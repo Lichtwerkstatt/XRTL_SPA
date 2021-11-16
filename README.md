@@ -1,2 +1,2 @@
-# vigilant-octo-happiness
+# XRTwinLab Single Page Application
 Single Page Application for XRTL Remote Lab
