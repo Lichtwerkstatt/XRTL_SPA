@@ -1,26 +1,16 @@
-const express = require('express');
-const socket = require('socket.io');
-const app = express();
+var io = require('socket.io');
+const http = require("http").Server(app);
+var express = require('express'),
+  app = express(),
+  port = process.env.PORT || 4000;
+
 const cors = require('cors');
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000' 
+}));
 
-app.use(cors());
-app.use(express.json());
 
-const server = app.listen('3002', () => {
-    console.log('LÄUFT');
-});
-
-io = socket(server);      //Verbindung zu Server
-
-io.on('connection', (socket) => {
-    console.log(socket.id);
-
-    socket.on('join_Experiment_1', () => {       //in der Klammer könnten wir noch Daten übertragen
-        socket.join();       //Übergabe an ?
-        console.log('Experiment 1 was selected');
-    });
-
-    socket.on('disconnect', () => {
-        console.log('User disconnted');
-    });
-});
+http.listen(3000, function() {
+    console.log("listening on *:3000");
+  });
