@@ -1,16 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
-// Change Experiment here.
+import MichelsonInterferometer from "./components/experiment/MichelsonInterferometer/MichelsonInterferometer"
 
 ReactDOM.render(
   <React.StrictMode>
-    
-    <App />
+    {/* Inject Experiment here. */}
+    <MichelsonInterferometer />
+    {/* <App /> */}
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-
