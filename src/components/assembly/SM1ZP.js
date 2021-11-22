@@ -4,7 +4,7 @@ const SM1ZP = (props) => {
     return <div>
         <h2>SM1ZP</h2>
         <p>id: {props.id}</p>
-        <RotaryCtrl />
+        <RotaryCtrl rotation={props.rotation}/>
     </div>
 }
 
