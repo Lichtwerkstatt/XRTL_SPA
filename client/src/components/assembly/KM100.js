@@ -5,8 +5,8 @@ const KM100 = (props) => {
     return <div>
         <h2>KM100</h2>
         <p>id: {props.id}</p>
-        <RotaryCtrl rotation={props.rotationTop} />
-        <RotaryCtrl rotation={props.rotationBottom}/>
+        <RotaryCtrl rotation={props.rotationTop} component={props.id} />
+        <RotaryCtrl rotation={props.rotationBottom} component={props.id}/>
     </div>
 }
 
