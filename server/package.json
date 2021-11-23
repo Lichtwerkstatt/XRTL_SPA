@@ -1,13 +1,12 @@
 {
-  "name": "server",
+  "name": "XRTL_SPA Server",
   "version": "1.0.0",
-  "description": "chat app using socket.io",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "author": "Aamir",
+  "author": "Clara Henkel",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",

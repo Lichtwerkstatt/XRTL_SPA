@@ -20,6 +20,7 @@ io.on('connection', socket =>{
 
     socket.on('Experiment', (experiment) => {
         console.log('Experiment ausgewählt: ', experiment)
+        
 
     })
 })

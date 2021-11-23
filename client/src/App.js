@@ -13,7 +13,7 @@ function App() {
       setChat([...chat, payload])
     })
   })
-
+  
   const sendMessage = (e) => {
     e.preventDefault();
     console.log(message)
@@ -34,7 +34,7 @@ function App() {
       </form>
       
 
-
+      <h3>Alles darunter kommt weg</h3> 
       <form onSubmit={sendMessage}>
         <input type="text" name="message"
           placeholder='Type message'
@@ -50,7 +50,6 @@ function App() {
         )
       })}
     </div>
-
   );
 }
 

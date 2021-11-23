@@ -1,4 +1,5 @@
 const MichelsonInterferometer = () => {
+    
     return null;
 }
 
