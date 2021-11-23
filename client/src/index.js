@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 //import App from "./App";
 
-//import MichelsonInterferometer from "./components/experiment/MichelsonInterferometer/MichelsonInterferometer"
+import MichelsonInterferometer from "./components/experiment/MichelsonInterferometer/MichelsonInterferometer"
 
 ReactDOM.render(
   <React.StrictMode>
     {/* Inject Experiment here. */}
     {/*<MichelsonInterferometer />*/}
-     <App /> 
+    <MichelsonInterferometer />
+    {/* <App /> */} 
   </React.StrictMode>,
   document.getElementById("root")
 );
