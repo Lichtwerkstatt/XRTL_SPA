@@ -30,7 +30,7 @@ function App() {
       <h1>Welcome to the experiments!</h1>
       <form onClick={ex}>
         <button type="submit" onClick={(e) => { experiment = 1 }}>Experiment 1</button>
-        <button type="submit" onClick={(e) => { experiment = 2 }}>Experiment 2</button>
+        <button type="submit" onClick={(e) => { experiment =  -1}}>Experiment 2</button>
       </form>
       
 
