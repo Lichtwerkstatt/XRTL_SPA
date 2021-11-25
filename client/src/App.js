@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:7000')
+
 const userName = 'User ' + parseInt(Math.random() * 10)
+
 function App() {
   const [message, setMessage] = useState('')
   const [chat, setChat] = useState([])
