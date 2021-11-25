@@ -9,9 +9,8 @@ ReactDOM.render(
   <React.StrictMode>
     {/* Inject Experiment here. */}
     {/*<MichelsonInterferometer />*/}
-    
-    <App />
-    
+    <MichelsonInterferometer />
+    {/* <App /> */}    
   </React.StrictMode>,
   document.getElementById("root")
 );

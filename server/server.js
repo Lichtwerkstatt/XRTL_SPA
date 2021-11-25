@@ -21,6 +21,12 @@ io.on('connection', socket => {
     socket.on('Experiment', (experiment) => {
         console.log('Experiment ausgewählt: ', experiment)
     })
+
+    socket.on('control', payload => {
+        console.log("Control command received:", payload)
+        io.emit('control', payload)
+    })
+
 })
 
 server.listen(7000, () => {

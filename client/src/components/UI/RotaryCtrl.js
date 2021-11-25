@@ -1,28 +1,59 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
+import { socket } from "../../services/socket";
 
 const RotaryCtrl = (props) => {
+  const [rotation, setRotation] = useState(props.rotation);
+  const [enteredRotation, setEnteredRotation] = useState(0)
 
-    const [rotation, setRotation] = useState(props.rotation)
+  useEffect(() => {
+      socket.on('control', payload => {
+          if (payload.component === props.component && payload.control === props.control)
+          {console.log(props.component, " got Command ", props.control, payload.command)
+            setRotation(payload.command.rotation)
+        }
+      })
+  },[])
 
-    const changeRotationHandler=(event)=>{
-        setRotation(event.target.value)
-    }
+  const changeRotationHandler = (event) => {
+    setEnteredRotation(event.target.value)
+  };
 
-    const rotCW_Handler=(event)=>{
-        event.preventDefault()
-        console.log(props.component," CW rotation: ",rotation)
-    }
+  const rotCW_Handler = (event) => {
+    event.preventDefault();
+    const newRotation = Number(rotation)+Number(enteredRotation)
+    setRotation(newRotation)  
+    socket.emit("control", {
+      component: props.component,
+      control: props.control,
+      command: {steps: enteredRotation, rotation: newRotation},
+    });
+  };
 
-    const rotCCW_Handler=(event)=>{
-        event.preventDefault()
-        console.log(props.component," CCW rotation: ",rotation)
-    }
+  const rotCCW_Handler = (event) => {
+    event.preventDefault();
+    const newRotation = Number(rotation)-Number(enteredRotation)
+    setRotation(newRotation)  
+    socket.emit("control", {
+      component: props.component,
+      control: props.control,
+      command: {steps: -1*enteredRotation, rotation:newRotation},
+    });
+  };
 
-    return <form>
-        <input type="number" min="0" max="100" value={rotation} onChange={changeRotationHandler}/>
-        <button onClick={rotCW_Handler}> CW</button>
-        <button onClick={rotCCW_Handler}>CCW</button>
+  return (
+    <form>
+        <span>{rotation}</span>
+      <input
+        type="number"
+        min="0"
+        max="100"
+        value={enteredRotation}
+        onChange={changeRotationHandler}
+      />
+      <button onClick={rotCW_Handler}> CW</button>
+      <button onClick={rotCCW_Handler}>CCW</button>
     </form>
-} 
+  );
+};
 
-export default RotaryCtrl
+export default RotaryCtrl;
