@@ -27,6 +27,7 @@ const RotaryCtrl = (props) => {
       control: props.control,
       command: {steps: enteredRotation, rotation: newRotation},
     });
+    props.newStatus("CW rotation by "+enteredRotation+" steps.")
   };
 
   const rotCCW_Handler = (event) => {
@@ -38,6 +39,7 @@ const RotaryCtrl = (props) => {
       control: props.control,
       command: {steps: -1*enteredRotation, rotation:newRotation},
     });
+    props.newStatus("CCW rotation by "+enteredRotation+" steps.")
   };
 
   return (
