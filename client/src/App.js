@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import io from 'socket.io-client'
-
-const socket = io('http://localhost:7000')
+import { socket } from "./services/socket";
 
 const userName = 'User ' + parseInt(Math.random() * 10)
 
@@ -15,7 +13,7 @@ function App() {
       setChat([...chat, payload])
     })
   })
-  
+
   const sendMessage = (e) => {
     e.preventDefault();
     console.log(message)
@@ -32,11 +30,11 @@ function App() {
       <h1>Welcome to the experiments!</h1>
       <form onClick={ex}>
         <button type="submit" onClick={(e) => { experiment = 1 }}>Experiment 1</button>
-        <button type="submit" onClick={(e) => { experiment =  -1}}>Experiment 2</button>
+        <button type="submit" onClick={(e) => { experiment = 2 }}>Experiment 2</button>
       </form>
-      
 
-      <h3>Alles darunter kommt weg</h3> 
+
+      <h3>Alles darunter kommt weg</h3>
       <form onSubmit={sendMessage}>
         <input type="text" name="message"
           placeholder='Type message'
