@@ -1,13 +1,11 @@
 import RotaryCtrl from "../UI/RotaryCtrl"
-import Modal from "../UI/Modal"
+import Window from "../UI/Window"
 
 const KM100 = (props) => {
-    return <div>
-        <h2>KM100</h2>
-        <p>id: {props.id}</p>
+    return <Window header={props.title + " ("+ props.id+")"} footer={props.footer}>
         <RotaryCtrl rotation={props.rotationTop} component={props.id} control="top" />
         <RotaryCtrl rotation={props.rotationBottom} component={props.id} control="bottom" />
-        </div>
+        </Window>
 }
 
 export default KM100
