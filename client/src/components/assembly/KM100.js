@@ -1,4 +1,5 @@
 import RotaryCtrl from "../UI/RotaryCtrl"
+import Modal from "../UI/Modal"
 
 const KM100 = (props) => {
     return <div>
@@ -6,7 +7,7 @@ const KM100 = (props) => {
         <p>id: {props.id}</p>
         <RotaryCtrl rotation={props.rotationTop} component={props.id} control="top" />
         <RotaryCtrl rotation={props.rotationBottom} component={props.id} control="bottom" />
-    </div>
+        </div>
 }
 
 export default KM100
