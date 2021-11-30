@@ -8,9 +8,9 @@ import {
   Redirect
 } from "react-router-dom";
 
-import Main from "./services/Main"
-import Error from "./services/ErrorPage"
-import MichelsonInterferometer from "./components/experiment/MichelsonInterferometer/MichelsonInterferometer";
+import Main from "./services/Main";
+import Error from "./services/ErrorPage";
+import MichelsonInterferometer from "./components/UI/RotaryCtrl";
 
 
 export default function App() {
