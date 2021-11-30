@@ -1,8 +1,11 @@
+import styles from './Window.module.css'
+
 const Window = props => {
-    return <div class="window">
-        <div class="window_header">{props.header}</div>
-        <div class="window_content">{props.children}</div>
-        <div class="window_footer">{props.footer}</div>
+    console.log("Rendering Window...")
+    return <div class="window" className={styles.window} style={{top:props.top+"px", left:props.left+"px"}}>
+        <div class="window_header" className={styles.windowHeader}>{props.header}</div>
+        <div class="window_content" className={styles.windowContent}>{props.children}</div>
+        {props.footer != undefined && <div class="window_footer" className={styles.windowFooter}>{props.footer}</div>}
     </div>
 }
 

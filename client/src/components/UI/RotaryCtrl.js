@@ -53,7 +53,7 @@ const RotaryCtrl = (props) => {
   };
 
   return (
-    <form className={styles.rotaryCtrl}>
+    <form className={styles.rotaryCtrl} style={{top:props.top+"px", left:props.left+"px"}}>
       <div className={styles.rotaryCtrl}>
         <span>{rotation}</span>
         <input
