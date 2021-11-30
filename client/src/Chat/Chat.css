@@ -115,7 +115,7 @@
     height: 2px;
     background-color: #fff;
     transform-origin: right;
-    transform: rotate(45deg) translate(-4px, 4px) scale(0);
+    transform: rotate(45deg) translate(1px, 13px) scale(1);
     transition: .3s;
 }
 
@@ -126,7 +126,7 @@
 
 .Chat ul li.ChatOff span {
     top: 50%;
-    left: 20%;
+    left: 35%;
     transform: translateY(-50%) rotate(-45deg);
     border-right: none;
     border-bottom: none;
@@ -145,7 +145,7 @@
     height: 2px;
     background-color: #fff;
     transform-origin: left;
-    transform: rotate(45deg) translate(-4px, 4px) scale(0);
+    transform: rotate(45deg) translate(-4px, -3.8px) scale(1);
     transition: .3s;
 }
 
