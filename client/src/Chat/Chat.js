@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { socket } from "./socket";
+import { socket } from "../services/socket";
 import { useNavigate } from "react-router-dom";
-import "../Chat/Chat.js";
-
+import "./Chat.css";
 
 const userName = 'User ' + parseInt(Math.random() * 10);
 var chatOn = true;    //For the Chat window
 
-function Main() {
+function Chat() {
   let navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
@@ -68,4 +67,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Chat

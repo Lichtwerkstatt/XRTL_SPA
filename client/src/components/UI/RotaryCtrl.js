@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { socket } from "../../services/socket";
+import "../../Chat/Chat"
+
 
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(props.rotation);
