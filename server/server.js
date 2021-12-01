@@ -8,7 +8,8 @@ const io = require('socket.io')(server, {
 })
 
 instrument(io, {auth: false}) //TODO: Add Authentication before deployment JKr 011221
-
+// Connect to https://admin.socket.io/#/
+// Client https://amritb.github.io/socketio-client-tool
 
 io.on('connection', socket => {
     console.log('connection made successfully');
