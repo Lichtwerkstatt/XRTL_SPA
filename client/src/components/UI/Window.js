@@ -5,7 +5,7 @@ const Window = props => {
     return <div class="window" className={styles.window} style={{top:props.top+"px", left:props.left+"px"}}>
         <div class="window_header" className={styles.windowHeader}>{props.header}</div>
         <div class="window_content" className={styles.windowContent}>{props.children}</div>
-        {props.footer != undefined && <div class="window_footer" className={styles.windowFooter}>{props.footer}</div>}
+        {props.footer !== undefined && <div class="window_footer" className={styles.windowFooter}>{props.footer}</div>}
     </div>
 }
 

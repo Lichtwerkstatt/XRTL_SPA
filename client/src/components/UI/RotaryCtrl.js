@@ -22,7 +22,7 @@ const RotaryCtrl = (props) => {
         setRotation(payload.command.rotation);
       }
     });
-  }, []);
+  }, [props.component, props.control]);
 
   const changeRotationHandler = (event) => {
     setEnteredRotation(event.target.value);
