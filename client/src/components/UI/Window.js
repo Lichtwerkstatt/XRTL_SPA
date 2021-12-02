@@ -11,7 +11,9 @@ const Window = (props) => {
       <div class="window_header" className={styles.windowHeader}>
         {props.header}
       </div>
-      <div class="window_content" className={styles.windowContent} style={{height: props.height , width: props.width}}>
+      <div class="window_content" 
+        className={styles.windowContent} 
+        style={{height: props.height , width: props.width, background:"url("+props.background+")"}}>
         {props.children}
       </div>
       {props.footer !== undefined && (

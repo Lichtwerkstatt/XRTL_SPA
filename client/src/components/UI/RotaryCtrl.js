@@ -65,10 +65,10 @@ const RotaryCtrl = (props) => {
         />
       </div>
       <button onClick={rotCCW_Handler} className={styles.CtrlLeft}>
-        <MdOutlineRotateLeft size={23} />
+        <MdOutlineRotateLeft size={28} />
       </button>
       <button onClick={rotCW_Handler} className={styles.CtrlRight}>
-        <MdOutlineRotateRight size={23} />
+        <MdOutlineRotateRight size={28} />
       </button>
       
     </form>

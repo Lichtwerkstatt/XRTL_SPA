@@ -8,7 +8,7 @@ form.rotaryCtrl{
 
 div.rotaryCtrl{
     position:absolute;
-    background-color:greenyellow;
+    background-color:#00ffa8;
     width:75px;
     height: 75px;   
     border-radius: 50px;
@@ -29,13 +29,15 @@ div.rotaryCtrl input{
 
 form.rotaryCtrl button {
     border-radius:15px;
+    overflow:hidden;
     position:absolute;
     bottom:0;
     width:30px;
     height:30px;
-    background-color:green;
+    background-color:#01bd7d;
     border:none;
     padding:0;
+    margin:0;
     padding-top:2px;
     color:white;
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
+import KM100_Background from "../experiment/MichelsonInterferometer/media/km100_outline.png"
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
@@ -15,8 +16,9 @@ const KM100 = (props) => {
       footer={footer}
       top={props.top}
       left={props.left}
-      height="250px"
-      width="230px"
+      height="240px"
+      width="250px"
+      background={KM100_Background}
     >
       <RotaryCtrl
         rotation={props.rotationTop}
@@ -24,7 +26,7 @@ const KM100 = (props) => {
         control="top"
         newStatus={handleChangeFooter}
         top="20"
-        left="130"
+        left="160"
       />
       <RotaryCtrl
         rotation={props.rotationBottom}
@@ -32,7 +34,7 @@ const KM100 = (props) => {
         control="bottom"
         newStatus={handleChangeFooter}
         top="50"
-        left="130"
+        left="160"
       />
     </Window>
   );
