@@ -27,18 +27,28 @@ function Main() {
   return (
     <div className="OuterChater">
       <h1>Chat</h1>
-      <div className="Chat" id="Chat">
         <ul id="On">
-          <li class="ChatOn" onClick={(e) => { //onClick the Chat window will disappear
-            if (chatOn == true) {
-              document.getElementById("Chat").style.display = "none";   //Chat is now hidden
+          <li id="ChatOn" class="ChatOn" onClick={(e) => { //onClick the Chat window will disappear
+            
+              document.getElementById("Chat").style.display = "flex";   //Chat is now hidden
+              document.getElementById("ChatOff").style.display = "flex";
+              document.getElementById("ChatOn").style.display = "none";
               chatOn = false;    //That for the next click the Chat will appear
-            } else {
-              document.getElementById("Chat").style.display = "flex";   //Chat is visible
-              chatOn = true;    //That for the next click the Chat will disappear
-            }
+            
           }}><span></span></li>
+          
+          
+          <li id="ChatOff" class="ChatOff" onClick={(e) => { //onClick the Chat window will disappear
+            
+              document.getElementById("Chat").style.display = "none";   //Chat is visible
+              document.getElementById("ChatOff").style.display = "none";
+              document.getElementById("ChatOn").style.display = "flex";
+              chatOn = true;    //That for the next click the Chat will disappear
+            
+          }}><span></span></li>
+
         </ul>
+      <div className="Chat" id="Chat">
 
         <div className="Messages">
           {chat.map((payload, index) => {

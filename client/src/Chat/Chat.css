@@ -58,43 +58,72 @@
     left: 10px;
 }
 
-.Chat ul {
+.OuterChater ul {
     position: fixed;
     left: 454px;
     top: 65px;
     display: flex;
 }
 
-.Chat ul li {
+.OuterChater ul li {
     list-style: none;
     width: 40px;
     height: 40px;
     background: rgb(107, 16, 16, .4);
-    margin: 0 10px;
+    margin: 0 100px;
     border-radius: 20%;
     transition: .5s;
 }
 
-.Chat ul li:hover {
+.OuterChater ul li.ChatOn {
+    position: fixed;
+    left: -96px;
+    top: 81px;
+    display: none;
+}
+
+.OuterChater ul li.ChatOff {
+    position: fixed;
+    left: 404px;
+    top: 81px;
+    display: flex;
+}
+
+.OuterChater ul li:hover {
     background: rgb(107, 16, 16);
 }
 
-.Chat ul li span {
+.OuterChater ul li span {
     position: absolute;
     width: 15px;
     height: 15px;
     border: 3px solid #fff;
     transition: .5s;
+    
 }
 
-.Chat ul li.ChatOn span {
-    top: 50%;
-    right: 20%;
+.OuterChater ul li.ChatOn span {
+    top: 20px;
+    left: 5px;
+    transform: translateY(-50%) rotate(-45deg);
+    border-left: none;
+    border-top: none;
+
+}
+
+.OuterChater ul li.ChatOff span {
+    top: 20px;
+    right: 5px;
     transform: translateY(-50%) rotate(-45deg);
     border-right: none;
     border-bottom: none;
 }
 
-.Chat ul li.ChatOn:hover span {
-    left: 60%;
+.OuterChater ul li.ChatOn:hover span {
+    left: 30%;
 }
+
+.OuterChater ul li.ChatOff:hover span {
+    right: 30%;
+}
+
