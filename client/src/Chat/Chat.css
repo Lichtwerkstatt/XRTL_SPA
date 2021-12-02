@@ -1,61 +1,7 @@
 .OuterChater {
     background-color: rgb(55, 55, 58);
-    width: 1900px;
-    height: 895px;
-}
-
-
-.Chat {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 18px;
-    border: 1px solid rgb(55, 55, 58);
-    border-width: 2px;
-    border-radius: 10px;
-    background: rgb(255, 255, 255, .2);
-
-
-    width: 500px;
-    height: 850px;
-
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 80px;
-    left: 2px;
-
-    overflow-y: scroll;
-    scrollbar-color: grey rgb(255, 255, 255);
-    scrollbar-width: auto;
-}
-
-.Messages {
-    width: 470px;
-    height: 745px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-}
-
-.Messages b {
-    font-size: 16px;
-    display: flex;
-}
-
-.Chat form {
-    position: fixed;
-    bottom: 27px;
-    left: 9px;
-}
-
-.Chat input {
-    width: 390px;
-    border-radius: 10px;
-}
-
-.Chat button {
-    border-radius: 10px;
-    width: 75px;
-    left: 10px;
+    width: 1920px;
+    height: 955px;
 }
 
 .OuterChater ul {
@@ -78,14 +24,14 @@
 .OuterChater ul li.ChatOn {
     position: fixed;
     left: -96px;
-    top: 81px;
+    top: 2px;
     display: none;
 }
 
 .OuterChater ul li.ChatOff {
     position: fixed;
-    left: 404px;
-    top: 81px;
+    left: 410px;
+    top:2px;
     display: flex;
 }
 
@@ -99,7 +45,7 @@
     height: 15px;
     border: 3px solid #fff;
     transition: .5s;
-    
+
 }
 
 .OuterChater ul li.ChatOn span {
@@ -126,4 +72,90 @@
 .OuterChater ul li.ChatOff:hover span {
     right: 30%;
 }
+
+.Frame {
+    display: flex;
+    width: 508px;
+    height: 945px;
+    border: 1px solid rgb(104, 101, 103);
+    border-width: 2px;
+    border-radius: 10px;
+    background: rgb(255, 255, 255, .2);
+
+}
+
+.Chat {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 18px;
+    
+    border-width: 2px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.103);
+
+
+    width: 500px;
+    height: 900px;
+
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50px;
+    left: 5px;
+
+    overflow-y: scroll;
+    scrollbar-color: grey rgb(255, 255, 255);
+    scrollbar-width: auto;
+    transition: 0.5s;
+
+
+}
+
+.Chat h1 {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: -20px;
+    left: 10px;
+
+}
+
+.Chat form {
+    position: fixed;
+    bottom: 10px;
+    left: 9px;
+}
+
+.Chat input {
+    width: 390px;
+    border-radius: 10px;
+}
+
+.Chat button {
+    border-radius: 10px;
+    width: 75px;
+    left: 10px;
+}
+
+.Chat:hover {
+    background: rgba(255, 255, 255, 0.281);
+}
+
+.Messages {
+    width: 470px;
+    height: 745px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.Messages b {
+    font-size: 16px;
+    display: flex;
+}
+
+
+
+
+
+
 
