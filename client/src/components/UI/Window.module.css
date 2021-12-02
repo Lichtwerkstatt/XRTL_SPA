@@ -1,0 +1,32 @@
+div.window {
+    position:absolute;
+    border:3px solid green;
+    border-radius:10px;
+    overflow:hidden;
+    background: black;
+    color:white;
+}
+
+div.windowHeader {
+    padding-left:10px;
+    padding-top:5px;
+    position:relative;
+    width:100%;
+    height:25px;
+    top:0;
+    left:0;
+    background:green;
+    color:white;
+  }
+
+  div.windowFooter {
+    position:relative;
+    width:100%;
+    height:20px;
+    bottom:0px;
+    left:0;
+    background:green;
+    color:white;
+    padding-left:10px;
+    padding-bottom:5px;
+  }

@@ -1,0 +1,50 @@
+form.rotaryCtrl{
+    text-align:center;
+    width:75px;
+    height:90px;
+    display:block;
+    position:relative;
+}
+
+div.rotaryCtrl{
+    position:absolute;
+    background-color:greenyellow;
+    width:75px;
+    height: 75px;   
+    border-radius: 50px;
+    text-align:center;
+}
+
+div.rotaryCtrl span{
+    display:block;
+    padding-top:5px;
+    font-size:15px;
+    font-weight:bold;
+    color:darkgreen;
+}
+
+div.rotaryCtrl input{
+    width:40px;
+}
+
+form.rotaryCtrl button {
+    border-radius:15px;
+    position:absolute;
+    bottom:0;
+    width:30px;
+    height:30px;
+    background-color:green;
+    border:none;
+    padding:0;
+    padding-top:2px;
+    color:white;
+}
+
+button.CtrlLeft{
+    left:5px;
+}
+
+button.CtrlRight{
+    right:5px;
+}
+
