@@ -24,7 +24,6 @@
 .OuterChater ul li.ChatOn {
     position: fixed;
     left: -96px;
-    top: 2px;
     display: none;
 }
 
