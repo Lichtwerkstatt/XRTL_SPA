@@ -8,7 +8,6 @@ const userName = 'User ' + parseInt(Math.random() * 10);
 var chatOn = true;    //For the Chat window
 
 function Main() {
-  let navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
 
@@ -25,53 +24,42 @@ function Main() {
     setMessage('')
   };
 
-
   return (
     <div className="OuterChater">
       <h1>Chat</h1>
-
-      <button type="submit" onClick={(e) => { navigate("/MichelsonInterferometer") }}>Experiment 1</button>
-      <button type="submit" onClick={(e) => { navigate("/MichelsonInterferometer") }}> Experiment 2</button>
-
-      <button onClick={(e) => { //onClick the Chat window will disappear
-        if (chatOn == true) {
-          document.getElementById("Chat").style.display = "none";   //Chat is now hidden
-          chatOn = false;    //That for the next click the Chat will appear
-        } else {
-          document.getElementById("Chat").style.display = "flex";   //Chat is visible
-          chatOn = true;    //That for the next click the Chat will disappear
-        }
-
-      }}>Chat</button>
       <div className="Chat" id="Chat">
-        <ul>
-        <li class ="ChatOn"><span></span></li>
-        <li class ="ChatOff"><span></span></li>
+        <ul id="On">
+          <li class="ChatOn" onClick={(e) => { //onClick the Chat window will disappear
+            if (chatOn == true) {
+              document.getElementById("Chat").style.display = "none";   //Chat is now hidden
+              chatOn = false;    //That for the next click the Chat will appear
+            } else {
+              document.getElementById("Chat").style.display = "flex";   //Chat is visible
+              chatOn = true;    //That for the next click the Chat will disappear
+            }
+          }}><span></span></li>
         </ul>
 
-
         <div className="Messages">
-      {chat.map((payload, index) => {
-        return (
-        <b key={index}>{payload.userName}: <span>{payload.message}</span></b>
-      )
-      })}
-        </div>
-        <form onSubmit={sendMessage}>
-        <input type ="text" name="message"
-        placeholder='Type message'
-        value={message}
-        onChange={(e) => { setMessage(e.target.value) }}
-        required
-        ></input>
-        <button type ='submit'>Send</button>
-        </form>
+          {chat.map((payload, index) => {
+            return (
+              <b key={index}>{payload.userName}: <span>{payload.message}</span></b>
+            )
+          })}
 
-
+          <form onSubmit={sendMessage}>
+            <input type="text" name="message"
+              placeholder='Type message'
+              value={message}
+              onChange={(e) => { setMessage(e.target.value) }}
+              required
+            ></input>
+            <button classe="Chat Send" type='submit'>Send</button>
+          </form>
         </div>
-        <b>HALLO</b>
       </div>
-      )
+    </div>
+  )
 }
 
-      export default Main
+export default Main

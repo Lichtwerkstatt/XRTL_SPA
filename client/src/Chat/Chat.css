@@ -15,18 +15,17 @@
 
 
     width: 500px;
-    height: 800px;
+    height: 850px;
 
     display: flex;
     flex-direction: column;
     position: fixed;
+    top: 80px;
     left: 2px;
 
     overflow-y: scroll;
     scrollbar-color: grey rgb(255, 255, 255);
     scrollbar-width: auto;
-
-
 }
 
 .Messages {
@@ -44,16 +43,13 @@
 
 .Chat form {
     position: fixed;
-    bottom: 25px;
-    left: 10px;
-
-
+    bottom: 27px;
+    left: 9px;
 }
 
 .Chat input {
     width: 390px;
     border-radius: 10px;
-
 }
 
 .Chat button {
@@ -64,32 +60,30 @@
 
 .Chat ul {
     position: fixed;
-    right: 394px;
-    top: 114px;
+    left: 454px;
+    top: 65px;
     display: flex;
-
 }
 
 .Chat ul li {
     list-style: none;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background: rgb(107, 16, 16, .4);
     margin: 0 10px;
-    border-radius: 50%;
+    border-radius: 20%;
     transition: .5s;
 }
 
 .Chat ul li:hover {
     background: rgb(107, 16, 16);
-    ;
 }
 
 .Chat ul li span {
     position: absolute;
     width: 15px;
     height: 15px;
-    border: 2px solid #fff;
+    border: 3px solid #fff;
     transition: .5s;
 }
 
@@ -97,58 +91,10 @@
     top: 50%;
     right: 20%;
     transform: translateY(-50%) rotate(-45deg);
-    border-left: none;
-    border-top: none;
-}
-
-.Chat ul li.ChatOn:hover span {
-    right: 16%;
-}
-
-.Chat ul li.ChatOn span:before {
-    content: '';
-    position: absolute;
-    top: 5px;
-
-
-    width: 25px;
-    height: 2px;
-    background-color: #fff;
-    transform-origin: right;
-    transform: rotate(45deg) translate(1px, 13px) scale(1);
-    transition: .3s;
-}
-
-.Chat ul li.ChatOn:hover span:before {
-    transform: rotate(45deg) translate(-4px, 5px) scaleX(1);
-}
-
-
-.Chat ul li.ChatOff span {
-    top: 50%;
-    left: 35%;
-    transform: translateY(-50%) rotate(-45deg);
     border-right: none;
     border-bottom: none;
 }
 
-.Chat ul li.ChatOff:hover span {
-    left: 16%;
-}
-
-.Chat ul li.ChatOff span:before {
-    content: '';
-    position: absolute;
-    top: 5px;
-
-    width: 25px;
-    height: 2px;
-    background-color: #fff;
-    transform-origin: left;
-    transform: rotate(45deg) translate(-4px, -3.8px) scale(1);
-    transition: .3s;
-}
-
-.Chat ul li.ChatOff:hover span:before {
-    transform: rotate(45deg) translate(-4px, 5px) scaleX(1);
+.Chat ul li.ChatOn:hover span {
+    left: 60%;
 }
