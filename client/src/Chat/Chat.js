@@ -1,40 +1,48 @@
-import { useEffect, useState } from "react";
-import { socket } from "../services/socket";
-import styles from "./Chat.module.css";
-import { ImBubble } from "react-icons/im";
+import { useEffect, useState } from "react"
+import { socket } from "../services/socket"
+import styles from "./Chat.module.css"
+import { ImBubble } from "react-icons/im"
+import {RiSendPlaneFill} from "react-icons/ri"
 
 const Chat = (props) => {
-  const [message, setMessage] = useState("");
-  const [showChat, setShowChat] = useState(false);
-  const [chat, setChat] = useState([]);
+  const [message, setMessage] = useState("")
+  const [showChat, setShowChat] = useState(false)
+  const [animation, setAnimation] = useState("")
+  const [chat, setChat] = useState([])
+  
 
   useEffect(() => {
     socket.on("message", (payload) => {
-      setChat([...chat, payload]);
-    });
-    console.log(chat);
-  }, [chat]);
+      setChat([...chat, payload])
+    })
+    console.log(chat)
+  }, [chat])
 
   const sendMessage = (event) => {
-    event.preventDefault();
-    console.log(message);
-    socket.emit("message", { userName: "user", message });
-    setMessage("");
-  };
+    event.preventDefault()
+    console.log(message)
+    socket.emit("message", { userName: "user", message })
+    setMessage("")
+  }
 
   const showChatHandler = () => {
-    console.log(showChat);
-    setShowChat(!showChat);
-  };
+    setAnimation(showChat ? styles.closeChat : styles.openChat)
+    setShowChat(!showChat)  
+  }
+
 
   return (
     <div
-      className={styles.chatContainer}
-      style={{ left: showChat ? "0px" : "-405px" }}
+      className={styles.chatContainer+" "+animation }
     >
       <div className={styles.chatMain}>
         {chat.map((payload, index) => {
-          return (<b key={index}>{payload.userName}: <span>{payload.message}</span><br/></b>)
+          return (
+            <b key={index}>
+              {payload.userName}: <span>{payload.message}</span>
+              <br />
+            </b>
+          )
         })}
       </div>
       <form className={styles.msgForm} onSubmit={sendMessage}>
@@ -44,19 +52,19 @@ const Chat = (props) => {
           placeholder="Type Message here"
           value={message}
           onChange={(e) => {
-            setMessage(e.target.value);
+            setMessage(e.target.value)
           }}
           required
         />
-        <button type="submit">Send</button>
+        <button type="submit"><RiSendPlaneFill size={25} /></button>
       </form>
-      <div className={styles.chatHandler}>
+      <div className={styles.chatHandler+" "+animation}>
         <span>
           <ImBubble size={35} onClick={showChatHandler} />
         </span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat
