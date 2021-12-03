@@ -1,7 +1,7 @@
 import { useState } from "react";
 import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
-import KM100_Background from "../experiment/MichelsonInterferometer/media/km100_outline.png"
+import KM100_Background from "./media/km100_outline.png"
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
