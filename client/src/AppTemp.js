@@ -8,6 +8,7 @@ const AppTemp = () => {
     <NavBar />
     <MichelsonInterferometer />
     <Console/>
+    {/*<Chat/>*/}
     <Chat/>
    </>
    
