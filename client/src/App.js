@@ -1,56 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "./services/socket";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 
-const userName = 'User ' + parseInt(Math.random() * 10)
+import Main from "./services/Main";
+import Error from "./services/ErrorPage";
+import MichelsonInterferometer from "./components/UI/RotaryCtrl";
 
-function App() {
-  const [message, setMessage] = useState('')
-  const [chat, setChat] = useState([])
-  var [experiment] = useState(-1)
 
-  useEffect(() => {
-    socket.on('message', payload => {
-      setChat([...chat, payload])
-    })
-  })
+export default function App() {
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    console.log(message)
-    socket.emit('message', { userName, message })
-    setMessage('')
-  };
-
-  const ex = (e) => {
-    e.preventDefault();
-    socket.emit('Experiment', { experiment })
-  }
   return (
-    <div className="App">
-      <h1>Welcome to the experiments!</h1>
-      <form onClick={ex}>
-        <button type="submit" onClick={(e) => { experiment = 1 }}>Experiment 1</button>
-        <button type="submit" onClick={(e) => { experiment = 2 }}>Experiment 2</button>
-      </form>
-
-
-      <h3>Alles darunter kommt weg</h3>
-      <form onSubmit={sendMessage}>
-        <input type="text" name="message"
-          placeholder='Type message'
-          value={message}
-          onChange={(e) => { setMessage(e.target.value) }}
-          required
-        ></input>
-        <button type='submit'>Send</button>
-      </form>
-      {chat.map((payload, index) => {
-        return (
-          <h3 key={index}>{payload.userName}: <span>{payload.message}</span></h3>
-        )
-      })}
-    </div>
+    <Router>
+      <nav> 
+        <Link to="/">Back to the start page</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Main />}/>
+        <Route path="/MichelsonInterferometer" element={<MichelsonInterferometer />}/>
+        
+        <Route path="*" element= {<Error/>}/>
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
