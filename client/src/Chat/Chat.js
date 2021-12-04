@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { socket } from "../services/socket"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
-import {RiSendPlaneFill} from "react-icons/ri"
+import {MdSend} from "react-icons/md"
 
 const Chat = (props) => {
   const [message, setMessage] = useState("")
@@ -56,7 +56,7 @@ const Chat = (props) => {
           }}
           required
         />
-        <button type="submit"><RiSendPlaneFill size={25} /></button>
+        <button type="submit"><MdSend size={25} /></button>
       </form>
       <div className={styles.chatHandler+" "+animation}>
         <span>

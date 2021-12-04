@@ -17,16 +17,19 @@ div.chatMain{
     overflow:auto;
     top:0;
     width:400px;
-    height:calc(100% - 60px);
+    height:calc(100% - 40px);
     color:#00ffa8;
+    font-family:'Inconsolata'
 }
 
 form.msgForm{
     display:block;
-    padding:5px;
     padding-left:20px;
+    height:30px;
 }
 form.msgForm input{
+    position:relative;
+    top:-7px;
     height:20px;
     width:300px;
     border-radius: 5px;
@@ -35,10 +38,10 @@ form.msgForm input{
 form.msgForm button{
     border:none;
     background-color:#00ffa8;
-    margin-left:10px;
-    padding-top:2px;
-    height:40px;
-    width:50px;
+    margin-left:5px;
+    padding-top:3px;
+    height:30px;
+    width:40px;
     border-radius: 5px;
     color:white;
 }

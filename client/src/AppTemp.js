@@ -7,7 +7,7 @@ const AppTemp = () => {
    return <>
     <NavBar />
     <MichelsonInterferometer />
-    <Console/>
+    <Console addLog="App started..."/>
     {/*<Chat/>*/}
     <Chat/>
    </>

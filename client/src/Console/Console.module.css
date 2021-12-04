@@ -13,13 +13,14 @@ div.consoleContainer{
    border-top-right-radius: 15px;
 }
 
-div.consoleMain{
+div.consoleMain *{
     height:300px;
     width:calc(100% - 20px);
     margin:auto;
     color:#00ffa8;
     padding:10px;
     box-sizing:border-box;
+    font-family:'Inconsolata';
 }
 
 div.consoleHandler{
