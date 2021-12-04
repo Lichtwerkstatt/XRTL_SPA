@@ -5,6 +5,7 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-draggable": "^4.4.4",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
@@ -41,5 +42,3 @@
     ]
   }
 }
-
-

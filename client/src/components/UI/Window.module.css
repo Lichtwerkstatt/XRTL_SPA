@@ -17,8 +17,15 @@ div.windowHeader {
     top:0;
     left:0;
     background:#01bd7d;
-    color:white;
+    color:white;   
   }
+
+span.windowTitle {
+  display:block;
+  width: 200px;
+  border:1px solid yellow;
+  cursor:move;
+}
 
   div.windowFooter {
     position:relative;
