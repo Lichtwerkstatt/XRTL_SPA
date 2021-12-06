@@ -23,6 +23,8 @@ export default function Model({ ...props }) {
   
   const { nodes, materials } = useGLTF("/MI_0612.glb");
 
+  console.log(nodes.KM100mesh002.material)
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group
@@ -37,7 +39,7 @@ export default function Model({ ...props }) {
         <mesh
           geometry={nodes.KM100mesh002.geometry}
           material={nodes.KM100mesh002.material}
-        > {mirrorSelected ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshPhongMaterial />} 
+        > {mirrorSelected ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshBasicMaterial color="#222222" opacity={1.0} />} 
         </mesh>
         <mesh
           geometry={nodes.KM100mesh002_1.geometry}
