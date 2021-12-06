@@ -2,14 +2,14 @@ import { useEffect, useState } from "react"
 import { socket } from "../services/socket"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
-import {MdSend} from "react-icons/md"
+import { MdSend } from "react-icons/md"
 
 const Chat = (props) => {
   const [message, setMessage] = useState("")
   const [showChat, setShowChat] = useState(false)
   const [animation, setAnimation] = useState("")
   const [chat, setChat] = useState([])
-  
+
 
   useEffect(() => {
     socket.on("message", (payload) => {
@@ -27,13 +27,13 @@ const Chat = (props) => {
 
   const showChatHandler = () => {
     setAnimation(showChat ? styles.closeChat : styles.openChat)
-    setShowChat(!showChat)  
+    setShowChat(!showChat)
   }
 
 
   return (
     <div
-      className={styles.chatContainer+" "+animation }
+      className={styles.chatContainer + " " + animation}
     >
       <div className={styles.chatMain}>
         {chat.map((payload, index) => {
@@ -58,7 +58,7 @@ const Chat = (props) => {
         />
         <button type="submit"><MdSend size={25} /></button>
       </form>
-      <div className={styles.chatHandler+" "+animation}>
+      <div className={styles.chatHandler + " " + animation}>
         <span>
           <ImBubble size={35} onClick={showChatHandler} />
         </span>
