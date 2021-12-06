@@ -6,8 +6,8 @@ import React from 'react';
 const App = () => {
   return (
     <SocketContext.Provider value={socket}>
-      <AppTemp />
-
+      {/* <AppTemp /> */}
+      <Child/>
     </SocketContext.Provider>
   );
 }

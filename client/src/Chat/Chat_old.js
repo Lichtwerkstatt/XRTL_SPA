@@ -1,13 +1,19 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import "./Chat.css";
-import {SocketContext} from "../services/socket";
+import { SocketContext } from "../services/socket";
+import serverConnection from "../services/serverConnection";
 
 const userName = 'User ' + parseInt(Math.random() * 10);
 var chatOn = true;    //For the Chat window
 
 function Chat() {
-  const socket = useContext(SocketContext);
+  let state = false;
+  let socket = useContext(SocketContext);
+
+  state = serverConnection(socket, state);
+
+
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
 
