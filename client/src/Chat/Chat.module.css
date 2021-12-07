@@ -1,87 +1,110 @@
-div.chatContainer{
-    height:calc(100% - 100px);
-    position:fixed;
-    bottom:50px;
-    left:-405px;
-    background:rgba(0, 0, 0, 0.6);
+div.chatContainer {
+    height: calc(100% - 100px);
+    position: fixed;
+    bottom: 50px;
+    left: -405px;
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(3px);
-    border-top:3px solid #01bd7d;
-    border-right:3px solid #01bd7d;
-    border-bottom:3px solid #01bd7d;
-   border-top-right-radius: 15px;
-   border-bottom-right-radius: 15px;
-}
-
-div.chatMain{
-    box-sizing:border-box;
-    overflow:auto;
-    top:0;
-    width:400px;
-    height:calc(100% - 40px);
-    color:#00ffa8;
-    font-family:'Inconsolata'
-}
-
-form.msgForm{
-    display:block;
-    padding-left:20px;
-    height:30px;
-}
-form.msgForm input{
-    position:relative;
-    top:-7px;
-    height:20px;
-    width:300px;
-    border-radius: 5px;
-}
-
-form.msgForm button{
-    border:none;
-    background-color:#00ffa8;
-    margin-left:5px;
-    padding-top:3px;
-    height:30px;
-    width:40px;
-    border-radius: 5px;
-    color:white;
-}
-
-div.chatHandler{
-    position:absolute;
-    right:-50px;
-    top:100px;
-    width:50px;
-    height:50px;
-    background-color:#01bd7d;
+    border-top: 3px solid #01bd7d;
+    border-right: 3px solid #01bd7d;
+    border-bottom: 3px solid #01bd7d;
     border-top-right-radius: 15px;
-   border-bottom-right-radius: 15px;
-   color:white;
-   cursor:pointer;
+    border-bottom-right-radius: 15px;
 }
 
-div.chatHandler span{
-    display:block;
-    margin-left:10px;
-    margin-top:7px;
+div.chatMain {
+    box-sizing: border-box;
+    overflow: auto;
+    top: 0;
+    width: 400px;
+    height: calc(100% - 40px);
+    color: #00ffa8;
+    font-family: 'Inconsolata'
 }
 
-.chatContainer.openChat {animation: openChat 1s ease-in-out forwards;}
-.chatContainer.closeChat {animation: closeChat 1s ease-in-out forwards;}
+form.msgForm {
+    display: block;
+    padding-left: 20px;
+    height: 30px;
+}
 
-.chatHandler.openChat {animation: buttonBlink 0.5s ease-out forwards;}
+form.msgForm input {
+    position: relative;
+    top: -7px;
+    height: 20px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+form.msgForm button {
+    border: none;
+    background-color: #00ffa8;
+    margin-left: 5px;
+    padding-top: 3px;
+    height: 30px;
+    width: 40px;
+    border-radius: 5px;
+    color: white;
+}
+
+div.chatHandler {
+    position: absolute;
+    right: -50px;
+    top: 100px;
+    width: 50px;
+    height: 50px;
+    background-color: #01bd7d;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+div.chatHandler span {
+    display: block;
+    margin-left: 10px;
+    margin-top: 7px;
+}
+
+.chatContainer.openChat {
+    animation: openChat 1s ease-in-out forwards;
+}
+
+.chatContainer.closeChat {
+    animation: closeChat 1s ease-in-out forwards;
+}
+
+.chatHandler.openChat {
+    animation: buttonBlink 0.5s ease-out forwards;
+}
 
 
 @keyframes openChat {
-    0% {left:-405px;}
-    100% {left:0px;}
+    0% {
+        left: -405px;
+    }
+
+    100% {
+        left: 0px;
+    }
 }
 
 @keyframes closeChat {
-    0% {left:0px;}
-    100% {left:-405px;}
+    0% {
+        left: 0px;
+    }
+
+    100% {
+        left: -405px;
+    }
 }
 
 @keyframes buttonBlink {
-    0% {color: #01bd7d;}
-    100% {color: white;}
+    0% {
+        color: #01bd7d;
+    }
+
+    100% {
+        color: white;
+    }
 }
