@@ -5,20 +5,21 @@ import Console from "./components/Console/Console";
 import Chat from "./components/Chat/Chat";
 import VirtualLayer from "./components/UI/VirtualLayer";
 import { SocketContext } from "./services/SocketContext";
+import { AppContextProvider, useAppContext } from "./services/AppContext";
 
-const AppTemp = () => {
+const App = () => {
 
-  const [autoRotate, toggleAutoRotate] = useState('true')
-
-  return (
-    <SocketContext.Provider>
-      <VirtualLayer autoRotate={autoRotate} />
-      <NavBar toggleRotate={() => toggleAutoRotate(!autoRotate)} />
-      <MichelsonInterferometer />
-      <Console />
-      <Chat />
-    </SocketContext.Provider>
+   return (
+    <AppContextProvider>
+      <SocketContext.Provider>
+        <VirtualLayer/>
+        <NavBar/>
+        <MichelsonInterferometer />
+        <Console />
+        <Chat />
+      </SocketContext.Provider>
+    </AppContextProvider>
   );
 };
 
-export default AppTemp;
+export default App;
