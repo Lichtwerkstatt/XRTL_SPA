@@ -5,14 +5,11 @@ import Chat from "./Chat/Chat"
 
 const AppTemp = () => {
    return <>
-    <NavBar />
-    <MichelsonInterferometer />
-    <Console addLog="App started..."/>
-    {/*<Chat/>*/}
-    <Chat/>
+      <NavBar />
+      <MichelsonInterferometer />
+      <Console addLog="App started..." />
+      <Chat />
    </>
-   
-   
 }
 
 export default AppTemp
