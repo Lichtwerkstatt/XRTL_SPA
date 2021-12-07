@@ -16,12 +16,12 @@ export default function Model({ ...props }) {
   
   useFrame(() => {
     if (true) {
-      group.current.rotation.y += 0.005;
+      //group.current.rotation.y += 0.005;
     }
   })
 
   
-  const { nodes, materials } = useGLTF("/MI_0612.glb");
+  const { nodes, materials } = useGLTF("/model/MI_0612.glb");
 
   console.log(nodes.KM100mesh002.material)
 
@@ -115,4 +115,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/MI_0612.glb");
+useGLTF.preload("/model/MI_0612.glb");

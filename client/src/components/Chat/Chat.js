@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { socket } from "../services/socket"
+import { socket } from "../../services/SocketContext"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"

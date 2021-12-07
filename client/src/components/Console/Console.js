@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { socket } from "../services/socket"
+import { socket } from "../../services/SocketContext"
 import { RiTerminalBoxFill } from "react-icons/ri"
 import styles from "./Console.module.css"
 
