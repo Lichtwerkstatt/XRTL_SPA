@@ -2,13 +2,17 @@ import MichelsonInterferometer from "./components/experiment/MichelsonInterferom
 import NavBar from "./components/UI/NavBar"
 import Console from "./Console/Console"
 import Chat from "./Chat/Chat"
+import VirtualLayer from "./components/UI/VirtualLayer"
 
 const AppTemp = () => {
    return <>
-      <NavBar />
-      <MichelsonInterferometer />
-      <Console addLog="App started..." />
-      <Chat />
+   <VirtualLayer />
+    <NavBar />
+    <MichelsonInterferometer />
+    <Console addLog="App started..."/>
+    <Chat/>
+    
+    <Chat/>
    </>
 }
 
