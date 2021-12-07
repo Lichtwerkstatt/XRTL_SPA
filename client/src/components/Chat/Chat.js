@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { socket } from "../../services/SocketContext"
+// import { socket } from "../../services/SocketContext"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
@@ -11,17 +11,17 @@ const Chat = (props) => {
   const [chat, setChat] = useState([])
 
 
-  useEffect(() => {
-    socket.on("message", (payload) => {
-      setChat([...chat, payload])
-    })
-    console.log(chat)
-  }, [chat])
+  // useEffect(() => {
+  //   socket.on("message", (payload) => {
+  //     setChat([...chat, payload])
+  //   })
+  //   console.log(chat)
+  // }, [chat])
 
   const sendMessage = (event) => {
     event.preventDefault()
     console.log(message)
-    socket.emit("message", { userName: "user", message })
+    // socket.emit("message", { userName: "user", message })
     setMessage("")
   }
 

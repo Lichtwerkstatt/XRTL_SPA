@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { socket } from "../../services/SocketContext"
+// import { socket } from "../../services/SocketContext"
 import { RiTerminalBoxFill } from "react-icons/ri"
 import styles from "./Console.module.css"
 
@@ -8,12 +8,12 @@ const Console = (props) => {
   const [showConsole, setShowConsole] = useState(false)
   const [animation, setAnimation] = useState("")
 
-  useEffect(() => {
-    socket.on("message", (payload) => {
-      setLog([...log, payload])
-    })
-    console.log(log)
-  }, [log])
+  // useEffect(() => {
+  //   socket.on("message", (payload) => {
+  //     setLog([...log, payload])
+  //   })
+  //   console.log(log)
+  // }, [log])
 
   const showConsoleHandler = () => {
     setAnimation(showConsole ? styles.closeConsole : styles.openConsole)
