@@ -14,8 +14,6 @@ const AppTemp = () => {
     
     <Chat/>
    </>
-   
-   
 }
 
 export default AppTemp

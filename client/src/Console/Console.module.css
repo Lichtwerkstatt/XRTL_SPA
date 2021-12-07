@@ -1,56 +1,71 @@
-div.consoleContainer{
+div.consoleContainer {
     position: fixed;
-    bottom:-305px;
-    right:20px;
-    width: calc( 100% - 500px);
+    bottom: -305px;
+    right: 20px;
+    width: calc(100% - 500px);
     height: 300px;
-    background:rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(3px);
-    border-top:3px solid #01bd7d;
-    border-right:3px solid #01bd7d;
-    border-left:3px solid #01bd7d;
-   border-top-left-radius: 15px;
-   border-top-right-radius: 15px;
-}
-
-div.consoleMain *{
-    height:300px;
-    width:calc(100% - 20px);
-    margin:auto;
-    color:#00ffa8;
-    padding:10px;
-    box-sizing:border-box;
-    font-family:'Inconsolata';
-}
-
-div.consoleHandler{
-    position:absolute;
-    right:50px;
-    top:-52px;
-    width:50px;
-    height:50px;
-    background-color:#01bd7d;
+    border-top: 3px solid #01bd7d;
+    border-right: 3px solid #01bd7d;
+    border-left: 3px solid #01bd7d;
     border-top-left-radius: 15px;
-   border-top-right-radius: 15px;
-   color:white;
-   cursor:pointer;
+    border-top-right-radius: 15px;
 }
 
-div.consoleHandler span{
-    display:block;
-    margin-left:7px;
-    margin-top:6px;
+div.consoleMain * {
+    height: 300px;
+    width: calc(100% - 20px);
+    margin: auto;
+    color: #00ffa8;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: 'Inconsolata';
 }
 
-.consoleContainer.openConsole {animation: openConsole 1s ease-in-out forwards;}
-.consoleContainer.closeConsole {animation: closeConsole 1s ease-in-out forwards;}
+div.consoleHandler {
+    position: absolute;
+    right: 50px;
+    top: -52px;
+    width: 50px;
+    height: 50px;
+    background-color: #01bd7d;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+div.consoleHandler span {
+    display: block;
+    margin-left: 7px;
+    margin-top: 6px;
+}
+
+.consoleContainer.openConsole {
+    animation: openConsole 1s ease-in-out forwards;
+}
+
+.consoleContainer.closeConsole {
+    animation: closeConsole 1s ease-in-out forwards;
+}
 
 @keyframes openConsole {
-    0% {bottom: -305px;}
-    100% {bottom:0px;}
+    0% {
+        bottom: -305px;
+    }
+
+    100% {
+        bottom: 0px;
+    }
 }
 
 @keyframes closeConsole {
-    0% {bottom: 0px;}
-    100% {bottom: -305px;}
+    0% {
+        bottom: 0px;
+    }
+
+    100% {
+        bottom: -305px;
+    }
 }

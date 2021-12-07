@@ -4,7 +4,7 @@ import { RiTerminalBoxFill } from "react-icons/ri"
 import styles from "./Console.module.css"
 
 const Console = (props) => {
-  const [log, setLog] = useState(['App started...','Initializing.'])
+  const [log, setLog] = useState(['App started...', 'Initializing.'])
   const [showConsole, setShowConsole] = useState(false)
   const [animation, setAnimation] = useState("")
 
@@ -16,20 +16,20 @@ const Console = (props) => {
   }, [log])
 
   const showConsoleHandler = () => {
-      setAnimation(showConsole ? styles.closeConsole : styles.openConsole)
-      setShowConsole(!showConsole)
+    setAnimation(showConsole ? styles.closeConsole : styles.openConsole)
+    setShowConsole(!showConsole)
   }
 
   return (
-    <div className={styles.consoleContainer + " "+ animation}>
+    <div className={styles.consoleContainer + " " + animation}>
       <div className={styles.consoleMain}>
-           {log.map((payload, index) => {
-              return(<span>{index}:{payload}<br/></span>)
-          })}
+        {log.map((payload, index) => {
+          return (<span>{index}:{payload}<br /></span>)
+        })}
       </div>
       <div className={styles.consoleHandler}><span>
-          <RiTerminalBoxFill size={35} onClick={showConsoleHandler}/>
-          </span></div>
+        <RiTerminalBoxFill size={35} onClick={showConsoleHandler} />
+      </span></div>
     </div>
   )
 }

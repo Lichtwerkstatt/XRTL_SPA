@@ -1,31 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { socket } from "./services/socket";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
+import {SocketContext, socket} from './services/socket';
+import Child from './Chat/Chat_old';
+import AppTemp from './AppTemp';
+import React from 'react';
 
-import Main from "./services/Main";
-import Error from "./services/ErrorPage";
-import MichelsonInterferometer from "./components/UI/RotaryCtrl";
-
-
-export default function App() {
-
+const App = () => {
   return (
-    <Router>
-      <nav> 
-        <Link to="/">Back to the start page</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Main />}/>
-        <Route path="/MichelsonInterferometer" element={<MichelsonInterferometer />}/>
-        
-        <Route path="*" element= {<Error/>}/>
-      </Routes>
-    </Router>
+    <SocketContext.Provider value={socket}>
+      {/* <AppTemp /> */}
+      <Child/>
+    </SocketContext.Provider>
   );
 }
+export default App;

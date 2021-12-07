@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { socket } from "../services/socket";
+import React, { useState, useEffect, useContext } from "react";
+
 import "./Chat.css";
+import { SocketContext } from "../services/socket";
+import serverConnection from "../services/socket"
 
 const userName = 'User ' + parseInt(Math.random() * 10);
 var chatOn = true;    //For the Chat window
 
 function Chat() {
+  let state = false;
+  let socket = useContext(SocketContext);
+
+  console.log(socket)
+
+
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
 
@@ -21,6 +29,14 @@ function Chat() {
     socket.emit('message', { userName, message })
     setMessage('')
   };
+
+  const connnect = (e) => {
+    e.preventDefault();
+    console.log(socket);
+    state = serverConnection(socket, state);
+    if (state === true) { socket.emit('message', "Button pressed!") }
+
+  }
 
   return (
     <div className="OuterChater">
@@ -70,6 +86,9 @@ function Chat() {
                 required
               ></input>
               <button classe="Chat Send" type='submit'>Send</button>
+            </form>
+            <form onSubmit={connnect}>
+              <button type='submit'>Connection</button>
             </form>
           </div>
         </div>
