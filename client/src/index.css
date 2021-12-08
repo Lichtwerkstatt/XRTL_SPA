@@ -3,11 +3,6 @@
   src: local('Roboto'), url('./components/media/fonts/RobotoCondensed-Regular.ttf') format('truetype');
 }
 
-@font-face{
-  font-family: 'Inconsolata';
-  src: local('Inconsolata'), url('./components/media/fonts/Inconsolata_Condensed-Medium.ttf') format('truetype');
-}
-
 *{
   font-family: 'Roboto';
 }

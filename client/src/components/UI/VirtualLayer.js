@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, GizmoHelper, GizmoViewport } from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
 import MI_0612 from "../experiment/MichelsonInterferometer/MI_0612";
 import { useAppContext } from "../../services/AppContext";
 
@@ -21,11 +21,6 @@ const VirtualLayer = () => {
         camera={{ position: [0, 3, 5], fov: 40 }}
       >
         <Suspense fallback={null}>
-          {/* <GizmoHelper
-            alignment = "top-right"
-            margin= {[80,100]} >
-              <GizmoViewport axisColors= {['red','black','blue']} labelColor="white" />
-          </GizmoHelper> */}
           <Environment preset="warehouse" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
           <MI_0612

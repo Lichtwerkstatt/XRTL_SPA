@@ -2,18 +2,13 @@ import { useState, useEffect } from "react"
 // import { socket } from "../../services/SocketContext"
 import { RiTerminalBoxFill } from "react-icons/ri"
 import styles from "./Console.module.css"
+import { useAppContext } from "../../services/AppContext"
 
 const Console = (props) => {
   const [log, setLog] = useState(['App started...', 'Initializing.'])
   const [showConsole, setShowConsole] = useState(false)
   const [animation, setAnimation] = useState("")
-
-  // useEffect(() => {
-  //   socket.on("message", (payload) => {
-  //     setLog([...log, payload])
-  //   })
-  //   console.log(log)
-  // }, [log])
+  const appCtx = useAppContext();
 
   const showConsoleHandler = () => {
     setAnimation(showConsole ? styles.closeConsole : styles.openConsole)
@@ -23,7 +18,7 @@ const Console = (props) => {
   return (
     <div className={styles.consoleContainer + " " + animation}>
       <div className={styles.consoleMain}>
-        {log.map((payload, index) => {
+        {appCtx.logs.map((payload, index) => {
           return (<span>{index}:{payload}<br /></span>)
         })}
       </div>

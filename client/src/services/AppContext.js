@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { MdSettingsInputAntenna } from "react-icons/md";
 
 const AppContext = React.createContext()
 
@@ -11,25 +10,30 @@ export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set())
+  const [logs, setLogs] = useState([])
 
-  console.log(selectedComps)
+  console.log(logs)
 
   const toggleSelectedComp = compId => {
+    console.log("looking for ", compId, "=", !selectedComps.has(compId))
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)))
-      console.log("added ", compId)
+      console.log("selected ", compId)
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
       console.log("deselected ", compId)
     }
   }
-
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
   };
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
+
+  const addLog = (log) => {
+    setLogs(prev => [log,...prev])
+  }
 
   return (
     <AppContext.Provider
@@ -39,7 +43,9 @@ export function AppContextProvider({ children }) {
         showVirtualLayer,
         toggleShowVirtualLayer,
         selectedComps,
-        toggleSelectedComp
+        toggleSelectedComp,
+        logs,
+        addLog,
       }}
     >
       {children}

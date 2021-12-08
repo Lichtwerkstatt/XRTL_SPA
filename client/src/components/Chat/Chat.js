@@ -18,7 +18,7 @@ const Chat = (props) => {
       setChat([...chat, payload])
     })
     console.log(chat)
-  }, [chat])
+  }, [socketCtx, chat])
 
   const sendMessage = (event) => {
     event.preventDefault()

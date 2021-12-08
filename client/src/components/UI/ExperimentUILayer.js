@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { useAppContext } from "../../services/AppContext";
 import MichelsonInterferometer from "../experiment/MichelsonInterferometer/MichelsonInterferometer";
 

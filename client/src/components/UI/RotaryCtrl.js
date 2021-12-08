@@ -3,11 +3,16 @@ import { useState, useEffect } from "react";
 import styles from "./RotaryCtrl.module.css";
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
 
+import { useAppContext } from "../../services/AppContext";
+
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(props.rotation);
   const [enteredRotation, setEnteredRotation] = useState(0);
 
+  const appCtx = useAppContext()
+
   // useEffect(() => {
+  //   props.newStatus()
   //   socket.on("control", (payload) => {
   //     if (
   //       payload.component === props.component &&
@@ -37,7 +42,7 @@ const RotaryCtrl = (props) => {
     //   control: props.control,
     //   command: { steps: enteredRotation, rotation: newRotation },
     // });
-    props.newStatus("CW rotation by " + enteredRotation + " steps.");
+    appCtx.addLog("User initiated CW rotation on "+props.component+" / "+props.control+" by " +enteredRotation+" steps.")
   };
 
   const rotCCW_Handler = (event) => {
@@ -49,7 +54,7 @@ const RotaryCtrl = (props) => {
     //   control: props.control,
     //   command: { steps: -1 * enteredRotation, rotation: newRotation },
     // });
-    props.newStatus("CCW rotation by " + enteredRotation + " steps.");
+    appCtx.addLog("User initiated CCW rotation on "+props.component+" / "+props.control+" by " +enteredRotation+" steps.")
   };
 
   return (

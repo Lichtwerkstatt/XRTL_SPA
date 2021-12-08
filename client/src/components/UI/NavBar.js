@@ -1,19 +1,14 @@
-import { useContext } from 'react'
+
 import styles from "./NavBar.module.css"
-import { GiBowlingPropulsion, GiLaserWarning } from "react-icons/gi"
+import { GiLaserWarning } from "react-icons/gi"
 import { ImConnection } from "react-icons/im"
 import { BsBox } from "react-icons/bs"
 import {MdOutlineScreenRotation} from "react-icons/md"
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from '../../services/AppContext'
-import serverConnection from '../../services/SocketContext';
-import { socket } from '../../services/SocketContext_old'
-import { connect } from 'socket.io-client'
-
 
 const NavBar = () => {
-    let state = false;
-
+    
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 

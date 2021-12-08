@@ -1,16 +1,7 @@
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
-import React, { useEffect, useState } from "react";
-import { useAppContext } from "../../../services/AppContext";
 
 const MichelsonInterferometer = (props) => {
-
- 
-
-  const appCtx = useAppContext()
-
-
-  
   return (
     <div>
       {props.selected.has("KM100_1") && (
