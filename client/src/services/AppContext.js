@@ -12,6 +12,8 @@ export function AppContextProvider({ children }) {
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set())
 
+  console.log(selectedComps)
+
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)))

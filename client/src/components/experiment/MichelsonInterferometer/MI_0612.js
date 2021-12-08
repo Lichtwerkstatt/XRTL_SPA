@@ -39,15 +39,12 @@ const Model = ({ ...props }) => {
         position={[-1.96, 0.67, 0.13]}
         rotation={[0, Math.PI / 2, 0]}
         scale={0.26}
-        onClick={(e) => {
-          e.stopPropagation();
-          props.toggleSelect("SM1ZP_1");
-        }}
-      >
+        onClick={(e)=> {e.stopPropagation(); props.toggleSelect("SM1ZP_1")}}
+        >
         <mesh
           geometry={nodes.KM100mesh003.geometry}
           material={nodes.KM100mesh003.material}
-        > {props.selected.has("SM1ZP_1") ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshPhongMaterial />} 
+        >  {props.selected.has("SM1ZP_1") ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshBasicMaterial color="#222222" opacity={1.0} />}
         </mesh>
         <mesh
           geometry={nodes.KM100mesh003_1.geometry}
@@ -58,14 +55,12 @@ const Model = ({ ...props }) => {
           material={nodes.KM100mesh003_2.material}
         />
       </group>
-      <group position={[-0.62, 0.86, -1.12]}  onClick={(e) => {
-          e.stopPropagation();
-          {props.toggleSelect("EDUVS_1")}
-        }}>
+      <group position={[-0.62, 0.86, -1.12]}  
+        >
         <mesh
           geometry={nodes.Cube003.geometry}
           material={materials.WhiteParts}
-        >{props.selected.has("EDUVS_1") ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshStandardMaterial opacity={1.0} />} 
+        >
         </mesh>
         <mesh
           geometry={nodes.Cube003_1.geometry}
@@ -76,7 +71,8 @@ const Model = ({ ...props }) => {
         <mesh
           geometry={nodes.Cube004.geometry}
           material={nodes.Cube004.material}
-        />
+        >
+        </mesh>
         <mesh
           geometry={nodes.Cube004_1.geometry}
           material={nodes.Cube004_1.material}

@@ -1,7 +1,14 @@
 import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
+import { useAppContext } from "../../services/AppContext";
 
 const SM1ZP = (props) => {
+  const appCtx = useAppContext()
+  
+  const handleCloseWindow = () => {
+    appCtx.toggleSelectedComp(props.id)
+  }
+
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
@@ -9,6 +16,7 @@ const SM1ZP = (props) => {
       left={props.left}
       width="250px"
       height="150px"
+      onClose={handleCloseWindow}
     >
       <RotaryCtrl
         rotation={props.rotation}

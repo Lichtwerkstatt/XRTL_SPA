@@ -22,7 +22,7 @@ const Window = (props) => {
           >
             {props.header}
           </span>
-          <div className={styles.windowHeaderIcon} onClick={props.onClose}><CgCloseO size={20}/>HELLO</div>
+          <div className={styles.windowHeaderIcon} onClick={props.onClose}><CgCloseO size={20}/></div>
         </div>
         <div
           className={styles.windowContent}

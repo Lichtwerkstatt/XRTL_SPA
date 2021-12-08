@@ -11,7 +11,6 @@ const KM100 = (props) => {
   
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
-    console.log("Closing Window...")
   }
 
   const handleChangeFooter = (newFooter) => {
