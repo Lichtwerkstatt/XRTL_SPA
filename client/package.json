@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-three/drei": "^7.27.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-draggable": "^4.4.4",
