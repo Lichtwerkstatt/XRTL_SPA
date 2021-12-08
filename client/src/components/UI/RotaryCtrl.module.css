@@ -50,3 +50,9 @@ button.CtrlRight{
     right:5px;
 }
 
+button.CtrlLeft:disabled{
+    background-color:grey;
+}
+button.CtrlRight:disabled{
+    background-color:grey;
+}

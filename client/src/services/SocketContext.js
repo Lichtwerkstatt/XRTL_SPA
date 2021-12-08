@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useAppContext } from "./AppContext";
 
 const {Manager} = require("socket.io-client")
 
-const manager = new Manager("http://localhost:7000", {autoConnect: false})
+const URL = "http://localhost:7000"
+
+const manager = new Manager(URL, {autoConnect: false})
 const socket = manager.socket("/")
 
 const SocketContext = React.createContext();
@@ -14,14 +17,16 @@ export function useSocketContext() {
 export function SocketContextProvider({ children }) {
   const [connected, setConnected] = useState(false);
 
+  const appCtx = useAppContext()
+
   useEffect(() => {
       socket.on('connect', (e)=> {
           setConnected(true)
-          console.log("connected!",e)
+          appCtx.addLog("Server : Client connected to "+URL)
       })
       socket.on('disconnect', (e) => {
           setConnected(false)
-          console.log('disconnected', e)
+          appCtx.addLog("Server : Client disconnect.")
       })
   })
 
@@ -30,9 +35,11 @@ export function SocketContextProvider({ children }) {
       if (!connected) {
           console.log(socket.connect());
           setConnected(true)
+          appCtx.addLog("Client connected to "+URL+" by choice.")
       } else {
           console.log(socket.close())
           setConnected(false)
+          appCtx.addLog("Client disconnected by choice.")
       }
   }
   
