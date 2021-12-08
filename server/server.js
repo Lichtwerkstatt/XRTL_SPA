@@ -12,11 +12,16 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 // Client https://amritb.github.io/socketio-client-tool
 
 io.on('connection', socket => {
-    //console.log('connection made successfully');
+    console.log('connection made successfully');
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
+
+    socket.on('forceDisconnect',() => {
+        socket.disconnect();
+        console.log('User kicked')
+    })
 
     socket.on('message', payload => {
         console.log('Message received on server: ', payload)

@@ -2,9 +2,14 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import {OrbitControls, Environment} from "@react-three/drei"
 import MI_0612 from "../experiment/MichelsonInterferometer/MI_0612"
+import { useAppContext } from "../../services/AppContext"
 
-const VirtualLayer = (props) => {
-  return (
+const VirtualLayer = () => {
+
+  const appCtx = useAppContext();
+
+  if (appCtx.showVirtualLayer)
+  {return (
     <Canvas
       style={{ position:"absolute", background: "linear-gradient(Teal, Black)", width:"100%", height:"100%" }}
       colorManagement
@@ -13,11 +18,13 @@ const VirtualLayer = (props) => {
     >
       <Suspense fallback={null}>
           <Environment preset="warehouse" />
-          <OrbitControls autoRotate={props.autoRotate} />
+          <OrbitControls autoRotate={appCtx.autoRotate} />
           <MI_0612 />
       </Suspense>
     </Canvas>
-  );
+  );} else {
+    return <></>
+  }
 };
 
 export default VirtualLayer;
