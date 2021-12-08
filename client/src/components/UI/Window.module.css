@@ -19,12 +19,20 @@ div.windowHeader {
     background:#01bd7d;
     color:white;   
   }
-
-span.windowTitle {
+  
+/* DEPRECATED
+span.windowTitle { 
   display:block;
   width: 200px;
-  border:1px solid yellow;
   cursor:move;
+} */
+
+div.windowHeaderIcon {
+  display:block;
+  float:right;
+  margin-right:8px;
+  width:25px; height:25px;
+  
 }
 
   div.windowFooter {

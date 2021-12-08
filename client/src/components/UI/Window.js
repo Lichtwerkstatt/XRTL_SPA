@@ -1,9 +1,10 @@
 import Draggable from "react-draggable"
 import styles from "./Window.module.css"
+import {CgCloseO} from "react-icons/cg"
 
 const Window = (props) => {
-  console.log("Rendering Window...")
-  return (
+
+   return (
     <Draggable handle=".draggableHandler">
       <div
         className={styles.window}
@@ -15,12 +16,13 @@ const Window = (props) => {
             style={{
               display: 'block',
               width: "calc(100% - 50px)",
-              //border: "1px solid yellow",
               cursor: "move",
+              float: "left"
             }}
           >
             {props.header}
           </span>
+          <div className={styles.windowHeaderIcon} onClick={props.onClose}><CgCloseO size={20}/>HELLO</div>
         </div>
         <div
           className={styles.windowContent}

@@ -6,17 +6,18 @@ import Chat from "./components/Chat/Chat";
 import VirtualLayer from "./components/UI/VirtualLayer";
 import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider, useAppContext } from "./services/AppContext";
+import ExperimentUILayer from "./components/UI/ExperimentUILayer";
 
 const App = () => {
 
    return (
     <AppContextProvider>
       <SocketContextProvider>
-        {/* <VirtualLayer/> */}
-        <NavBar/>
-        {/* <MichelsonInterferometer />
+        <VirtualLayer/> 
+        <ExperimentUILayer />
         <Console />
-        <Chat /> */}
+        <Chat /> 
+        <NavBar/>
       </SocketContextProvider>
     </AppContextProvider>
   );

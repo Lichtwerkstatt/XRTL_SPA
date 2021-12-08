@@ -3,13 +3,22 @@ import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import KM100_Background from "./media/km100_outline.png"
 
+import { useAppContext } from "../../services/AppContext";
+
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
+  const appCtx = useAppContext()
+  
+  const handleCloseWindow = () => {
+    appCtx.toggleSelectedComp(props.id)
+    console.log("Closing Window...")
+  }
 
   const handleChangeFooter = (newFooter) => {
     setFooter(newFooter);
   };
 
+  
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
@@ -19,6 +28,7 @@ const KM100 = (props) => {
       height="240px"
       width="250px"
       background={KM100_Background}
+      onClose={handleCloseWindow}
     >
       <RotaryCtrl
         rotation={props.rotationTop}

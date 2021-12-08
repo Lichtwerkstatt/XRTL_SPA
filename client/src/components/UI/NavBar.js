@@ -17,7 +17,7 @@ const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
-    let connectionStatusColor = ""
+      let connectionStatusColor = ""
     if (socketCtx.connected) {connectionStatusColor="white"}
     
     return <div id="navbar" className={styles.navbar} >
