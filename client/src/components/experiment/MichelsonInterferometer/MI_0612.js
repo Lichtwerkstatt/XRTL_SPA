@@ -1,18 +1,39 @@
 import React, { useRef } from "react"
 import { useGLTF } from "@react-three/drei"
+import { Box } from "@react-three/drei"
 
 const Model = ({ ...props }) => {
   const group = useRef()
 
-  const { nodes, materials } = useGLTF("/model/MI_0612.glb")
+  const { nodes, materials } = useGLTF("/model/MI_0612.glb") //define Materials all in Three?
+
+  const glassMaterialProps = {}
 
   return (
     <group ref={group} {...props} dispose={null}>
+      <Box
+        position={[-0.65, 0.66, 0.15]}
+        args={[1, 1, 1]}
+        scale={[0.25, 0.25, 0.25]}
+      >
+        <meshPhysicalMaterial
+          thickness={1}
+          roughness={0.1}
+          transmission={1}
+          clearcoat={0.5}
+          clearcoatRoughness={0}
+          ior={1.1}
+          envMapIntensity={25}
+          color={'#ffffff'}
+          attenuationColor={'#00ffff'}
+          attenuationDistance={5}
+        />
+      </Box>
       <group
         position={[-0.64, 0.67, 1.06]}
         rotation={[Math.PI, 0, Math.PI]}
         scale={0.26}
-        onPointerUp={(e) => {
+        onPointerDown={(e) => {
           console.log("Clicked on KM100_1")
           e.stopPropagation()
           props.toggleSelect("KM100_1")
@@ -42,7 +63,7 @@ const Model = ({ ...props }) => {
         position={[-1.96, 0.67, 0.13]}
         rotation={[0, Math.PI / 2, 0]}
         scale={0.26}
-        onPointerUp={(e) => {
+        onPointerDown={(e) => {
           e.stopPropagation()
           props.toggleSelect("SM1ZP_1")
         }}
@@ -69,7 +90,7 @@ const Model = ({ ...props }) => {
       </group>
       <group
         position={[-0.62, 0.86, -1.12]}
-        onPointerUp={(e) => {
+        onPointerDown={(e) => {
           e.stopPropagation()
           props.toggleSelect("EDU-VS1_1")
         }}

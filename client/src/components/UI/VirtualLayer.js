@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls, Environment, Stats } from "@react-three/drei";
 import MI_0612 from "../experiment/MichelsonInterferometer/MI_0612";
 import { useAppContext } from "../../services/AppContext";
 
@@ -21,6 +21,7 @@ const VirtualLayer = () => {
         camera={{ position: [0, 3, 5], fov: 40 }}
       >
         <Suspense fallback={null}>
+          {/* <Stats showPanel={0}  /> */}
           <Environment preset="warehouse" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
           <MI_0612
