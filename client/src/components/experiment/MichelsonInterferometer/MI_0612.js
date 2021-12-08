@@ -55,12 +55,13 @@ const Model = ({ ...props }) => {
           material={nodes.KM100mesh003_2.material}
         />
       </group>
-      <group position={[-0.62, 0.86, -1.12]}  
+      <group position={[-0.62, 0.86, -1.12]} onClick={(e) => {e.stopPropagation(); props.toggleSelect("EDU-VS1_1")}} 
         >
         <mesh
           geometry={nodes.Cube003.geometry}
           material={materials.WhiteParts}
-        >
+        >{props.selected.has("EDU-VS1_1") ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshBasicMaterial color="#eeeeee" opacity={1.0} />}
+        
         </mesh>
         <mesh
           geometry={nodes.Cube003_1.geometry}
@@ -82,11 +83,14 @@ const Model = ({ ...props }) => {
         position={[1.56, 0.67, 0.14]}
         rotation={[Math.PI / 2, 0, -Math.PI / 2]}
         scale={[0.11, 0.05, 0.11]}
+        onClick={(e) => {e.stopPropagation(); props.toggleSelect("KM100_2")}}
       >
         <mesh
           geometry={nodes.Cylinder011.geometry}
           material={nodes.Cylinder011.material}
-        />
+        > {props.selected.has("KM100_2") ? <meshStandardMaterial color="#00ff00" transparent opacity={0.7} /> : <meshBasicMaterial color="#222222" opacity={1.0} />}
+        
+        </mesh>
         <mesh
           geometry={nodes.Cylinder011_1.geometry}
           material={nodes.Cylinder011_1.material}
