@@ -1,3 +1,4 @@
+
 div.chatContainer {
     height: calc(100% - 100px);
     position: fixed;
@@ -19,8 +20,9 @@ div.chatMain {
     width: 400px;
     height: calc(100% - 40px);
     color: #00ffa8;
-    font-family: 'Inconsolata'
-}
+    padding-left:20px;
+    padding-top:5px;
+   }
 
 form.msgForm {
     display: block;

@@ -21,11 +21,11 @@ const VirtualLayer = () => {
         camera={{ position: [0, 3, 5], fov: 40 }}
       >
         <Suspense fallback={null}>
-          <GizmoHelper
+          {/* <GizmoHelper
             alignment = "top-right"
             margin= {[80,100]} >
               <GizmoViewport axisColors= {['red','black','blue']} labelColor="white" />
-          </GizmoHelper>
+          </GizmoHelper> */}
           <Environment preset="warehouse" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
           <MI_0612
