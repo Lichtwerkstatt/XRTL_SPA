@@ -14,13 +14,13 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 io.on('connection', socket => {
     console.log('connection made successfully');
 
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
+    socket.on('disconnect', (e) => {
+        console.log('User disconnected: ',e);
     });
 
-    socket.on('forceDisconnect',() => {
+    socket.on('forceDisconnect',(e) => {
         socket.disconnect();
-        console.log('User kicked')
+        console.log('User kicked: ',e)
     })
 
     socket.on('message', payload => {
@@ -32,13 +32,13 @@ io.on('connection', socket => {
         console.log('Experiment ausgewählt: ', experiment)
     })
 
-    socket.on('control', payload => {
-        console.log("Control command received:", payload)
+    socket.on('command', payload => {
+        console.log("Command received:", payload)
         io.emit('control', payload)
     })
 
-    socket.on('connectionStatus', () => {
-        console.log('Connection made successfully!');
+    socket.on('connectionStatus', (e) => {
+        console.log('Connection made successfully: ',e);
     });
 
 })
