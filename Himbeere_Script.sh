@@ -1,13 +1,17 @@
 #!/bin/bash
+echo Checking for new dependencies 
+cd "/home/pi/XRTL_SPA"
+npm install
+cd "/home/pi/XRTL_SPA/client"
+npm install
+cd "/home/pi/XRTL_SPA/server"
+npm install
 
-cd "C:\Users\henkel\AppData\Local\GitHubDesktop\app-2.9.4\XRTL_SPA"
-
+echo Done with checking & installing
 git checkout main
+echo Pull request
 git pull
 
-# git pull https://username:password@github.com:Lichtwerkstatt/XRTL_SPA.git
-
-cd "C:\Users\henkel\AppData\Local\GitHubDesktop\app-2.9.4\XRTL_SPA\server"
-
-
+echo Starting server.js 
+cd "/home/pi/XRTL_SPA/server"
 node server.js
