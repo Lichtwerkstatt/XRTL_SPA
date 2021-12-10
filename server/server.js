@@ -41,6 +41,16 @@ io.on('connection', socket => {
         console.log('Connection made successfully: ',e);
     });
 
+    socket.on('rotationControl', payload => {
+        console.log("Rotation control received", payload)
+        io.emit('rotationControl', payload)
+    });
+
+    socket.on('rotationStatus', payload => {
+        console.log("Rotation status received", payload)
+        io.emit('rotationStatus', payload)
+    });
+
 })
 
 server.listen(7000, () => {
