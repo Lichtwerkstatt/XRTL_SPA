@@ -1,8 +1,8 @@
-// var Gpio = require('onoff').Gpio;
-// var LED = new Gpio(12, 'out');
-// var green = new Gpio(16, 'out')
-// var blue = new Gpio(20, 'out')
-// var red = new Gpio(21, 'out')
+var Gpio = require('onoff').Gpio;
+var LED = new Gpio(12, 'out');
+var green = new Gpio(16, 'out')
+var blue = new Gpio(20, 'out')
+var red = new Gpio(21, 'out')
 const time = require('sleep');
 const app = require('express')()
 const server = require('http').createServer(app)
@@ -24,7 +24,7 @@ function RGB(r, g, b) {
     blue.writeSync(b);
 }
 function clients_connected() {
-    if (io.engine.clientsCoun == 0) {
+    if (io.engine.clientsCount == 0) {
         RGB(1, 0, 0);
     } else {
         RGB(0, 1, 0)
