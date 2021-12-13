@@ -37,10 +37,6 @@ io.on('connection', socket => {
         io.emit('control', payload)
     })
 
-    socket.on('connectionStatus', (e) => {
-        console.log('Connection made successfully: ',e);
-    });
-
 })
 
 server.listen(7000, () => {
