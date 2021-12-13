@@ -1,5 +1,6 @@
 var Gpio = require('onoff').Gpio;
 var LED = new Gpio(12, 'out');
+var R = new Gpio(13, 'out')
 const app = require('express')()
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui')
@@ -13,32 +14,30 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
-function LED_on() { //function to start blinking
-    if (LED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
-      LED.writeSync(1); //set pin state to 1 (turn LED on)
-    } else {
-      LED.writeSync(0); //set pin state to 0 (turn LED off)
-    }
+function LED_on() {
+      LED.writeSync(1); // Turn LED on
+ 
   }
   
-  function LED_off() { //function to stop blinking
+  function LED_off() { 
     LED.writeSync(0); // Turn LED off
-    LED.unexport(); // Unexport GPIO to free resources
   }
   
 io.on('connection', socket => {
     console.log('connection made successfully');
-    LED_on();
+    LED.writeSync(1);
+    R.writeSync(1);
 
 
     socket.on('disconnect', (e) => {
         console.log('User disconnected: ',e);
-        LED_off()
+        LED.writeSync(0);
     });
 
     socket.on('forceDisconnect',(e) => {
         socket.disconnect();
         console.log('User kicked: ',e)
+        LED.writeSync(0);
     })
 
     socket.on('message', payload => {
