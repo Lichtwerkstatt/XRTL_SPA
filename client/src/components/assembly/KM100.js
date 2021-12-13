@@ -8,7 +8,7 @@ import { useAppContext } from "../../services/AppContext";
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const appCtx = useAppContext()
-  
+
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
@@ -17,7 +17,6 @@ const KM100 = (props) => {
     setFooter(newFooter);
   };
 
-  
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
