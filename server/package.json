@@ -10,7 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "gpio": "^0.2.10",
     "nodemon": "^2.0.7",
+    "onoff": "^6.0.3",
     "rpi-gpio": "^2.1.7",
     "socket.io": "^4.4.0"
   },
