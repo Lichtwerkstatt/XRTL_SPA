@@ -1,3 +1,4 @@
+const gpio = require('rpi-gpio')
 const app = require('express')()
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui')
@@ -11,8 +12,21 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
+process.on("SIGINT", ()=>{
+    gpio.write(12,true, ()=>{
+        gpio.destroy(()=>{
+            process.exit();
+        })
+    })
+})
+
+gpio.setup(12, gpio.DIR_OUT, ()=>{
+    gpio.write(12, true);
+})
+
 io.on('connection', socket => {
     console.log('connection made successfully');
+    gpio.write(12, false);
 
     socket.on('disconnect', (e) => {
         console.log('User disconnected: ',e);
