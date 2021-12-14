@@ -14,4 +14,4 @@ git pull
 
 echo Starting server.js 
 cd "/home/pi/XRTL_SPA/server"
-node server.js
+node server_himbeere.js
