@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server_localhost.js"
+    "local": "nodemon server_localhost.js",
+    "himbeere" : "nodemon server_himbeere.js"
   },
   "author": "Clara Henkel",
   "license": "MIT",
