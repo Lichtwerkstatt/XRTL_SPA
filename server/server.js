@@ -1,8 +1,10 @@
 var Gpio = require('onoff').Gpio;
-var green = new Gpio(16, 'out')
-var blue = new Gpio(20, 'out')
-var red = new Gpio(21, 'out')
+var green = new Gpio(16, 'out');
+var blue = new Gpio(20, 'out');
+var red = new Gpio(21, 'out');
+var b= 0;
 
+var blinkInterval;
 const app = require('express')()
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui')
@@ -21,6 +23,7 @@ function RGB(r, g, b) {
     green.writeSync(g);
     blue.writeSync(b);
 }
+
 function clients_connected() {
     if (io.engine.clientsCount == 0) {
         RGB(1, 0, 0);
@@ -29,13 +32,25 @@ function clients_connected() {
     }
 }
 
-function command_received() {
-    for (i = 0; i < 5; i++) {
-        RGB(0, 0, 1);
-        sleep(200);
-        RGB(0, 0, 0);
+function blink_start() {
+    console.log("hier");
+    if (b==0){
+        RGB(0,0,1);
+        b=1;
+    }else{
+    RGB(0,0,0);
+    b=0;
     }
-    clients_connected();
+}
+function blink_end() {
+clearInterval(blinkInterval);
+clients_connected();
+}
+
+function blink(){
+blinkInterval = setInterval(blink_start ,250);
+blink_start();
+setTimeout(blink_end, 1000);
 }
 
 function Sleep(milliseconds) {
@@ -46,13 +61,15 @@ async function sleep(time) {
     await Sleep(time);
    }
 
-//RGB(1, 0, 0);
+clients_connected();
+
 io.on('connection', socket => {
     console.log('connection made successfully');
-    //RGB(0, 1, 0);
-    sleep(3000)
+    RGB(0, 1, 0);
+    
 
     socket.on('disconnect', (e) => {
+        blink();
         console.log('User disconnected: ', e);
         clients_connected();
     });
@@ -64,16 +81,19 @@ io.on('connection', socket => {
     })
 
     socket.on('message', payload => {
+        blink();
         console.log('Message received on server: ', payload)
         io.emit('message', payload)
 
     })
 
     socket.on('Experiment', (experiment) => {
+        blink();
         console.log('Experiment ausgewählt: ', experiment)
     })
 
     socket.on('command', payload => {
+        blink();
         console.log("Command received:", payload)
         io.emit('control', payload)
     })
