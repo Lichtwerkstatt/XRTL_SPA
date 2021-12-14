@@ -1,13 +1,11 @@
 var Gpio = require('onoff').Gpio;
-var LED = new Gpio(12, 'out');
 var green = new Gpio(16, 'out')
 var blue = new Gpio(20, 'out')
 var red = new Gpio(21, 'out')
-const time = require('sleep');
+
 const app = require('express')()
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui')
-const { time } = require('console')
 const io = require('socket.io')(server, {
     cors: {
         origin: '*'
@@ -34,23 +32,28 @@ function clients_connected() {
 function command_received() {
     for (i = 0; i < 5; i++) {
         RGB(0, 0, 1);
-        sleep(2);
+        sleep(200);
         RGB(0, 0, 0);
     }
     clients_connected();
 }
 
-RGB(1, 0, 0);
+function Sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+   }
+
+async function sleep(time) {
+    await Sleep(time);
+   }
+
+//RGB(1, 0, 0);
 io.on('connection', socket => {
     console.log('connection made successfully');
-    // LED.writeSync(1);
-    RGB(0, 1, 0);
-    console.log(io.engine.clientsCount)
+    //RGB(0, 1, 0);
+    sleep(3000)
 
     socket.on('disconnect', (e) => {
         console.log('User disconnected: ', e);
-        //LED.writeSync(0);
-        console.log(io.engine.clientsCount)
         clients_connected();
     });
 
@@ -58,7 +61,6 @@ io.on('connection', socket => {
         socket.disconnect();
         console.log('User kicked: ', e)
         clients_connected();
-        //LED.writeSync(0);
     })
 
     socket.on('message', payload => {
