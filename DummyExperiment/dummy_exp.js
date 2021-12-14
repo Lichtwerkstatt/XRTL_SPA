@@ -1,77 +1,95 @@
-const io = require('socket.io-client');
-const socket = io("http://localhost:7000");
+const io = require("socket.io-client");
+const socket = io.connect("http://localhost:7000");
 
-var KM100_1 = {
-    componentId: "km100_1",
+var Exp = [
+  {
+    id: "KM100_1",
+    type: "doubleRotaryCtrl",
     status: {
-        busy: false,
-        top: 100,
-        bottom: 200
-    }
-};
-var KM100_2 = {
-    componentId: "km100_2",
+      busy: false,
+      top: 0,
+      bottom: 0,
+    },
+  },
+  {
+    id: "KM100_2",
+    type: "doubleRotaryCtrl",
     status: {
-        busy: false,
-        top: 10,
-        bottom: 50
+      busy: false,
+      top:0,
+      bottom: 0
     }
-};
+  },
+  {
+    id: "SM1ZP_1",
+    type: "singleRotaryCtrl",
+    status: {
+      busy: false,
+      pos: 0
+    }
+  },
+];
 
 socket.on("connect", () => {
-    console.log("SocketID: " + socket.id); // Outputs the socket ID
-    socket.emit("connection", "User connected!")
+  console.log("SocketID: " + socket.id);
+  socket.emit("connection", "User connected!");
 });
 
-socket.on("message", () => {
-    console.log("Hello World!");
-    socket.emit('message', ("beetlebum", "Hello World!"));       //Output-> beetlebum: Hello World!
-});
 
-socket.on("command", () => {
-    console.log("user1234", "km100_1", "top", 100);
-    socket.emit('command', {
-        userId: "user123",
-        componentId: KM100_1.componentId,
-        controlId: "top",
-        command: {
-            steps: 100,
-        }
-    })
-});
+socket.on("command", payload => {
+  Exp.forEach( comp => {
+    if (payload.componentId === comp.id) {
+      switch (comp.type) {
+        case "doubleRotaryCtrl":
+          comp.status.busy = true;
+          socket.emit("status", { componentId: comp.id, status: comp.status})
+          if (payload.controlId === "top") {
+            comp.status.top += +payload.command.steps
+          } else {
+            comp.status.bottom += +payload.command.steps
+          }
+          setTimeout(() => {
+            comp.status.busy = false;
+            socket.emit("status", {componentId: comp.id, status: comp.status} )
+          }, 3000);
+          break;
+        case "singleRotaryCtrl":
+          comp.status.busy = true;
+          socket.emit("status", {componentId: comp.id, status: comp.status})
+          comp.status.pos += +payload.command.steps
+          setTimeout(() => {
+            comp.status.busy = false;
+            socket.emit("status", {componentId: comp.id, status: comp.status})
+          }, 3000)
+      }
+    }
+  })
+})
 
-socket.on("command", () => {
-    console.log("km100_1", KM100_1.status.busy, KM100_1.status.top, KM100_1.status.bottom);
-    socket.emit('rotation', {
-        userId: "user123",
-        componentId: KM100_1.componentId,
-        status: {
-            busy: KM100_1.status.busy,
-            top: KM100_1.status.top,
-            bottom: KM100_1.status.bottom
-        }
-    });
-
-    sleep(2000);
-
-    console.log("km100_1", false, KM100_1.status.top, KM100_1.status.bottom);
-    socket.emit('command', {
-        userId: "user123",
-        componentId: KM100_1.componentId,
-        status: {
-            busy: false,
-            top: KM100_1.status.top,
-            bottom: KM100_1.status.bottom
-        }
-    });
-});
-
-socket.on("connect", () => {
-});
+// socket.on("command", (payload) => {
+//   console.log("Command received");
+//   socket.emit("status", {
+//     componentId: "KM100_1",
+//     status: {
+//       busy: true,
+//       top: KM100_1.status.top,
+//       bottom: KM100_1.status.bottom,
+//     },
+//   });
+//   setTimeout(() => {
+//     socket.emit("status", {
+//       componentId: "KM100_1",
+//       status: {
+//         busy: false,
+//         top: +KM100_1.status.top + +payload.command.steps,
+//         bottom: KM100_1.status.bottom,
+//       },
+//     });
+//   }, 3000);
+// });
 
 socket.on("disconnect", () => {
-    console.log("User will disconnect");
-    socket.disconnect();
-    console.log(socket.id); // Outputs undefined
+  console.log("User will disconnect");
+  socket.disconnect();
+  console.log(socket.id); // Outputs undefined
 });
-

@@ -16,9 +16,9 @@ const RotaryCtrl = (props) => {
   useEffect(() => {
 
     /* STATUS UPDATE HANDLIN */
-    socketCtx.socket.on("status", (payload) => { 
-      if (payload.component === props.component ) {
-        setRotation(payload.status.props.control);
+    socketCtx.socket.on("status", payload => { 
+      if (payload.componentId === props.component ) {
+        setRotation(payload.status[props.control]);
       }
     }); //TODO: Update Footer of UI Window with Status
   }, [socketCtx.socket]);
@@ -72,10 +72,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCCW_Handler} className={styles.CtrlLeft} disabled={props.busy} > 
+      <button onClick={rotCCW_Handler} className={styles.CtrlLeft} disabled={appCtx.busyComps.has(props.component)} > 
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler} className={styles.CtrlRight} disabled={props.busy}>
+      <button onClick={rotCW_Handler} className={styles.CtrlRight} disabled={appCtx.busyComps.has(props.component)}>
         <MdOutlineRotateRight size={28} />
       </button>
       

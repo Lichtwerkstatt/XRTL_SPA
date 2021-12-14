@@ -21,7 +21,7 @@ const SM1ZP = (props) => {
       <RotaryCtrl
         rotation={props.rotation}
         component={props.id}
-        control="linStage"
+        control="pos"
         top="35"
         left="150"
       />

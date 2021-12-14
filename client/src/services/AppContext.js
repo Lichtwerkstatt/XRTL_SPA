@@ -10,20 +10,29 @@ export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set())
+  const [busyComps, setBusyComps] = useState(new Set())
   const [logs, setLogs] = useState([])
 
-  console.log(logs)
-
   const toggleSelectedComp = compId => {
-    console.log("looking for ", compId, "=", !selectedComps.has(compId))
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)))
-      console.log("selected ", compId)
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
-      console.log("deselected ", compId)
     }
   }
+
+  const addBusyComp = compId => {
+    if (!busyComps.has(compId)) {
+      setBusyComps(prev => new Set(prev.add(compId)))
+    }
+  }
+
+  const removeBusyComp = compId => {
+    if (busyComps.has(compId)) {
+      setBusyComps(prev => new Set([...prev].filter(x => x !== compId)))
+    }
+  }
+ 
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
   };
@@ -46,6 +55,9 @@ export function AppContextProvider({ children }) {
         toggleSelectedComp,
         logs,
         addLog,
+        busyComps,
+        addBusyComp,
+        removeBusyComp,
       }}
     >
       {children}

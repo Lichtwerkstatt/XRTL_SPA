@@ -34,7 +34,12 @@ io.on('connection', socket => {
 
     socket.on('command', payload => {
         console.log("Command received:", payload)
-        io.emit('control', payload)
+        io.emit('command', payload)
+    })
+
+    socket.on('status', payload => {
+        console.log("New Status", payload)
+        io.emit('status', payload)
     })
 
 })

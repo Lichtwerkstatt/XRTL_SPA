@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { MdSettingsApplications } from "react-icons/md";
 import { useAppContext } from "./AppContext";
 
 const {Manager} = require("socket.io-client")
@@ -27,6 +28,11 @@ export function SocketContextProvider({ children }) {
       socket.on('disconnect', (e) => {
           setConnected(false)
           appCtx.addLog("Server : Client disconnect.")
+      })
+      socket.on('status', payload => {
+        if (payload.status.busy) {appCtx.addBusyComp(payload.componentId)} else {
+          appCtx.removeBusyComp(payload.componentId)
+        }
       })
   })
 

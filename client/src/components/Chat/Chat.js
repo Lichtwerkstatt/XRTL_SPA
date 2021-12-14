@@ -17,8 +17,7 @@ const Chat = (props) => {
     socketCtx.socket.on("message", (payload) => {
       setChat([...chat, payload])
     })
-    console.log(chat)
-  }, [socketCtx, chat])
+   }, [socketCtx, chat])
 
   const sendMessage = (event) => {
     event.preventDefault()
