@@ -2,7 +2,7 @@ var Gpio = require('onoff').Gpio;
 var green = new Gpio(16, 'out');
 var blue = new Gpio(20, 'out');
 var red = new Gpio(21, 'out');
-var b= 0;
+var b = 0;
 
 var blinkInterval;
 const app = require('express')()
@@ -34,39 +34,39 @@ function clients_connected() {
 
 function blink_start() {
     console.log("hier");
-    if (b==0){
-        RGB(0,0,1);
-        b=1;
-    }else{
-    RGB(0,0,0);
-    b=0;
+    if (b == 0) {
+        RGB(0, 0, 1);
+        b = 1;
+    } else {
+        RGB(0, 0, 0);
+        b = 0;
     }
 }
 function blink_end() {
-clearInterval(blinkInterval);
-clients_connected();
+    clearInterval(blinkInterval);
+    clients_connected();
 }
 
-function blink(){
-blinkInterval = setInterval(blink_start ,250);
-blink_start();
-setTimeout(blink_end, 1000);
+function blink() {
+    blinkInterval = setInterval(blink_start, 250);
+    blink_start();
+    setTimeout(blink_end, 1000);
 }
 
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
-   }
+}
 
 async function sleep(time) {
     await Sleep(time);
-   }
+}
 
 clients_connected();
 
 io.on('connection', socket => {
     console.log('connection made successfully');
     RGB(0, 1, 0);
-    
+
 
     socket.on('disconnect', (e) => {
         blink();
