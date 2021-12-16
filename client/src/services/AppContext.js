@@ -9,6 +9,7 @@ export function useAppContext() {
 export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [showWebcam, setShowWebcam] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set())
   const [logs, setLogs] = useState([])
 
@@ -30,9 +31,13 @@ export function AppContextProvider({ children }) {
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
+  const toggleShowWebcam = () => {
+    setShowWebcam(!showWebcam);
+  };
+
 
   const addLog = (log) => {
-    setLogs(prev => [log,...prev])
+    setLogs(prev => [log, ...prev])
   }
 
   return (
@@ -42,6 +47,8 @@ export function AppContextProvider({ children }) {
         toggleAutoRotate,
         showVirtualLayer,
         toggleShowVirtualLayer,
+        showWebcam,
+        toggleShowWebcam,
         selectedComps,
         toggleSelectedComp,
         logs,

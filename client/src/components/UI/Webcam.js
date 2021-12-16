@@ -1,43 +1,38 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 //import styles from "./RotaryCtrl.module.css";
 //import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
 import { useSocketContext } from "../../services/SocketContext"
 
 import { useAppContext } from "../../services/AppContext";
+import Webcam from "react-webcam";
 
-
-const Webcam = (props) => {
+const Cam = (props) => {
     const appCtx = useAppContext();
     const socket = useSocketContext();
+    const webcamRef = useRef(null);
 
-    const videoRef = useRef(null);
+    const videoConstraints = {
+        width: 1280,
+        height: 720,
+        facingMode: "user"
+    };
 
-    const getVideo = () => {
-        navigator.mediaDevices.getUserMedia({
-            video: {
-                width: 1020,
-                height: 720
-            }
-        }).then(stream => {
-            let video = videoRef.current;
-            video.srcObject = stream;
-            video.play();
-        }).catch(err => {
-            console.error(err);
-        })
-    }
-
-    useEffect(() => {
-        getVideo();
-    }, [videoRef])
-
-
-    return (
-        <div className="webcam">
-            <video ref={videoRef}></video>
-
-
-        </div>
-    );
-};
-export default Webcam;
+    if (appCtx.showWebcam) {
+        console.log(socket.connec);
+        return (
+            <>
+                <Webcam
+                    audio={false}
+                    height={720}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    width={1280}
+                    videoConstraints={videoConstraints}
+                />
+            </>
+        );
+    } else {
+        return <></>;
+    };
+}
+export default Cam;
