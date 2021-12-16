@@ -5,17 +5,18 @@ import VirtualLayer from "./components/UI/VirtualLayer";
 import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider } from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
-
+import Webcam from "./components/UI/Webcam"
 const App = () => {
 
    return (
     <AppContextProvider>
       <SocketContextProvider>
-        <VirtualLayer/> 
+        <Webcam/>
+{/*      <VirtualLayer/> 
         <ExperimentUILayer />
         <Console />
         <Chat /> 
-        <NavBar/>
+        <NavBar/> */}
       </SocketContextProvider>
     </AppContextProvider>
   );
