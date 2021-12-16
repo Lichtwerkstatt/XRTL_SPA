@@ -12,11 +12,11 @@ const App = () => {
     <AppContextProvider>
       <SocketContextProvider>
         <Webcam/>
-{/*      <VirtualLayer/> 
+     <VirtualLayer/> 
         <ExperimentUILayer />
         <Console />
         <Chat /> 
-        <NavBar/> */}
+        <NavBar/>
       </SocketContextProvider>
     </AppContextProvider>
   );

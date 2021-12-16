@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 //import styles from "./RotaryCtrl.module.css";
 //import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
-
-//import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext"
 
+import { useAppContext } from "../../services/AppContext";
 
 
 const Webcam = (props) => {
+    const appCtx = useAppContext();
+    const socket = useSocketContext();
+
     const videoRef = useRef(null);
+
     const getVideo = () => {
         navigator.mediaDevices.getUserMedia({
             video: {
@@ -26,21 +29,15 @@ const Webcam = (props) => {
 
     useEffect(() => {
         getVideo();
-
     }, [videoRef])
 
-    // const socketCtx = useSocketContext();
-    // socketCtx.connect();
+
     return (
         <div className="webcam">
-            <font color="white">
-                <h1 >Hallo</h1>
-            </font>
             <video ref={videoRef}></video>
 
 
         </div>
     );
 };
-
 export default Webcam;

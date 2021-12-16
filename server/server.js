@@ -1,4 +1,3 @@
-const cv =require('opencv4nodejs')
 const app = require('express')()
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui')
@@ -13,24 +12,16 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 // Client https://amritb.github.io/socketio-client-tool
 
 
-
-/* setInterval(() => {
-    const frame = wCap.read();
-    const image = cv.imencode ('.jpg', frame('base64'));
-    io.emit('image', image)
-}, 1000/30); */
-
-
 io.on('connection', socket => {
     console.log('connection made successfully');
 
     socket.on('disconnect', (e) => {
-        console.log('User disconnected: ',e);
+        console.log('User disconnected: ', e);
     });
 
-    socket.on('forceDisconnect',(e) => {
+    socket.on('forceDisconnect', (e) => {
         socket.disconnect();
-        console.log('User kicked: ',e)
+        console.log('User kicked: ', e)
     })
 
     socket.on('message', payload => {
@@ -46,7 +37,11 @@ io.on('connection', socket => {
         console.log("Command received:", payload)
         io.emit('control', payload)
     })
-  
+
+    socket.on('video', payload => {
+        console.log("Command received:", payload)
+        io.emit('control', payload)
+    })
 
 })
 
