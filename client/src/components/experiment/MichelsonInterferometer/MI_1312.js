@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Html } from "@react-three/drei";
 import { Box } from "@react-three/drei";
 
 export default function Model({ ...props }) {
@@ -34,6 +34,12 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_1");
         }}
       >
+        <Html position={[0,1,0]}>
+          <div style={{color: "white", width: "200px", height:"150px", "border-left" : "1px solid white", "padding-left":"10px"}}>
+            <span><b>Reference Mirror</b></span><br/>
+            KM100 Double Rotary Control 
+          </div>
+        </Html>
         <mesh
           geometry={nodes.SideMirrorMesh.geometry}
           material={nodes.SideMirrorMesh.material}
@@ -61,6 +67,12 @@ export default function Model({ ...props }) {
           props.toggleSelect("SM1ZP_1");
         }}
       >
+         <Html position={[0,1,0]}>
+          <div style={{color: "white", width: "200px", height:"150px", "border-left" : "1px solid white", "padding-left":"10px"}}>
+            <span><b>Translate Mirror</b></span><br/>
+            SM1ZP Single Rotary Control 
+          </div>
+        </Html>
         <mesh
           geometry={nodes.TranslateMirrorMesh.geometry}
           material={nodes.TranslateMirrorMesh.material}
@@ -121,6 +133,12 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_2")
         }}
       >
+        <Html position={[0,0,-1]}>
+          <div style={{color: "white", width: "200px", height:"150px", "border-left" : "1px solid white", "padding-left":"10px"}}>
+            <span><b>Laser Diode</b></span><br/>
+            KM100 Double Rotary Control 
+          </div>
+        </Html>
         <mesh
           geometry={nodes.LaserMesh.geometry}
           material={nodes.LaserMesh.material}
