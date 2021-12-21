@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { useGLTF, Html } from "@react-three/drei";
 import { Box } from "@react-three/drei";
+import {Sprite} from "@react-three/fiber"
+import DescriptiveTag from "../../UI/DescriptiveTag"
 
 export default function Model({ ...props }) {
   const group = useRef();
@@ -34,12 +36,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_1");
         }}
       >
-        <Html position={[0,1,0]}>
-          <div style={{color: "white", width: "200px", height:"150px", "border-left" : "1px solid white", "padding-left":"10px"}}>
-            <span><b>Reference Mirror</b></span><br/>
-            KM100 Double Rotary Control 
-          </div>
-        </Html>
+   
+        <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Mirror" />
         <mesh
           geometry={nodes.SideMirrorMesh.geometry}
           material={nodes.SideMirrorMesh.material}
