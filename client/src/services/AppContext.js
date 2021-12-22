@@ -43,6 +43,7 @@ export function AppContextProvider({ children }) {
   const addLog = (log) => {
     setLogs(prev => [log,...prev])
   }
+  
 
   return (
     <AppContext.Provider

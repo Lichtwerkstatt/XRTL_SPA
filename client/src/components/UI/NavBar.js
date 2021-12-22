@@ -6,7 +6,7 @@ import { BsBox } from "react-icons/bs"
 import {MdOutlineScreenRotation} from "react-icons/md"
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from '../../services/AppContext'
-
+import{BsCamera } from 'react-icons/bs'
 const NavBar = () => {
     
     const appCtx = useAppContext();
@@ -24,6 +24,7 @@ const NavBar = () => {
                 <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
                 <li><GiLaserWarning size={29} /></li>
                 <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26}/></li>
+                <li onClick={appCtx.toggleAutoRotate}><BsCamera size={26}/></li>
             </ul>
         </div>
 
