@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Html } from "@react-three/drei";
 import { Box } from "@react-three/drei";
+import DescriptiveTag from "../../UI/DescriptiveTag"
 
 export default function Model({ ...props }) {
   const group = useRef();
@@ -34,6 +35,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_1");
         }}
       >
+   
+        <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Control" />
         <mesh
           geometry={nodes.SideMirrorMesh.geometry}
           material={nodes.SideMirrorMesh.material}
@@ -61,6 +64,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("SM1ZP_1");
         }}
       >
+        <DescriptiveTag position={[0,1,0]} title="Translate Mirror" description="KM100 Single Rotary Control" />
+        
         <mesh
           geometry={nodes.TranslateMirrorMesh.geometry}
           material={nodes.TranslateMirrorMesh.material}
@@ -87,6 +92,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("EDU-VS1_1");
         }}
       >
+        <DescriptiveTag position={[0,1,0]} title="Screen"/>
+        
         <mesh
           geometry={nodes.PlaneMesh.geometry}
           material={materials.WhiteParts}
@@ -121,6 +128,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_2")
         }}
       >
+        <DescriptiveTag position={[0,0,-1]} title="Laser Alignment" description="KM100 Double Rotary Control" />
+        
         <mesh
           geometry={nodes.LaserMesh.geometry}
           material={nodes.LaserMesh.material}
