@@ -42,6 +42,16 @@ io.on('connection', socket => {
         io.emit('status', payload)
     })
 
+	socket.on("callUser", (payload) => {
+		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+	})
+
+	socket.on("answerCall", (payload) => {
+		io.to(data.to).emit("callAccepted", data.signal)
+	})
+
+
+
 })
 
 server.listen(7000, () => {
