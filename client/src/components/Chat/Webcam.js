@@ -3,6 +3,8 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 import styled from "styled-components";
 
+
+const ROOMID = "<%= roomID>";
 const Container = styled.div`
     padding: 20px;
     display: flex;
@@ -42,7 +44,7 @@ const Webcam = (props) => {
     const socketRef = useRef();
     const userVideo = useRef();
     const peersRef = useRef([]);
-    const roomID = props.match.params.roomID;
+    const roomID =  "<%= roomID>";
 
     useEffect(() => {
         socketRef.current = io.connect("/");
@@ -113,6 +115,8 @@ const Webcam = (props) => {
 
     return (
         <Container>
+
+
             <StyledVideo muted ref={userVideo} autoPlay playsInline />
             {peers.map((peer, index) => {
                 return (

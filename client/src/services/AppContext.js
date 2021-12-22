@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { v1 as uuid } from "uuid";
 
 const AppContext = React.createContext()
 
@@ -32,7 +33,7 @@ export function AppContextProvider({ children }) {
       setBusyComps(prev => new Set([...prev].filter(x => x !== compId)))
     }
   }
- 
+
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
   };
@@ -41,9 +42,13 @@ export function AppContextProvider({ children }) {
   };
 
   const addLog = (log) => {
-    setLogs(prev => [log,...prev])
+    setLogs(prev => [log, ...prev])
   }
-  
+  const createRoom = (props) => {
+    const id = uuid();
+    console.log(id);
+    props.history.push(`/${id}`);
+  };
 
   return (
     <AppContext.Provider
@@ -59,6 +64,7 @@ export function AppContextProvider({ children }) {
         busyComps,
         addBusyComp,
         removeBusyComp,
+        createRoom,
       }}
     >
       {children}

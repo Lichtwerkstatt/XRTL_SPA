@@ -8,12 +8,22 @@ const io = require('socket.io')(server, {
         origin: '*'
     }
 })
+const {v4 : uuidV4} = require('uuid');
+
+app.get('/', (req, res)=>{
+    res.redirect('/${id}')
+})
+
+app.get('/', (req, res)=>{
+    res.render('Webcam', {roomID: req.params.room});
+})
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
 io.on('connection', socket => {
+
     console.log('connection made successfully');
 
     // socket.on('disconnect', (e) => {
