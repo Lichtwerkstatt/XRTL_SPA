@@ -5,11 +5,8 @@ const DescriptiveTag = (props) => {
     color: "white",
     width: "200px",
     height: "30px",
-    border: "1px solid green",
-    "z-index": "-1",
-    "pointer-event": "none",
   };
-  return <Html position={props.position} style={wrapperStyle} >
+  return <Html position={props.position} style={wrapperStyle} zIndexRange={[0,10]} >
 
         <div
           style={{
@@ -19,7 +16,7 @@ const DescriptiveTag = (props) => {
             float: "left",
           }}
         ></div>
-        <div>
+        <div style={{"margin-left": "12px"}}>
           <span>
             <b>{props.title}</b>
           </span>

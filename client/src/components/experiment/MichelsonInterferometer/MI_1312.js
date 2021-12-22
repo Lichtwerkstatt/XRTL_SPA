@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { useGLTF, Html } from "@react-three/drei";
 import { Box } from "@react-three/drei";
-import {Sprite} from "@react-three/fiber"
 import DescriptiveTag from "../../UI/DescriptiveTag"
 
 export default function Model({ ...props }) {
@@ -37,7 +36,7 @@ export default function Model({ ...props }) {
         }}
       >
    
-        <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Mirror" />
+        <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Control" />
         <mesh
           geometry={nodes.SideMirrorMesh.geometry}
           material={nodes.SideMirrorMesh.material}
@@ -65,12 +64,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("SM1ZP_1");
         }}
       >
-         <Html position={[0,1,0]}>
-          <div style={{color: "white", width: "200px", height:"150px", "border-left" : "1px solid white", "padding-left":"10px"}}>
-            <span><b>Translate Mirror</b></span><br/>
-            SM1ZP Single Rotary Control 
-          </div>
-        </Html>
+        <DescriptiveTag position={[0,1,0]} title="Translate Mirror" description="KM100 Single Rotary Control" />
+        
         <mesh
           geometry={nodes.TranslateMirrorMesh.geometry}
           material={nodes.TranslateMirrorMesh.material}
@@ -97,6 +92,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("EDU-VS1_1");
         }}
       >
+        <DescriptiveTag position={[0,1,0]} title="Screen"/>
+        
         <mesh
           geometry={nodes.PlaneMesh.geometry}
           material={materials.WhiteParts}
@@ -131,12 +128,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_2")
         }}
       >
-        <Html position={[0,0,-1]}>
-          <div style={{color: "white", width: "200px", height:"150px", "border-left" : "1px solid white", "padding-left":"10px"}}>
-            <span><b>Laser Diode</b></span><br/>
-            KM100 Double Rotary Control 
-          </div>
-        </Html>
+        <DescriptiveTag position={[0,0,-1]} title="Laser Alignment" description="KM100 Double Rotary Control" />
+        
         <mesh
           geometry={nodes.LaserMesh.geometry}
           material={nodes.LaserMesh.material}
