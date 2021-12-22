@@ -27,6 +27,7 @@ const VirtualLayer = () => {
           <MI_1312
             toggleSelect={appCtx.toggleSelectedComp}
             selected={appCtx.selectedComps}
+            showTags={appCtx.showTags}
           />
         </Suspense>
       </Canvas>

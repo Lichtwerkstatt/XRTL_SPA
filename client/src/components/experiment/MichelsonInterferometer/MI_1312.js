@@ -36,7 +36,7 @@ export default function Model({ ...props }) {
         }}
       >
    
-        <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Control" />
+        {props.showTags && <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
         <mesh
           geometry={nodes.SideMirrorMesh.geometry}
           material={nodes.SideMirrorMesh.material}
@@ -64,7 +64,7 @@ export default function Model({ ...props }) {
           props.toggleSelect("SM1ZP_1");
         }}
       >
-        <DescriptiveTag position={[0,1,0]} title="Translate Mirror" description="KM100 Single Rotary Control" />
+        {props.showTags && <DescriptiveTag position={[0,1,0]} title="Translate Mirror" description="KM100 Single Rotary Control" />}
         
         <mesh
           geometry={nodes.TranslateMirrorMesh.geometry}
@@ -92,7 +92,7 @@ export default function Model({ ...props }) {
           props.toggleSelect("EDU-VS1_1");
         }}
       >
-        <DescriptiveTag position={[0,1,0]} title="Screen"/>
+        {props.showTags &&<DescriptiveTag position={[0,1,0]} title="Screen"/>}
         
         <mesh
           geometry={nodes.PlaneMesh.geometry}
@@ -128,7 +128,7 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_2")
         }}
       >
-        <DescriptiveTag position={[0,0,-1]} title="Laser Alignment" description="KM100 Double Rotary Control" />
+        {props.showTags &&<DescriptiveTag position={[0,0,-1]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
         
         <mesh
           geometry={nodes.LaserMesh.geometry}

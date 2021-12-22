@@ -12,6 +12,7 @@ export function AppContextProvider({ children }) {
   const [selectedComps, setSelectedComps] = useState(new Set())
   const [busyComps, setBusyComps] = useState(new Set())
   const [logs, setLogs] = useState([])
+  const [showTags, setShowTags] = useState(true)
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
@@ -39,6 +40,9 @@ export function AppContextProvider({ children }) {
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
+  const toggleShowTags = () => {
+    setShowTags(!showTags)
+  }
 
   const addLog = (log) => {
     setLogs(prev => [log,...prev])
@@ -58,6 +62,8 @@ export function AppContextProvider({ children }) {
         busyComps,
         addBusyComp,
         removeBusyComp,
+        showTags,
+        toggleShowTags
       }}
     >
       {children}

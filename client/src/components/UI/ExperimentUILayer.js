@@ -1,4 +1,5 @@
 
+import { MdSettingsApplications } from "react-icons/md";
 import { useAppContext } from "../../services/AppContext";
 import MichelsonInterferometer from "../experiment/MichelsonInterferometer/MichelsonInterferometer";
 
