@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { v1 as uuid } from "uuid";
 
 const AppContext = React.createContext()
 
@@ -45,9 +44,7 @@ export function AppContextProvider({ children }) {
     setLogs(prev => [log, ...prev])
   }
   const createRoom = (props) => {
-    const id = uuid();
-    console.log(id);
-    props.history.push(`/${id}`);
+
   };
 
   return (

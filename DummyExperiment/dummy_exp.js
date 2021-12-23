@@ -16,7 +16,7 @@ var Exp = [
     type: "doubleRotaryCtrl",
     status: {
       busy: false,
-      top:0,
+      top: 0,
       bottom: 0
     }
   },
@@ -37,12 +37,12 @@ socket.on("connect", () => {
 
 
 socket.on("command", payload => {
-  Exp.forEach( comp => {
+  Exp.forEach(comp => {
     if (payload.componentId === comp.id) {
       switch (comp.type) {
         case "doubleRotaryCtrl":
           comp.status.busy = true;
-          socket.emit("status", { componentId: comp.id, status: comp.status})
+          socket.emit("status", { componentId: comp.id, status: comp.status })
           if (payload.controlId === "top") {
             comp.status.top += +payload.command.steps
           } else {
@@ -50,16 +50,16 @@ socket.on("command", payload => {
           }
           setTimeout(() => {
             comp.status.busy = false;
-            socket.emit("status", {componentId: comp.id, status: comp.status} )
+            socket.emit("status", { componentId: comp.id, status: comp.status })
           }, 3000);
           break;
         case "singleRotaryCtrl":
           comp.status.busy = true;
-          socket.emit("status", {componentId: comp.id, status: comp.status})
+          socket.emit("status", { componentId: comp.id, status: comp.status })
           comp.status.pos += +payload.command.steps
           setTimeout(() => {
             comp.status.busy = false;
-            socket.emit("status", {componentId: comp.id, status: comp.status})
+            socket.emit("status", { componentId: comp.id, status: comp.status })
           }, 3000)
       }
     }

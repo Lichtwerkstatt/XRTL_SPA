@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import Peer from "simple-peer";
 import styled from "styled-components";
+import { useSocketContext } from '../../services/SocketContext'
 
-
-const ROOMID = "<%= roomID>";
 const Container = styled.div`
     padding: 20px;
     display: flex;
@@ -19,7 +18,12 @@ const StyledVideo = styled.video`
     width: 50%;
 `;
 
+
+
 const Video = (props) => {
+
+
+
     const ref = useRef();
 
     useEffect(() => {
@@ -44,7 +48,17 @@ const Webcam = (props) => {
     const socketRef = useRef();
     const userVideo = useRef();
     const peersRef = useRef([]);
-    const roomID =  "<%= roomID>";
+    var roomID = '';
+
+    const socketCtx = useSocketContext();
+
+    if (socketCtx.socket.connected == true) {
+        socketCtx.socket.emit('roomID', (data) => {
+            roomID = data;
+            console.log(roomID);
+        });
+    }
+
 
     useEffect(() => {
         socketRef.current = io.connect("/");
@@ -81,8 +95,8 @@ const Webcam = (props) => {
         })
     }, []);
 
-    
-    
+
+
     function createPeer(userToSignal, callerID, stream) {
         const peer = new Peer({
             initiator: true,

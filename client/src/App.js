@@ -6,7 +6,7 @@ import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider } from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
 import Cam from "./components/Chat/Webcam";
-import Room from  "./components/Chat/CreateRoom";
+
 
 const App = () => {
 
@@ -16,8 +16,8 @@ const App = () => {
         <Cam/>
 {/*         <VirtualLayer/> 
         <ExperimentUILayer />
+      <Chat />  */}
         <Console />
-        <Chat />  */}
         <NavBar/>
       </SocketContextProvider>
     </AppContextProvider>
