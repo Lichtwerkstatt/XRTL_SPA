@@ -2,16 +2,17 @@ const users = {};
 const socketToRoom = {};
 const app = require('express')();
 const server = require('http').createServer(app)
-const { instrument } = require('@socket.io/admin-ui')
+//const { instrument } = require('@socket.io/admin-ui')
 const io = require('socket.io')(server, {
     cors: {
         origin: '*'
     }
 })
-const { v4: uuidv4 } = require('uuid');
-const roomID = uuidv4();
+//const { v4: uuidv4 } = require('uuid');
+const roomID = "raum12334";             //uuidv4();
+const rooms = {};
 
-instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
+//instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
@@ -20,8 +21,28 @@ io.on('connection', socket => {
 
     socket.on('roomID', (room) => {
         room(roomID);
-        console.log("RoomID (" + roomID + ") was trasnmitted to the client");
+        //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
 
+    });
+
+    socket.on('join-room', (roomID) => {        //auf UserID umstellen, weil Raumid (uuid) immer dieselbe ist
+        if (rooms[roomID]) {
+            rooms[roomID].push(socket.id);
+         //   console.log(rooms)
+        } else {
+            rooms[roomID] = [socket.id];
+           // console.log(rooms)
+
+        }
+        
+        const otherUser = rooms[roomID].find(id => id !== socket.id);
+        console.log(socket.id)
+        if (otherUser) {
+           // users[roomID].push(socket.id)
+            //console.log("User"+users)
+            socket.emit("other user", otherUser);
+            socket.to(otherUser).emit("user joined", socket.id);
+        }
     });
 
     // socket.on('disconnect', (e) => {
@@ -52,13 +73,13 @@ io.on('connection', socket => {
         io.emit('status', payload)
     });
 
-    socket.on("callUser", (payload) => {
-        io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
-    });
-
-    socket.on("answerCall", (payload) => {
-        io.to(data.to).emit("callAccepted", data.signal)
-    });
+    /*   socket.on("callUser", (payload) => {
+          io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+      });
+  
+      socket.on("answerCall", (payload) => {
+          io.to(data.to).emit("callAccepted", data.signal)
+      }); */
 
     /*     socket.on("join room", roomID => {
             if (users[roomID]) {
@@ -87,12 +108,7 @@ io.on('connection', socket => {
 
     socket.on('disconnect', (e) => {
         console.log('User disconnected: ', e);
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
-        }
+        socket.disconnect();
     });
 
 
