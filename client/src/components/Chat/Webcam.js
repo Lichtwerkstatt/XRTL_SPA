@@ -5,77 +5,40 @@ var roomID = '';
 
 const Webcam = (props) => {
     const socketCtx = useSocketContext();
-    const webcamElement =document.getElementById("videostream");
-    
+    const webcamElement = document.getElementById("videostream");
 
-    if (socketCtx.socket.connected == true) {
-        socketCtx.socket.emit('roomID', (data) => {
+
+    if (socketCtx.socket.connected == true) {           //Client mus mit Server verbudnen sein, damit dieser Code aufgeführt wird
+        socketCtx.socket.emit('roomID', (data) => {     //übertragen der Server/Room ID an CLient
             roomID = data;
-            console.log(roomID);
         });
 
-
-        socketCtx.socket.emit('join-room', roomID)
-        socketCtx.socket.on('user-connected', (userID) => {     //sendet an alle außerdem dem sendenden Client die Nachriht, dass xy connected hat
+        socketCtx.socket.emit('join-room', roomID)      //Client tritt KEINEN Raum hier bei
+        socketCtx.socket.on('other user', (userID) => {     //sendet an alle außerdem dem sendenden Client die Nachriht, dass xy connected hat
             console.log("User connected: " + userID);
         });
 
-        const constraints ={
+        const constraints = {           //contraints der Webcam
             audio: true,
-            video:{
+            video: {
                 width: 400, height: 300
             }
         }
-    
-        async function init(){
+
+        async function init() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 handleSuccess(stream);
             } catch (e) {
-                //errorMsgElement.innerHTML = 'navigator.mediaDevices.getUserMedia.error:${e.toString()}'
-                
+                console.error("Something went wrong with the camera");
             }
         }
-    
-        function handleSuccess(stream){
-            window.stream=stream 
-            webcamElement.srcObject = stream 
+
+        function handleSuccess(stream) {
+            window.stream = stream
+            webcamElement.srcObject = stream
         }
         init()
-
-
-        /* navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
-        }).then(gotMedia).catch(() => { })
-
-        function gotMedia(stream) {
-            var peer1 = new Peer({ initiator: true, stream: stream })
-            var peer2 = new Peer()
-
-            console.log(peer2)
-
-            peer1.on('signal', data => {
-                peer2.signal(data)
-            })
-
-            peer2.on('signal', data => {
-                peer1.signal(data)
-            })
-
-            peer2.on('stream', stream => {
-                // got remote video stream, now let's show it in a video tag
-                var video = document.querySelector('video')
-
-                if ('srcObject' in video) {
-                    video.srcObject = stream
-                } else {
-                    video.src = window.URL.createObjectURL(stream) // for older browsers
-                }
-
-                video.play()
-            }) 
-        } */
     }
 
 

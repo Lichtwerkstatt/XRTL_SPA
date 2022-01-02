@@ -26,22 +26,21 @@ io.on('connection', socket => {
     });
 
     socket.on('join-room', (roomID) => {        //auf UserID umstellen, weil Raumid (uuid) immer dieselbe ist
-        if (rooms[roomID]) {
+        
+        if (rooms[roomID] && rooms[roomID].includes(socket.id) == false) {
             rooms[roomID].push(socket.id);
-         //   console.log(rooms)
+
+        } else if (rooms[roomID] && rooms[roomID].includes(socket.id) == true) {
+            //falls socket.id schon in dem Array enthalten ist soll nichts gemacht werden, da mit dem elese Fall sonst altes Array überschrieben werden würde
+
         } else {
             rooms[roomID] = [socket.id];
-           // console.log(rooms)
-
         }
-        
-        const otherUser = rooms[roomID].find(id => id !== socket.id);
-        console.log(socket.id)
-        if (otherUser) {
-           // users[roomID].push(socket.id)
-            //console.log("User"+users)
-            socket.emit("other user", otherUser);
-            socket.to(otherUser).emit("user joined", socket.id);
+
+        var otherUser = rooms[roomID][rooms[roomID].length - 1];        //bestimmt aus dem Array rooms den letzten gejoined user
+       
+        if (otherUser != rooms[roomID][0]) {
+            io.emit("other user", otherUser);       //gibt an alle aus das ein neuer User oder er gejoined ist
         }
     });
 
@@ -72,39 +71,6 @@ io.on('connection', socket => {
         console.log("New Status", payload)
         io.emit('status', payload)
     });
-
-    /*   socket.on("callUser", (payload) => {
-          io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
-      });
-  
-      socket.on("answerCall", (payload) => {
-          io.to(data.to).emit("callAccepted", data.signal)
-      }); */
-
-    /*     socket.on("join room", roomID => {
-            if (users[roomID]) {
-                const length = users[roomID].length;
-                if (length === 4) {
-                    socket.emit("room full");
-                    return;
-                }
-                users[roomID].push(socket.id);
-            } else {
-                users[roomID] = [socket.id];
-            }
-            socketToRoom[socket.id] = roomID;
-            const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-    
-            socket.emit("all users", usersInThisRoom);
-        });
-    
-        socket.on("sending signal", payload => {
-            io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
-        });
-    
-        socket.on("returning signal", payload => {
-            io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
-        }); */
 
     socket.on('disconnect', (e) => {
         console.log('User disconnected: ', e);
