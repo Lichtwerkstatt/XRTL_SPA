@@ -2,17 +2,17 @@ const users = {};
 const socketToRoom = {};
 const app = require('express')();
 const server = require('http').createServer(app)
-//const { instrument } = require('@socket.io/admin-ui')
+const { instrument } = require('@socket.io/admin-ui')
 const io = require('socket.io')(server, {
     cors: {
         origin: '*'
     }
 })
-//const { v4: uuidv4 } = require('uuid');
-const roomID = "raum12334";             //uuidv4();
+const { v4: uuidv4 } = require('uuid');
+const roomID = uuidv4();
 const rooms = {};
 
-//instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
+instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
@@ -74,6 +74,7 @@ io.on('connection', socket => {
 
     socket.on('disconnect', (e) => {
         console.log('User disconnected: ', e);
+        //delete users[socket.id];
         socket.disconnect();
     });
 
