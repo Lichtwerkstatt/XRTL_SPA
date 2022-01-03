@@ -1,12 +1,22 @@
 import { useSocketContext } from '../../services/SocketContext'
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import {Container, Row} from 'react-bootstrap';
 var Peer = require('simple-peer')
 var roomID = '';
 
 const Webcam = (props) => {
     const socketCtx = useSocketContext();
-    const webcamElement =document.getElementById("videostream");
-    
+    const webcamElement = document.getElementById("videostream");
+    const [stream, setStream] = useState();
+    const userVideo = useRef();
+    const partnerVideo = useRef();
+    const partnerVideo2 = useRef();
+    let PartnerVideo;
+    let PartnerVideo2;
+    let UserVideo;
+    var otheruser = true;
+
+
 
     if (socketCtx.socket.connected == true) {
         socketCtx.socket.emit('roomID', (data) => {
@@ -18,73 +28,98 @@ const Webcam = (props) => {
         socketCtx.socket.emit('join-room', roomID)
         socketCtx.socket.on('user-connected', (userID) => {     //sendet an alle außerdem dem sendenden Client die Nachriht, dass xy connected hat
             console.log("User connected: " + userID);
+            otheruser = true;
+            console.log(otheruser);
         });
 
-        const constraints ={
-            audio: true,
-            video:{
-                width: 400, height: 300
-            }
+        if (otheruser== true){
+            partnerVideo.current.srcObject = stream;
+            partnerVideo2.current.srcObject = stream;
         }
-    
-        async function init(){
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                handleSuccess(stream);
-            } catch (e) {
-                //errorMsgElement.innerHTML = 'navigator.mediaDevices.getUserMedia.error:${e.toString()}'
-                
-            }
-        }
-    
-        function handleSuccess(stream){
-            window.stream=stream 
-            webcamElement.srcObject = stream 
-        }
-        init()
 
 
-        /* navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
-        }).then(gotMedia).catch(() => { })
 
-        function gotMedia(stream) {
-            var peer1 = new Peer({ initiator: true, stream: stream })
-            var peer2 = new Peer()
-
-            console.log(peer2)
-
-            peer1.on('signal', data => {
-                peer2.signal(data)
-            })
-
-            peer2.on('signal', data => {
-                peer1.signal(data)
-            })
-
-            peer2.on('stream', stream => {
-                // got remote video stream, now let's show it in a video tag
-                var video = document.querySelector('video')
-
-                if ('srcObject' in video) {
-                    video.srcObject = stream
-                } else {
-                    video.src = window.URL.createObjectURL(stream) // for older browsers
+        /* 
+                const constraints = {
+                    audio: true,
+                    video: {
+                        width: 400, height: 300
+                    }
                 }
-
-                video.play()
-            }) 
-        } */
+        
+                async function init() {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                        handleSuccess(stream);
+                    } catch (e) {
+                        //errorMsgElement.innerHTML = 'navigator.mediaDevices.getUserMedia.error:${e.toString()}'
+        
+                    }
+                }
+        
+                function handleSuccess(stream) {
+                    window.stream = stream
+                    webcamElement.srcObject = stream
+                }
+        
+                const clone_Webcam_Div = function () {
+                    init();
+                    console.log("Hier");
+                    let w1 = document.getElementById('web2')
+                    let t = document.querySelector('.webcamDiv');
+        
+                    w1.appendChild(t.cloneNode(true));
+                    console.log("erstellt?");
+        
+                }
+                clone_Webcam_Div();
+         */
     }
+    useEffect(() => {
+
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+            setStream(stream);
+            if (userVideo.current) {
+                userVideo.current.srcObject = stream;
+            }
+        })
+    }, []);
+
+
+
+    UserVideo = (
+        <video playsInline muted ref={userVideo} autoPlay />
+    );
+
+    if (otheruser == true) {
+        PartnerVideo = (
+            <video playsInline ref={partnerVideo} autoPlay />
+        );
+        PartnerVideo2 = (
+            <video playsInline ref={partnerVideo2} autoPlay />
+        );
+
+    }
+
+
+
+
+
+
+
 
 
     return (
         <div>
+            <Container>
+            <Row>
+                {UserVideo}
+                {PartnerVideo}
+                {PartnerVideo2}
+            </Row>
+            </Container>
 
-            <video autoplay="true" id="videostream" >
 
-            </video>
         </div>
     );
 
