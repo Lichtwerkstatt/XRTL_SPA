@@ -26,8 +26,7 @@ io.on('connection', socket => {
 
     });
 
-    socket.once('join-room', (data) => {        //auf UserID umstellen, weil Raumid (uuid) immer dieselbe ist
-
+    socket.once('client list', (data) => {        //übergibt an Client die Liste aller verbundenen Clients
         if (user[roomID] && user[roomID].includes(socket.id) == false) {
             user[roomID].push(socket.id);
         } else {
@@ -37,25 +36,28 @@ io.on('connection', socket => {
         data(user[roomID]);
 
         //console.log("user    " + user[roomID]);
-        //lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
+        lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
         //console.log("LasUser " + lastUserID);
 
-
-
-        //io.emit("user joined", lastUserID);       //gibt an alle aus das ein neuer User oder er gejoined ist
-
-    });
-
-    socket.on('user joined', (lastUserID) => {
         if (user[roomID] && lastUserID != user[roomID][0]) {
-            console.log("User has joined with ID " + lastUserID)
-            io.emit('user joined', lastUserID);
+
+            socket.once("user joined", (lastUserID) => {
+                
+                io.emit((lastUserID));
+            });
+
+            /* socket.once("user joined", (userID) =>{
+                userID(lastUserID)
+            });       //gibt an alle aus das ein neuer User oder er gejoined ist
+
+            socket.once("update userlist", (updateUserList) =>{
+                console.log(user[roomID]);
+                updateUserList(user[roomID]);
+            }) */
         }
     });
 
-    // socket.on('disconnect', (e) => {
-    //     console.log('User disconnected: ',e);
-    // });
+
 
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();

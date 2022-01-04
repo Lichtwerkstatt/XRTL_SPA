@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 var Peer = require('simple-peer')
 var roomID = '';
+var userID = '';
 
 const Webcam = (props) => {
     const socketCtx = useSocketContext();
@@ -21,8 +22,8 @@ const Webcam = (props) => {
     const socketRef = useRef();
     const userVideo = useRef();
     const peersRef = useRef([]);
-
-    const userID = [1, 2, 3, 4]
+    var joinRoom = false;
+    var userList = [];
 
     const videoConstraints = {
         height: window.innerHeight / 2,
@@ -30,35 +31,63 @@ const Webcam = (props) => {
     };
 
     useEffect(() => {
-
         if (socketCtx.socket.connected == true) {
             socketCtx.socket.emit('roomID', (data) => { //roomID wird übermittelt entspricht der ID erstellt durch uuid (konstant) bis zum nächsten Serverneustart
                 roomID = data;
             });
 
-            navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
-                //userVideo.current.srcObject = stream;
-                socketCtx.socket.emit('join-room', roomID);
-                socketCtx.socket.on('user-connected', (users) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
-                    console.log("User connected: " + userID);           //brauchen statt userId das komplette Array
+            socketCtx.socket.emit('client list', (data) => {
+                userList = data; //client Liste
+                console.log(data);
+            });
+
+            socketCtx.socket.emit('user joined', (userID) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
+                console.log("User connected: " + userID);
+            });
+
+            socketCtx.socket.emit('update userlist', (newUserList) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
+                console.log("New userlist: " + newUserList);
+                userList = newUserList;
+
+            });
+            // console.log("User connected: " + data.id);
+            //     userList = data.list;
+            //     console.log("LISTE "+userList);
 
 
-                    const peers = [];
-
-                    /*    users.array.forEach(userID => {
-                           const peer = createPeer(userID, socketRef.current.id, stream);
-                           peersRef.current.push({
-                               peerID: userID,
-                               peer,
-                           })
-                           peers.push(peer);
-                           setPeers(peers);
-                       }); */
-                });
-
-            }, []);
         }
-    })
+    }
+    )
+    //     useEffect(() => {
+    //     navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
+    //             //userVideo.current.srcObject = stream;
+
+    //           /*   socketCtx.socket.emit('user joined', (data) => {
+    //                 userID = data;
+    //                 console.log("New User conected with userID " + userID);
+    //             }) */
+
+
+    //             socketCtx.socket.on('user-connected', (users) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
+    //                 console.log("User connected: " + userID);           //brauchen statt userId das komplette Array
+
+
+    //                 const peers = [];
+
+    //                 /*    users.array.forEach(userID => {
+    //                        const peer = createPeer(userID, socketRef.current.id, stream);
+    //                        peersRef.current.push({
+    //                            peerID: userID,
+    //                            peer,
+    //                        })
+    //                        peers.push(peer);
+    //                        setPeers(peers);
+    //                    }); */
+    //             });
+
+    //         }, []);
+    //     }
+    // })
 
     function createPeer(userToSignal, callerId, stream) {       //Erstellen von peer des 1. joinenden Clienten
         const peer = new Peer({
