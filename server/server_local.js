@@ -10,7 +10,8 @@ const io = require('socket.io')(server, {
 })
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
-const rooms = {};
+const user = {};
+var lastUserID = '';
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
@@ -19,28 +20,36 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 io.on('connection', socket => {
     console.log('connection made successfully');
 
-    socket.on('roomID', (room) => {
+    socket.once('roomID', (room) => {
         room(roomID);
         //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
 
     });
 
-    socket.on('join-room', (roomID) => {        //auf UserID umstellen, weil Raumid (uuid) immer dieselbe ist
-        
-        if (rooms[roomID] && rooms[roomID].includes(socket.id) == false) {
-            rooms[roomID].push(socket.id);
+    socket.once('join-room', (data) => {        //auf UserID umstellen, weil Raumid (uuid) immer dieselbe ist
 
-        } else if (rooms[roomID] && rooms[roomID].includes(socket.id) == true) {
-            //falls socket.id schon in dem Array enthalten ist soll nichts gemacht werden, da mit dem elese Fall sonst altes Array überschrieben werden würde
-
+        if (user[roomID] && user[roomID].includes(socket.id) == false) {
+            user[roomID].push(socket.id);
         } else {
-            rooms[roomID] = [socket.id];
+            user[roomID] = [socket.id];
         }
+        console.log(user[roomID])
+        data(user[roomID]);
 
-        var otherUser = rooms[roomID][rooms[roomID].length - 1];        //bestimmt aus dem Array rooms den letzten gejoined user
-       
-        if (otherUser != rooms[roomID][0]) {
-            io.emit("other user", otherUser);       //gibt an alle aus das ein neuer User oder er gejoined ist
+        //console.log("user    " + user[roomID]);
+        //lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
+        //console.log("LasUser " + lastUserID);
+
+
+
+        //io.emit("user joined", lastUserID);       //gibt an alle aus das ein neuer User oder er gejoined ist
+
+    });
+
+    socket.on('user joined', (lastUserID) => {
+        if (user[roomID] && lastUserID != user[roomID][0]) {
+            console.log("User has joined with ID " + lastUserID)
+            io.emit('user joined', lastUserID);
         }
     });
 
@@ -73,12 +82,10 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', (e) => {
-        console.log('User disconnected: ', e);
-        //delete users[socket.id];
+        user[roomID] = user[roomID].filter(id => id !== socket.id);
         socket.disconnect();
+        console.log('User disconnected: ', e);
     });
-
-
 })
 
 server.listen(7000, () => {
