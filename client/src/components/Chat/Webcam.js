@@ -22,8 +22,36 @@ const Webcam = (props) => {
     const socketRef = useRef();
     const userVideo = useRef();
     const peersRef = useRef([]);
-    var joinRoom = false;
     var userList = [];
+    var i = 0;
+
+    const Container = styled.div`
+    padding: 20px;
+    display: flex;
+    height: 100vh;
+    width: 90%;
+    margin: auto;
+    flex-wrap: wrap;
+`;
+
+    const StyledVideo = styled.video`
+    height: 40%;
+    width: 50%;
+`;
+
+    const Video = (props) => {
+        const ref = useRef();
+
+        useEffect(() => {
+            props.peer.on("stream", stream => {
+                ref.current.srcObject = stream;
+            })
+        }, []);
+
+        return (
+            <StyledVideo playsInline autoPlay ref={ref} />
+        );
+    }
 
     const videoConstraints = {
         height: window.innerHeight / 2,
@@ -34,55 +62,64 @@ const Webcam = (props) => {
         if (socketCtx.socket.connected == true) {
             socketCtx.socket.emit('roomID', (data) => { //roomID wird übermittelt entspricht der ID erstellt durch uuid (konstant) bis zum nächsten Serverneustart
                 roomID = data;
+
             });
 
             socketCtx.socket.emit('client list', (data) => { //übergibt die Userliste an den Client
                 userList = data; //client Liste
+                if (i == 0) {
+                    userID = userList[0];
+                    i++
+                }
                 //console.log(data);
             });
+        }
+        navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
+            console.log("Hier");
+            userVideo.current.srcObject = stream;
 
 
-            socketCtx.socket.on('user joined', (data) => {     //sendet an alle Clients bis uaf den senddenden CLient, dass ein neuer User gejoined ist & die aktualisierte Liste
+            const peers = [];
+            //console.log(socketCtx.socket.id)
+            userList.forEach(userID => {
+                const peer = createPeer(userID, roomID, stream);
+                peersRef.current.push({
+                    peerID: userID,
+                    peer,
+                })
+                peers.push(peer);
+                setPeers(peers);
+            })
+
+
+
+            socketCtx.socket.on('new user', (data) => {     //sendet an alle Clients bis uaf den senddenden CLient, dass ein neuer User gejoined ist & die aktualisierte Liste
                 userID = data.id;
                 userList = data.list;
                 //console.log(userList);
                 console.log("User connected: " + userID);
-            });
 
-        }
-    })
-    //     useEffect(() => {
-    //     navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
-    //             //userVideo.current.srcObject = stream;
+                socketCtx.socket.on("user joined", (payload) => {
+                    const peer = addPeer(payload.signal, payload.callerID, stream);
+                    peersRef.current.push({
+                        peerID: payload.callerID,
+                        peer,
+                    })
 
-    //           /*   socketCtx.socket.emit('user joined', (data) => {
-    //                 userID = data;
-    //                 console.log("New User conected with userID " + userID);
-    //             }) */
+                    setPeers(users => [...users, peer]);
+                });
 
+                socketCtx.socket.on("receiving returned signal", payload => {
+                    const item = peersRef.current.find(p => p.peerID === payload.id);
+                    item.peer.signal(payload.signal);
+                });
 
-    //             socketCtx.socket.on('user-connected', (users) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
-    //                 console.log("User connected: " + userID);           //brauchen statt userId das komplette Array
+            })
+        })
 
+    }, []);
 
-    //                 const peers = [];
-
-    //                 /*    users.array.forEach(userID => {
-    //                        const peer = createPeer(userID, socketRef.current.id, stream);
-    //                        peersRef.current.push({
-    //                            peerID: userID,
-    //                            peer,
-    //                        })
-    //                        peers.push(peer);
-    //                        setPeers(peers);
-    //                    }); */
-    //             });
-
-    //         }, []);
-    //     }
-    // })
-
-    function createPeer(userToSignal, callerId, stream) {       //Erstellen von peer des 1. joinenden Clienten
+    function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer des 1. joinenden Clienten
         const peer = new Peer({
             initiator: true,
             trickle: false,
@@ -91,7 +128,7 @@ const Webcam = (props) => {
         });
 
         peer.on("signal", signal => {
-            socketRef.current.emit("sending signal"(userToSignal))
+            socketCtx.socket.emit("sending signal", (userToSignal, callerID, signal))
         })
 
         return peer;
@@ -105,7 +142,7 @@ const Webcam = (props) => {
         })
 
         peer.on("signal", signal => {
-            socketRef.current.emit("returning signal", { signal, callerID })
+            socketCtx.socket.emit("returning signal", { signal, callerID })
         })
 
         peer.signal(incomingSignal);
@@ -156,10 +193,12 @@ const Webcam = (props) => {
             })}
         </Container> */}
     return (
-        <div>
-            <h1>hha</h1>
-
-        </div>
+        <Container>
+            <StyledVideo muted ref={userVideo} autoplay playsInline />
+            {peers.map((peer, index) => {
+                <Video key={index} peer={peer} />
+            })}
+        </Container>
     );
 
 };

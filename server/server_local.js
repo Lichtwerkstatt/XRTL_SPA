@@ -37,12 +37,18 @@ io.on('connection', socket => {
         lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
 
         if (user[roomID] && lastUserID != user[roomID][0]) {    //Wenn eine zweite, dritte, ... Person joined, wird die aktulaisierte Liste an alle gesendet
-            io.broadcast.emit("user joined", ({ id: lastUserID, list: user[roomID] }));
+            io.broadcast.emit("new user", ({ id: lastUserID, list: user[roomID] }));
             return;     //damit if Bedingung verlassen wird
         }
     });
 
+    socket.on("sending signal", payload => {
+        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
+    });
 
+    socket.on("returning signal", payload => {
+        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
+    });
 
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
