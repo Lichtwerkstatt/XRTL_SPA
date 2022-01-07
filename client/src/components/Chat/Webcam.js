@@ -36,28 +36,21 @@ const Webcam = (props) => {
                 roomID = data;
             });
 
-            socketCtx.socket.emit('client list', (data) => {
+            socketCtx.socket.emit('client list', (data) => { //übergibt die Userliste an den Client
                 userList = data; //client Liste
-                console.log(data);
+                //console.log(data);
             });
 
-            socketCtx.socket.emit('user joined', (userID) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
+
+            socketCtx.socket.on('user joined', (data) => {     //sendet an alle Clients bis uaf den senddenden CLient, dass ein neuer User gejoined ist & die aktualisierte Liste
+                userID = data.id;
+                userList = data.list;
+                //console.log(userList);
                 console.log("User connected: " + userID);
             });
 
-            socketCtx.socket.emit('update userlist', (newUserList) => {     //sendet an alle außerdem dem sendenden Client die Nachricht, dass xy connected hat
-                console.log("New userlist: " + newUserList);
-                userList = newUserList;
-
-            });
-            // console.log("User connected: " + data.id);
-            //     userList = data.list;
-            //     console.log("LISTE "+userList);
-
-
         }
-    }
-    )
+    })
     //     useEffect(() => {
     //     navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
     //             //userVideo.current.srcObject = stream;
@@ -126,7 +119,7 @@ const Webcam = (props) => {
                 partnerVideo.current.srcObject = stream;
                 partnerVideo2.current.srcObject = stream;
             }
-    
+     
         }
         useEffect(() => {
             navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
@@ -136,13 +129,13 @@ const Webcam = (props) => {
                 }
             })
         }, []);
-    
-    
-    
+     
+     
+     
         UserVideo = (
             <video playsInline muted ref={userVideo} autoPlay />
         );
-    
+     
         if (otheruser == true) {
             PartnerVideo = (
                 <video playsInline ref={partnerVideo} autoPlay />
@@ -150,7 +143,7 @@ const Webcam = (props) => {
             PartnerVideo2 = (
                 <video playsInline ref={partnerVideo2} autoPlay />
             );
-    
+     
         } */
 
 

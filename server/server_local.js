@@ -34,26 +34,11 @@ io.on('connection', socket => {
         }
         console.log(user[roomID])
         data(user[roomID]);
-
-        //console.log("user    " + user[roomID]);
         lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
-        //console.log("LasUser " + lastUserID);
 
-        if (user[roomID] && lastUserID != user[roomID][0]) {
-
-            socket.once("user joined", (lastUserID) => {
-                
-                io.emit((lastUserID));
-            });
-
-            /* socket.once("user joined", (userID) =>{
-                userID(lastUserID)
-            });       //gibt an alle aus das ein neuer User oder er gejoined ist
-
-            socket.once("update userlist", (updateUserList) =>{
-                console.log(user[roomID]);
-                updateUserList(user[roomID]);
-            }) */
+        if (user[roomID] && lastUserID != user[roomID][0]) {    //Wenn eine zweite, dritte, ... Person joined, wird die aktulaisierte Liste an alle gesendet
+            io.broadcast.emit("user joined", ({ id: lastUserID, list: user[roomID] }));
+            return;     //damit if Bedingung verlassen wird
         }
     });
 
