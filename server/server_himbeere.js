@@ -28,7 +28,7 @@ function clients_connected() {
     if (io.engine.clientsCount == 0) {
         RGB(1, 0, 0);
     } else {
-        RGB(0, 1, 0)
+        RGB(0, 1, 0);
     }
 }
 
@@ -76,26 +76,26 @@ io.on('connection', socket => {
 
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
-        console.log('User kicked: ', e)
+        console.log('User kicked: ', e);
         clients_connected();
     })
 
     socket.on('message', payload => {
         blink();
-        console.log('Message received on server: ', payload)
-        io.emit('message', payload)
+        console.log('Message received on server: ', payload);
+        io.emit('message', payload);
 
     })
 
     socket.on('Experiment', (experiment) => {
         blink();
-        console.log('Experiment ausgewählt: ', experiment)
+        console.log('Experiment ausgewählt: ', experiment);
     })
 
     socket.on('command', payload => {
         blink();
-        console.log("Command received:", payload)
-        io.emit('control', payload)
+        console.log("Command received:", payload);
+        io.emit('control', payload);
     })
 
 })
