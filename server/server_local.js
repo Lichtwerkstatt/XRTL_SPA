@@ -1,5 +1,3 @@
-const users = {};
-const socketToRoom = {};
 const app = require('express')();
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui')
@@ -23,7 +21,6 @@ io.on('connection', socket => {
     socket.on('roomID', (room) => {
         room(roomID);
         //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
-
     });
 
     socket.on('client list', (data) => {        //übergibt an Client die Liste aller verbundenen Clients
@@ -40,14 +37,17 @@ io.on('connection', socket => {
             io.emit("new user", ({ id: lastUserID, list: user[roomID] }));
             return;     //damit if Bedingung verlassen wird
         }
+
     });
 
     socket.on("sending signal", payload => {
-        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
+        console.log("Sending a signal");
+        io.to(payload.id).emit('user joined', { signal: payload.signal, room: payload.room });
     });
 
     socket.on("returning signal", payload => {
-        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
+        console.log("Returning a signal");
+        io.to(payload.id).emit('receiving returned signal', { signal: payload.signal, id: payload.room });
     });
 
     socket.on('forceDisconnect', (e) => {
@@ -87,5 +87,3 @@ io.on('connection', socket => {
 server.listen(7000, () => {
     console.log('I am listening at port: 7000!');
 })
-
-

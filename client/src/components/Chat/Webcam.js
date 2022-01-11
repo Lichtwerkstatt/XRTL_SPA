@@ -1,10 +1,10 @@
 import { useSocketContext } from '../../services/SocketContext'
 import React, { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
 
 var Peer = require('simple-peer')
 var roomID = '';
-var userID = '';
+var currentUserID = '';
+var lastJoinedUserID = '';
 
 const Webcam = (props) => {
     const socketCtx = useSocketContext();
@@ -12,9 +12,6 @@ const Webcam = (props) => {
     const userVideo = useRef();
     const peersRef = useRef([]);
     var userList = [];
-    var i = 0;
-    var stream;
-
 
     const Video = (props) => {
         const ref = useRef();
@@ -37,79 +34,61 @@ const Webcam = (props) => {
 
     useEffect(() => {
         if (socketCtx.socket.connected == true) {
-
-
-            //stream.stop()
-
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
                 console.log("Hier");
                 userVideo.current.srcObject = stream;
                 socketCtx.socket.emit('roomID', (data) => { //roomID wird übermittelt entspricht der ID erstellt durch uuid (konstant) bis zum nächsten Serverneustart
                     roomID = data;
-
                 });
 
                 socketCtx.socket.emit('client list', (data) => { //übergibt die Userliste an den Client
                     userList = data; //client Liste
-                    if (i == 0) {
-                        userID = userList[0];
-                        i++
-                    }
-
+                    //console.log(userList);
+                    currentUserID = userList[userList.length - 1];
                     const peers = [];
-
-                    userList.forEach(userList => {
-                        const peer = createPeer(userID, roomID, stream);
-                        peersRef.current.push({
-                            peerID: userID,
-                            peer,
-                        })
-                        peers.push(peer);
-                        setPeers(peers);
+                    userList.forEach(lastJoinedUserID => {
+                        if (lastJoinedUserID !== currentUserID) {    //erstelle die Peers von allen Usern außer uns selbst
+                            const peer = createPeer(lastJoinedUserID, currentUserID, stream);
+                            peersRef.current.push({
+                                peerID: lastJoinedUserID,
+                                peer,
+                            });
+                            peers.push(peer);
+                        } else {
+                            lastJoinedUserID = currentUserID;       //setze die eigene ID
+                        }
                     })
-                    console.log(peers);
+                    setPeers(peers);
                 });
 
+            
                 socketCtx.socket.on('new user', (data) => {     //sendet an alle Clients bis uaf den senddenden CLient, dass ein neuer User gejoined ist & die aktualisierte Liste
-                    userID = data.id;
+                    lastJoinedUserID = data.id;
                     userList = data.list;
-                    //console.log(userList);
-                    console.log("User connected: " + userID);
+                    //console.log("User connected: " + lastJoinedUserID);
 
                     socketCtx.socket.on("user joined", (payload) => {
-                        const peer = addPeer(payload.signal, payload.callerID, stream);
+                        console.log("user joined??")
+                        const peer = addPeer(payload.signal, payload.currentUserID, stream);
                         peersRef.current.push({
-                            peerID: payload.callerID,
+                            peerID: payload.currentUserID,
                             peer,
-                        })
+                        });
 
-                        setPeers(users => [...users, peer]);
+                        setPeers(user => [...user, peer]);
+                        console.log("Peers 2");
+                        console.log(peers);
                     });
-                    console.log("Peers 2" + peers);
-
-                    socketCtx.socket.on("receiving returned signal", payload => {
-                        const item = peersRef.current.find(p => p.peerID === payload.id);
-                        item.peer.signal(payload.signal);
-                    });
-
-                })
+                });
+                socketCtx.socket.on("receiving returned signal", payload => {
+                    const item = peersRef.current.find(p => p.peerID === payload.id);
+                    item.peer.signal(payload.signal);
+                });
             })
         }
-        
-       
-      
     }, []);
-    useEffect(() => {
-        if(socketCtx.socket.connected == false && stream){
-            console.log("fall2");
-            stream.getTracks().forEach(function(track) {
-                track.stop();
-              });
-        }
-       
-    }, [])
 
-    function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer des 1. joinenden Clienten
+    function createPeer(lastJoinedUserID, currentUserID, stream) {       //Erstellen von peer des 1. joinenden Clienten
         const peer = new Peer({
             initiator: true,
             trickle: false,
@@ -117,29 +96,32 @@ const Webcam = (props) => {
 
         });
 
-        peer.on("signal", signal => {
-            socketCtx.socket.emit("sending signal", (userToSignal, callerID, signal))
-        })
 
+        peer.on("signal", signal => {
+            //console.log("signal");
+            //console.log({ id: lastJoinedUserID, room: currentUserID, signal: signal });
+            //socketCtx.socket.emit("sending signal", ({ id: lastJoinedUserID, room: currentUserID, signal: signal }));
+        })
         return peer;
     }
 
-    function addPeer(incomingSignal, callerID, stream) {        //erstellt peers für alle folgenden joinenden Clienten 
+    function addPeer(lastJoinedUserID, currentUserID, stream) {        //erstellt peers für alle folgenden joinenden Clienten 
+        console.log("addPeer???");
         const peer = new Peer({
             initiator: false,
             trickle: false,
             stream,
-        })
+        });
 
         peer.on("signal", signal => {
-            socketCtx.socket.emit("returning signal", { signal, callerID })
-        })
+            //console.log("signalll 2");
+            // socketCtx.socket.emit("returning signal", { signal: signal, room: currentUserID, id: currentUserID });
+        });
 
-        peer.signal(incomingSignal);
-
+        peer.signal(lastJoinedUserID);
         return peer;
     }
-    
+
     return (
         <div>
             <video muted ref={userVideo} autoPlay playsInline />
