@@ -20,13 +20,13 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 io.on('connection', socket => {
     console.log('connection made successfully');
 
-    socket.once('roomID', (room) => {
+    socket.on('roomID', (room) => {
         room(roomID);
         //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
 
     });
 
-    socket.once('client list', (data) => {        //übergibt an Client die Liste aller verbundenen Clients
+    socket.on('client list', (data) => {        //übergibt an Client die Liste aller verbundenen Clients
         if (user[roomID] && user[roomID].includes(socket.id) == false) {
             user[roomID].push(socket.id);
         } else {
@@ -37,7 +37,7 @@ io.on('connection', socket => {
         lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
 
         if (user[roomID] && lastUserID != user[roomID][0]) {    //Wenn eine zweite, dritte, ... Person joined, wird die aktulaisierte Liste an alle gesendet
-            io.broadcast.emit("new user", ({ id: lastUserID, list: user[roomID] }));
+            io.emit("new user", ({ id: lastUserID, list: user[roomID] }));
             return;     //damit if Bedingung verlassen wird
         }
     });
@@ -75,9 +75,12 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', (e) => {
-        user[roomID] = user[roomID].filter(id => id !== socket.id);
+        if (user[roomID]) {
+            user[roomID] = user[roomID].filter(id => id !== socket.id);
+        }
         socket.disconnect();
         console.log('User disconnected: ', e);
+
     });
 })
 
