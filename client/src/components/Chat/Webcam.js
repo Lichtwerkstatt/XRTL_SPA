@@ -43,9 +43,6 @@ const Webcam = () => {
     const peersRef = useRef([]);
     var userList = [];
 
-
-
-
     const videoConstraints = {
         height: 300,
         width: 300,
@@ -97,6 +94,7 @@ const Webcam = () => {
                         console.log(peers);
                     });
                 });
+
                 socketCtx.socket.on("receiving returned signal", payload => {
                     const item = peersRef.current.find(p => p.peerID === payload.id);
                     item.peer.signal(payload.signal);
@@ -105,12 +103,12 @@ const Webcam = () => {
 
         }
     }, [appCtx.showWebcam])
+
     function createPeer(lastJoinedUserID, currentUserID, stream) {       //Erstellen von peer des 1. joinenden Clienten
         const peer = new Peer({
             initiator: true,
             trickle: false,
             stream,
-
         });
 
         peer.on("signal", signal => {
@@ -131,9 +129,9 @@ const Webcam = () => {
 
         peer.on("signal", signal => {
             //console.log("signalll 2");
-            socketCtx.socket.emit("returning signal", { signal: signal, room: currentUserID, id: currentUserID });
+            socketCtx.socket.emit("returning signal", { signal: signal, room: lastJoinedUserID, stream: stream });  //hier stimmt irgendwas noch nicht ganz
         });
-
+        console.log(peers.map);
         peer.signal(lastJoinedUserID);
         return peer;
     }
