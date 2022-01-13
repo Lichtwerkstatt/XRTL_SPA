@@ -10,15 +10,15 @@ import Cam from "./components/Chat/Webcam";
 
 const App = () => {
 
-   return (
+  return (
     <AppContextProvider>
       <SocketContextProvider>
-        <Cam/>
-{/*         <VirtualLayer/> 
+        {/*         <VirtualLayer/> 
         <ExperimentUILayer />
       <Chat />  */}
+        <Cam />
         <Console />
-        <NavBar/>
+        <NavBar />
       </SocketContextProvider>
     </AppContextProvider>
   );

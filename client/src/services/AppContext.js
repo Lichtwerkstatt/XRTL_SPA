@@ -9,6 +9,7 @@ export function useAppContext() {
 export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [showWebcam, setShowWebcam] = useState(false);
   const [selectedComps, setSelectedComps] = useState(new Set())
   const [busyComps, setBusyComps] = useState(new Set())
   const [logs, setLogs] = useState([])
@@ -19,32 +20,34 @@ export function AppContextProvider({ children }) {
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
     }
-  }
+  };
 
   const addBusyComp = compId => {
     if (!busyComps.has(compId)) {
       setBusyComps(prev => new Set(prev.add(compId)))
     }
-  }
+  };
 
   const removeBusyComp = compId => {
     if (busyComps.has(compId)) {
       setBusyComps(prev => new Set([...prev].filter(x => x !== compId)))
     }
-  }
+  };
 
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
   };
+
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
 
   const addLog = (log) => {
     setLogs(prev => [log, ...prev])
-  }
-  const createRoom = (props) => {
+  };
 
+  const toggleShowWebcam = () => {
+    setShowWebcam(!showWebcam);
   };
 
   return (
@@ -61,7 +64,8 @@ export function AppContextProvider({ children }) {
         busyComps,
         addBusyComp,
         removeBusyComp,
-        createRoom,
+        showWebcam,
+        toggleShowWebcam,
       }}
     >
       {children}

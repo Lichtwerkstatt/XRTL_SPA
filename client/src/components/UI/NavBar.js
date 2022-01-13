@@ -12,8 +12,10 @@ const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
-    let connectionStatusColor = ""
+    let connectionStatusColor = "";
+    let cameraStatusColor = "";
     if (socketCtx.connected) { connectionStatusColor = "white" }
+    if (appCtx.showWebcam) { cameraStatusColor = "white" }
 
     return <div id="navbar" className={styles.navbar} >
         <h1>XR Remote Lab</h1>
@@ -24,13 +26,10 @@ const NavBar = () => {
                 <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
                 <li><GiLaserWarning size={29} /></li>
                 <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} /></li>
-                <li onClick={appCtx.createRoom}><BsCamera size={26} /></li>
+                <li onClick={appCtx.toggleShowWebcam}><BsCamera size={26}
+                    color={cameraStatusColor} /></li>
             </ul>
         </div>
-
     </div>
-
-
 }
-
 export default NavBar

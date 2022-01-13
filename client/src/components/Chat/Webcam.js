@@ -1,31 +1,50 @@
 import { useSocketContext } from '../../services/SocketContext'
 import React, { useRef, useEffect, useState } from "react";
-
+import { useAppContext } from "../../services/AppContext";
+import styled from "styled-components";
 var Peer = require('simple-peer')
 var roomID = '';
 var currentUserID = '';
 var lastJoinedUserID = '';
 
-const Webcam = (props) => {
+const Container = styled.div`
+    padding: 20px;
+    display: flex;
+    height: 100vh;
+    width: 90%;
+    margin: auto;
+    flex-wrap: wrap;
+`;
+
+const StyledVideo = styled.video`
+    height: 40%;
+    width: 50%;
+`;
+
+const Video = (props) => {
+    const ref = useRef();
+
+    useEffect(() => {
+        props.peer.on("stream", stream => {
+            ref.current.srcObject = stream;
+        })
+    }, []);
+
+    return (
+        <StyledVideo playsInline autoPlay ref={ref} />
+    );
+}
+
+const Webcam = () => {
     const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
     const [peers, setPeers] = useState([]);
     const userVideo = useRef();
     const peersRef = useRef([]);
     var userList = [];
 
-    const Video = (props) => {
-        const ref = useRef();
 
-        useEffect(() => {
-            props.peer.on("stream", stream => {
-                ref.current.srcObject = stream;
-            })
-        }, []);
 
-        return (
-            <video playsInline autoPlay ref={ref} />
-        );
-    }
 
     const videoConstraints = {
         height: 300,
@@ -33,9 +52,8 @@ const Webcam = (props) => {
     };
 
     useEffect(() => {
-        if (socketCtx.socket.connected == true) {
+        if (appCtx.showWebcam) {
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
-                console.log("Hier");
                 userVideo.current.srcObject = stream;
                 socketCtx.socket.emit('roomID', (data) => { //roomID wird übermittelt entspricht der ID erstellt durch uuid (konstant) bis zum nächsten Serverneustart
                     roomID = data;
@@ -61,7 +79,6 @@ const Webcam = (props) => {
                     setPeers(peers);
                 });
 
-            
                 socketCtx.socket.on('new user', (data) => {     //sendet an alle Clients bis uaf den senddenden CLient, dass ein neuer User gejoined ist & die aktualisierte Liste
                     lastJoinedUserID = data.id;
                     userList = data.list;
@@ -85,9 +102,9 @@ const Webcam = (props) => {
                     item.peer.signal(payload.signal);
                 });
             })
-        }
-    }, []);
 
+        }
+    }, [appCtx.showWebcam])
     function createPeer(lastJoinedUserID, currentUserID, stream) {       //Erstellen von peer des 1. joinenden Clienten
         const peer = new Peer({
             initiator: true,
@@ -96,11 +113,10 @@ const Webcam = (props) => {
 
         });
 
-
         peer.on("signal", signal => {
             //console.log("signal");
             //console.log({ id: lastJoinedUserID, room: currentUserID, signal: signal });
-            //socketCtx.socket.emit("sending signal", ({ id: lastJoinedUserID, room: currentUserID, signal: signal }));
+            socketCtx.socket.emit("sending signal", ({ id: lastJoinedUserID, room: currentUserID, signal: signal }));
         })
         return peer;
     }
@@ -115,21 +131,27 @@ const Webcam = (props) => {
 
         peer.on("signal", signal => {
             //console.log("signalll 2");
-            // socketCtx.socket.emit("returning signal", { signal: signal, room: currentUserID, id: currentUserID });
+            socketCtx.socket.emit("returning signal", { signal: signal, room: currentUserID, id: currentUserID });
         });
 
         peer.signal(lastJoinedUserID);
         return peer;
     }
-
-    return (
-        <div>
-            <video muted ref={userVideo} autoPlay playsInline />
-            {peers.map((peer, index) => {
-                <Video key={index} peer={peer} />
-            })}
-        </div>
-    );
-
+    if (appCtx.showWebcam) {
+        return (
+            <Container>
+                <StyledVideo muted ref={userVideo} autoPlay playsInline />
+                {peers.map((peer, index) => {
+                    return (
+                        <Video key={index} peer={peer} />
+                    );
+                })}
+            </Container>
+        );
+    }
+    else {
+        return <></>;
+    }
 };
+
 export default Webcam;
