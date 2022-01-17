@@ -42,12 +42,12 @@ io.on('connection', socket => {
 
     socket.on("sending signal", payload => {
         console.log("Sending a signal");
-        io.to(payload.id).emit('user joined', { signal: payload.signal, room: payload.room });
+        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
     });
 
     socket.on("returning signal", payload => {
         console.log("Returning a signal");
-        io.to(payload.id).emit('receiving returned signal', { signal: payload.signal, id: payload.room });
+        io.to(payload.userToSignal).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
     socket.on('forceDisconnect', (e) => {

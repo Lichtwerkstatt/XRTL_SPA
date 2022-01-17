@@ -44,8 +44,8 @@ const Webcam = () => {
     var userList = [];
 
     const videoConstraints = {
-        height: 300,
-        width: 300,
+        height: window.innerHeight / 2,
+        width: window.innerWidth / 2
     };
 
     useEffect(() => {
@@ -83,9 +83,9 @@ const Webcam = () => {
 
                     socketCtx.socket.on("user joined", (payload) => {
                         console.log("user joined??")
-                        const peer = addPeer(payload.signal, payload.currentUserID, stream);
+                        const peer = addPeer(payload.signal, payload.callerID, stream);
                         peersRef.current.push({
-                            peerID: payload.currentUserID,
+                            peerID: payload.callerID,
                             peer,
                         });
 
@@ -104,7 +104,7 @@ const Webcam = () => {
         }
     }, [appCtx.showWebcam])
 
-    function createPeer(lastJoinedUserID, currentUserID, stream) {       //Erstellen von peer des 1. joinenden Clienten
+    function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer des 1. joinenden Clienten
         const peer = new Peer({
             initiator: true,
             trickle: false,
@@ -114,12 +114,12 @@ const Webcam = () => {
         peer.on("signal", signal => {
             //console.log("signal");
             //console.log({ id: lastJoinedUserID, room: currentUserID, signal: signal });
-            socketCtx.socket.emit("sending signal", ({ id: lastJoinedUserID, room: currentUserID, signal: signal }));
+            socketCtx.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
         })
         return peer;
     }
 
-    function addPeer(lastJoinedUserID, currentUserID, stream) {        //erstellt peers für alle folgenden joinenden Clienten 
+    function addPeer(incomingSignal, callerID, stream) {        //erstellt peers für alle folgenden joinenden Clienten 
         console.log("addPeer???");
         const peer = new Peer({
             initiator: false,
@@ -129,10 +129,10 @@ const Webcam = () => {
 
         peer.on("signal", signal => {
             //console.log("signalll 2");
-            socketCtx.socket.emit("returning signal", { signal: signal, room: lastJoinedUserID, stream: stream });  //hier stimmt irgendwas noch nicht ganz
+            socketCtx.socket.emit("returning signal", { signal, callerID });  //hier stimmt irgendwas noch nicht ganz
         });
         console.log(peers.map);
-        peer.signal(lastJoinedUserID);
+        peer.signal(incomingSignal);
         return peer;
     }
     if (appCtx.showWebcam) {
