@@ -50,17 +50,18 @@ const Webcam = () => {
 
     useEffect(() => {
         if (appCtx.showWebcam) {
-            navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
+            navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false }).then(stream => {     //audio: true
                 userVideo.current.srcObject = stream;
-                socketCtx.socket.emit('roomID', (data) => { //roomID wird übermittelt entspricht der ID erstellt durch uuid (konstant) bis zum nächsten Serverneustart
-                    roomID = data;
-                });
+                // socketCtx.socket.emit('roomID', (data) => { //roomID wird übermittelt entspricht der ID erstellt durch uuid (konstant) bis zum nächsten Serverneustart
+                //   roomID = data;
+                //});
 
                 socketCtx.socket.emit('client list', (data) => { //übergibt die Userliste an den Client
                     userList = data; //client Liste
-                    //console.log(userList);
                     currentUserID = userList[userList.length - 1];
+
                     const peers = [];
+
                     userList.forEach(lastJoinedUserID => {
                         if (lastJoinedUserID !== currentUserID) {    //erstelle die Peers von allen Usern außer uns selbst
                             const peer = createPeer(lastJoinedUserID, currentUserID, stream);
@@ -69,20 +70,20 @@ const Webcam = () => {
                                 peer,
                             });
                             peers.push(peer);
-                        } else {
-                            lastJoinedUserID = currentUserID;       //setze die eigene ID
                         }
                     })
+                    console.log("Peers");
+                    console.log(peers);
                     setPeers(peers);
                 });
+
 
                 socketCtx.socket.on('new user', (data) => {     //sendet an alle Clients bis uaf den senddenden CLient, dass ein neuer User gejoined ist & die aktualisierte Liste
                     lastJoinedUserID = data.id;
                     userList = data.list;
-                    //console.log("User connected: " + lastJoinedUserID);
+                    console.log("User connected: " + lastJoinedUserID);
 
                     socketCtx.socket.on("user joined", (payload) => {
-                        console.log("user joined??")
                         const peer = addPeer(payload.signal, payload.callerID, stream);
                         peersRef.current.push({
                             peerID: payload.callerID,
@@ -90,15 +91,20 @@ const Webcam = () => {
                         });
 
                         setPeers(user => [...user, peer]);
-                        console.log("Peers 2");
-                        console.log(peers);
                     });
                 });
-
                 socketCtx.socket.on("receiving returned signal", payload => {
-                    const item = peersRef.current.find(p => p.peerID === payload.id);
+                    var item = peersRef.current.find(p => p.peerID === payload.id);
+
+                    console.log("Item")
+                    console.log(item);
+                    //console.log(item.peer.signal(payload.signal));
+
                     item.peer.signal(payload.signal);
+
+
                 });
+
             })
 
         }
@@ -112,15 +118,13 @@ const Webcam = () => {
         });
 
         peer.on("signal", signal => {
-            //console.log("signal");
-            //console.log({ id: lastJoinedUserID, room: currentUserID, signal: signal });
+            console.log("sendet Signal");
             socketCtx.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
         })
         return peer;
     }
 
     function addPeer(incomingSignal, callerID, stream) {        //erstellt peers für alle folgenden joinenden Clienten 
-        console.log("addPeer???");
         const peer = new Peer({
             initiator: false,
             trickle: false,
@@ -128,10 +132,9 @@ const Webcam = () => {
         });
 
         peer.on("signal", signal => {
-            //console.log("signalll 2");
+            console.log("returnt SIgnal");
             socketCtx.socket.emit("returning signal", { signal, callerID });  //hier stimmt irgendwas noch nicht ganz
         });
-        console.log(peers.map);
         peer.signal(incomingSignal);
         return peer;
     }

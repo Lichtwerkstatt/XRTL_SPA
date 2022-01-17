@@ -1,6 +1,7 @@
 const app = require('express')();
 const server = require('http').createServer(app)
-const { instrument } = require('@socket.io/admin-ui')
+const { instrument } = require('@socket.io/admin-ui');
+const { log } = require('console');
 const io = require('socket.io')(server, {
     cors: {
         origin: '*'
@@ -42,12 +43,15 @@ io.on('connection', socket => {
 
     socket.on("sending signal", payload => {
         console.log("Sending a signal");
+        console.log("Usertosignale");
+        console.log(payload.userToSignal)
         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
     });
 
     socket.on("returning signal", payload => {
-        console.log("Returning a signal");
-        io.to(payload.userToSignal).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
+        console.log("CallerId");
+        console.log(payload.callerID);
+        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
     socket.on('forceDisconnect', (e) => {
