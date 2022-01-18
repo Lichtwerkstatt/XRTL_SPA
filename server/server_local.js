@@ -1,6 +1,6 @@
 const app = require('express')();
 const server = require('http').createServer(app)
-const { instrument } = require('@socket.io/admin-ui');
+//const { instrument } = require('@socket.io/admin-ui');
 const { log } = require('console');
 const io = require('socket.io')(server, {
     cors: {
@@ -9,48 +9,40 @@ const io = require('socket.io')(server, {
 })
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
-const user = {};
+const users = {};
+const socketToRoom = {};
 var lastUserID = '';
 
-instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
+//instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
 io.on('connection', socket => {
     console.log('connection made successfully');
-
-    socket.on('roomID', (room) => {
+    socket.once('roomID', (room) => {
         room(roomID);
         //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
     });
 
-    socket.on('client list', (data) => {        //übergibt an Client die Liste aller verbundenen Clients
-        if (user[roomID] && user[roomID].includes(socket.id) == false) {
-            user[roomID].push(socket.id);
+    socket.on("client join room", roomID => {
+        if (users[roomID]) {
+            users[roomID].push(socket.id);
         } else {
-            user[roomID] = [socket.id];
+            users[roomID] = [socket.id];
         }
-        console.log(user[roomID])
-        data(user[roomID]);
-        lastUserID = user[roomID][user[roomID].length - 1];        //bestimmt aus dem Array user den letzten gejoined user
+        socketToRoom[socket.id] = roomID;
+        const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
 
-        if (user[roomID] && lastUserID != user[roomID][0]) {    //Wenn eine zweite, dritte, ... Person joined, wird die aktulaisierte Liste an alle gesendet
-            socket.broadcast.emit("new user", ({ id: lastUserID, list: user[roomID] }));
-            return;     //damit if Bedingung verlassen wird
-        }
-
+        socket.emit("all users", usersInThisRoom);
     });
 
     socket.on("sending signal", payload => {
         console.log("Sending a signal");
-        console.log("Usertosignale");
-        console.log(payload.userToSignal)
         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
     });
 
     socket.on("returning signal", payload => {
-        console.log("CallerId");
-        console.log(payload.callerID);
+        console.log("Returing a signal");
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
@@ -79,9 +71,13 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', (e) => {
-        if (user[roomID]) {
-            user[roomID] = user[roomID].filter(id => id !== socket.id);
+        const roomID = socketToRoom[socket.id];
+        let room = users[roomID];
+        if (room) {
+            room = room.filter(id => id !== socket.id);
+            users[roomID] = room;
         }
+        console.log(users[roomID]);
         socket.disconnect();
         console.log('User disconnected: ', e);
 
