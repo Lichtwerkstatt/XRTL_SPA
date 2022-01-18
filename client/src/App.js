@@ -13,9 +13,9 @@ const App = () => {
   return (
     <AppContextProvider>
       <SocketContextProvider>
-        {/*         <VirtualLayer/> 
+        <VirtualLayer />
         <ExperimentUILayer />
-      <Chat />  */}
+        <Chat />
         <Cam />
         <Console />
         <NavBar />
