@@ -1,6 +1,7 @@
 import { useSocketContext } from '../../services/SocketContext'
 import React, { useRef, useEffect, useState } from "react";
 import { useAppContext } from "../../services/AppContext";
+import styles  from "./Webcam.module.css";
 var Peer = require('simple-peer');
 var roomID = '';
 
@@ -14,7 +15,7 @@ const Video = (props) => {
     }, []);
 
     return (
-        <video playsInline autoPlay ref={ref} />
+        <video  playsInline autoPlay ref={ref} />
     );
 }
 
@@ -99,8 +100,8 @@ const Webcam = () => {
     }
     if (appCtx.showWebcam) {
         return (
-            <div className='webcamDiv'>
-                <video muted ref={userVideo} autoPlay playsInline />
+            <div className={styles.webcamDiv}>
+                <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />
                 {peers.map((peer, index) => {
                     return (
                         <Video key={index} peer={peer} />

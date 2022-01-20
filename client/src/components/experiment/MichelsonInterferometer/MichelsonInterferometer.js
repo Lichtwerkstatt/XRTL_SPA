@@ -1,5 +1,7 @@
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
+import Cam1 from "../../assembly/Stream";
+
 
 const MichelsonInterferometer = (props) => {
   return (
@@ -30,6 +32,15 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Mirror Stage"
           id="SM1ZP_1"
+          rotation="0"
+          top="200"
+          left="820"
+        />
+      )}
+      {props.selected.has("Cam_1") && (
+        <Cam1
+          title="Camera 1"
+          id="Cam_1"
           rotation="0"
           top="200"
           left="820"

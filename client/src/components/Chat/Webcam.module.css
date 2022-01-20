@@ -1,5 +1,5 @@
-.div.webcamDiv{
-    padding: 20px;
+div.webcamDiv {
+    padding-left: 10px;
     display: flex;
     height: 100%;
     width: 100%;
@@ -7,7 +7,11 @@
     flex-wrap: wrap;
 }
 
-video{
-    height: 40%;
-    width: 50%;
+video {
+    margin-left: 10px;
+    margin-top: 40px;
+    width: 240px;
+    box-shadow: 0px 0px 10px rgb(0, 100, 0, 0.5);
+    border-radius: 20px;
+
 }
