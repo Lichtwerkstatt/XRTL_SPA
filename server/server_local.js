@@ -36,6 +36,11 @@ io.on('connection', socket => {
         socket.emit("all users", usersInThisRoom);
     });
 
+    socket.on("Client list", roomID =>{
+        const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+        socket.emit("all users ExperimentCam", usersInThisRoom);
+    } )
+
     socket.on("sending signal", payload => {
         console.log("Sending a signal");
         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
