@@ -13,8 +13,8 @@ const MichelsonInterferometer = (props) => {
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
-          top="200"
-          left="20"
+          top="50"
+          left="50"
         />
       )}
       {props.selected.has("KM100_2") && (
@@ -24,7 +24,7 @@ const MichelsonInterferometer = (props) => {
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
-          top="200"
+          top="100"
           left="520"
         />
       )}
@@ -33,17 +33,29 @@ const MichelsonInterferometer = (props) => {
           title="Mirror Stage"
           id="SM1ZP_1"
           rotation="0"
-          top="200"
-          left="820"
+          top="400"
+          left="100"
         />
       )}
-      {props.selected.has("Cam_1") && (
+      {props.selected.has("Laser") && (
+        <KM100
+          title="Laser"
+          id="Laser"
+          rotationTop="0"
+          rotationBottom="0"
+          footer="Initializing..."
+          top="50"
+          left="350"
+        />
+      )}
+
+      {props.selected.has("Screen") && (
         <Cam1
-          title="Camera 1"
-          id="Cam_1"
+          title="Screen"
+          id="Screen"
           rotation="0"
-          top="200"
-          left="820"
+          top="50"
+          left="1600"
         />
       )}
     </div>

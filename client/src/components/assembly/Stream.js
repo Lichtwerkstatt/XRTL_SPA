@@ -1,41 +1,36 @@
-import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
-import { useEffect } from "react";
-
-
-
+import { useEffect, useRef } from "react";
 
 const Stream = (props) => {
   const appCtx = useAppContext()
+  const cam_1 = useRef();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
 
-/*   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ audio: false }).then(stream => {
-      experimentCam1.current.srcObject = stream;
+  useEffect(() => {
+    const videoConstraints = {
+      height: 150,
+      width: 250
+    };
+    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false }).then(stream => {
+      cam_1.current.srcObject = stream;
     })
-  }, []) */
+  }, [])
 
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
       top={props.top}
       left={props.left}
-      width="250px"
-      height="150px"
+      width="300px"
+      height="250px"
       onClose={handleCloseWindow}
     >
-      {/* <video className={styles.videoSt} muted ref={experimentCam1} autoPlay playsInline /> */}
-      <RotaryCtrl
-        rotation={props.rotation}
-        component={props.id}
-        control="pos"
-        top="35"
-        left="150"
-      />
+      <video ref={cam_1} playsInline autoPlay />
+
     </Window>
   );
 };

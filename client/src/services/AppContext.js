@@ -69,7 +69,7 @@ export function AppContextProvider({ children }) {
         addBusyComp,
         removeBusyComp,
         showTags,
-        toggleShowTags
+        toggleShowTags,
         showWebcam,
         toggleShowWebcam,
       }}

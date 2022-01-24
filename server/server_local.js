@@ -53,7 +53,7 @@ io.on('connection', socket => {
 
     socket.on('message', payload => {
         console.log('Message received on server: ', payload)
-        io.broadcast.emit('message', payload)
+        io.emit('message', payload)
     });
 
     socket.on('Experiment', (experiment) => {
