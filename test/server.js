@@ -17,10 +17,9 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', function (socket) {
-  socket.on('pic', (path) => {
-    fs.readFile(file, function (err, buffer) {
-      socket.emit('image', { buffer: buffer });
-    });
+  socket.on('pic', (image) => {
+       socket.emit('pic', (image));
+
   })
 });
 
