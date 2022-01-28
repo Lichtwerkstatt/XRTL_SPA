@@ -8,6 +8,7 @@ const io = require('socket.io')(server, {
     }
 })
 const { v4: uuidv4 } = require('uuid');
+const fs =require('fs');
 const roomID = uuidv4();
 const users = {};
 const socketToRoom = {};
@@ -19,6 +20,8 @@ var lastUserID = '';
 
 io.on('connection', socket => {
     console.log('connection made successfully');
+
+    //Following are for handshakes for the video chat
     socket.once('roomID', (room) => {
         room(roomID);
         //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
@@ -36,10 +39,10 @@ io.on('connection', socket => {
         socket.emit("all users", usersInThisRoom);
     });
 
-    socket.on("Client list", roomID =>{
+    socket.on("Client list", roomID => {
         const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
         socket.emit("all users ExperimentCam", usersInThisRoom);
-    } )
+    })
 
     socket.on("sending signal", payload => {
         console.log("Sending a signal");
@@ -56,11 +59,43 @@ io.on('connection', socket => {
         console.log('User kicked: ', e)
     });
 
+    //Handshake to handle the chat messages
     socket.on('message', payload => {
         console.log('Message received on server: ', payload)
         io.emit('message', payload)
     });
 
+    socket.on("pic", (data)=>{
+        var readStrem = fs.createReadStream(path.resolve(__dirname, '/eich.jpg'),{
+            encoding: 'binary'
+        }), chunks=[];
+
+        readStrem.on('readable', () =>{
+            console.log('Image loeading');
+        });
+
+        readStrem.on('data', (chunk)=>{
+            chunks.push(chunk);
+            socket.emit('img-chunk', chunk);
+        });
+
+        readStrem.on('end',() =>{
+            console.log('Image loaded');
+        });
+    });
+
+
+    //Handshakes for the experiment cameras
+    socket.on("camera", (data => {
+        const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+        socket.broadcast("camera", data);
+    }));
+
+    socket.on("error", (error) => {
+        console.error("Socket.io error observed: ", error);
+    });
+
+    //kann das weg?
     socket.on('Experiment', (experiment) => {
         console.log('Experiment ausgewählt: ', experiment)
     });
