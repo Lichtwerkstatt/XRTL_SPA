@@ -16,11 +16,10 @@ app.get('/', (req, res) => {
 });
 
 
-io.on('connection', function (socket) {
-  socket.on('pic', (image) => {
-       socket.emit('pic', (image));
-
-  })
+io.on('connection', function(socket){
+  fs.readFile('./eich.jpg', function(err, buffer){
+      socket.emit('image', { buffer: buffer });
+  });
 });
 
 server.listen(4000, () => {
