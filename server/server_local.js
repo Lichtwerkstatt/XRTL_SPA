@@ -41,7 +41,7 @@ io.on('connection', socket => {
 
     socket.on("Client list", roomID => {
         const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-        socket.emit("all users ExperimentCam", usersInThisRoom);
+        socket.emit("Client list", usersInThisRoom);
     })
 
     socket.on("sending signal", payload => {
