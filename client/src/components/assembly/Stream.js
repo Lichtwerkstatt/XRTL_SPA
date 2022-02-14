@@ -8,23 +8,10 @@ const Stream = (props) => {
   const appCtx = useAppContext()
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id);
-/*     socketCtx.socket.emit("command", {
-      userId: "user123",
-      componentId: props.component,
-      controlId: props.control,
-      command: "stopESP"
-    }); */
+    appCtx.toggleSelectedComp(props.id)
   }
 
   useEffect(() => {
-/*     socketCtx.socket.emit("command", {
-      userId: "user123",
-      componentId: props.component,
-      controlId: props.control,
-      command: "startESP"
-    }); */
-
     socketCtx.socket.on('pic', function (data) {
       var uint8Arr = new Uint8Array(data.buffer);
       var binary = '';
@@ -42,7 +29,7 @@ const Stream = (props) => {
       }
       img.src = 'data:image/jpg;base64,' + base64String;
     });
-  }, [])
+  }, [socketCtx.socket])
 
   return (
     <Window
