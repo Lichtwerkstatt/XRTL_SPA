@@ -8,7 +8,7 @@ const io = require('socket.io')(server, {
     }
 })
 const { v4: uuidv4 } = require('uuid');
-const fs =require('fs');
+const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
 const socketToRoom = {};
@@ -65,25 +65,9 @@ io.on('connection', socket => {
         io.emit('message', payload)
     });
 
-    socket.on("pic", (data)=>{
-        var readStrem = fs.createReadStream(path.resolve(__dirname, '/eich.jpg'),{
-            encoding: 'binary'
-        }), chunks=[];
-
-        readStrem.on('readable', () =>{
-            console.log('Image loeading');
-        });
-
-        readStrem.on('data', (chunk)=>{
-            chunks.push(chunk);
-            socket.emit('img-chunk', chunk);
-        });
-
-        readStrem.on('end',() =>{
-            console.log('Image loaded');
-        });
+    socket.on('pic', (data) => {
+        socket.broadcast.emit('pic', { buffer: data.image });
     });
-
 
     //Handshakes for the experiment cameras
     socket.on("camera", (data => {
