@@ -35,8 +35,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("KM100_1");
         }}
       >
-   
-        {props.showTags && <DescriptiveTag position={[0,1,0]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
+
+        {props.showTags && <DescriptiveTag position={[0, 1, 0]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
         <mesh
           geometry={nodes.SideMirrorMesh.geometry}
           material={nodes.SideMirrorMesh.material}
@@ -64,8 +64,8 @@ export default function Model({ ...props }) {
           props.toggleSelect("SM1ZP_1");
         }}
       >
-        {props.showTags && <DescriptiveTag position={[0,1,0]} title="Translate Mirror" description="KM100 Single Rotary Control" />}
-        
+        {props.showTags && <DescriptiveTag position={[0, 1, 0]} title="Translate Mirror" description="KM100 Single Rotary Control" />}
+
         <mesh
           geometry={nodes.TranslateMirrorMesh.geometry}
           material={nodes.TranslateMirrorMesh.material}
@@ -89,11 +89,11 @@ export default function Model({ ...props }) {
         position={[-0.62, 0.86, -1.22]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("EDU-VS1_1");
+          props.toggleSelect("Screen");
         }}
       >
-        {props.showTags &&<DescriptiveTag position={[0,1,0]} title="Screen"/>}
-        
+        {props.showTags && <DescriptiveTag position={[0, 1, 0]} title="Screen" />}
+
         <mesh
           geometry={nodes.PlaneMesh.geometry}
           material={materials.WhiteParts}
@@ -123,13 +123,13 @@ export default function Model({ ...props }) {
         position={[1.56, 0.67, 0.14]}
         rotation={[Math.PI / 2, 0, -Math.PI / 2]}
         onPointerDown={(e) => {
-          console.log("Clicked on KM100_1")
+          console.log("Clicked on laser")
           e.stopPropagation()
-          props.toggleSelect("KM100_2")
+          props.toggleSelect("Laser")
         }}
       >
-        {props.showTags &&<DescriptiveTag position={[0,0,-1]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
-        
+        {props.showTags && <DescriptiveTag position={[0, 0, -1]} title="Laser Alignment" />}
+
         <mesh
           geometry={nodes.LaserMesh.geometry}
           material={nodes.LaserMesh.material}
@@ -148,16 +148,16 @@ export default function Model({ ...props }) {
         material={nodes.SD5.material}
         position={[1.61, 0.25, -0.9]}
         onPointerDown={(e) => {
-          console.log("Clicked on KM100_1")
+          console.log("Clicked on LaserPower")
           e.stopPropagation()
           props.toggleSelect("LaserPower")
         }}
       >
-         {props.selected.has("LaserPower") ? (
-            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
-          ) : (
-            <meshBasicMaterial color="#222222" opacity={1.0} />
-          )}
+        {props.selected.has("LaserPower") ? (
+          <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+        ) : (
+          <meshBasicMaterial color="#222222" opacity={1.0} />
+        )}
       </mesh>
     </group>
   );

@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-// import { socket } from "../../services/SocketContext";
 import styles from "./RotaryCtrl.module.css";
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
-
 import { useAppContext } from "../../services/AppContext";
-import { useSocketContext} from "../../services/SocketContext"
+import { useSocketContext } from "../../services/SocketContext"
 
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(props.rotation);
@@ -16,52 +14,49 @@ const RotaryCtrl = (props) => {
   useEffect(() => {
 
     /* STATUS UPDATE HANDLIN */
-    socketCtx.socket.on("status", payload => { 
-      if (payload.componentId === props.component ) {
+    socketCtx.socket.on("status", payload => {
+      if (payload.componentId === props.component) {
         setRotation(payload.status[props.control]);
       }
     }); //TODO: Update Footer of UI Window with Status
   }, [socketCtx.socket]);
 
-
-
   const changeRotationHandler = (event) => {
     setEnteredRotation(event.target.value);
   };
-
 
   //TODO: Combine Rotation Handliner into one.
 
   const rotCW_Handler = (event) => {
     event.preventDefault();
     socketCtx.socket.emit("command", {
-      userId:"user123",
+      userId: "user123",
       componentId: props.component,
       controlId: props.control,
       command: {
         steps: enteredRotation
       }
 
-    })  
-    appCtx.addLog("User initiated CW rotation on "+props.component+" / "+props.control+" by " +enteredRotation+" steps.")
+    })
+    appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
   const rotCCW_Handler = (event) => {
     event.preventDefault();
     socketCtx.socket.emit("command", {
-      userId:"user123",
+      userId: "user123",
       componentId: props.component,
       controlId: props.control,
       command: {
         steps: -1 * enteredRotation
       }
 
-    })  
-    appCtx.addLog("User initiated CCW rotation on "+props.component+" / "+props.control+" by " +enteredRotation+" steps.")
+    })
+    appCtx.addLog("User initiated CCW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
   return (
-    <form className={styles.rotaryCtrl} style={{top:props.top+"px", left:props.left+"px"}}>
+    <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
       <div className={styles.rotaryCtrl}>
         <span>{rotation}</span>
         <input
@@ -72,13 +67,13 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCCW_Handler} className={styles.CtrlLeft} disabled={appCtx.busyComps.has(props.component)} > 
+      <button onClick={rotCCW_Handler} className={styles.CtrlLeft} disabled={appCtx.busyComps.has(props.component)} >
         <MdOutlineRotateLeft size={28} />
       </button>
       <button onClick={rotCW_Handler} className={styles.CtrlRight} disabled={appCtx.busyComps.has(props.component)}>
         <MdOutlineRotateRight size={28} />
       </button>
-      
+
     </form>
   );
 };

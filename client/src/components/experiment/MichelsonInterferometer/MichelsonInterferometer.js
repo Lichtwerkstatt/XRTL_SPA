@@ -1,5 +1,7 @@
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
+import Cam1 from "../../assembly/Stream";
+
 
 const MichelsonInterferometer = (props) => {
   return (
@@ -11,8 +13,8 @@ const MichelsonInterferometer = (props) => {
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
-          top="200"
-          left="20"
+          top="50"
+          left="50"
         />
       )}
       {props.selected.has("KM100_2") && (
@@ -22,7 +24,7 @@ const MichelsonInterferometer = (props) => {
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
-          top="200"
+          top="100"
           left="520"
         />
       )}
@@ -31,8 +33,29 @@ const MichelsonInterferometer = (props) => {
           title="Mirror Stage"
           id="SM1ZP_1"
           rotation="0"
-          top="200"
-          left="820"
+          top="400"
+          left="100"
+        />
+      )}
+      {props.selected.has("Laser") && (
+        <KM100
+          title="Laser"
+          id="Laser"
+          rotationTop="0"
+          rotationBottom="0"
+          footer="Initializing..."
+          top="50"
+          left="350"
+        />
+      )}
+
+      {props.selected.has("Screen") && (
+        <Cam1
+          title="Screen"
+          id="Screen"
+          rotation="0"
+          top="50"
+          left="1600"
         />
       )}
     </div>

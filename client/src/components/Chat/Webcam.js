@@ -1,6 +1,7 @@
 import { useSocketContext } from '../../services/SocketContext'
 import React, { useRef, useEffect, useState } from "react";
 import { useAppContext } from "../../services/AppContext";
+import styles  from "./Webcam.module.css";
 var Peer = require('simple-peer');
 var roomID = '';
 
@@ -14,7 +15,7 @@ const Video = (props) => {
     }, []);
 
     return (
-        <video playsInline autoPlay ref={ref} />
+        <video  playsInline autoPlay ref={ref} />
     );
 }
 
@@ -25,16 +26,16 @@ const Webcam = () => {
     const userVideo = useRef();
     const peersRef = useRef([]);
 
-    const videoConstraints = {
-        height: window.innerHeight / 2,
-        width: window.innerWidth / 2
-    };
-
+    
     useEffect(() => {
+        const videoConstraints = {
+            height: window.innerHeight / 2,
+            width: window.innerWidth / 2
+        };
         if (appCtx.showWebcam) {
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
                 userVideo.current.srcObject = stream;
-                socketCtx.socket.emit('roomID', (data) => { //Transmission of the rromID
+                socketCtx.socket.emit('roomID', (data) => { //Transmission of the roomID
                     roomID = data;
                 });
 
@@ -69,39 +70,39 @@ const Webcam = () => {
                 });
             })
         }
+        function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer für alle bisher Clienten die sich bisher im Raum schon befinden
+            const peer = new Peer({
+                initiator: true,        //wichtig, damit Stream in die gesendet werden kann
+                trickle: false,
+                stream,     //eigener Stream
+            });
+    
+            peer.on("signal", signal => {       
+                socketCtx.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
+            })
+            return peer;
+        }
+    
+        function addPeer(incomingSignal, callerID, stream) {        //creates peers for all following joining clients
+            const peer = new Peer({
+                initiator: false,
+                trickle: false,
+                stream,
+            });
+    
+            peer.on("signal", signal => {
+                socketCtx.socket.emit("returning signal", { signal, callerID });
+            });
+            peer.signal(incomingSignal);
+            return peer;
+        }
     }, [appCtx.showWebcam])
 
-    function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer des 1. joinenden Clienten
-        const peer = new Peer({
-            initiator: true,
-            trickle: false,
-            stream,
-        });
-
-        peer.on("signal", signal => {
-            socketCtx.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
-        })
-        return peer;
-    }
-
-    function addPeer(incomingSignal, callerID, stream) {        //creates peers for all following joining clients
-        const peer = new Peer({
-            initiator: false,
-            trickle: false,
-            stream,
-        });
-
-        peer.on("signal", signal => {
-            socketCtx.socket.emit("returning signal", { signal, callerID });
-        });
-        peer.signal(incomingSignal);
-        return peer;
-    }
     if (appCtx.showWebcam) {
         return (
-            <div className='webcamDiv'>
-                <video muted ref={userVideo} autoPlay playsInline />
-                {peers.map((peer, index) => {
+            <div className={styles.webcamDiv}>
+                <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />
+                {peers.map((peer, index) => {           //wenn man diese Schleife weglässt, dann wird nur der eigene Stream dargestellt
                     return (
                         <Video key={index} peer={peer} />
                     );
