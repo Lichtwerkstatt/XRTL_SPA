@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Stats } from "@react-three/drei";
 import MI_1312 from "../experiment/MichelsonInterferometer/MI_1312";
+import DigiLab4You from "../experiment/digilab4You/DL4Y_export1";
 import { useAppContext } from "../../services/AppContext";
 
 const VirtualLayer = () => {
@@ -24,7 +25,7 @@ const VirtualLayer = () => {
           {/* <Stats showPanel={0}  /> */}
           <Environment preset="warehouse" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
-          <MI_1312
+          <DigiLab4You
             toggleSelect={appCtx.toggleSelectedComp}
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
