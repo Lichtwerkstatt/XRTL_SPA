@@ -31,6 +31,16 @@ const Stream = (props) => {
     });
   }, [socketCtx.socket])
 
+  useEffect(() => {
+    console.log("Start Streaming.")
+    socketCtx.socket.emit("command", {
+      userId: "user123",
+      componentId: props.component,
+      controlId: props.control,
+      command: "startStreaming" })
+
+  },[])
+
   return (
     <Window
       header={props.title + " (" + props.id + ")"}

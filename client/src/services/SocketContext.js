@@ -4,7 +4,7 @@ import { useAppContext } from "./AppContext";
 const { Manager } = require("socket.io-client")
 
 
-const URL = "http://localhost:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
+const URL = "http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
 
 const manager = new Manager(URL, { autoConnect: false })
 const socket = manager.socket("/")

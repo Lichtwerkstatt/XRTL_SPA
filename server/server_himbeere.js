@@ -95,7 +95,7 @@ io.on('connection', socket => {
     socket.on('command', payload => {
         blink();
         console.log("Command received:", payload);
-        io.emit('control', payload);
+        io.emit('command', payload);
     })
     
     socket.on("callUser", (payload) => {

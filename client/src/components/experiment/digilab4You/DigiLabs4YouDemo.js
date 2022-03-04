@@ -5,10 +5,10 @@ import Stream from "../../assembly/Stream";
 const DigiLabs4YouDemo = (props) => {
   return (
     <div>
-      {props.selected.has("KM100_1") &&(
+      {props.selected.has("KM100_2") &&(
         <KM100
           title="Mirror"
-          id="KM100_1"
+          id="KM100_2"
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
@@ -16,10 +16,10 @@ const DigiLabs4YouDemo = (props) => {
           left="100"
           />
       )}
-      {props.selected.has("iris") && (
+      {props.selected.has("ID25_1") && (
         <ID15
           title="Iris"
-          id="iris"
+          id="ID25_1"
           sliderPos="0"
           top="150"
           left="150"
