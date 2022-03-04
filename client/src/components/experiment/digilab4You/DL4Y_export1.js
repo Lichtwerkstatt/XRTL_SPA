@@ -31,12 +31,12 @@ export default function Model({ ...props }) {
       <group position={[-0.89, 0.86, -1.12]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("Screen");
+          props.toggleSelect("screen");
         }}
       >
         {props.showTags && <DescriptiveTag position={[0, 1.4, 0]} title="Screen" description="" />}
         <mesh geometry={nodes.PlaneMesh.geometry} material={materials.WhiteParts}>
-        {props.selected.has("Screen") ? (
+        {props.selected.has("screen") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshBasicMaterial color="#eeeeee" opacity={1.0} />
@@ -67,12 +67,12 @@ export default function Model({ ...props }) {
       <group position={[-0.92, 0.49, -0.14]}
          onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("Iris");
+          props.toggleSelect("iris");
         }}      
       >
         {props.showTags && <DescriptiveTag position={[0, 1.4, 0]} title="Iris" description="Controllable 15mm Iris Diaphragm" />}
         <mesh geometry={nodes.ID15Mesh.geometry} material={nodes.ID15Mesh.material}>
-        {props.selected.has("Iris") ? (
+        {props.selected.has("iris") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshBasicMaterial color="#222222" opacity={1.0} />
