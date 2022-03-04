@@ -33,7 +33,6 @@ function clients_connected() {
 }
 
 function blink_start() {
-    console.log("hier");
     if (b == 0) {
         RGB(0, 0, 1);
         b = 1;

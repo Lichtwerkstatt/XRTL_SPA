@@ -11,6 +11,7 @@ const SliderCtrl = (props) => {
 
   useEffect(() => {
     socketCtx.socket.on("status", payload => {
+      console.log(payload);
       if (payload.component === props.component) {
         setSliderPos(payload.status[props.control]);
       }
@@ -19,7 +20,8 @@ const SliderCtrl = (props) => {
 
   const sliderHandler = (event) => {
     event.preventDefault();
-    setSliderPos(event.target.value);
+    console.log("Setting...")
+    setSliderPos((prevState) => {return event.target.value});
   }
 
   const sliderCtrl = (event) => {
