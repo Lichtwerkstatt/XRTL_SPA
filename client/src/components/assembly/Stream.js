@@ -9,6 +9,16 @@ const Stream = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
+    console.log("Stop Streaming.")
+    socketCtx.socket.emit("command", {
+      userId: "user123",
+      componentId: props.id,
+      command: "stopStreaming" })
+    socketCtx.socket.emit("command", {
+        userId: "user123",
+        componentId: "laser_1",
+        command: { laser: false  }})
+
   }
 
   useEffect(() => {
@@ -35,9 +45,12 @@ const Stream = (props) => {
     console.log("Start Streaming.")
     socketCtx.socket.emit("command", {
       userId: "user123",
-      componentId: props.component,
-      controlId: props.control,
+      componentId: props.id,
       command: "startStreaming" })
+    socketCtx.socket.emit("command", {
+        userId: "user123",
+        componentId: "laser_1",
+        command: { laser: true} })
 
   },[])
 

@@ -25,10 +25,10 @@ const DigiLabs4YouDemo = (props) => {
           left="150"
         />
       )}
-      {props.selected.has("screen") && (
+      {props.selected.has("ESP32Cam_1") && (
         <Stream
           title="Camera"
-          id="screen"
+          id="ESP32Cam_1"
           top="100"
           left="100"
         />
