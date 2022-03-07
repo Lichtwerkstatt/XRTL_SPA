@@ -1,5 +1,6 @@
 import ID15 from "../../assembly/ID15";
 import KM100 from "../../assembly/KM100"
+import LaserCtrl from "../../assembly/LaserCtrl";
 import Stream from "../../assembly/Stream";
 
 const DigiLabs4YouDemo = (props) => {
@@ -32,6 +33,14 @@ const DigiLabs4YouDemo = (props) => {
           top="100"
           left="100"
         />
+      )}
+      {props.selected.has("Laser") && (
+        <LaserCtrl
+          title="Laser"
+          id="Laser"
+          top="120"
+          left="120"
+          />
       )}
 
     </div>

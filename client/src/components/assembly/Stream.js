@@ -1,30 +1,31 @@
 import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext"
+import { useSocketContext } from "../../services/SocketContext";
 import { useEffect } from "react";
 
 const Stream = (props) => {
   const socketCtx = useSocketContext();
-  const appCtx = useAppContext()
+  const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
-    console.log("Stop Streaming.")
+    appCtx.toggleSelectedComp(props.id);
+    console.log("Stop Streaming.");
     socketCtx.socket.emit("command", {
       userId: "user123",
       componentId: props.id,
-      command: "stopStreaming" })
+      command: "stopStreaming",
+    });
     socketCtx.socket.emit("command", {
-        userId: "user123",
-        componentId: "laser_1",
-        command: { laser: false  }})
-
-  }
+      userId: "user123",
+      componentId: "laser_1",
+      command: { laser: false },
+    });
+  };
 
   useEffect(() => {
-    socketCtx.socket.on('pic', function (data) {
+    socketCtx.socket.on("pic", function (data) {
       var uint8Arr = new Uint8Array(data.buffer);
-      var binary = '';
+      var binary = "";
       for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
       }
@@ -32,29 +33,31 @@ const Stream = (props) => {
 
       var img = new Image();
       img.onload = function () {
-        var canvas = document.getElementById('ScreenCanvas');
-        if (canvas != null){
-        var ctx = canvas.getContext('2d');
-        var x = 0, y = 0;
-        ctx.drawImage(this, x, y);
-      }
-      }
-      img.src = 'data:image/jpg;base64,' + base64String;
+        var canvas = document.getElementById("ScreenCanvas");
+        if (canvas != null) {
+          var ctx = canvas.getContext("2d");
+          var x = 0,
+            y = 0;
+          ctx.drawImage(this, x, y);
+        }
+      };
+      img.src = "data:image/jpg;base64," + base64String;
     });
-  }, [socketCtx.socket])
+  }, [socketCtx.socket]);
 
   useEffect(() => {
-    console.log("Start Streaming.")
+    console.log("Start Streaming.");
     socketCtx.socket.emit("command", {
       userId: "user123",
       componentId: props.id,
-      command: "startStreaming" })
+      command: "startStreaming",
+    });
     socketCtx.socket.emit("command", {
-        userId: "user123",
-        componentId: "laser_1",
-        command: { laser: true} })
-
-  },[])
+      userId: "user123",
+      componentId: "laser_1",
+      command: { laser: true },
+    });
+  }, []);
 
   return (
     <Window
@@ -65,7 +68,7 @@ const Stream = (props) => {
       height="600px"
       onClose={handleCloseWindow}
     >
-      <canvas id='ScreenCanvas' width="800px" height="600px" />
+      <canvas id="ScreenCanvas" width="800px" height="600px" />
     </Window>
   );
 };
