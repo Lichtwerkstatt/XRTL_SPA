@@ -23,7 +23,7 @@ const VirtualLayer = () => {
       >
         <Suspense fallback={null}>
           {/* <Stats showPanel={0}  /> */}
-          <Environment preset="warehouse" />
+          <Environment files="../hdri/autoshop.hdr" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
           <DigiLab4You
             toggleSelect={appCtx.toggleSelectedComp}
