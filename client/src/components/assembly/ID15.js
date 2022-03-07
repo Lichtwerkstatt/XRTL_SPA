@@ -4,6 +4,8 @@ import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
 import SliderCtrl from "../UI/SliderCtrl";
 
+import ID15_Background from "./media/id15_outline.png";
+
 const ID15 = (props) => {
   const appCtx = useAppContext();
 
@@ -18,6 +20,7 @@ const ID15 = (props) => {
       left={props.left}
       height="240px"
       width="250px"
+      background={ID15_Background}
       onClose={handleCloseWindow}
     >
       <SliderCtrl
