@@ -33,9 +33,11 @@ const Stream = (props) => {
       var img = new Image();
       img.onload = function () {
         var canvas = document.getElementById('ScreenCanvas');
+        if (canvas != null){
         var ctx = canvas.getContext('2d');
         var x = 0, y = 0;
         ctx.drawImage(this, x, y);
+      }
       }
       img.src = 'data:image/jpg;base64,' + base64String;
     });
