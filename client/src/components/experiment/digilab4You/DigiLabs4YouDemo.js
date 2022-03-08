@@ -34,10 +34,10 @@ const DigiLabs4YouDemo = (props) => {
           left="100"
         />
       )}
-      {props.selected.has("Laser") && (
+      {props.selected.has("laser_1") && (
         <LaserCtrl
           title="Laser"
-          id="Laser"
+          id="laser_1"
           top="120"
           left="120"
           />

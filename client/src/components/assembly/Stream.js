@@ -15,11 +15,6 @@ const Stream = (props) => {
       componentId: props.id,
       command: "stopStreaming",
     });
-    socketCtx.socket.emit("command", {
-      userId: "user123",
-      componentId: "laser_1",
-      command: { laser: false },
-    });
   };
 
   useEffect(() => {
@@ -51,11 +46,6 @@ const Stream = (props) => {
       userId: "user123",
       componentId: props.id,
       command: "startStreaming",
-    });
-    socketCtx.socket.emit("command", {
-      userId: "user123",
-      componentId: "laser_1",
-      command: { laser: true },
     });
   }, []);
 

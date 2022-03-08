@@ -49,12 +49,12 @@ export default function Model({ ...props }) {
       <group position={[1.25, 0.67, 0.88]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("Laser");
+          props.toggleSelect("laser_1");
         }}      
       >
         {props.showTags && <DescriptiveTag position={[0, 1, 0]} title="Laser" description="green Laserpointer" />}
         <mesh geometry={nodes.LaserMesh.geometry}  material={nodes.LaserMesh.material} >
-        {props.selected.has("Laser") ? (
+        {props.selected.has("laser_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshBasicMaterial color="#222222" opacity={1.0} />
