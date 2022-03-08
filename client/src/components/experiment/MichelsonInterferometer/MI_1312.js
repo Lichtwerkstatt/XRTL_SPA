@@ -89,7 +89,7 @@ export default function Model({ ...props }) {
         position={[-0.62, 0.86, -1.22]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("Screen");
+          props.toggleSelect("EDU-VS1_1");
         }}
       >
         {props.showTags && <DescriptiveTag position={[0, 1, 0]} title="Screen" />}
@@ -125,7 +125,7 @@ export default function Model({ ...props }) {
         onPointerDown={(e) => {
           console.log("Clicked on laser")
           e.stopPropagation()
-          props.toggleSelect("Laser")
+          props.toggleSelect("KM100_2")
         }}
       >
         {props.showTags && <DescriptiveTag position={[0, 0, -1]} title="Laser Alignment" />}

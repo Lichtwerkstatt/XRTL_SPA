@@ -33,7 +33,6 @@ function clients_connected() {
 }
 
 function blink_start() {
-    console.log("hier");
     if (b == 0) {
         RGB(0, 0, 1);
         b = 1;
@@ -95,7 +94,7 @@ io.on('connection', socket => {
     socket.on('command', payload => {
         blink();
         console.log("Command received:", payload);
-        io.emit('control', payload);
+        io.emit('command', payload);
     })
     
     socket.on("callUser", (payload) => {

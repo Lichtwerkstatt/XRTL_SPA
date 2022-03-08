@@ -54,8 +54,8 @@ const MichelsonInterferometer = (props) => {
           title="Screen"
           id="Screen"
           rotation="0"
-          top="50"
-          left="1600"
+          top="150"
+          left="150"
         />
       )}
     </div>

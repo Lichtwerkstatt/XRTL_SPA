@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="../libs/mindAR/mindar-image.prod.js"></script>
+    <script src="../libs/mindAR/aframe.min.js"></script>
+    <script src="../libs/mindAR/mindar-image-aframe.prod.js"></script>
+    <script>
+      AFRAME.registerComponent("foo", {
+        init: function() {
+          var targetCube = new THREE.WebGLRenderTargetCube(512, 512);
+          var renderer = this.el.sceneEl.renderer;
+
+          this.el.addEventListener("model-loaded", e => {
+            let mesh = this.el.getObject3D("mesh");
+            
+            var texture = new THREE.TextureLoader().load(
+              "../assets/hdr/acp.jpg",
+              function() {
+                var cubeTex = targetCube.fromEquirectangularTexture(renderer, texture);
+                mesh.traverse(function(el) {
+                  if (el.material) {
+                    el.material.envMap = cubeTex.texture;
+                    el.material.envMap.intensity = 3;
+                    el.material.needsUpdate = true;
+                  }
+                });
+                renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                renderer.outputEncoding = THREE.sRGBEncoding;
+              }
+            );
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: ../assets/marker/target_xrtl.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <a-asset-item id="avatarModel" src="../model/DL4Y_export1.gltf"></a-asset-item>
+      </a-assets>
+
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <!-- <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> -->
+        <a-gltf-model rotation="90 0 0" scale="0.75 0.75 0.75" src="#avatarModel" foo>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>

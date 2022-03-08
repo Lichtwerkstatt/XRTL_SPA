@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <title>XRTL Session</title>
+
+
+</head>
+
+<body>
+    <script src="../libs/fas.js"></script>
+    <script type="module">
+        import { App } from './app.js';
+
+        document.addEventListener("DOMContentLoaded", function(){
+            const app = new App();
+            window.app = app;
+        });
+    </script>
+
+    <button class="ar-button" onclick="window.app.showChair(1);"><i class="fas fa-camera"></i></button>
+
+</body>
+
+</html>
