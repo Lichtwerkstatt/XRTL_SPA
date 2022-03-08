@@ -66,11 +66,73 @@ io.on('connection', socket => {
     console.log('connection made successfully');
     RGB(0, 1, 0);
 
+    //The handshakes of the VIDEO CHAT
 
-    socket.on('disconnect', (e) => {
+    //Sends the random generated roomID to the client how wants to join the video chat
+    socket.once('roomID', (room) => {
+        room(roomID);
+        //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
+    });
+
+    //Sends an array with all the users in the room except the client how sends this command
+    socket.on("client join room", roomID => {
+        if (users[roomID]) {
+            users[roomID].push(socket.id);
+        } else {
+            users[roomID] = [socket.id];
+        }
+        socketToRoom[socket.id] = roomID;
+        const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+
+        socket.emit("all users", usersInThisRoom);
+    });
+
+    //Sends the peer to the newly joined client
+    socket.on("sending signal", payload => {
+        console.log("Sending a signal");
+        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
+    });
+
+    //Sends the peer to the already connected clients
+    socket.on("returning signal", payload => {
+        console.log("Returing a signal");
+        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
+    });
+
+    //Handshake to handle the CHAT MESSAGES
+
+    //Sends the new message to all users
+    socket.on('message', payload => {
         blink();
-        console.log('User disconnected: ', e);
-        clients_connected();
+        console.log('Message received on server: ', payload);
+        io.emit('message', payload);
+    })
+
+    //Handshakes for the experiment cameras
+
+    //Sends pictures to the clients
+    socket.on('pic', (data) => {
+        socket.broadcast.emit('pic', { buffer: data.image });
+    });
+
+    socket.on("error", (error) => {
+        blink();
+        console.error("Socket.io error observed: ", error);
+    });
+
+    //Handshakes for command handeling
+
+    //Transfers the command from the client to the experiment components
+    socket.on('command', payload => {
+        blink();
+        console.log("Command received:", payload);
+        io.emit('command', payload);
+    })
+
+    //Returns theb status of a experiment component
+    socket.on('status', payload => {
+        console.log("New Status", payload)
+        io.emit('status', payload)
     });
 
     socket.on('forceDisconnect', (e) => {
@@ -79,36 +141,22 @@ io.on('connection', socket => {
         clients_connected();
     })
 
-    socket.on('message', payload => {
+    socket.on('disconnect', (e) => {
         blink();
-        console.log('Message received on server: ', payload);
-        io.emit('message', payload);
-
-    })
-
-    socket.on('Experiment', (experiment) => {
-        blink();
-        console.log('Experiment ausgewählt: ', experiment);
-    })
-
-    socket.on('command', payload => {
-        blink();
-        console.log("Command received:", payload);
-        io.emit('command', payload);
-    })
-    
-    socket.on("callUser", (payload) => {
-		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
-	})
-
-	socket.on("answerCall", (payload) => {
-		io.to(data.to).emit("callAccepted", data.signal)
-	})
+        const roomID = socketToRoom[socket.id];
+        let room = users[roomID];
+        if (room) {
+            room = room.filter(id => id !== socket.id);
+            users[roomID] = room;
+        }
+        console.log(users[roomID]);
+        socket.disconnect();
+        console.log('User disconnected: ', e);
+        clients_connected();
+    });
 
 })
 
 server.listen(7000, () => {
     console.log('I am listening at port: 7000!');
 })
-
-
