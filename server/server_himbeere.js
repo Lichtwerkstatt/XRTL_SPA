@@ -110,9 +110,27 @@ io.on('connection', socket => {
 
     //Handshakes for the experiment cameras
 
-    //Sends pictures to the clients
+
+    //Client how starts the stream is added to a room
+    socket.on('join Stream room', getComponentID => {
+        componentID = getComponentID;
+        console.log("Start stream of " + componentID);
+        socket.join(componentID);
+        //let roomSize = io.sockets.adapter.rooms.get(componentID).size;
+        //console.log(roomSize);
+    });
+
+    //Sends pictures of the stream to the clients
     socket.on('pic', (data) => {
-        socket.broadcast.emit('pic', { buffer: data.image });
+        socket.to(componentID).emit('pic', { buffer: data.image });
+    });
+
+    //Clients leaves the room after ending the stream
+    socket.on('leave Stream room', getComponentID => {
+        console.log("End stream of " + getComponentID);
+        //let roomSize = io.sockets.adapter.rooms.get(componentID).size-1;
+        //console.log(roomSize);
+        socket.leave(getComponentID);
     });
 
     socket.on("error", (error) => {

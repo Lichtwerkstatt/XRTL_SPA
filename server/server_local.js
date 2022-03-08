@@ -11,8 +11,9 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
+var componentID = '';
 const socketToRoom = {};
-var lastUserID = '';
+
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
@@ -20,6 +21,7 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 
 io.on('connection', socket => {
     console.log('connection made successfully');
+
 
     //The handshakes of the VIDEO CHAT
 
@@ -64,9 +66,26 @@ io.on('connection', socket => {
 
     //Handshakes for the experiment cameras
 
-    //Sends pictures to the clients
+    //Client how starts the stream is added to a room
+    socket.on('join stream room', getComponentID => {
+        componentID = getComponentID;
+        console.log("Start stream of " + componentID);
+        socket.join(componentID);
+        //let roomSize = io.sockets.adapter.rooms.get(componentID).size;
+        //console.log(roomSize);
+    });
+
+    //Sends pictures of the stream to the clients
     socket.on('pic', (data) => {
-        socket.broadcast.emit('pic', { buffer: data.image });
+        socket.to(componentID).emit('pic', { buffer: data.image });
+    });
+
+    //Clients leaves the room after ending the stream
+    socket.on('leave stream room', getComponentID => {
+        console.log("End stream of " + componentID);
+        //let roomSize = io.sockets.adapter.rooms.get(componentID).size-1;
+        //console.log(roomSize);
+        socket.leave(getComponentID);
     });
 
     socket.on("error", (error) => {
@@ -86,6 +105,8 @@ io.on('connection', socket => {
         console.log("New Status", payload)
         io.emit('status', payload)
     });
+
+
 
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
