@@ -1,58 +1,59 @@
-form.rotaryCtrl{
-    text-align:center;
-    width:75px;
-    height:90px;
-    display:block;
-    position:relative;
+form.rotaryCtrl {
+    text-align: center;
+    width: 75px;
+    height: 90px;
+    display: block;
+    position: relative;
 }
 
-div.rotaryCtrl{
-    position:absolute;
-    background-color:#00ffa8;
-    width:75px;
-    height: 75px;   
+div.rotaryCtrl {
+    position: absolute;
+    background-color: #00ffa8;
+    width: 75px;
+    height: 75px;
     border-radius: 50px;
-    text-align:center;
+    text-align: center;
 }
 
-div.rotaryCtrl span{
-    display:block;
-    padding-top:5px;
-    font-size:15px;
-    font-weight:bold;
-    color:darkgreen;
+div.rotaryCtrl span {
+    display: block;
+    padding-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: darkgreen;
 }
 
-div.rotaryCtrl input{
-    width:40px;
+div.rotaryCtrl input {
+    width: 40px;
 }
 
 form.rotaryCtrl button {
-    border-radius:15px;
-    overflow:hidden;
-    position:absolute;
-    bottom:0;
-    width:30px;
-    height:30px;
-    background-color:#01bd7d;
-    border:none;
-    padding:0;
-    margin:0;
-    padding-top:2px;
-    color:white;
+    border-radius: 15px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #01bd7d;
+    border: none;
+    padding: 0;
+    margin: 0;
+    padding-top: 2px;
+    color: white;
 }
 
-button.CtrlLeft{
-    left:5px;
+button.CtrlLeft {
+    left: 5px;
 }
 
-button.CtrlRight{
-    right:5px;
+button.CtrlRight {
+    right: 5px;
 }
 
-button.CtrlLeft:disabled{
-    background-color:grey;
+button.CtrlLeft:disabled {
+    background-color: grey;
 }
-button.CtrlRight:disabled{
-    background-color:grey;
+
+button.CtrlRight:disabled {
+    background-color: grey;
 }

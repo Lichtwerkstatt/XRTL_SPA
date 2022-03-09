@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import styles from "./SwitchOnOff.module.css"
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
@@ -25,19 +25,15 @@ const SwitchOnOff = (props) => {
       componentId: props.component,
       command: {
         laser: newStatus
-      }      
+      }
     })
-    console.log("Current Laser State: "+newStatus);
+    console.log("Current Laser State: " + newStatus);
     setSwitchStatus(newStatus);
-    
-
   }
 
-
-  return(
+  return (
     <button onClick={switch_Handler}>
       {switchStatus ? 'ON' : 'OFF'}</button>
-
   )
 }
 

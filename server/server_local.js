@@ -69,10 +69,18 @@ io.on('connection', socket => {
     //Client how starts the stream is added to a room
     socket.on('join stream room', getComponentID => {
         componentID = getComponentID;
-        console.log("Start stream of " + componentID);
+        console.log("User has joined the room " + componentID);
         socket.join(componentID);
-        //let roomSize = io.sockets.adapter.rooms.get(componentID).size;
+        let roomSize = io.sockets.adapter.rooms.get(componentID).size;
         //console.log(roomSize);
+
+        if (roomSize == 1) {
+            io.emit("command", {
+                userId: "user123",
+                componentId: componentID,
+                command: "startStreaming",
+            });
+        }
     });
 
     //Sends pictures of the stream to the clients
@@ -82,9 +90,17 @@ io.on('connection', socket => {
 
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', getComponentID => {
-        console.log("End stream of " + componentID);
-        //let roomSize = io.sockets.adapter.rooms.get(componentID).size-1;
+        console.log("User has left the room " + componentID);
+        let roomSize = io.sockets.adapter.rooms.get(componentID).size - 1;
         //console.log(roomSize);
+
+        if (roomSize == 0) {
+            io.emit("command", {
+                userId: "user123",
+                componentId: componentID,
+                command: "stopStreaming",
+            });
+        }
         socket.leave(getComponentID);
     });
 
@@ -105,8 +121,6 @@ io.on('connection', socket => {
         console.log("New Status", payload)
         io.emit('status', payload)
     });
-
-
 
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();

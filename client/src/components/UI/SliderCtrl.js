@@ -21,13 +21,13 @@ const SliderCtrl = (props) => {
   const sliderHandler = (event) => {
     event.preventDefault();
     console.log("Setting...")
-    setSliderPos((prevState) => {return event.target.value});
+    setSliderPos((prevState) => { return event.target.value });
   }
 
   const sliderCtrl = (event) => {
     event.preventDefault();
     setSliderPos(event.target.value);
-    console.log("Sending Command "+event.target.value);
+    console.log("Sending Command " + event.target.value);
     socketCtx.socket.emit("command", {
       userId: "user123",
       componentId: props.component,
@@ -35,13 +35,13 @@ const SliderCtrl = (props) => {
         position: sliderPos
       }
     })
-    appCtx.addLog("User set position on "+props.component+" to "+sliderPos)
+    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
   }
 
-  return(
-    <form className={styles.sliderCtrl} style={{top: props.top+"px", left: props.left+"px"}}>
+  return (
+    <form className={styles.sliderCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
       <div className={styles.sliderCtrl}>
-      <span>{sliderPos}</span>
+        <span>{sliderPos}</span>
         <input type="range" min="0" max="100" value={sliderPos} className={styles.sliderCtrl} onChange={sliderHandler} onMouseUp={sliderCtrl} />
       </div>
     </form>
