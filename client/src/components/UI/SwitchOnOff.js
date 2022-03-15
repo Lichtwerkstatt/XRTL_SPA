@@ -29,16 +29,14 @@ const SwitchOnOff = (props) => {
     })
     console.log("Current Laser State: "+newStatus);
     setSwitchStatus(newStatus);
-    
-
+  
   }
 
-
-  return(
-    <button onClick={switch_Handler}>
+  return (
+    <button data-testid="switchtest" onClick={switch_Handler}>
       {switchStatus ? 'ON' : 'OFF'}</button>
 
   )
 }
 
-export default SwitchOnOff
+export default SwitchOnOff;

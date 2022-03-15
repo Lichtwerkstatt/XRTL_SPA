@@ -3,6 +3,15 @@ import { useAppContext } from "./AppContext";
 
 const { Manager } = require("socket.io-client")
 
+let EVENTS = {};
+function emit(event, ...args) { EVENTS[event].forEach(func => func(...args)); }
+const fakesocket = { on(event, func) { if (EVENTS[event]) { return EVENTS[event].push(func); } EVENTS[event] = [func]; }, emit };
+
+export const io = { connect() { return fakesocket; } };
+const serverSocket = { emit };
+function cleanup() { EVENTS = {} }
+
+export default io;
 
 const URL = "http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
 
@@ -12,14 +21,14 @@ const socket = manager.socket("/")
 const SocketContext = React.createContext();
 
 export function useSocketContext() {
-  return useContext(SocketContext);
+  return React.useContext(SocketContext);
 }
 
 export function SocketContextProvider({ children }) {
   const [connected, setConnected] = useState(false);
 
   const appCtx = useAppContext()
-  
+
   useEffect(() => {
     socket.on('connect', (e) => {
       setConnected(true)

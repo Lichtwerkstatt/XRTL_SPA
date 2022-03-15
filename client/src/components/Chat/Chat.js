@@ -1,28 +1,29 @@
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
+import React from "react"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
 import { useSocketContext } from "../../services/SocketContext"
 
 const Chat = (props) => {
-  const [message, setMessage] = useState("")
-  const [showChat, setShowChat] = useState(false)
-  const [animation, setAnimation] = useState("")
-  const [chat, setChat] = useState([])
+  const [message, setMessage] = React.useState("")
+  const [showChat, setShowChat] = React.useState(false)
+  const [animation, setAnimation] = React.useState("")
+  const [chat, setChat] = React.useState([])
 
   const socketCtx = useSocketContext();
 
 
-  useEffect(() => {
-    socketCtx.socket.on("message", (payload) => {
+  React.useEffect(() => {
+    socketCtx?.socket.on("message", (payload) => {
       setChat([...chat, payload])
     })
-   }, [socketCtx, chat])
+  }, [socketCtx, chat])
 
   const sendMessage = (event) => {
     event.preventDefault()
     console.log(message)
-    socketCtx.socket.emit("message", { userName: "user", message })
+    socketCtx?.socket.emit("message", { userName: "user", message })
     setMessage("")
   }
 
@@ -48,6 +49,7 @@ const Chat = (props) => {
       </div>
       <form className={styles.msgForm} onSubmit={sendMessage}>
         <input
+          title="mes"
           type="text"
           name="message"
           placeholder="Type Message here"
