@@ -22,9 +22,9 @@ const Video = (props) => {
 const Webcam = () => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [peers, setPeers] = useState([]);
-    const userVideo = useRef();
-    const peersRef = useRef([]);
+    const [peers, setPeers] = React.useState([]);
+    const userVideo = React.useRef();
+    const peersRef = React.useRef([]);
 
     
     useEffect(() => {
@@ -32,10 +32,10 @@ const Webcam = () => {
             height: window.innerHeight / 2,
             width: window.innerWidth / 2
         };
-        if (appCtx.showWebcam) {
+        if (appCtx?.showWebcam) {
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
                 userVideo.current.srcObject = stream;
-                socketCtx.socket.emit('roomID', (data) => { //Transmission of the roomID
+                socketCtx?.socket.emit('roomID', (data) => { //Transmission of the roomID
                     roomID = data;
                 });
 
@@ -54,7 +54,7 @@ const Webcam = () => {
                     setPeers(peers);
                 })
 
-                socketCtx.socket.on("user joined", payload => {
+                socketCtx?.socket.on("user joined", payload => {
                     const peer = addPeer(payload.signal, payload.callerID, stream); //creates a new peer & adds it to the list for a freshly joining client
                     peersRef.current.push({
                         peerID: payload.callerID,
@@ -64,7 +64,7 @@ const Webcam = () => {
                     setPeers(users => [...users, peer]);
                 });
 
-                socketCtx.socket.on("receiving returned signal", payload => {
+                socketCtx?.socket.on("receiving returned signal", payload => {
                     const item = peersRef.current.find(p => p.peerID === payload.id);
                     item.peer.signal(payload.signal);
                 });
@@ -78,7 +78,7 @@ const Webcam = () => {
             });
     
             peer.on("signal", signal => {       
-                socketCtx.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
+                socketCtx?.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
             })
             return peer;
         }
@@ -96,9 +96,9 @@ const Webcam = () => {
             peer.signal(incomingSignal);
             return peer;
         }
-    }, [appCtx.showWebcam])
+    }, [appCtx?.showWebcam])
 
-    if (appCtx.showWebcam) {
+    if (appCtx?.showWebcam) {
         return (
             <div className={styles.webcamDiv}>
                 <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />

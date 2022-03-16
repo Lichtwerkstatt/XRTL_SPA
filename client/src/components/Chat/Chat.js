@@ -1,4 +1,4 @@
-import { useEffect} from "react"
+import { useEffect } from "react"
 import React from "react"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
@@ -6,13 +6,12 @@ import { MdSend } from "react-icons/md"
 import { useSocketContext } from "../../services/SocketContext"
 
 const Chat = (props) => {
-  const [message, setMessage] = React.useState("")
-  const [showChat, setShowChat] = React.useState(false)
-  const [animation, setAnimation] = React.useState("")
-  const [chat, setChat] = React.useState([])
+  const [message, setMessage] = React.useState("");
+  const [showChat, setShowChat] = React.useState(false);
+  const [animation, setAnimation] = React.useState("");
+  const [chat, setChat] = React.useState([]);
 
   const socketCtx = useSocketContext();
-
 
   React.useEffect(() => {
     socketCtx?.socket.on("message", (payload) => {
@@ -32,7 +31,6 @@ const Chat = (props) => {
     setShowChat(!showChat)
   }
 
-
   return (
     <div
       className={styles.chatContainer + " " + animation}
@@ -49,7 +47,6 @@ const Chat = (props) => {
       </div>
       <form className={styles.msgForm} onSubmit={sendMessage}>
         <input
-          title="mes"
           type="text"
           name="message"
           placeholder="Type Message here"
@@ -63,7 +60,7 @@ const Chat = (props) => {
       </form>
       <div className={styles.chatHandler + " " + animation}>
         <span>
-          <ImBubble size={35} onClick={showChatHandler} />
+          <ImBubble test-id="bubble" size={35} onClick={showChatHandler} />
         </span>
       </div>
     </div>
