@@ -1,7 +1,7 @@
-import Chat from './Chat';
+import Chat from '../Chat';
 import React from "react";
 import ReactDOM from "react-dom";
-import { screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 
 describe('Some general tests of Chat', () => {
     beforeEach(() => {
@@ -9,6 +9,7 @@ describe('Some general tests of Chat', () => {
     });
 
     test('Render Chat without crashing!', () => {
+        
         const div = document.createElement("div");
         ReactDOM.render(<Chat />, div);
         ReactDOM.unmountComponentAtNode(div);

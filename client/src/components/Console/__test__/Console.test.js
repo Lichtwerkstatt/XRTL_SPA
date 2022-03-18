@@ -1,4 +1,4 @@
-import Console from './Console';
+import Console from '../Console';
 import React from "react";
 import ReactDOM from "react-dom";
 import { screen } from '@testing-library/react';
