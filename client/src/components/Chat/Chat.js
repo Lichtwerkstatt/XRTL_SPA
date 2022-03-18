@@ -1,19 +1,18 @@
-import { useEffect } from "react"
-import React from "react"
+import { useEffect, useState } from "react"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
 import { useSocketContext } from "../../services/SocketContext"
 
 const Chat = (props) => {
-  const [message, setMessage] = React.useState("");
-  const [showChat, setShowChat] = React.useState(false);
-  const [animation, setAnimation] = React.useState("");
-  const [chat, setChat] = React.useState([]);
+  const [message, setMessage] = useState("");
+  const [showChat, setShowChat] = useState(false);
+  const [animation, setAnimation] = useState("");
+  const [chat, setChat] = useState([]);
 
   const socketCtx = useSocketContext();
 
-  React.useEffect(() => {
+  useEffect(() => {
     socketCtx?.socket.on("message", (payload) => {
       setChat([...chat, payload])
     })
@@ -35,7 +34,7 @@ const Chat = (props) => {
     <div
       className={styles.chatContainer + " " + animation}
     >
-      <div className={styles.chatMain}>
+      <div data-testid="message-block" className={styles.chatMain}>
         {chat.map((payload, index) => {
           return (
             <b key={index}>
@@ -56,11 +55,11 @@ const Chat = (props) => {
           }}
           required
         />
-        <button type="submit"><MdSend size={25} /></button>
+        <button title="send button" type="submit"><MdSend size={25} /></button>
       </form>
       <div className={styles.chatHandler + " " + animation}>
         <span>
-          <ImBubble test-id="bubble" size={35} onClick={showChatHandler} />
+          <ImBubble data-testid="bubble" size={35} onClick={showChatHandler} />
         </span>
       </div>
     </div>

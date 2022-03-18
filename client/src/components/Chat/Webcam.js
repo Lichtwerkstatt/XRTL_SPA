@@ -1,32 +1,32 @@
 import { useSocketContext } from '../../services/SocketContext'
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { useAppContext } from "../../services/AppContext";
-import styles  from "./Webcam.module.css";
+import styles from "./Webcam.module.css";
 var Peer = require('simple-peer');
 var roomID = '';
 
-const Video = (props) => {
+export const Video = (props) => {
     const ref = useRef();
 
     useEffect(() => {
-        props.peer.on("stream", stream => {
+        props.peer?.on("stream", stream => {
             ref.current.srcObject = stream;
         })
     }, []);
 
     return (
-        <video  playsInline autoPlay ref={ref} />
+        <video data-testid="webcam-host" playsInline autoPlay ref={ref} />
     );
 }
 
-const Webcam = () => {
+export const Webcam = () => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
     const [peers, setPeers] = React.useState([]);
     const userVideo = React.useRef();
     const peersRef = React.useRef([]);
 
-    
+
     useEffect(() => {
         const videoConstraints = {
             height: window.innerHeight / 2,
@@ -76,20 +76,20 @@ const Webcam = () => {
                 trickle: false,
                 stream,     //eigener Stream
             });
-    
-            peer.on("signal", signal => {       
+
+            peer.on("signal", signal => {
                 socketCtx?.socket.emit("sending signal", ({ userToSignal, callerID, signal }));
             })
             return peer;
         }
-    
+
         function addPeer(incomingSignal, callerID, stream) {        //creates peers for all following joining clients
             const peer = new Peer({
                 initiator: false,
                 trickle: false,
                 stream,
             });
-    
+
             peer.on("signal", signal => {
                 socketCtx.socket.emit("returning signal", { signal, callerID });
             });
@@ -100,7 +100,7 @@ const Webcam = () => {
 
     if (appCtx?.showWebcam) {
         return (
-            <div className={styles.webcamDiv}>
+            <div data-testid="empty-stream2" className={styles.webcamDiv}>
                 <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />
                 {peers.map((peer, index) => {           //wenn man diese Schleife weglässt, dann wird nur der eigene Stream dargestellt
                     return (
@@ -111,8 +111,6 @@ const Webcam = () => {
         );
     }
     else {
-        return <></>;
+        return <div data-testid="empty-stream" />;
     }
 };
-
-export default Webcam;
