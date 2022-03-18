@@ -1,4 +1,3 @@
-
 import { MdSettingsApplications } from "react-icons/md";
 import { useAppContext } from "../../services/AppContext";
 //import MichelsonInterferometer from "../experiment/MichelsonInterferometer/MichelsonInterferometer";
@@ -10,8 +9,8 @@ const ExperimentUILayer = () => {
 
   return (
     <DigiLabs4YouDemo
-      toggleSelect={appCtx.toggleSelectedComp}
-      selected={appCtx.selectedComps}
+      toggleSelect={appCtx?.toggleSelectedComp}
+      selected={appCtx?.selectedComps}
     />
   );
 };
