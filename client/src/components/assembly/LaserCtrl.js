@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Window from "../UI/Window"
 import SwitchOnOff from "../UI/SwitchOnOff";
 

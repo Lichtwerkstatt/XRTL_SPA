@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useGLTF, Html } from "@react-three/drei";
+import { useGLTF} from "@react-three/drei";
 import { Box } from "@react-three/drei";
 import DescriptiveTag from "../../UI/DescriptiveTag"
 
