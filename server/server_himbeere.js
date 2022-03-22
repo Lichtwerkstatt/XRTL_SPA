@@ -13,6 +13,12 @@ const io = require('socket.io')(server, {
         origin: '*'
     }
 })
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+const roomID = uuidv4();
+const users = {};
+var componentID = '';
+const socketToRoom = {};
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
@@ -177,13 +183,15 @@ io.on('connection', socket => {
 
     socket.on('disconnect', (e) => {
         blink();
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
+        if (typeof socketToRoom[socket.id] !== 'undefined') {
+            const roomID = socketToRoom[socket.id];
+            let room = users[roomID];
+            if (room) {
+                room = room.filter(id => id !== socket.id);
+                users[roomID] = room;
+            }
+            console.log(users[roomID]);
         }
-        console.log(users[roomID]);
         socket.disconnect();
         console.log('User disconnected: ', e);
         clients_connected();
