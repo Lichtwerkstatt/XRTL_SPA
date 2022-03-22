@@ -183,6 +183,7 @@ io.on('connection', socket => {
 
     socket.on('disconnect', (e) => {
         blink();
+
         if (typeof socketToRoom[socket.id] !== 'undefined') {
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];

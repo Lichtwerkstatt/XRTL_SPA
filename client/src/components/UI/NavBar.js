@@ -1,5 +1,6 @@
 
 import styles from "./NavBar.module.css"
+import Login from "../Login/Login"
 import { GiLaserWarning } from "react-icons/gi"
 import { ImConnection } from "react-icons/im"
 import { BsBox } from "react-icons/bs"
@@ -12,7 +13,6 @@ const NavBar = () => {
 
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
-
 
     let connectionStatusColor = ""
     if (socketCtx.connected) { connectionStatusColor = "white" }

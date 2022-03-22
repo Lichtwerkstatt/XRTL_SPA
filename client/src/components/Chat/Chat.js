@@ -11,8 +11,7 @@ const Chat = (props) => {
   const [chat, setChat] = useState([])
 
   const socketCtx = useSocketContext();
-
-
+  
   useEffect(() => {
     socketCtx.socket.on("message", (payload) => {
       setChat([...chat, payload])
