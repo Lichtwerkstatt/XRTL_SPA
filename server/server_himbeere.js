@@ -112,7 +112,7 @@ io.on('connection', socket => {
 
 
     //Client how starts the stream is added to a room
-    socket.on('join Stream room', getComponentID => {
+    socket.on('join stream room', getComponentID => {
         componentID = getComponentID;
         console.log("Start stream of " + componentID);
         socket.join(componentID);
@@ -134,7 +134,7 @@ io.on('connection', socket => {
     });
 
     //Clients leaves the room after ending the stream
-    socket.on('leave Stream room', getComponentID => {
+    socket.on('leave stream room', getComponentID => {
         console.log("End stream of " + getComponentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size - 1;
         //console.log(roomSize);
