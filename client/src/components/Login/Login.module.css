@@ -79,11 +79,19 @@ div.serverConnect input {
 
 }
 
+div.ErrorMessages label {
+    display: block;
+    position: fixed;
+    color: rgb(255, 0, 0);
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
 div.popupInner button {
     font-size: larger;
-    position: relative;
+    position: block;
+    margin-top: 25px;
     margin-left: 280px;
-    margin-top: 30px;
     border: none;
     background-color: #00ffa8;
 
