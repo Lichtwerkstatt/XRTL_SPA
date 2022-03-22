@@ -13,6 +13,12 @@ const io = require('socket.io')(server, {
         origin: '*'
     }
 })
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+const roomID = uuidv4();
+const users = {};
+var componentID = '';
+const socketToRoom = {};
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
@@ -110,9 +116,43 @@ io.on('connection', socket => {
 
     //Handshakes for the experiment cameras
 
-    //Sends pictures to the clients
+
+    //Client how starts the stream is added to a room
+    socket.on('join stream room', getComponentID => {
+        componentID = getComponentID;
+        console.log("Start stream of " + componentID);
+        socket.join(componentID);
+        let roomSize = io.sockets.adapter.rooms.get(componentID).size;
+        //console.log(roomSize);
+
+        if (roomSize == 1) {
+            io.emit("command", {
+                userId: "user123",
+                componentId: componentID,
+                command: "startStreaming",
+            });
+        }
+    });
+
+    //Sends pictures of the stream to the clients
     socket.on('pic', (data) => {
-        socket.broadcast.emit('pic', { buffer: data.image });
+        socket.to(componentID).emit('pic', { buffer: data.image });
+    });
+
+    //Clients leaves the room after ending the stream
+    socket.on('leave stream room', getComponentID => {
+        console.log("End stream of " + getComponentID);
+        let roomSize = io.sockets.adapter.rooms.get(componentID).size - 1;
+        //console.log(roomSize);
+
+        if (roomSize == 0) {
+            io.emit("command", {
+                userId: "user123",
+                componentId: componentID,
+                command: "stopStreaming",
+            });
+        }
+        socket.leave(getComponentID);
     });
 
     socket.on("error", (error) => {
@@ -143,13 +183,15 @@ io.on('connection', socket => {
 
     socket.on('disconnect', (e) => {
         blink();
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
+        if (typeof socketToRoom[socket.id] !== 'undefined') {
+            const roomID = socketToRoom[socket.id];
+            let room = users[roomID];
+            if (room) {
+                room = room.filter(id => id !== socket.id);
+                users[roomID] = room;
+            }
+            console.log(users[roomID]);
         }
-        console.log(users[roomID]);
         socket.disconnect();
         console.log('User disconnected: ', e);
         clients_connected();

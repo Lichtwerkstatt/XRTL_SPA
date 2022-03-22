@@ -1,10 +1,10 @@
 import Draggable from "react-draggable"
 import styles from "./Window.module.css"
-import {CgClose, CgCloseO} from "react-icons/cg"
+import { CgClose, CgCloseO } from "react-icons/cg"
 
 const Window = (props) => {
 
-   return (
+  return (
     <Draggable handle=".draggableHandler">
       <div
         className={styles.window}
@@ -22,10 +22,10 @@ const Window = (props) => {
           >
             {props.header}
           </span>
-           {/* TODO : Add Status Retrievel Button 
+          {/* TODO : Add Status Retrievel Button 
             TODO: Add Reset Component Button
            */}
-          <div className={styles.windowHeaderIcon} onClick={props.onClose}><CgCloseO size={20}/></div>
+          <div className={styles.windowHeaderIcon} onClick={props.onClose}><CgCloseO size={20} /></div>
         </div>
         <div
           className={styles.windowContent}

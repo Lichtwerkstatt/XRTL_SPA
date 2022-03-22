@@ -1,47 +1,46 @@
 .navbar {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:100vw;
-    height:30px;
-    background: linear-gradient(270deg, #00ffa8, #01bd7d );
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 30px;
+    background: linear-gradient(270deg, #00ffa8, #01bd7d);
 }
 
 .navbar h1 {
-    display:inline-block;
-    color:white;
-    font-weight:bold;
-    font-size:20px;
-    margin:0;
-    margin-top:5px;
-    margin-left:20px;
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 .navMenu {
-    position:absolute;
-    top:0px;
-    right:20px;
-    height:100%;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    height: 100%;
 }
 
 .navMenu ul {
-    margin:0px;
-    padding:0px;
-    height:100%;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
 }
 
 .navMenu li {
-    display:block;
-    float:right;
-    height:100%;
-    color:darkgreen;
-    padding-left:5px;
-    padding-right:5px;
-    padding-top:2px;
+    display: block;
+    float: right;
+    height: 100%;
+    color: darkgreen;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
 }
 
-.navMenu li:hover{
-    background:darkgreen;
+.navMenu li:hover {
+    background: darkgreen;
     color: #00ffa8
 }
-
