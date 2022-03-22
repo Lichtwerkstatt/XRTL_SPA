@@ -93,13 +93,15 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', (e) => {
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
+        if (socketToRoom[socket.id]) {
+            const roomID = socketToRoom[socket.id];
+            let room = users[roomID];
+            if (room) {
+                room = room.filter(id => id !== socket.id);
+                users[roomID] = room;
+            }
+            console.log(users[roomID]);
         }
-        console.log(users[roomID]);
         socket.disconnect();
         console.log('User disconnected: ', e);
     });

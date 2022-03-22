@@ -3,6 +3,8 @@ import styles from "./Login.module.css"
 import { useAppContext } from "../../services/AppContext"
 import { BiFontColor } from 'react-icons/bi'
 
+//weiterleitung von adresse & username
+//verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Datend
 const Login = (props) => {
     const [username, setUsername] = useState("");
     const [fontColor, setfontColor] = useState("white");
@@ -10,8 +12,6 @@ const Login = (props) => {
     const [customConnection, setCustomConnection] = useState('');
     const [custom, setCuston] = useState(false)
     const appCtx = useAppContext();
-
-    //let custom = false;
 
     const displayCustom = () => {
         setCuston(true);
@@ -30,18 +30,30 @@ const Login = (props) => {
             errorLabel.innerHTML = "Please enter a username!";
         } else {
             errorLabel.innerHTML = "";
-
+            const addressCheck = checkServerAdress();
+            console.log(addressCheck);
             if (custom == false) {
                 login.style.display = 'none'
             } else if (custom == true && customConnection == "") {
                 errorLabel.innerHTML = "Please enter a server address!";
-            } else if (custom == true && customConnection != "") {
+            } else if (custom == true && customConnection != "" && addressCheck) {
                 login.style.display = 'none'
                 errorLabel.innerHTML = "";
             } else {
-                errorLabel.innerHTML = 'Something went wrong'
+                errorLabel.innerHTML = 'Something went wrong!'
             }
         }
+    }
+
+    const checkServerAdress = () => {
+        // let regex = /http:\/\/([a-zA-Z0-9\.]*):[0-9]{4}/i
+        let ipRegex = /http:\/\/[0-9]{3}\.[0-9]{3}\.[0-9]+\.[0-9]{1,3}:[0-9]{4}$/i
+        let localRegex = /http:\/\/localhost:[0-9]{4}$/i;
+
+        if (localRegex.test(customConnection) || ipRegex.test(customConnection)) {
+            return true;
+        }
+        return false;
     }
 
     return (
@@ -59,7 +71,15 @@ const Login = (props) => {
                         id="fontColor"
                         value={username}
                         onChange={(e) => {
-                            setUsername(e.target.value)
+                            setUsername(e.target.value);
+                            var errorLabel = document.getElementById('errorLabel');
+                            if (username.length >= 20) {
+                                setUsername("");
+                                errorLabel.innerHTML = "Username is to long!";
+                            }
+                            else {
+                                errorLabel.innerHTML = "";
+                            }
                         }}
                         required
                     ></input>
@@ -89,7 +109,7 @@ const Login = (props) => {
                         placeholder="http://..."
                         value={customConnection}
                         onChange={(e) => {
-                            setCustomConnection(e.target.value)
+                            setCustomConnection(e.target.value);
                         }}
                     />
                 </div>
