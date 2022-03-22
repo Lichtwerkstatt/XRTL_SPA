@@ -1,10 +1,11 @@
+import { useSocketContext } from '../../services/SocketContext'
 import React, { useState } from "react";
 import styles from "./Login.module.css"
 import { useAppContext } from "../../services/AppContext"
 import { BiFontColor } from 'react-icons/bi'
 
-//weiterleitung von adresse & username
-//verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Datend
+//weiterleitung von adresse & username --> in den socket provider reinnschreiben???
+//verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Daten
 const Login = (props) => {
     const [username, setUsername] = useState("");
     const [fontColor, setfontColor] = useState("white");
@@ -12,6 +13,7 @@ const Login = (props) => {
     const [customConnection, setCustomConnection] = useState('');
     const [custom, setCuston] = useState(false)
     const appCtx = useAppContext();
+    const socketCtx = useSocketContext();
 
     const displayCustom = () => {
         setCuston(true);
@@ -22,6 +24,7 @@ const Login = (props) => {
         inputCustom.style.display = 'block'
     }
 
+
     const loginCaseChecking = () => {
         var errorLabel = document.getElementById('errorLabel');
         var login = document.getElementById("login");
@@ -31,14 +34,21 @@ const Login = (props) => {
         } else {
             errorLabel.innerHTML = "";
             const addressCheck = checkServerAdress();
-            console.log(addressCheck);
+            //setNewUsername(username);
+
             if (custom == false) {
                 login.style.display = 'none'
+                errorLabel.innerHTML = "";
+                socketCtx.toggleConnection();
+                //  setNewURL(connection);
             } else if (custom == true && customConnection == "") {
                 errorLabel.innerHTML = "Please enter a server address!";
             } else if (custom == true && customConnection != "" && addressCheck) {
                 login.style.display = 'none'
                 errorLabel.innerHTML = "";
+                socketCtx.toggleConnection();
+
+                //setNewURL(customConnection);
             } else {
                 errorLabel.innerHTML = 'Something went wrong!'
             }

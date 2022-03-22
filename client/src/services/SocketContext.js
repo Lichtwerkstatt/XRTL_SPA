@@ -4,7 +4,7 @@ import { useAppContext } from "./AppContext";
 const { Manager } = require("socket.io-client")
 
 
-const URL = "http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
+const URL = "http://localhost:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
 
 const manager = new Manager(URL, { autoConnect: false })
 const socket = manager.socket("/")
@@ -12,14 +12,25 @@ const socket = manager.socket("/")
 const SocketContext = React.createContext();
 
 export function useSocketContext() {
+  const [username, setUsername] = useState('');
+  const [URL, setURL] = useState('');
+
+  const setNewUsername = (newUsername) => {
+    setUsername(newUsername);
+  }
+
+  const setNewURL = (newURL) => {
+    setURL(newURL);
+  }
   return useContext(SocketContext);
 }
 
 export function SocketContextProvider({ children }) {
   const [connected, setConnected] = useState(false);
 
+
   const appCtx = useAppContext()
-  
+
   useEffect(() => {
     socket.on('connect', (e) => {
       setConnected(true)
@@ -36,6 +47,8 @@ export function SocketContextProvider({ children }) {
     })
   })
 
+
+//trigger einfügen?, damit bei auflösen der Connection login angezeigt wird??
   const toggleConnection = () => {
     console.log(connected)
     if (!connected) {
