@@ -27,5 +27,4 @@ const Console = (props) => {
     </div>
   )
 }
-
 export default Console
