@@ -30,7 +30,7 @@ const RotaryCtrl = (props) => {
   const rotCW_Handler = (event) => {
     event.preventDefault();
     socketCtx.socket.emit("command", {
-      userId: "user123",
+      userId: socketCtx.getNewUsername(),
       componentId: props.component,
       controlId: props.control,
       command: {
@@ -44,7 +44,7 @@ const RotaryCtrl = (props) => {
   const rotCCW_Handler = (event) => {
     event.preventDefault();
     socketCtx.socket.emit("command", {
-      userId: "user123",
+      userId: socketCtx.getNewUsername(),
       componentId: props.component,
       controlId: props.control,
       command: {

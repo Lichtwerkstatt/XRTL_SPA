@@ -32,6 +32,7 @@ const Chat = (props) => {
   }
 
   const showChatHandler = () => {
+    console.log(socketCtx.getNewURL())
     setAnimation(showChat ? styles.closeChat : styles.openChat)
     setShowChat(!showChat)
   }

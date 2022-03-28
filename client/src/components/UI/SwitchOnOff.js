@@ -21,7 +21,7 @@ const SwitchOnOff = (props) => {
     event.preventDefault();
     const newStatus = !switchStatus;
     socketCtx.socket.emit("command", {
-      userId: "user123",
+      userId: socketCtx.getNewUsername(),
       componentId: props.component,
       command: {
         laser: newStatus

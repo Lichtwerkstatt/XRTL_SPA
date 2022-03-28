@@ -127,7 +127,7 @@ io.on('connection', socket => {
 
         if (roomSize == 1) {
             io.emit("command", {
-                userId: "user123",
+                userId: socket.getNewUsername(),
                 componentId: componentID,
                 command: "startStreaming",
             });
@@ -147,7 +147,7 @@ io.on('connection', socket => {
 
         if (roomSize == 0) {
             io.emit("command", {
-                userId: "user123",
+                userId: socket.getNewUsername(),
                 componentId: componentID,
                 command: "stopStreaming",
             });

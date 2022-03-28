@@ -10,7 +10,7 @@ const Stream = (props) => {
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
     console.log("Stop Streaming.");
-    socketCtx.socket.emit("leave stream room", props.id );
+    socketCtx.socket.emit("leave stream room", { id: props.id, username: socketCtx.getNewUsername() });
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Stream = (props) => {
 
   useEffect(() => {
     console.log("Start Streaming.");
-    socketCtx.socket.emit("join stream room", props.id );
+    socketCtx.socket.emit("join stream room", { id: props.id, username: socketCtx.getNewUsername() });
   }, []);
 
   return (

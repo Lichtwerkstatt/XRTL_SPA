@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useAppContext } from "./AppContext";
+import { Manager } from "socket.io-client";
 
-const { Manager } = require("socket.io-client")
-
-const URL = "http://localhost:7000";      //"http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
+var URL = "http://localhost:7000";      //"http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
 
 const manager = new Manager(URL, { autoConnect: false })
 const socket = manager.socket("/")
@@ -11,7 +10,6 @@ const socket = manager.socket("/")
 const SocketContext = React.createContext();
 
 export function useSocketContext() {
-
   return useContext(SocketContext);
 }
 
@@ -57,6 +55,7 @@ export function SocketContextProvider({ children }) {
   }
 
   const getNewURL = () => {
+    console.log(URL)
     return URL;
   }
 

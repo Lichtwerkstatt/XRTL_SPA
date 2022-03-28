@@ -29,7 +29,7 @@ const SliderCtrl = (props) => {
     setSliderPos(event.target.value);
     console.log("Sending Command " + event.target.value);
     socketCtx.socket.emit("command", {
-      userId: "user123",
+      userId: socketCtx.getNewUsername(),
       componentId: props.component,
       command: {
         position: sliderPos
