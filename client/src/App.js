@@ -19,7 +19,7 @@ const App = () => {
         <Chat />
         <Cam />
         <NavBar />
-        <Login />        {/* <Login      trigger={true}/> */}
+        <Login trigger={true} />
       </SocketContextProvider>
     </AppContextProvider>
   );

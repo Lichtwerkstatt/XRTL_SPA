@@ -11,24 +11,17 @@ const socket = manager.socket("/")
 const SocketContext = React.createContext();
 
 export function useSocketContext() {
-  const [username, setUsername] = useState('');
-  const [URL, setURL] = useState('');
 
-  const setNewUsername = (newUsername) => {
-    setUsername(newUsername);
-  }
-
-  const setNewURL = (newURL) => {
-    setURL(newURL);
-  }
   return useContext(SocketContext);
 }
 
 export function SocketContextProvider({ children }) {
   const [connected, setConnected] = useState(false);
-
-
   const appCtx = useAppContext()
+  const [username, setUsername] = useState('');
+  const [URL, setURL] = useState('');
+  const [fontColor, setFontColor] = useState('white');
+
 
   useEffect(() => {
     socket.on('connect', (e) => {
@@ -46,15 +39,42 @@ export function SocketContextProvider({ children }) {
     })
   })
 
+  //trigger einfügen?, damit bei auflösen der Connection login angezeigt wird??
+  const setNewUsername = (newUsername) => {
+    setUsername(newUsername);
+  }
 
-//trigger einfügen?, damit bei auflösen der Connection login angezeigt wird??
+  const setNewURL = (newURL) => {
+    setURL(newURL);
+  }
+
+  const setNewFont = (newFont) => {
+    setFontColor(newFont);
+  }
+
+  const getNewUsername = () => {
+    return username;
+  }
+
+  const getNewURL = () => {
+    return URL;
+  }
+
+  const getNewFont = () => {
+    return fontColor;
+  }
+
   const toggleConnection = () => {
-    console.log(connected)
+    //console.log(connected)
     if (!connected) {
       console.log(socket.connect());
       setConnected(true)
       appCtx.addLog("Client connected to " + URL + " by choice.")
+      appCtx.setShowLogin(false)
     } else {
+      appCtx.setShowLogin(true);
+      setNewUsername("");
+      setNewURL("");
       console.log(socket.close())
       setConnected(false)
       appCtx.addLog("Client disconnected by choice.")
@@ -62,7 +82,7 @@ export function SocketContextProvider({ children }) {
   }
 
   return (
-    <SocketContext.Provider value={{ socket, connected, toggleConnection }}>
+    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setNewUsername, setNewFont, getNewURL, getNewUsername, getNewFont }}>
       {children}
     </SocketContext.Provider>
   );

@@ -10,10 +10,12 @@ export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [showWebcam, setShowWebcam] = useState(false);
-  const [selectedComps, setSelectedComps] = useState(new Set())
-  const [busyComps, setBusyComps] = useState(new Set())
-  const [logs, setLogs] = useState([])
-  const [showTags, setShowTags] = useState(true)
+  const [selectedComps, setSelectedComps] = useState(new Set());
+  const [busyComps, setBusyComps] = useState(new Set());
+  const [logs, setLogs] = useState([]);
+  const [showTags, setShowTags] = useState(true);
+  const [showLogin, setShowLogin] = useState(true);
+
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
@@ -72,6 +74,8 @@ export function AppContextProvider({ children }) {
         toggleShowTags,
         showWebcam,
         toggleShowWebcam,
+        showLogin,
+        setShowLogin
       }}
     >
       {children}

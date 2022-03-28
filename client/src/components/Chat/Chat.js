@@ -2,34 +2,39 @@ import { useEffect, useState } from "react"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
-import { useSocketContext } from "../../services/SocketContext"
+import { useSocketContext } from "../../services/SocketContext";
+import Login from "../Login/Login"
+import { BiFontColor } from "react-icons/bi";
 
 const Chat = (props) => {
   const [message, setMessage] = useState("")
   const [showChat, setShowChat] = useState(false)
   const [animation, setAnimation] = useState("")
-  const [chat, setChat] = useState([])
+  const [chat, setChat] = useState([]);
+  const [font, setFont] = useState("white")
 
   const socketCtx = useSocketContext();
-  
+
   useEffect(() => {
     socketCtx.socket.on("message", (payload) => {
       setChat([...chat, payload])
     })
-   }, [socketCtx, chat])
+  }, [socketCtx, chat])
 
   const sendMessage = (event) => {
     event.preventDefault()
+    setFont(socketCtx.getNewFont());
     console.log(message)
-    socketCtx.socket.emit("message", { userName: "user", message })
-    setMessage("")
+    socketCtx.socket.emit("message", { userName: socketCtx.getNewUsername(), message })
+    setMessage("");
+    console.log(socketCtx.getNewFont());
+    //setFont(Login.getFontColor());
   }
 
   const showChatHandler = () => {
     setAnimation(showChat ? styles.closeChat : styles.openChat)
     setShowChat(!showChat)
   }
-
 
   return (
     <div
@@ -38,8 +43,8 @@ const Chat = (props) => {
       <div className={styles.chatMain}>
         {chat.map((payload, index) => {
           return (
-            <b key={index}>
-              {payload.userName}: <span>{payload.message}</span>
+            <b key={index} >
+              <span style={{ color: socketCtx.getNewFont() }}> {payload.userName}:</span> <span >{payload.message}</span>
               <br />
             </b>
           )
