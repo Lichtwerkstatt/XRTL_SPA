@@ -1,27 +1,32 @@
-import { useState, useEffect } from "react";
-import styles from "./SwitchOnOff.module.css"
-import { useAppContext } from "../../services/AppContext";
+import { useState, useEffect, useRef } from "react";
+//import styles from "./SwitchOnOff.module.css"
+//import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
+  const tempSwitch = useRef()
+  //const appCtx = useAppContext();
 
-  useEffect(() => {
+  const switchFunction = () => {
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         setSwitchStatus(payload.status['laser'])
       }
     })
+  }
+
+  tempSwitch.current = switchFunction
+  useEffect(() => {
+    tempSwitch.current();
   }, [socketCtx.socket])
 
   const switch_Handler = (event) => {
     event.preventDefault();
     const newStatus = !switchStatus;
     socketCtx.socket.emit("command", {
-      userId: "user123",
+      userId: socketCtx.getNewUsername(),
       componentId: props.component,
       command: {
         laser: newStatus
@@ -32,8 +37,10 @@ const SwitchOnOff = (props) => {
   }
 
   return (
-    <button onClick={switch_Handler}>
-      {switchStatus ? 'ON' : 'OFF'}</button>
+    <div className="switchOnOff">
+      <button onClick={switch_Handler}>
+        {switchStatus ? 'ON' : 'OFF'}</button>
+    </div>
   )
 }
 

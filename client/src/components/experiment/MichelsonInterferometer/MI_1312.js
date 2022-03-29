@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useGLTF, Html } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { Box } from "@react-three/drei";
 import DescriptiveTag from "../../UI/DescriptiveTag"
 
@@ -162,5 +162,4 @@ export default function Model({ ...props }) {
     </group>
   );
 }
-
 useGLTF.preload("/model/MI_1312.glb");

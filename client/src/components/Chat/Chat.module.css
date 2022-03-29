@@ -5,7 +5,6 @@ div.chatContainer {
     bottom: 50px;
     left: -405px;
     background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px);
     border-top: 3px solid #01bd7d;
     border-right: 3px solid #01bd7d;
     border-bottom: 3px solid #01bd7d;

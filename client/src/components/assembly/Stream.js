@@ -1,19 +1,21 @@
 import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const Stream = (props) => {
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
+  const tempWebcam = useRef();
+  const tempWebcam2 = useRef();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
     console.log("Stop Streaming.");
-    socketCtx.socket.emit("leave stream room", props.id );
+    socketCtx.socket.emit("leave stream room", { id: props.id, username: socketCtx.getNewUsername() });
   };
 
-  useEffect(() => {
+  const webcamEmitPic = () => {
     socketCtx.socket.on("pic", function (data) {
       var uint8Arr = new Uint8Array(data.buffer);
       var binary = "";
@@ -34,11 +36,22 @@ const Stream = (props) => {
       };
       img.src = "data:image/jpg;base64," + base64String;
     });
+  }
+
+  const webcamStartStreaming = () => {
+    console.log("Start Streaming.");
+    socketCtx.socket.emit("join stream room", { id: props.id, username: socketCtx.getNewUsername() });
+  }
+
+  tempWebcam.current = webcamEmitPic;
+  tempWebcam2.current = webcamStartStreaming;
+
+  useEffect(() => {
+    tempWebcam.current();
   }, [socketCtx.socket]);
 
   useEffect(() => {
-    console.log("Start Streaming.");
-    socketCtx.socket.emit("join stream room", props.id );
+    tempWebcam2.current();
   }, []);
 
   return (
@@ -54,5 +67,4 @@ const Stream = (props) => {
     </Window>
   );
 };
-
 export default Stream;

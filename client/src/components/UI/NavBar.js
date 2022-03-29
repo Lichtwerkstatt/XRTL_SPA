@@ -13,7 +13,6 @@ const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
-
     let connectionStatusColor = ""
     if (socketCtx.connected) { connectionStatusColor = "white" }
     let autoRotateColor = ""

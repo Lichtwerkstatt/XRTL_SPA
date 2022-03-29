@@ -67,8 +67,8 @@ io.on('connection', socket => {
     //Handshakes for the experiment cameras
 
     //Client how starts the stream is added to a room
-    socket.on('join stream room', getComponentID => {
-        componentID = getComponentID;
+    socket.on('join stream room', (data) => {
+        componentID = data.id;
         console.log("User has joined the room " + componentID);
         socket.join(componentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size;
@@ -76,7 +76,7 @@ io.on('connection', socket => {
 
         if (roomSize == 1) {
             io.emit("command", {
-                userId: "user123",
+                userId: data.username,
                 componentId: componentID,
                 command: "startStreaming",
             });
@@ -89,19 +89,19 @@ io.on('connection', socket => {
     });
 
     //Clients leaves the room after ending the stream
-    socket.on('leave stream room', getComponentID => {
-        console.log("User has left the room " + componentID);
-        let roomSize = io.sockets.adapter.rooms.get(componentID).size - 1;
+    socket.on('leave stream room', (data) => {
+        console.log("User has left the room " + data.id);
+        let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
         //console.log(roomSize);
 
         if (roomSize == 0) {
             io.emit("command", {
-                userId: "user123",
-                componentId: componentID,
+                userId: data.username,
+                componentId: data.id,
                 command: "stopStreaming",
             });
         }
-        socket.leave(getComponentID);
+        socket.leave(data.id);
     });
 
     socket.on("error", (error) => {
@@ -122,19 +122,26 @@ io.on('connection', socket => {
         io.emit('status', payload)
     });
 
+    socket.on('error', (er) => {
+        console.log("Error " + er.number + ": " + er.message);
+        socket.emit('error', er);
+    })
+
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
         console.log('User kicked: ', e)
     });
 
     socket.on('disconnect', (e) => {
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
+        if (socketToRoom[socket.id]) {
+            const roomID = socketToRoom[socket.id];
+            let room = users[roomID];
+            if (room) {
+                room = room.filter(id => id !== socket.id);
+                users[roomID] = room;
+            }
+            console.log(users[roomID]);
         }
-        console.log(users[roomID]);
         socket.disconnect();
         console.log('User disconnected: ', e);
     });

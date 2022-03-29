@@ -1,7 +1,5 @@
-import { useState } from "react";
 import Window from "../UI/Window"
 import SwitchOnOff from "../UI/SwitchOnOff";
-
 import { useAppContext } from "../../services/AppContext";
 
 const LaserCtrl = (props) => {
@@ -13,21 +11,19 @@ const LaserCtrl = (props) => {
 
   return (
     <Window
-      header ={props.title+ "("+props.id+")"}
+      header={props.title + " (" + props.id + ")"}
       top={props.top}
       left={props.left}
       height="200px"
       width="200px"
       onClose={handleCloseWindow}
     >
-    <SwitchOnOff
-      component={props.id}
-      top="0"
-      left="0"
+      <SwitchOnOff
+        component={props.id}
+        top="0"
+        left="0"
       />
-
     </Window>
   )
 }
-
 export default LaserCtrl;
