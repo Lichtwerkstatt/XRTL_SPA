@@ -11,7 +11,6 @@ const Chat = (props) => {
   const [showChat, setShowChat] = useState(false)
   const [animation, setAnimation] = useState("")
   const [chat, setChat] = useState([]);
-  const [font, setFont] = useState("white")
 
   const socketCtx = useSocketContext();
 
@@ -23,12 +22,9 @@ const Chat = (props) => {
 
   const sendMessage = (event) => {
     event.preventDefault()
-    setFont(socketCtx.getNewFont());
     console.log(message)
-    socketCtx.socket.emit("message", { userName: socketCtx.getNewUsername(), message })
+    socketCtx.socket.emit("message", { userName: socketCtx.getNewUsername(), message, color: socketCtx.getNewFont() })
     setMessage("");
-    console.log(socketCtx.getNewFont());
-    //setFont(Login.getFontColor());
   }
 
   const showChatHandler = () => {
@@ -45,7 +41,7 @@ const Chat = (props) => {
         {chat.map((payload, index) => {
           return (
             <b key={index} >
-              <span style={{ color: socketCtx.getNewFont() }}> {payload.userName}:</span> <span >{payload.message}</span>
+              <span style={{ color: payload.color }}> {payload.userName}:</span> <span >{payload.message}</span>
               <br />
             </b>
           )
