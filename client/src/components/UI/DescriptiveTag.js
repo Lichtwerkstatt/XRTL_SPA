@@ -12,11 +12,12 @@ const DescriptiveTag = (props) => {
       style={{
         height: "150px",
         width: "0px",
-        "border-left": "2px solid white",
+        "borderLeft": "2px solid white",
         float: "left",
       }}
     ></div>
-    <div style={{ "margin-left": "12px" }}>
+    
+    <div style={{ "marginLeft": "12px" }}>
       <span>
         <b>{props.title}</b>
       </span>

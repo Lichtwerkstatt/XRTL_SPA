@@ -6,7 +6,7 @@ import Stream from "../../assembly/Stream";
 const DigiLabs4YouDemo = (props) => {
   return (
     <div>
-      {props.selected.has("KM100_2") &&(
+      {props.selected.has("KM100_2") && (
         <KM100
           title="Mirror"
           id="KM100_2"
@@ -15,7 +15,7 @@ const DigiLabs4YouDemo = (props) => {
           footer="Initializing..."
           top="100"
           left="100"
-          />
+        />
       )}
       {props.selected.has("ID25_1") && (
         <ID15
@@ -40,11 +40,10 @@ const DigiLabs4YouDemo = (props) => {
           id="laser_1"
           top="120"
           left="120"
-          />
+        />
       )}
 
     </div>
   )
 }
-
 export default DigiLabs4YouDemo;

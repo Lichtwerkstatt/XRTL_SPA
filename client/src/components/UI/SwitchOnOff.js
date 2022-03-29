@@ -5,9 +5,8 @@ import { useSocketContext } from "../../services/SocketContext";
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-
-  //const appCtx = useAppContext();
   const socketCtx = useSocketContext();
+  //const appCtx = useAppContext();
 
   useEffect(() => {
     socketCtx.socket.on("status", payload => {
@@ -32,8 +31,10 @@ const SwitchOnOff = (props) => {
   }
 
   return (
-    <button onClick={switch_Handler}>
-      {switchStatus ? 'ON' : 'OFF'}</button>
+    <div className="switchOnOff">
+      <button onClick={switch_Handler}>
+        {switchStatus ? 'ON' : 'OFF'}</button>
+    </div>
   )
 }
 

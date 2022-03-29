@@ -4,7 +4,7 @@ import { useAppContext } from "../../services/AppContext";
 
 const SM1ZP = (props) => {
   const appCtx = useAppContext()
-  
+
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }

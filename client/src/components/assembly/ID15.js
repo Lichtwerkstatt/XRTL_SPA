@@ -14,7 +14,7 @@ const ID15 = (props) => {
 
   return (
     <Window
-      header={props.title + " ("+props.id+")"}
+      header={props.title + " (" + props.id + ")"}
       top={props.top}
       left={props.left}
       height="240px"

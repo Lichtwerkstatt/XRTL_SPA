@@ -22,7 +22,7 @@ const Chat = (props) => {
 
   const sendMessage = (event) => {
     event.preventDefault()
-    console.log(message)
+    //console.log(message)
     socketCtx.socket.emit("message", { userName: socketCtx.getNewUsername(), message, color: socketCtx.getNewFont() })
     setMessage("");
   }
@@ -68,5 +68,4 @@ const Chat = (props) => {
     </div>
   )
 }
-
 export default Chat

@@ -1,6 +1,6 @@
 import Draggable from "react-draggable"
 import styles from "./Window.module.css"
-import {CgCloseO} from "react-icons/cg"
+import { CgCloseO } from "react-icons/cg"
 
 const Window = (props) => {
 

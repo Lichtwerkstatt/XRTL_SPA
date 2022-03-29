@@ -37,7 +37,6 @@ export function SocketContextProvider({ children }) {
     })
   })
 
-  //trigger einfügen?, damit bei auflösen der Connection login angezeigt wird??
   const setNewUsername = (newUsername) => {
     setUsername(newUsername);
   }
