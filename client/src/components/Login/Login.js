@@ -69,10 +69,6 @@ const Login = (props) => {
         return false;
     }
 
-    const getFontColor = () => {
-        return fontColor;
-    }
-
     if (appCtx.showLogin) {
         return (
             <div className="login" id="login">

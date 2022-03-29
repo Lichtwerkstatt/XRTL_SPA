@@ -39,7 +39,7 @@ const Webcam = () => {
             height: window.innerHeight / 2,
             width: window.innerWidth / 2
         };
-        
+
         if (appCtx.showWebcam) {
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
                 userVideo.current.srcObject = stream;
