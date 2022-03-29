@@ -26,8 +26,6 @@ const Login = (props) => {
 
     const loginCaseChecking = () => {
         var errorLabel = document.getElementById('errorLabel');
-        var usernameInput = document.getElementById('fontColor');
-
 
         if (username === '') {
             errorLabel.innerHTML = "Please enter a username!";

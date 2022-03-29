@@ -1,19 +1,25 @@
-import { useState, useEffect } from "react";
-import styles from "./SwitchOnOff.module.css"
+import { useState, useEffect, useRef } from "react";
+//import styles from "./SwitchOnOff.module.css"
 //import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
   const socketCtx = useSocketContext();
+  const tempSwitch = useRef()
   //const appCtx = useAppContext();
 
-  useEffect(() => {
+  const switchFunction = () => {
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         setSwitchStatus(payload.status['laser'])
       }
     })
+  }
+
+  tempSwitch.current = switchFunction
+  useEffect(() => {
+    tempSwitch.current();
   }, [socketCtx.socket])
 
   const switch_Handler = (event) => {

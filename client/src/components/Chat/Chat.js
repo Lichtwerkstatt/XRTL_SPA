@@ -1,23 +1,27 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import styles from "./Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
 import { useSocketContext } from "../../services/SocketContext";
-import Login from "../Login/Login"
-import { BiFontColor } from "react-icons/bi";
 
 const Chat = (props) => {
   const [message, setMessage] = useState("")
   const [showChat, setShowChat] = useState(false)
   const [animation, setAnimation] = useState("")
   const [chat, setChat] = useState([]);
-
   const socketCtx = useSocketContext();
+  const tempChat = useRef();
 
-  useEffect(() => {
+  const ChatEmit = () => {
     socketCtx.socket.on("message", (payload) => {
       setChat([...chat, payload])
     })
+  }
+
+  tempChat.current = ChatEmit;
+
+  useEffect(() => {
+    tempChat.current();
   }, [socketCtx, chat])
 
   const sendMessage = (event) => {
@@ -28,7 +32,6 @@ const Chat = (props) => {
   }
 
   const showChatHandler = () => {
-    console.log(socketCtx.getNewURL())
     setAnimation(showChat ? styles.closeChat : styles.openChat)
     setShowChat(!showChat)
   }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./SliderCtrl.module.css"
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
@@ -8,14 +8,21 @@ const SliderCtrl = (props) => {
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
+  const tempSlider = useRef();
 
-  useEffect(() => {
+  const sliderEmit = () => {
     socketCtx.socket.on("status", payload => {
       console.log(payload);
       if (payload.component === props.component) {
         setSliderPos(payload.status[props.control]);
       }
     })
+  }
+
+  tempSlider.current = sliderEmit;
+
+  useEffect(() => {
+    tempSlider.current();
   }, [socketCtx.socket])
 
   const sliderHandler = (event) => {

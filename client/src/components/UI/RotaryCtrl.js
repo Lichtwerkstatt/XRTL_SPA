@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./RotaryCtrl.module.css";
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
 import { useAppContext } from "../../services/AppContext";
@@ -8,17 +8,22 @@ const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(props.rotation);
   const [enteredRotation, setEnteredRotation] = useState(0);
 
-  const appCtx = useAppContext()
-  const socketCtx = useSocketContext()
+  const appCtx = useAppContext();
+  const socketCtx = useSocketContext();
+  const tempRotaryCtrl = useRef();
 
-  useEffect(() => {
-
+  const rotaryCtrlEmit = () => {
     /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         setRotation(payload.status[props.control]);
       }
     }); //TODO: Update Footer of UI Window with Status
+  }
+  tempRotaryCtrl.current = rotaryCtrlEmit;
+
+  useEffect(() => {
+    tempRotaryCtrl.current()
   }, [socketCtx.socket]);
 
   const changeRotationHandler = (event) => {
