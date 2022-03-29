@@ -13,14 +13,12 @@ div.popupWindow {
 div.popupInner {
     width: 370px;
     height: 250px;
-    position: absolute;
+    position:absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(17, 238, 17);
     background: rgba(0, 0, 0, 0.6);
     border: 3px solid #01bd7d;
-
     border-radius: 15px;
 }
 
@@ -88,7 +86,6 @@ div.ErrorMessages label {
 
 div.popupInner button {
     font-size: larger;
-    position: block;
     margin-top: 25px;
     margin-left: 280px;
     border: none;
