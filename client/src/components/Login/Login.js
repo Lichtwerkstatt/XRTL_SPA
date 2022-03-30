@@ -36,11 +36,9 @@ const Login = (props) => {
 
             if (custom === false) {
                 errorLabel.innerHTML = "";
-
-                socketCtx.toggleConnection();
                 socketCtx.setNewURL(String(connection));
                 socketCtx.setNewFont(fontColor);
-                //console.log(fontColor);
+                socketCtx.toggleConnection();
                 setUsername('');
                 setConnection('http://localhost:7000');
             } else if (custom === true && customConnection === "") {
@@ -67,10 +65,6 @@ const Login = (props) => {
             return true;
         }
         return false;
-    }
-
-    const getFontColor = () => {
-        return fontColor;
     }
 
     if (appCtx.showLogin) {
