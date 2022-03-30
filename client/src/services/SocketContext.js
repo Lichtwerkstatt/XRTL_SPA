@@ -2,11 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { useAppContext } from "./AppContext";
 import { Manager } from "socket.io-client";
 
-var URL = "http://localhost:7000";      //"http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
+var URLglobal = "";      //"http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
 
-const manager = new Manager(URL, { autoConnect: false });
-const socket = manager.socket("/");
-const SocketContext = React.createContext();
+var manager = new Manager(URLglobal, { autoConnect: false });
+var socket = manager.socket("/");
+var SocketContext = React.createContext();
 
 export function useSocketContext() {
   return useContext(SocketContext);
@@ -42,6 +42,11 @@ export function SocketContextProvider({ children }) {
 
   const setNewURL = (newURL) => {
     setURL(newURL);
+    URLglobal = newURL;
+    socket.disconnect();
+    manager = new Manager(URLglobal, { autoConnect: false });
+    socket = manager.socket("/");
+    SocketContext = React.createContext();
   }
 
   const setNewFont = (newFont) => {
