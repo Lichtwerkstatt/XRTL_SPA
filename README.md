@@ -10,5 +10,9 @@ Remote labs are a trendsetting way of teaching, communicating, and experiencing 
 - "Photonic Quantum Experiments for Everyone with DIY Components, Web Servcies and VR endpoints" J.Kretzschmar, S.Ritter, T.Vogl, F.Eilenberger, Virtual Poster at 2nd European Quantum Technologies Virtual Conference (EQTC), 2021
 
 # Links
-[Hardware Repository for XRTL](https://github.com/Lichtwerkstatt/XRTL_Hardware)  
-[Lichtwerkstatt Jena](http://www.lichtwerkstatt-jena.de)
+- [Hardware Repository for XRTL](https://github.com/Lichtwerkstatt/XRTL_Hardware)  
+- [Lichtwerkstatt Jena](http://www.lichtwerkstatt-jena.de)
+
+<p align="right">
+<img src="rmMedia/xrtl_team.jpg" />
+</p>
