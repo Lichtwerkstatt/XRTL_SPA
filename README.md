@@ -14,5 +14,5 @@ Remote labs are a trendsetting way of teaching, communicating, and experiencing 
 - [Lichtwerkstatt Jena](http://www.lichtwerkstatt-jena.de)
 
 <p align="right">
-<img src="rmMedia/xrtl_team.jpg" />
+<img src="rmMedia/xrtl_team.png" width="50%" />
 </p>
