@@ -1,0 +1,140 @@
+#: import utils kivy.utils
+<Grid>
+    RelativeLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        Label:
+            text: "Server Settings"
+            font_size:32
+            size_hint:(0.1,0.1)
+            pos_hint: {'center_x': 0.5, 'y': 0.9}
+
+        Switch:
+            id: switch
+            size_hint:(0.1,0.1)
+            pos_hint: {'x': 0.7, 'y': 0.9}   
+          
+        Label:
+            font_size:18
+            size_hint:(0.1,0.1)
+            pos_hint: {'x': 0.85, 'y': 0.9}
+            text: 'Server is online' if switch.active else 'Server is offline'
+
+        BoxLayout:
+            spacing:20
+            Label:
+                font_size:18
+                size_hint:(0.1,0.1)
+                pos_hint: {'x': 0, 'y': 0.80}
+                text: "To reset all commponents"
+                color: utils.get_color_from_hex('01bd7d')
+            
+            Label:
+                font_size:18
+                size_hint:(0.1,0.1)
+                pos_hint: {'x': 0.5, 'y': 0.80}
+                text: "To reset all commponents"
+                color: utils.get_color_from_hex('01bd7d')
+
+        BoxLayout:  
+            orientation: 'horizontal'
+            padding: 100
+            spacing:250
+                        
+            Button:
+                font_size:18
+                size_hint:(0.1,0.1)
+                pos_hint: {'x': 0.1, 'y': 0.94}
+                text:"Initialization"
+                background_color: utils.get_color_from_hex('01bd7d')
+                
+            Button:
+                font_size:18
+                size_hint:(0.1,0.1)
+                pos_hint: {'x': 0.1, 'y': 0.94}
+                text:"Reset"
+
+        RelativeLayout:
+            padding: 100
+            spacing:100
+ 
+            TextInput:
+                font_size:18
+                size_hint:(0.8,0.05)
+                pos_hint: {'x': 0.05, 'y': 0.5}
+                multiline: False
+
+            Button:
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.86, 'y': 0.5}
+                text:"Submit"
+
+        RelativeLayout:
+            padding:10
+
+            Label:
+                text: "Socket log:"
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.05, 'y': 0.45}
+                font_size:24
+                color: utils.get_color_from_hex('01bd7d')
+
+            ScrollView:
+                size_hint:(0.6,0.4)
+                pos_hint: {'x': 0.05, 'y': 0.05}
+                do_scroll_x: False
+                do_scroll_y: True
+
+                Label:
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    padding: 10, 10
+                    text:
+                        'really some amazing textcidmllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllc\n' * 100
+
+        RelativeLayout:
+            padding:10
+
+            Label:
+                text: "User log:"
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.65, 'y': 0.45}
+                font_size:24
+                color: utils.get_color_from_hex('01bd7d')
+
+            ScrollView:
+                size_hint:(0.3,0.1)
+                pos_hint: {'x': 0.65, 'y': 0.35}
+                do_scroll_x: False
+                do_scroll_y: True
+
+                Label:
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    padding: 10, 10
+                    text:
+                        'reUsernameekmckdmckc\n' * 100
+
+            Label:
+                text: "Component log:"
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.685, 'y': 0.25}
+                font_size:24
+                color: utils.get_color_from_hex('01bd7d')
+
+            ScrollView:
+                size_hint:(0.3,0.2)
+                pos_hint: {'x': 0.65, 'y': 0.05}
+                do_scroll_x: False
+                do_scroll_y: True
+
+                Label:
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    padding: 10, 10
+                    text:
+                        'Compoentskcbnkjdnc\n' * 100          
