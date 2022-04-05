@@ -3,21 +3,28 @@ import kivy;
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
+from kivy.graphics import Rectangle, Color
+from kivy.lang import Builder
+from kivymd.app import MDApp
+from kivymd.uix.list import OneLineIconListItem
+from kivymd.icon_definitions import md_icons
 
-class Grid(Widget):
-    pass
+class MainApp(MDApp):
+     def build(self):
+        #Window.clearcolor = (0, 0, 0, 0.6)
+        #Window.size = (1080, 720)
+        self.theme_cls.theme_style ="Dark"
+       
+        return Builder.load_file('server.kv')
  
 #1824x984 Auflösung des Raspberry Pis
 
-def switch_callback(switchObject, switchValue):
 
-    print('Value of sample settings is:', switchValue) 
 
-class ServerApp(App):
-    def build(self):
-        Window.clearcolor = (0, 0, 0, 0.6)
-        Window.size = (1080, 720)
-        return Grid()
+# class ServerApp(MDApp):
+#     def build(self):
+#         Window.clearcolor = (0, 0, 0, 0.6)
+#         Window.size = (1080, 720)
+#         return Grid()
 
-if __name__ == '__main__':
-    ServerApp().run()
+MainApp().run()

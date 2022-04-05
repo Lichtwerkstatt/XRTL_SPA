@@ -1,5 +1,7 @@
 #: import utils kivy.utils
-<Grid>
+#:import md_icons kivymd.icon_definitions.md_icons
+
+Screen:
     RelativeLayout:
         size: root.width, root.height
         orientation: 'vertical'
@@ -16,60 +18,74 @@
             pos_hint: {'x': 0.7, 'y': 0.9}   
           
         Label:
+            markup: True
             font_size:18
             size_hint:(0.1,0.1)
             pos_hint: {'x': 0.85, 'y': 0.9}
-            text: 'Server is online' if switch.active else 'Server is offline'
+            text: 'Server is [color=#6aa84f]online[/color]' if switch.active else 'Server is [color=#cc0000]offline[/color]'
 
-        BoxLayout:
-            spacing:20
+        RelativeLayout:
+            CanvasBox:
+                size_hint:(0.65,0.18)
+                pos_hint: {'x': 0.03, 'y': 0.72}
+
             Label:
                 font_size:18
                 size_hint:(0.1,0.1)
-                pos_hint: {'x': 0, 'y': 0.80}
+                pos_hint: {'x': 0.1, 'y': 0.80}
                 text: "To reset all commponents"
                 color: utils.get_color_from_hex('01bd7d')
+            
+            MDRaisedButton:
+                md_bg_color: utils.get_color_from_hex('01bd7d')
+                font_size:18
+                size_hint:(0.21,0.07)
+                pos_hint: {'x': 0.05, 'y': 0.75}
+                text:"Initialization"
             
             Label:
                 font_size:18
                 size_hint:(0.1,0.1)
                 pos_hint: {'x': 0.5, 'y': 0.80}
                 text: "To reset all commponents"
-                color: utils.get_color_from_hex('01bd7d')
+                color: utils.get_color_from_hex('01bd7d')       
 
-        BoxLayout:  
-            orientation: 'horizontal'
-            padding: 100
-            spacing:250
-                        
-            Button:
+
+            MDRaisedButton:
+                text: "Reset"
                 font_size:18
-                size_hint:(0.1,0.1)
-                pos_hint: {'x': 0.1, 'y': 0.94}
-                text:"Initialization"
-                background_color: utils.get_color_from_hex('01bd7d')
-                
-            Button:
-                font_size:18
-                size_hint:(0.1,0.1)
-                pos_hint: {'x': 0.1, 'y': 0.94}
-                text:"Reset"
+                md_bg_color: utils.get_color_from_hex('01bd7d')
+                size_hint:(0.2,0.07)
+                pos_hint: {'x': 0.46, 'y': 0.75}   
 
         RelativeLayout:
-            padding: 100
             spacing:100
- 
-            TextInput:
-                font_size:18
-                size_hint:(0.8,0.05)
-                pos_hint: {'x': 0.05, 'y': 0.5}
-                multiline: False
 
-            Button:
+            Label:
+                text: "Commandos to the server:"
+                font_size:24
+                color: utils.get_color_from_hex('01bd7d')
                 size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.86, 'y': 0.5}
-                text:"Submit"
+                pos_hint: {'x': 0.17, 'y': 0.6}
 
+            MDTextField:
+                multiline: False
+                font_size:18
+                size_hint_x:.5
+                pos_hint: {'x': 0.05, 'y': 0.5}
+                helper_text_mode: "persistent"
+
+                hint_text: "Type in a server command ..."
+                hint_text_color_focus: utils.get_color_from_hex('4dd0a4')
+                
+                line_color_normal: utils.get_color_from_hex('01bd7d')
+                line_color_focus: utils.get_color_from_hex('4dd0a4')
+                
+                icon_right: "arrow-right"
+                icon_right_color_normal: utils.get_color_from_hex('01bd7d')
+                icon_right_color_focus: utils.get_color_from_hex('4dd0a4')
+
+            
         RelativeLayout:
             padding:10
 
@@ -92,7 +108,7 @@
                     text_size: self.width, None
                     padding: 10, 10
                     text:
-                        'really some amazing textcidmllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllc\n' * 100
+                        'really some amazing textcidmlllllllllc\n' * 100
 
         RelativeLayout:
             padding:10
@@ -137,4 +153,25 @@
                     text_size: self.width, None
                     padding: 10, 10
                     text:
-                        'Compoentskcbnkjdnc\n' * 100          
+                        'Compoentskcbnkjdnc\n' * 100
+
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal:''
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex('01bd7d')
+        RoundedRectangle:
+            size:self.size
+            pos: self.pos
+            radius:[20]
+
+<CanvasBox@Widget>
+    canvas:
+        Color: 
+            rgba: 1,1,1,1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 40, 40, 40, 40
