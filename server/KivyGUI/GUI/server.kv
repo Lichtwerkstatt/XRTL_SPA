@@ -1,79 +1,102 @@
-#: import utils kivy.utils
+#:import utils kivy.utils
 #:import md_icons kivymd.icon_definitions.md_icons
+#:import Gradient kivy_gradient.Gradient
 
-Screen:
+MDScreen:
     RelativeLayout:
         size: root.width, root.height
         orientation: 'vertical'
+
+        CanvasBox:
+            size_hint:(1,0.1)
+            pos_hint: {'x': 0, 'y': 0.92}
 
         Label:
             text: "Server Settings"
             font_size:32
             size_hint:(0.1,0.1)
-            pos_hint: {'center_x': 0.5, 'y': 0.9}
-
-        Switch:
-            id: switch
+            pos_hint: {'center_x': 0.5, 'y': 0.91}
+            color: 1,1,1,1
+            
+        MDIcon:
+            id: wifi1
+            icon: 'wifi'
             size_hint:(0.1,0.1)
-            pos_hint: {'x': 0.7, 'y': 0.9}   
+            pos_hint: {"x": .625, "y": .91}
+            color: 1,1,1,0.6
+        
+        MDIcon:
+            id: wifi2
+            icon: 'wifi'
+            size_hint:(0.1,0.1)
+            pos_hint: {"x": .355, "y": .91}
+            color: 1,1,1,0.6
+
+            
+        MDSwitch:
+            id: switch
+            height:dp(50)
+            width: dp(70)
+            pos_hint: {'x': 0.915, 'y': 0.9225}
+            on_active: app.switchPress(self, self.active)
+            #selected_color: 1,0,0,1   
           
         Label:
             markup: True
-            font_size:18
+            font_size:20
             size_hint:(0.1,0.1)
-            pos_hint: {'x': 0.85, 'y': 0.9}
-            text: 'Server is [color=#6aa84f]online[/color]' if switch.active else 'Server is [color=#cc0000]offline[/color]'
+            pos_hint: {'x': 0.82, 'y': 0.90}
+            color: 0,0,0,1
+            text: 'Server is [color=#a3e7d0]online[/color]' if switch.active else 'Server is [color=#cc0000]offline[/color]'
 
         RelativeLayout:
-            CanvasBox:
-                size_hint:(0.65,0.18)
+            MDScreen:
+                size_hint:(0.5,0.18)
                 pos_hint: {'x': 0.03, 'y': 0.72}
+                md_bg_color: utils.get_color_from_hex('b3b5b0')
+                radius: [25, 15, 25, 15]
+
+            MDScreen:
+                size_hint:(0.5,0.065)
+                pos_hint: {'x': 0.03, 'y': 0.835}
+                md_bg_color: utils.get_color_from_hex('323232')
+                radius: [25, 15, 0, 0]
 
             Label:
                 font_size:18
                 size_hint:(0.1,0.1)
-                pos_hint: {'x': 0.1, 'y': 0.80}
-                text: "To reset all commponents"
+                pos_hint: {'x': 0.06, 'y': 0.815}
+                text: "Commponents Control"
+                font_size:24
                 color: utils.get_color_from_hex('01bd7d')
             
             MDRaisedButton:
-                md_bg_color: utils.get_color_from_hex('01bd7d')
-                font_size:18
-                size_hint:(0.21,0.07)
-                pos_hint: {'x': 0.05, 'y': 0.75}
                 text:"Initialization"
-            
-            Label:
+                text_color: 1,1,1,1
                 font_size:18
-                size_hint:(0.1,0.1)
-                pos_hint: {'x': 0.5, 'y': 0.80}
-                text: "To reset all commponents"
-                color: utils.get_color_from_hex('01bd7d')       
-
-
+                size_hint:(0.15,0.05)
+                pos_hint: {'x': 0.05, 'y': 0.75}
+                md_bg_color: utils.get_color_from_hex('01bd7d') 
+            
             MDRaisedButton:
                 text: "Reset"
+                text_color: 1,1,1,1
                 font_size:18
+                size_hint:(0.15,0.05)
+                pos_hint: {'x': 0.26, 'y': 0.75}   
                 md_bg_color: utils.get_color_from_hex('01bd7d')
-                size_hint:(0.2,0.07)
-                pos_hint: {'x': 0.46, 'y': 0.75}   
 
         RelativeLayout:
             spacing:100
 
-            Label:
-                text: "Commandos to the server:"
-                font_size:24
-                color: utils.get_color_from_hex('01bd7d')
-                size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.17, 'y': 0.6}
-
             MDTextField:
                 multiline: False
                 font_size:18
-                size_hint_x:.5
-                pos_hint: {'x': 0.05, 'y': 0.5}
+                size_hint_x:.415
+                pos_hint: {'x': 0.05, 'y': 0.62}
                 helper_text_mode: "persistent"
+                text_color_normal: utils.get_color_from_hex('7f7f7f')
+                text_color_focus: 1,1,1,1
 
                 hint_text: "Type in a server command ..."
                 hint_text_color_focus: utils.get_color_from_hex('4dd0a4')
@@ -84,77 +107,132 @@ Screen:
                 icon_right: "arrow-right"
                 icon_right_color_normal: utils.get_color_from_hex('01bd7d')
                 icon_right_color_focus: utils.get_color_from_hex('4dd0a4')
-
             
         RelativeLayout:
             padding:10
 
-            Label:
-                text: "Socket log:"
+            MDScreen:
+                size_hint:(0.63,0.56)
+                pos_hint: {'x': 0.03, 'y': 0.035}
+                md_bg_color: utils.get_color_from_hex('b3b5b0')
+                radius: [25, 15, 25, 15]
+
+            MDScreen:
+                size_hint:(0.63,0.065)
+                pos_hint: {'x': 0.03, 'y': 0.535}
+                md_bg_color: utils.get_color_from_hex('323232')
+                radius: [25, 15, 0, 0]
+
+            MDIcon:
                 size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.05, 'y': 0.45}
+                pos_hint: {'x': 0.635, 'y': 0.54}
+                icon: 'power'
+
+            Label:
+                text: "Socket Log"
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.03, 'y': 0.54}
                 font_size:24
                 color: utils.get_color_from_hex('01bd7d')
 
             ScrollView:
-                size_hint:(0.6,0.4)
+                size_hint:(0.6,0.483)
                 pos_hint: {'x': 0.05, 'y': 0.05}
                 do_scroll_x: False
                 do_scroll_y: True
+                bar_color: 0,0,0,0.5
 
                 Label:
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width, None
                     padding: 10, 10
+                    color: 1,1,1,1
                     text:
                         'really some amazing textcidmlllllllllc\n' * 100
 
         RelativeLayout:
             padding:10
 
-            Label:
-                text: "User log:"
+            MDScreen:
+                size_hint:(0.23,0.3)
+                pos_hint: {'x': 0.74, 'y': 0.61}
+                md_bg_color: utils.get_color_from_hex('b3b5b0')
+                radius: [25, 15, 25, 15]
+
+            MDScreen:
+                size_hint:(0.23,0.3)
+                pos_hint: {'x': 0.74, 'y': 0.24}
+                md_bg_color: utils.get_color_from_hex('b3b5b0')
+                radius: [25, 15, 25, 15]
+
+            MDScreen:
+                size_hint:(0.23,0.065)
+                pos_hint: {'x': 0.74, 'y': 0.475}
+                md_bg_color: utils.get_color_from_hex('323232')
+                radius: [25, 15, 0, 0]
+
+            MDScreen:
+                size_hint:(0.23,0.065)
+                pos_hint: {'x': 0.74, 'y': 0.845}
+                md_bg_color: utils.get_color_from_hex('323232')
+                radius: [25, 15, 0, 0]
+
+            MDIcon:
                 size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.65, 'y': 0.45}
+                pos_hint: {'x': 0.945, 'y': 0.85}
+                icon: 'odnoklassniki'
+            
+            MDIcon:
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.945, 'y': 0.475}
+                icon: 'devices'
+
+            Label:
+                text: "User Log"
+                size_hint:(0.1,0.05)
+                pos_hint: {'x': 0.725, 'y': 0.85}
                 font_size:24
                 color: utils.get_color_from_hex('01bd7d')
-
+            
             ScrollView:
-                size_hint:(0.3,0.1)
-                pos_hint: {'x': 0.65, 'y': 0.35}
+                size_hint:(0.2,0.22)
+                pos_hint: {'x': 0.75, 'y': 0.62}
                 do_scroll_x: False
                 do_scroll_y: True
+                bar_color: 0,0,0,0.5
 
                 Label:
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width, None
+                    color: 1,1,1,1
                     padding: 10, 10
                     text:
                         'reUsernameekmckdmckc\n' * 100
 
             Label:
-                text: "Component log:"
+                text: "Component Log"
                 size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.685, 'y': 0.25}
+                pos_hint: {'x': 0.745, 'center_y': 0.50}
                 font_size:24
                 color: utils.get_color_from_hex('01bd7d')
 
             ScrollView:
-                size_hint:(0.3,0.2)
-                pos_hint: {'x': 0.65, 'y': 0.05}
+                size_hint:(0.2,0.22)
+                pos_hint: {'x': 0.75, 'y': 0.25}
                 do_scroll_x: False
                 do_scroll_y: True
+                bar_color: 0,0,0,0.5
 
                 Label:
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width, None
+                    color: 1,1,1,1
                     padding: 10, 10
                     text:
                         'Compoentskcbnkjdnc\n' * 100
-
 
 <RoundedButton@Button>
     background_color: (0,0,0,0)
@@ -174,4 +252,16 @@ Screen:
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: 40, 40, 40, 40
+            radius: 0,0,0,0
+            
+            texture:
+                Gradient.horizontal(
+                utils.get_color_from_hex('66D7B1'),
+                utils.get_color_from_hex('01BD7D'),
+                utils.get_color_from_hex('004B32'),
+                utils.get_color_from_hex('002519'),
+                utils.get_color_from_hex('002519'),
+                utils.get_color_from_hex('004B32'),
+                utils.get_color_from_hex('01BD7D'),
+                utils.get_color_from_hex('66D7B1'),
+                )
