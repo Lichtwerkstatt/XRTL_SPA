@@ -1,20 +1,21 @@
 from asyncio import constants
 from cgitb import text
+from ctypes.wintypes import RGB
 from re import T, sub
 import kivy;
 from kivy.app import App
-from kivy.uix.widget import Widget
 from kivy.core.window import Window
-from kivy.graphics import Rectangle, Color
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivymd.uix.list import OneLineIconListItem
-from kivymd.icon_definitions import md_icons
+
 import socketio
 import subprocess
 
 
+
 class MainApp(MDApp):
+        global socketGUI
+        socketGUI = socketio.Client()
         def build(self):
                 Window.clearcolor = (0, 0, 0, 0.6)
                 Window.size = (1824, 984)
@@ -46,11 +47,22 @@ class MainApp(MDApp):
                # output = r.stdout.read()
 
                 #r.stdout.close()
-                # sio = socketio.Client()
-                # sio.connect('http://localhost:7000')
+
+                #socketGUI.connect('http://localhost:7000')
 
                 #print(r)
-             
+        def button_press(self, button, button_id):
+                button.md_bg_color= (1,0,0)
+
+                # socketGUI.emit("command", {
+                #         'userId': "PythonGUI",
+                #         'componentId': "*",
+                #         'command': "init"
+                # })
+        
+                button.disabled = True
+
+
                 
 
 MainApp().run()

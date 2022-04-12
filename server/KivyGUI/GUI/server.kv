@@ -51,13 +51,13 @@ MDScreen:
 
         RelativeLayout:
             MDScreen:
-                size_hint:(0.5,0.18)
+                size_hint:(0.59,0.18)
                 pos_hint: {'x': 0.03, 'y': 0.72}
                 md_bg_color: utils.get_color_from_hex('b3b5b0')
                 radius: [25, 15, 25, 15]
 
             MDScreen:
-                size_hint:(0.5,0.065)
+                size_hint:(0.59,0.065)
                 pos_hint: {'x': 0.03, 'y': 0.835}
                 md_bg_color: utils.get_color_from_hex('323232')
                 radius: [25, 15, 0, 0]
@@ -71,19 +71,34 @@ MDScreen:
                 color: utils.get_color_from_hex('01bd7d')
             
             MDRaisedButton:
+                id: init_button
                 text:"Initialization"
                 text_color: 1,1,1,1
                 font_size:18
+                disabled: False
                 size_hint:(0.15,0.05)
                 pos_hint: {'x': 0.05, 'y': 0.75}
-                md_bg_color: utils.get_color_from_hex('01bd7d') 
+                md_bg_color: utils.get_color_from_hex('01bd7d')
+                on_press: app.button_press(self, "init_button") 
             
             MDRaisedButton:
+                id: reset_button
                 text: "Reset"
                 text_color: 1,1,1,1
                 font_size:18
+                disabled: False
                 size_hint:(0.15,0.05)
-                pos_hint: {'x': 0.26, 'y': 0.75}   
+                pos_hint: {'x': 0.25, 'y': 0.75}   
+                md_bg_color: utils.get_color_from_hex('01bd7d')
+                on_press: app.button_press(self, "reset_button") 
+            
+            MDRaisedButton:
+                text: "Update"
+                text_color: 1,1,1,1
+                font_size:18
+                disabled: False
+                size_hint:(0.15,0.05)
+                pos_hint: {'x': 0.45, 'y': 0.75}   
                 md_bg_color: utils.get_color_from_hex('01bd7d')
 
         RelativeLayout:

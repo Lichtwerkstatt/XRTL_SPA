@@ -122,16 +122,6 @@ io.on('connection', socket => {
         io.emit('status', payload)
     });
 
-    socket.on('reset', payload => {
-        Console.log("The reset of all components was requested!")
-        io.emit('reset', payload)
-    })
-
-    socket.on('init', payload => {
-        Console.log("Initialization of all components was requested!")
-        io.emit('init', payload)
-    })
-
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
         socket.emit('error', er);
