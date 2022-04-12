@@ -1,5 +1,6 @@
 from asyncio import constants
 from cgitb import text
+from re import T, sub
 import kivy;
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -9,8 +10,8 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.list import OneLineIconListItem
 from kivymd.icon_definitions import md_icons
-
-
+import socketio
+import subprocess
 
 
 class MainApp(MDApp):
@@ -24,12 +25,33 @@ class MainApp(MDApp):
         
         #Changes the color of the wifi icons, when the switch has been clicked
         def switchPress(self, switchObject, switchValue):
+                command = ['bash', 'start_server.sh']#node ../../server_local.js']
+
+               # r = subprocess.Popen('echo')
                 if switchValue == True:
                         self.root.ids.wifi1.color= (1,1,0,1)
                         self.root.ids.wifi2.color= (1,1,0,1)
+                        global r 
+                        r =subprocess.Popen(command, shell=True)
                 else:
                         self.root.ids.wifi1.color= (1,1,1,0.6)
                         self.root.ids.wifi2.color= (1,1,1,0.6)
+                        r.terminate()
+
+                # out, err = r.communicate();
+               
+                # print(out.decode())
+                # print(err.decode())
+                #out, err = r.communicate()
+               # output = r.stdout.read()
+
+                #r.stdout.close()
+                # sio = socketio.Client()
+                # sio.connect('http://localhost:7000')
+
+                #print(r)
+             
+                
 
 MainApp().run()
 #1824x984 Auflösung des Raspberry Pis
