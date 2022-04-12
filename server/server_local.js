@@ -1,7 +1,7 @@
 const app = require('express')();
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui');
-const { log } = require('console');
+const { log, Console } = require('console');
 const io = require('socket.io')(server, {
     cors: {
         origin: '*'
@@ -116,11 +116,21 @@ io.on('connection', socket => {
         io.emit('command', payload)
     });
 
-    //Returns theb status of a experiment component
+    //Returns the status of a experiment component
     socket.on('status', payload => {
         console.log("New Status", payload)
         io.emit('status', payload)
     });
+
+    socket.on('reset', payload => {
+        Console.log("The reset of all components was requested!")
+        io.emit('reset', payload)
+    })
+
+    socket.on('init', payload => {
+        Console.log("Initialization of all components was requested!")
+        io.emit('init', payload)
+    })
 
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
