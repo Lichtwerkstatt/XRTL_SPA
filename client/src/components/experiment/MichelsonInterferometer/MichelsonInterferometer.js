@@ -1,15 +1,16 @@
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import Cam1 from "../../assembly/Stream";
+import LaserCtrl from "../../assembly/LaserCtrl";
 
 
 const MichelsonInterferometer = (props) => {
   return (
     <div>
-      {props.selected.has("KM100_1") && (
+      {props.selected.has("Michelson_KM100") && (
         <KM100
           title="Mirror"
-          id="KM100_1"
+          id="Michelson_KM100"
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
@@ -17,30 +18,19 @@ const MichelsonInterferometer = (props) => {
           left="50"
         />
       )}
-      {props.selected.has("KM100_2") && (
-        <KM100
-          title="Mirror"
-          id="KM100_2"
-          rotationTop="0"
-          rotationBottom="0"
-          footer="Initializing..."
-          top="100"
-          left="520"
-        />
-      )}
-      {props.selected.has("SM1ZP_1") && (
+      {props.selected.has("Michelson_linear") && (
         <SM1ZP
           title="Mirror Stage"
-          id="SM1ZP_1"
+          id="Michelson_linear"
           rotation="0"
           top="400"
           left="100"
         />
       )}
-      {props.selected.has("Laser") && (
+      {props.selected.has("Michelson_laser") && (
         <KM100
           title="Laser"
-          id="Laser"
+          id="Michelson_laser"
           rotationTop="0"
           rotationBottom="0"
           footer="Initializing..."
@@ -48,15 +38,21 @@ const MichelsonInterferometer = (props) => {
           left="350"
         />
       )}
-
-      {props.selected.has("Screen") && (
+      {props.selected.has("Michelson_cam") && (
         <Cam1
           title="Screen"
-          id="Screen"
-          rotation="0"
+          id="Michelson_cam"
           top="150"
           left="150"
         />
+      )}
+      {props.selected.has("Michelson_LaserPower") && (
+        <LaserCtrl
+          title="Laser Power Supply"
+          id="Michelson_LaserPower"
+          top="180"
+          left="200"
+          />
       )}
     </div>
   );
