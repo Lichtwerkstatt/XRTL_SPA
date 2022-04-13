@@ -3,6 +3,7 @@
 #:import Gradient kivy_gradient.Gradient
 
 MDScreen:
+    input: command_input
     RelativeLayout:
         size: root.width, root.height
         orientation: 'vertical'
@@ -71,7 +72,7 @@ MDScreen:
                 color: utils.get_color_from_hex('01bd7d')
             
             MDRaisedButton:
-                id: init_button
+                id: init
                 text:"Initialization"
                 text_color: 1,1,1,1
                 font_size:18
@@ -79,10 +80,10 @@ MDScreen:
                 size_hint:(0.15,0.05)
                 pos_hint: {'x': 0.05, 'y': 0.75}
                 md_bg_color: utils.get_color_from_hex('01bd7d')
-                on_press: app.button_press(self, "init_button") 
+                on_press: app.button_press(self, "init") 
             
             MDRaisedButton:
-                id: reset_button
+                id: reset
                 text: "Reset"
                 text_color: 1,1,1,1
                 font_size:18
@@ -90,9 +91,10 @@ MDScreen:
                 size_hint:(0.15,0.05)
                 pos_hint: {'x': 0.25, 'y': 0.75}   
                 md_bg_color: utils.get_color_from_hex('01bd7d')
-                on_press: app.button_press(self, "reset_button") 
+                on_press: app.button_press(self, "reset") 
             
             MDRaisedButton:
+                id: update
                 text: "Update"
                 text_color: 1,1,1,1
                 font_size:18
@@ -100,11 +102,13 @@ MDScreen:
                 size_hint:(0.15,0.05)
                 pos_hint: {'x': 0.45, 'y': 0.75}   
                 md_bg_color: utils.get_color_from_hex('01bd7d')
+                on_press: app.update_press(self, "update" )
 
         RelativeLayout:
             spacing:100
 
             MDTextField:
+                id: command_input
                 multiline: False
                 font_size:18
                 size_hint_x:.415
@@ -122,6 +126,13 @@ MDScreen:
                 icon_right: "arrow-right"
                 icon_right_color_normal: utils.get_color_from_hex('01bd7d')
                 icon_right_color_focus: utils.get_color_from_hex('4dd0a4')
+                #icon_on_rele: app.server_command(self, "command_input")
+            
+            MDIconButton:
+                icon: "arrow-right"
+                pos_hint: {'x': 0.44, 'y': 0.64}
+                on_press: app.server_command(self, "command_input")
+                opacity: 0
             
         RelativeLayout:
             padding:10
