@@ -156,8 +156,8 @@ export default function Model({ ...props }) {
           />
         </group>
         <group name="Base">
-        {props.showTags && <DescriptiveTag position={[-0.5, 2,-0.1]} title="Beam Splitter" description="50/50 Beam Splitter" />}
-        {props.showTags && <DescriptiveTag position={[0.6, 2, -0.1]} title="Lens" description="Lens for Beam Widening" />}
+          {props.showTags && <DescriptiveTag position={[-0.5, 2, -0.1]} title="Beam Splitter" description="50/50 Beam Splitter" />}
+          {props.showTags && <DescriptiveTag position={[0.6, 2, -0.1]} title="Lens" description="Lens for Beam Widening" />}
           <mesh
             name="BaseMesh"
             castShadow
@@ -210,27 +210,27 @@ export default function Model({ ...props }) {
           geometry={nodes.SD5.geometry}
           material={materials.BlackParts}
           position={[1.61, 0.25, -0.9]}
-          onPointerDown={(e)=>{
+          onPointerDown={(e) => {
             e.stopPropagation();
             props.toggleSelect("Michelson_LaserPower")
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Power Supply" description="12V Laser Power Supply" />}
+          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Power Supply" description="5V Laser Power Supply" />}
           {props.selected.has("Michelson_LaserPower") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshBasicMaterial color="#222222" opacity={1.0} />
           )}
-          </mesh>
-        {props.showBeam &&  
-        <mesh
-          name="LaserBeam"
-          castShadow
-          receiveShadow
-          geometry={nodes.LaserBeam.geometry}
-          material={materials.Laser}
-          position={[-0.3, 0.66, -0.15]}
-        /> }
+        </mesh>
+        {props.showBeam &&
+          <mesh
+            name="LaserBeam"
+            castShadow
+            receiveShadow
+            geometry={nodes.LaserBeam.geometry}
+            material={materials.Laser}
+            position={[-0.3, 0.66, -0.15]}
+          />}
       </group>
     </group>
   );

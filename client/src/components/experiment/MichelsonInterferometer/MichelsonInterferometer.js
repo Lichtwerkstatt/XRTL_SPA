@@ -52,7 +52,7 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_laser"
           top="180"
           left="200"
-          />
+        />
       )}
     </div>
   );

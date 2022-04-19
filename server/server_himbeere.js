@@ -125,7 +125,7 @@ io.on('connection', socket => {
         //console.log(roomSize);
 
         if (roomSize == 1) {
-            io.emit("command", {
+            socket.broadcast.emit("command", {
                 userId: data.username,
                 componentId: componentID,
                 command: "startStreaming",
@@ -165,13 +165,13 @@ io.on('connection', socket => {
     socket.on('command', payload => {
         blink();
         console.log("Command received:", payload);
-        io.emit('command', payload);
+        socket.broadcast.emit('command', payload);
     })
 
     //Returns theb status of a experiment component
     socket.on('status', payload => {
         console.log("New Status", payload)
-        io.emit('status', payload)
+        socket.broadcast.emit('status', payload)
     });
 
     socket.on('forceDisconnect', (e) => {

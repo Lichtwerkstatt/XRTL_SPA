@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 //import styles from "./SwitchOnOff.module.css"
-//import { useAppContext } from "../../services/AppContext";
+import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef()
-  //const appCtx = useAppContext();
+  const appCtx = useAppContext();
 
   const switchFunction = () => {
     socketCtx.socket.on("status", payload => {
@@ -28,12 +28,13 @@ const SwitchOnOff = (props) => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       command: {
-        componentId: props.component,
+        componentId: 'switch',
         val: newStatus
       }
     })
     console.log("Current Laser State: " + newStatus);
     setSwitchStatus(newStatus);
+    appCtx.addLog("User set position on " + props.component + " to " + newStatus)
   }
 
   return (

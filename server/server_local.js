@@ -21,8 +21,6 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 
 io.on('connection', socket => {
     console.log('connection made successfully');
-
-
     //The handshakes of the VIDEO CHAT
 
     //Sends the random generated roomID to the client how wants to join the video chat
@@ -113,13 +111,13 @@ io.on('connection', socket => {
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
         console.log("Command received:", payload)
-        io.emit('command', payload)
+        socket.broadcast.emit('command', payload)
     });
 
     //Returns theb status of a experiment component
     socket.on('status', payload => {
         console.log("New Status", payload)
-        io.emit('status', payload)
+        socket.broadcast.emit('status', payload)
     });
 
     socket.on('error', (er) => {
