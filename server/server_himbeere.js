@@ -116,18 +116,17 @@ io.on('connection', socket => {
 
     //Handshakes for the experiment cameras
 
-
     //Client how starts the stream is added to a room
-    socket.on('join stream room', getComponentID => {
-        componentID = getComponentID;
-        console.log("Start stream of " + componentID);
+    socket.on('join stream room', (data) => {
+        componentID = data.id;
+        console.log("User has joined the room " + componentID);
         socket.join(componentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size;
         //console.log(roomSize);
 
         if (roomSize == 1) {
             io.emit("command", {
-                userId: socket.getNewUsername(),
+                userId: data.username,
                 componentId: componentID,
                 command: "startStreaming",
             });
@@ -140,19 +139,19 @@ io.on('connection', socket => {
     });
 
     //Clients leaves the room after ending the stream
-    socket.on('leave stream room', getComponentID => {
-        console.log("End stream of " + getComponentID);
-        let roomSize = io.sockets.adapter.rooms.get(componentID).size - 1;
+    socket.on('leave stream room', (data) => {
+        console.log("User has left the room " + data.id);
+        let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
         //console.log(roomSize);
 
         if (roomSize == 0) {
             io.emit("command", {
-                userId: socket.getNewUsername(),
-                componentId: componentID,
+                userId: data.username,
+                componentId: data.id,
                 command: "stopStreaming",
             });
         }
-        socket.leave(getComponentID);
+        socket.leave(data.id);
     });
 
     socket.on("error", (error) => {
