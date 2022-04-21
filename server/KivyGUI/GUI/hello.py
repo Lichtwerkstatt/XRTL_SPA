@@ -2,6 +2,7 @@ from asyncio import constants, create_subprocess_shell
 from cgitb import text
 from ctypes.wintypes import RGB
 from re import T, sub
+from xmlrpc.client import boolean
 import kivy;
 from kivy.app import App
 from kivy.core.window import Window
@@ -57,44 +58,40 @@ class MainApp(MDApp):
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text
                 self.root.ids.command_input.text=""
-        #         c = re.split(r"\s+", command)
-        #         command= command.split(",",)
-        #        #l = len(command)
-        #         print(command[1:len(command)])
-
                 disallowed_characters = "{}'\""
+                
                 #to get command for which the socket is listening
                 a = re.split(r', ', command, maxsplit=1)
                 command = a[0]
 
-                #The rest of the command
-                rest = a[1]
-
+                #The command_string of the command
+                command_string = a[1]
                 for character in disallowed_characters:
-                        rest = rest.replace(character, "")
+                        command_string = command_string.replace(character, "")
 
-                rest =rest.replace(" ", "")
-                print(rest)
-                rest2 = re.split(r"\:|,", rest)
-                print(rest2)
-                leng = len(rest2)
-                if leng == 4:
-                        dic = {rest2[0]:rest2[1], rest2[2]:rest2[3]}
-                elif leng==6:
-                        dic = {rest2[0]:rest2[1], rest2[2]:rest2[3], rest2[4]:rest2[5]}
+                command_string = command_string.replace(" ", "")
+                print(command_string)
+                command_list = re.split(r"\:|,", command_string)
+                print(command_list)
+                leng = len(command_list)
 
+                #Creating the dictionary based on their length
+                if leng == 6:
+                        dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]:command_list[5]}
+                elif leng == 7:
+                        dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]: int(command_list[6])}}
+                elif leng == 9:
+                        digit = command_list[8].isdigit()
+                        boolean_value = command_list[8]
+                        if digit == True:
+                                command_list[8] = int(command_list[8])
+                        elif boolean_value == 'true':
+                                command_list[8] = True
+                        elif boolean_value== 'false':
+                                command_list[8] = False
 
-
-
+                        dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]:command_list[6], command_list[7]:command_list[8]}}
 
                 socketGUI.emit(command, dic)
 
-                #message, { userName: beetlebum, message: Hello World!}
-                #message, { userId: beetlebum, message: Hello World!, color: #bf9000}
-                #command, {userId: user1234,  componentId: ESP32Cam_1,   command: startStreaming}
-                #command, {"userId" : "user1234", "componentId": "KM100_1", "command" : "stop"}
-                #command, {"userId" : "user1234",  "componentId" : "KM100_1",   "command" : "reset" "}
-
-
 MainApp().run()
-#1824x984 Auflösung des Raspberry Pis
