@@ -14,7 +14,8 @@ export function AppContextProvider({ children }) {
   const [busyComps, setBusyComps] = useState(new Set());
   const [logs, setLogs] = useState([]);
   const [showTags, setShowTags] = useState(true);
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showBeam, setShowBeam] = useState(false);
 
 
   const toggleSelectedComp = compId => {
@@ -56,6 +57,10 @@ export function AppContextProvider({ children }) {
     setShowWebcam(!showWebcam);
   };
 
+  const toggleShowBeam = () => {
+    setShowBeam(!showBeam);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -74,6 +79,8 @@ export function AppContextProvider({ children }) {
         toggleShowTags,
         showWebcam,
         toggleShowWebcam,
+        showBeam,
+        toggleShowBeam,
         showLogin,
         setShowLogin
       }}

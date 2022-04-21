@@ -1,8 +1,7 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
-//import MI_1312 from "../experiment/MichelsonInterferometer/MI_1312";
-import DigiLab4You from "../experiment/digilab4You/DL4Y_export1";
+import MI_110422 from "../experiment/MichelsonInterferometer/MI_110422";
 import { useAppContext } from "../../services/AppContext";
 
 const VirtualLayer = () => {
@@ -25,10 +24,11 @@ const VirtualLayer = () => {
           {/* <Stats showPanel={0}  /> */}
           <Environment files="../hdri/autoshop.hdr" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
-          <DigiLab4You
+          <MI_110422
             toggleSelect={appCtx.toggleSelectedComp}
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
+            showBeam={appCtx.showBeam}
           />
         </Suspense>
       </Canvas>

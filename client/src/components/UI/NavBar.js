@@ -21,6 +21,8 @@ const NavBar = () => {
     if (appCtx.showTags) { showTagsColor = "white" }
     let cameraStatusColor = "";
     if (appCtx.showWebcam) { cameraStatusColor = "white" }
+    let showBeamColor = "";
+    if (appCtx.showBeam) {showBeamColor="white"}
 
     return <div id="navbar" className={styles.navbar} >
         <h1>XR Remote Lab</h1>
@@ -29,7 +31,7 @@ const NavBar = () => {
                 <li onClick={socketCtx.toggleConnection}><ImConnection size={29}
                     color={connectionStatusColor} /></li>
                 <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
-                <li><GiLaserWarning size={29} /></li>
+                <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>
 
                 <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
                 <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>

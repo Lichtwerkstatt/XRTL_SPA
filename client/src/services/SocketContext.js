@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useAppContext } from "./AppContext";
 import { Manager } from "socket.io-client";
 
-var URLglobal = "";      //"http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
+var URLglobal = ""; //http://192.168.1.42:7000"   //192.168.4.1:7000   Raspberry Pi ID oder wlan 192.168.1.?
 
 var manager = new Manager(URLglobal, { autoConnect: false });
 var socket = manager.socket("/");

@@ -37,9 +37,9 @@ const RotaryCtrl = (props) => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: props.component,
-      controlId: props.control,
       command: {
-        steps: enteredRotation
+        controlId: props.control,
+        val: Number(enteredRotation)
       }
 
     })
@@ -51,9 +51,9 @@ const RotaryCtrl = (props) => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: props.component,
-      controlId: props.control,
       command: {
-        steps: -1 * enteredRotation
+        controlId: props.control,
+        val: -1 * Number(enteredRotation)
       }
 
     })
