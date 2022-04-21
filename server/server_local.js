@@ -22,7 +22,6 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 io.on('connection', socket => {
     console.log('connection made successfully');
 
-
     //The handshakes of the VIDEO CHAT
 
     //Sends the random generated roomID to the client how wants to join the video chat

@@ -10,6 +10,7 @@ from kivymd.app import MDApp
 import socketio
 import subprocess
 import os
+import re
 
 class MainApp(MDApp):
         #input = ObjectProperty(None)
@@ -56,13 +57,44 @@ class MainApp(MDApp):
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text
                 self.root.ids.command_input.text=""
-                command= command.split(",",)
-               #l = len(command)
+        #         c = re.split(r"\s+", command)
+        #         command= command.split(",",)
+        #        #l = len(command)
+        #         print(command[1:len(command)])
 
-                print(command[1:len(command)])
-                socketGUI.emit(command[0], command[1: len(command)])
+                disallowed_characters = "{}'\""
+                #to get command for which the socket is listening
+                a = re.split(r', ', command, maxsplit=1)
+                command = a[0]
 
-                #message, { username: beetlebum, message: Hello World!}
+                #The rest of the command
+                rest = a[1]
+
+                for character in disallowed_characters:
+                        rest = rest.replace(character, "")
+
+                rest =rest.replace(" ", "")
+                print(rest)
+                rest2 = re.split(r"\:|,", rest)
+                print(rest2)
+                leng = len(rest2)
+                if leng == 4:
+                        dic = {rest2[0]:rest2[1], rest2[2]:rest2[3]}
+                elif leng==6:
+                        dic = {rest2[0]:rest2[1], rest2[2]:rest2[3], rest2[4]:rest2[5]}
+
+
+
+
+
+                socketGUI.emit(command, dic)
+
+                #message, { userName: beetlebum, message: Hello World!}
+                #message, { userId: beetlebum, message: Hello World!, color: #bf9000}
+                #command, {userId: user1234,  componentId: ESP32Cam_1,   command: startStreaming}
+                #command, {"userId" : "user1234", "componentId": "KM100_1", "command" : "stop"}
+                #command, {"userId" : "user1234",  "componentId" : "KM100_1",   "command" : "reset" "}
+
 
 MainApp().run()
 #1824x984 Auflösung des Raspberry Pis
