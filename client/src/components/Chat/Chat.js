@@ -27,7 +27,7 @@ const Chat = (props) => {
   const sendMessage = (event) => {
     event.preventDefault()
     //console.log(message)
-    socketCtx.socket.emit("message", { userName: socketCtx.getNewUsername(), message, color: socketCtx.getNewFont() })
+    socketCtx.socket.emit("message", { userId: socketCtx.getNewUsername(), message, color: socketCtx.getNewFont() })
     setMessage("");
   }
 
@@ -44,7 +44,7 @@ const Chat = (props) => {
         {chat.map((payload, index) => {
           return (
             <b key={index} >
-              <span style={{ color: payload.color }}> {payload.userName}:</span> <span >{payload.message}</span>
+              <span style={{ color: payload.color }}> {payload.userId}:</span> <span >{payload.message}</span>
               <br />
             </b>
           )

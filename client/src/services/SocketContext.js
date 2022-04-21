@@ -15,7 +15,7 @@ export function useSocketContext() {
 export function SocketContextProvider({ children }) {
   const [connected, setConnected] = useState(false);
   const appCtx = useAppContext()
-  const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
   const [URL, setURL] = useState('');
   const [fontColor, setFontColor] = useState('white');
 
@@ -37,7 +37,7 @@ export function SocketContextProvider({ children }) {
   })
 
   const setNewUsername = (newUsername) => {
-    setUsername(newUsername);
+    setUserId(newUsername);
   }
 
   const setNewURL = (newURL) => {
@@ -54,7 +54,7 @@ export function SocketContextProvider({ children }) {
   }
 
   const getNewUsername = () => {
-    return username;
+    return userId;
   }
 
   const getNewURL = () => {
