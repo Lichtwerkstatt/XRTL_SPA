@@ -2,6 +2,7 @@ from asyncio import constants, create_subprocess_shell
 from cgitb import text
 from ctypes.wintypes import RGB
 from re import T, sub
+from turtle import pensize
 from xmlrpc.client import boolean
 import kivy;
 from kivy.app import App
@@ -12,6 +13,9 @@ import socketio
 import subprocess
 import os
 import re
+from kivy.config import Config
+Config.set('kivy', 'exit_on_escape', '0')
+
 
 class MainApp(MDApp):
         #input = ObjectProperty(None)
@@ -34,6 +38,15 @@ class MainApp(MDApp):
                 if switchValue == True:
                         self.root.ids.wifi1.color= (1,1,0,1)
                         self.root.ids.wifi2.color= (1,1,0,1)
+
+                        self.root.ids.user_log.text= ""
+                        self.root.ids.socket_log.text= ""
+                        self.root.ids.component_log.text= ""
+
+                        self.root.ids.user_log.color= (1,1,1,1)
+                        self.root.ids.socket_log.color= (1,1,1,1)
+                        self.root.ids.component_log.color= (1,1,1,1)
+
                         r = subprocess.Popen(command, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
                         socketGUI.connect('http://localhost:7000')
                 else:
@@ -64,34 +77,48 @@ class MainApp(MDApp):
                 a = re.split(r', ', command, maxsplit=1)
                 command = a[0]
 
-                #The command_string of the command
-                command_string = a[1]
-                for character in disallowed_characters:
-                        command_string = command_string.replace(character, "")
+                if len(a) == 1:
+                        pass
+                else:
+                        #Formating the payload into a dictionary
+                        dic = {}
+                        command_string = a[1]
+                        for character in disallowed_characters:
+                                command_string = command_string.replace(character, "")
 
-                command_string = command_string.replace(" ", "")
-                print(command_string)
-                command_list = re.split(r"\:|,", command_string)
-                print(command_list)
-                leng = len(command_list)
+                        command_string = command_string.replace(" ", "")
+                        command_list = re.split(r"\:|,", command_string)
+                        leng = len(command_list)
 
-                #Creating the dictionary based on their length
-                if leng == 6:
-                        dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]:command_list[5]}
-                elif leng == 7:
-                        dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]: int(command_list[6])}}
-                elif leng == 9:
-                        digit = command_list[8].isdigit()
-                        boolean_value = command_list[8]
-                        if digit == True:
-                                command_list[8] = int(command_list[8])
-                        elif boolean_value == 'true':
-                                command_list[8] = True
-                        elif boolean_value== 'false':
-                                command_list[8] = False
+                        #Creating the dictionary based on their length
+                        if leng == 6:
+                                dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]:command_list[5]}
+                        elif leng == 7:
+                                dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]: int(command_list[6])}}
+                        elif leng == 9:
+                                digit = command_list[8].isdigit()
+                                boolean_value = command_list[8]
+                                if digit == True:
+                                        command_list[8] = int(command_list[8])
+                                elif boolean_value == 'true':
+                                        command_list[8] = True
+                                elif boolean_value== 'false':
+                                        command_list[8] = False
 
-                        dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]:command_list[6], command_list[7]:command_list[8]}}
+                                dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]:command_list[6], command_list[7]:command_list[8]}}
 
-                socketGUI.emit(command, dic)
+                        socketGUI.emit(command, dic)
+
+                #message, { userName: beetlebum, message: Hello World!}
+                #message, { userId: beetlebum, message: Hello World!, color: #bf9000}
+                #command, {userId: user1234,  componentId: ESP32Cam_1,   command: startStreaming}
+                #command, {"userId" : "user1234", "componentId": "KM100_1", "command" : "stop"}
+                #command, {"userId" : "user1234",  "componentId" : "KM100_1",   "command" : "reset" "}
+                #command, {  "userId" : "user1234",   "componentId" : "iris",   "command" : { "position" : 50 }}
+                #command, { "userId" : "user1234","componentId": "km100_1","command" : { "controlId": "top", "val" : 100} }
+                #command, {  "userID" : "user1234", "componentId" : "laser_1", "command" : {"controlId" : "greenLaser","val" : true} }
+                #command, { "userId" : "user1234", "componentId" : "ESP32Cam_1","command" : {"controlId" : "frame size", "val" : "XGA"}}
+                #command, { "userId" : "user1234","componentId": "km100_1","command" : { "controlId": "top", "val" : 100} }
 
 MainApp().run()
+#1824x984 Auflösung des Raspberry Pis

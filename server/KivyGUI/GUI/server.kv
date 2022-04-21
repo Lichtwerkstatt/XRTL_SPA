@@ -67,7 +67,7 @@ MDScreen:
                 font_size:18
                 size_hint:(0.1,0.1)
                 pos_hint: {'x': 0.06, 'y': 0.815}
-                text: "Commponents Control"
+                text: "Commponent Control"
                 font_size:24
                 color: utils.get_color_from_hex('01bd7d')
             
@@ -126,7 +126,6 @@ MDScreen:
                 icon_right: "arrow-right"
                 icon_right_color_normal: utils.get_color_from_hex('01bd7d')
                 icon_right_color_focus: utils.get_color_from_hex('4dd0a4')
-                #icon_on_rele: app.server_command(self, "command_input")
             
             MDIconButton:
                 icon: "arrow-right"
@@ -169,13 +168,13 @@ MDScreen:
                 bar_color: 0,0,0,0.5
 
                 Label:
+                    id: socket_log
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width, None
                     padding: 10, 10
-                    color: 1,1,1,1
-                    text:
-                        'really some amazing textcidmlllllllllc\n' * 100
+                    color: utils.get_color_from_hex('cc0000')
+                    text: 'Connection to the server necessary'
 
         RelativeLayout:
             padding:10
@@ -229,13 +228,13 @@ MDScreen:
                 bar_color: 0,0,0,0.5
 
                 Label:
+                    id: user_log
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width, None
-                    color: 1,1,1,1
+                    color: utils.get_color_from_hex('cc0000')
                     padding: 10, 10
-                    text:
-                        'reUsernameekmckdmckc\n' * 100
+                    text: 'Connection to the server necessary'
 
             Label:
                 text: "Component Log"
@@ -252,13 +251,13 @@ MDScreen:
                 bar_color: 0,0,0,0.5
 
                 Label:
+                    id: component_log
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width, None
-                    color: 1,1,1,1
+                    color: utils.get_color_from_hex('cc0000')
                     padding: 10, 10
-                    text:
-                        'Compoentskcbnkjdnc\n' * 100
+                    text: 'Connection to the server necessary'
 
 <RoundedButton@Button>
     background_color: (0,0,0,0)
