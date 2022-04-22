@@ -4,7 +4,7 @@ import { GiLaserWarning } from "react-icons/gi"
 import { ImConnection } from "react-icons/im"
 import { BsBox } from "react-icons/bs"
 import { FaTags } from "react-icons/fa"
-import { MdOutlineScreenRotation } from "react-icons/md"
+import { MdOutlineScreenRotation, MdInfoOutline } from "react-icons/md"
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from '../../services/AppContext'
 import { BsCamera } from 'react-icons/bs'
@@ -23,9 +23,11 @@ const NavBar = () => {
     if (appCtx.showWebcam) { cameraStatusColor = "white" }
     let showBeamColor = "";
     if (appCtx.showBeam) {showBeamColor="white"}
+    let showInfoWindowColor = "";
+    if (appCtx.showInfoWindow) {showInfoWindowColor="white"}
 
     return <div id="navbar" className={styles.navbar} >
-        <h1>XR Remote Lab</h1>
+        <h1>XR TwinLab</h1>
         <div className={styles.navMenu}>
             <ul>
                 <li onClick={socketCtx.toggleConnection}><ImConnection size={29}
@@ -38,6 +40,8 @@ const NavBar = () => {
 
                 <li onClick={appCtx.toggleShowWebcam}><BsCamera size={26}
                     color={cameraStatusColor} /></li>
+
+                <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
 
             </ul>
         </div>

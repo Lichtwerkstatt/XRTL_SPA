@@ -3,7 +3,8 @@ div.window {
   border: 3px solid #01bd7d;
   border-radius: 10px;
   overflow: hidden;
-  background: linear-gradient(grey, black);
+  background: linear-gradient(rgba(100,100,100,0.7),rgba(0,0,0,0.7));
+  backdrop-filter: blur(5px);
   color: white;
   box-shadow: 2px 2px 2px 2px rgba(35, 59, 53, 0.2);
 }

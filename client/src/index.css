@@ -13,3 +13,7 @@ html, body {
 }
 
 body {background-color:black;}
+
+a {color:aquamarine}
+a:hover {color:white}
+a:visited {color:aqua}

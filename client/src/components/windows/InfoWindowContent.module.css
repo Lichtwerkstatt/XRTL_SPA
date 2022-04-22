@@ -1,0 +1,8 @@
+div .mainWrapper{
+  height:500px;
+  column-count: 2;
+  padding:15px;
+  background-position: bottom right;
+  background-size:80% auto;
+  background-repeat:no-repeat;
+}
