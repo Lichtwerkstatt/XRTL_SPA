@@ -48,8 +48,8 @@ const MichelsonInterferometer = (props) => {
       )}
       {props.selected.has("Michelson_LaserPower") && (
         <LaserCtrl
-          title="Laser Power Supply"
-          id="Michelson_laser"
+          title="Power Supply"
+          id="Michelson_LaserPower"
           top="180"
           left="200"
         />

@@ -1,6 +1,7 @@
 import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
+import SM1ZP_bg from "./media/linear_outline.png";
 
 const SM1ZP = (props) => {
   const appCtx = useAppContext()
@@ -15,15 +16,16 @@ const SM1ZP = (props) => {
       top={props.top}
       left={props.left}
       width="250px"
-      height="150px"
+      height="235px"
       onClose={handleCloseWindow}
+      background={SM1ZP_bg}
     >
       <RotaryCtrl
         rotation={props.rotation}
         component={props.id}
         control="linear"
         top="35"
-        left="150"
+        left="160"
       />
     </Window>
   );
