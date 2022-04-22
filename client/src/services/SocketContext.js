@@ -14,10 +14,10 @@ export function useSocketContext() {
 
 export function SocketContextProvider({ children }) {
   const [connected, setConnected] = useState(false);
-  const appCtx = useAppContext()
   const [userId, setUserId] = useState('');
   const [URL, setURL] = useState('');
   const [fontColor, setFontColor] = useState('white');
+  const appCtx = useAppContext()
 
 
   useEffect(() => {
@@ -37,16 +37,20 @@ export function SocketContextProvider({ children }) {
   })
 
   const setNewUsername = (newUsername) => {
+    console.log(newUsername)
     setUserId(newUsername);
+    
   }
 
-  const setNewURL = (newURL) => {
+  const setNewURL = (newURL, user) => {
     setURL(newURL);
     URLglobal = newURL;
     socket.disconnect();
     manager = new Manager(URLglobal, { autoConnect: false });
     socket = manager.socket("/");
     SocketContext = React.createContext();
+    console.log(user);
+    socket.emit("userId", (user))
   }
 
   const setNewFont = (newFont) => {

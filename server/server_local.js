@@ -11,6 +11,7 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
+const userIDs = [];
 var componentID = '';
 const socketToRoom = {};
 
@@ -21,6 +22,17 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 
 io.on('connection', socket => {
     console.log('connection made successfully');
+
+
+    socket.on("userId", (newUser) => {
+        if (userIDs) {
+            userIDs.push(socket.id, newUser)
+        } else {
+            userIDs = [socket.id, newUser]
+        }
+
+        socket.broadcast.emit("newUser", (userIDs))
+    })
 
     //The handshakes of the VIDEO CHAT
 
@@ -141,6 +153,11 @@ io.on('connection', socket => {
             }
             console.log(users[roomID]);
         }
+        if (userIDs.includes(socket.id)) {
+            userIDs.splice(userIDs.indexOf(socket.id), 2)
+        }
+        console.log(userIDs)
+        socket.broadcast.emit("newUser", (userIDs))
         socket.disconnect();
         console.log('User disconnected: ', e);
     });

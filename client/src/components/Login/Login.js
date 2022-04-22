@@ -36,7 +36,7 @@ const Login = (props) => {
 
             if (custom === false) {
                 errorLabel.innerHTML = "";
-                socketCtx.setNewURL(String(connection));
+                socketCtx.setNewURL(String(connection), String(username));
                 socketCtx.setNewFont(fontColor);
                 socketCtx.toggleConnection();
                 setUsername('');
@@ -46,7 +46,7 @@ const Login = (props) => {
             } else if (custom === true && customConnection !== "" && addressCheck) {
                 errorLabel.innerHTML = "";
                 socketCtx.toggleConnection();
-                socketCtx.setNewURL(String(customConnection));
+                socketCtx.setNewURL(String(customConnection), String(username));
                 setUsername('');
                 setCustomConnection('');
                 setCuston(false);

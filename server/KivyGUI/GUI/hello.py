@@ -1,24 +1,17 @@
-from asyncio import constants, create_subprocess_shell
-from cgitb import text
-from ctypes.wintypes import RGB
-from re import T, sub
-from turtle import pensize
-from xmlrpc.client import boolean
-import kivy;
+import kivy
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivymd.app import MDApp
+from kivy.utils import get_color_from_hex
 import socketio
 import subprocess
-import os
 import re
 from kivy.config import Config
 Config.set('kivy', 'exit_on_escape', '0')
 
 
 class MainApp(MDApp):
-        #input = ObjectProperty(None)
         global socketGUI
         socketGUI = socketio.Client()
 
@@ -49,10 +42,29 @@ class MainApp(MDApp):
 
                         r = subprocess.Popen(command, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
                         socketGUI.connect('http://localhost:7000')
+
+                        @socketGUI.event
+                        def newUser (userIds):
+                                i=1
+                                userStr=''
+                                while i < len(userIds):
+                                        userStr += userIds[i] +"\n"
+                                        i+=2
+                                        print(userStr)
+                                self.root.ids.user_log.text= str(userStr)
                 else:
                         socketGUI.disconnect()
                         self.root.ids.wifi1.color= (1,1,1,0.6)
                         self.root.ids.wifi2.color= (1,1,1,0.6)
+
+                        self.root.ids.user_log.text= 'Connection to the server necessary'
+                        self.root.ids.socket_log.text= 'Connection to the server necessary'
+                        self.root.ids.component_log.text= 'Connection to the server necessary'
+
+                        self.root.ids.user_log.color= get_color_from_hex('cc0000')
+                        self.root.ids.socket_log.color= get_color_from_hex('cc0000')
+                        self.root.ids.component_log.color= get_color_from_hex('cc0000')
+
                         r.terminate()
 
         def button_press(self, button, button_id):
@@ -61,7 +73,6 @@ class MainApp(MDApp):
                         'componentId': "*",
                         'command': button_id
                 })
-        
                 button.disabled = True
         
         def update_press(self, button, button_id):
@@ -108,6 +119,8 @@ class MainApp(MDApp):
                                 dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]:command_list[6], command_list[7]:command_list[8]}}
 
                         socketGUI.emit(command, dic)
+
+
 
                 #message, { userName: beetlebum, message: Hello World!}
                 #message, { userId: beetlebum, message: Hello World!, color: #bf9000}
