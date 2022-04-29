@@ -1,3 +1,5 @@
+import time
+import json
 import kivy
 from kivy.app import App
 from kivy.core.window import Window
@@ -14,6 +16,8 @@ Config.set('kivy', 'exit_on_escape', '0')
 class MainApp(MDApp):
         global socketGUI
         socketGUI = socketio.Client()
+        global log
+        log = []
 
         def build(self):
                 Window.clearcolor = (0, 0, 0, 0.6)
@@ -26,8 +30,8 @@ class MainApp(MDApp):
         #Changes the color of the wifi icons, when the switch has been clicked
         def switchPress(self, switchObject, switchValue):
                 global r
+    
                 command = ['node', '../../server_local.js']
-                print(switchValue)
                 if switchValue == True:
                         self.root.ids.wifi1.color= (1,1,0,1)
                         self.root.ids.wifi2.color= (1,1,0,1)
@@ -42,6 +46,7 @@ class MainApp(MDApp):
 
                         r = subprocess.Popen(command, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
                         socketGUI.connect('http://localhost:7000')
+                        socketGUI.emit("GUI",())
 
                         @socketGUI.event
                         def newUser (userIds):
@@ -50,8 +55,17 @@ class MainApp(MDApp):
                                 while i < len(userIds):
                                         userStr += userIds[i] +"\n"
                                         i+=2
-                                        print(userStr)
                                 self.root.ids.user_log.text= str(userStr)
+                                
+                        @socketGUI.on('newLog')
+                        def newLog (logMess):
+                                logMessage = logMess.replace("\""," ")
+                                log.append(time.strftime('%H:%M:%S', time.localtime())+": "+logMessage) 
+                                messStr=''
+                                for i in range(len(log)):
+                                        messStr += str(log[i]) +"\n"
+                                        i+=2
+                                self.root.ids.socket_log.text= str(messStr)
                 else:
                         socketGUI.disconnect()
                         self.root.ids.wifi1.color= (1,1,1,0.6)
@@ -67,18 +81,34 @@ class MainApp(MDApp):
 
                         r.terminate()
 
+
         def button_press(self, button, button_id):
                 socketGUI.emit("command", {
                         'userId': "PythonGUI",
                         'componentId': "*",
                         'command': button_id
                 })
+                socketGUI.emit ("newLogGUI", "Command received: { userId: PythonGUI, componentId: *, command: "+button_id+"}" )
                 button.disabled = True
         
         def update_press(self, button, button_id):
                 command2=['bash', 'update_Script.sh']
                 r = subprocess.Popen(command2, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
              
+        def update_User(self):
+                socketGUI.emit('updateUser')
+
+                @socketGUI.on('updateUser')
+                def updateUser (userIDs):
+                        i=1
+                        userStr=''
+                        while i < len(userIds):
+                                userStr += userIds[i] +"\n"
+                                i+=2
+                        self.root.ids.user_log.text= str(userStr)
+
+
+        
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text
                 self.root.ids.command_input.text=""
@@ -119,6 +149,7 @@ class MainApp(MDApp):
                                 dic = {command_list[0]:command_list[1], command_list[2]:command_list[3], command_list[4]: {command_list[5]:command_list[6], command_list[7]:command_list[8]}}
 
                         socketGUI.emit(command, dic)
+                        socketGUI.emit ("newLogGUI", "Command received: " + json.dumps(dic))
 
 
 

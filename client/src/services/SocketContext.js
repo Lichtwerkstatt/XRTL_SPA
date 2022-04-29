@@ -13,7 +13,7 @@ export function useSocketContext() {
 }
 
 export function SocketContextProvider({ children }) {
-  const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useState(true);
   const [userId, setUserId] = useState('');
   const [URL, setURL] = useState('');
   const [fontColor, setFontColor] = useState('white');

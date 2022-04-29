@@ -204,15 +204,18 @@ MDScreen:
                 md_bg_color: utils.get_color_from_hex('323232')
                 radius: [25, 15, 0, 0]
 
-            MDIcon:
-                size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.945, 'y': 0.85}
-                icon: 'odnoklassniki'
-            
-            MDIcon:
-                size_hint:(0.1,0.05)
-                pos_hint: {'x': 0.945, 'y': 0.475}
+            MDIconButton:
+                icon: "odnoklassniki"
+                pos_hint: {'x': 0.94, 'y': 0.85}
+                on_press: app.update_User()
+
+
+            MDIconButton:
                 icon: 'devices'
+                pos_hint: {'x': 0.94, 'y': 0.475}
+                on_press: print("je22")
+
+
 
             Label:
                 text: "User Log"
