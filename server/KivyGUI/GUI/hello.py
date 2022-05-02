@@ -16,8 +16,10 @@ Config.set('kivy', 'exit_on_escape', '0')
 class MainApp(MDApp):
         global socketGUI
         socketGUI = socketio.Client()
-        global log
+        global log, userWithSocket, userIdList
         log = []
+        userWithSocket =[]
+        userIdList =[]
 
         def build(self):
                 Window.clearcolor = (0, 0, 0, 0.6)
@@ -50,13 +52,31 @@ class MainApp(MDApp):
 
                         @socketGUI.event
                         def newUser (userIds):
-                                i=1
-                                userStr=''
-                                while i < len(userIds):
-                                        userStr += userIds[i] +"\n"
-                                        i+=2
-                                self.root.ids.user_log.text= str(userStr)
+                                userWithSocket.append(userIds[0])
+                                userWithSocket.append(userIds[1])
+                                userIdList.append(userIds[1])
                                 
+                                userStr =''
+                                for i in range(len(userIdList)):
+                                        userStr += userIdList[i] +"\n"
+
+                                self.root.ids.user_log.text= str(userStr)
+
+                        @socketGUI.event
+                        def userLeft (socketId):
+                                indexOfSocket = userWithSocket.index(socketId)
+                                userToDelete = userWithSocket[indexOfSocket+1]
+                                userWithSocket.remove(userWithSocket[indexOfSocket])
+                                userWithSocket.remove(userToDelete)
+                                userIdList.remove(userToDelete)
+
+                                userStr =''
+                                for i in range(len(userIdList)):
+                                        userStr += userIdList[i] +"\n"
+                                self.root.ids.user_log.text= str(userStr)
+
+
+                                                        
                         @socketGUI.on('newLog')
                         def newLog (logMess):
                                 logMessage = logMess.replace("\""," ")
@@ -94,20 +114,6 @@ class MainApp(MDApp):
         def update_press(self, button, button_id):
                 command2=['bash', 'update_Script.sh']
                 r = subprocess.Popen(command2, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
-             
-        def update_User(self):
-                socketGUI.emit('updateUser')
-
-                @socketGUI.on('updateUser')
-                def updateUser (userIDs):
-                        i=1
-                        userStr=''
-                        while i < len(userIds):
-                                userStr += userIds[i] +"\n"
-                                i+=2
-                        self.root.ids.user_log.text= str(userStr)
-
-
         
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text

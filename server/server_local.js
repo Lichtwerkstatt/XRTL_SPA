@@ -11,7 +11,7 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
-const userIDs = [];
+var userIDs = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
@@ -33,17 +33,8 @@ io.on('connection', socket => {
         socket.emit("newLog", payload)
     })
 
-    socket.on("updateUser", () => {
-        socket.to(GUIId).emit("updateUser", userIDs)
-    })
-
     socket.on("userId", (newUser) => {
-        if (userIDs) {
-            userIDs.push(socket.id, newUser)
-        } else {
-            userIDs = [socket.id, newUser]
-        }
-
+        userIDs = [socket.id, newUser]
         socket.broadcast.emit("newUser", (userIDs))
         socket.to(GUIId).emit("newLog", 'User connected successfully')
     })
@@ -175,10 +166,8 @@ io.on('connection', socket => {
             }
             console.log(users[roomID]);
         }
-        if (userIDs.includes(socket.id)) {
-            userIDs.splice(userIDs.indexOf(socket.id), 2)
-        }
-        socket.broadcast.emit("newUser", (userIDs))
+
+        socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();
         console.log('User disconnected: ', e);
         socket.to(GUIId).emit("newLog", 'User disconnected: ' + String(e));
