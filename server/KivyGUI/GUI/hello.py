@@ -1,3 +1,4 @@
+from logging.config import listen
 import time
 import json
 import kivy
@@ -12,14 +13,15 @@ import re
 from kivy.config import Config
 Config.set('kivy', 'exit_on_escape', '0')
 
+class Liste:
+        def __init__(self, userWithSocket =[], userIdList=[]):
+                self.userWithSocket = userWithSocket
+                self.userIdList = userIdList
+
 
 class MainApp(MDApp):
         global socketGUI
         socketGUI = socketio.Client()
-        global log, userWithSocket, userIdList
-        log = []
-        userWithSocket =[]
-        userIdList =[]
 
         def build(self):
                 Window.clearcolor = (0, 0, 0, 0.6)
@@ -31,8 +33,13 @@ class MainApp(MDApp):
         
         #Changes the color of the wifi icons, when the switch has been clicked
         def switchPress(self, switchObject, switchValue):
+                
                 global r
-    
+                global log, liste
+                liste =Liste()
+                log = []
+                
+                
                 command = ['node', '../../server_local.js']
                 if switchValue == True:
                         self.root.ids.wifi1.color= (1,1,0,1)
@@ -50,31 +57,85 @@ class MainApp(MDApp):
                         socketGUI.connect('http://localhost:7000')
                         socketGUI.emit("GUI",())
 
+                        @socketGUI.on('updateUser')
+                        def updateUser (newUserList):
+                                print("in der funktion")
+                                print (newUserList)
+                                print(liste.userWithSocket)
+
+                                if  not newUserList and not liste.userWithSocket:
+                                        liste.userWithSocket = []
+                                elif newUserList and not liste.userWithSocket:
+                                
+                                        print("stranger fall?")
+                                        liste.userWithSocket = newUserList.copy()
+                                        print(newUserList)
+                                        print(liste.userWithSocket)
+
+                                elif len(newUserList) == len(liste.userWithSocket):
+                                        newList=[]
+                                        for i in range(len(newUserList)):
+                                                if newUserList.index(str(newUserList[i])) == True and liste.userWithSocket.index(str(liste.userWithSocket[i]))== True:
+                                                        newList.append(newUserList[i])
+                                        print("gleich groß")
+                                        print(newList)
+                                       
+                                        
+                                elif len(newUserList) > len(liste.userWithSocket):
+                                        print("serverliste ist größer")
+                                        for i in range(len(newUserList)):
+                                                if newUserList.index(i)==True and liste.userWithSocket.index(i)== True:
+                                                        newList.append(i)
+                                                elif newUserList.index(i)==True and liste.userWithSocket.index(i)== False:
+                                                        newList.append(i)
+                                        print("server größer")
+                                        print(newList)
+
+                                elif len(newUserList) < len(liste.userWithSocket):
+                                        print("GUIliste ist größer")
+                                        for i in range(len(liste.userWithSocket)):
+                                                if newUserList.index(i)==True and liste.userWithSocket.index(i)== True:
+                                                        newList.append(i)
+                                                elif newUserList.index(i)==True and liste.userWithSocket.index(i)== False:
+                                                        newList.append(i)
+                                        print("gui größer")
+                                        print(newList)
+
+                                else: 
+                                        print("nicht leer")
+                                        print(liste.userWithSocket)
+
                         @socketGUI.event
                         def newUser (userIds):
-                                userWithSocket.append(userIds[0])
-                                userWithSocket.append(userIds[1])
-                                userIdList.append(userIds[1])
-                                
-                                userStr =''
-                                for i in range(len(userIdList)):
-                                        userStr += userIdList[i] +"\n"
+                                try:
+                                        liste.userWithSocket.append(userIds[0])
+                                        liste.userWithSocket.append(userIds[1])
+                                        liste.userIdList.append(userIds[1])
 
-                                self.root.ids.user_log.text= str(userStr)
+                                        userStr =''
+                                        for i in range(len(liste.userIdList)):
+                                                userStr += liste.userIdList[i] +"\n"
+
+                                        self.root.ids.user_log.text= str(userStr)
+                                except ValueError:
+                                        socketGUI.emit('error', {'number': 3, 'message':"ValueError occured during adding a new user to the list"})
 
                         @socketGUI.event
                         def userLeft (socketId):
-                                indexOfSocket = userWithSocket.index(socketId)
-                                userToDelete = userWithSocket[indexOfSocket+1]
-                                userWithSocket.remove(userWithSocket[indexOfSocket])
-                                userWithSocket.remove(userToDelete)
-                                userIdList.remove(userToDelete)
+                                try:
+                                        indexOfSocket = liste.userWithSocket.index(socketId)
+                                        userToDelete = liste.userWithSocket[indexOfSocket+1]
+                                        liste.userWithSocket.remove(liste.userWithSocket[indexOfSocket])
+                                        liste.userWithSocket.remove(userToDelete)
+                                        liste.userIdList.remove(userToDelete)
 
-                                userStr =''
-                                for i in range(len(userIdList)):
-                                        userStr += userIdList[i] +"\n"
-                                self.root.ids.user_log.text= str(userStr)
-
+                                        userStr =''
+                                        for i in range(len(liste.userIdList)):
+                                                userStr += liste.userIdList[i] +"\n"
+                                        self.root.ids.user_log.text= str(userStr)
+                                        
+                                except ValueError:
+                                        socketGUI.emit('error', {'number': 3, 'message':"ValueError occured during the disconnect of a user"})
 
                                                         
                         @socketGUI.on('newLog')
@@ -86,6 +147,9 @@ class MainApp(MDApp):
                                         messStr += str(log[i]) +"\n"
                                         i+=2
                                 self.root.ids.socket_log.text= str(messStr)
+
+
+                        
                 else:
                         socketGUI.disconnect()
                         self.root.ids.wifi1.color= (1,1,1,0.6)
@@ -115,6 +179,15 @@ class MainApp(MDApp):
                 command2=['bash', 'update_Script.sh']
                 r = subprocess.Popen(command2, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
         
+        def update_User(self):
+                socketGUI.emit ('updateUser',())
+
+                
+                print("Update")
+
+
+
+
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text
                 self.root.ids.command_input.text=""

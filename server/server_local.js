@@ -12,6 +12,7 @@ const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
 var userIDs = [];
+var userIDServerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
@@ -34,9 +35,19 @@ io.on('connection', socket => {
     })
 
     socket.on("userId", (newUser) => {
+        if (userIDServerList) {
+            userIDServerList.push(socket.id, newUser)
+        } else {
+            userIDServerList = [socket.id, newUser]
+        }
         userIDs = [socket.id, newUser]
         socket.broadcast.emit("newUser", (userIDs))
         socket.to(GUIId).emit("newLog", 'User connected successfully')
+    })
+
+    socket.on("updateUser",() => {
+        console.log("Update of the users")
+      socket.emit("updateUser", userIDServerList)
     })
 
     //The handshakes of the VIDEO CHAT
@@ -146,8 +157,8 @@ io.on('connection', socket => {
 
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
-        socket.to(GUIId).emit("newLog", "Error: " + String(er));
-        socket.emit('error', er);
+        socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
+        //socket.emit('error', er);
     })
 
     socket.on('forceDisconnect', (e) => {
@@ -166,6 +177,11 @@ io.on('connection', socket => {
             }
             console.log(users[roomID]);
         }
+
+        if (userIDServerList.includes(socket.id)) {
+            userIDServerList.splice(userIDServerList.indexOf(socket.id), 2)
+        }
+        console.log(userIDServerList)
 
         socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();
