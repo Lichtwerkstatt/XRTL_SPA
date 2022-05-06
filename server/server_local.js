@@ -46,8 +46,11 @@ io.on('connection', socket => {
     })
 
     socket.on("updateUser",() => {
-        console.log("Update of the users")
       socket.emit("updateUser", userIDServerList)
+    })
+
+    socket.on("updateUserList", (newList) => {
+      userIDServerList = newList
     })
 
     //The handshakes of the VIDEO CHAT

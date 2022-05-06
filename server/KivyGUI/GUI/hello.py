@@ -32,11 +32,13 @@ class MainApp(MDApp):
                 return Builder.load_file('server.kv')
         
         #Changes the color of the wifi icons, when the switch has been clicked
+        
+               
         def switchPress(self, switchObject, switchValue):
                 
                 global r
                 global log, liste
-                liste =Liste()
+                liste = Liste()
                 log = []
                 
                 
@@ -57,53 +59,69 @@ class MainApp(MDApp):
                         socketGUI.connect('http://localhost:7000')
                         socketGUI.emit("GUI",())
 
+                        def displayUser ():
+                                userStr =''
+                                for i in range(len(liste.userIdList)):
+                                        userStr += liste.userIdList[i] +"\n"
+                                self.root.ids.user_log.text= str(userStr)
+
+
                         @socketGUI.on('updateUser')
                         def updateUser (newUserList):
-                                print("in der funktion")
-                                print (newUserList)
-                                print(liste.userWithSocket)
-
                                 if  not newUserList and not liste.userWithSocket:
                                         liste.userWithSocket = []
+                                        liste.userIdList = []
                                 elif newUserList and not liste.userWithSocket:
-                                
-                                        print("stranger fall?")
+                                        newUser = []
                                         liste.userWithSocket = newUserList.copy()
-                                        print(newUserList)
-                                        print(liste.userWithSocket)
-
+                                        for i in range(len(liste.userWithSocket)):
+                                                if i % 2 != 0:
+                                                        newUser.append(liste.userWithSocket[i])
+                                        liste.userIdList = newUser
+                                        displayUser()  
+                                elif liste.userWithSocket and not newUserList:
+                                        socketGUI.emit("updateUserList", liste.userWithSocket)
                                 elif len(newUserList) == len(liste.userWithSocket):
-                                        newList=[]
+                                        newList = []
+                                        newUser = []
                                         for i in range(len(newUserList)):
-                                                if newUserList.index(str(newUserList[i])) == True and liste.userWithSocket.index(str(liste.userWithSocket[i]))== True:
+                                                if re.search(str(newUserList[i]), str(liste.userWithSocket))!= None:
                                                         newList.append(newUserList[i])
-                                        print("gleich groß")
-                                        print(newList)
-                                       
+                                                        if i % 2 != 0:
+                                                                newUser.append(newUserList[i])  
+                                                
+                                        liste.userWithSocket = newList
+                                        liste.userIdList = newUser
+                                        displayUser()
                                         
                                 elif len(newUserList) > len(liste.userWithSocket):
+                                        newList = []
+                                        newUser = []
                                         print("serverliste ist größer")
                                         for i in range(len(newUserList)):
-                                                if newUserList.index(i)==True and liste.userWithSocket.index(i)== True:
-                                                        newList.append(i)
-                                                elif newUserList.index(i)==True and liste.userWithSocket.index(i)== False:
-                                                        newList.append(i)
-                                        print("server größer")
-                                        print(newList)
+                                                if re.search(str(newUserList[i]), str(liste.userWithSocket))!= None or re.search(str(newUserList[i]), str(liste.userWithSocket)) == None:
+                                                        newList.append(newUserList[i])
+                                                        if i % 2 != 0:
+                                                                newUser.append(newUserList[i]) 
+                                        liste.userWithSocket = newList
+                                        liste.userIdList = newUser
+                                        displayUser()
 
                                 elif len(newUserList) < len(liste.userWithSocket):
-                                        print("GUIliste ist größer")
+                                        newList = []
+                                        newUser = []
                                         for i in range(len(liste.userWithSocket)):
-                                                if newUserList.index(i)==True and liste.userWithSocket.index(i)== True:
-                                                        newList.append(i)
-                                                elif newUserList.index(i)==True and liste.userWithSocket.index(i)== False:
-                                                        newList.append(i)
-                                        print("gui größer")
-                                        print(newList)
+                                                 if re.search(str(liste.userWithSocket[i]), str(newUserList))!= None or re.search(str(liste.userWithSocket[i]), str(newUserList)) == None:
+                                                        newList.append(newUserList[i])
+                                                        if i % 2 != 0:
+                                                                newUser.append(newUserList[i]) 
+                                        liste.userWithSocket = newList
+                                        liste.userIdList = newUser
+                                        displayUser()
+                                        socketGUI.emit("updateUserList", liste.userWithSocket)
 
                                 else: 
-                                        print("nicht leer")
-                                        print(liste.userWithSocket)
+                                        socketGUI.emit('error', {'number': 3, 'message':"Something went wrong during the update of the User log"})
 
                         @socketGUI.event
                         def newUser (userIds):
@@ -111,12 +129,7 @@ class MainApp(MDApp):
                                         liste.userWithSocket.append(userIds[0])
                                         liste.userWithSocket.append(userIds[1])
                                         liste.userIdList.append(userIds[1])
-
-                                        userStr =''
-                                        for i in range(len(liste.userIdList)):
-                                                userStr += liste.userIdList[i] +"\n"
-
-                                        self.root.ids.user_log.text= str(userStr)
+                                        displayUser()
                                 except ValueError:
                                         socketGUI.emit('error', {'number': 3, 'message':"ValueError occured during adding a new user to the list"})
 
@@ -128,11 +141,7 @@ class MainApp(MDApp):
                                         liste.userWithSocket.remove(liste.userWithSocket[indexOfSocket])
                                         liste.userWithSocket.remove(userToDelete)
                                         liste.userIdList.remove(userToDelete)
-
-                                        userStr =''
-                                        for i in range(len(liste.userIdList)):
-                                                userStr += liste.userIdList[i] +"\n"
-                                        self.root.ids.user_log.text= str(userStr)
+                                        displayUser()
                                         
                                 except ValueError:
                                         socketGUI.emit('error', {'number': 3, 'message':"ValueError occured during the disconnect of a user"})
@@ -147,9 +156,7 @@ class MainApp(MDApp):
                                         messStr += str(log[i]) +"\n"
                                         i+=2
                                 self.root.ids.socket_log.text= str(messStr)
-
-
-                        
+      
                 else:
                         socketGUI.disconnect()
                         self.root.ids.wifi1.color= (1,1,1,0.6)
@@ -181,12 +188,6 @@ class MainApp(MDApp):
         
         def update_User(self):
                 socketGUI.emit ('updateUser',())
-
-                
-                print("Update")
-
-
-
 
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text
