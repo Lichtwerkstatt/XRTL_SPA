@@ -17,8 +17,12 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
+var userIDs = [];
+var userIDServerList = [];
+var componentList = [];
 var componentID = '';
 const socketToRoom = {};
+var GUIId = ""
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
