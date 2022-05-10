@@ -208,9 +208,9 @@ io.on('connection', socket => {
         console.log("Componenten Payload")
         console.log(payload)
         if (componentList) {
-            componentList.push(payload.componentId);
+            componentList.push(payload.component);
         } else {
-            componentList = [payload.componentId];
+            componentList = [payload.component];
         }
         console.log("Conmponenten Liste")
         console.log(componentList)
