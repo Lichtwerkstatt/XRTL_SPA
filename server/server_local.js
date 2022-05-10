@@ -13,6 +13,7 @@ const roomID = uuidv4();
 const users = {};
 var userIDs = [];
 var userIDServerList = [];
+var componentList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
@@ -45,12 +46,12 @@ io.on('connection', socket => {
         socket.to(GUIId).emit("newLog", 'User connected successfully')
     })
 
-    socket.on("updateUser",() => {
-      socket.emit("updateUser", userIDServerList)
+    socket.on("updateUser", () => {
+        socket.emit("updateUser", userIDServerList)
     })
 
     socket.on("updateUserList", (newList) => {
-      userIDServerList = newList
+        userIDServerList = newList
     })
 
     //The handshakes of the VIDEO CHAT
@@ -154,7 +155,17 @@ io.on('connection', socket => {
     //Returns the status of a experiment component
     socket.on('status', payload => {
         console.log("New Status", payload)
+        console.log("Componenten Payload")
+        console.log(payload)
+        if (componentList) {
+            componentList.push(payload.componentId);
+        } else {
+            componentList = [payload.componentId];
+        }
+        console.log("Conmponenten Liste")
+        console.log(componentList)
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
+        socket.to(GUIId).emit("newComponent", componentList);
         socket.broadcast.emit('status', payload)
     });
 

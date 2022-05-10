@@ -14,9 +14,10 @@ from kivy.config import Config
 Config.set('kivy', 'exit_on_escape', '0')
 
 class Liste:
-        def __init__(self, userWithSocket =[], userIdList=[]):
+        def __init__(self, userWithSocket =[], userIdList=[], componentList =[]):
                 self.userWithSocket = userWithSocket
                 self.userIdList = userIdList
+                self.componentList = componentList
 
 
 class MainApp(MDApp):
@@ -156,6 +157,11 @@ class MainApp(MDApp):
                                         messStr += str(log[i]) +"\n"
                                         i+=2
                                 self.root.ids.socket_log.text= str(messStr)
+
+                        @socketGUI.on('newComponent')
+                        def newComponent (newComponentList):
+                                liste.componentList = newComponentList
+
       
                 else:
                         socketGUI.disconnect()
