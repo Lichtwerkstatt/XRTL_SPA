@@ -155,12 +155,12 @@ io.on('connection', socket => {
     //Returns the status of a experiment component
     socket.on('status', payload => {
         console.log("New Status", payload)
-        console.log("Componenten Payload")
-        console.log(payload)
+        console.log("Componenten Busy Status")
+        console.log(payload.status.busy)
         if (componentList) {
-            componentList.push(payload.componentId);
+            componentList.push(payload.component, payload.status.busy);
         } else {
-            componentList = [payload.componentId];
+            componentList = [payload.component, payload.status.busy];
         }
         console.log("Conmponenten Liste")
         console.log(componentList)
