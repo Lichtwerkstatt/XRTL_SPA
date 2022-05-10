@@ -208,9 +208,9 @@ io.on('connection', socket => {
         console.log("Componenten Busy Status")
         console.log(payload.status.busy)
         if (componentList) {
-            componentList.push(payload.component);
+            componentList.push(payload.component, payload.status.busy);
         } else {
-            componentList = [payload.component];
+            componentList = [payload.component, payload.status.busy];
         }
         console.log("Conmponenten Liste")
         console.log(componentList)
