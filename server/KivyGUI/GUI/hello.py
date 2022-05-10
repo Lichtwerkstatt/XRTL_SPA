@@ -59,12 +59,27 @@ class MainApp(MDApp):
                         r = subprocess.Popen(command, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
                         socketGUI.connect('http://localhost:7000')
                         socketGUI.emit("GUI",())
+                        socketGUI.emit("status", { "componentId": "km100_1", "status" : { "busy" : True, "top" : 55, "bottom" : 22}})
+  
+
 
                         def displayUser ():
                                 userStr =''
                                 for i in range(len(liste.userIdList)):
                                         userStr += liste.userIdList[i] +"\n"
                                 self.root.ids.user_log.text= str(userStr)
+                        
+                        def displayComponents ():
+                                componentStr =''
+                                print(liste.componentList)
+                                for i in range(len(liste.componentList)):
+                                        if i % 2 != 0:
+                                                componentStr += str(liste.componentList[i]) +"                "
+                                        elif i % 3!= 0:
+                                                componentStr += str(liste.componentList[i]) +"\n"
+
+                                print(componentStr)
+                                self.root.ids.component_log.text= str(componentStr)
 
 
                         @socketGUI.on('updateUser')
@@ -161,6 +176,8 @@ class MainApp(MDApp):
                         @socketGUI.on('newComponent')
                         def newComponent (newComponentList):
                                 liste.componentList = newComponentList
+                                print(newComponentList)
+                                displayComponents()
 
       
                 else:

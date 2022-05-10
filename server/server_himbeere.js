@@ -208,15 +208,15 @@ io.on('connection', socket => {
         console.log("Componenten Busy Status")
         console.log(payload.status.busy)
         if (componentList) {
-            componentList.push(payload.component, payload.status.busy);
+            componentList.push(socket.id, payload.componentId, payload.status.busy);
         } else {
-            componentList = [payload.component, payload.status.busy];
+            componentList = [socket.id, payload.componentId, payload.status.busy];
         }
         console.log("Conmponenten Liste")
         console.log(componentList)
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.to(GUIId).emit("newComponent", componentList);
-        socket.broadcast.emit('status', payload)
+        socket.broadcast.emit('status', payload);
     });
 
     socket.on('error', (er) => {
@@ -246,6 +246,9 @@ io.on('connection', socket => {
 
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 2)
+        }
+        if (componentList.includes(socket.id)) {
+            componentList.splice(componentID.indexOf(socket.id), 3)
         }
         console.log(userIDServerList)
 
