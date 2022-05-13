@@ -85,13 +85,15 @@ io.on('connection', socket => {
     })
 
     socket.on("userId", (newUser) => {
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         if (userIDServerList) {
-            userIDServerList.push(socket.id, newUser)
+            userIDServerList.push(socket.id, time, newUser)
         } else {
-            userIDServerList = [socket.id, newUser]
+            userIDServerList = [socket.id, time, newUser]
         }
-        userIDs = [socket.id, newUser]
-        socket.broadcast.emit("newUser", (userIDs))
+        userIDs = [socket.id, time, newUser]
+        socket.broadcast.emit("newUser", (time, userIDs))
         socket.to(GUIId).emit("newLog", 'User connected successfully')
     })
 
@@ -101,6 +103,14 @@ io.on('connection', socket => {
 
     socket.on("updateUserList", (newList) => {
         userIDServerList = newList
+    })
+
+    socket.on("updateComponents", () => {
+        socket.emit("updateComponents", componentList)
+    })
+
+    socket.on("updateComponentsList", (newList) => {
+        componentList = newList
     })
 
     //The handshakes of the VIDEO CHAT
@@ -206,11 +216,13 @@ io.on('connection', socket => {
     socket.on('status', payload => {
         console.log("New Status", payload)
         console.log("Componenten Busy Status")
-        console.log(payload.status.busy)
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
         if (componentList) {
-            componentList.push(socket.id, payload.componentId, payload.status.busy);
+            componentList.push(socket.id, time, payload.componentId, payload.status.busy);
         } else {
-            componentList = [socket.id, payload.componentId, payload.status.busy];
+            componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }
         console.log("Conmponenten Liste")
         console.log(componentList)
@@ -245,10 +257,10 @@ io.on('connection', socket => {
         }
 
         if (userIDServerList.includes(socket.id)) {
-            userIDServerList.splice(userIDServerList.indexOf(socket.id), 2)
+            userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
         }
         if (componentList.includes(socket.id)) {
-            componentList.splice(componentID.indexOf(socket.id), 3)
+            componentList.splice(componentList.indexOf(socket.id), 4)
         }
         console.log(userIDServerList)
 

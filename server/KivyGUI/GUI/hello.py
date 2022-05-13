@@ -36,7 +36,6 @@ class MainApp(MDApp):
         
                
         def switchPress(self, switchObject, switchValue):
-                
                 global r
                 global log, liste
                 liste = Liste()
@@ -45,40 +44,42 @@ class MainApp(MDApp):
                 
                 command = ['node', '../../server_local.js']
                 if switchValue == True:
-                        self.root.ids.wifi1.color= (1,1,0,1)
-                        self.root.ids.wifi2.color= (1,1,0,1)
+                        self.root.ids.wifi1.color = (1,1,0,1)
+                        self.root.ids.wifi2.color = (1,1,0,1)
 
-                        self.root.ids.user_log.text= ""
-                        self.root.ids.socket_log.text= ""
-                        self.root.ids.component_log.text= ""
+                        self.root.ids.user_log.text = ""
+                        self.root.ids.socket_log.text = ""
+                        self.root.ids.component_log.text = ""
 
-                        self.root.ids.user_log.color= (1,1,1,1)
-                        self.root.ids.socket_log.color= (1,1,1,1)
-                        self.root.ids.component_log.color= (1,1,1,1)
+                        self.root.ids.user_log.color = (1,1,1,1)
+                        self.root.ids.socket_log.color = (1,1,1,1)
+                        self.root.ids.component_log.color = (1,1,1,1)
 
-                        r = subprocess.Popen(command, creationflags= subprocess.CREATE_NEW_CONSOLE, shell=False)
+                        r = subprocess.Popen(command, creationflags = subprocess.CREATE_NEW_CONSOLE, shell=False)
                         socketGUI.connect('http://localhost:7000')
                         socketGUI.emit("GUI",())
                         socketGUI.emit("status", { "componentId": "km100_1", "status" : { "busy" : True, "top" : 55, "bottom" : 22}})
   
-
-
                         def displayUser ():
-                                userStr =''
+                                userStr = '' 
                                 for i in range(len(liste.userIdList)):
-                                        userStr += liste.userIdList[i] +"\n"
+                                        
+                                        userStr += liste.userIdList[i] + "         "
+                                        if i % 2:
+                                                userStr += "\n"
+                                              
                                 self.root.ids.user_log.text= str(userStr)
                         
                         def displayComponents ():
                                 componentStr =''
-                                print(liste.componentList)
                                 for i in range(len(liste.componentList)):
                                         if i % 2 != 0:
-                                                componentStr += str(liste.componentList[i]) +"                "
+                                                componentStr += str(liste.componentList[i]) + "         "
                                         elif i % 3!= 0:
-                                                componentStr += str(liste.componentList[i]) +"\n"
+                                                componentStr += str(liste.componentList[i]) + "         "
+                                        elif i % 4 !=0:
+                                                componentStr += str(liste.componentList[i]) + "\n"
 
-                                print(componentStr)
                                 self.root.ids.component_log.text= str(componentStr)
 
 
@@ -89,10 +90,14 @@ class MainApp(MDApp):
                                         liste.userIdList = []
                                 elif newUserList and not liste.userWithSocket:
                                         newUser = []
+                                        counter = 3
                                         liste.userWithSocket = newUserList.copy()
                                         for i in range(len(liste.userWithSocket)):
-                                                if i % 2 != 0:
+                                                if counter == 1 or counter == 2:
                                                         newUser.append(liste.userWithSocket[i])
+                                                        counter += 1
+                                                elif counter == 3:
+                                                        counter = 1
                                         liste.userIdList = newUser
                                         displayUser()  
                                 elif liste.userWithSocket and not newUserList:
@@ -100,11 +105,15 @@ class MainApp(MDApp):
                                 elif len(newUserList) == len(liste.userWithSocket):
                                         newList = []
                                         newUser = []
+                                        counter = 3
                                         for i in range(len(newUserList)):
                                                 if re.search(str(newUserList[i]), str(liste.userWithSocket))!= None:
                                                         newList.append(newUserList[i])
-                                                        if i % 2 != 0:
-                                                                newUser.append(newUserList[i])  
+                                                        if counter == 1 or counter == 2:
+                                                                newUser.append(liste.userWithSocket[i])
+                                                                counter += 1
+                                                        elif counter == 3:
+                                                                counter = 1
                                                 
                                         liste.userWithSocket = newList
                                         liste.userIdList = newUser
@@ -113,12 +122,15 @@ class MainApp(MDApp):
                                 elif len(newUserList) > len(liste.userWithSocket):
                                         newList = []
                                         newUser = []
-                                        print("serverliste ist größer")
+                                        counter = 3
                                         for i in range(len(newUserList)):
                                                 if re.search(str(newUserList[i]), str(liste.userWithSocket))!= None or re.search(str(newUserList[i]), str(liste.userWithSocket)) == None:
                                                         newList.append(newUserList[i])
-                                                        if i % 2 != 0:
-                                                                newUser.append(newUserList[i]) 
+                                                        if counter == 1 or counter == 2:
+                                                                newUser.append(liste.userWithSocket[i])
+                                                                counter += 1
+                                                        elif counter == 3:
+                                                                counter = 1
                                         liste.userWithSocket = newList
                                         liste.userIdList = newUser
                                         displayUser()
@@ -144,7 +156,9 @@ class MainApp(MDApp):
                                 try:
                                         liste.userWithSocket.append(userIds[0])
                                         liste.userWithSocket.append(userIds[1])
+                                        liste.userWithSocket.append(userIds[2])
                                         liste.userIdList.append(userIds[1])
+                                        liste.userIdList.append(userIds[2])
                                         displayUser()
                                 except ValueError:
                                         socketGUI.emit('error', {'number': 3, 'message':"ValueError occured during adding a new user to the list"})
@@ -152,11 +166,24 @@ class MainApp(MDApp):
                         @socketGUI.event
                         def userLeft (socketId):
                                 try:
+                                        
+                                        print("Userleft before")
+                                        print(liste.userWithSocket)
+                                        print(liste.userIdList)
+                                        displayUser()
+                                        
                                         indexOfSocket = liste.userWithSocket.index(socketId)
-                                        userToDelete = liste.userWithSocket[indexOfSocket+1]
+                                        timeToDelete = liste.userWithSocket[indexOfSocket+1]
+                                        userToDelete = liste.userWithSocket[indexOfSocket+2]
                                         liste.userWithSocket.remove(liste.userWithSocket[indexOfSocket])
+                                        liste.userWithSocket.remove(timeToDelete)
                                         liste.userWithSocket.remove(userToDelete)
+                                        liste.userIdList.remove(timeToDelete)
                                         liste.userIdList.remove(userToDelete)
+
+                                        print("Userleft")
+                                        print(liste.userWithSocket)
+                                        print(liste.userIdList)
                                         displayUser()
                                         
                                 except ValueError:
@@ -176,7 +203,6 @@ class MainApp(MDApp):
                         @socketGUI.on('newComponent')
                         def newComponent (newComponentList):
                                 liste.componentList = newComponentList
-                                print(newComponentList)
                                 displayComponents()
 
       
