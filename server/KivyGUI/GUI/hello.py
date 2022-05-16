@@ -165,13 +165,7 @@ class MainApp(MDApp):
 
                         @socketGUI.event
                         def userLeft (socketId):
-                                try:
-                                        
-                                        print("Userleft before")
-                                        print(liste.userWithSocket)
-                                        print(liste.userIdList)
-                                        displayUser()
-                                        
+                                try:                                        
                                         indexOfSocket = liste.userWithSocket.index(socketId)
                                         timeToDelete = liste.userWithSocket[indexOfSocket+1]
                                         userToDelete = liste.userWithSocket[indexOfSocket+2]
@@ -180,10 +174,6 @@ class MainApp(MDApp):
                                         liste.userWithSocket.remove(userToDelete)
                                         liste.userIdList.remove(timeToDelete)
                                         liste.userIdList.remove(userToDelete)
-
-                                        print("Userleft")
-                                        print(liste.userWithSocket)
-                                        print(liste.userIdList)
                                         displayUser()
                                         
                                 except ValueError:
@@ -202,6 +192,11 @@ class MainApp(MDApp):
 
                         @socketGUI.on('newComponent')
                         def newComponent (newComponentList):
+                                liste.componentList = newComponentList
+                                displayComponents()
+
+                        @socketGUI.on('updateComponents')
+                        def updateComponents (newComponentList):
                                 liste.componentList = newComponentList
                                 displayComponents()
 
@@ -237,6 +232,9 @@ class MainApp(MDApp):
         
         def update_User(self):
                 socketGUI.emit ('updateUser',())
+
+        def update_Components (self):
+                socketGUI.emit('updateComponents', ())
 
         def server_command(self, input, input_id):
                 command = self.root.ids.command_input.text

@@ -109,10 +109,6 @@ io.on('connection', socket => {
         socket.emit("updateComponents", componentList)
     })
 
-    socket.on("updateComponentsList", (newList) => {
-        componentList = newList
-    })
-
     //The handshakes of the VIDEO CHAT
 
     //Sends the random generated roomID to the client how wants to join the video chat
