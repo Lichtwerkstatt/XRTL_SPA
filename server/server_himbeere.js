@@ -74,6 +74,7 @@ clients_connected();
 
 io.on('connection', socket => {
     console.log('connection made successfully');
+    socket.emit("newLog", 'Connection made successfully')
     RGB(0, 1, 0);
 
     socket.on('GUI', () => {

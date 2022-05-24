@@ -58,7 +58,6 @@ class MainApp(MDApp):
                         r = subprocess.Popen(command, creationflags = subprocess.CREATE_NEW_CONSOLE, shell=False)
                         socketGUI.connect('http://localhost:7000')
                         socketGUI.emit("GUI",())
-                        socketGUI.emit("status", { "componentId": "km100_1", "status" : { "busy" : True, "top" : 55, "bottom" : 22}})
   
                         def displayUser ():
                                 userStr = '' 
@@ -101,6 +100,13 @@ class MainApp(MDApp):
                                         liste.userIdList = newUser
                                         displayUser()  
                                 elif liste.userWithSocket and not newUserList:
+                                        socketGUI.emit("GUI",())
+                                        liste.userIdList = []
+                                        liste.userWithSocket = []
+                                        self.root.ids.component_log.text= str("Server had a disconnect!")
+                                        self.root.ids.user_log.text= str("Server had a disconnect!")
+                                        self.root.ids.user_log.color = get_color_from_hex('cc0000')
+                                        self.root.ids.component_log.color = get_color_from_hex('cc0000')
                                         socketGUI.emit("updateUserList", liste.userWithSocket)
                                 elif len(newUserList) == len(liste.userWithSocket):
                                         newList = []
