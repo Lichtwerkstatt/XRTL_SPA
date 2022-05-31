@@ -1,0 +1,7 @@
+('C:\\Users\\henkel\\AppData\\Local\\GitHubDesktop\\app-2.9.4\\XRTL_SPA\\server\\KivyGUI\\GUI\\share\\glew\\bin',
+ None,
+ [],
+ 'DATA',
+ [('glew32.dll',
+   'C:\\Users\\henkel\\AppData\\Local\\GitHubDesktop\\app-2.9.4\\XRTL_SPA\\server\\KivyGUI\\GUI\\share\\glew\\bin\\glew32.dll',
+   'DATA')])
