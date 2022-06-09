@@ -39,16 +39,53 @@ MDScreen:
             height:dp(50)
             width: dp(70)
             pos_hint: {'x': 0.915, 'y': 0.9225}
-            on_active: app.switchPress(self, self.active)
-            #selected_color: 1,0,0,1   
-          
+            on_active: app.switchPress(self, self.active, "server")
+            #selected_color: 1,0,0,1 
+
         Label:
+            id: switch_label
             markup: True
             font_size:20
             size_hint:(0.1,0.1)
             pos_hint: {'x': 0.82, 'y': 0.90}
             color: 0,0,0,1
             text: 'Server is [color=#a3e7d0]online[/color]' if switch.active else 'Server is [color=#cc0000]offline[/color]'
+
+        MDSwitch:
+            id: switch_Server_Client
+            height:dp(50)
+            width: dp(70)
+            pos_hint: {'x': 0.755, 'y': 0.9225}
+            on_active: app.switchPress(self, self.active, "client") 
+         
+        Label:
+            markup: True
+            font_size:20
+            size_hint:(0.1,0.1)
+            pos_hint: {'x': 0.68, 'y': 0.90}
+            color: 0,0,0,1
+            text: '[color=#a3e7d0]Client[/color]' if switch_Server_Client.active else '[color=#a3e7d0]Server[/color]'
+        
+        MDTextField:
+            id: server_adress
+            multiline: False
+            font_size:18
+            size_hint_x:.2
+            pos_hint: {'x': 0.05, 'y': 0.92}
+            helper_text_mode: "persistent"
+            text_color_normal: utils.get_color_from_hex('7f7f7f')
+            text_color_focus: 1,1,1,1
+
+            hint_text: "Type in a server adress ..."
+            hint_text_color_focus: utils.get_color_from_hex('4dd0a4')
+            
+            line_color_normal: utils.get_color_from_hex('01bd7d')
+            line_color_focus: utils.get_color_from_hex('4dd0a4')
+            
+            icon_right: "arrow-right"
+            icon_right_color_normal: utils.get_color_from_hex('01bd7d')
+            icon_right_color_focus: utils.get_color_from_hex('4dd0a4')
+
 
         RelativeLayout:
             MDScreen:
