@@ -1,14 +1,18 @@
-from pickle import FALSE
-import time
-import json
-import kivy
-from kivy.core.window import Window
-from kivy.lang import Builder
-from kivymd.app import MDApp
-from kivy.utils import get_color_from_hex
-import socketio
-import subprocess
 import re
+import subprocess
+import socketio
+from kivy.utils import get_color_from_hex
+from kivymd.app import MDApp
+from kivy.lang import Builder
+from kivy.core.window import Window
+import kivy
+import json
+import time
+from kivy.config import Config
+Config.set('graphics', 'resizable', '0')
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'top', '100')
+Config.set('graphics', 'left', '25')
 
 
 class Liste:
@@ -30,6 +34,7 @@ class MainApp(MDApp):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         self.theme_cls.accent_palette = "Gray"
+        self.title = "XRTL"
         return Builder.load_file('Python_GUI.kv')
 
     # Changes the color of the wifi icons, when the switch has been clicked
@@ -81,7 +86,7 @@ class MainApp(MDApp):
                 componentStr = ''
                 for i in range(len(liste.componentList)):
                     if i % 4 == 0:
-                        componentStr += "\n"                
+                        componentStr += "\n"
                     else:
                         componentStr += str(
                             liste.componentList[i]) + "    "
@@ -328,7 +333,8 @@ class MainApp(MDApp):
 
             # Creating the dictionary based on their length
             if leng == 6:
-                dic = {command_list[0]: command_list[1], command_list[2]: command_list[3], command_list[4]: command_list[5]}
+                dic = {command_list[0]: command_list[1], command_list[2]
+                    : command_list[3], command_list[4]: command_list[5]}
             elif leng == 7:
                 dic = {command_list[0]: command_list[1], command_list[2]: command_list[3], command_list[4]: {
                     command_list[5]: int(command_list[6])}}
@@ -351,6 +357,7 @@ class MainApp(MDApp):
                     "newLogGUI", "Command received: " + json.dumps(dic))
             except:
                 print("No connection established!")
+
 
         # message, { userName: beetlebum, message: Hello World!}
         # message, { userId: beetlebum, message: Hello World!, color: #bf9000}
