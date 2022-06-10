@@ -20,6 +20,7 @@ class Liste:
 
 class MainApp(MDApp):
     global socketGUI
+
     socketGUI = socketio.Client()
 
     def build(self):
@@ -32,6 +33,10 @@ class MainApp(MDApp):
         return Builder.load_file('Python_GUI.kv')
 
     # Changes the color of the wifi icons, when the switch has been clicked
+    def server_address(self, input):
+        global serverAddress
+        serverAddress = self.root.ids.server_address.text
+        self.root.ids.server_address.text = ""
 
     def switchPress(self, switchObject, switchValue, v):
         global r
@@ -40,7 +45,6 @@ class MainApp(MDApp):
         log = []
 
         command = ['node', '../../server_local.js']
-        print(self.root.ids.switch_Server_Client.active)
         if switchValue == True:
             self.root.ids.wifi1.color = (1, 1, 0, 1)
             self.root.ids.wifi2.color = (1, 1, 0, 1)
@@ -88,14 +92,23 @@ class MainApp(MDApp):
                 self.root.ids.component_log.text = str(componentStr)
 
             try:
-                socketGUI.connect('http://localhost:7000')
+                socketGUI.connect(serverAddress)  # http://localhost:7000
                 socketGUI.emit("GUI", ())
             except:
                 self.root.ids.user_log.text = 'Server is offline'
                 self.root.ids.socket_log.text = 'Server is offline'
                 self.root.ids.component_log.text = 'Server is offline'
 
-            try: 
+            try:
+                socketGUI.connect('http://192.168.1.42:7000')
+                # socketGUI.connect('http://localhost:7000')
+                socketGUI.emit("GUI", ())
+            except:
+                self.root.ids.user_log.text = 'Server is offline'
+                self.root.ids.socket_log.text = 'Server is offline'
+                self.root.ids.component_log.text = 'Server is offline'
+
+            try:
                 @socketGUI.on('updateUser')
                 def updateUser(newUserList):
                     if not newUserList and not liste.userWithSocket:
@@ -264,7 +277,14 @@ class MainApp(MDApp):
             })
             socketGUI.emit(
                 "newLogGUI", "Command received: { userId: PythonGUI, componentId: *, command: "+button_id+"}")
-            button.disabled = True
+
+            @socketGUI.on('status')
+            def updateStatus(status):
+                print(status)
+                """if status.status.busy == True:
+                    button.disabled = True
+                else:
+                    button.disabled = False """
         except:
             print("No connection established!")
 
@@ -312,7 +332,7 @@ class MainApp(MDApp):
 
             # Creating the dictionary based on their length
             if leng == 6:
-                dic = {command_list[0]: command_list[1], command_list[2]                       : command_list[3], command_list[4]: command_list[5]}
+                dic = {command_list[0]: command_list[1], command_list[2]: command_list[3], command_list[4]: command_list[5]}
             elif leng == 7:
                 dic = {command_list[0]: command_list[1], command_list[2]: command_list[3], command_list[4]: {
                     command_list[5]: int(command_list[6])}}

@@ -67,25 +67,30 @@ MDScreen:
             text: '[color=#a3e7d0]Client[/color]' if switch_Server_Client.active else '[color=#a3e7d0]Server[/color]'
         
         MDTextField:
-            id: server_adress
+            id: server_address
             multiline: False
             font_size:18
             size_hint_x:.2
-            pos_hint: {'x': 0.05, 'y': 0.92}
+            pos_hint: {'x': 0.04, 'y': 0.92}
             helper_text_mode: "persistent"
-            text_color_normal: utils.get_color_from_hex('7f7f7f')
+            text_color_normal: utils.get_color_from_hex('89B5A6')
             text_color_focus: 1,1,1,1
 
             hint_text: "Type in a server adress ..."
-            hint_text_color_focus: utils.get_color_from_hex('4dd0a4')
+            hint_text_color_focus: utils.get_color_from_hex('DDEAE5')
             
-            line_color_normal: utils.get_color_from_hex('01bd7d')
-            line_color_focus: utils.get_color_from_hex('4dd0a4')
+            line_color_normal: utils.get_color_from_hex('89B5A6')
+            line_color_focus: utils.get_color_from_hex('DDEAE5')
             
             icon_right: "arrow-right"
-            icon_right_color_normal: utils.get_color_from_hex('01bd7d')
-            icon_right_color_focus: utils.get_color_from_hex('4dd0a4')
+            icon_right_color_normal: utils.get_color_from_hex('ABCAC0')
+            icon_right_color_focus: utils.get_color_from_hex('DDEAE5')
 
+        MDIconButton:
+            icon: "arrow-right"
+            pos_hint: {'x': 0.215, 'y': 0.935}
+            on_press: app.server_address(self)
+            opacity: 0
 
         RelativeLayout:
             MDScreen:
