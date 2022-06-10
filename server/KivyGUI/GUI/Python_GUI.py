@@ -80,15 +80,11 @@ class MainApp(MDApp):
             def displayComponents():
                 componentStr = ''
                 for i in range(len(liste.componentList)):
-                    if i % 2 != 0:
+                    if i % 4 == 0:
+                        componentStr += "\n"                
+                    else:
                         componentStr += str(
-                            liste.componentList[i]) + "         "
-                    elif i % 3 != 0:
-                        componentStr += str(
-                            liste.componentList[i]) + "         "
-                    elif i % 4 != 0:
-                        componentStr += str(liste.componentList[i]) + "\n"
-
+                            liste.componentList[i]) + "    "
                 self.root.ids.component_log.text = str(componentStr)
 
             try:
