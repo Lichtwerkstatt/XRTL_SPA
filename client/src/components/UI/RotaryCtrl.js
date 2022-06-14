@@ -12,11 +12,12 @@ const RotaryCtrl = (props) => {
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
 
+
   const rotaryCtrlEmit = () => {
     /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
-        setRotation(payload.status[props.control]);
+        setRotation(payload.status[props.val]);
       }
     }); //TODO: Update Footer of UI Window with Status
   }
@@ -43,6 +44,8 @@ const RotaryCtrl = (props) => {
       }
 
     })
+    var newRotation = parseInt(rotation) + parseInt(enteredRotation)
+    setRotation(newRotation);
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
@@ -57,13 +60,15 @@ const RotaryCtrl = (props) => {
       }
 
     })
+    var newRotation = rotation - enteredRotation
+    setRotation(newRotation);
     appCtx.addLog("User initiated CCW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
       <div className={styles.rotaryCtrl}>
-        <span>{rotation}</span>
+        <span>{Number(rotation)}</span>
         <input
           type="number"
           min="0"
