@@ -55,18 +55,18 @@ const Stream = (props) => {
   }, []);
 
   return (
-      <Window
-        header={props.title + " (" + props.id + ")"}
-        top={props.top}
-        left={props.left}
-        width="1000px"
-        height="400px"
-        onClose={handleCloseWindow}
-      >
-        <canvas id="ScreenCanvas" width="600px" height="400px" />
+    <Window
+      header={props.title + " (" + props.id + ")"}
+      top={props.top}
+      left={props.left}
+      width="1000px"
+      height="400px"
+      onClose={handleCloseWindow}
+    >
+      <canvas id="ScreenCanvas" width="600px" height="400px" />
 
 
-      </Window>
+    </Window>
   );
 };
 export default Stream;

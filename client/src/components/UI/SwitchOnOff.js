@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-//import styles from "./SwitchOnOff.module.css"
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
   const socketCtx = useSocketContext();
-  const tempSwitch = useRef()
   const appCtx = useAppContext();
+  const tempSwitch = useRef()
 
   const switchFunction = () => {
     socketCtx.socket.on("status", payload => {

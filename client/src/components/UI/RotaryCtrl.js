@@ -7,17 +7,18 @@ import { useSocketContext } from "../../services/SocketContext"
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(props.rotation);
   const [enteredRotation, setEnteredRotation] = useState(0);
+  const [footer, setFooter] = useState();
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
-
 
   const rotaryCtrlEmit = () => {
     /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         setRotation(payload.status[props.val]);
+        setFooter("Connected!")
       }
     }); //TODO: Update Footer of UI Window with Status
   }

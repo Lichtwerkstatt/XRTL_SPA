@@ -49,7 +49,6 @@ export function SocketContextProvider({ children }) {
     manager = new Manager(URLglobal, { autoConnect: false });
     socket = manager.socket("/");
     SocketContext = React.createContext();
-    console.log(user);
     socket.emit("userId", (user))
   }
 
