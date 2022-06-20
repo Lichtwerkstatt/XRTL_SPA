@@ -166,8 +166,11 @@ io.on('connection', socket => {
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
         console.log(time)
-        if (componentList) {
+        if (componentList.includes(socket.id) === false) {
             componentList.push(socket.id, time, payload.componentId, payload.status.busy);
+        }
+        else if (componentList.includes(socket.id) === true) {
+
         } else {
             componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }

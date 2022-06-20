@@ -16,6 +16,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-select": "^5.3.2",
+    "react-switch": "^7.0.0",
     "simple-peer": "^9.6.2",
     "socket.io-client": "^4.4.0",
     "styled-components": "^5.3.3",
