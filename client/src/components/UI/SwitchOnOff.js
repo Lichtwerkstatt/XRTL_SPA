@@ -26,8 +26,9 @@ const SwitchOnOff = (props) => {
     const newStatus = !switchStatus;
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
+      componentId:'Michelson_laser_power',
       command: {
-        componentId: 'switch',
+        controlId: 'switch',
         val: newStatus
       }
     })
