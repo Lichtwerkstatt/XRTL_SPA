@@ -28,6 +28,7 @@ const SliderCtrl = (props) => {
   const sliderHandler = (event) => {
     event.preventDefault();
     console.log("Setting...")
+    setSliderPos(event.target.value)
     setSliderPos((prevState) => { return event.target.value });
   }
 
@@ -49,7 +50,7 @@ const SliderCtrl = (props) => {
     <form className={styles.sliderCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
       <div className={styles.sliderCtrl}>
         <span>{sliderPos}</span>
-        <input type="range" min="0" max="100" value={sliderPos} className={styles.sliderCtrl} onChange={sliderHandler} onMouseUp={sliderCtrl} />
+        <input type="range" min="-2" max="2" value={sliderPos} className={styles.sliderCtrl} onChange={sliderHandler} onMouseUp={sliderCtrl} />
       </div>
     </form>
   )
