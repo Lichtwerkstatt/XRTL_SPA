@@ -36,7 +36,7 @@ const Login = (props) => {
 
             if (custom === false) {
                 errorLabel.innerHTML = "";
-                socketCtx.setNewURL(String(connection));
+                socketCtx.setNewURL(String(connection), String(username));
                 socketCtx.setNewFont(fontColor);
                 socketCtx.toggleConnection();
                 setUsername('');
@@ -46,7 +46,7 @@ const Login = (props) => {
             } else if (custom === true && customConnection !== "" && addressCheck) {
                 errorLabel.innerHTML = "";
                 socketCtx.toggleConnection();
-                socketCtx.setNewURL(String(customConnection));
+                socketCtx.setNewURL(String(customConnection), String(username));
                 setUsername('');
                 setCustomConnection('');
                 setCuston(false);
@@ -72,16 +72,18 @@ const Login = (props) => {
             <div className="login" id="login">
                 <div className={styles.popupWindow}>
                 </div>
-                <div className={styles.popupInner}>
+                <div className={styles.popupInner} >
                     <h3 title="settings">Settings</h3>
 
                     <div className={styles.setUsername}>
                         <label >Username:</label>
                         <input
-                            type="text"
+                            autoFocus="autofocus"
+                            type="textfield"
                             placeholder="Please enter your username"
                             id="fontColor"
                             value={username}
+                            onKeyPress={(e) => { if (e.key === 'Enter') { loginCaseChecking(); } }}
                             onChange={(e) => {
                                 setUsername(e.target.value);
                                 var errorLabel = document.getElementById('errorLabel');
@@ -129,7 +131,7 @@ const Login = (props) => {
                     <div className={styles.ErrorMessages}>
                         <label title="errorLabel" id="errorLabel" color="white"></label>
                     </div>
-                    <button title="login"
+                    <button type="submit" title="login"
                         onClick={loginCaseChecking}>
                         Login
                     </button>

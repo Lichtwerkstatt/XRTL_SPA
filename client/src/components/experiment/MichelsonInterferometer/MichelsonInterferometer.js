@@ -13,7 +13,7 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_KM100"
           rotationTop="0"
           rotationBottom="0"
-          footer="Initializing..."
+          //footer="Initializing..."
           top="50"
           left="50"
         />
@@ -33,7 +33,7 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_laser"
           rotationTop="0"
           rotationBottom="0"
-          footer="Initializing..."
+          //footer="Initializing..."
           top="50"
           left="350"
         />
@@ -48,7 +48,7 @@ const MichelsonInterferometer = (props) => {
       )}
       {props.selected.has("Michelson_LaserPower") && (
         <LaserCtrl
-          title="Power Supply"
+          title="Laser Power Supply"
           id="Michelson_LaserPower"
           top="180"
           left="200"

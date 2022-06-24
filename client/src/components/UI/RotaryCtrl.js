@@ -7,16 +7,37 @@ import { useSocketContext } from "../../services/SocketContext"
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(props.rotation);
   const [enteredRotation, setEnteredRotation] = useState(0);
+  //const [footer, setFooter] = useState();
+  const [topRotation, setTopRotation] = useState(0);
+  const [bottomRotation, setBottomRotation] = useState(0);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
 
+  //um status von Komponente beim öffnen des WIndows zu bekommen
+  socketCtx.socket.emit("getStatus", {
+    userId: socketCtx.getNewUsername(),
+    componentId: props.component,
+    command: "getStatus"
+  })
+
+  //Auf Status hin die Werte setzen
+  socketCtx.socket.on("status", payload => {
+    if (payload.componentId === props.component) {
+      setTopRotation(payload.status[props.top]);
+      setBottomRotation(payload.status[props.bottom]);
+      //setFooter("Connected!")
+    }
+  })
+
   const rotaryCtrlEmit = () => {
     /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
-        setRotation(payload.status[props.control]);
+        setTopRotation(payload.status[props.top]);
+        setBottomRotation(payload.status[props.bottom]);
+        //setFooter("Connected!")
       }
     }); //TODO: Update Footer of UI Window with Status
   }
@@ -43,6 +64,8 @@ const RotaryCtrl = (props) => {
       }
 
     })
+    var newRotation = parseInt(rotation) + parseInt(enteredRotation)
+    setRotation(newRotation);
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
@@ -57,13 +80,15 @@ const RotaryCtrl = (props) => {
       }
 
     })
+    var newRotation = rotation - enteredRotation
+    setRotation(newRotation);
     appCtx.addLog("User initiated CCW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
       <div className={styles.rotaryCtrl}>
-        <span>{rotation}</span>
+        <span>{Number(rotation)}</span>
         <input
           type="number"
           min="0"

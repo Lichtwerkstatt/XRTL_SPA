@@ -17,8 +17,12 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
+var userIDs = [];
+var userIDServerList = [];
+var componentList = [];
 var componentID = '';
 const socketToRoom = {};
+var GUIId = ""
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
@@ -70,7 +74,41 @@ clients_connected();
 
 io.on('connection', socket => {
     console.log('connection made successfully');
+    socket.emit("newLog", 'Connection made successfully')
     RGB(0, 1, 0);
+
+    socket.on('GUI', () => {
+        GUIId = socket.id
+    })
+
+    socket.on('newLogGUI', (payload) => {
+        socket.emit("newLog", payload)
+    })
+
+    socket.on("userId", (newUser) => {
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        if (userIDServerList) {
+            userIDServerList.push(socket.id, time, newUser)
+        } else {
+            userIDServerList = [socket.id, time, newUser]
+        }
+        userIDs = [socket.id, time, newUser]
+        socket.broadcast.emit("newUser", (time, userIDs))
+        socket.to(GUIId).emit("newLog", 'User connected successfully')
+    })
+
+    socket.on("updateUser", () => {
+        socket.emit("updateUser", userIDServerList)
+    })
+
+    socket.on("updateUserList", (newList) => {
+        userIDServerList = newList
+    })
+
+    socket.on("updateComponents", () => {
+        socket.emit("updateComponents", componentList)
+    })
 
     //The handshakes of the VIDEO CHAT
 
@@ -95,13 +133,13 @@ io.on('connection', socket => {
 
     //Sends the peer to the newly joined client
     socket.on("sending signal", payload => {
-        console.log("Sending a signal");
+        //console.log("Sending a signal");
         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
     });
 
     //Sends the peer to the already connected clients
     socket.on("returning signal", payload => {
-        console.log("Returing a signal");
+        //console.log("Returing a signal");
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
@@ -109,10 +147,10 @@ io.on('connection', socket => {
 
     //Sends the new message to all users
     socket.on('message', payload => {
-        blink();
-        console.log('Message received on server: ', payload);
-        io.emit('message', payload);
-    })
+        console.log('Message received on server: ', payload)
+        socket.to(GUIId).emit("newLog", 'Message received on server: ' + JSON.stringify(payload))
+        io.emit('message', payload)
+    });
 
     //Handshakes for the experiment cameras
 
@@ -120,12 +158,13 @@ io.on('connection', socket => {
     socket.on('join stream room', (data) => {
         componentID = data.id;
         console.log("User has joined the room " + componentID);
+        socket.to(GUIId).emit("newLog", "User has joined the room " + String(componentID));
         socket.join(componentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size;
         //console.log(roomSize);
 
         if (roomSize == 1) {
-            socket.broadcast.emit("command", {
+            io.emit("command", {
                 userId: data.username,
                 componentId: componentID,
                 command: "startStreaming",
@@ -141,6 +180,7 @@ io.on('connection', socket => {
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
         console.log("User has left the room " + data.id);
+        socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
         let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
         //console.log(roomSize);
 
@@ -154,36 +194,59 @@ io.on('connection', socket => {
         socket.leave(data.id);
     });
 
-    socket.on("error", (error) => {
-        blink();
-        console.error("Socket.io error observed: ", error);
-    });
+    /*     socket.on("error", (error) => {
+            console.error("Socket.io error observed: ", error);
+            socket.to(GUIId).emit("newLog", "Socket.io error observed: "+ String(error));
+        }); */
 
     //Handshakes for command handeling
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
         blink();
-        console.log("Command received:", payload);
+        console.log("Command received: ", payload);
+        socket.to(GUIId).emit("newLog", "Command received: " + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
-    })
+    });
 
-    //Returns theb status of a experiment component
+    //Returns the status of a experiment component
     socket.on('status', payload => {
         console.log("New Status", payload)
-        socket.broadcast.emit('status', payload)
+        console.log("Componenten Busy Status")
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+        if (componentList.includes(socket.id) === false) {
+            componentList.push(socket.id, time, payload.componentId, payload.status.busy);
+        }
+        else if (componentList.includes(socket.id) === true) {
+
+        } else {
+            componentList = [socket.id, time, payload.componentId, payload.status.busy];
+        }
+        console.log("Conmponenten Liste")
+        console.log(componentList)
+        socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
+        socket.to(GUIId).emit("newComponent", componentList);
+        socket.broadcast.emit('status', payload);
     });
+
+    socket.on('error', (er) => {
+        console.log("Error " + er.number + ": " + er.message);
+        socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
+        //socket.emit('error', er);
+    })
 
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
-        console.log('User kicked: ', e);
+        console.log('User kicked: ', e)
+        socket.to(GUIId).emit("newLog", 'User kicked: ' + String(e));
         clients_connected();
-    })
+    });
 
     socket.on('disconnect', (e) => {
-        blink();
-
-        if (typeof socketToRoom[socket.id] !== 'undefined') {
+        blink()
+        if (socketToRoom[socket.id]) {
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
             if (room) {
@@ -192,11 +255,21 @@ io.on('connection', socket => {
             }
             console.log(users[roomID]);
         }
+
+        if (userIDServerList.includes(socket.id)) {
+            userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
+        }
+        if (componentList.includes(socket.id)) {
+            componentList.splice(componentList.indexOf(socket.id), 4)
+        }
+        console.log(userIDServerList)
+
+        socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();
         console.log('User disconnected: ', e);
+        socket.to(GUIId).emit("newLog", 'User disconnected: ' + String(e));
         clients_connected();
     });
-
 })
 
 server.listen(7000, () => {
