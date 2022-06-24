@@ -11,10 +11,25 @@ const RotaryCtrl = (props) => {
   const [topRotation, setTopRotation] = useState(0);
   const [bottomRotation, setBottomRotation] = useState(0);
 
-
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
+
+  //um status von Komponente beim öffnen des WIndows zu bekommen
+  socketCtx.socket.emit("getStatus", {
+    userId: socketCtx.getNewUsername(),
+    componentId: props.component,
+    command: "getStatus"
+  })
+
+  //Auf Status hin die Werte setzen
+  socketCtx.socket.on("status", payload => {
+    if (payload.componentId === props.component) {
+      setTopRotation(payload.status[props.top]);
+      setBottomRotation(payload.status[props.bottom]);
+      //setFooter("Connected!")
+    }
+  })
 
   const rotaryCtrlEmit = () => {
     /* STATUS UPDATE HANDLIN */
@@ -22,7 +37,7 @@ const RotaryCtrl = (props) => {
       if (payload.componentId === props.component) {
         setTopRotation(payload.status[props.top]);
         setBottomRotation(payload.status[props.bottom]);
-        setFooter("Connected!")
+        //setFooter("Connected!")
       }
     }); //TODO: Update Footer of UI Window with Status
   }

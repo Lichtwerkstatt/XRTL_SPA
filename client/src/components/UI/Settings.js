@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import stylesCSS from "./Settings.module.css"
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-//import Select from 'react-select';
-import Switch from "react-switch";
-//import Slider from "./SliderCtrl"
+import Switch from '@mui/material/Switch';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -24,14 +22,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Settings = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [selectedOption, setSelectedOption] = useState('');
-    const [switchValue, setSwitchValue] = useState(false);
-    const [value, setValue] = useState(0);
-
-
+    const [resolution, setResolution] = useState('');
+    const [contrast, setContrast] = useState(0);
+    const [brightness, setBrightness] = useState(0);
+    const [grey, setGrey] = useState(false);
 
     const theme = createTheme({
-
         palette: {
             mode: 'dark',
             primary: {
@@ -50,29 +46,44 @@ const Settings = (props) => {
     })
 
     const marks = [
-        {
-            value: -2,
-            label: '-2',
-        },
-        {
-            value: 0,
-            label: '0',
-        },
-        {
-            value: 2,
-            label: '2',
-        },
-
+        { value: -2, label: '-2', },
+        { value: 0, label: '0', },
+        { value: 2, label: '2', },
     ]
-    const handleSelect = (event, newValue) => {
-        setSelectedOption(newValue.props.value);
-        console.log(newValue.props.value)
-    }
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleSettingChanges = (event, newValue) => {
+        var command = ""
+        console.log(newValue.props.id)
         console.log(newValue)
+
+        if (newValue.props.id == "resolutionSelect") {
+            setResolution(newValue.props.value);
+            command = "resolutionSelect"
+        } else if (newValue.props.id == "contrastSlider") {
+            setContrast(newValue.props.value);
+            command = "contrast"
+        }
+        else if (newValue.props.id == "brightnessSlider") {
+            setBrightness(newValue.props.value);
+            command = "bightness"
+        } else if (newValue.props.id == "brightnessSlider") {
+            setGrey(newValue.props.value);
+            command = "gray"
+        }
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.getNewUsername(),
+            componentId: "ESP32Cam_1",
+            command: {
+                controlId: command,
+                val: newValue.prop.value
+            }
+        })
     }
+    handleToggle = (name) => {
+        this.setState({ active: !this.state.active });
+    };
+
     const AntSwitch = styled(Switch)(({ theme }) => ({
         width: 60,
         height: 16,
@@ -115,7 +126,6 @@ const Settings = (props) => {
         },
     }));
 
-
     return (
         <ThemeProvider theme={theme}>
             <div className={stylesCSS.settings}>
@@ -126,12 +136,11 @@ const Settings = (props) => {
                         }}>Resolution</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={selectedOption}
+                            id="resolutionSelect"
+                            value={resolution}
                             label="Resolution     dc,ld,"
-                            onChange={handleSelect}
+                            onChange={handleSettingChanges}
                             borderColor="primary.main"
-
                         >
                             <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
                             <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
@@ -151,13 +160,15 @@ const Settings = (props) => {
                     <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
 
                         <Slider aria-label="Temperature"
+                            id="contrastSlider"
                             defaultValue={0}
                             valueLabelDisplay="auto"
                             step={1}
 
                             min={-2}
                             max={2}
-                            value={value} onChange={handleChange}
+                            value={contrast}
+                            onChange={handleSettingChanges}
                             marks={marks}
                         />
 
@@ -168,16 +179,16 @@ const Settings = (props) => {
                     <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
 
                         <Slider aria-label="Temperature"
+                            id="brightnessSlider"
                             defaultValue={0}
                             valueLabelDisplay="auto"
                             step={1}
-
                             min={-2}
                             max={2}
-                            value={value} onChange={handleChange}
+                            value={brightness}
+                            onChange={handleSettingChanges}
                             marks={marks}
                         />
-
                     </Stack>
                 </Box>
 
@@ -185,16 +196,16 @@ const Settings = (props) => {
                     <FormGroup>
                         <Stack direction="row" spacing={1} alignItems="right">
                             <Typography>Color</Typography>
-                            <AntSwitch defaultChecked inputProps={{ 'aria-label': 'ant design' }} />
+                            <Switch {...label} defaultChecked
+                                checked={this.state.active}
+                                onClick={() => this.handleToggle('active')}
+                                value="active"
+                                inputProps={{ 'aria-label': 'secondary checkbox' }} />
+                            {/* <AntSwitch defaultChecked inputProps={{ 'aria-label': 'ant design' }} /> */}
                             <Typography>Grey</Typography>
                         </Stack>
                     </FormGroup>
                 </Box>
-
-
-
-
-
             </div>
         </ThemeProvider>
 
