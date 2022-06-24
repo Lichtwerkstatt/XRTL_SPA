@@ -1,5 +1,6 @@
 import Window from "../UI/Window";
 import Settings from "../UI/Settings";
+import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { useEffect, useRef } from "react";
@@ -61,12 +62,15 @@ const Stream = (props) => {
       top={props.top}
       left={props.left}
       width="1000px"
-      height="600px"
+      height="430px"
       onClose={handleCloseWindow}
     >
-      <canvas id="ScreenCanvas" width="600px" height="400px" />
-    <Settings></Settings>
-
+      <div className={styles.Canvas}>
+        <canvas id="ScreenCanvas" />
+      </div>
+      <div className={styles.Settings}>
+        <Settings />
+      </div>
     </Window>
   );
 };
