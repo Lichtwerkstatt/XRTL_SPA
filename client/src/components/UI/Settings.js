@@ -61,7 +61,7 @@ const Settings = (props) => {
         } else if (name === "greySwitch") {
             setGrey(newValue);
             valueSend = newValue
-            command = "grey"
+            command = "gray"
         }
 
         socketCtx.socket.emit("command", {
