@@ -42,13 +42,10 @@ const Settings = (props) => {
     const handleSettingChanges = name => (event, newValue) => {
         var command = ""
         var valueSend = ""
-        console.log(name)
-        console.log(newValue)
-
-        if (name === "resolutionSelect") {
+         if (name === "resolutionSelect") {
             setResolution(newValue.props.value);
             valueSend = newValue.props.value;
-            command = "resolution"
+            command = "frame size"
         } else if (name === "contrastSlider") {
             setContrast(newValue);
             valueSend = newValue
@@ -61,12 +58,12 @@ const Settings = (props) => {
         } else if (name === "greySwitch") {
             setGrey(newValue);
             valueSend = newValue
-            command = "grey"
+            command = "gray"
         }
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.getNewUsername(),
-            componentId: "ESP32Cam_1",
+            componentId: "Michelson_cam",
             command: {
                 controlId: command,
                 val: valueSend
