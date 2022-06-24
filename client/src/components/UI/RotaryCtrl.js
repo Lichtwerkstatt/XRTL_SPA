@@ -5,7 +5,7 @@ import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext"
 
 const RotaryCtrl = (props) => {
-  const [rotation, setRotation] = useState(props.rotation);
+  const [rotation, setRotation] = useState(0);
   const [enteredRotation, setEnteredRotation] = useState(0);
   //const [footer, setFooter] = useState();
   const [topRotation, setTopRotation] = useState(0);
@@ -15,29 +15,32 @@ const RotaryCtrl = (props) => {
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
 
-  //um status von Komponente beim öffnen des WIndows zu bekommen
-  socketCtx.socket.emit("getStatus", {
-    userId: socketCtx.getNewUsername(),
-    componentId: props.component,
-    command: "getStatus"
-  })
-
-  //Auf Status hin die Werte setzen
-  socketCtx.socket.on("status", payload => {
-    if (payload.componentId === props.component) {
-      setTopRotation(payload.status[props.top]);
-      setBottomRotation(payload.status[props.bottom]);
-      //setFooter("Connected!")
-    }
-  })
 
   const rotaryCtrlEmit = () => {
+    socketCtx.socket.emit("command", {
+      userId: socketCtx.getNewUsername(),
+      componentId: props.component,
+      command: "getStatus"
+    })
+
     /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
-        setTopRotation(payload.status[props.top]);
-        setBottomRotation(payload.status[props.bottom]);
+
+        //setTopRotation(payload.status.top.absolute);
+        //setBottomRotation(payload.status.bottom.absolute);
+
+        if (props.control === "top") {
+          setRotation(payload.status.top.absolute)
+
+        } else if (props.control === "bottom") {
+          setRotation(payload.status.bottom.absolute)
+        } else {
+          setRotation(payload.status.linear.absolute)
+        }
+
         //setFooter("Connected!")
+
       }
     }); //TODO: Update Footer of UI Window with Status
   }
@@ -64,8 +67,7 @@ const RotaryCtrl = (props) => {
       }
 
     })
-    var newRotation = parseInt(rotation) + parseInt(enteredRotation)
-    setRotation(newRotation);
+
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
