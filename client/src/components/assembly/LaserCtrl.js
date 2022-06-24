@@ -15,7 +15,7 @@ const LaserCtrl = (props) => {
       top={props.top}
       left={props.left}
       height="200px"
-      width="200px"
+      width="300px"
       onClose={handleCloseWindow}
     >
       <SwitchOnOff

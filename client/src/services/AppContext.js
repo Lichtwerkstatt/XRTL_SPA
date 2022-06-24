@@ -15,6 +15,7 @@ export function AppContextProvider({ children }) {
   const [logs, setLogs] = useState([]);
   const [showTags, setShowTags] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
+  const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showBeam, setShowBeam] = useState(false);
 
 
@@ -61,6 +62,10 @@ export function AppContextProvider({ children }) {
     setShowBeam(!showBeam);
   }
 
+  const toggleShowInfoWindow = () => {
+    setShowInfoWindow(!showInfoWindow);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -82,7 +87,9 @@ export function AppContextProvider({ children }) {
         showBeam,
         toggleShowBeam,
         showLogin,
-        setShowLogin
+        setShowLogin,
+        showInfoWindow,
+        toggleShowInfoWindow
       }}
     >
       {children}
