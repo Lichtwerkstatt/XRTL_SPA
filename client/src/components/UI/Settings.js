@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
@@ -41,7 +42,7 @@ const Settings = (props) => {
     const handleSettingChanges = name => (event, newValue) => {
         var command = ""
         var valueSend = ""
-         if (name === "resolutionSelect") {
+        if (name === "resolutionSelect") {
             setResolution(newValue.props.value);
             valueSend = newValue.props.value;
             command = "frame size"

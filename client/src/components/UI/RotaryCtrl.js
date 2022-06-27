@@ -7,7 +7,7 @@ import { useSocketContext } from "../../services/SocketContext"
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(0);
   const [enteredRotation, setEnteredRotation] = useState(0);
-  //const [footer, setFooter] = useState();
+  const [footer, setFooter] = useState();
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -20,14 +20,11 @@ const RotaryCtrl = (props) => {
       componentId: props.component,
       command: "getStatus"
     })
+    //console.log(props.newStatus("Working"))
 
     /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
-
-        //setTopRotation(payload.status.top.absolute);
-        //setBottomRotation(payload.status.bottom.absolute);
-
         if (props.control === "top") {
           setRotation(payload.status.top.absolute)
 
@@ -36,8 +33,6 @@ const RotaryCtrl = (props) => {
         } else {
           setRotation(payload.status.linear.absolute)
         }
-
-        //setFooter("Connected!")
 
       }
     }); //TODO: Update Footer of UI Window with Status
@@ -54,22 +49,27 @@ const RotaryCtrl = (props) => {
 
   //TODO: Combine Rotation Handliner into one.
 
-  const rotCW_Handler = (event) => {
-    event.preventDefault();
+  const rotCW_Handler = name => (event) => {
+    // event.preventDefault();
+    var direction = 0
+    if (name === "left") {
+      direction = -1 * Number(enteredRotation)
+    } else if (name === "right") {
+      direction = Number(enteredRotation)
+    }
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: props.component,
       command: {
         controlId: props.control,
-        val: Number(enteredRotation)
+        val: direction
       }
-
     })
 
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
-  const rotCCW_Handler = (event) => {
+  const rotCCW_Handler = (event, name) => {
     event.preventDefault();
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
@@ -97,10 +97,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCCW_Handler} className={styles.CtrlLeft} disabled={appCtx.busyComps.has(props.component)} >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={appCtx.busyComps.has(props.component)} >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler} className={styles.CtrlRight} disabled={appCtx.busyComps.has(props.component)}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={appCtx.busyComps.has(props.component)}>
         <MdOutlineRotateRight size={28} />
       </button>
 

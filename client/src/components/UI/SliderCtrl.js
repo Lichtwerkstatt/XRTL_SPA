@@ -1,14 +1,21 @@
 import { useState, useEffect, useRef } from "react";
-import styles from "./SliderCtrl.module.css"
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
+import Slider from '@mui/material/Slider';
+
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
-
+  const [brightness, setBrightness] = useState(0);
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
+
+  const marks = [
+    { value: -2, label: '-2', },
+    { value: 0, label: '0', },
+    { value: 2, label: '2', },
+]
 
   const sliderEmit = () => {
     socketCtx.socket.on("status", payload => {
@@ -25,34 +32,31 @@ const SliderCtrl = (props) => {
     tempSlider.current();
   }, [socketCtx.socket])
 
-  const sliderHandler = (event) => {
-    event.preventDefault();
-    console.log("Setting...")
-    setSliderPos(event.target.value)
-    setSliderPos((prevState) => { return event.target.value });
-  }
-
-  const sliderCtrl = (event) => {
-    event.preventDefault();
-    setSliderPos(event.target.value);
-    console.log("Sending Command " + event.target.value);
+  const handleSettingChanges = () => (event, newValue) => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
+      componentId: "Michelson_cam",
       command: {
-        componentId: props.component,
-        val: sliderPos
+        controlId: "bightness",
+        val: newValue
       }
     })
+
     appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
   }
 
   return (
-    <form className={styles.sliderCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
-      <div className={styles.sliderCtrl}>
-        <span>{sliderPos}</span>
-        <input type="range" min="-2" max="2" value={sliderPos} className={styles.sliderCtrl} onChange={sliderHandler} onMouseUp={sliderCtrl} />
-      </div>
-    </form>
+    <Slider aria-label="Temperature"
+      id="brightnessSlider"
+      defaultValue={0}
+      valueLabelDisplay="auto"
+      step={1}
+      min={-2}
+      max={2}
+      value={brightness}
+      onChange={handleSettingChanges}
+      marks={marks}
+    />
   )
 
 }
