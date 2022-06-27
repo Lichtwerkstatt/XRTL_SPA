@@ -8,8 +8,6 @@ const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(0);
   const [enteredRotation, setEnteredRotation] = useState(0);
   //const [footer, setFooter] = useState();
-  const [topRotation, setTopRotation] = useState(0);
-  const [bottomRotation, setBottomRotation] = useState(0);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();

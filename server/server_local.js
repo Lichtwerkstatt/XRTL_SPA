@@ -131,7 +131,11 @@ io.on('connection', socket => {
     socket.on('leave stream room', (data) => {
         console.log("User has left the room " + data.id);
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
-        let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
+        try {
+            let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
+        } catch (error) {
+            var roomSize = 0
+        }
         //console.log(roomSize);
 
         if (roomSize == 0) {
