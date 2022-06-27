@@ -1,5 +1,7 @@
 import Window from "../UI/Window";
 import Settings from "../UI/Settings";
+import UpDown from "../UI/UpDownCtrl";
+import LeftRight from "../UI/LeftRightCtrl";
 import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
@@ -70,6 +72,12 @@ const Stream = (props) => {
       </div>
       <div className={styles.Settings}>
         <Settings />
+      </div>
+      <div className={styles.UpDown}>
+        <UpDown />
+      </div>
+      <div className={styles.LeftRight}>
+        <LeftRight />
       </div>
     </Window>
   );
