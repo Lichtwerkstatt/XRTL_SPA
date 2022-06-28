@@ -17,10 +17,6 @@ const KM100 = (props) => {
     console.log("New Footer " + newFooter)
   };
 
-  const getFooter = () => {
-    return footer
-  }
-
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
