@@ -1,14 +1,21 @@
+import { useState } from "react";
 import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
 import SM1ZP_bg from "./media/linear_outline.png";
 
 const SM1ZP = (props) => {
+  const [footer, setFooter] = useState(props.footer);
   const appCtx = useAppContext()
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
+
+  const handleChangeFooter = (newFooter) => {
+    setFooter(newFooter);
+    console.log("New Footer " + newFooter)
+  };
 
   return (
     <Window
@@ -19,6 +26,8 @@ const SM1ZP = (props) => {
       height="235px"
       onClose={handleCloseWindow}
       background={SM1ZP_bg}
+      newStatus={handleChangeFooter}
+      footer={footer}
     >
       <RotaryCtrl
         rotation={props.rotation}
