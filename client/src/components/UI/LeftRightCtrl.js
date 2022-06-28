@@ -25,11 +25,8 @@ const LeftRightCtrl = (props) => {
             userId: socketCtx.getNewUsername(),
             componentId: props.component,
             command: {
-                controlId: "control",
-                Up: 300,
-                Down: 200,
-                Left: 800,
-                Right: 600
+                controlId: "up",
+               val: 15
             }
         })
     }

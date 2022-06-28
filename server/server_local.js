@@ -157,7 +157,7 @@ io.on('connection', socket => {
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
-        console.log("Command received: ", payload);
+        //console.log("Command received: ", payload);
         socket.to(GUIId).emit("newLog", "Command received: " + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
     });
@@ -178,12 +178,15 @@ io.on('connection', socket => {
         } else {
             componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }
-        console.log("Conmponenten Liste")
-        console.log(componentList)
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.emit("newComponent", componentList);
         socket.broadcast.emit('status', payload)
     });
+
+    socket.on('footer', payload => {
+        console.log(payload)
+        io.emit('footer', payload)
+    })
 
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);

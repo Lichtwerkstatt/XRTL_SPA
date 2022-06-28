@@ -44,6 +44,7 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_cam"
           top="150"
           left="150"
+          footer = "Start streaming ..."
         />
       )}
       {props.selected.has("Michelson_LaserPower") && (
