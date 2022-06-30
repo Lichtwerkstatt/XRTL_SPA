@@ -235,6 +235,19 @@ io.on('connection', socket => {
         socket.broadcast.emit('status', payload);
     });
 
+    socket.on('footer', payload => {
+        console.log(footerList)
+        if (footerList.includes(payload.componentId) === false) {
+            footerList.push(payload.componentId, payload.status)
+        } else if (footerList.includes(payload.componentId) === true) {
+            var newStatus = footerList.indexOf(payload.componentId)
+            footerList[newStatus + 1] = payload.status
+        }
+        console.log(footerList)
+        console.log(payload)
+        io.emit('footer', payload)
+    })
+
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
@@ -257,7 +270,7 @@ io.on('connection', socket => {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-            console.log(users[roomID]);
+            //console.log(users[roomID]);
         }
 
         if (userIDServerList.includes(socket.id)) {
@@ -266,7 +279,7 @@ io.on('connection', socket => {
         if (componentList.includes(socket.id)) {
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
-        console.log(userIDServerList)
+        //console.log(userIDServerList)
 
         socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();

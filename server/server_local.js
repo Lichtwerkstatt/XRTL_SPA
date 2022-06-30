@@ -14,6 +14,7 @@ const users = {};
 var userIDs = [];
 var userIDServerList = [];
 var componentList = [];
+var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
@@ -167,7 +168,6 @@ io.on('connection', socket => {
         var today = new Date();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-        console.log(time)
         if (componentList.includes(socket.id) === false) {
             componentList.push(socket.id, time, payload.componentId, payload.status.busy);
         }
@@ -182,6 +182,14 @@ io.on('connection', socket => {
     });
 
     socket.on('footer', payload => {
+        console.log(footerList)
+        if (footerList.includes(payload.componentId) === false) {
+            footerList.push(payload.componentId, payload.status)
+        } else if (footerList.includes(payload.componentId) === true) {
+            var newStatus = footerList.indexOf(payload.componentId)
+            footerList[newStatus + 1] = payload.status
+        }
+        console.log(footerList)
         console.log(payload)
         io.emit('footer', payload)
     })
@@ -206,7 +214,7 @@ io.on('connection', socket => {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-            console.log(users[roomID]);
+            //console.log(users[roomID]);
         }
 
         if (userIDServerList.includes(socket.id)) {
@@ -215,7 +223,7 @@ io.on('connection', socket => {
         if (componentList.includes(socket.id)) {
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
-        console.log(userIDServerList)
+        //console.log(userIDServerList)
 
         socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();
