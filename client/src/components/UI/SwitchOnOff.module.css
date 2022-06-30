@@ -1,0 +1,9 @@
+div.switchOnOff Button {
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    right: 30px;
+    top: 40px;
+    display: flex;
+    align-items: center;
+}
