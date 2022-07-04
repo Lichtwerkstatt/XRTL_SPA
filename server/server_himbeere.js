@@ -21,6 +21,7 @@ var userIDs = [];
 var userIDServerList = [];
 var componentList = [];
 var componentID = '';
+var footerList = [];
 const socketToRoom = {};
 var GUIId = ""
 
@@ -235,18 +236,6 @@ io.on('connection', socket => {
         socket.broadcast.emit('status', payload);
     });
 
-    socket.on('footer', payload => {
-        console.log(footerList)
-        if (footerList.includes(payload.componentId) === false) {
-            footerList.push(payload.componentId, payload.status)
-        } else if (footerList.includes(payload.componentId) === true) {
-            var newStatus = footerList.indexOf(payload.componentId)
-            footerList[newStatus + 1] = payload.status
-        }
-        console.log(footerList)
-        console.log(payload)
-        io.emit('footer', payload)
-    })
 
     socket.on('footer', payload => {
         console.log(footerList)
