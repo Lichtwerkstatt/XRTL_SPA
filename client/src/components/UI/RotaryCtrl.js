@@ -19,11 +19,11 @@ const RotaryCtrl = (props) => {
       componentId: props.component,
       command: "getStatus"
     })
-
-    socketCtx.socket.emit('footer', {
-      componentId: props.component,
-      status: "Connected!"
-    })
+    /* 
+        socketCtx.socket.emit('footer', {
+          componentId: props.component,
+          status: "Connected!"
+        }) */
     //console.log(props.newStatus("Working"))
 
     /* STATUS UPDATE HANDLIN */
@@ -48,6 +48,18 @@ const RotaryCtrl = (props) => {
         if (mouted) {
           console.log(props)
           props.newStatus(String(payload.status))
+        }
+      }
+    })
+
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on('getFooter', payload => {
+      setFooter(payload.status)
+      if (mouted) {
+        if (payload.status != undefined) { if (mouted) props.newStatus(String(payload.status)) }
+        else {
+          if (mouted) props.newStatus(String("Connected!"))
         }
       }
     })

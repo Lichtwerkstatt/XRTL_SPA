@@ -189,14 +189,17 @@ io.on('connection', socket => {
             var newStatus = footerList.indexOf(payload.componentId)
             footerList[newStatus + 1] = payload.status
         }
-        console.log(footerList)
-        console.log(payload)
+
         io.emit('footer', payload)
     })
 
     socket.on('getFooter', payload => {
-        var status = footerList.indexOf(payload.componentId);
-        io.emit('getFooter', { componentId: payload.componentId, status: footerList[status + 1] })
+        if (footerList.includes(payload) === true) {
+            var statusFoot = footerList.indexOf(payload);
+            console.log(footerList)
+            console.log(payload)
+            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] })
+        }
     })
 
     socket.on('error', (er) => {

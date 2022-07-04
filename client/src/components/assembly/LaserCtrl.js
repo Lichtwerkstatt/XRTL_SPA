@@ -8,11 +8,6 @@ import { useSocketContext } from "../../services/SocketContext"
 const LaserCtrl = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const appCtx = useAppContext();
-  const [rotation, setRotation] = useState(0);
-  const [enteredRotation, setEnteredRotation] = useState(0);
-  const [mouted, setMounted] = useState(true);
-  const socketCtx = useSocketContext();
-  const tempRotaryCtrl = useRef();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)

@@ -248,6 +248,27 @@ io.on('connection', socket => {
         io.emit('footer', payload)
     })
 
+    socket.on('footer', payload => {
+        console.log(footerList)
+        if (footerList.includes(payload.componentId) === false) {
+            footerList.push(payload.componentId, payload.status)
+        } else if (footerList.includes(payload.componentId) === true) {
+            var newStatus = footerList.indexOf(payload.componentId)
+            footerList[newStatus + 1] = payload.status
+        }
+
+        io.emit('footer', payload)
+    })
+
+    socket.on('getFooter', payload => {
+        if (footerList.includes(payload) === true) {
+            var statusFoot = footerList.indexOf(payload);
+            console.log(footerList)
+            console.log(payload)
+            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] })
+        }
+    })
+
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));

@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import Button from '@mui/material/Button';
 
 const SwitchOnOff = (props) => {
@@ -32,13 +31,6 @@ const SwitchOnOff = (props) => {
       command: "getStatus"
     })
 
-    socketCtx.socket.emit('getFooter', props.component)
-
-    socketCtx.socket.on ('getFooter', payload =>{
-      
-    })
-
-
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         setSwitchStatus(payload.status['laser'])
@@ -46,13 +38,22 @@ const SwitchOnOff = (props) => {
     })
 
     socketCtx.socket.on('footer', payload => {
-      console.log("jjj")
       if (payload.componentId === props.component) {
-        console.log(payload.status)
         setFooter(payload.status)
         if (mouted) {
-          console.log(props)
           props.newStatus(String(payload.status))
+        }
+      }
+    })
+
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on('getFooter', payload => {
+      setFooter(payload.status)
+      if (mouted) {
+        if (payload.status != undefined) { if (mouted) props.newStatus(String(payload.status)) }
+        else {
+          if (mouted) props.newStatus(String("Connected!"))
         }
       }
     })
