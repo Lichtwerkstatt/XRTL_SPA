@@ -14,7 +14,6 @@ const KM100 = (props) => {
 
   const handleChangeFooter = (newFooter) => {
     setFooter(newFooter);
-    //console.log("New Footer " + newFooter)
   };
 
   return (

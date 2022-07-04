@@ -14,7 +14,6 @@ const SM1ZP = (props) => {
 
   const handleChangeFooter = (newFooter) => {
     setFooter(newFooter);
-    console.log("New Footer " + newFooter)
   };
 
   return (

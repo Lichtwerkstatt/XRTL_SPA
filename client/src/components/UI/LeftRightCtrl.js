@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSocketContext } from "../../services/SocketContext";
 import IconButton from '@mui/material/IconButton';
 import Left from '@mui/icons-material/ArrowCircleLeftOutlined';
@@ -26,7 +25,7 @@ const LeftRightCtrl = (props) => {
             componentId: props.component,
             command: {
                 controlId: "up",
-               val: 15
+                val: 15
             }
         })
     }

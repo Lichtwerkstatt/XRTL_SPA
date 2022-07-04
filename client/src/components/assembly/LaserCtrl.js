@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Window from "../UI/Window"
 import SwitchOnOff from "../UI/SwitchOnOff";
 import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext"
 
 
 const LaserCtrl = (props) => {
@@ -15,7 +14,6 @@ const LaserCtrl = (props) => {
 
   const handleChangeFooter = (newFooter) => {
     setFooter(newFooter);
-    console.log("New Footer " + newFooter)
   };
 
   return (

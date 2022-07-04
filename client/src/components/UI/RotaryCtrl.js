@@ -19,14 +19,7 @@ const RotaryCtrl = (props) => {
       componentId: props.component,
       command: "getStatus"
     })
-    /* 
-        socketCtx.socket.emit('footer', {
-          componentId: props.component,
-          status: "Connected!"
-        }) */
-    //console.log(props.newStatus("Working"))
 
-    /* STATUS UPDATE HANDLIN */
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         if (props.control === "top") {
@@ -39,7 +32,7 @@ const RotaryCtrl = (props) => {
         }
         setFooter(payload.footer)
       }
-    }); //TODO: Update Footer of UI Window with Status
+    });
 
     socketCtx.socket.on('footer', payload => {
       if (payload.componentId === props.component) {
@@ -57,7 +50,7 @@ const RotaryCtrl = (props) => {
     socketCtx.socket.on('getFooter', payload => {
       setFooter(payload.status)
       if (mouted) {
-        if (payload.status != undefined) { if (mouted) props.newStatus(String(payload.status)) }
+        if (payload.status !== undefined) { if (mouted) props.newStatus(String(payload.status)) }
         else {
           if (mouted) props.newStatus(String("Connected!"))
         }
@@ -93,6 +86,7 @@ const RotaryCtrl = (props) => {
           val: direction
         }
       })
+
       socketCtx.socket.emit("footer", {
         status: "Last change by: " + socketCtx.getNewUsername(),
         componentId: props.component

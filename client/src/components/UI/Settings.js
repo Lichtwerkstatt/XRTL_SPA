@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
