@@ -25,7 +25,6 @@ const SliderCtrl = (props) => {
       }
     })
   }
-
   tempSlider.current = sliderEmit;
 
   useEffect(() => {
@@ -41,7 +40,6 @@ const SliderCtrl = (props) => {
         val: newValue
       }
     })
-
     appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
   }
 
@@ -58,7 +56,6 @@ const SliderCtrl = (props) => {
       marks={marks}
     />
   )
-
 }
 
 export default SliderCtrl;

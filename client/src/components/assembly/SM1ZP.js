@@ -32,6 +32,8 @@ const SM1ZP = (props) => {
       <RotaryCtrl
         rotation={props.rotation}
         component={props.id}
+        newStatus={handleChangeFooter}
+        footer={footer}
         control="linear"
         top="35"
         left="160"

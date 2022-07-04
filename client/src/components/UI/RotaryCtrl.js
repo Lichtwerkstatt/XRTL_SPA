@@ -13,7 +13,6 @@ const RotaryCtrl = (props) => {
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
 
-
   const rotaryCtrlEmit = () => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),

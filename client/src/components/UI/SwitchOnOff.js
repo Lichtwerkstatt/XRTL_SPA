@@ -7,10 +7,11 @@ import Button from '@mui/material/Button';
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
+  const [footer, setFooter] = useState(props.footer);
+  const [mouted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
   const tempSwitch = useRef()
-
 
   const theme = createTheme({
     palette: {
@@ -25,9 +26,34 @@ const SwitchOnOff = (props) => {
   })
 
   const switchFunction = () => {
+    socketCtx.socket.emit("command", {
+      userId: socketCtx.getNewUsername(),
+      componentId: props.component,
+      command: "getStatus"
+    })
+
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on ('getFooter', payload =>{
+      
+    })
+
+
     socketCtx.socket.on("status", payload => {
       if (payload.componentId === props.component) {
         setSwitchStatus(payload.status['laser'])
+      }
+    })
+
+    socketCtx.socket.on('footer', payload => {
+      console.log("jjj")
+      if (payload.componentId === props.component) {
+        console.log(payload.status)
+        setFooter(payload.status)
+        if (mouted) {
+          console.log(props)
+          props.newStatus(String(payload.status))
+        }
       }
     })
   }
@@ -42,6 +68,8 @@ const SwitchOnOff = (props) => {
     //event.target.textContent = 'On';
 
     const newStatus = !switchStatus;
+
+
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: 'Michelson_laser_power',
@@ -50,6 +78,12 @@ const SwitchOnOff = (props) => {
         val: newStatus
       }
     })
+    socketCtx.socket.emit("footer", {
+      status: "Last change by: " + socketCtx.getNewUsername(),
+      componentId: props.component
+    })
+
+
     console.log("Current Laser State: " + newStatus);
     setSwitchStatus(newStatus);
     appCtx.addLog("User set position on " + props.component + " to " + newStatus)
@@ -57,7 +91,7 @@ const SwitchOnOff = (props) => {
 
   return (
     <div className="switchOnOff">
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme} >
         <Button variant="contained" onClick={switch_Handler} sx={{ width: '60px', padding: "10px", marginLeft: "20px", marginTop: "20px" }}>
           {switchStatus ? 'ON' : 'OFF'}</Button>
       </ThemeProvider>

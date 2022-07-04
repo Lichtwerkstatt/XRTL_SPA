@@ -194,6 +194,11 @@ io.on('connection', socket => {
         io.emit('footer', payload)
     })
 
+    socket.on('getFooter', payload => {
+        var status = footerList.indexOf(payload.componentId);
+        io.emit('getFooter', { componentId: payload.componentId, status: footerList[status + 1] })
+    })
+
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
