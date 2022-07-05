@@ -32,6 +32,7 @@ const KM100 = (props) => {
         component={props.id}
         control="top"
         newStatus={handleChangeFooter}
+        footer={footer}
         top="20"
         left="160"
       />
@@ -40,6 +41,7 @@ const KM100 = (props) => {
         component={props.id}
         control="bottom"
         newStatus={handleChangeFooter}
+        footer={footer}
         top="50"
         left="160"
       />

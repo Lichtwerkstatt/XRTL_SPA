@@ -3,8 +3,8 @@ import SM1ZP from "../../assembly/SM1ZP";
 import Cam1 from "../../assembly/Stream";
 import LaserCtrl from "../../assembly/LaserCtrl";
 
-
 const MichelsonInterferometer = (props) => {
+  let footer = "Initializing..."
   return (
     <div>
       {props.selected.has("Michelson_KM100") && (
@@ -13,7 +13,7 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_KM100"
           rotationTop="0"
           rotationBottom="0"
-          //footer="Initializing..."
+          footer={footer}
           top="50"
           left="50"
         />
@@ -22,6 +22,7 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Mirror Stage"
           id="Michelson_linear"
+          footer={footer}
           rotation="0"
           top="400"
           left="100"
@@ -33,25 +34,27 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_laser"
           rotationTop="0"
           rotationBottom="0"
-          //footer="Initializing..."
-          top="50"
-          left="350"
+          footer={footer}
+          top="450"
+          left="1500"
         />
       )}
       {props.selected.has("Michelson_cam") && (
         <Cam1
           title="Screen"
           id="Michelson_cam"
-          top="150"
-          left="150"
+          top="550"
+          left="400"
+          footer={footer}
         />
       )}
       {props.selected.has("Michelson_LaserPower") && (
         <LaserCtrl
-          title="Laser Power Supply"
+          title="Power Supply"
           id="Michelson_LaserPower"
-          top="180"
-          left="200"
+          footer={footer}
+          top="100"
+          left="1600"
         />
       )}
     </div>

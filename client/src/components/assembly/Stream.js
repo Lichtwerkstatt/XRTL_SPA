@@ -3,9 +3,11 @@ import Settings from "../UI/Settings";
 import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
 
 const Stream = (props) => {
+  const [footer, setFooter] = useState(props.footer);
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
   const tempWebcam = useRef();
@@ -64,13 +66,16 @@ const Stream = (props) => {
       width="1000px"
       height="430px"
       onClose={handleCloseWindow}
+      footer={footer}
     >
       <div className={styles.Canvas}>
-        <canvas id="ScreenCanvas" />
+        <canvas id="ScreenCanvas" position="absolute" width="600px" height="400px" top="43px" left="15px"
+          border="2px solid #01bd7d" border-radius="15px" />
       </div>
       <div className={styles.Settings}>
-        <Settings />
+        <Settings component={props.id} />
       </div>
+
     </Window>
   );
 };

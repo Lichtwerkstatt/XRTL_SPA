@@ -20,7 +20,9 @@ const users = {};
 var userIDs = [];
 var userIDServerList = [];
 var componentList = [];
+var footerList = [];
 var componentID = '';
+var footerList = [];
 const socketToRoom = {};
 var GUIId = ""
 
@@ -181,7 +183,11 @@ io.on('connection', socket => {
     socket.on('leave stream room', (data) => {
         console.log("User has left the room " + data.id);
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
-        let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
+        try {
+            let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
+        } catch (error) {
+            var roomSize = 0
+        }
         //console.log(roomSize);
 
         if (roomSize == 0) {
@@ -231,6 +237,28 @@ io.on('connection', socket => {
         socket.broadcast.emit('status', payload);
     });
 
+
+    socket.on('footer', payload => {
+        console.log(footerList)
+        if (footerList.includes(payload.componentId) === false) {
+            footerList.push(payload.componentId, payload.status)
+        } else if (footerList.includes(payload.componentId) === true) {
+            var newStatus = footerList.indexOf(payload.componentId)
+            footerList[newStatus + 1] = payload.status
+        }
+
+        io.emit('footer', payload)
+    })
+
+    socket.on('getFooter', payload => {
+        if (footerList.includes(payload) === true) {
+            var statusFoot = footerList.indexOf(payload);
+            console.log(footerList)
+            console.log(payload)
+            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] })
+        }
+    })
+
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
@@ -253,7 +281,7 @@ io.on('connection', socket => {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-            console.log(users[roomID]);
+            //console.log(users[roomID]);
         }
 
         if (userIDServerList.includes(socket.id)) {
@@ -262,7 +290,7 @@ io.on('connection', socket => {
         if (componentList.includes(socket.id)) {
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
-        console.log(userIDServerList)
+        //console.log(userIDServerList)
 
         socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();

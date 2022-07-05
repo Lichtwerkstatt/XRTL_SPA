@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import styles from "./SliderCtrl.module.css"
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
+import { Box, Stack, Typography, Slider } from "@mui/material";
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
-
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
+
+  const marks = [
+    { value: parseInt(props.min), label: props.min, },
+    { value: 0, label: '0', },
+    { value: parseInt(props.max), label: props.max, },
+  ]
 
   const sliderEmit = () => {
     socketCtx.socket.on("status", payload => {
@@ -18,43 +23,44 @@ const SliderCtrl = (props) => {
       }
     })
   }
-
   tempSlider.current = sliderEmit;
 
   useEffect(() => {
     tempSlider.current();
   }, [socketCtx.socket])
 
-  const sliderHandler = (event) => {
-    event.preventDefault();
-    console.log("Setting...")
-    setSliderPos(event.target.value)
-    setSliderPos((prevState) => { return event.target.value });
-  }
-
-  const sliderCtrl = (event) => {
-    event.preventDefault();
-    setSliderPos(event.target.value);
-    console.log("Sending Command " + event.target.value);
+  const handleSettingChanges = (event, newValue) => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
+      componentId: props.component,
       command: {
-        componentId: props.component,
-        val: sliderPos
+        controlId: props.command,
+        val: newValue
       }
     })
     appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
   }
 
   return (
-    <form className={styles.sliderCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
-      <div className={styles.sliderCtrl}>
-        <span>{sliderPos}</span>
-        <input type="range" min="-2" max="2" value={sliderPos} className={styles.sliderCtrl} onChange={sliderHandler} onMouseUp={sliderCtrl} />
-      </div>
-    </form>
+    <Box  sx={{ width: 250, m: 2 }}>
+      <Typography id="input-slider" gutterBottom>
+        {props.title}
+      </Typography>
+      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+        <Slider aria-label="Temperature"
+          id="brightnessSlider"
+          defaultValue={0}
+          valueLabelDisplay="auto"
+          step={1}
+          min={-2}
+          max={2}
+          value={sliderPos}
+          onChange={handleSettingChanges}
+          marks={marks}
+        />
+      </Stack>
+    </Box>
   )
-
 }
 
 export default SliderCtrl;
