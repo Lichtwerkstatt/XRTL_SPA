@@ -20,6 +20,7 @@ const users = {};
 var userIDs = [];
 var userIDServerList = [];
 var componentList = [];
+var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
