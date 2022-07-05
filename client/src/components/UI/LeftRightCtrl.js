@@ -6,7 +6,6 @@ import Right from '@mui/icons-material/ArrowCircleRightOutlined';
 
 const LeftRightCtrl = (props) => {
     const socketCtx = useSocketContext();
-    var negativ = false;
 
     const handleCtrl = (direction, negativ) => (event) => {
         event.preventDefault();

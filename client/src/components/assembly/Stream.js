@@ -35,7 +35,7 @@ const Stream = (props) => {
           var ctx = canvas.getContext("2d");
           var x = 0,
             y = 0;
-          ctx.drawImage(this, x, y);
+          ctx.drawImage(this, x, y, 200, 300);
         }
       };
       img.src = "data:image/jpg;base64," + base64String;
@@ -69,8 +69,7 @@ const Stream = (props) => {
       footer={footer}
     >
       <div className={styles.Canvas}>
-        <canvas id="ScreenCanvas" position="absolute" width="600px" height="400px" top="43px" left="15px"
-          border="2px solid #01bd7d" border-radius="15px" />
+        <canvas id="ScreenCanvas"  />
       </div>
       <div className={styles.Settings}>
         <Settings component={props.id} />
