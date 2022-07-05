@@ -7,26 +7,27 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
+  var negativ = false;
 
-  const handleCtrl = direction => (event) => {
+  const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
-    console.log(socketCtx)
+
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: props.component,
       command: {
         controlId: direction,
-        val: 15
+        val: negativ ? 15 : -15
       }
     })
   }
 
   return (
     <Stack>
-      <IconButton onClick={handleCtrl("up")}>
+      <IconButton onClick={handleCtrl("tilt", true)}>
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("down")}>
+      <IconButton onClick={handleCtrl("tilt", false)}>
         <Down />
       </IconButton>
     </Stack>

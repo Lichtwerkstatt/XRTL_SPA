@@ -32,7 +32,7 @@ const SelectCtrl = (props) => {
                 val: newValue.props.value
             }
         })
-        appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
+        appCtx.addLog("User set select on " + props.component + " to " + selectValue)
     }
 
     return (
@@ -58,5 +58,4 @@ const SelectCtrl = (props) => {
         </Box>
     )
 }
-
 export default SelectCtrl;

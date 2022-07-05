@@ -6,26 +6,27 @@ import Right from '@mui/icons-material/ArrowCircleRightOutlined';
 
 const LeftRightCtrl = (props) => {
     const socketCtx = useSocketContext();
+    var negativ = false;
 
-    const handleCtrl = direction => (event) => {
+    const handleCtrl = (direction, negativ) => (event) => {
         event.preventDefault();
-        console.log(socketCtx)
+
         socketCtx.socket.emit("command", {
             userId: socketCtx.getNewUsername(),
             componentId: props.component,
             command: {
                 controlId: direction,
-                val: 15
+                val: negativ ? 15 : -15
             }
         })
     }
 
     return (
         <Box>
-            <IconButton onClick={handleCtrl("left")}>
+            <IconButton onClick={handleCtrl("pan", false)}>
                 <Left />
             </IconButton>
-            <IconButton onClick={handleCtrl("right")}>
+            <IconButton onClick={handleCtrl("pan", true)}>
                 <Right />
             </IconButton>
         </Box>

@@ -16,14 +16,3 @@ div.Settings{
     top: 40px
 }
 
-div.UpDown{
-    position: absolute;
-    right: 30px;
-    top: 40px
-}
-
-div.LeftRight{
-    position: absolute;
-    right: 10px;
-    top: 60px
-}

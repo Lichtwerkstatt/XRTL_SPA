@@ -1,12 +1,10 @@
 import Window from "../UI/Window";
 import Settings from "../UI/Settings";
-import UpDown from "../UI/UpDownCtrl";
-import LeftRight from "../UI/LeftRightCtrl";
 import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { useEffect, useRef, useState } from "react";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 const Stream = (props) => {
   const [footer, setFooter] = useState(props.footer);
@@ -15,18 +13,6 @@ const Stream = (props) => {
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
 
-
-  const theme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        light: '#01bd7d',
-        main: '#01bd7d',
-        dark: '#01bd7d',
-        contrastText: '#01bd7d',
-      },
-    }
-  })
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
     console.log("Stop Streaming.");
@@ -82,21 +68,14 @@ const Stream = (props) => {
       onClose={handleCloseWindow}
       footer={footer}
     >
-      <ThemeProvider theme={theme}>
+      <div className={styles.Canvas}>
+        <canvas id="ScreenCanvas" position="absolute" width="600px" height="400px" top="43px" left="15px"
+          border="2px solid #01bd7d" border-radius="15px" />
+      </div>
+      <div className={styles.Settings}>
+        <Settings component={props.id} />
+      </div>
 
-        <div className={styles.Canvas}>
-          <canvas id="ScreenCanvas" />
-        </div>
-        <div className={styles.Settings}>
-          <Settings component={props.id} />
-        </div>
-        <div className={styles.UpDown}>
-          <UpDown component={props.id} />
-        </div>
-        <div className={styles.LeftRight}>
-          <LeftRight component={props.id} />
-        </div>
-      </ThemeProvider>
     </Window>
   );
 };
