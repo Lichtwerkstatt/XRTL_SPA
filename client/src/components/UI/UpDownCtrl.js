@@ -8,44 +8,28 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
 
-  const theme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        light: '#01bd7d',
-        main: '#01bd7d',
-        dark: '#01bd7d',
-        contrastText: '#01bd7d',
-      },
-    }
-  })
-
-  const handleCtrl = () => {
+  const handleCtrl = direction => (event) => {
+    event.preventDefault();
+    console.log(socketCtx)
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: props.component,
       command: {
-        controlId: "control",
-        Up: 300,
-        Down: 200,
-        Left: 800,
-        Right: 600
+        controlId: direction,
+        val: 15
       }
     })
   }
 
-
   return (
-    <ThemeProvider theme={theme}>
-      <Stack>
-        <IconButton onClick={handleCtrl}>
-          <Up />
-        </IconButton>
-        <IconButton onClick={handleCtrl}>
-          <Down />
-        </IconButton>
-      </Stack>
-    </ThemeProvider>
+    <Stack>
+      <IconButton onClick={handleCtrl("up")}>
+        <Up />
+      </IconButton>
+      <IconButton onClick={handleCtrl("down")}>
+        <Down />
+      </IconButton>
+    </Stack>
   )
 
 }

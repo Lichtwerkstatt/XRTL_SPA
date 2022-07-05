@@ -6,14 +6,15 @@ import Slider, { SliderValueLabel } from '@mui/material/Slider';
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
+  //const [sliderPos, setSliderPos] = useState(props.sliderPo);
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
 
   const marks = [
-    { value: parseInt(props.min), label: props.min, },
+    { value: -2, label: '-2', },
     { value: 0, label: '0', },
-    { value: parseInt(props.max), label: props.max, },
+    { value: 2, label: '2', },
   ]
 
   const sliderEmit = () => {
@@ -44,7 +45,6 @@ const SliderCtrl = (props) => {
   }
 
   return (
-
     <Slider aria-label="Temperature"
       id="brightnessSlider"
       defaultValue={0}

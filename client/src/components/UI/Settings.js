@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useSocketContext } from "../../services/SocketContext";
+import Slider from "./SliderCtrl"
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Slider from '@mui/material/Slider';
+
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -19,6 +20,7 @@ const Settings = (props) => {
     const [contrast, setContrast] = useState(0);
     const [brightness, setBrightness] = useState(0);
     const [grey, setGrey] = useState(false);
+
 
     const theme = createTheme({
         palette: {
@@ -72,7 +74,7 @@ const Settings = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ m: 2, width: 250 }} >
+            {/*  <Box sx={{ m: 2, width: 250 }} >
                 <h1>Settings</h1>
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label" sx={{
@@ -103,47 +105,31 @@ const Settings = (props) => {
                         <Switch checked={grey}
                             onChange={handleSettingChanges("greySwitch")}
                             inputProps={{ 'aria-label': 'controlled' }} />
-                        {/* <AntSwitch defaultChecked inputProps={{ 'aria-label': 'ant design' }} /> */}
+                        
                         <Typography>Grey</Typography>
                     </Stack>
                 </FormGroup>
             </Box>
-
+*/}
             <Box sx={{ width: 250, m: 2 }}>
-                <Typography id="input-slider" gutterBottom>
+                <Typography id="input-slider" >
                     Contrast
                 </Typography>
                 <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-
-                    <Slider aria-label="Temperature"
-                        id="contrastSlider"
-                        defaultValue={0}
-                        valueLabelDisplay="auto"
-                        step={1}
-                        min={-2}
-                        max={2}
-                        value={contrast}
-                        onChange={handleSettingChanges("contrastSlider")}
-                        marks={marks}
-                    />
+                    <Slider component={props.component} command="contrast" min='-2' max='2' />
                 </Stack>
+
+
+
                 <Typography id="input-slider" gutterBottom>
                     Brightness
                 </Typography>
                 <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-                    <Slider aria-label="Temperature"
-                        id="brightnessSlider"
-                        defaultValue={0}
-                        valueLabelDisplay="auto"
-                        step={1}
-                        min={-2}
-                        max={2}
-                        value={brightness}
-                        onChange={handleSettingChanges("brightnessSlider")}
-                        marks={marks}
-                    />
+                    <Slider component={props.component} command="brightness" min='-2' max='2' />
                 </Stack>
             </Box>
+
+
         </ThemeProvider>
 
     )
