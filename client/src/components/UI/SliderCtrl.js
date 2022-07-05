@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-import Slider, { SliderValueLabel } from '@mui/material/Slider';
-
+import { Box, Stack, Typography, Slider } from "@mui/material";
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
@@ -31,7 +30,6 @@ const SliderCtrl = (props) => {
   }, [socketCtx.socket])
 
   const handleSettingChanges = (event, newValue) => {
-
     socketCtx.socket.emit("command", {
       userId: socketCtx.getNewUsername(),
       componentId: props.component,
@@ -44,18 +42,24 @@ const SliderCtrl = (props) => {
   }
 
   return (
-
-    <Slider aria-label="Temperature"
-      id="brightnessSlider"
-      defaultValue={0}
-      valueLabelDisplay="auto"
-      step={1}
-      min={-2}
-      max={2}
-      value={sliderPos}
-      onChange={handleSettingChanges}
-      marks={marks}
-    />
+    <Box  sx={{ width: 250, m: 2 }}>
+      <Typography id="input-slider" gutterBottom>
+        {props.title}
+      </Typography>
+      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+        <Slider aria-label="Temperature"
+          id="brightnessSlider"
+          defaultValue={0}
+          valueLabelDisplay="auto"
+          step={1}
+          min={-2}
+          max={2}
+          value={sliderPos}
+          onChange={handleSettingChanges}
+          marks={marks}
+        />
+      </Stack>
+    </Box>
   )
 }
 

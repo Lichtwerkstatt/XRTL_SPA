@@ -1,62 +1,54 @@
 import { useState, useEffect, useRef } from "react";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-import Slider, { SliderValueLabel } from '@mui/material/Slider';
+import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
 
+const SwiitchCtrl = (props) => {
+    const [switchValue, setSwitchValue] = useState(false);
+    const appCtx = useAppContext();
+    const socketCtx = useSocketContext();
+    const tempSlider = useRef();
 
-const SliderCtrl = (props) => {
-  const [sliderPos, setSliderPos] = useState(props.sliderPos);
-  //const [sliderPos, setSliderPos] = useState(props.sliderPo);
-  const appCtx = useAppContext();
-  const socketCtx = useSocketContext();
-  const tempSlider = useRef();
+    const sliderEmit = () => {
+        socketCtx.socket.on("status", payload => {
+            if (payload.component === props.component) {
+                setSwitchValue(payload.status[props.control]);
+            }
+        })
+    }
+    tempSlider.current = sliderEmit;
 
-  const marks = [
-    { value: -2, label: '-2', },
-    { value: 0, label: '0', },
-    { value: 2, label: '2', },
-  ]
+    useEffect(() => {
+        tempSlider.current();
+    }, [socketCtx.socket])
 
-  const sliderEmit = () => {
-    socketCtx.socket.on("status", payload => {
-      console.log(payload);
-      if (payload.component === props.component) {
-        setSliderPos(payload.status[props.control]);
-      }
-    })
-  }
-  tempSlider.current = sliderEmit;
+    const handleSettingChanges = (event, newValue) => {
+        setSwitchValue(newValue);
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.getNewUsername(),
+            componentId: props.component,
+            command: {
+                controlId: props.command,
+                val: newValue
+            }
+        })
+        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+    }
 
-  useEffect(() => {
-    tempSlider.current();
-  }, [socketCtx.socket])
+    return (
+        <Box sx={{ width: 250, m: 2 }}>
+            <FormGroup>
+                <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography>{props.start}</Typography>
+                    <Switch checked={switchValue}
+                        onChange={handleSettingChanges}
+                        inputProps={{ 'aria-label': 'controlled' }} />
 
-  const handleSettingChanges = (event, newValue) => {
-
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
-      componentId: props.component,
-      command: {
-        controlId: props.command,
-        val: newValue
-      }
-    })
-    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
-  }
-
-  return (
-    <Slider aria-label="Temperature"
-      id="brightnessSlider"
-      defaultValue={0}
-      valueLabelDisplay="auto"
-      step={1}
-      min={-2}
-      max={2}
-      value={sliderPos}
-      onChange={handleSettingChanges}
-      marks={marks}
-    />
-  )
+                    <Typography>{props.end}</Typography>
+                </Stack>
+            </FormGroup>
+        </Box>
+    )
 }
 
-export default SliderCtrl;
+export default SwiitchCtrl;
