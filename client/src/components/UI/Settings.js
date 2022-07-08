@@ -28,7 +28,7 @@ const Settings = (props) => {
             <div className={styles.LeftRight}>
                 <LeftRightCtrl component={props.id} />
             </div>
-            <Box sx={{ m: 2, width: 250 }} ><h1>Settings</h1> </Box>
+            <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} command="resolution" />
             <Switch component={props.component} command="gray" start='Color' end='Grey' />
             <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' />

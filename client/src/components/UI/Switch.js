@@ -32,7 +32,14 @@ const SwiitchCtrl = (props) => {
                 val: newValue
             }
         })
+
+        socketCtx.socket.emit("footer", {
+            status: "Last change by: " + socketCtx.getNewUsername(),
+            componentId: props.component
+        })
+
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+
     }
 
     return (
@@ -43,7 +50,6 @@ const SwiitchCtrl = (props) => {
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }} />
-
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>

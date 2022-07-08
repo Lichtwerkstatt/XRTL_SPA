@@ -5,6 +5,7 @@ import { MenuItem, Select, FormControl, InputLabel, Box } from '@mui/material';
 
 const SelectCtrl = (props) => {
     const [selectValue, setSelectValue] = useState(false);
+    const [loginValue, setLoginValue] = useState(false);
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
@@ -35,27 +36,56 @@ const SelectCtrl = (props) => {
         appCtx.addLog("User set select on " + props.component + " to " + selectValue)
     }
 
-    return (
-        <Box sx={{ m: 2, width: 250 }} >
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" sx={{
-                    color: 'main.primary'
-                }}>Resolution</InputLabel>
-                <Select
-                    value={selectValue}
-                    label={props.title}
-                    onChange={handleSettingChanges}
-                >
-                    <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
-                    <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
-                    <MenuItem value={'XGA'}>XGA (1024x768)</MenuItem>
-                    <MenuItem value={'SVGA'}>SVGA (800x600)</MenuItem>
-                    <MenuItem value={'VGA'}>VGA (640x480)</MenuItem>
-                    <MenuItem value={'QVGA'}>QVGA (320x240)</MenuItem>
-                    <MenuItem value={'CIF'}>CIF (352x288)</MenuItem>
-                </Select>
-            </FormControl>
-        </Box>
-    )
+    const handleLoginSelect = (event, newValue) =>{
+        setLoginValue(newValue.props.value);
+        console.log("jo")
+
+    }
+    if (props.title === "Resolution") {
+
+        return (
+            <Box sx={{ m: 2, width: 250 }} >
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label" sx={{
+                        color: 'main.primary'
+                    }}>Resolution</InputLabel>
+                    <Select
+                        value={selectValue}
+                        label={props.title}
+                        onChange={handleSettingChanges}
+                    >
+                        <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
+                        <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
+                        <MenuItem value={'XGA'}>XGA (1024x768)</MenuItem>
+                        <MenuItem value={'SVGA'}>SVGA (800x600)</MenuItem>
+                        <MenuItem value={'VGA'}>VGA (640x480)</MenuItem>
+                        <MenuItem value={'QVGA'}>QVGA (320x240)</MenuItem>
+                        <MenuItem value={'CIF'}>CIF (352x288)</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+        )
+    } else {
+        return (
+           
+
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label" sx={{
+                        color: 'main.primary'
+                    }}>Choose server address</InputLabel>
+                    <Select
+                        value={loginValue}
+                        label={props.title}
+                        onChange={handleLoginSelect}
+                    >
+                        <MenuItem value={'http://localhost:7000'}>Localhost</MenuItem>
+                        <MenuItem value={'http://192.168.1.42:700'}>Raspberry</MenuItem>
+                        <MenuItem value={''}>Define</MenuItem>
+
+                    </Select>
+                </FormControl>
+            
+        )
+    }
 }
 export default SelectCtrl;
