@@ -4,8 +4,9 @@ import styles from "./Login.module.css"
 import { BiFontColor } from 'react-icons/bi'
 import { useAppContext } from "../../services/AppContext";
 import Select from '../UI/Select'
-import { Typography, MenuItem, FormControl, InputLabel, Box, TextField, createTheme, ThemeProvider, Stack, Button } from '@mui/material';
+import { Grid, Typography, MenuItem, FormControl, InputLabel, Box, TextField, createTheme, ThemeProvider, Stack, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 
 //weiterleitung von adresse & username -->  erfolgt, aber socket Manager wird nicht mit neuer URL besetzt
 //verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Daten
@@ -28,8 +29,6 @@ const Login = (props) => {
             },
         },
         spacing: 2,
-
-
     })
 
     const handleLogin = (event, newValue) => {
@@ -47,18 +46,21 @@ const Login = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-
-            <Box sx={{ m: 8, width: 250 }} >
-                <Stack>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid item xs={6}>
                     <TextField
                         variant="outlined"
                         label="Username"
                         value={username}
                         onChange={handleChange}
                         onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        style={{ marginLeft: 17, width: 250 }}
                     />
-                </Stack>
-            </Box>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormatColorTextIcon fontSize="large" style={{ marginTop: 12, marginLeft: 100, width: 50, color: "white", size: 50 }} />
+                </Grid>
+            </Grid>
             <Box sx={{ m: 8, width: 250 }} >
                 <Select title="Choose server address " />
             </Box>
@@ -66,7 +68,7 @@ const Login = (props) => {
             <Button size="small" type="submit" variant="contained"
                 onClick={handleLogin}
                 endIcon={<SendIcon />}
-                style={{ width: 90, height: 30, marginTop: 0, marginLeft: 270 }}
+                style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
             >Login</Button>
 
         </ThemeProvider>
