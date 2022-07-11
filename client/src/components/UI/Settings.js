@@ -23,13 +23,13 @@ const Settings = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
-                <UpDownCtrl component={props.id} />
+                <UpDownCtrl component={props.component} />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.id} />
+                <LeftRightCtrl component={props.component} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} command="resolution" />
+            <Select title="Resolution" component={props.component} command="frame size" />
             <Switch component={props.component} command="gray" start='Color' end='Grey' />
             <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' />
             <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' />

@@ -38,7 +38,9 @@ const SelectCtrl = (props) => {
 
     const handleLoginSelect = (event, newValue) => {
         setLoginValue(newValue.props.value);
-        return newValue
+        if(props.username !== ""){
+            socketCtx.setNewURL(String(newValue.props.value), String(props.username));
+        }
 
     }
     if (props.title === "Resolution") {
@@ -73,7 +75,7 @@ const SelectCtrl = (props) => {
                     onChange={handleLoginSelect}
                 >
                     <MenuItem value={'http://localhost:7000'}>Localhost</MenuItem>
-                    <MenuItem value={'http://192.168.1.42:700'}>Raspberry</MenuItem>
+                    <MenuItem value={'http://192.168.1.42:7000'}>Raspberry</MenuItem>
                     <MenuItem value={''}>Define</MenuItem>
 
                 </Select>

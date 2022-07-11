@@ -4,7 +4,8 @@ import styles from "./Login.module.css"
 import { BiFontColor } from 'react-icons/bi'
 import { useAppContext } from "../../services/AppContext";
 import OutlineLogin from './OutlineLogin';
-import { Grid, Typography, MenuItem, FormControl, InputLabel, Box, TextField, createTheme, ThemeProvider, Stack, Button } from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Grid, Typography, MenuItem, FormControl, InputLabel, Box, TextField, createTheme, ThemeProvider, Stack, Button, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import Select from '../UI/Select'
@@ -44,100 +45,106 @@ const Login = (props) => {
     }
 
     const loginCaseChecking = () => {
-        var errorLabel = document.getElementById('errorLabel');
 
-        if (username === '') {
-            errorLabel.innerHTML = "Please enter a username!";
-        } else {
-            errorLabel.innerHTML = "";
-            const addressCheck = checkServerAdress();
-            socketCtx.setNewUsername(String(username));
+        const addressCheck = checkServerAdress();
+        socketCtx.setNewUsername(String(username));
 
-            if (custom === false) {
-                errorLabel.innerHTML = "";
-                socketCtx.setNewURL(String(connection), String(username));
-                socketCtx.setNewFont(fontColor);
-                socketCtx.toggleConnection();
-                setUsername('');
-                setConnection('http://localhost:7000');
-            } else if (custom === true && customConnection === "") {
-                errorLabel.innerHTML = "Please enter a server address!";
-            } else if (custom === true && customConnection !== "" && addressCheck) {
-                errorLabel.innerHTML = "";
-                socketCtx.toggleConnection();
-                socketCtx.setNewURL(String(customConnection), String(username));
-                setUsername('');
-                setCustomConnection('');
-                setCuston(false);
-            } else {
-                errorLabel.innerHTML = 'Please check your connection address!'
-            }
+        if (custom === false) {
+
+            
+            socketCtx.toggleConnection();
+            setUsername('');
+            setConnection('http://localhost:7000');
+        
+        } else if (custom === true && customConnection !== "" && addressCheck) {
+
+            socketCtx.toggleConnection();
+            socketCtx.setNewURL(String(customConnection), String(username));
+            setUsername('');
+            setCustomConnection('');
+            setCuston(false);
         }
+    
     }
 
-    const checkServerAdress = () => {
-        // let regex = /http:\/\/([a-zA-Z0-9\.]*):[0-9]{4}/i
-        let ipRegex = /http:\/\/[0-9]{3}\.[0-9]{3}\.[0-9]+\.[0-9]{1,3}:[0-9]{4}$/i
-        let localRegex = /http:\/\/localhost:[0-9]{4}$/i;
 
-        if (localRegex.test(customConnection) || ipRegex.test(customConnection)) {
-            return true;
-        }
-        return false;
+
+const checkServerAdress = () => {
+    // let regex = /http:\/\/([a-zA-Z0-9\.]*):[0-9]{4}/i
+    let ipRegex = /http:\/\/[0-9]{3}\.[0-9]{3}\.[0-9]+\.[0-9]{1,3}:[0-9]{4}$/i
+    let localRegex = /http:\/\/localhost:[0-9]{4}$/i;
+
+    if (localRegex.test(customConnection) || ipRegex.test(customConnection)) {
+        return true;
     }
+    return false;
+}
 
-    const handleLogin = (event, newValue) => {
-        console.log(Select);
-        socketCtx.setNewURL(String(connection), String(username));
-        socketCtx.setNewFont(fontColor);
+const handleLogin = (event, newValue) => {
+    if(username !== "" & socketCtx.socket.getNewURL !== ""){
+        socketCtx.setNewUsername(String(username));
         socketCtx.toggleConnection();
-        setUsername('');
-        setConnection('http://localhost:7000');
-    }
 
-    const handleChange = (event) => {
-        setUsername(event.target.value);
-    };
+    } 
+   
+   
+    setUsername('');
+    setConnection('http://localhost:7000');
+}
+
+const handleChange = (event) => {
+    setUsername(event.target.value);
+
+};
 
 
-    if (appCtx.showLogin) {
-        return (
-            <ThemeProvider theme={theme}>
+if (appCtx.showLogin) {
+    return (
+        <ThemeProvider theme={theme}>
 
-                <div className={styles.popupWindow}>
-                </div>
-                <div className={styles.popupInner} >
-                    <h3 title="settings">Settings</h3>
-                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                        <Grid item xs={6}>
-                            <TextField
-                                variant="outlined"
-                                label="Username"
-                                value={username}
-                                onChange={handleChange}
-                                onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                                style={{ marginLeft: 17, width: 250 }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormatColorTextIcon fontSize="large" style={{ marginTop: 12, marginLeft: 100, width: 50, color: "white", size: 50 }} />
-                        </Grid>
+            <div className={styles.popupWindow}>
+            </div>
+            <div className={styles.popupInner} >
+                <h3 title="settings">Settings</h3>
+                <Grid container columnSpacing={{ md: 95 }}>
+                    <Grid item xs={6}>
+                        <TextField
+                            variant="outlined"
+                            label="Username "
+                            value={username}
+                            onChange={handleChange}
+                            onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                            style={{ marginLeft: 17, width: 250 }}
+                            error={username === ""}
+                            helperText={username === "" ? 'Please enter your username!' : ' '}
+                        />
                     </Grid>
-                    <Box sx={{ m: 8, width: 250 }} >
-                        <Select title="Choose server address " />
-                    </Box>
+                    <Grid item xs={6}>
+                        < IconButton onClick={(e) => {
+                            var c = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+                            document.getElementById("colorIcon").style.color = c
+                            setfontColor(c);
+                            socketCtx.setNewFont(fontColor);
+                        }} >
+                            <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" onChange />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+                <Box sx={{ m: 8, width: 250 }} >
+                    <Select title="Choose server address " username={username} />
+                </Box>
 
-                    <Button size="small" type="submit" variant="contained"
-                        onClick={handleLogin}
-                        endIcon={<SendIcon />}
-                        style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
-                    >Login</Button>
+                <Button size="small" type="submit" variant="contained"
+                    onClick={handleLogin}
+                    endIcon={<SendIcon />}
+                    style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
+                >Login</Button>
 
-                </div >
-            </ThemeProvider>
-        );
-    } else {
-        return (<div></div>)
-    }
+            </div >
+        </ThemeProvider>
+    );
+} else {
+    return (<div></div>)
+}
 }
 export default Login;

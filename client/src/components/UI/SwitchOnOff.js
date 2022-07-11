@@ -62,13 +62,14 @@ const SwitchOnOff = (props) => {
       }
     })
   }
+  console.log(switchStatus)
 
   tempSwitch.current = switchFunction
   useEffect(() => {
     tempSwitch.current();
   }, [socketCtx.socket])
 
-  const switch_Handler = (event) => {
+  /* const switch_Handler = (event) => {
     event.preventDefault();
     //event.target.textContent = 'On';
 
@@ -93,13 +94,13 @@ const SwitchOnOff = (props) => {
     setSwitchStatus(newStatus);
     appCtx.addLog("User set position on " + props.component + " to " + newStatus)
   }
-
+ */
   return (
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-        <Switch component={props.component} command="switch" start='Off' end='On' checked ={switchStatus}/>
-        <GiLaserWarning id="icon" size ={100} vertical-align = "middle" color= {iconColor}/>
+          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} />
+          <GiLaserWarning id="icon" size={100} vertical-align="middle" color={switchStatus ? 'white' : 'grey'} />
 
         </Box>
       </ThemeProvider>

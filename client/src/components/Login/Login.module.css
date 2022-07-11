@@ -12,9 +12,9 @@ div.popupWindow {
 
 div.popupInner {
     width: 370px;
-    height: 250px;
+    height: 275px;
     position:absolute;
-    top: 40%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.6);

@@ -43,6 +43,7 @@ export function SocketContextProvider({ children }) {
   }
 
   const setNewURL = (newURL, user) => {
+    console.log(newURL, user)
     setURL(newURL);
     URLglobal = newURL;
     socket.disconnect();
