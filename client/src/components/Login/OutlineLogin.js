@@ -5,6 +5,7 @@ import { BiFontColor } from 'react-icons/bi'
 import { useAppContext } from "../../services/AppContext";
 import Select from '../UI/Select'
 import { Typography, MenuItem, FormControl, InputLabel, Box, TextField, createTheme, ThemeProvider, Stack, Button } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 //weiterleitung von adresse & username -->  erfolgt, aber socket Manager wird nicht mit neuer URL besetzt
 //verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Daten
@@ -26,11 +27,13 @@ const Login = (props) => {
                 contrastText: '#01bd7d',
             },
         },
-        spacing: 2
+        spacing: 2,
+
+
     })
 
     const handleLogin = (event, newValue) => {
-        console.log("hallo")
+        console.log(Select);
         socketCtx.setNewURL(String(connection), String(username));
         socketCtx.setNewFont(fontColor);
         socketCtx.toggleConnection();
@@ -42,12 +45,10 @@ const Login = (props) => {
         setUsername(event.target.value);
     };
 
-
-
     return (
         <ThemeProvider theme={theme}>
 
-            <Box sx={{ m: 5, width: 280, marginLeft: "20px" }} >
+            <Box sx={{ m: 8, width: 250 }} >
                 <Stack>
                     <TextField
                         variant="outlined"
@@ -56,12 +57,18 @@ const Login = (props) => {
                         onChange={handleChange}
                         onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
                     />
-
-                    <Select />
-                    <Button type="submit" size="small" variant="contained"
-                        onClick={handleLogin}  >Login</Button>
                 </Stack>
             </Box>
+            <Box sx={{ m: 8, width: 250 }} >
+                <Select title="Choose server address " />
+            </Box>
+
+            <Button size="small" type="submit" variant="contained"
+                onClick={handleLogin}
+                endIcon={<SendIcon />}
+                style={{ width: 90, height: 30, marginTop: 0, marginLeft: 270 }}
+            >Login</Button>
+
         </ThemeProvider>
     );
 }

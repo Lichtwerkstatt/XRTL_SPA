@@ -36,9 +36,9 @@ const SelectCtrl = (props) => {
         appCtx.addLog("User set select on " + props.component + " to " + selectValue)
     }
 
-    const handleLoginSelect = (event, newValue) =>{
+    const handleLoginSelect = (event, newValue) => {
         setLoginValue(newValue.props.value);
-        console.log("jo")
+        return newValue
 
     }
     if (props.title === "Resolution") {
@@ -46,9 +46,7 @@ const SelectCtrl = (props) => {
         return (
             <Box sx={{ m: 2, width: 250 }} >
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label" sx={{
-                        color: 'main.primary'
-                    }}>Resolution</InputLabel>
+                    <InputLabel >Resolution</InputLabel>
                     <Select
                         value={selectValue}
                         label={props.title}
@@ -67,24 +65,20 @@ const SelectCtrl = (props) => {
         )
     } else {
         return (
-           
+            <FormControl fullWidth>
+                <InputLabel>Choose server address</InputLabel>
+                <Select
+                    value={loginValue}
+                    label={props.title}
+                    onChange={handleLoginSelect}
+                >
+                    <MenuItem value={'http://localhost:7000'}>Localhost</MenuItem>
+                    <MenuItem value={'http://192.168.1.42:700'}>Raspberry</MenuItem>
+                    <MenuItem value={''}>Define</MenuItem>
 
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label" sx={{
-                        color: 'main.primary'
-                    }}>Choose server address</InputLabel>
-                    <Select
-                        value={loginValue}
-                        label={props.title}
-                        onChange={handleLoginSelect}
-                    >
-                        <MenuItem value={'http://localhost:7000'}>Localhost</MenuItem>
-                        <MenuItem value={'http://192.168.1.42:700'}>Raspberry</MenuItem>
-                        <MenuItem value={''}>Define</MenuItem>
+                </Select>
+            </FormControl>
 
-                    </Select>
-                </FormControl>
-            
         )
     }
 }
