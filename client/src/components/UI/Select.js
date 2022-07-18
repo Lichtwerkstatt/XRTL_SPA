@@ -5,10 +5,13 @@ import { MenuItem, Select, FormControl, InputLabel, Box } from '@mui/material';
 
 const SelectCtrl = (props) => {
     const [selectValue, setSelectValue] = useState(false);
+    const [footer, setFooter] = useState(props.footer);
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
-
+    const [mouted, setMounted] = useState(true);
+    
+console.log(props)
     const sliderEmit = () => {
         socketCtx.socket.on("status", payload => {
             if (payload.component === props.component) {
@@ -21,6 +24,19 @@ const SelectCtrl = (props) => {
     useEffect(() => {
         tempSlider.current();
     }, [socketCtx.socket])
+
+    socketCtx.socket.on('footer', payload => {
+      
+        if (payload.componentId === props.component) {
+          console.log(props.newStatus)
+          setFooter(payload.status)
+          if (mouted) {
+         
+            props.newStatus(String(payload.status))
+          }
+        }
+      })
+    
 
     const handleSettingChanges = (event, newValue) => {
         setSelectValue(newValue.props.value);

@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 
 
 const Stream = (props) => {
-  console.log(props.footer)
   const [mouted, setMounted] = useState(true);
   const [footer, setFooter] = useState(props.footer);
   const socketCtx = useSocketContext();
@@ -15,17 +14,8 @@ const Stream = (props) => {
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
 
-  console.log(props)
-  socketCtx.socket.on('footer', payload => {
-    if (payload.componentId === props.id) {
-      console.log(payload.status)
-      setFooter(payload.status)
-      if (mouted) {
-        console.log(props)
-        //props.newStatus(String(payload.status))
-      }
-    }
-  })
+
+
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
@@ -49,8 +39,8 @@ const Stream = (props) => {
           var ctx = canvas.getContext("2d");
           var x1 = 0,
             y1 = 0,
-              x2=300,
-              y2=200;
+            x2 = 300,
+            y2 = 200;
           ctx.drawImage(this, x1, y1, x2, y2);
         }
       };

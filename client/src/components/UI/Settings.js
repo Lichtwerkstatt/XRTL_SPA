@@ -7,10 +7,14 @@ import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "./Settings.module.css"
 
+import { useSocketContext } from "../../services/SocketContext";
 import {useState} from "react";
 
 const Settings = (props) => {
     const [footer, setFooter] = useState(props.footer);
+    const socketCtx = useSocketContext();
+    
+    const [mouted, setMounted] = useState(true);
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -22,10 +26,12 @@ const Settings = (props) => {
             },
         }
     })
-
+   
     const handleChangeFooter = (newFooter) => {
         setFooter(newFooter);
       };
+
+
 
     return (
         <ThemeProvider theme={theme}>
