@@ -72,7 +72,7 @@ const SelectCtrl = (props) => {
                 <Select
                     value={loginValue}
                     label={props.title}
-                    onChange={handleLoginSelect}
+                    onClick={handleLoginSelect}
                 >
                     <MenuItem value={'http://localhost:7000'}>Localhost</MenuItem>
                     <MenuItem value={'http://192.168.1.42:7000'}>Raspberry</MenuItem>
