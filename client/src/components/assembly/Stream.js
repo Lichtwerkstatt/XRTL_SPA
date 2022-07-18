@@ -7,11 +7,25 @@ import { useEffect, useRef, useState } from "react";
 
 
 const Stream = (props) => {
+  console.log(props.footer)
+  const [mouted, setMounted] = useState(true);
   const [footer, setFooter] = useState(props.footer);
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
+
+  console.log(props)
+  socketCtx.socket.on('footer', payload => {
+    if (payload.componentId === props.id) {
+      console.log(payload.status)
+      setFooter(payload.status)
+      if (mouted) {
+        console.log(props)
+        //props.newStatus(String(payload.status))
+      }
+    }
+  })
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
@@ -47,6 +61,10 @@ const Stream = (props) => {
     socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
   }
 
+  const handleChangeFooter = (newFooter) => {
+    setFooter(newFooter);
+  };
+
   tempWebcam.current = webcamEmitPic;
   tempWebcam2.current = webcamStartStreaming;
 
@@ -67,12 +85,13 @@ const Stream = (props) => {
       height="430px"
       onClose={handleCloseWindow}
       footer={footer}
+      newStatus={handleChangeFooter}
     >
       <div className={styles.Canvas}>
-        <canvas id="ScreenCanvas"  />
+        <canvas id="ScreenCanvas" />
       </div>
       <div className={styles.Settings}>
-        <Settings component={props.id} />
+        <Settings component={props.id} footer={footer} newStatus={handleChangeFooter} />
       </div>
 
     </Window>

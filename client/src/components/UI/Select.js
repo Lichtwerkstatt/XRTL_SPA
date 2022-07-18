@@ -32,6 +32,12 @@ const SelectCtrl = (props) => {
                 val: newValue.props.value
             }
         })
+
+        socketCtx.socket.emit("footer", {
+            status: "Last change by: " + socketCtx.username,
+            componentId: props.component
+        })
+
         appCtx.addLog("User set select on " + props.component + " to " + selectValue)
     }
 

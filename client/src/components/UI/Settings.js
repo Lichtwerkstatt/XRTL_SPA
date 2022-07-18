@@ -7,7 +7,10 @@ import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "./Settings.module.css"
 
+import {useState} from "react";
+
 const Settings = (props) => {
+    const [footer, setFooter] = useState(props.footer);
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -20,19 +23,23 @@ const Settings = (props) => {
         }
     })
 
+    const handleChangeFooter = (newFooter) => {
+        setFooter(newFooter);
+      };
+
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
-                <UpDownCtrl component={props.component} />
+                <UpDownCtrl component={props.component} footer={props.footer} />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} />
+                <LeftRightCtrl component={props.component} footer={props.footer} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} command="frame size" />
-            <Switch component={props.component} command="gray" start='Color' end='Grey' />
-            <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' />
-            <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' />
+            <Select title="Resolution" component={props.component} footer={props.footer}  newStatus={handleChangeFooter} command="frame size" />
+            <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' />
+            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' />
+            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' />
         </ThemeProvider>
 
     )
