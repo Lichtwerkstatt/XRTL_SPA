@@ -15,7 +15,7 @@ const RotaryCtrl = (props) => {
 
   const rotaryCtrlEmit = () => {
     socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
+      userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
     })
@@ -79,7 +79,7 @@ const RotaryCtrl = (props) => {
     }
     if (direction !== 0) {
       socketCtx.socket.emit("command", {
-        userId: socketCtx.getNewUsername(),
+        userId: socketCtx.username,
         componentId: props.component,
         command: {
           controlId: props.control,
@@ -88,7 +88,7 @@ const RotaryCtrl = (props) => {
       })
 
       socketCtx.socket.emit("footer", {
-        status: "Last change by: " + socketCtx.getNewUsername(),
+        status: "Last change by: " + socketCtx.username,
         componentId: props.component
       })
 

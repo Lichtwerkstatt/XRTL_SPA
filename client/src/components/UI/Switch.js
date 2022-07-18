@@ -25,7 +25,7 @@ const SwiitchCtrl = (props) => {
     const handleSettingChanges = (event, newValue) => {
         setSwitchValue(newValue);
         socketCtx.socket.emit("command", {
-            userId: socketCtx.getNewUsername(),
+            userId: socketCtx.username,
             componentId: props.component,
             command: {
                 controlId: props.command,
@@ -34,7 +34,7 @@ const SwiitchCtrl = (props) => {
         })
 
         socketCtx.socket.emit("footer", {
-            status: "Last change by: " + socketCtx.getNewUsername(),
+            status: "Last change by: " + socketCtx.username,
             componentId: props.component
         })
 

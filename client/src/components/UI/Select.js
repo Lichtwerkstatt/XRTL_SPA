@@ -26,7 +26,7 @@ const SelectCtrl = (props) => {
     const handleSettingChanges = (event, newValue) => {
         setSelectValue(newValue.props.value);
         socketCtx.socket.emit("command", {
-            userId: socketCtx.getNewUsername(),
+            userId: socketCtx.username,
             componentId: props.component,
             command: {
                 controlId: props.command,

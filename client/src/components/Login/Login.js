@@ -46,7 +46,7 @@ const Login = (props) => {
 
     const handleChange = (event) => {
         setUsername(event.target.value);
-        socketCtx.setNewUsername(String(username));
+        //socketCtx.setNewUsername(String(username));
     };
 
     const autoCompleteHandle = (event, newValue) => {

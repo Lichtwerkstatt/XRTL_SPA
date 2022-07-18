@@ -11,7 +11,7 @@ const LeftRightCtrl = (props) => {
         event.preventDefault();
 
         socketCtx.socket.emit("command", {
-            userId: socketCtx.getNewUsername(),
+            userId: socketCtx.username,
             componentId: props.component,
             command: {
                 controlId: direction,
