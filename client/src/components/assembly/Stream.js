@@ -47,9 +47,11 @@ const Stream = (props) => {
         var canvas = document.getElementById("ScreenCanvas");
         if (canvas != null) {
           var ctx = canvas.getContext("2d");
-          var x = 0,
-            y = 0;
-          ctx.drawImage(this, x, y, 200, 300);
+          var x1 = 0,
+            y1 = 0,
+              x2=300,
+              y2=200;
+          ctx.drawImage(this, x1, y1, x2, y2);
         }
       };
       img.src = "data:image/jpg;base64," + base64String;
