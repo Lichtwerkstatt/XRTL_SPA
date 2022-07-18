@@ -91,7 +91,6 @@ const RotaryCtrl = (props) => {
         status: "Last change by: " + socketCtx.username,
         componentId: props.component
       })
-
     }
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };

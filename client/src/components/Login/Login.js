@@ -1,17 +1,12 @@
 import { useSocketContext } from '../../services/SocketContext'
 import React, { useState } from "react";
 import styles from "./Login.module.css"
-import { BiFontColor } from 'react-icons/bi'
 import { useAppContext } from "../../services/AppContext";
-import OutlineLogin from './OutlineLogin';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Grid, Autocomplete, Typography, MenuItem, FormControl, InputLabel, Box, TextField, createTheme, ThemeProvider, Stack, Button, IconButton } from '@mui/material';
+import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
-import Select from '../UI/Select'
 import { createFilterOptions } from '@mui/material/Autocomplete';
-//weiterleitung von adresse & username -->  erfolgt, aber socket Manager wird nicht mit neuer URL besetzt
-//verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Daten
+
 const Login = (props) => {
     const [username, setUsername] = useState("");
     const [fontColor, setfontColor] = useState("white");
@@ -46,7 +41,6 @@ const Login = (props) => {
 
     const handleChange = (event) => {
         setUsername(event.target.value);
-        //socketCtx.setNewUsername(String(username));
     };
 
     const autoCompleteHandle = (event, newValue) => {
