@@ -24,7 +24,6 @@ const RotaryCtrl = (props) => {
       if (payload.componentId === props.component) {
         if (props.control === "top") {
           setRotation(payload.status.top.absolute)
-
         } else if (props.control === "bottom") {
           setRotation(payload.status.bottom.absolute)
         } else {
@@ -36,10 +35,8 @@ const RotaryCtrl = (props) => {
 
     socketCtx.socket.on('footer', payload => {
       if (payload.componentId === props.component) {
-        console.log(payload.status)
         setFooter(payload.status)
         if (mouted) {
-          console.log(props)
           props.newStatus(String(payload.status))
         }
       }

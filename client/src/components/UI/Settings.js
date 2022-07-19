@@ -6,15 +6,16 @@ import LeftRightCtrl from "./LeftRightCtrl";
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "./Settings.module.css"
-
+import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-import {useState} from "react";
+import { useState, useRef, useEffect } from "react";
 
 const Settings = (props) => {
     const [footer, setFooter] = useState(props.footer);
     const socketCtx = useSocketContext();
-    
     const [mouted, setMounted] = useState(true);
+    const settingCtrl = useRef();
+
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -26,12 +27,52 @@ const Settings = (props) => {
             },
         }
     })
-   
+
     const handleChangeFooter = (newFooter) => {
         setFooter(newFooter);
-      };
+    };
 
+    const settingEmit = () => {
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            componentId: props.component,
+            command: "getStatus"
+        })
 
+        socketCtx.socket.on("status", payload => {
+            if (payload.componentId === props.component) {
+                setFooter(payload.footer)
+            }
+        });
+
+        socketCtx.socket.on('footer', payload => {
+            if (payload.componentId === props.component) {
+                setFooter(payload.status)
+                if (mouted) {
+                    props.newStatus(String(payload.status))
+                }
+            }
+        })
+
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on('getFooter', payload => {
+            setFooter(payload.status)
+            if (mouted) {
+                if (payload.status !== undefined) { if (mouted) props.newStatus(String(payload.status)) }
+                else {
+                    if (mouted) props.newStatus(String("Connected!"))
+                }
+            }
+        })
+
+        return () => setMounted(false)
+    }
+    settingCtrl.current = settingEmit;
+
+    useEffect(() => {
+        settingCtrl.current()
+    }, [socketCtx.socket]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -42,12 +83,11 @@ const Settings = (props) => {
                 <LeftRightCtrl component={props.component} footer={props.footer} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} footer={props.footer}  newStatus={handleChangeFooter} command="frame size" />
+            <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} command="frame size" />
             <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' />
             <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' />
             <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' />
         </ThemeProvider>
-
     )
 }
 export default Settings

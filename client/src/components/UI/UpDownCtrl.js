@@ -1,4 +1,5 @@
 import { useSocketContext } from "../../services/SocketContext";
+import { useAppContext } from "../../services/AppContext";
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Up from '@mui/icons-material/ArrowCircleUpOutlined';
@@ -7,6 +8,7 @@ import Down from '@mui/icons-material/ArrowCircleDownOutlined';
 
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
+  const appCtx = useAppContext();
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
@@ -19,6 +21,13 @@ const UpDownCtrl = (props) => {
         val: negativ ? 15 : -15
       }
     })
+
+    socketCtx.socket.emit("footer", {
+      status: "Last change by: " + socketCtx.username,
+      componentId: props.component
+    })
+
+    appCtx.addLog("User changed the position on " + props.component)
   }
 
   return (
@@ -31,7 +40,6 @@ const UpDownCtrl = (props) => {
       </IconButton>
     </Stack>
   )
-
 }
 
 export default UpDownCtrl;

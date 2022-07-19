@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -25,7 +24,6 @@ const SwitchOnOff = (props) => {
     }
   })
 
-  console.log(switchStatus)
   const switchFunction = () => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
