@@ -40,7 +40,9 @@ const SwiitchCtrl = (props) => {
 
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
-        if (props.command === 'switch') { props.icon.style.color = (switchValue === true) ? 'grey' : 'white'; }
+        try {
+            props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
+        } catch (error) { }
     }
 
     return (
