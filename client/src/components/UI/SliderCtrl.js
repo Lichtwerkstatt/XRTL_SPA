@@ -17,7 +17,6 @@ const SliderCtrl = (props) => {
 
   const sliderEmit = () => {
     socketCtx.socket.on("status", payload => {
-      console.log(payload);
       if (payload.component === props.component) {
         setSliderPos(payload.status[props.control]);
       }
@@ -31,18 +30,24 @@ const SliderCtrl = (props) => {
 
   const handleSettingChanges = (event, newValue) => {
     socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
+      userId: socketCtx.username,
       componentId: props.component,
       command: {
         controlId: props.command,
         val: newValue
       }
     })
+
+    socketCtx.socket.emit("footer", {
+      status: "Last change by: " + socketCtx.username,
+      componentId: props.component
+    })
+
     appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
   }
 
   return (
-    <Box  sx={{ width: 250, m: 2 }}>
+    <Box sx={{ width: 250, m: 2 }}>
       <Typography id="input-slider" gutterBottom>
         {props.title}
       </Typography>
@@ -57,6 +62,7 @@ const SliderCtrl = (props) => {
           value={sliderPos}
           onChange={handleSettingChanges}
           marks={marks}
+          disabled={(socketCtx.socket.connected) ? false : true}
         />
       </Stack>
     </Box>

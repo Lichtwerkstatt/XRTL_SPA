@@ -7,16 +7,20 @@ import { useEffect, useRef, useState } from "react";
 
 
 const Stream = (props) => {
+  const [mouted, setMounted] = useState(true);
   const [footer, setFooter] = useState(props.footer);
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
 
+
+
+
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
     console.log("Stop Streaming.");
-    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.getNewUsername() });
+    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
   };
 
   const webcamEmitPic = () => {
@@ -33,9 +37,11 @@ const Stream = (props) => {
         var canvas = document.getElementById("ScreenCanvas");
         if (canvas != null) {
           var ctx = canvas.getContext("2d");
-          var x = 0,
-            y = 0;
-          ctx.drawImage(this, x, y);
+          var x1 = 0,
+            y1 = 0,
+            x2 = 300,
+            y2 = 200;
+          ctx.drawImage(this, x1, y1, x2, y2);
         }
       };
       img.src = "data:image/jpg;base64," + base64String;
@@ -44,8 +50,12 @@ const Stream = (props) => {
 
   const webcamStartStreaming = () => {
     console.log("Start Streaming.");
-    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.getNewUsername() });
+    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
   }
+
+  const handleChangeFooter = (newFooter) => {
+    setFooter(newFooter);
+  };
 
   tempWebcam.current = webcamEmitPic;
   tempWebcam2.current = webcamStartStreaming;
@@ -67,13 +77,13 @@ const Stream = (props) => {
       height="430px"
       onClose={handleCloseWindow}
       footer={footer}
+      newStatus={handleChangeFooter}
     >
       <div className={styles.Canvas}>
-        <canvas id="ScreenCanvas" position="absolute" width="600px" height="400px" top="43px" left="15px"
-          border="2px solid #01bd7d" border-radius="15px" />
+        <canvas id="ScreenCanvas" />
       </div>
       <div className={styles.Settings}>
-        <Settings component={props.id} />
+        <Settings component={props.id} footer={footer} newStatus={handleChangeFooter} />
       </div>
 
     </Window>

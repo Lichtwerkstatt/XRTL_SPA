@@ -25,14 +25,24 @@ const SwiitchCtrl = (props) => {
     const handleSettingChanges = (event, newValue) => {
         setSwitchValue(newValue);
         socketCtx.socket.emit("command", {
-            userId: socketCtx.getNewUsername(),
+            userId: socketCtx.username,
             componentId: props.component,
             command: {
                 controlId: props.command,
                 val: newValue
             }
         })
+
+        socketCtx.socket.emit("footer", {
+            status: "Last change by: " + socketCtx.username,
+            componentId: props.component
+        })
+
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+
+        try {
+            props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
+        } catch (error) { }
     }
 
     return (
@@ -42,8 +52,8 @@ const SwiitchCtrl = (props) => {
                     <Typography>{props.start}</Typography>
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
-                        inputProps={{ 'aria-label': 'controlled' }} />
-
+                        inputProps={{ 'aria-label': 'controlled' }}
+                        disabled={(socketCtx.socket.connected) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>

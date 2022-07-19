@@ -182,7 +182,7 @@ io.on('connection', socket => {
     });
 
     socket.on('footer', payload => {
-        console.log(footerList)
+        console.log(payload)
         if (footerList.includes(payload.componentId) === false) {
             footerList.push(payload.componentId, payload.status)
         } else if (footerList.includes(payload.componentId) === true) {

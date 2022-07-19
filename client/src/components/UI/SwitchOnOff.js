@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
+import { Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+import Switch from './Switch';
+import { GiLaserWarning } from "react-icons/gi"
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
   const [footer, setFooter] = useState(props.footer);
   const [mouted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
-  const appCtx = useAppContext();
   const tempSwitch = useRef()
 
   const theme = createTheme({
@@ -26,7 +26,7 @@ const SwitchOnOff = (props) => {
 
   const switchFunction = () => {
     socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
+      userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
     })
@@ -64,37 +64,13 @@ const SwitchOnOff = (props) => {
     tempSwitch.current();
   }, [socketCtx.socket])
 
-  const switch_Handler = (event) => {
-    event.preventDefault();
-    //event.target.textContent = 'On';
-
-    const newStatus = !switchStatus;
-
-
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
-      componentId: 'Michelson_laser_power',
-      command: {
-        controlId: 'switch',
-        val: newStatus
-      }
-    })
-    socketCtx.socket.emit("footer", {
-      status: "Last change by: " + socketCtx.getNewUsername(),
-      componentId: props.component
-    })
-
-
-    console.log("Current Laser State: " + newStatus);
-    setSwitchStatus(newStatus);
-    appCtx.addLog("User set position on " + props.component + " to " + newStatus)
-  }
-
   return (
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
-        <Button variant="contained" onClick={switch_Handler} sx={{ width: '60px', padding: "10px", marginLeft: "20px", marginTop: "20px" }}>
-          {switchStatus ? 'ON' : 'OFF'}</Button>
+        <Box sx={{ m: 2, width: 250 }}>
+          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} />
+          <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
+        </Box>
       </ThemeProvider>
     </div>
   )

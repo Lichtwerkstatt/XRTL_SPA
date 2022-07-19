@@ -1,142 +1,137 @@
 import { useSocketContext } from '../../services/SocketContext'
 import React, { useState } from "react";
 import styles from "./Login.module.css"
-import { BiFontColor } from 'react-icons/bi'
 import { useAppContext } from "../../services/AppContext";
+import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 
-//weiterleitung von adresse & username -->  erfolgt, aber socket Manager wird nicht mit neuer URL besetzt
-//verbindung des icons mit öffnen & schließen des Fensters --> zurücksetzen der Daten
 const Login = (props) => {
+    var col = ['IndianRed', 'FireBrick', 'MediumVioletRed', 'HotPink', 'Coral', 'DarkOrange', 'Yellow',
+        'Khaki', 'Plum', 'DarkOrchid', 'ForestGreen', 'DarkOliveGreen', 'LightGreen', 'Teal', 'Aqua', 'Blue', 'LightSkyBlue']
     const [username, setUsername] = useState("");
     const [fontColor, setfontColor] = useState("white");
-    const [connection, setConnection] = useState('http://localhost:7000');
-    const [customConnection, setCustomConnection] = useState('');
-    const [custom, setCuston] = useState(false);
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
+    const [connection, setConnection] = useState(null);
+    const filter = createFilterOptions();
+    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://192.168.1.42:7000' }]
 
-    const displayCustom = () => {
-        setCuston(true);
-        var inputCustom = document.getElementById("customInput");
-        var dropDownMenu = document.getElementById("dropDownMenu")
+    const theme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                light: '#01bd7d',
+                main: '#01bd7d',
+                dark: '#01bd7d',
+                contrastText: '#fff',
+            },
+        },
+        spacing: 2,
+    })
 
-        dropDownMenu.style.display = 'none';
-        inputCustom.style.display = 'block'
-    }
-
-    const loginCaseChecking = () => {
-        var errorLabel = document.getElementById('errorLabel');
-
-        if (username === '') {
-            errorLabel.innerHTML = "Please enter a username!";
-        } else {
-            errorLabel.innerHTML = "";
-            const addressCheck = checkServerAdress();
-            socketCtx.setNewUsername(String(username));
-
-            if (custom === false) {
-                errorLabel.innerHTML = "";
-                socketCtx.setNewURL(String(connection), String(username));
-                socketCtx.setNewFont(fontColor);
+    const handleLogin = () => {
+        if (username !== "") {
+            try {
+                socketCtx.setNewURL(String(connection.title), String(username));
                 socketCtx.toggleConnection();
-                setUsername('');
-                setConnection('http://localhost:7000');
-            } else if (custom === true && customConnection === "") {
-                errorLabel.innerHTML = "Please enter a server address!";
-            } else if (custom === true && customConnection !== "" && addressCheck) {
-                errorLabel.innerHTML = "";
-                socketCtx.toggleConnection();
-                socketCtx.setNewURL(String(customConnection), String(username));
-                setUsername('');
-                setCustomConnection('');
-                setCuston(false);
-            } else {
-                errorLabel.innerHTML = 'Please check your connection address!'
             }
+            catch (error) { }
         }
     }
 
-    const checkServerAdress = () => {
-        // let regex = /http:\/\/([a-zA-Z0-9\.]*):[0-9]{4}/i
-        let ipRegex = /http:\/\/[0-9]{3}\.[0-9]{3}\.[0-9]+\.[0-9]{1,3}:[0-9]{4}$/i
-        let localRegex = /http:\/\/localhost:[0-9]{4}$/i;
+    const handleChange = (event) => {
+        setUsername(event.target.value);
+    };
 
-        if (localRegex.test(customConnection) || ipRegex.test(customConnection)) {
-            return true;
+    const autoCompleteHandle = (event, newValue) => {
+        if (typeof newValue === 'string') {
+            setConnection({ title: newValue, });
+        } else if (newValue && newValue.inputValue) {
+            setConnection({ title: newValue.inputValue, });
+        } else {
+            setConnection(newValue);
         }
-        return false;
+    }
+
+    const filterOption = (options, params) => {
+        const filtered = filter(options, params);
+        const { inputValue } = params;
+        const isExisting = options.some((option) => inputValue === option.title);
+        if (inputValue !== '' && !isExisting) {
+            filtered.push({ inputValue, title: `Add "${inputValue}"`, });
+        }
+        return filtered;
+    }
+
+    const getLabel = (option) => {
+        if (typeof option === 'string') {
+            return option;
+        }
+        if (option.inputValue) {
+            return option.inputValue;
+        }
+        return option.title;
     }
 
     if (appCtx.showLogin) {
         return (
-            <div className="login" id="login">
+            <ThemeProvider theme={theme}>
                 <div className={styles.popupWindow}>
                 </div>
                 <div className={styles.popupInner} >
                     <h3 title="settings">Settings</h3>
-
-                    <div className={styles.setUsername}>
-                        <label >Username:</label>
-                        <input
-                            autoFocus="autofocus"
-                            type="textfield"
-                            placeholder="Please enter your username"
-                            id="fontColor"
-                            value={username}
-                            onKeyPress={(e) => { if (e.key === 'Enter') { loginCaseChecking(); } }}
-                            onChange={(e) => {
-                                setUsername(e.target.value);
-                                var errorLabel = document.getElementById('errorLabel');
-                                if (username.length >= 20) {
-                                    setUsername("");
-                                    errorLabel.innerHTML = "Username is to long!";
-                                }
-                                else {
-                                    errorLabel.innerHTML = "";
-                                }
-                            }}
-                            required
-                        ></input>
-                    </div>
-
-                    <div className={styles.colorPicker}>
-                        <li onClick={(e) => {
-                            var c = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-                            setfontColor(c);
-                        }}><BiFontColor size={33} color={fontColor} /></li>
-                    </div>
-
-                    <div className={styles.serverConnect}>
-                        <label htmlFor="serverOption" >
-                            Choose server:
-                        </label>
-                        <select id="dropDownMenu" name="serverOption" data-testid="dropDownMenu"
-                            onClick={(e) => {
-                                setConnection(e.target.value);
-                            }}>
-                            <option data-testid='localhost' value='http://localhost:7000'>http://localhost:7000</option>
-                            <option data-testid='himbeere' value='http://192.168.1.42:7000'>http://192.168.1.42:7000</option>
-                            <option data-testid='custom' value='' onClick={displayCustom}>Define</option>
-                        </select>
-
-                        <input id="customInput"
-                            placeholder="http://..."
-                            value={customConnection}
-                            onChange={(e) => {
-                                setCustomConnection(e.target.value);
-                            }}
+                    <Grid container columnSpacing={{ md: 95 }}>
+                        <Grid item xs={6}>
+                            <TextField
+                                autoFocus
+                                variant="outlined"
+                                label="Username "
+                                value={username}
+                                onChange={handleChange}
+                                onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                                style={{ marginLeft: 17, width: 250 }}
+                                error={username === ""}
+                                helperText={username === "" ? 'Please enter your username!' : ' '}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            < IconButton onClick={(e) => {
+                                var c = col[Math.floor(Math.random() * 16)]
+                                document.getElementById("colorIcon").style.color = c
+                                setfontColor(c);
+                                socketCtx.setNewFont(c);
+                            }} >
+                                <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" onChange />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
+                    <Box sx={{ m: 8, width: 250 }} >
+                        <Autocomplete
+                            value={connection}
+                            freeSolo
+                            renderInput={(params) => (
+                                <TextField {...params} label="Choose server address " />)}
+                            onChange={autoCompleteHandle}
+                            filterOptions={filterOption}
+                            selectOnFocus
+                            clearOnBlur
+                            handleHomeEndKeys
+                            options={connectionOption}
+                            getOptionLabel={getLabel}
+                            renderOption={(props, option) => <li {...props}>{option.title}</li>}
                         />
-                    </div>
+                    </Box>
 
-                    <div className={styles.ErrorMessages}>
-                        <label title="errorLabel" id="errorLabel" color="white"></label>
-                    </div>
-                    <button type="submit" title="login"
-                        onClick={loginCaseChecking}>
-                        Login
-                    </button>
-                </div>
-            </div >
+                    <Button size="small" type="submit" variant="contained"
+                        onClick={handleLogin}
+                        endIcon={<SendIcon />}
+                        style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
+                    >Login</Button>
+
+                </div >
+            </ThemeProvider>
         );
     } else {
         return (<div></div>)

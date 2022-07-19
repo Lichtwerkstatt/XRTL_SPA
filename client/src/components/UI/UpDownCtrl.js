@@ -1,38 +1,45 @@
 import { useSocketContext } from "../../services/SocketContext";
+import { useAppContext } from "../../services/AppContext";
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Up from '@mui/icons-material/ArrowCircleUpOutlined';
 import Down from '@mui/icons-material/ArrowCircleDownOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
-  var negativ = false;
+  const appCtx = useAppContext();
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
 
     socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
+      userId: socketCtx.username,
       componentId: props.component,
       command: {
         controlId: direction,
         val: negativ ? 15 : -15
       }
     })
+
+    socketCtx.socket.emit("footer", {
+      status: "Last change by: " + socketCtx.username,
+      componentId: props.component
+    })
+
+    appCtx.addLog("User changed the position on " + props.component)
   }
 
   return (
     <Stack>
-      <IconButton onClick={handleCtrl("tilt", true)}>
+      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.socket.connected) ? false : true} >
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("tilt", false)}>
+      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.socket.connected) ? false : true} >
         <Down />
       </IconButton>
     </Stack>
   )
-
 }
 
 export default UpDownCtrl;

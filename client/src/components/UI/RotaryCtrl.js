@@ -15,7 +15,7 @@ const RotaryCtrl = (props) => {
 
   const rotaryCtrlEmit = () => {
     socketCtx.socket.emit("command", {
-      userId: socketCtx.getNewUsername(),
+      userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
     })
@@ -24,7 +24,6 @@ const RotaryCtrl = (props) => {
       if (payload.componentId === props.component) {
         if (props.control === "top") {
           setRotation(payload.status.top.absolute)
-
         } else if (props.control === "bottom") {
           setRotation(payload.status.bottom.absolute)
         } else {
@@ -36,10 +35,8 @@ const RotaryCtrl = (props) => {
 
     socketCtx.socket.on('footer', payload => {
       if (payload.componentId === props.component) {
-        console.log(payload.status)
         setFooter(payload.status)
         if (mouted) {
-          console.log(props)
           props.newStatus(String(payload.status))
         }
       }
@@ -79,7 +76,7 @@ const RotaryCtrl = (props) => {
     }
     if (direction !== 0) {
       socketCtx.socket.emit("command", {
-        userId: socketCtx.getNewUsername(),
+        userId: socketCtx.username,
         componentId: props.component,
         command: {
           controlId: props.control,
@@ -88,10 +85,9 @@ const RotaryCtrl = (props) => {
       })
 
       socketCtx.socket.emit("footer", {
-        status: "Last change by: " + socketCtx.getNewUsername(),
+        status: "Last change by: " + socketCtx.username,
         componentId: props.component
       })
-
     }
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
@@ -108,13 +104,13 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={appCtx.busyComps.has(props.component)} >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component)) ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={appCtx.busyComps.has(props.component)}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component)) ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
-    </form>
+    </form >
   );
 };
 

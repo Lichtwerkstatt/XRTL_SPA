@@ -12,9 +12,9 @@ div.popupWindow {
 
 div.popupInner {
     width: 370px;
-    height: 250px;
+    height: 275px;
     position:absolute;
-    top: 40%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.6);
@@ -28,72 +28,3 @@ div.popupInner h3 {
     margin-left: 15px;
 }
 
-
-div.setUsername label {
-    color: white;
-    position: relative;
-    margin-left: 20px;
-}
-
-div.setUsername input {
-    position: relative;
-    margin-left: 20px;
-    width: 200px;
-    border-radius: 5px;
-}
-
-div.colorPicker li {
-    position: relative;
-    display: block;
-    top: -30px;
-    left: 325px;
-}
-
-div.serverConnect {
-    position: relative;
-    top: -10px;
-    margin-left: 20px;
-    padding: 0;
-    color: white;
-}
-
-div.serverConnect select {
-    display: block;
-    margin-left: 20px;
-    border-radius: 5px;
-}
-
-div.serverConnect select option {
-    color: #000;
-}
-
-div.serverConnect input {
-    display: none;
-    position: relative;
-    margin-left: 112px;
-    top: -22px;
-    width: 173px;
-    border-radius: 5px;
-}
-
-div.ErrorMessages label {
-    display: block;
-    position: fixed;
-    color: rgb(255, 0, 0);
-    margin-left: 20px;
-    margin-top: 20px;
-}
-
-div.popupInner button {
-    font-size: larger;
-    margin-top: 25px;
-    margin-left: 280px;
-    border: none;
-    background-color: #00ffa8;
-
-    padding-top: 3px;
-    height: 30px;
-    width: 60px;
-    border-radius: 5px;
-    color: white;
-}
