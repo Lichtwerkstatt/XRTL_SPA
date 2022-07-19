@@ -12,12 +12,21 @@ const Stream = (props) => {
   const appCtx = useAppContext();
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
-  
+
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
     console.log("Stop Streaming.");
     socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
   };
+
+  const handleReset = () => {
+    console.log(socketCtx.socket)
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      componentId: props.id,
+      command: "reset"
+    })
+  }
 
   const webcamEmitPic = () => {
     socketCtx.socket.on("pic", function (data) {
@@ -72,6 +81,7 @@ const Stream = (props) => {
       width="1000px"
       height="430px"
       onClose={handleCloseWindow}
+      onReset={handleReset}
       footer={footer}
       newStatus={handleChangeFooter}
     >

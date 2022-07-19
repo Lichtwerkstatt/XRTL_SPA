@@ -3,13 +3,24 @@ import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import KM100_Background from "./media/km100_outline.png"
 import { useAppContext } from "../../services/AppContext";
+import { useSocketContext } from "../../services/SocketContext"
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
-  const appCtx = useAppContext()
+  const appCtx = useAppContext();
+  const socketCtx = useSocketContext();
 
   const handleCloseWindow = () => {
+    console.log(props)
     appCtx.toggleSelectedComp(props.id)
+  }
+  const handleReset = () => {
+    console.log(socketCtx.socket)
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      componentId: props.id,
+      command: "reset"
+    })
   }
 
   const handleChangeFooter = (newFooter) => {
@@ -26,6 +37,7 @@ const KM100 = (props) => {
       width="250px"
       background={KM100_Background}
       onClose={handleCloseWindow}
+      onReset={handleReset}
     >
       <RotaryCtrl
         rotation={props.rotationTop}
