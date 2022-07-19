@@ -98,10 +98,10 @@ const Login = (props) => {
                         </Grid>
                         <Grid item xs={6}>
                             < IconButton onClick={(e) => {
-                                var c = col[Math.floor(Math.random() * 16)]
-                                document.getElementById("colorIcon").style.color = c
-                                setfontColor(c);
-                                socketCtx.setNewFont(c);
+                                col = col[Math.floor(Math.random() * 16)]
+                                document.getElementById("colorIcon").style.color = col
+                                setfontColor(col);
+                                socketCtx.setNewFont(col);
                             }} >
                                 <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" onChange />
                             </IconButton>

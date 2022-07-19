@@ -40,9 +40,7 @@ const SwitchOnOff = (props) => {
     socketCtx.socket.on('footer', payload => {
       if (payload.componentId === props.component) {
         setFooter(payload.status)
-        if (mouted) {
-          props.newStatus(String(payload.status))
-        }
+        if (mouted) { props.newStatus(String(payload.status)) }
       }
     })
 
@@ -50,12 +48,7 @@ const SwitchOnOff = (props) => {
 
     socketCtx.socket.on('getFooter', payload => {
       setFooter(payload.status)
-      if (mouted) {
-        if (payload.status !== undefined) { if (mouted) props.newStatus(String(payload.status)) }
-        else {
-          if (mouted) props.newStatus(String("Connected!"))
-        }
-      }
+      if (mouted) { props.newStatus(String(payload.status)) }
     })
   }
 

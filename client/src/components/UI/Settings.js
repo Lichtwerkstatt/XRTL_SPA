@@ -1,14 +1,13 @@
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSocketContext } from "../../services/SocketContext";
+import { useState, useRef, useEffect } from "react";
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
 import Select from "./Select";
 import UpDownCtrl from "./UpDownCtrl"
 import LeftRightCtrl from "./LeftRightCtrl";
 import Box from '@mui/material/Box';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "./Settings.module.css"
-import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext";
-import { useState, useRef, useEffect } from "react";
 
 const Settings = (props) => {
     const [footer, setFooter] = useState(props.footer);
@@ -48,9 +47,7 @@ const Settings = (props) => {
         socketCtx.socket.on('footer', payload => {
             if (payload.componentId === props.component) {
                 setFooter(payload.status)
-                if (mouted) {
-                    props.newStatus(String(payload.status))
-                }
+                if (mouted) { props.newStatus(String(payload.status)) }
             }
         })
 
@@ -58,12 +55,7 @@ const Settings = (props) => {
 
         socketCtx.socket.on('getFooter', payload => {
             setFooter(payload.status)
-            if (mouted) {
-                if (payload.status !== undefined) { if (mouted) props.newStatus(String(payload.status)) }
-                else {
-                    if (mouted) props.newStatus(String("Connected!"))
-                }
-            }
+            if (mouted) { props.newStatus(String(payload.status)) }
         })
 
         return () => setMounted(false)

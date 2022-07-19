@@ -7,16 +7,12 @@ import { useEffect, useRef, useState } from "react";
 
 
 const Stream = (props) => {
-  const [mouted, setMounted] = useState(true);
   const [footer, setFooter] = useState(props.footer);
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
-
-
-
-
+  
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
     console.log("Stop Streaming.");
