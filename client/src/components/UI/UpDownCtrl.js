@@ -32,10 +32,10 @@ const UpDownCtrl = (props) => {
 
   return (
     <Stack>
-      <IconButton onClick={handleCtrl("tilt", true)}>
+      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.socket.connected) ? false : true} >
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("tilt", false)}>
+      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.socket.connected) ? false : true} >
         <Down />
       </IconButton>
     </Stack>

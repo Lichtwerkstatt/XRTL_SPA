@@ -62,6 +62,7 @@ const SliderCtrl = (props) => {
           value={sliderPos}
           onChange={handleSettingChanges}
           marks={marks}
+          disabled={(socketCtx.socket.connected) ? false : true}
         />
       </Stack>
     </Box>

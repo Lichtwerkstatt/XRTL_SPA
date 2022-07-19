@@ -52,7 +52,8 @@ const SwiitchCtrl = (props) => {
                     <Typography>{props.start}</Typography>
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
-                        inputProps={{ 'aria-label': 'controlled' }} />
+                        inputProps={{ 'aria-label': 'controlled' }}
+                        disabled={(socketCtx.socket.connected) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>

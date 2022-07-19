@@ -31,10 +31,10 @@ const LeftRightCtrl = (props) => {
 
     return (
         <Box>
-            <IconButton onClick={handleCtrl("pan", false)}>
+            <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.socket.connected) ? false : true} >
                 <Left />
             </IconButton>
-            <IconButton onClick={handleCtrl("pan", true)}>
+            <IconButton onClick={handleCtrl("pan", true)} disabled={(socketCtx.socket.connected) ? false : true} >
                 <Right />
             </IconButton>
         </Box>
