@@ -8,6 +8,8 @@ import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 
 const Login = (props) => {
+    var col = ['IndianRed', 'FireBrick', 'MediumVioletRed', 'HotPink', 'Coral', 'DarkOrange', 'Yellow',
+        'Khaki', 'Plum', 'DarkOrchid', 'ForestGreen', 'DarkOliveGreen', 'LightGreen', 'Teal', 'Aqua', 'Blue', 'LightSkyBlue']
     const [username, setUsername] = useState("");
     const [fontColor, setfontColor] = useState("white");
     const socketCtx = useSocketContext();
@@ -96,12 +98,10 @@ const Login = (props) => {
                         </Grid>
                         <Grid item xs={6}>
                             < IconButton onClick={(e) => {
-                                var c = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-
-                                var col = ['#FFC055', '#CC4400', '#3340FF', '#78AB70', '#8993C1', '#25A26C', '#F5C7E7', '#FFE599', '#741b47', '#a2c4c9']
+                                var c = col[Math.floor(Math.random() * 16)]
                                 document.getElementById("colorIcon").style.color = c
                                 setfontColor(c);
-                                socketCtx.setNewFont(fontColor);
+                                socketCtx.setNewFont(c);
                             }} >
                                 <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" onChange />
                             </IconButton>
