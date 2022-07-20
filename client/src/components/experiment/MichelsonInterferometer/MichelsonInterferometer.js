@@ -5,6 +5,19 @@ import LaserCtrl from "../../assembly/LaserCtrl";
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
+  var height = window.innerHeight;
+  var width = window.innerWidth;
+  var halfWidth = width / 2;
+
+  var topHigh = String(height - (height / 3 * 2.7))
+  var topHighMiddle = String(height - (height / 2))
+  var topMiddle = String(height - (height / 2.15))
+  var leftLeft = String(width - (halfWidth * 1.9))
+  var leftMiddle = String(width - (halfWidth * 1.8))
+  var leftRight = String(width - (halfWidth * 0.4))
+  var leftMiddleRight = String(width - (halfWidth * 0.4))
+  var leftCam = String(width - (halfWidth * 1.5))
+
   return (
     <div>
       {props.selected.has("Michelson_KM100") && (
@@ -14,8 +27,8 @@ const MichelsonInterferometer = (props) => {
           rotationTop="0"
           rotationBottom="0"
           footer={footer}
-          top="50"
-          left="50"
+          top={topHigh}
+          left={leftLeft}
         />
       )}
       {props.selected.has("Michelson_linear") && (
@@ -24,8 +37,8 @@ const MichelsonInterferometer = (props) => {
           id="Michelson_linear"
           footer={footer}
           rotation="0"
-          top="400"
-          left="100"
+          top={topMiddle}
+          left={leftMiddle}
         />
       )}
       {props.selected.has("Michelson_laser") && (
@@ -35,17 +48,17 @@ const MichelsonInterferometer = (props) => {
           rotationTop="0"
           rotationBottom="0"
           footer={footer}
-          top="450"
-          left="1500"
+          top={topMiddle}
+          left={leftMiddleRight}
         />
       )}
       {props.selected.has("Michelson_cam") && (
         <Cam1
           title="Screen"
           id="Michelson_cam"
-          top="550"
-          left="400"
           footer={footer}
+          top={topHighMiddle}
+          left={leftCam}
         />
       )}
       {props.selected.has("Michelson_LaserPower") && (
@@ -53,8 +66,8 @@ const MichelsonInterferometer = (props) => {
           title="Power Supply"
           id="Michelson_LaserPower"
           footer={footer}
-          top="100"
-          left="1600"
+          top={topHigh}
+          left={leftRight}
         />
       )}
     </div>

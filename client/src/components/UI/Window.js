@@ -4,7 +4,6 @@ import { CgCloseO } from "react-icons/cg"
 import { IoReloadCircleOutline } from "react-icons/io5"
 
 const Window = (props) => {
-
   return (
     <Draggable handle=".draggableHandler">
       <div
