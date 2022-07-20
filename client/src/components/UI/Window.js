@@ -1,9 +1,9 @@
 import Draggable from "react-draggable"
 import styles from "./Window.module.css"
 import { CgCloseO } from "react-icons/cg"
+import { IoReloadOutline } from "react-icons/io5"
 
 const Window = (props) => {
-
   return (
     <Draggable handle=".draggableHandler">
       <div
@@ -22,10 +22,8 @@ const Window = (props) => {
           >
             {props.header}
           </span>
-          {/* TODO : Add Status Retrievel Button 
-            TODO: Add Reset Component Button
-           */}
-          <div className={styles.windowHeaderIcon} onClick={props.onClose}><CgCloseO size={20} /></div>
+          <span onClick={props.onReset} > <IoReloadOutline size={20} />        </span>
+          <span onClick={props.onClose}><CgCloseO size={20} /></span>
         </div>
         <div
           className={styles.windowContent}

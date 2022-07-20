@@ -60,7 +60,7 @@ const SliderCtrl = (props) => {
           min={-2}
           max={2}
           value={sliderPos}
-          onChange={handleSettingChanges}
+          onChangeCommitted={handleSettingChanges}
           marks={marks}
           disabled={(socketCtx.socket.connected) ? false : true}
         />

@@ -3,10 +3,12 @@ import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
 import SM1ZP_bg from "./media/linear_outline.png";
+import { useSocketContext } from "../../services/SocketContext"
 
 const SM1ZP = (props) => {
   const [footer, setFooter] = useState(props.footer);
-  const appCtx = useAppContext()
+  const appCtx = useAppContext();
+  const socketCtx = useSocketContext();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
@@ -16,6 +18,15 @@ const SM1ZP = (props) => {
     setFooter(newFooter);
   };
 
+  const handleReset = () => {
+    console.log(socketCtx.socket)
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      componentId: props.id,
+      command: "reset"
+    })
+  }
+
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
@@ -24,6 +35,7 @@ const SM1ZP = (props) => {
       width="250px"
       height="235px"
       onClose={handleCloseWindow}
+      onReset={handleReset}
       background={SM1ZP_bg}
       newStatus={handleChangeFooter}
       footer={footer}

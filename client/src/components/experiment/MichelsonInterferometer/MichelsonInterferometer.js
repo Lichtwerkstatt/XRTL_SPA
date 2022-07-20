@@ -5,56 +5,76 @@ import LaserCtrl from "../../assembly/LaserCtrl";
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
+  var zero = "0"
+
+  var height = window.innerHeight;
+  var width = window.innerWidth;
+  var halfWidth = width / 2;
+  var topHigh = String(height - (height / 3 * 2.7))
+  var topHighMiddle = String(height - (height / 1.4))
+  var topMiddle = String(height - (height / 2.15))
+  var leftLeft = String(width - (halfWidth * 1.9))
+  var leftMiddle = String(width - (halfWidth * 1.8))
+  var leftRight = String(width - (halfWidth * 0.47))
+  var leftMiddleRight = String(width - (halfWidth * 0.4))
+  var leftCam = String(width - (halfWidth * 1.485))
+
+  var componentList = ['Michelson_KM100', 'Michelson_linear', 'Michelson_laser', 'Michelson_LaserPower', 'Michelson_cam']
   return (
     <div>
-      {props.selected.has("Michelson_KM100") && (
+      {/* KM100 */}
+      {props.selected.has(componentList[0]) && (
         <KM100
           title="Mirror"
-          id="Michelson_KM100"
-          rotationTop="0"
-          rotationBottom="0"
+          id={componentList[0]}
+          rotationTop={zero}
+          rotationBottom={zero}
           footer={footer}
-          top="50"
-          left="50"
+          top={topHigh}
+          left={leftLeft}
         />
       )}
-      {props.selected.has("Michelson_linear") && (
+      {/* Linear stage */}
+      {props.selected.has(componentList[1]) && (
         <SM1ZP
           title="Mirror Stage"
-          id="Michelson_linear"
+          id={componentList[1]}
           footer={footer}
-          rotation="0"
-          top="400"
-          left="100"
+          rotation={zero}
+          top={topMiddle}
+          left={leftMiddle}
         />
       )}
-      {props.selected.has("Michelson_laser") && (
+      {/* Laser ctrl */}
+      {props.selected.has(componentList[2]) && (
         <KM100
           title="Laser"
-          id="Michelson_laser"
-          rotationTop="0"
-          rotationBottom="0"
+          id={componentList[2]}
+          rotationTop={zero}
+          rotationBottom={zero}
           footer={footer}
-          top="450"
-          left="1500"
+          top={topMiddle}
+          left={leftMiddleRight}
         />
       )}
-      {props.selected.has("Michelson_cam") && (
-        <Cam1
-          title="Screen"
-          id="Michelson_cam"
-          top="550"
-          left="400"
-          footer={footer}
-        />
-      )}
-      {props.selected.has("Michelson_LaserPower") && (
+      {/* Laser power */}
+      {props.selected.has(componentList[3]) && (
         <LaserCtrl
           title="Power Supply"
-          id="Michelson_LaserPower"
+          id={componentList[3]}
           footer={footer}
-          top="100"
-          left="1600"
+          top={topHigh}
+          left={leftRight}
+        />
+      )}
+      {/* Cam1 */}
+      {props.selected.has(componentList[4]) && (
+        <Cam1
+          title="Screen"
+          id={componentList[4]}
+          footer={footer}
+          top={topHighMiddle}
+          left={leftCam}
         />
       )}
     </div>
