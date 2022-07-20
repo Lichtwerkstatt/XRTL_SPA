@@ -114,6 +114,7 @@ const Login = (props) => {
                             renderInput={(params) => (
                                 <TextField {...params} label="Choose server address " />)}
                             onChange={autoCompleteHandle}
+                            onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
                             filterOptions={filterOption}
                             selectOnFocus
                             clearOnBlur

@@ -1,7 +1,7 @@
 import Draggable from "react-draggable"
 import styles from "./Window.module.css"
 import { CgCloseO } from "react-icons/cg"
-import { IoReloadCircleOutline } from "react-icons/io5"
+import { IoReloadOutline } from "react-icons/io5"
 
 const Window = (props) => {
   return (
@@ -22,7 +22,7 @@ const Window = (props) => {
           >
             {props.header}
           </span>
-          <span onClick={props.onReset}> <IoReloadCircleOutline size={20} /></span>
+          <span onClick={props.onReset} > <IoReloadOutline size={20} />        </span>
           <span onClick={props.onClose}><CgCloseO size={20} /></span>
         </div>
         <div
