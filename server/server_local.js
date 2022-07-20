@@ -18,6 +18,7 @@ var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
+var online = false;
 
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
@@ -147,7 +148,7 @@ io.on('connection', socket => {
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
-        console.log("Command received: ", payload);
+        //console.log("Command received: ", payload);
         socket.to(GUIId).emit("newLog", "Command received: " + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
     });
@@ -166,7 +167,6 @@ io.on('connection', socket => {
             componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
-        console.log(componentList)
         socket.emit("newComponent", componentList);
         socket.broadcast.emit('status', payload)
     });
@@ -183,9 +183,11 @@ io.on('connection', socket => {
     })
 
     socket.on('getFooter', payload => {
+        console.log(componentList.includes(payload))
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] });
+            online = componentList.includes(payload) ? false : true;
+            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1], online: online});
         }
     })
 
