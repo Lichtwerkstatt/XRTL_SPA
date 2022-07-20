@@ -11,7 +11,7 @@ const MichelsonInterferometer = (props) => {
   var width = window.innerWidth;
   var halfWidth = width / 2;
   var topHigh = String(height - (height / 3 * 2.7))
-  var topHighMiddle = String(height - (height / 1.7))
+  var topHighMiddle = String(height - (height / 1.4))
   var topMiddle = String(height - (height / 2.15))
   var leftLeft = String(width - (halfWidth * 1.9))
   var leftMiddle = String(width - (halfWidth * 1.8))

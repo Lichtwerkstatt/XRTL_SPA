@@ -166,12 +166,12 @@ io.on('connection', socket => {
             componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
+        console.log(componentList)
         socket.emit("newComponent", componentList);
         socket.broadcast.emit('status', payload)
     });
 
     socket.on('footer', payload => {
-
         if (footerList.includes(payload.componentId) === false) {
             footerList.push(payload.componentId, payload.status)
         } else if (footerList.includes(payload.componentId) === true) {
