@@ -43,13 +43,12 @@ export function SocketContextProvider({ children }) {
   }
 
   const setNewFont = (newFont) => {
-    console.log(newFont)
     setFontColor(newFont);
   }
 
   const toggleConnection = () => {
     if (!connected) {
-      console.log(socket.connect());
+      socket.connect();
       setConnected(true)
       appCtx.addLog("Client connected to " + URL + " by choice.")
       appCtx.setShowLogin(false)
@@ -57,7 +56,7 @@ export function SocketContextProvider({ children }) {
       appCtx.setShowLogin(true);
       setUsername("");
       setNewURL("");
-      console.log(socket.close())
+      socket.close();
       setConnected(false)
       appCtx.addLog("Client disconnected by choice.")
     }

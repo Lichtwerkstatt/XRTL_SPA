@@ -11,11 +11,9 @@ const KM100 = (props) => {
   const socketCtx = useSocketContext();
 
   const handleCloseWindow = () => {
-    console.log(props)
     appCtx.toggleSelectedComp(props.id)
   }
   const handleReset = () => {
-    console.log(socketCtx.socket)
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
       componentId: props.id,

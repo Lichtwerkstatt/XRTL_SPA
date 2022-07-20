@@ -66,7 +66,6 @@ io.on('connection', socket => {
     //Sends the random generated roomID to the client how wants to join the video chat
     socket.once('roomID', (room) => {
         room(roomID);
-        //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
     });
 
     //Sends an array with all the users in the room except the client how sends this command
@@ -84,13 +83,11 @@ io.on('connection', socket => {
 
     //Sends the peer to the newly joined client
     socket.on("sending signal", payload => {
-        //console.log("Sending a signal");
         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
     });
 
     //Sends the peer to the already connected clients
     socket.on("returning signal", payload => {
-        //console.log("Returing a signal");
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
@@ -108,11 +105,9 @@ io.on('connection', socket => {
     //Client how starts the stream is added to a room
     socket.on('join stream room', (data) => {
         componentID = data.id;
-        console.log("User has joined the room " + componentID);
         socket.to(GUIId).emit("newLog", "User has joined the room " + String(componentID));
         socket.join(componentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size;
-        //console.log(roomSize);
 
         if (roomSize == 1) {
             io.emit("command", {
@@ -137,7 +132,6 @@ io.on('connection', socket => {
         } catch (error) {
             var roomSize = 0
         }
-        //console.log(roomSize);
 
         if (roomSize == 0) {
             io.emit("command", {
@@ -148,11 +142,6 @@ io.on('connection', socket => {
         }
         socket.leave(data.id);
     });
-
-    /*     socket.on("error", (error) => {
-            console.error("Socket.io error observed: ", error);
-            socket.to(GUIId).emit("newLog", "Socket.io error observed: "+ String(error));
-        }); */
 
     //Handshakes for command handeling
 
@@ -182,7 +171,7 @@ io.on('connection', socket => {
     });
 
     socket.on('footer', payload => {
-        console.log(payload)
+
         if (footerList.includes(payload.componentId) === false) {
             footerList.push(payload.componentId, payload.status)
         } else if (footerList.includes(payload.componentId) === true) {
@@ -196,9 +185,7 @@ io.on('connection', socket => {
     socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            console.log(footerList)
-            console.log(payload)
-            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] })
+            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] });
         }
     })
 
@@ -222,7 +209,6 @@ io.on('connection', socket => {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-            //console.log(users[roomID]);
         }
 
         if (userIDServerList.includes(socket.id)) {
@@ -231,7 +217,6 @@ io.on('connection', socket => {
         if (componentList.includes(socket.id)) {
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
-        //console.log(userIDServerList)
 
         socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();

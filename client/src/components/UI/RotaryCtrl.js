@@ -9,6 +9,8 @@ const RotaryCtrl = (props) => {
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [mouted, setMounted] = useState(true);
   const [footer, setFooter] = useState(props.footer);
+  const [componentList, setComponentList] = useState([]);
+
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
@@ -32,6 +34,11 @@ const RotaryCtrl = (props) => {
         setFooter(payload.footer)
       }
     });
+
+    socketCtx.socket.on('newComponent', payload => {
+      console.log(payload)
+      setComponentList(payload);
+    })
 
     socketCtx.socket.on('footer', payload => {
       if (payload.componentId === props.component) {
@@ -97,7 +104,7 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component)) ? false : true}  >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component) || componentList.includes(props.component)) ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
       <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component)) ? false : true}>

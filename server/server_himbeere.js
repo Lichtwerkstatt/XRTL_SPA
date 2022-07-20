@@ -163,7 +163,6 @@ io.on('connection', socket => {
         socket.to(GUIId).emit("newLog", "User has joined the room " + String(componentID));
         socket.join(componentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size;
-        //console.log(roomSize);
 
         if (roomSize == 1) {
             io.emit("command", {
@@ -188,7 +187,6 @@ io.on('connection', socket => {
         } catch (error) {
             var roomSize = 0
         }
-        //console.log(roomSize);
 
         if (roomSize == 0) {
             io.emit("command", {
@@ -199,11 +197,6 @@ io.on('connection', socket => {
         }
         socket.leave(data.id);
     });
-
-    /*     socket.on("error", (error) => {
-            console.error("Socket.io error observed: ", error);
-            socket.to(GUIId).emit("newLog", "Socket.io error observed: "+ String(error));
-        }); */
 
     //Handshakes for command handeling
 
@@ -217,8 +210,6 @@ io.on('connection', socket => {
 
     //Returns the status of a experiment component
     socket.on('status', payload => {
-        console.log("New Status", payload)
-        console.log("Componenten Busy Status")
         var today = new Date();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
@@ -230,8 +221,6 @@ io.on('connection', socket => {
         } else {
             componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }
-        console.log("Conmponenten Liste")
-        console.log(componentList)
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.to(GUIId).emit("newComponent", componentList);
         socket.broadcast.emit('status', payload);
@@ -239,7 +228,6 @@ io.on('connection', socket => {
 
 
     socket.on('footer', payload => {
-        console.log(footerList)
         if (footerList.includes(payload.componentId) === false) {
             footerList.push(payload.componentId, payload.status)
         } else if (footerList.includes(payload.componentId) === true) {
@@ -253,8 +241,6 @@ io.on('connection', socket => {
     socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            console.log(footerList)
-            console.log(payload)
             io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] })
         }
     })
@@ -281,7 +267,6 @@ io.on('connection', socket => {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-            //console.log(users[roomID]);
         }
 
         if (userIDServerList.includes(socket.id)) {
@@ -290,7 +275,6 @@ io.on('connection', socket => {
         if (componentList.includes(socket.id)) {
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
-        //console.log(userIDServerList)
 
         socket.to(GUIId).emit("userLeft", (socket.id))
         socket.disconnect();

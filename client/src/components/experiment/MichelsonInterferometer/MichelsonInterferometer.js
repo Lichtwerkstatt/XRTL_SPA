@@ -11,13 +11,13 @@ const MichelsonInterferometer = (props) => {
   var width = window.innerWidth;
   var halfWidth = width / 2;
   var topHigh = String(height - (height / 3 * 2.7))
-  var topHighMiddle = String(height - (height / 2))
+  var topHighMiddle = String(height - (height / 1.7))
   var topMiddle = String(height - (height / 2.15))
   var leftLeft = String(width - (halfWidth * 1.9))
   var leftMiddle = String(width - (halfWidth * 1.8))
-  var leftRight = String(width - (halfWidth * 0.4))
+  var leftRight = String(width - (halfWidth * 0.47))
   var leftMiddleRight = String(width - (halfWidth * 0.4))
-  var leftCam = String(width - (halfWidth * 1.5))
+  var leftCam = String(width - (halfWidth * 1.485))
 
   var componentList = ['Michelson_KM100', 'Michelson_linear', 'Michelson_laser', 'Michelson_LaserPower', 'Michelson_cam']
   return (
