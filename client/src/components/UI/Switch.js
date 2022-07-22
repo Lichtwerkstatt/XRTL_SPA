@@ -44,7 +44,7 @@ const SwiitchCtrl = (props) => {
             props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
         } catch (error) { }
     }
-
+   
     return (
         <Box sx={{ width: 250, m: 2 }}>
             <FormGroup>
@@ -53,7 +53,7 @@ const SwiitchCtrl = (props) => {
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.socket.connected) ? false : true} />
+                        disabled={(socketCtx.connected) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>

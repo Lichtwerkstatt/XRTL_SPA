@@ -35,7 +35,7 @@ const SelectCtrl = (props) => {
                     value={selectValue}
                     label={props.title}
                     onChange={handleSettingChanges}
-                    disabled={(socketCtx.socket.connected) ? false : true}
+                    disabled={(socketCtx.connected) ? false : true}
                 >
                     <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
                     <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
