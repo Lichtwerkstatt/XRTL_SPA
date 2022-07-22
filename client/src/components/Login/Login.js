@@ -35,7 +35,7 @@ const Login = (props) => {
         if (username !== "") {
             try {
                 socketCtx.setNewURL(String(connection.title), String(username));
-                socketCtx.toggleConnection();
+                appCtx.setShowLogin(false)
             }
             catch (error) { }
         }

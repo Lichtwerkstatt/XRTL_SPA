@@ -11,7 +11,7 @@ export function useSocketContext() {
 }
 
 export function SocketContextProvider({ children }) {
-  const [connected, setConnected] = useState(true);
+  const [connected, setConnected] = useState(false);
   const [username, setUsername] = useState('');
   const [URL, setURL] = useState('');
   const [fontColor, setFontColor] = useState('white');
@@ -48,12 +48,11 @@ export function SocketContextProvider({ children }) {
 
   const toggleConnection = () => {
     if (!connected) {
-      socket.connect();
       setConnected(true)
+      socket.connect();
       appCtx.addLog("Client connected to " + URL + " by choice.")
-      appCtx.setShowLogin(false)
+      appCtx.setShowLogin(true)
     } else {
-      appCtx.setShowLogin(true);
       setUsername("");
       setNewURL("");
       socket.close();

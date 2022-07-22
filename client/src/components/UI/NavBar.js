@@ -22,9 +22,9 @@ const NavBar = () => {
     let cameraStatusColor = "";
     if (appCtx.showWebcam) { cameraStatusColor = "white" }
     let showBeamColor = "";
-    if (appCtx.showBeam) {showBeamColor="white"}
+    if (appCtx.showBeam) { showBeamColor = "white" }
     let showInfoWindowColor = "";
-    if (appCtx.showInfoWindow) {showInfoWindowColor="white"}
+    if (appCtx.showInfoWindow) { showInfoWindowColor = "white" }
 
     return <div id="navbar" className={styles.navbar} >
         <h1>XR TwinLab</h1>
