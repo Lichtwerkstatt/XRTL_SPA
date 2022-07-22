@@ -20,6 +20,7 @@ export function SocketContextProvider({ children }) {
   useEffect(() => {
     socket.on('connect', (e) => {
       setConnected(true)
+      console.log("hallo  ")
       appCtx.addLog("Server : Client connected to " + URL)
     })
     socket.on('disconnect', (e) => {
@@ -47,16 +48,17 @@ export function SocketContextProvider({ children }) {
   }
 
   const toggleConnection = () => {
+    console.log(connected)
     if (!connected) {
-      setConnected(true)
       socket.connect();
+      setConnected(true)
       appCtx.addLog("Client connected to " + URL + " by choice.")
-      appCtx.setShowLogin(true)
     } else {
+      setConnected(false)
+      appCtx.toggleLogin();
       setUsername("");
       setNewURL("");
       socket.close();
-      setConnected(false)
       appCtx.addLog("Client disconnected by choice.")
     }
   }

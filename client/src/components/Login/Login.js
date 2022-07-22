@@ -35,6 +35,7 @@ const Login = (props) => {
         if (username !== "") {
             try {
                 socketCtx.setNewURL(String(connection.title), String(username));
+                socketCtx.toggleConnection();
                 appCtx.setShowLogin(false)
             }
             catch (error) { }
@@ -103,7 +104,7 @@ const Login = (props) => {
                                 setfontColor(col);
                                 socketCtx.setNewFont(col);
                             }} >
-                                <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" onChange />
+                                <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" />
                             </IconButton>
                         </Grid>
                     </Grid>

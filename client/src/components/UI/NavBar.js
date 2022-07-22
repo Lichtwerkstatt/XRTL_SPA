@@ -30,7 +30,7 @@ const NavBar = () => {
         <h1>XR TwinLab</h1>
         <div className={styles.navMenu}>
             <ul>
-                <li onClick={socketCtx.toggleConnection}><ImConnection size={29}
+                <li onClick={appCtx.toggleLogin}><ImConnection size={29}
                     color={connectionStatusColor} /></li>
                 <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
                 <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>
