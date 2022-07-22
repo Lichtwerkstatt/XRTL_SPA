@@ -225,7 +225,7 @@ io.on('connection', socket => {
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.to(GUIId).emit("newComponent", componentList);
         socket.broadcast.emit('status', payload);
-        console.log("Stat")
+        console.log("Status  "+ payload)
     });
 
 
