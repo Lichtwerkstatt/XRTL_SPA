@@ -100,10 +100,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component) || onlineStatus === '') ? false : true}  >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component) || onlineStatus !== '') ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component)) ? false : true}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component) || onlineStatus != '') ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
     </form >
