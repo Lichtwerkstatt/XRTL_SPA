@@ -24,7 +24,8 @@ var footerList = [];
 var componentID = '';
 var footerList = [];
 const socketToRoom = {};
-var GUIId = ""
+var GUIId = "";
+var online = false;
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
@@ -224,6 +225,7 @@ io.on('connection', socket => {
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.to(GUIId).emit("newComponent", componentList);
         socket.broadcast.emit('status', payload);
+        console.log("Stat")
     });
 
 
@@ -234,14 +236,15 @@ io.on('connection', socket => {
             var newStatus = footerList.indexOf(payload.componentId)
             footerList[newStatus + 1] = payload.status
         }
-
+        console.log("foooter    " + payload)
         io.emit('footer', payload)
     })
 
     socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1] })
+            online = componentList.includes(payload) ? false : true;
+            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1], online: online });
         }
     })
 
