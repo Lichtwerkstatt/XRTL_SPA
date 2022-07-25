@@ -9,17 +9,28 @@ const RotaryCtrl = (props) => {
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [mouted, setMounted] = useState(true);
   const [footer, setFooter] = useState(props.footer);
-  const [onlineStatus, setOnlineStatus] = useState(false);
+  const [onlineStatus, setOnlineStatus] = useState('');
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
+
 
   const rotaryCtrlEmit = () => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
+    })
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on('getFooter', payload => {
+      console.log("payload in rotCtrl on get Footer  ", payload)
+
+
+      setFooter(payload.status)
+      setOnlineStatus(props.online)
+      if (mouted) { props.newStatus(String(payload.status)) }
     })
 
     socketCtx.socket.on("status", payload => {
@@ -42,13 +53,6 @@ const RotaryCtrl = (props) => {
       }
     })
 
-    socketCtx.socket.emit('getFooter', props.component)
-
-    socketCtx.socket.on('getFooter', payload => {
-      setFooter(payload.status)
-      setOnlineStatus(props.online)
-      if (mouted) { props.newStatus(String(payload.status)) }
-    })
 
     return () => setMounted(false)
   }
@@ -87,11 +91,11 @@ const RotaryCtrl = (props) => {
     }
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
-  console.log("Socket " + socketCtx.socket.connected)
-  console.log("Busy?   " + appCtx.busyComps.has(props.component))
+  // console.log("Socket " + socketCtx.socket.connected)
+  //console.log("Busy?   " + !appCtx.busyComps.has(props.component))
   console.log("Online??  " + onlineStatus)
 
-  console.log("allles "+ socketCtx.connected && appCtx.busyComps.has(props.component) && onlineStatus)
+  console.log("allles " + socketCtx.connected && appCtx.busyComps.has(props.component) && onlineStatus)
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
@@ -105,10 +109,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
     </form >

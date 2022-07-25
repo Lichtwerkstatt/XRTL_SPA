@@ -1,13 +1,7 @@
-var Gpio = require('onoff').Gpio;
-var green = new Gpio(16, 'out');
-var blue = new Gpio(20, 'out');
-var red = new Gpio(21, 'out');
-var b = 0;
-
-var blinkInterval;
-const app = require('express')()
+const app = require('express')();
 const server = require('http').createServer(app)
-const { instrument } = require('@socket.io/admin-ui')
+const { instrument } = require('@socket.io/admin-ui');
+const { log, Console } = require('console');
 const io = require('socket.io')(server, {
     cors: {
         origin: '*'
@@ -22,63 +16,19 @@ var userIDServerList = [];
 var componentList = [];
 var footerList = [];
 var componentID = '';
-var footerList = [];
 const socketToRoom = {};
-var GUIId = "";
+var GUIId = ""
 var online = false;
+var footerStatus = "Connected!"
+
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
-function RGB(r, g, b) {
-    red.writeSync(r);
-    green.writeSync(g);
-    blue.writeSync(b);
-}
-
-function clients_connected() {
-    if (io.engine.clientsCount == 0) {
-        RGB(1, 0, 0);
-    } else {
-        RGB(0, 1, 0);
-    }
-}
-
-function blink_start() {
-    if (b == 0) {
-        RGB(0, 0, 1);
-        b = 1;
-    } else {
-        RGB(0, 0, 0);
-        b = 0;
-    }
-}
-function blink_end() {
-    clearInterval(blinkInterval);
-    clients_connected();
-}
-
-function blink() {
-    blinkInterval = setInterval(blink_start, 250);
-    blink_start();
-    setTimeout(blink_end, 1000);
-}
-
-function Sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
-
-async function sleep(time) {
-    await Sleep(time);
-}
-
-clients_connected();
-
 io.on('connection', socket => {
     console.log('connection made successfully');
     socket.emit("newLog", 'Connection made successfully')
-    RGB(0, 1, 0);
 
     socket.on('GUI', () => {
         GUIId = socket.id
@@ -118,7 +68,6 @@ io.on('connection', socket => {
     //Sends the random generated roomID to the client how wants to join the video chat
     socket.once('roomID', (room) => {
         room(roomID);
-        //console.log("RoomID (" + roomID + ") was trasnmitted to the client");
     });
 
     //Sends an array with all the users in the room except the client how sends this command
@@ -136,13 +85,11 @@ io.on('connection', socket => {
 
     //Sends the peer to the newly joined client
     socket.on("sending signal", payload => {
-        //console.log("Sending a signal");
         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
     });
 
     //Sends the peer to the already connected clients
     socket.on("returning signal", payload => {
-        //console.log("Returing a signal");
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
@@ -160,7 +107,6 @@ io.on('connection', socket => {
     //Client how starts the stream is added to a room
     socket.on('join stream room', (data) => {
         componentID = data.id;
-        console.log("User has joined the room " + componentID);
         socket.to(GUIId).emit("newLog", "User has joined the room " + String(componentID));
         socket.join(componentID);
         let roomSize = io.sockets.adapter.rooms.get(componentID).size;
@@ -203,8 +149,7 @@ io.on('connection', socket => {
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
-        blink();
-        console.log("Command received: ", payload);
+        //console.log("Command received: ", payload);
         socket.to(GUIId).emit("newLog", "Command received: " + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
     });
@@ -223,11 +168,9 @@ io.on('connection', socket => {
             componentList = [socket.id, time, payload.componentId, payload.status.busy];
         }
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
-        socket.to(GUIId).emit("newComponent", componentList);
-        socket.broadcast.emit('status', payload);
-        console.log("New Status ", payload)
+        socket.emit("newComponent", componentList);
+        socket.broadcast.emit('status', payload)
     });
-
 
     socket.on('footer', payload => {
         if (footerList.includes(payload.componentId) === false) {
@@ -236,16 +179,18 @@ io.on('connection', socket => {
             var newStatus = footerList.indexOf(payload.componentId)
             footerList[newStatus + 1] = payload.status
         }
-        console.log("foooter    " + payload)
+
         io.emit('footer', payload)
     })
 
     socket.on('getFooter', payload => {
+        console.log(componentList.includes(payload))
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
             online = componentList.includes(payload) ? false : true;
-            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1], online: online });
+            footerStatus = footerList[statusFoot + 1]
         }
+        io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
     socket.on('error', (er) => {
@@ -258,11 +203,9 @@ io.on('connection', socket => {
         socket.disconnect();
         console.log('User kicked: ', e)
         socket.to(GUIId).emit("newLog", 'User kicked: ' + String(e));
-        clients_connected();
     });
 
     socket.on('disconnect', (e) => {
-        blink()
         if (socketToRoom[socket.id]) {
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
@@ -283,10 +226,10 @@ io.on('connection', socket => {
         socket.disconnect();
         console.log('User disconnected: ', e);
         socket.to(GUIId).emit("newLog", 'User disconnected: ' + String(e));
-        clients_connected();
     });
 })
 
 server.listen(7000, () => {
     console.log('I am listening at port: 7000!');
+
 })
