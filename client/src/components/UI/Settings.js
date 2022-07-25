@@ -14,6 +14,8 @@ const Settings = (props) => {
     const socketCtx = useSocketContext();
     const [mouted, setMounted] = useState(true);
     const settingCtrl = useRef();
+    const [onlineStatus, setOnlineStatus] = useState('');
+
 
     const theme = createTheme({
         palette: {
@@ -54,9 +56,11 @@ const Settings = (props) => {
         socketCtx.socket.emit('getFooter', props.component)
 
         socketCtx.socket.on('getFooter', payload => {
+            console.log("payload in rotCtrl on get Footer  ", payload)
             setFooter(payload.status)
+            setOnlineStatus(props.online)
             if (mouted) { props.newStatus(String(payload.status)) }
-        })
+        });
 
         return () => setMounted(false)
     }

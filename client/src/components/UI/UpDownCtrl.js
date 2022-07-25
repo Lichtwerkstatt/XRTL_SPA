@@ -4,11 +4,14 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Up from '@mui/icons-material/ArrowCircleUpOutlined';
 import Down from '@mui/icons-material/ArrowCircleDownOutlined';
-
+import { useState } from "react";
 
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
+  const [onlineStatus, setOnlineStatus] = useState('');
+  const [mouted, setMounted] = useState(true);
+  const [footer, setFooter] = useState(props.footer);
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
@@ -27,15 +30,24 @@ const UpDownCtrl = (props) => {
       componentId: props.component
     })
 
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on('getFooter', payload => {
+      console.log("payload in rotCtrl on get Footer  ", payload)
+      setFooter(payload.status)
+      setOnlineStatus(props.online)
+      if (mouted) { props.newStatus(String(payload.status)) }
+    })
+
     appCtx.addLog("User changed the position on " + props.component)
   }
 
   return (
     <Stack>
-      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected) ? false : true} >
+      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} >
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.connected) ? false : true} >
+      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
         <Down />
       </IconButton>
     </Stack>

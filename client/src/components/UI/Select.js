@@ -7,6 +7,9 @@ const SelectCtrl = (props) => {
     const [selectValue, setSelectValue] = useState(false);
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
+    const [onlineStatus, setOnlineStatus] = useState('');
+    const [mouted, setMounted] = useState(true);
+    const [footer, setFooter] = useState(props.footer);
 
     const handleSettingChanges = (event, newValue) => {
         setSelectValue(newValue.props.value);
@@ -17,6 +20,15 @@ const SelectCtrl = (props) => {
                 controlId: props.command,
                 val: newValue.props.value
             }
+        })
+
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on('getFooter', payload => {
+            console.log("payload in rotCtrl on get Footer  ", payload)
+            setFooter(payload.status)
+            setOnlineStatus(props.online)
+            if (mouted) { props.newStatus(String(payload.status)) }
         })
 
         socketCtx.socket.emit("footer", {
@@ -35,7 +47,7 @@ const SelectCtrl = (props) => {
                     value={selectValue}
                     label={props.title}
                     onChange={handleSettingChanges}
-                    disabled={(socketCtx.connected) ? false : true}
+                    disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}
                 >
                     <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
                     <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>

@@ -8,6 +8,9 @@ const SliderCtrl = (props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
+  const [onlineStatus, setOnlineStatus] = useState('');
+  const [mouted, setMounted] = useState(true);
+  const [footer, setFooter] = useState(props.footer);
 
   const marks = [
     { value: parseInt(props.min), label: props.min, },
@@ -20,6 +23,15 @@ const SliderCtrl = (props) => {
       if (payload.component === props.component) {
         setSliderPos(payload.status[props.control]);
       }
+    })
+
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on('getFooter', payload => {
+      console.log("payload in rotCtrl on get Footer  ", payload)
+      setFooter(payload.status)
+      setOnlineStatus(props.online)
+      if (mouted) { props.newStatus(String(payload.status)) }
     })
   }
   tempSlider.current = sliderEmit;
@@ -62,7 +74,7 @@ const SliderCtrl = (props) => {
           value={sliderPos}
           onChangeCommitted={handleSettingChanges}
           marks={marks}
-          disabled={(socketCtx.connected) ? false : true}
+          disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}
         />
       </Stack>
     </Box>

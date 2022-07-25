@@ -8,6 +8,9 @@ const SwiitchCtrl = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
+    const [onlineStatus, setOnlineStatus] = useState('');
+    const [mouted, setMounted] = useState(true);
+    const [footer, setFooter] = useState(props.footer);
 
     const sliderEmit = () => {
         socketCtx.socket.on("status", payload => {
@@ -38,13 +41,22 @@ const SwiitchCtrl = (props) => {
             componentId: props.component
         })
 
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on('getFooter', payload => {
+            console.log("payload in rotCtrl on get Footer  ", payload)
+            setFooter(payload.status)
+            setOnlineStatus(props.online)
+            if (mouted) { props.newStatus(String(payload.status)) }
+        })
+
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
         try {
             props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
         } catch (error) { }
     }
-   
+
     return (
         <Box sx={{ width: 250, m: 2 }}>
             <FormGroup>
@@ -53,7 +65,7 @@ const SwiitchCtrl = (props) => {
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.connected) ? false : true} />
+                        disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>
