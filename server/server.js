@@ -18,7 +18,6 @@ var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
-var online = false;
 var footerStatus = "Connected!"
 
 
@@ -188,7 +187,7 @@ io.on('connection', socket => {
         console.log(componentList.includes(payload))
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            online = componentList.includes(payload);
+            var online = componentList.includes(payload);
             footerStatus = footerList[statusFoot + 1]
         }
         console.log("liste ", componentList.includes(payload))
