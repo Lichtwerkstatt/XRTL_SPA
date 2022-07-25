@@ -35,7 +35,7 @@ const UpDownCtrl = (props) => {
     socketCtx.socket.on('getFooter', payload => {
       console.log("payload in rotCtrl on get Footer  ", payload)
       setFooter(payload.status)
-      setOnlineStatus(props.online)
+      setOnlineStatus(payload.online)
       if (mouted) { props.newStatus(String(payload.status)) }
     })
 
@@ -53,5 +53,4 @@ const UpDownCtrl = (props) => {
     </Stack>
   )
 }
-
 export default UpDownCtrl;

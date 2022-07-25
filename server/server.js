@@ -19,6 +19,7 @@ var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
 var footerStatus = "Connected!"
+var online = false;
 
 
 instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
@@ -187,13 +188,10 @@ io.on('connection', socket => {
         console.log(componentList.includes(payload))
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            var online = componentList.includes(payload);
+            online = componentList.includes(payload);
             footerStatus = footerList[statusFoot + 1]
         }
-        console.log("liste ", componentList.includes(payload))
-        console.log("online ?", online);
-        console.log(footerStatus);
-        io.emit('getFooter', { componentId: payload, status: footerStatus, online: componentList.includes(payload) });
+        io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
     socket.on('error', (er) => {
