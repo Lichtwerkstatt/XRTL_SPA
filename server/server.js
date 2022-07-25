@@ -191,6 +191,8 @@ io.on('connection', socket => {
             online = componentList.includes(payload) ? false : true;
             footerStatus = footerList[statusFoot + 1]
         }
+        console.log("online ?", online);
+        console.log(footerStatus);
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
