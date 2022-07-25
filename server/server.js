@@ -169,7 +169,8 @@ io.on('connection', socket => {
         }
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.emit("newComponent", componentList);
-        socket.broadcast.emit('status', payload)
+        socket.broadcast.emit('status', payload);
+        console.log("New status: ", payload)
     });
 
     socket.on('footer', payload => {
