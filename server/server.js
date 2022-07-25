@@ -193,7 +193,7 @@ io.on('connection', socket => {
         console.log("liste ", componentList.includes(payload))
         console.log("online ?", online);
         console.log(footerStatus);
-        io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
+        io.emit('getFooter', { componentId: payload, status: footerStatus, online: componentList.includes(payload) });
     })
 
     socket.on('error', (er) => {
