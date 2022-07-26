@@ -10,7 +10,7 @@ import Cam from "./components/Chat/Webcam";
 //import { WebView } from 'react-native-webview';
 
 const App = () => {
-
+  process.title = 'XRTLApp';
   return (
     <AppContextProvider>
       <SocketContextProvider>
@@ -27,5 +27,3 @@ const App = () => {
 };
 
 export default App;
-
-//Pubs.

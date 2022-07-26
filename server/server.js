@@ -228,6 +228,10 @@ io.on('connection', socket => {
         console.log('User disconnected: ', e);
         socket.to(GUIId).emit("newLog", 'User disconnected: ' + String(e));
     });
+
+    socket.on('npmStop', () => {
+        process.exit(0);
+    });
 })
 
 server.listen(7000, () => {
