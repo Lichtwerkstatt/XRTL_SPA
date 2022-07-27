@@ -19,7 +19,6 @@ const SM1ZP = (props) => {
   };
 
   const handleReset = () => {
-    console.log(socketCtx.socket)
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
       componentId: props.id,

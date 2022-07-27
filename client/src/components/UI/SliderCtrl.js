@@ -24,15 +24,6 @@ const SliderCtrl = (props) => {
         setSliderPos(payload.status[props.control]);
       }
     })
-
-    socketCtx.socket.emit('getFooter', props.component)
-
-    socketCtx.socket.on('getFooter', payload => {
-      console.log("payload in rotCtrl on get Footer  ", payload)
-      setFooter(payload.status)
-      setOnlineStatus(payload.online)
-      if (mouted) { props.newStatus(String(payload.status)) }
-    })
   }
   tempSlider.current = sliderEmit;
 
@@ -74,7 +65,7 @@ const SliderCtrl = (props) => {
           value={sliderPos}
           onChangeCommitted={handleSettingChanges}
           marks={marks}
-          disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}
+          disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
         />
       </Stack>
     </Box>

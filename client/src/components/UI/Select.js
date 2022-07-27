@@ -25,7 +25,6 @@ const SelectCtrl = (props) => {
         socketCtx.socket.emit('getFooter', props.component)
 
         socketCtx.socket.on('getFooter', payload => {
-            console.log("payload in rotCtrl on get Footer  ", payload)
             setFooter(payload.status)
             setOnlineStatus(payload.online)
             if (mouted) { props.newStatus(String(payload.status)) }

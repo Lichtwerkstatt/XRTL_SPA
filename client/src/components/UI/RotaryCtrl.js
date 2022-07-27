@@ -25,7 +25,6 @@ const RotaryCtrl = (props) => {
     socketCtx.socket.emit('getFooter', props.component)
 
     socketCtx.socket.on('getFooter', payload => {
-      console.log("payload in rotCtrl on get Footer  ", payload)
       setFooter(payload.status)
       setOnlineStatus(payload.online)
       if (mouted) { props.newStatus(String(payload.status)) }
@@ -89,11 +88,6 @@ const RotaryCtrl = (props) => {
     }
     appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
-  // console.log("Socket " + socketCtx.socket.connected)
-  //console.log("Busy?   " + !appCtx.busyComps.has(props.component))
-  console.log("Online??  " + onlineStatus)
-
-  console.log("allles " + socketCtx.connected && appCtx.busyComps.has(props.component) && onlineStatus)
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>

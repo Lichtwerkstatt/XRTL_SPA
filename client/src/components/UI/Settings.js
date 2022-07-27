@@ -56,7 +56,6 @@ const Settings = (props) => {
         socketCtx.socket.emit('getFooter', props.component)
 
         socketCtx.socket.on('getFooter', payload => {
-            console.log("payload in rotCtrl on get Footer  ", payload)
             setFooter(payload.status)
             setOnlineStatus(payload.online)
             if (mouted) { props.newStatus(String(payload.status)) }
@@ -81,8 +80,8 @@ const Settings = (props) => {
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} command="frame size" />
             <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' />
-            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' />
-            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' />
+            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' online={onlineStatus} />
+            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>
     )
 }
