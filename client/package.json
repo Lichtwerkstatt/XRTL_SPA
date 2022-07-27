@@ -17,10 +17,10 @@
     "react-dom": "^17.0.1",
     "react-draggable": "^4.4.4",
     "react-icons": "^4.3.1",
+    "react-native-webview": "^11.22.7",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "simple-peer": "^9.6.2",
-    "socket.io-client": "^4.4.0",
     "styled-components": "^5.3.3",
     "three": "^0.135.0",
     "uuid": "^8.3.2"
@@ -29,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stop": "pkill --signal SIGINT XRTLApp"
   },
   "eslintConfig": {
     "extends": [

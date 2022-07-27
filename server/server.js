@@ -18,6 +18,7 @@ var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
+var footerStatus = "Connected!"
 var online = false;
 
 
@@ -168,7 +169,8 @@ io.on('connection', socket => {
         }
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.emit("newComponent", componentList);
-        socket.broadcast.emit('status', payload)
+        socket.broadcast.emit('status', payload);
+        console.log("New status: ", payload)
     });
 
     socket.on('footer', payload => {
@@ -183,12 +185,12 @@ io.on('connection', socket => {
     })
 
     socket.on('getFooter', payload => {
-        console.log(componentList.includes(payload))
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            online = componentList.includes(payload) ? false : true;
-            io.emit('getFooter', { componentId: payload, status: footerList[statusFoot + 1], online: online});
+            online = componentList.includes(payload);
+            footerStatus = footerList[statusFoot + 1]
         }
+        io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
     socket.on('error', (er) => {
@@ -224,6 +226,10 @@ io.on('connection', socket => {
         socket.disconnect();
         console.log('User disconnected: ', e);
         socket.to(GUIId).emit("newLog", 'User disconnected: ' + String(e));
+    });
+
+    socket.on('npmStop', () => {
+        process.exit(0);
     });
 })
 

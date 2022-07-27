@@ -15,12 +15,11 @@ const Stream = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
-    console.log("Stop Streaming.");
+    //console.log("Stop Streaming.");
     socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
   };
 
   const handleReset = () => {
-    console.log(socketCtx.socket)
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
       componentId: props.id,
@@ -54,7 +53,7 @@ const Stream = (props) => {
   }
 
   const webcamStartStreaming = () => {
-    console.log("Start Streaming.");
+    //console.log("Start Streaming.");
     socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
   }
 

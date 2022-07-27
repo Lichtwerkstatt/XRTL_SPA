@@ -22,15 +22,15 @@ const NavBar = () => {
     let cameraStatusColor = "";
     if (appCtx.showWebcam) { cameraStatusColor = "white" }
     let showBeamColor = "";
-    if (appCtx.showBeam) {showBeamColor="white"}
+    if (appCtx.showBeam) { showBeamColor = "white" }
     let showInfoWindowColor = "";
-    if (appCtx.showInfoWindow) {showInfoWindowColor="white"}
+    if (appCtx.showInfoWindow) { showInfoWindowColor = "white" }
 
     return <div id="navbar" className={styles.navbar} >
         <h1>XR TwinLab</h1>
         <div className={styles.navMenu}>
             <ul>
-                <li onClick={socketCtx.toggleConnection}><ImConnection size={29}
+                <li onClick={appCtx.toggleLogin}><ImConnection size={29}
                     color={connectionStatusColor} /></li>
                 <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
                 <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>

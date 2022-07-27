@@ -14,6 +14,8 @@ const Settings = (props) => {
     const socketCtx = useSocketContext();
     const [mouted, setMounted] = useState(true);
     const settingCtrl = useRef();
+    const [onlineStatus, setOnlineStatus] = useState('');
+
 
     const theme = createTheme({
         palette: {
@@ -55,8 +57,9 @@ const Settings = (props) => {
 
         socketCtx.socket.on('getFooter', payload => {
             setFooter(payload.status)
+            setOnlineStatus(payload.online)
             if (mouted) { props.newStatus(String(payload.status)) }
-        })
+        });
 
         return () => setMounted(false)
     }
@@ -67,7 +70,7 @@ const Settings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} footer={footer}>
             <div className={styles.UpDown}>
                 <UpDownCtrl component={props.component} footer={props.footer} />
             </div>
@@ -77,8 +80,8 @@ const Settings = (props) => {
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} command="frame size" />
             <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' />
-            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' />
-            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' />
+            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' online={onlineStatus} />
+            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>
     )
 }

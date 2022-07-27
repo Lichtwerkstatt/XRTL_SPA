@@ -15,11 +15,19 @@ const RotaryCtrl = (props) => {
   const socketCtx = useSocketContext();
   const tempRotaryCtrl = useRef();
 
+
   const rotaryCtrlEmit = () => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
+    })
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on('getFooter', payload => {
+      setFooter(payload.status)
+      setOnlineStatus(payload.online)
+      if (mouted) { props.newStatus(String(payload.status)) }
     })
 
     socketCtx.socket.on("status", payload => {
@@ -42,13 +50,6 @@ const RotaryCtrl = (props) => {
       }
     })
 
-    socketCtx.socket.emit('getFooter', props.component)
-
-    socketCtx.socket.on('getFooter', payload => {
-      setFooter(payload.status)
-      setOnlineStatus(props.online)
-      if (mouted) { props.newStatus(String(payload.status)) }
-    })
 
     return () => setMounted(false)
   }
@@ -90,7 +91,7 @@ const RotaryCtrl = (props) => {
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
-      <div className={styles.rotaryCtrl}>
+      <div className={styles.rotaryCtrl} footer={footer}>
         <span>{Number(rotation)}</span>
         <input
           type="number"
@@ -100,10 +101,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component) || onlineStatus === '') ? false : true}  >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.socket.connected || appCtx.busyComps.has(props.component)) ? false : true}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
     </form >

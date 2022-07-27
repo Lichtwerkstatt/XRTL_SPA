@@ -9,7 +9,6 @@ const InfoWindow = (props) => {
     appCtx.toggleShowInfoWindow();
   };
 
-  console.log("I'm here!");
   return (
     <Window
       header="About XR TwinLab"

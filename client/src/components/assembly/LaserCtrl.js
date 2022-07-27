@@ -18,7 +18,6 @@ const LaserCtrl = (props) => {
   };
 
   const handleReset = () => {
-    console.log(props)
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
       componentId: props.id,

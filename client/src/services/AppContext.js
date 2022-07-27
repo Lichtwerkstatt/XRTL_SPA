@@ -66,6 +66,10 @@ export function AppContextProvider({ children }) {
     setShowInfoWindow(!showInfoWindow);
   }
 
+  const toggleLogin = () => {
+    setShowLogin(!showLogin);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -89,7 +93,8 @@ export function AppContextProvider({ children }) {
         showLogin,
         setShowLogin,
         showInfoWindow,
-        toggleShowInfoWindow
+        toggleShowInfoWindow,
+        toggleLogin
       }}
     >
       {children}

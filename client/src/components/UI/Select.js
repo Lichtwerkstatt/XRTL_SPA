@@ -7,6 +7,9 @@ const SelectCtrl = (props) => {
     const [selectValue, setSelectValue] = useState(false);
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
+    const [onlineStatus, setOnlineStatus] = useState('');
+    const [mouted, setMounted] = useState(true);
+    const [footer, setFooter] = useState(props.footer);
 
     const handleSettingChanges = (event, newValue) => {
         setSelectValue(newValue.props.value);
@@ -19,23 +22,33 @@ const SelectCtrl = (props) => {
             }
         })
 
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on('getFooter', payload => {
+            setFooter(payload.status)
+            setOnlineStatus(payload.online)
+            if (mouted) { props.newStatus(String(payload.status)) }
+        })
+
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
             componentId: props.component
         })
 
         appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
+
+        return () => setMounted(false)
     }
 
     return (
-        <Box sx={{ m: 2, width: 250 }} >
+        <Box sx={{ m: 2, width: 250 }} footer={footer}>
             <FormControl fullWidth>
                 <InputLabel >Resolution</InputLabel>
                 <Select
                     value={selectValue}
                     label={props.title}
                     onChange={handleSettingChanges}
-                    disabled={(socketCtx.socket.connected) ? false : true}
+                    disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}
                 >
                     <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
                     <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
