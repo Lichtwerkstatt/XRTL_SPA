@@ -45,6 +45,7 @@ const RotaryCtrl = (props) => {
 
     socketCtx.socket.on('footer', payload => {
       if (payload.componentId === props.component) {
+        (payload.status == "Init") ? setFooter("Connected") : setFooter(payload.status);
         setFooter(payload.status)
         if (mouted) { props.newStatus(String(payload.status)) }
       }
@@ -57,6 +58,7 @@ const RotaryCtrl = (props) => {
 
   useEffect(() => {
     tempRotaryCtrl.current()
+    return () => tempRotaryCtrl.current()
   }, [socketCtx.socket]);
 
   const changeRotationHandler = (event) => {
@@ -91,7 +93,7 @@ const RotaryCtrl = (props) => {
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
-      <div className={styles.rotaryCtrl} footer={footer}>
+      <div className={styles.rotaryCtrl}>
         <span>{Number(rotation)}</span>
         <input
           type="number"

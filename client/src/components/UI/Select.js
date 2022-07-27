@@ -41,7 +41,7 @@ const SelectCtrl = (props) => {
     }
 
     return (
-        <Box sx={{ m: 2, width: 250 }} footer={footer}>
+        <Box sx={{ m: 2, width: 250 }}>
             <FormControl fullWidth>
                 <InputLabel >Resolution</InputLabel>
                 <Select

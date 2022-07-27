@@ -1,5 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
+import { useAppContext } from "../../services/AppContext";
 import { useState, useRef, useEffect } from "react";
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
@@ -13,9 +14,9 @@ const Settings = (props) => {
     const [footer, setFooter] = useState(props.footer);
     const socketCtx = useSocketContext();
     const [mouted, setMounted] = useState(true);
-    const settingCtrl = useRef();
     const [onlineStatus, setOnlineStatus] = useState('');
-
+    const settingCtrl = useRef();
+    const appCtx = useAppContext();
 
     const theme = createTheme({
         palette: {
@@ -70,7 +71,7 @@ const Settings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ThemeProvider theme={theme} footer={footer}>
+        <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
                 <UpDownCtrl component={props.component} footer={props.footer} />
             </div>

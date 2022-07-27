@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSocketContext } from "../../services/SocketContext";
+import { useAppContext } from "../../services/AppContext";
 import { Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Switch from './Switch';
@@ -10,7 +11,8 @@ const SwitchOnOff = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [mouted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
-  const tempSwitch = useRef()
+  const tempSwitch = useRef();
+  const appCtx = useAppContext();
 
   const theme = createTheme({
     palette: {
@@ -50,6 +52,9 @@ const SwitchOnOff = (props) => {
       setFooter(payload.status)
       if (mouted) { props.newStatus(String(payload.status)) }
     })
+
+    appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
+
     return () => setMounted(false)
   }
 
@@ -60,7 +65,7 @@ const SwitchOnOff = (props) => {
 
   return (
     <div className="switchOnOff">
-      <ThemeProvider theme={theme} footer={footer} >
+      <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
           <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />

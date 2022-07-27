@@ -44,7 +44,7 @@ const LeftRightCtrl = (props) => {
     }
 
     return (
-        <Box footer={footer}>
+        <Box>
             <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
                 <Left />
             </IconButton>
@@ -52,9 +52,7 @@ const LeftRightCtrl = (props) => {
                 <Right />
             </IconButton>
         </Box>
-
     )
-
 }
 
 export default LeftRightCtrl;

@@ -33,7 +33,8 @@ const UpDownCtrl = (props) => {
     socketCtx.socket.emit('getFooter', props.component)
 
     socketCtx.socket.on('getFooter', payload => {
-      setFooter(payload.status)
+      console.log(payload.status)
+      (payload.status == "Init") ? setFooter("Connected") : setFooter(payload.status);
       setOnlineStatus(payload.online)
       if (mouted) { props.newStatus(String(payload.status)) }
     })
@@ -44,7 +45,7 @@ const UpDownCtrl = (props) => {
   }
 
   return (
-    <Stack footer={footer}>
+    <Stack >
       <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} >
         <Up />
       </IconButton>

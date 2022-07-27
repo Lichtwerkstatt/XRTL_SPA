@@ -18,7 +18,7 @@ var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
-var footerStatus = "Connected!"
+var footerStatus = "Init"
 var online = false;
 
 
@@ -187,9 +187,9 @@ io.on('connection', socket => {
     socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            online = componentList.includes(payload);
             footerStatus = footerList[statusFoot + 1]
         }
+        online = componentList.includes(payload);
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
