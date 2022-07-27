@@ -39,10 +39,12 @@ const UpDownCtrl = (props) => {
     })
 
     appCtx.addLog("User changed the position on " + props.component)
+
+    return () => setMounted(false)
   }
 
   return (
-    <Stack>
+    <Stack footer={footer}>
       <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} >
         <Up />
       </IconButton>

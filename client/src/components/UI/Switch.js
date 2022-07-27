@@ -54,10 +54,12 @@ const SwiitchCtrl = (props) => {
         try {
             props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
         } catch (error) { }
+
+        return () => setMounted(false)
     }
 
     return (
-        <Box sx={{ width: 250, m: 2 }}>
+        <Box sx={{ width: 250, m: 2 }} footer={footer}>
             <FormGroup>
                 <Stack direction="row" spacing={1} alignItems="center">
                     <Typography>{props.start}</Typography>

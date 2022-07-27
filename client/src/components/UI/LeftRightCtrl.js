@@ -39,10 +39,12 @@ const LeftRightCtrl = (props) => {
         })
 
         appCtx.addLog("User changed the position on " + props.component)
+
+        return () => setMounted(false)
     }
 
     return (
-        <Box>
+        <Box footer={footer}>
             <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
                 <Left />
             </IconButton>

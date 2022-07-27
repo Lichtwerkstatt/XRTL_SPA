@@ -185,7 +185,6 @@ io.on('connection', socket => {
     })
 
     socket.on('getFooter', payload => {
-        console.log(componentList.includes(payload))
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
             online = componentList.includes(payload);

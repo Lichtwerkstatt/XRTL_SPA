@@ -8,9 +8,6 @@ const SliderCtrl = (props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
-  const [onlineStatus, setOnlineStatus] = useState('');
-  const [mouted, setMounted] = useState(true);
-  const [footer, setFooter] = useState(props.footer);
 
   const marks = [
     { value: parseInt(props.min), label: props.min, },

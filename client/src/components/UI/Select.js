@@ -36,10 +36,12 @@ const SelectCtrl = (props) => {
         })
 
         appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
+
+        return () => setMounted(false)
     }
 
     return (
-        <Box sx={{ m: 2, width: 250 }} >
+        <Box sx={{ m: 2, width: 250 }} footer={footer}>
             <FormControl fullWidth>
                 <InputLabel >Resolution</InputLabel>
                 <Select

@@ -50,6 +50,7 @@ const SwitchOnOff = (props) => {
       setFooter(payload.status)
       if (mouted) { props.newStatus(String(payload.status)) }
     })
+    return () => setMounted(false)
   }
 
   tempSwitch.current = switchFunction
@@ -59,7 +60,7 @@ const SwitchOnOff = (props) => {
 
   return (
     <div className="switchOnOff">
-      <ThemeProvider theme={theme} >
+      <ThemeProvider theme={theme} footer={footer} >
         <Box sx={{ m: 2, width: 250 }}>
           <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
@@ -68,5 +69,4 @@ const SwitchOnOff = (props) => {
     </div>
   )
 }
-
 export default SwitchOnOff

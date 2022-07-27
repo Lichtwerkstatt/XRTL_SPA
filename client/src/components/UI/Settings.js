@@ -70,7 +70,7 @@ const Settings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} footer={footer}>
             <div className={styles.UpDown}>
                 <UpDownCtrl component={props.component} footer={props.footer} />
             </div>
