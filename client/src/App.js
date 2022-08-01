@@ -7,6 +7,7 @@ import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider} from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
 import Cam from "./components/Chat/Webcam";
+import PopUp from "./components/UI/PopUp";
 //import { WebView } from 'react-native-webview';
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
         <Cam />
         <NavBar />
         <Login />
+        <PopUp />
       </SocketContextProvider>
     </AppContextProvider>
   );

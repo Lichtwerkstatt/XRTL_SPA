@@ -26,35 +26,36 @@ const SwiitchCtrl = (props) => {
     }, [socketCtx.socket])
 
     const handleSettingChanges = (event, newValue) => {
-        setSwitchValue(newValue);
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                val: newValue
-            }
-        })
+        if (mouted) {
+            setSwitchValue(newValue);
+            socketCtx.socket.emit("command", {
+                userId: socketCtx.username,
+                componentId: props.component,
+                command: {
+                    controlId: props.command,
+                    val: newValue
+                }
+            })
 
-        socketCtx.socket.emit("footer", {
-            status: "Last change by: " + socketCtx.username,
-            componentId: props.component
-        })
+            socketCtx.socket.emit("footer", {
+                status: "Last change by: " + socketCtx.username,
+                componentId: props.component
+            })
 
-        socketCtx.socket.emit('getFooter', props.component)
+            socketCtx.socket.emit('getFooter', props.component)
 
-        socketCtx.socket.on('getFooter', payload => {
-            setFooter(payload.status)
-            setOnlineStatus(payload.online)
-            if (mouted) { props.newStatus(String(payload.status)) }
-        })
+            socketCtx.socket.on('getFooter', payload => {
+                setFooter(payload.status)
+                setOnlineStatus(payload.online)
+                props.newStatus(String(payload.status))
+            })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+            appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
-        try {
-            props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
-        } catch (error) { }
-
+            try {
+                props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
+            } catch (error) { }
+        }
         return () => setMounted(false)
     }
 

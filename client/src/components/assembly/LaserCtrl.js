@@ -24,6 +24,9 @@ const LaserCtrl = (props) => {
       command: "reset"
     })
   }
+  const handleInfo = () => {
+    console.log("Info")
+  }
 
   return (
     <Window
@@ -34,6 +37,7 @@ const LaserCtrl = (props) => {
       width="300px"
       onClose={handleCloseWindow}
       onReset={handleReset}
+      onInfo={handleInfo}
       newStatus={handleChangeFooter}
       footer={footer}
     >

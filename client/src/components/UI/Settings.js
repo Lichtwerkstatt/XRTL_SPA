@@ -35,33 +35,34 @@ const Settings = (props) => {
     };
 
     const settingEmit = () => {
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: props.component,
-            command: "getStatus"
-        })
+        if (mouted) {
+            socketCtx.socket.emit("command", {
+                userId: socketCtx.username,
+                componentId: props.component,
+                command: "getStatus"
+            })
 
-        socketCtx.socket.on("status", payload => {
-            if (payload.componentId === props.component) {
-                setFooter(payload.footer)
-            }
-        });
+            socketCtx.socket.on("status", payload => {
+                if (payload.componentId === props.component) {
+                    setFooter(payload.footer)
+                }
+            });
 
-        socketCtx.socket.on('footer', payload => {
-            if (payload.componentId === props.component) {
+            socketCtx.socket.on('footer', payload => {
+                if (payload.componentId === props.component) {
+                    setFooter(payload.status)
+                    props.newStatus(String(payload.status))
+                }
+            })
+
+            socketCtx.socket.emit('getFooter', props.component)
+
+            socketCtx.socket.on('getFooter', payload => {
                 setFooter(payload.status)
-                if (mouted) { props.newStatus(String(payload.status)) }
-            }
-        })
-
-        socketCtx.socket.emit('getFooter', props.component)
-
-        socketCtx.socket.on('getFooter', payload => {
-            setFooter(payload.status)
-            setOnlineStatus(payload.online)
-            if (mouted) { props.newStatus(String(payload.status)) }
-        });
-
+                setOnlineStatus(payload.online)
+                props.newStatus(String(payload.status))
+            });
+        }
         return () => setMounted(false)
     }
     settingCtrl.current = settingEmit;

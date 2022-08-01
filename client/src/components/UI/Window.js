@@ -1,7 +1,7 @@
 import Draggable from "react-draggable"
 import styles from "./Window.module.css"
 import { CgCloseO } from "react-icons/cg"
-import { IoReloadOutline } from "react-icons/io5"
+import { IoReloadOutline, IoInformationCircleOutline } from "react-icons/io5"
 
 const Window = (props) => {
   return (
@@ -36,8 +36,14 @@ const Window = (props) => {
           {props.children}
         </div>
         {props.footer !== undefined && (
-          <div className={styles.windowFooter}>{props.footer}</div>
+          <div className={styles.windowFooter}>
+            <span onClick={props.onInfo}> <IoInformationCircleOutline size={25} /></span>
+            <label>{props.footer}</label>
+          </div>
         )}
+        <div className={styles.windowInfo}>
+
+        </div>
       </div>
     </Draggable>
   )

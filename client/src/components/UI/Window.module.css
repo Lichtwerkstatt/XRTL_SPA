@@ -36,12 +36,18 @@ div.windowFooter {
   left: 0;
   background: #01bd7d;
   color: white;
-  padding-left: 10px;
+  padding-left: 0px;
   padding-bottom: 5px;
   display: flex;
   align-items: center;
 }
 
+div.windowFooter span {
+  position: relative;
+  margin-top: 9px;
+}
+
 div.windowFooter label{
+  margin-top: 5px;
   font-size: 18px;
 }

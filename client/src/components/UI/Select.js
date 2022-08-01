@@ -12,31 +12,32 @@ const SelectCtrl = (props) => {
     const [footer, setFooter] = useState(props.footer);
 
     const handleSettingChanges = (event, newValue) => {
-        setSelectValue(newValue.props.value);
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                val: newValue.props.value
-            }
-        })
+        if (mouted) {
+            setSelectValue(newValue.props.value);
+            socketCtx.socket.emit("command", {
+                userId: socketCtx.username,
+                componentId: props.component,
+                command: {
+                    controlId: props.command,
+                    val: newValue.props.value
+                }
+            })
 
-        socketCtx.socket.emit('getFooter', props.component)
+            socketCtx.socket.emit('getFooter', props.component)
 
-        socketCtx.socket.on('getFooter', payload => {
-            setFooter(payload.status)
-            setOnlineStatus(payload.online)
-            if (mouted) { props.newStatus(String(payload.status)) }
-        })
+            socketCtx.socket.on('getFooter', payload => {
+                setFooter(payload.status)
+                setOnlineStatus(payload.online)
+                if (mouted) { props.newStatus(String(payload.status)) }
+            })
 
-        socketCtx.socket.emit("footer", {
-            status: "Last change by: " + socketCtx.username,
-            componentId: props.component
-        })
+            socketCtx.socket.emit("footer", {
+                status: "Last change by: " + socketCtx.username,
+                componentId: props.component
+            })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
-
+            appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
+        }
         return () => setMounted(false)
     }
 

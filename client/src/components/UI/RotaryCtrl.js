@@ -17,48 +17,48 @@ const RotaryCtrl = (props) => {
 
 
   const rotaryCtrlEmit = () => {
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      componentId: props.component,
-      command: "getStatus"
-    })
-    socketCtx.socket.emit('getFooter', props.component)
+    if (mouted) {
+      socketCtx.socket.emit("command", {
+        userId: socketCtx.username,
+        componentId: props.component,
+        command: "getStatus"
+      })
+      socketCtx.socket.emit('getFooter', props.component)
 
-    socketCtx.socket.on('getFooter', payload => {
-      setFooter(payload.status)
-      setOnlineStatus(payload.online)
-      if (mouted) { props.newStatus(String(payload.status)) }
-    })
-
-    socketCtx.socket.on("status", payload => {
-      if (payload.componentId === props.component) {
-        if (props.control === "top") {
-          setRotation(payload.status.top.absolute)
-        } else if (props.control === "bottom") {
-          setRotation(payload.status.bottom.absolute)
-        } else {
-          setRotation(payload.status.linear.absolute)
-        }
-        setFooter(payload.footer)
-      }
-    });
-
-    socketCtx.socket.on('footer', payload => {
-      if (payload.componentId === props.component) {
-        (payload.status == "Init") ? setFooter("Connected") : setFooter(payload.status);
+      socketCtx.socket.on('getFooter', payload => {
         setFooter(payload.status)
-        if (mouted) { props.newStatus(String(payload.status)) }
-      }
-    })
+        setOnlineStatus(payload.online)
+        props.newStatus(String(payload.status))
+      })
 
+      socketCtx.socket.on("status", payload => {
+        if (payload.componentId === props.component) {
+          if (props.control === "top") {
+            setRotation(payload.status.top.absolute)
+          } else if (props.control === "bottom") {
+            setRotation(payload.status.bottom.absolute)
+          } else {
+            setRotation(payload.status.linear.absolute)
+          }
+          setFooter(payload.footer)
+        }
+      });
+
+      socketCtx.socket.on('footer', payload => {
+        if (payload.componentId === props.component) {
+          (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
+          setFooter(payload.status)
+          props.newStatus(String(payload.status))
+        }
+      })
+    }
 
     return () => setMounted(false)
   }
   tempRotaryCtrl.current = rotaryCtrlEmit;
 
   useEffect(() => {
-    tempRotaryCtrl.current()
-    return () => tempRotaryCtrl.current()
+    tempRotaryCtrl.current();
   }, [socketCtx.socket]);
 
   const changeRotationHandler = (event) => {

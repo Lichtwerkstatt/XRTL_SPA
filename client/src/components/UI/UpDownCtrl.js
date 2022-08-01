@@ -15,32 +15,32 @@ const UpDownCtrl = (props) => {
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
+    if (mouted) {
+      socketCtx.socket.emit("command", {
+        userId: socketCtx.username,
+        componentId: props.component,
+        command: {
+          controlId: direction,
+          val: negativ ? 15 : -15
+        }
+      })
 
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      componentId: props.component,
-      command: {
-        controlId: direction,
-        val: negativ ? 15 : -15
-      }
-    })
+      socketCtx.socket.emit("footer", {
+        status: "Last change by: " + socketCtx.username,
+        componentId: props.component
+      })
 
-    socketCtx.socket.emit("footer", {
-      status: "Last change by: " + socketCtx.username,
-      componentId: props.component
-    })
+      socketCtx.socket.emit('getFooter', props.component)
 
-    socketCtx.socket.emit('getFooter', props.component)
+      socketCtx.socket.on('getFooter', payload => {
+        console.log(payload.status)
+          (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
+        setOnlineStatus(payload.online)
+        props.newStatus(String(payload.status))
+      })
 
-    socketCtx.socket.on('getFooter', payload => {
-      console.log(payload.status)
-      (payload.status == "Init") ? setFooter("Connected") : setFooter(payload.status);
-      setOnlineStatus(payload.online)
-      if (mouted) { props.newStatus(String(payload.status)) }
-    })
-
-    appCtx.addLog("User changed the position on " + props.component)
-
+      appCtx.addLog("User changed the position on " + props.component)
+    }
     return () => setMounted(false)
   }
 

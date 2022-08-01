@@ -27,6 +27,10 @@ const Stream = (props) => {
     })
   }
 
+  const handleInfo = () => {
+    console.log("Info")
+  }
+
   const webcamEmitPic = () => {
     socketCtx.socket.on("pic", function (data) {
       var uint8Arr = new Uint8Array(data.buffer);
@@ -81,6 +85,7 @@ const Stream = (props) => {
       height="430px"
       onClose={handleCloseWindow}
       onReset={handleReset}
+      onInfo={handleInfo}
       footer={footer}
       newStatus={handleChangeFooter}
     >

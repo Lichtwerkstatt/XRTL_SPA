@@ -26,6 +26,10 @@ const SM1ZP = (props) => {
     })
   }
 
+  const handleInfo = () => {
+    console.log("Info")
+  }
+
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
@@ -35,6 +39,7 @@ const SM1ZP = (props) => {
       height="235px"
       onClose={handleCloseWindow}
       onReset={handleReset}
+      onInfo={handleInfo}
       background={SM1ZP_bg}
       newStatus={handleChangeFooter}
       footer={footer}

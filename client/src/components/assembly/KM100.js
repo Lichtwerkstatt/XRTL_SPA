@@ -7,6 +7,7 @@ import { useSocketContext } from "../../services/SocketContext"
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
+  const [lastChange, setLastChange] = useState([0, 0])
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
@@ -20,8 +21,35 @@ const KM100 = (props) => {
       command: "reset"
     })
   }
+  const handleInfo = () => {
+    var timeNow = new Date();
+    let difH = 0;
+    let difMin = 0;
+    let difSek = 0;
+
+    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds()]
+
+    if (timeNow[0] > lastChange[0]) {
+      difH = timeNow[0] - lastChange[0];
+
+      console.log(difH)
+    } else if (timeNow[1] > lastChange[1]) {
+      difMin = timeNow[1] - lastChange[1]
+      console.log(difMin)
+    } else if (timeNow[2] > lastChange[2]) {
+      difSek = timeNow[2] - lastChange[2]
+      console.log(difSek)
+    } else{
+      console.log("No last change")
+    }
+    console.log(timeNow)
+    console.log(lastChange)
+
+  }
 
   const handleChangeFooter = (newFooter) => {
+    var time = new Date();
+    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds()])
     setFooter(newFooter);
   };
 
@@ -36,6 +64,7 @@ const KM100 = (props) => {
       background={KM100_Background}
       onClose={handleCloseWindow}
       onReset={handleReset}
+      onInfo={handleInfo}
     >
       <RotaryCtrl
         rotation={props.rotationTop}
