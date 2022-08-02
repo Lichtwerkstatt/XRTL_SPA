@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext, createContext } from "react";
 
 import { useSocketContext } from "../../services/SocketContext";
-import { Switch, Box, Typography, FormGroup, Stack, Alert } from '@mui/material';
+import { Switch, Box, Typography, FormGroup, Stack, Alert, Snackbar } from '@mui/material';
 import styles from "./PopUp.module.css";
 /*
 const PopUpContext = createContext();
@@ -64,26 +64,24 @@ export function PopUpContextProvider({ children }) {
     var type = 'info'
     var text = "jdoivjd"
     const toggleShowPopUp = () => {
-        setShowPopUp(true)
+        setShowPopUp(!showPopUp)
     }
 
-    const alert = () => {
-        return (
-            <div className={styles.popUp}>
-                <Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}</Alert>
-            </div>
-        )
-    }
+
 
     return (
         <PopUpContext.Provider
             value={{
                 showPopUp,
-                toggleShowPopUp,
-                alert
+                toggleShowPopUp
             }}
         >
+            <Snackbar open={showPopUp}>
+                <div className={styles.popUp}>
 
+                    <Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}</Alert>
+                </div>
+            </Snackbar>
             {children}
         </PopUpContext.Provider>
     );

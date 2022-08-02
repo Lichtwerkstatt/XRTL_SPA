@@ -53,8 +53,7 @@ const KM100 = (props) => {
     console.log(popupCtx)
 
     popupCtx.toggleShowPopUp();
-    console.log(popupCtx.alert())
-
+   
   }
 
   const handleChangeFooter = (newFooter) => {
