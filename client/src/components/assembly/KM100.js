@@ -8,9 +8,9 @@ import { useSocketContext } from "../../services/SocketContext"
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
-  const [lastChange, setLastChange] = useState([0, 0]);
-  const [alert, setAlert] = useState(false);
+  const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
+  var [alert, setAlert] = useState(false);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -30,40 +30,31 @@ const KM100 = (props) => {
   }
   const handleInfo = () => {
     var timeNow = new Date();
-    let difH = 0;
-    let difMin = 0;
-    let difSec = 0;
-    var a = '';
+    let difH, difMin, difSec = 0;
+    alert = '';
 
     timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds()]
-
-    if (timeNow[0] > lastChange[0]) {
+    if (lastChange[0] === '') {
+      alert = 'No last change detected!'
+    } else if (timeNow[0] > lastChange[0]) {
       difH = timeNow[0] - lastChange[0];
-      a = 'Last change is more than ' + difH + ' h ago!'
-      console.log(difH)
+      alert = 'Last change is more than ' + difH + ' h ago!'
     } else if (timeNow[0] > lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
       difSec = timeNow[2] - lastChange[2]
-      a = 'Last change is ' + difSec + ' s ago!'
-      console.log(difSec)
+      alert = 'Last change is ' + difSec + ' s ago!'
     } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
       difMin = timeNow[1] - lastChange[1]
-      a = 'Last change is more than ' + difMin + ' min ago!'
-      console.log(difMin)
-    } else if (timeNow[0] < lastChange[0] || timeNow[1] < lastChange[1] ) {
-      a = 'Last change is more than 24 h ago!'
+      alert = 'Last change is more than ' + difMin + ' min ago!'
+    } else if (timeNow[0] < lastChange[0] || timeNow[1] < lastChange[1]) {
+      alert = 'Last change is more than 24 h ago!'
     } else {
-      a = 'No last change detected!'
-      console.log("No last change")
-
+      alert = 'No last change detected!'
     }
-    setAlert(a)
     console.log(timeNow)
     console.log(lastChange)
 
-    console.log(popupCtx)
-
-    popupCtx.toggleShowPopUp(a, alertType);
-
+    setAlert(alert)
+    popupCtx.toggleShowPopUp(alert, alertType);
   }
 
   const handleChangeFooter = (newFooter) => {
