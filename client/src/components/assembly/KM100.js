@@ -3,13 +3,18 @@ import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import KM100_Background from "./media/km100_outline.png"
 import { useAppContext } from "../../services/AppContext";
+import { usePopUpContext } from "../UI/PopUpContext";
 import { useSocketContext } from "../../services/SocketContext"
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
-  const [lastChange, setLastChange] = useState([0, 0])
+  const [lastChange, setLastChange] = useState([0, 0]);
+  const [alert, setAlert] = useState(false);
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
+  const popupCtx = usePopUpContext();
+
+  console.log(popupCtx)
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
@@ -39,11 +44,16 @@ const KM100 = (props) => {
     } else if (timeNow[2] > lastChange[2]) {
       difSek = timeNow[2] - lastChange[2]
       console.log(difSek)
-    } else{
+    } else {
       console.log("No last change")
     }
     console.log(timeNow)
     console.log(lastChange)
+
+    console.log(popupCtx)
+
+    popupCtx.toggleShowPopUp();
+    console.log(popupCtx.alert())
 
   }
 
