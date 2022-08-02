@@ -1,53 +1,7 @@
 import { useState, useEffect, useRef, useContext, createContext } from "react";
-
 import { useSocketContext } from "../../services/SocketContext";
-import { Switch, Box, Typography, FormGroup, Stack, Alert, Snackbar } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import styles from "./PopUp.module.css";
-/*
-const PopUpContext = createContext();
-
-export function usePopUpContext() {
-    return useContext(PopUpContext);
-}
-
-export function PopUpProvider({ children }) {
-    const [switchValue, setSwitchValue] = useState(false);
-    const [showPopUp, setShowPopUp] = useState(true)
-    const appCtx = usePopUpContext();
-    const socketCtx = useSocketContext();
-    const tempSlider = useRef();
-
-    var type = 'info'
-    var text = "jdoivjd"
-
-         if (showPopUp)
-            return (
-                <div className={styles.popUp}>
-                    <Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}</Alert>
-                </div>
-            )
-    
-        else {
-            return (
-                <div></div>
-            )
-        } 
-
-    const toggleShowPopUp = () => {
-        setShowPopUp(!showPopUp)
-    }
-
-    return (
-        <PopUpContext.Provider value={{ showPopUp, setShowPopUp, toggleShowPopUp }}>
-                        <div className={styles.popUp}>
-                <Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}</Alert>
-            </div> 
-            {children}
-
-        </PopUpContext.Provider>
-    )
-} */
-
 
 const PopUpContext = createContext();
 
@@ -56,18 +10,25 @@ export function usePopUpContext() {
 }
 
 export function PopUpContextProvider({ children }) {
-    const [showPopUp, setShowPopUp] = useState(true)
+    const [showPopUp, setShowPopUp] = useState(false);
+    const [text, setText] = useState('');
+    const [type, setType] = useState('info')
 
-    const socketCtx = useSocketContext();
-    const tempSlider = useRef();
+    //const socketCtx = useSocketContext();
+    //const tempSlider = useRef();
 
-    var type = 'info'
-    var text = "jdoivjd"
-    const toggleShowPopUp = () => {
-        setShowPopUp(!showPopUp)
+    const toggleShowPopUp = (newText, newType) => {
+        setText(newText);
+        setType(newType);
+        setShowPopUp(!showPopUp);
     }
 
-
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setShowPopUp(false);
+    };
 
     return (
         <PopUpContext.Provider
@@ -76,9 +37,8 @@ export function PopUpContextProvider({ children }) {
                 toggleShowPopUp
             }}
         >
-            <Snackbar open={showPopUp}>
+            <Snackbar open={showPopUp} autoHideDuration={2000} onClose={handleClose} >
                 <div className={styles.popUp}>
-
                     <Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}</Alert>
                 </div>
             </Snackbar>

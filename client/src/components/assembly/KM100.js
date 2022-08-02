@@ -10,6 +10,8 @@ const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState([0, 0]);
   const [alert, setAlert] = useState(false);
+  const [alertType, setAlertType] = useState('info');
+
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
@@ -30,30 +32,38 @@ const KM100 = (props) => {
     var timeNow = new Date();
     let difH = 0;
     let difMin = 0;
-    let difSek = 0;
+    let difSec = 0;
+    var a = '';
 
     timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds()]
 
     if (timeNow[0] > lastChange[0]) {
       difH = timeNow[0] - lastChange[0];
-
+      a = 'Last change is more than ' + difH + ' h ago!'
       console.log(difH)
-    } else if (timeNow[1] > lastChange[1]) {
+    } else if (timeNow[0] > lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
+      difSec = timeNow[2] - lastChange[2]
+      a = 'Last change is ' + difSec + ' s ago!'
+      console.log(difSec)
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
       difMin = timeNow[1] - lastChange[1]
+      a = 'Last change is more than ' + difMin + ' min ago!'
       console.log(difMin)
-    } else if (timeNow[2] > lastChange[2]) {
-      difSek = timeNow[2] - lastChange[2]
-      console.log(difSek)
+    } else if (timeNow[0] < lastChange[0] || timeNow[1] < lastChange[1] ) {
+      a = 'Last change is more than 24 h ago!'
     } else {
+      a = 'No last change detected!'
       console.log("No last change")
+
     }
+    setAlert(a)
     console.log(timeNow)
     console.log(lastChange)
 
     console.log(popupCtx)
 
-    popupCtx.toggleShowPopUp();
-   
+    popupCtx.toggleShowPopUp(a, alertType);
+
   }
 
   const handleChangeFooter = (newFooter) => {
