@@ -16,8 +16,6 @@ const KM100 = (props) => {
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
 
-  console.log(popupCtx)
-
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
@@ -39,7 +37,7 @@ const KM100 = (props) => {
     } else if (timeNow[0] > lastChange[0]) {
       difH = timeNow[0] - lastChange[0];
       alert = 'Last change is more than ' + difH + ' h ago!'
-    } else if (timeNow[0] > lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
       difSec = timeNow[2] - lastChange[2]
       alert = 'Last change is ' + difSec + ' s ago!'
     } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
@@ -50,8 +48,6 @@ const KM100 = (props) => {
     } else {
       alert = 'No last change detected!'
     }
-    console.log(timeNow)
-    console.log(lastChange)
 
     setAlert(alert)
     popupCtx.toggleShowPopUp(alert, alertType);
