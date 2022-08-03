@@ -18,7 +18,7 @@ var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
-var footerStatus = "Init"
+var footerStatus = "Initializing ..."
 var online = false;
 
 

@@ -46,7 +46,7 @@ const RotaryCtrl = (props) => {
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
-          (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
+          //(payload.status === "Initializing ...") ? setFooter("Connected") : setFooter(payload.status);
           setFooter(payload.status)
           props.newStatus(String(payload.status))
         }

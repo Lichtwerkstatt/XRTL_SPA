@@ -39,7 +39,7 @@ const Stream = (props) => {
     let difH, difMin, difSec = 0;
     alert = '';
 
-    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds()]
+    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
     if (lastChange[0] === '') {
       alert = 'No last change detected!'
     } else if (timeNow[0] > lastChange[0]) {
@@ -51,7 +51,7 @@ const Stream = (props) => {
     } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
       difMin = timeNow[1] - lastChange[1]
       alert = 'Last change is more than ' + difMin + ' min ago!'
-    } else if (timeNow[0] < lastChange[0] || timeNow[1] < lastChange[1]) {
+    } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
       alert = 'Last change is more than 24 h ago!'
     } else {
       alert = 'No last change detected!'
