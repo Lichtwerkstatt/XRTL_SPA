@@ -26,9 +26,12 @@ const RotaryCtrl = (props) => {
       socketCtx.socket.emit('getFooter', props.component)
 
       socketCtx.socket.on('getFooter', payload => {
-        setFooter(payload.status)
-        setOnlineStatus(payload.online)
-        props.newStatus(String(payload.status))
+        if (payload.componentId === props.component) {
+          console.log(payload)
+          //setFooter(payload.status)
+          setOnlineStatus(payload.online)
+          props.newStatus(String(payload.status))
+        }
       })
 
       socketCtx.socket.on("status", payload => {
@@ -40,14 +43,14 @@ const RotaryCtrl = (props) => {
           } else {
             setRotation(payload.status.linear.absolute)
           }
-          setFooter(payload.footer)
+          //setFooter(payload.footer)
         }
       });
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
           //(payload.status === "Initializing ...") ? setFooter("Connected") : setFooter(payload.status);
-          setFooter(payload.status)
+          // setFooter(payload.status)
           props.newStatus(String(payload.status))
         }
       })
@@ -103,10 +106,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component)) ? false : true}  > {/* //&& onlineStatus */}
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component)) ? false : true}> {/* //&& onlineStatus */}
         <MdOutlineRotateRight size={28} />
       </button>
     </form >

@@ -58,9 +58,11 @@ const Settings = (props) => {
             socketCtx.socket.emit('getFooter', props.component)
 
             socketCtx.socket.on('getFooter', payload => {
-                setFooter(payload.status)
-                setOnlineStatus(payload.online)
-                props.newStatus(String(payload.status))
+                if (payload.componentId === props.component) {
+                    setFooter(payload.status)
+                    setOnlineStatus(payload.online)
+                    props.newStatus(String(payload.status))
+                }
             });
         }
         return () => setMounted(false)

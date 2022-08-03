@@ -33,10 +33,12 @@ const UpDownCtrl = (props) => {
       socketCtx.socket.emit('getFooter', props.component)
 
       socketCtx.socket.on('getFooter', payload => {
-        console.log(payload.status)
-          (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
-        setOnlineStatus(payload.online)
-        props.newStatus(String(payload.status))
+        if (payload.componentId === props.component) {
+          console.log(payload.status)
+            (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
+          setOnlineStatus(payload.online)
+          props.newStatus(String(payload.status))
+        }
       })
 
       appCtx.addLog("User changed the position on " + props.component)

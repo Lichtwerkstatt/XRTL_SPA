@@ -14,13 +14,22 @@ export function PopUpContextProvider({ children }) {
     const [text, setText] = useState('');
     const [type, setType] = useState('info')
 
-    //const socketCtx = useSocketContext();
-    //const tempSlider = useRef();
+    const socketCtx = useSocketContext();
+
 
     const toggleShowPopUp = (newText, newType) => {
         setText(newText);
         setType(newType);
         setShowPopUp(!showPopUp);
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            componentId:"nckdj",
+            command: {
+              controlId:'cdcd',
+              val: 'dfcvdfc'
+            }
+        });
     }
 
     const handleClose = (event, reason) => {
@@ -29,6 +38,7 @@ export function PopUpContextProvider({ children }) {
         }
         setShowPopUp(false);
     };
+
 
     return (
         <PopUpContext.Provider

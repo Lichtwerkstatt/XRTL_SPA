@@ -48,5 +48,4 @@ const Window = (props) => {
     </Draggable>
   )
 }
-
 export default Window

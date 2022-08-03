@@ -26,9 +26,11 @@ const SelectCtrl = (props) => {
             socketCtx.socket.emit('getFooter', props.component)
 
             socketCtx.socket.on('getFooter', payload => {
-                setFooter(payload.status)
-                setOnlineStatus(payload.online)
-                if (mouted) { props.newStatus(String(payload.status)) }
+                if (payload.componentId === props.component) {
+                    setFooter(payload.status)
+                    setOnlineStatus(payload.online)
+                    if (mouted) { props.newStatus(String(payload.status)) }
+                }
             })
 
             socketCtx.socket.emit("footer", {

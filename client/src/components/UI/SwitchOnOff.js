@@ -50,8 +50,10 @@ const SwitchOnOff = (props) => {
       socketCtx.socket.emit('getFooter', props.component)
 
       socketCtx.socket.on('getFooter', payload => {
-        setFooter(payload.status)
-        props.newStatus(String(payload.status))
+        if (payload.componentId === props.component) {
+          setFooter(payload.status)
+          props.newStatus(String(payload.status))
+        }
       })
 
       appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
