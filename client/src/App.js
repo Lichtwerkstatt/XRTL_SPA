@@ -4,9 +4,10 @@ import Chat from "./components/Chat/Chat";
 import Login from "./components/Login/Login";
 import VirtualLayer from "./components/UI/VirtualLayer";
 import { SocketContextProvider } from "./services/SocketContext";
-import { AppContextProvider} from "./services/AppContext";
+import { AppContextProvider } from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
 import Cam from "./components/Chat/Webcam";
+import {PopUpContextProvider} from "./services/PopUpContext"
 //import { WebView } from 'react-native-webview';
 
 const App = () => {
@@ -14,13 +15,15 @@ const App = () => {
   return (
     <AppContextProvider>
       <SocketContextProvider>
-        <VirtualLayer />
-        <ExperimentUILayer />
-        <Console />
-        <Chat />
-        <Cam />
-        <NavBar />
-        <Login />
+          <VirtualLayer />
+        <PopUpContextProvider>
+          <ExperimentUILayer />
+          <Console />
+          <Chat />
+          <Cam />
+          <NavBar />
+          <Login />
+        </PopUpContextProvider>
       </SocketContextProvider>
     </AppContextProvider>
   );

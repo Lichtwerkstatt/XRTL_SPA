@@ -28,9 +28,11 @@ const LeftRightCtrl = (props) => {
         socketCtx.socket.emit('getFooter', props.component)
 
         socketCtx.socket.on('getFooter', payload => {
-            setFooter(payload.status)
+            if (payload.componentId === props.component) {
+           // setFooter(payload.status)
             setOnlineStatus(payload.online)
             if (mouted) { props.newStatus(String(payload.status)) }
+            }
         })
 
         socketCtx.socket.emit("footer", {
@@ -44,7 +46,7 @@ const LeftRightCtrl = (props) => {
     }
 
     return (
-        <Box footer={footer}>
+        <Box>
             <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
                 <Left />
             </IconButton>
@@ -52,9 +54,7 @@ const LeftRightCtrl = (props) => {
                 <Right />
             </IconButton>
         </Box>
-
     )
-
 }
 
 export default LeftRightCtrl;

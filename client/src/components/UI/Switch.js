@@ -26,40 +26,43 @@ const SwiitchCtrl = (props) => {
     }, [socketCtx.socket])
 
     const handleSettingChanges = (event, newValue) => {
-        setSwitchValue(newValue);
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                val: newValue
-            }
-        })
+        if (mouted) {
+            setSwitchValue(newValue);
+            socketCtx.socket.emit("command", {
+                userId: socketCtx.username,
+                componentId: props.component,
+                command: {
+                    controlId: props.command,
+                    val: newValue
+                }
+            })
 
-        socketCtx.socket.emit("footer", {
-            status: "Last change by: " + socketCtx.username,
-            componentId: props.component
-        })
+            socketCtx.socket.emit("footer", {
+                status: "Last change by: " + socketCtx.username,
+                componentId: props.component
+            })
 
-        socketCtx.socket.emit('getFooter', props.component)
+            socketCtx.socket.emit('getFooter', props.component)
 
-        socketCtx.socket.on('getFooter', payload => {
-            setFooter(payload.status)
-            setOnlineStatus(payload.online)
-            if (mouted) { props.newStatus(String(payload.status)) }
-        })
+            socketCtx.socket.on('getFooter', payload => {
+                if (payload.componentId === props.component) {
+                    setFooter(payload.status)
+                    setOnlineStatus(payload.online)
+                    props.newStatus(String(payload.status))
+                }
+            })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+            appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
-        try {
-            props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
-        } catch (error) { }
-
+            try {
+                props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
+            } catch (error) { }
+        }
         return () => setMounted(false)
     }
 
     return (
-        <Box sx={{ width: 250, m: 2 }} footer={footer}>
+        <Box sx={{ width: 250, m: 2 }}>
             <FormGroup>
                 <Stack direction="row" spacing={1} alignItems="center">
                     <Typography>{props.start}</Typography>

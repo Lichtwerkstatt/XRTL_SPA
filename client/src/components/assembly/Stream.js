@@ -4,12 +4,19 @@ import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { useEffect, useRef, useState } from "react";
+import { usePopUpContext } from "../../services/PopUpContext"
 
 
 const Stream = (props) => {
   const [footer, setFooter] = useState(props.footer);
+  const [lastChange, setLastChange] = useState(['', '', '']);
+  const [alertType, setAlertType] = useState('info');
+  var [alert, setAlert] = useState(false);
+
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
+  const popupCtx = usePopUpContext();
+
   const tempWebcam = useRef();
   const tempWebcam2 = useRef();
 
@@ -26,6 +33,39 @@ const Stream = (props) => {
       command: "reset"
     })
   }
+
+  const handleInfo = () => {
+    var timeNow = new Date();
+    let difH, difMin, difSec = 0;
+    alert = '';
+
+    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
+    if (lastChange[0] === '') {
+      alert = 'No last change detected!'
+    } else if (timeNow[0] > lastChange[0]) {
+      difH = timeNow[0] - lastChange[0];
+      alert = 'Last change is more than ' + difH + ' h ago!'
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
+      difSec = timeNow[2] - lastChange[2]
+      alert = 'Last change is ' + difSec + ' s ago!'
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
+      difMin = timeNow[1] - lastChange[1]
+      alert = 'Last change is more than ' + difMin + ' min ago!'
+    } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
+      alert = 'Last change is more than 24 h ago!'
+    } else {
+      alert = 'No last change detected!'
+    }
+
+    setAlert(alert)
+    popupCtx.toggleShowPopUp(alert, alertType);
+  }
+
+  const handleChangeFooter = (newFooter) => {
+    var time = new Date();
+    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds()])
+    setFooter(newFooter);
+  };
 
   const webcamEmitPic = () => {
     socketCtx.socket.on("pic", function (data) {
@@ -57,9 +97,6 @@ const Stream = (props) => {
     socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
   }
 
-  const handleChangeFooter = (newFooter) => {
-    setFooter(newFooter);
-  };
 
   tempWebcam.current = webcamEmitPic;
   tempWebcam2.current = webcamStartStreaming;
@@ -81,6 +118,7 @@ const Stream = (props) => {
       height="430px"
       onClose={handleCloseWindow}
       onReset={handleReset}
+      onInfo={handleInfo}
       footer={footer}
       newStatus={handleChangeFooter}
     >

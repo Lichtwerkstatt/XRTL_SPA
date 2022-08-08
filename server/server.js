@@ -18,7 +18,7 @@ var footerList = [];
 var componentID = '';
 const socketToRoom = {};
 var GUIId = ""
-var footerStatus = "Connected!"
+var footerStatus = "Initializing ..."
 var online = false;
 
 
@@ -149,7 +149,7 @@ io.on('connection', socket => {
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
-        //console.log("Command received: ", payload);
+        console.log("Command received: ", payload);
         socket.to(GUIId).emit("newLog", "Command received: " + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
     });
@@ -169,6 +169,7 @@ io.on('connection', socket => {
         }
         socket.to(GUIId).emit("newLog", "New Status" + JSON.stringify(payload));
         socket.emit("newComponent", componentList);
+
         socket.broadcast.emit('status', payload);
         console.log("New status: ", payload)
     });
@@ -180,16 +181,20 @@ io.on('connection', socket => {
             var newStatus = footerList.indexOf(payload.componentId)
             footerList[newStatus + 1] = payload.status
         }
-
+        console.log("compList: ", footerList)
         io.emit('footer', payload)
     })
 
     socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            online = componentList.includes(payload);
             footerStatus = footerList[statusFoot + 1]
+        } else if (componentList.includes(payload)) {
+            footerStatus = "Component connected!"
+        } else {
+            footerStatus = "Initializing ...";
         }
+        online = componentList.includes(payload);
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 

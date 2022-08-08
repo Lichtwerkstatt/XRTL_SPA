@@ -17,46 +17,50 @@ const RotaryCtrl = (props) => {
 
 
   const rotaryCtrlEmit = () => {
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      componentId: props.component,
-      command: "getStatus"
-    })
-    socketCtx.socket.emit('getFooter', props.component)
+    if (mouted) {
+      socketCtx.socket.emit("command", {
+        userId: socketCtx.username,
+        componentId: props.component,
+        command: "getStatus"
+      })
+      socketCtx.socket.emit('getFooter', props.component)
 
-    socketCtx.socket.on('getFooter', payload => {
-      setFooter(payload.status)
-      setOnlineStatus(payload.online)
-      if (mouted) { props.newStatus(String(payload.status)) }
-    })
-
-    socketCtx.socket.on("status", payload => {
-      if (payload.componentId === props.component) {
-        if (props.control === "top") {
-          setRotation(payload.status.top.absolute)
-        } else if (props.control === "bottom") {
-          setRotation(payload.status.bottom.absolute)
-        } else {
-          setRotation(payload.status.linear.absolute)
+      socketCtx.socket.on('getFooter', payload => {
+        if (payload.componentId === props.component) {
+          //setFooter(payload.status)
+          setOnlineStatus(payload.online)
+          props.newStatus(String(payload.status))
         }
-        setFooter(payload.footer)
-      }
-    });
+      })
 
-    socketCtx.socket.on('footer', payload => {
-      if (payload.componentId === props.component) {
-        setFooter(payload.status)
-        if (mouted) { props.newStatus(String(payload.status)) }
-      }
-    })
+      socketCtx.socket.on("status", payload => {
+        if (payload.componentId === props.component) {
+          if (props.control === "top") {
+            setRotation(payload.status.top.absolute)
+          } else if (props.control === "bottom") {
+            setRotation(payload.status.bottom.absolute)
+          } else {
+            setRotation(payload.status.linear.absolute)
+          }
+          //setFooter(payload.footer)
+        }
+      });
 
+      socketCtx.socket.on('footer', payload => {
+        if (payload.componentId === props.component) {
+    
+          // setFooter(payload.status)
+          props.newStatus(String(payload.status))
+        }
+      })
+    }
 
     return () => setMounted(false)
   }
   tempRotaryCtrl.current = rotaryCtrlEmit;
 
   useEffect(() => {
-    tempRotaryCtrl.current()
+    tempRotaryCtrl.current();
   }, [socketCtx.socket]);
 
   const changeRotationHandler = (event) => {
@@ -91,7 +95,7 @@ const RotaryCtrl = (props) => {
 
   return (
     <form className={styles.rotaryCtrl} style={{ top: props.top + "px", left: props.left + "px" }}>
-      <div className={styles.rotaryCtrl} footer={footer}>
+      <div className={styles.rotaryCtrl}>
         <span>{Number(rotation)}</span>
         <input
           type="number"

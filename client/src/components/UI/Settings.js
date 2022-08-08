@@ -1,5 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
+import { useAppContext } from "../../services/AppContext";
 import { useState, useRef, useEffect } from "react";
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
@@ -13,9 +14,9 @@ const Settings = (props) => {
     const [footer, setFooter] = useState(props.footer);
     const socketCtx = useSocketContext();
     const [mouted, setMounted] = useState(true);
-    const settingCtrl = useRef();
     const [onlineStatus, setOnlineStatus] = useState('');
-
+    const settingCtrl = useRef();
+    const appCtx = useAppContext();
 
     const theme = createTheme({
         palette: {
@@ -34,33 +35,36 @@ const Settings = (props) => {
     };
 
     const settingEmit = () => {
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: props.component,
-            command: "getStatus"
-        })
+        if (mouted) {
+            socketCtx.socket.emit("command", {
+                userId: socketCtx.username,
+                componentId: props.component,
+                command: "getStatus"
+            })
 
-        socketCtx.socket.on("status", payload => {
-            if (payload.componentId === props.component) {
-                setFooter(payload.footer)
-            }
-        });
+            socketCtx.socket.on("status", payload => {
+                if (payload.componentId === props.component) {
+                    setFooter(payload.footer)
+                }
+            });
 
-        socketCtx.socket.on('footer', payload => {
-            if (payload.componentId === props.component) {
-                setFooter(payload.status)
-                if (mouted) { props.newStatus(String(payload.status)) }
-            }
-        })
+            socketCtx.socket.on('footer', payload => {
+                if (payload.componentId === props.component) {
+                    setFooter(payload.status)
+                    props.newStatus(String(payload.status))
+                }
+            })
 
-        socketCtx.socket.emit('getFooter', props.component)
+            socketCtx.socket.emit('getFooter', props.component)
 
-        socketCtx.socket.on('getFooter', payload => {
-            setFooter(payload.status)
-            setOnlineStatus(payload.online)
-            if (mouted) { props.newStatus(String(payload.status)) }
-        });
-
+            socketCtx.socket.on('getFooter', payload => {
+                if (payload.componentId === props.component) {
+                    setFooter(payload.status)
+                    setOnlineStatus(payload.online)
+                    props.newStatus(String(payload.status))
+                }
+            });
+        }
         return () => setMounted(false)
     }
     settingCtrl.current = settingEmit;
@@ -70,7 +74,7 @@ const Settings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ThemeProvider theme={theme} footer={footer}>
+        <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
                 <UpDownCtrl component={props.component} footer={props.footer} />
             </div>
