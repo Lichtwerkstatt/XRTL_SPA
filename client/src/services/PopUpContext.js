@@ -18,7 +18,7 @@ export function PopUpContextProvider({ children }) {
 
     socketCtx.socket.on('error', error => {
         setShowPopUp(true);
-        setText(String(error));
+        setText(error.errmsg);
         setType('error');
     })
 

@@ -16,7 +16,7 @@ const Login = (props) => {
     const appCtx = useAppContext();
     const [connection, setConnection] = useState(null);
     const filter = createFilterOptions();
-    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://192.168.1.42:7000' }]
+    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://192.168.1.42:7000' }, { title: 'http://10.232.37.40:7000' }]
 
     const theme = createTheme({
         palette: {
