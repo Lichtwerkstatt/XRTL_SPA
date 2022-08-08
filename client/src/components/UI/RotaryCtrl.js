@@ -27,7 +27,6 @@ const RotaryCtrl = (props) => {
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
-          console.log(payload)
           //setFooter(payload.status)
           setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))
@@ -49,7 +48,7 @@ const RotaryCtrl = (props) => {
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
-          //(payload.status === "Initializing ...") ? setFooter("Connected") : setFooter(payload.status);
+    
           // setFooter(payload.status)
           props.newStatus(String(payload.status))
         }
@@ -106,10 +105,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component)) ? false : true}  > {/* //&& onlineStatus */}
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component)) ? false : true}> {/* //&& onlineStatus */}
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
     </form >

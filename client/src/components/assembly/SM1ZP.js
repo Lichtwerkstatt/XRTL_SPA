@@ -4,7 +4,7 @@ import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
 import SM1ZP_bg from "./media/linear_outline.png";
 import { useSocketContext } from "../../services/SocketContext";
-import { usePopUpContext } from "../UI/PopUpContext";
+import { usePopUpContext } from "../../services/PopUpContext"
 
 const SM1ZP = (props) => {
   const [footer, setFooter] = useState(props.footer);

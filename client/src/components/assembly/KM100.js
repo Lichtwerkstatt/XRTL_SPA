@@ -3,7 +3,7 @@ import RotaryCtrl from "../UI/RotaryCtrl";
 import Window from "../UI/Window";
 import KM100_Background from "./media/km100_outline.png"
 import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../UI/PopUpContext";
+import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"
 
 const KM100 = (props) => {

@@ -34,7 +34,6 @@ const UpDownCtrl = (props) => {
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
-          console.log(payload.status)
             (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
           setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))

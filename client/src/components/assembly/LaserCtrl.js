@@ -3,7 +3,7 @@ import Window from "../UI/Window"
 import SwitchOnOff from "../UI/SwitchOnOff";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext"
-import { usePopUpContext } from "../UI/PopUpContext";
+import { usePopUpContext } from "../../services/PopUpContext"
 
 const LaserCtrl = (props) => {
   const [footer, setFooter] = useState(props.footer);

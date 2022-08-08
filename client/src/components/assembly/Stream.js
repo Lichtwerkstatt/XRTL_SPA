@@ -4,7 +4,7 @@ import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { useEffect, useRef, useState } from "react";
-import { usePopUpContext } from "../UI/PopUpContext";
+import { usePopUpContext } from "../../services/PopUpContext"
 
 
 const Stream = (props) => {

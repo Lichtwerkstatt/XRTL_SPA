@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext, createContext } from "react";
-import { useSocketContext } from "../../services/SocketContext";
+import { useSocketContext } from "./SocketContext";
 import { Alert, Snackbar } from '@mui/material';
 import styles from "./PopUp.module.css";
 
