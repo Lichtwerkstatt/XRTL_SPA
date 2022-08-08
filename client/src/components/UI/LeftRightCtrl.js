@@ -28,7 +28,6 @@ const LeftRightCtrl = (props) => {
 
         socketCtx.socket.on('getFooter', payload => {
             if (payload.componentId === props.component) {
-           // setFooter(payload.status)
             setOnlineStatus(payload.online)
             if (mouted) { props.newStatus(String(payload.status)) }
             }

@@ -20,7 +20,6 @@ export function PopUpContextProvider({ children }) {
         setShowPopUp(true);
         setText(String(error));
         setType('error');
-
     })
 
 
@@ -45,7 +44,6 @@ export function PopUpContextProvider({ children }) {
         }
         setShowPopUp(false);
     };
-
 
     return (
         <PopUpContext.Provider
