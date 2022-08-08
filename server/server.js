@@ -123,7 +123,6 @@ io.on('connection', socket => {
     //Sends pictures of the stream to the clients
     socket.on('data', (payload) => {
        // socket.to(componentID).emit('pic', { buffer: data.image });
-
         socket.to(componentID).emit('data', { componentID: componentID, type: payload.image, dataId: payload.dataId, data: { type: payload.buffer, data: payload.data } })
     });
 

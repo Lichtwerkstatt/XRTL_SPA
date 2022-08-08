@@ -10,11 +10,11 @@ const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
   const [onlineStatus, setOnlineStatus] = useState('');
-  const [mouted, setMounted] = useState(true);
+  var [mounted, setMounted] = useState(true);
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
-    if (mouted) {
+    if (mounted) {
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
@@ -40,7 +40,10 @@ const UpDownCtrl = (props) => {
 
       appCtx.addLog("User changed the position on " + props.component)
     }
-    return () => setMounted(false)
+    return () => {
+      mounted = false;
+      setMounted(false)
+    }
   }
 
   return (

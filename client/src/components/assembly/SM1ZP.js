@@ -11,6 +11,7 @@ const SM1ZP = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
+  var [mounted, setMounted] = useState(true);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -36,30 +37,36 @@ const SM1ZP = (props) => {
   }
 
   const handleInfo = () => {
-    var timeNow = new Date();
-    let difH, difMin, difSec = 0;
-    alert = '';
+    if (mounted) {
+      var timeNow = new Date();
+      let difH, difMin, difSec = 0;
+      alert = '';
 
-    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
-    if (lastChange[0] === '') {
-      alert = 'No last change detected!'
-    } else if (timeNow[0] > lastChange[0]) {
-      difH = timeNow[0] - lastChange[0];
-      alert = 'Last change is more than ' + difH + ' h ago!'
-    } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
-      difSec = timeNow[2] - lastChange[2]
-      alert = 'Last change is ' + difSec + ' s ago!'
-    } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
-      difMin = timeNow[1] - lastChange[1]
-      alert = 'Last change is more than ' + difMin + ' min ago!'
-    } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
-      alert = 'Last change is more than 24 h ago!'
-    } else {
-      alert = 'No last change detected!'
+      timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
+      if (lastChange[0] === '') {
+        alert = 'No last change detected!'
+      } else if (timeNow[0] > lastChange[0]) {
+        difH = timeNow[0] - lastChange[0];
+        alert = 'Last change is more than ' + difH + ' h ago!'
+      } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
+        difSec = timeNow[2] - lastChange[2]
+        alert = 'Last change is ' + difSec + ' s ago!'
+      } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
+        difMin = timeNow[1] - lastChange[1]
+        alert = 'Last change is more than ' + difMin + ' min ago!'
+      } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
+        alert = 'Last change is more than 24 h ago!'
+      } else {
+        alert = 'No last change detected!'
+      }
+
+      setAlert(alert)
+      popupCtx.toggleShowPopUp(alert, alertType);
     }
-
-    setAlert(alert)
-    popupCtx.toggleShowPopUp(alert, alertType);
+    return () => {
+      mounted = false;
+      setMounted(false);
+    }
   }
 
   return (

@@ -8,10 +8,10 @@ const SelectCtrl = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
     const [onlineStatus, setOnlineStatus] = useState('');
-    const [mouted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(true);
 
     const handleSettingChanges = (event, newValue) => {
-        if (mouted) {
+        if (mounted) {
             setSelectValue(newValue.props.value);
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
@@ -27,7 +27,7 @@ const SelectCtrl = (props) => {
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
                     setOnlineStatus(payload.online)
-                    if (mouted) { props.newStatus(String(payload.status)) }
+                    if (mounted) { props.newStatus(String(payload.status)) }
                 }
             })
 
@@ -38,7 +38,10 @@ const SelectCtrl = (props) => {
 
             appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
         }
-        return () => setMounted(false)
+        return () => {
+            mounted = false;
+            setMounted(false);
+        }
     }
 
     return (

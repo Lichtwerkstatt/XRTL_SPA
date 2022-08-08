@@ -11,7 +11,7 @@ import styles from "./Settings.module.css"
 
 const Settings = (props) => {
     const socketCtx = useSocketContext();
-    const [mouted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(true);
     const [onlineStatus, setOnlineStatus] = useState('');
     const settingCtrl = useRef();
 
@@ -33,7 +33,7 @@ const Settings = (props) => {
     };
 
     const settingEmit = () => {
-        if (mouted) {
+        if (mounted) {
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
                 componentId: props.component,
@@ -61,7 +61,10 @@ const Settings = (props) => {
                 }
             });
         }
-        return () => setMounted(false)
+        return () => {
+            mounted = false;
+            setMounted(false)
+        }
     }
     settingCtrl.current = settingEmit;
 

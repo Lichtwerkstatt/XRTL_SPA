@@ -7,7 +7,7 @@ import { useSocketContext } from "../../services/SocketContext"
 const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(0);
   const [enteredRotation, setEnteredRotation] = useState(0);
-  const [mouted, setMounted] = useState(true);
+  var [mounted, setMounted] = useState(true);
   const [onlineStatus, setOnlineStatus] = useState('');
 
   const appCtx = useAppContext();
@@ -16,7 +16,7 @@ const RotaryCtrl = (props) => {
 
 
   const rotaryCtrlEmit = () => {
-    if (mouted) {
+    if (mounted) {
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,

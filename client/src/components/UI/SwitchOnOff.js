@@ -9,7 +9,7 @@ import { GiLaserWarning } from "react-icons/gi"
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
 
-  const [mouted, setMounted] = useState(true);
+  var [mounted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
   const appCtx = useAppContext();
@@ -27,7 +27,7 @@ const SwitchOnOff = (props) => {
   })
 
   const switchFunction = () => {
-    if (mouted) {
+    if (mounted) {
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
@@ -58,7 +58,10 @@ const SwitchOnOff = (props) => {
 
       appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
     }
-    return () => setMounted(false)
+    return () => {
+      mounted = false;
+      setMounted(false)
+    }
   }
 
   tempSwitch.current = switchFunction

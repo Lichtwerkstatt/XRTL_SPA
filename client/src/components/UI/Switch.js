@@ -9,7 +9,7 @@ const SwiitchCtrl = (props) => {
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
     const [onlineStatus, setOnlineStatus] = useState('');
-    const [mouted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(true);
 
     const sliderEmit = () => {
         socketCtx.socket.on("status", payload => {
@@ -25,7 +25,7 @@ const SwiitchCtrl = (props) => {
     }, [socketCtx.socket])
 
     const handleSettingChanges = (event, newValue) => {
-        if (mouted) {
+        if (mounted) {
             setSwitchValue(newValue);
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
@@ -56,7 +56,10 @@ const SwiitchCtrl = (props) => {
                 props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
             } catch (error) { }
         }
-        return () => setMounted(false)
+        return () => {
+            mounted = false;
+            setMounted(false)
+        }
     }
 
     return (
