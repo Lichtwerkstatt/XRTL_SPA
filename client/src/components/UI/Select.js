@@ -9,7 +9,6 @@ const SelectCtrl = (props) => {
     const appCtx = useAppContext();
     const [onlineStatus, setOnlineStatus] = useState('');
     const [mouted, setMounted] = useState(true);
-    const [footer, setFooter] = useState(props.footer);
 
     const handleSettingChanges = (event, newValue) => {
         if (mouted) {
@@ -27,7 +26,6 @@ const SelectCtrl = (props) => {
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.status)
                     setOnlineStatus(payload.online)
                     if (mouted) { props.newStatus(String(payload.status)) }
                 }

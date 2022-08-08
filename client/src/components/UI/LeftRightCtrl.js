@@ -11,7 +11,6 @@ const LeftRightCtrl = (props) => {
     const appCtx = useAppContext();
     const [onlineStatus, setOnlineStatus] = useState('');
     const [mouted, setMounted] = useState(true);
-    const [footer, setFooter] = useState(props.footer);
 
     const handleCtrl = (direction, negativ) => (event) => {
         event.preventDefault();

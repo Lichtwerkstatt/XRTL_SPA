@@ -10,7 +10,6 @@ const SwiitchCtrl = (props) => {
     const tempSlider = useRef();
     const [onlineStatus, setOnlineStatus] = useState('');
     const [mouted, setMounted] = useState(true);
-    const [footer, setFooter] = useState(props.footer);
 
     const sliderEmit = () => {
         socketCtx.socket.on("status", payload => {
@@ -46,7 +45,6 @@ const SwiitchCtrl = (props) => {
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.status)
                     setOnlineStatus(payload.online)
                     props.newStatus(String(payload.status))
                 }

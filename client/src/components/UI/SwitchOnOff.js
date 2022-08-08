@@ -8,7 +8,7 @@ import { GiLaserWarning } from "react-icons/gi"
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-  const [footer, setFooter] = useState(props.footer);
+
   const [mouted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
@@ -42,7 +42,7 @@ const SwitchOnOff = (props) => {
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
-          setFooter(payload.status)
+
           props.newStatus(String(payload.status))
         }
       })
@@ -51,7 +51,7 @@ const SwitchOnOff = (props) => {
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
-          setFooter(payload.status)
+
           props.newStatus(String(payload.status))
         }
       })

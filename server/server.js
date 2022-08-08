@@ -200,6 +200,7 @@ io.on('connection', socket => {
 
     socket.on('error', (er) => {
         console.log("Error " + er.number + ": " + er.message);
+        io.emit('error', er);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
         //socket.emit('error', er);
     })

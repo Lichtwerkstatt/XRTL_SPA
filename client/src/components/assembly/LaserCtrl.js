@@ -55,7 +55,8 @@ const LaserCtrl = (props) => {
       alert = 'No last change detected!'
     }
 
-    setAlert(alert)
+    setAlert(alert);
+    setAlertType('info');
     popupCtx.toggleShowPopUp(alert, alertType);
   }
 

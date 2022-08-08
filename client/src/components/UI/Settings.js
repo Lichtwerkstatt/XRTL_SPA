@@ -1,6 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
-import { useAppContext } from "../../services/AppContext";
 import { useState, useRef, useEffect } from "react";
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
@@ -11,12 +10,11 @@ import Box from '@mui/material/Box';
 import styles from "./Settings.module.css"
 
 const Settings = (props) => {
-    const [footer, setFooter] = useState(props.footer);
     const socketCtx = useSocketContext();
     const [mouted, setMounted] = useState(true);
     const [onlineStatus, setOnlineStatus] = useState('');
     const settingCtrl = useRef();
-    const appCtx = useAppContext();
+
 
     const theme = createTheme({
         palette: {
@@ -31,7 +29,7 @@ const Settings = (props) => {
     })
 
     const handleChangeFooter = (newFooter) => {
-        setFooter(newFooter);
+        props.newStatus(String(newFooter))
     };
 
     const settingEmit = () => {
@@ -44,13 +42,12 @@ const Settings = (props) => {
 
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.footer)
+                    props.newStatus(String(payload.status))
                 }
             });
 
             socketCtx.socket.on('footer', payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.status)
                     props.newStatus(String(payload.status))
                 }
             })
@@ -59,7 +56,6 @@ const Settings = (props) => {
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.status)
                     setOnlineStatus(payload.online)
                     props.newStatus(String(payload.status))
                 }

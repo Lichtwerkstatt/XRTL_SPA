@@ -50,6 +50,7 @@ const KM100 = (props) => {
     }
 
     setAlert(alert);
+    setAlertType('info');
     popupCtx.toggleShowPopUp(alert, alertType);
   }
 

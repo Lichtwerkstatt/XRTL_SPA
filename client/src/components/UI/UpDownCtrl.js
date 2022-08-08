@@ -11,7 +11,6 @@ const UpDownCtrl = (props) => {
   const appCtx = useAppContext();
   const [onlineStatus, setOnlineStatus] = useState('');
   const [mouted, setMounted] = useState(true);
-  const [footer, setFooter] = useState(props.footer);
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
@@ -34,7 +33,6 @@ const UpDownCtrl = (props) => {
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
-            (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
           setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))
         }

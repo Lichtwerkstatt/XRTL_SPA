@@ -24,6 +24,7 @@ const SM1ZP = (props) => {
     var time = new Date();
     setLastChange([time.getHours(), time.getMinutes(), time.getSeconds()])
     setFooter(newFooter);
+    setAlertType('info');
   };
 
   const handleReset = () => {

@@ -8,7 +8,6 @@ const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(0);
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [mouted, setMounted] = useState(true);
-  const [footer, setFooter] = useState(props.footer);
   const [onlineStatus, setOnlineStatus] = useState('');
 
   const appCtx = useAppContext();
