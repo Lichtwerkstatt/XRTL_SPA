@@ -6,7 +6,6 @@ import { useSocketContext } from "../../services/SocketContext";
 import { useEffect, useRef, useState } from "react";
 import { usePopUpContext } from "../../services/PopUpContext"
 
-
 const Stream = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
@@ -69,8 +68,8 @@ const Stream = (props) => {
   };
 
   const webcamEmitPic = () => {
-    socketCtx.socket.on("pic", function (data) {
-      var uint8Arr = new Uint8Array(data.buffer);
+    socketCtx.socket.on("data", function (payload) {
+      var uint8Arr = new Uint8Array(payload.data.data);
       var binary = "";
       for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
@@ -97,7 +96,6 @@ const Stream = (props) => {
     //console.log("Start Streaming.");
     socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
   }
-
 
   tempWebcam.current = webcamEmitPic;
   tempWebcam2.current = webcamStartStreaming;
