@@ -66,7 +66,6 @@ const Stream = (props) => {
       mounted = false;
       setMounted(false);
     }
-
   }
 
   const handleChangeFooter = (newFooter) => {

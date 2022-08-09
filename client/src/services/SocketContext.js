@@ -53,7 +53,6 @@ export function SocketContextProvider({ children }) {
       appCtx.addLog("Client connected to " + URL + " by choice.")
     } else {
       setConnected(false)
-      appCtx.toggleLogin();
       setUsername("");
       setNewURL("");
       socket.close();
