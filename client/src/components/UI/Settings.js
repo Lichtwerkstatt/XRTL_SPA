@@ -57,7 +57,7 @@ const Settings = (props) => {
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
                     setOnlineStatus(payload.online)
-                    props.newStatus(String(payload.status))
+                    //props.newStatus(String(payload.status))
                 }
             });
         }

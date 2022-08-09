@@ -9,7 +9,6 @@ import { useState } from "react";
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
- // const [onlineStatus, setOnlineStatus] = useState('');
   var [mounted, setMounted] = useState(true);
 
   const handleCtrl = (direction, negativ) => (event) => {
@@ -29,15 +28,6 @@ const UpDownCtrl = (props) => {
         componentId: props.component
       })
 
-/*       socketCtx.socket.emit('getFooter', props.component)
-
-      socketCtx.socket.on('getFooter', payload => {
-        if (payload.componentId === props.component) {
-          setOnlineStatus(payload.online)
-          props.newStatus(String(payload.status))
-        }
-      })
- */
       appCtx.addLog("User changed the position on " + props.component)
     }
     return () => {

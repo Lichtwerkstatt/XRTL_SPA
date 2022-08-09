@@ -7,7 +7,6 @@ const SelectCtrl = (props) => {
     const [selectValue, setSelectValue] = useState(false);
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [onlineStatus, setOnlineStatus] = useState('');
     var [mounted, setMounted] = useState(true);
 
     const handleSettingChanges = (event, newValue) => {
@@ -21,17 +20,6 @@ const SelectCtrl = (props) => {
                     val: newValue.props.value
                 }
             })
-
-            socketCtx.socket.emit('getFooter', props.component)
-
-            socketCtx.socket.on('getFooter', payload => {
-                if (payload.componentId === props.component) {
-                    setOnlineStatus(payload.online)
-                    props.newStatus(String(payload.status))
-                }
-            })
-
-            console.log(onlineStatus)
 
             socketCtx.socket.emit("footer", {
                 status: "Last change by: " + socketCtx.username,

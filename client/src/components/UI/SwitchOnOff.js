@@ -35,6 +35,8 @@ const SwitchOnOff = (props) => {
       })
 
       socketCtx.socket.on("status", payload => {
+        console.log("Switchon/off:  ", payload);
+        console.log("Props.comp   ", props.component)
         if (payload.componentId === props.component) {
           setSwitchStatus(payload.status['laser'])
         }
@@ -60,7 +62,7 @@ const SwitchOnOff = (props) => {
     }
     return () => {
       mounted = false;
-      setMounted(false)
+      setMounted(false);
     }
   }
 

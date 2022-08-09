@@ -72,6 +72,7 @@ const Stream = (props) => {
     var time = new Date();
     setLastChange([time.getHours(), time.getMinutes(), time.getSeconds()])
     setFooter(newFooter);
+    console.log("Footer Stream: ", newFooter)
   };
 
   const webcamEmitPic = () => {

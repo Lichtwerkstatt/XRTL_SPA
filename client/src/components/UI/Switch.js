@@ -8,7 +8,6 @@ const SwiitchCtrl = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
-    //const [onlineStatus, setOnlineStatus] = useState('');
     var [mounted, setMounted] = useState(true);
 
     const sliderEmit = () => {
@@ -40,15 +39,6 @@ const SwiitchCtrl = (props) => {
                 status: "Last change by: " + socketCtx.username,
                 componentId: props.component
             })
-
-  /*           socketCtx.socket.emit('getFooter', props.component)
-
-            socketCtx.socket.on('getFooter', payload => {
-                if (payload.componentId === props.component) {
-                    setOnlineStatus(payload.online)
-                    props.newStatus(String(payload.status))
-                }
-            }) */
 
             appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
