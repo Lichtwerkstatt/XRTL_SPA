@@ -183,6 +183,7 @@ io.on('connection', socket => {
             footerList[newStatus + 1] = payload.status
         }
         console.log("compList: ", footerList)
+         console.log("footer  ", payload)
         io.emit('footer', payload)
     })
 
@@ -199,6 +200,7 @@ io.on('connection', socket => {
             footerStatus = "Initializing ...";
         }
         online = componentList.includes(payload);
+         console.log("footerstatus  ", footerStatus)
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
