@@ -9,7 +9,7 @@ import { useState } from "react";
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
-  const [onlineStatus, setOnlineStatus] = useState('');
+ // const [onlineStatus, setOnlineStatus] = useState('');
   var [mounted, setMounted] = useState(true);
 
   const handleCtrl = (direction, negativ) => (event) => {
@@ -29,7 +29,7 @@ const UpDownCtrl = (props) => {
         componentId: props.component
       })
 
-      socketCtx.socket.emit('getFooter', props.component)
+/*       socketCtx.socket.emit('getFooter', props.component)
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
@@ -37,7 +37,7 @@ const UpDownCtrl = (props) => {
           props.newStatus(String(payload.status))
         }
       })
-
+ */
       appCtx.addLog("User changed the position on " + props.component)
     }
     return () => {
@@ -48,10 +48,10 @@ const UpDownCtrl = (props) => {
 
   return (
     <Stack >
-      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} >
+      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} >
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
+      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
         <Down />
       </IconButton>
     </Stack>

@@ -5,6 +5,7 @@ import { Box, Stack, Typography, Slider } from "@mui/material";
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
+  var [mounted, setMounted] = useState(true);
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
@@ -29,21 +30,27 @@ const SliderCtrl = (props) => {
   }, [socketCtx.socket])
 
   const handleSettingChanges = (event, newValue) => {
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      componentId: props.component,
-      command: {
-        controlId: props.command,
-        val: newValue
-      }
-    })
+    if (mounted) {
+      socketCtx.socket.emit("command", {
+        userId: socketCtx.username,
+        componentId: props.component,
+        command: {
+          controlId: props.command,
+          val: newValue
+        }
+      })
 
-    socketCtx.socket.emit("footer", {
-      status: "Last change by: " + socketCtx.username,
-      componentId: props.component
-    })
+      socketCtx.socket.emit("footer", {
+        status: "Last change by: " + socketCtx.username,
+        componentId: props.component
+      })
 
-    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
+      appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
+    }
+    return () => {
+      mounted = false;
+      setMounted(false)
+    }
   }
 
   return (

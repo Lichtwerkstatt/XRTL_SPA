@@ -8,7 +8,7 @@ const SwiitchCtrl = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
-    const [onlineStatus, setOnlineStatus] = useState('');
+    //const [onlineStatus, setOnlineStatus] = useState('');
     var [mounted, setMounted] = useState(true);
 
     const sliderEmit = () => {
@@ -41,14 +41,14 @@ const SwiitchCtrl = (props) => {
                 componentId: props.component
             })
 
-            socketCtx.socket.emit('getFooter', props.component)
+  /*           socketCtx.socket.emit('getFooter', props.component)
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
                     setOnlineStatus(payload.online)
                     props.newStatus(String(payload.status))
                 }
-            })
+            }) */
 
             appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
@@ -70,7 +70,7 @@ const SwiitchCtrl = (props) => {
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} />
+                        disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>

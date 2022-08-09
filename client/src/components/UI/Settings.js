@@ -81,8 +81,8 @@ const Settings = (props) => {
                 <LeftRightCtrl component={props.component} footer={props.footer} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} command="frame size" />
-            <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' />
+            <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} online={onlineStatus} command="frame size" />
+            <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' online={onlineStatus} />
             <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' online={onlineStatus} />
             <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>

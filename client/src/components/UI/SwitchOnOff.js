@@ -8,7 +8,7 @@ import { GiLaserWarning } from "react-icons/gi"
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-
+  const [onlineStatus, setOnlineStatus] = useState('');
   var [mounted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
@@ -51,7 +51,7 @@ const SwitchOnOff = (props) => {
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
-
+          setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))
         }
       })
@@ -73,7 +73,7 @@ const SwitchOnOff = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} />
+          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

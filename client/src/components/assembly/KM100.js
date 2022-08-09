@@ -27,6 +27,8 @@ const KM100 = (props) => {
       command: "reset"
     })
   }
+
+
   const handleInfo = () => {
     if (mounted) {
       var timeNow = new Date();

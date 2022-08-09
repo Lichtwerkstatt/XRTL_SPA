@@ -27,9 +27,11 @@ const SelectCtrl = (props) => {
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
                     setOnlineStatus(payload.online)
-                    if (mounted) { props.newStatus(String(payload.status)) }
+                    props.newStatus(String(payload.status))
                 }
             })
+
+            console.log(onlineStatus)
 
             socketCtx.socket.emit("footer", {
                 status: "Last change by: " + socketCtx.username,
@@ -52,7 +54,7 @@ const SelectCtrl = (props) => {
                     value={selectValue}
                     label={props.title}
                     onChange={handleSettingChanges}
-                    disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}
+                    disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
                 >
                     <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
                     <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>

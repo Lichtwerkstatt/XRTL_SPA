@@ -9,7 +9,7 @@ import { useState } from "react";
 const LeftRightCtrl = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [onlineStatus, setOnlineStatus] = useState('');
+    //const [onlineStatus, setOnlineStatus] = useState('');
     var [mounted, setMounted] = useState(true);
 
     const handleCtrl = (direction, negativ) => (event) => {
@@ -24,7 +24,7 @@ const LeftRightCtrl = (props) => {
                 }
             })
 
-            socketCtx.socket.emit('getFooter', props.component)
+/*             socketCtx.socket.emit('getFooter', props.component)
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
@@ -32,7 +32,7 @@ const LeftRightCtrl = (props) => {
                     props.newStatus(String(payload.status))
                 }
 
-            })
+            }) */
 
             socketCtx.socket.emit("footer", {
                 status: "Last change by: " + socketCtx.username,
@@ -49,10 +49,10 @@ const LeftRightCtrl = (props) => {
 
     return (
         <Box>
-            <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
+            <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
                 <Left />
             </IconButton>
-            <IconButton onClick={handleCtrl("pan", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
+            <IconButton onClick={handleCtrl("pan", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
                 <Right />
             </IconButton>
         </Box>

@@ -5,10 +5,10 @@ import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext"
 
 const RotaryCtrl = (props) => {
-  const [rotation, setRotation] = useState(0);
   const [enteredRotation, setEnteredRotation] = useState(0);
-  var [mounted, setMounted] = useState(true);
   const [onlineStatus, setOnlineStatus] = useState('');
+  const [rotation, setRotation] = useState(0);
+  var [mounted, setMounted] = useState(true);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -54,7 +54,10 @@ const RotaryCtrl = (props) => {
       })
     }
 
-    return () => setMounted(false)
+    return () =>{
+      mounted = false;
+      setMounted(false)
+    } 
   }
   tempRotaryCtrl.current = rotaryCtrlEmit;
 
