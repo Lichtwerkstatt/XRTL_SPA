@@ -226,6 +226,10 @@ io.on('connection', socket => {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
         }
         if (componentList.includes(socket.id)) {
+            console.log(componentList)
+            console.log(componentList.indexOf(socket.id))
+            //socket.emit('status',)
+
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
 
