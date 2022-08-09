@@ -189,7 +189,10 @@ io.on('connection', socket => {
     socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
-            footerStatus = footerList[statusFoot + 1]
+            footerStatus = footerList[statusFoot + 1];
+             if (footerStatus === 'Component went offline!') {
+                footerStatus = "Component connected!"
+            }
         } else if (componentList.includes(payload)) {
             footerStatus = "Component connected!"
         } else {
