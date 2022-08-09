@@ -226,10 +226,13 @@ io.on('connection', socket => {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
         }
         if (componentList.includes(socket.id)) {
-            console.log(componentList)
-            console.log(componentList.indexOf(socket.id))
+             console.log(componentList)
+            let com = componentList.indexOf(socket.id);
             //socket.emit('status',)
-
+            footerStatus = 'Component went offline!';
+            online = false;
+            console.log(componentList[com + 2], footerStatus, online)
+            io.emit('getFooter', { componentId: componentList[com + 2], status: footerStatus, online: online });
             componentList.splice(componentList.indexOf(socket.id), 4)
         }
 
