@@ -9,6 +9,7 @@ const RotaryCtrl = (props) => {
   const [onlineStatus, setOnlineStatus] = useState('');
   const [rotation, setRotation] = useState(0);
   var [mounted, setMounted] = useState(true);
+  var direction;
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -50,10 +51,10 @@ const RotaryCtrl = (props) => {
       })
     }
 
-    return () =>{
+    return () => {
       mounted = false;
       setMounted(false)
-    } 
+    }
   }
   tempRotaryCtrl.current = rotaryCtrlEmit;
 
@@ -61,34 +62,40 @@ const RotaryCtrl = (props) => {
     tempRotaryCtrl.current();
   }, [socketCtx.socket]);
 
+    const rotCW_Handler = name => (event) => {
+    event.preventDefault();
+    if (mounted) {
+      direction = 0
+      if (name === "left") {
+        direction = -1 * Number(enteredRotation)
+      } else if (name === "right") {
+        direction = Number(enteredRotation)
+      }
+      if (direction !== 0) {
+        socketCtx.socket.emit("command", {
+          userId: socketCtx.username,
+          componentId: props.component,
+          command: {
+            controlId: props.control,
+            val: direction
+          }
+        })
+        
+        socketCtx.socket.emit("footer", {
+          status: "Last change by: " + socketCtx.username,
+          componentId: props.component
+        })
+      }
+      appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
+    }
+    return () => {
+      mounted = false;
+      setMounted(false)
+    }
+  };
+  
   const changeRotationHandler = (event) => {
     setEnteredRotation(event.target.value);
-  };
-
-  const rotCW_Handler = name => (event) => {
-    event.preventDefault();
-    var direction = 0
-    if (name === "left") {
-      direction = -1 * Number(enteredRotation)
-    } else if (name === "right") {
-      direction = Number(enteredRotation)
-    }
-    if (direction !== 0) {
-      socketCtx.socket.emit("command", {
-        userId: socketCtx.username,
-        componentId: props.component,
-        command: {
-          controlId: props.control,
-          val: direction
-        }
-      })
-
-      socketCtx.socket.emit("footer", {
-        status: "Last change by: " + socketCtx.username,
-        componentId: props.component
-      })
-    }
-    appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
   return (

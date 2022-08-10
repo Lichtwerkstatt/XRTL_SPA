@@ -1,14 +1,13 @@
 const app = require('express')();
 const server = require('http').createServer(app)
 const { instrument } = require('@socket.io/admin-ui');
-const { log, Console } = require('console');
 const io = require('socket.io')(server, {
     cors: {
-        origin: '*'
+        origin: '*',
+        methods: ['GET', 'POST'],
     }
 })
 const { v4: uuidv4 } = require('uuid');
-const fs = require('fs');
 const roomID = uuidv4();
 const users = {};
 var userIDs = [];
@@ -26,22 +25,18 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
-/* io.use((socket, next) => {
+io.use((socket, next) => {
     const username = socket.handshake.auth.username;
-
-    console.log(username)
     if (!username) {
-        console.log("djkcbdj")
         return next(new Error("Invalid authentication"))
     }
-
-    socket.username = username;
+    socket.username = socket.handshake.auth.username;
     socket.userId = uuidv4();
     next();
-}); */
+});
 
 io.on('connection', socket => {
-    // socket.emit('session', { userId: socket.userId, username: socket.username })
+    socket.emit('XRTLAuth', { userId: socket.userId, username: socket.username })
     console.log('connection made successfully');
     socket.emit("newLog", 'Connection made successfully')
 
