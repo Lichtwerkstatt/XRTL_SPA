@@ -21,11 +21,17 @@ const KM100 = (props) => {
     appCtx.toggleSelectedComp(props.id)
   }
   const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
-    })
+    if (mounted) {
+      socketCtx.socket.emit('command', {
+        userId: socketCtx.username,
+        componentId: props.id,
+        command: "reset"
+      })
+    }
+    return () => {
+      mounted = false;
+      setMounted(false);
+    }
   }
 
 
