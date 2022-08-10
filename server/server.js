@@ -41,7 +41,7 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 }); */
 
 io.on('connection', socket => {
-   // socket.emit('session', { userId: socket.userId, username: socket.username })
+    // socket.emit('session', { userId: socket.userId, username: socket.username })
     console.log('connection made successfully');
     socket.emit("newLog", 'Connection made successfully')
 
@@ -112,8 +112,8 @@ io.on('connection', socket => {
 
     //Sends the new message to all users
     socket.on('message', payload => {
-        console.log('Message received on server: ', payload)
         socket.to(GUIId).emit("newLog", 'Message received on server: ' + JSON.stringify(payload))
+        console.log('Message received on server: ', payload)
         io.emit('message', payload)
     });
 
@@ -137,13 +137,11 @@ io.on('connection', socket => {
 
     //Sends pictures of the stream to the clients
     socket.on('data', (payload) => {
-        // socket.to(componentID).emit('pic', { buffer: data.image });
         socket.to(componentID).emit('data', { componentID: componentID, type: payload.image, dataId: payload.dataId, data: { type: payload.buffer, data: payload.data } })
     });
 
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
-        console.log("User has left the room " + data.id);
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
         try {
             let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
@@ -165,9 +163,9 @@ io.on('connection', socket => {
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
-        console.log("Command received: ", payload);
         socket.to(GUIId).emit("newLog", "Command received: " + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
+        console.log("Command received: ", payload);
     });
 
     //Returns the status of a experiment component
@@ -187,7 +185,7 @@ io.on('connection', socket => {
         socket.emit("newComponent", componentList);
 
         socket.broadcast.emit('status', payload);
-        //console.log("New status: ", payload)
+        console.log("New status: ", payload)
     });
 
     socket.on('footer', payload => {
@@ -197,8 +195,6 @@ io.on('connection', socket => {
             var newStatus = footerList.indexOf(payload.componentId)
             footerList[newStatus + 1] = payload.status
         }
-        console.log("compList: ", footerList)
-        console.log("footer  ", payload)
         io.emit('footer', payload)
     })
 
@@ -215,15 +211,13 @@ io.on('connection', socket => {
             footerStatus = "Initializing ...";
         }
         online = componentList.includes(payload);
-        console.log("footerstatus  ", footerStatus)
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
     socket.on('error', (er) => {
-        console.log("Error " + er.number + ": " + er.message);
         io.emit('error', er);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
-        //socket.emit('error', er);
+        console.log("Error " + er.number + ": " + er.message);
     })
 
     socket.on('forceDisconnect', (e) => {

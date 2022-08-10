@@ -58,7 +58,7 @@ export function SocketContextProvider({ children }) {
       //socket.auth = { username: username };
       socket.connect();
       setConnected(true)
-      appCtx.addLog("Client connected to " + URL + " by choice.")
+      appCtx.addLog("Client connected by choice.")
     } else {
       setConnected(false)
       setUsername("");
