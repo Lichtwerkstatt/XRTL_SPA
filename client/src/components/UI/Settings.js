@@ -28,10 +28,6 @@ const Settings = (props) => {
         }
     })
 
-    const handleChangeFooter = (newFooter) => {
-        props.newStatus(String(newFooter))
-    };
-
     const settingEmit = () => {
         if (mounted) {
             socketCtx.socket.emit("command", {
@@ -42,7 +38,8 @@ const Settings = (props) => {
 
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
-                    props.newStatus(String(payload.status))
+                    console.log("Status of settings:   ", payload)
+
                 }
             });
 
@@ -57,7 +54,7 @@ const Settings = (props) => {
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
                     setOnlineStatus(payload.online)
-                    //props.newStatus(String(payload.status))
+                    props.newStatus(String(payload.status))
                 }
             });
         }
@@ -75,16 +72,16 @@ const Settings = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
-                <UpDownCtrl component={props.component} footer={props.footer} />
+                <UpDownCtrl component={props.component} online={onlineStatus} />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} footer={props.footer} />
+                <LeftRightCtrl component={props.component} online={onlineStatus} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} online={onlineStatus} command="frame size" />
-            <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' online={onlineStatus} />
-            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' online={onlineStatus} />
-            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' online={onlineStatus} />
+            <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
+            <Switch component={props.component} command="gray" start='Color' end='Grey' online={onlineStatus} />
+            <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' online={onlineStatus} />
+            <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>
     )
 }

@@ -18,10 +18,17 @@ export function SocketContextProvider({ children }) {
   const appCtx = useAppContext()
 
   useEffect(() => {
+ /*    socket.on('session', ({ userId, newusername }) => {
+      setUsername(newusername)
+      console.log(userId);
+      console.log(newusername);
+    }) */
+
     socket.on('connect', (e) => {
       setConnected(true)
       appCtx.addLog("Server : Client connected to " + URL)
-    })
+    });
+
     socket.on('disconnect', (e) => {
       setConnected(false)
       appCtx.addLog("Server : Client disconnect.")
@@ -48,6 +55,7 @@ export function SocketContextProvider({ children }) {
 
   const toggleConnection = () => {
     if (!connected) {
+      //socket.auth = { username: username };
       socket.connect();
       setConnected(true)
       appCtx.addLog("Client connected to " + URL + " by choice.")

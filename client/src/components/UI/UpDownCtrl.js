@@ -38,10 +38,10 @@ const UpDownCtrl = (props) => {
 
   return (
     <Stack >
-      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} >
+      <IconButton onClick={handleCtrl("virtualTilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} >
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
+      <IconButton onClick={handleCtrl("virtualTilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
         <Down />
       </IconButton>
     </Stack>

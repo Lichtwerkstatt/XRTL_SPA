@@ -35,8 +35,6 @@ const SwitchOnOff = (props) => {
       })
 
       socketCtx.socket.on("status", payload => {
-        console.log("Switchon/off:  ", payload);
-        console.log("Props.comp   ", props.component)
         if (payload.componentId === props.component) {
           setSwitchStatus(payload.status['laser'])
         }
@@ -44,7 +42,6 @@ const SwitchOnOff = (props) => {
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
-
           props.newStatus(String(payload.status))
         }
       })

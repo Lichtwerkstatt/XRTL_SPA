@@ -26,7 +26,22 @@ instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr
 // Connect to https://admin.socket.io/#/
 // Client https://amritb.github.io/socketio-client-tool
 
+/* io.use((socket, next) => {
+    const username = socket.handshake.auth.username;
+
+    console.log(username)
+    if (!username) {
+        console.log("djkcbdj")
+        return next(new Error("Invalid authentication"))
+    }
+
+    socket.username = username;
+    socket.userId = uuidv4();
+    next();
+}); */
+
 io.on('connection', socket => {
+   // socket.emit('session', { userId: socket.userId, username: socket.username })
     console.log('connection made successfully');
     socket.emit("newLog", 'Connection made successfully')
 
@@ -122,7 +137,7 @@ io.on('connection', socket => {
 
     //Sends pictures of the stream to the clients
     socket.on('data', (payload) => {
-       // socket.to(componentID).emit('pic', { buffer: data.image });
+        // socket.to(componentID).emit('pic', { buffer: data.image });
         socket.to(componentID).emit('data', { componentID: componentID, type: payload.image, dataId: payload.dataId, data: { type: payload.buffer, data: payload.data } })
     });
 
@@ -183,7 +198,7 @@ io.on('connection', socket => {
             footerList[newStatus + 1] = payload.status
         }
         console.log("compList: ", footerList)
-         console.log("footer  ", payload)
+        console.log("footer  ", payload)
         io.emit('footer', payload)
     })
 
@@ -191,7 +206,7 @@ io.on('connection', socket => {
         if (footerList.includes(payload) === true) {
             var statusFoot = footerList.indexOf(payload);
             footerStatus = footerList[statusFoot + 1];
-             if (footerStatus === 'Component went offline!') {
+            if (footerStatus === 'Component went offline!') {
                 footerStatus = "Component connected!"
             }
         } else if (componentList.includes(payload)) {
@@ -200,7 +215,7 @@ io.on('connection', socket => {
             footerStatus = "Initializing ...";
         }
         online = componentList.includes(payload);
-         console.log("footerstatus  ", footerStatus)
+        console.log("footerstatus  ", footerStatus)
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 

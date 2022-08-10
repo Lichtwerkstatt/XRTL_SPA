@@ -26,7 +26,6 @@ const RotaryCtrl = (props) => {
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
-          //setFooter(payload.status)
           setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))
         }
@@ -41,14 +40,11 @@ const RotaryCtrl = (props) => {
           } else {
             setRotation(payload.status.linear.absolute)
           }
-          //setFooter(payload.footer)
         }
       });
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
-    
-          // setFooter(payload.status)
           props.newStatus(String(payload.status))
         }
       })

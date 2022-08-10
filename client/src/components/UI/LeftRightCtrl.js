@@ -38,10 +38,10 @@ const LeftRightCtrl = (props) => {
 
     return (
         <Box>
-            <IconButton onClick={handleCtrl("pan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
+            <IconButton onClick={handleCtrl("virtualPan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
                 <Left />
             </IconButton>
-            <IconButton onClick={handleCtrl("pan", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
+            <IconButton onClick={handleCtrl("virtualPan", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
                 <Right />
             </IconButton>
         </Box>
