@@ -75,12 +75,12 @@ const Settings = (props) => {
                 <UpDownCtrl component={props.component} online={onlineStatus} />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} online={onlineStatus} />
+                <LeftRightCtrl component={props.component} online={onlineStatus}  />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
-            <Switch component={props.component} command="gray" start='Color' end='Grey' online={onlineStatus} />
-            <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' online={onlineStatus} />
+            <Switch component={props.component}  command="gray" start='Color' end='Grey' online={onlineStatus} />
+            <Slider title="Contrast" component={props.component}  command="contrast" min='-2' max='2' online={onlineStatus} />
             <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>
     )
