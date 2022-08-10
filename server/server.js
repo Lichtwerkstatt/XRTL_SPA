@@ -172,7 +172,7 @@ io.on('connection', socket => {
         socket.emit("newComponent", componentList);
 
         socket.broadcast.emit('status', payload);
-        console.log("New status: ", payload)
+        //console.log("New status: ", payload)
     });
 
     socket.on('footer', payload => {
