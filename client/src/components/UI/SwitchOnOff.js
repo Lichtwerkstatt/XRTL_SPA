@@ -49,8 +49,12 @@ const SwitchOnOff = (props) => {
       socketCtx.socket.emit('getFooter', props.component)
 
       socketCtx.socket.on('getFooter', payload => {
-        if (payload.componentId === props.component) {
+        if (props.component === 'Michelson_laser') {
           setOnlineStatus(payload.online)
+
+        }
+
+        if (payload.componentId === props.component) {
           props.newStatus(String(payload.status))
         }
       })

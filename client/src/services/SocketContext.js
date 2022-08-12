@@ -44,7 +44,7 @@ export function SocketContextProvider({ children }) {
     socket = manager.socket("/");
     SocketContext = createContext();
     setURL(newURL);
-    setUsername(username)
+    setUsername(username);
     socket.auth = { username: username };
   }
 
