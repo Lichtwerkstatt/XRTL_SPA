@@ -1,10 +1,9 @@
+const jwt = require('jsonwebtoken');
 const app = require('express')();
-const server = require('http').createServer(app)
-const { instrument } = require('@socket.io/admin-ui');
+const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
         origin: '*',
-        methods: ['GET', 'POST'],
     }
 })
 const { v4: uuidv4 } = require('uuid');
@@ -19,26 +18,37 @@ const socketToRoom = {};
 var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
+var exp = ''
 
 
-instrument(io, { auth: false }) //TODO: Add Authentication before deployment JKr 011221
-// Connect to https://admin.socket.io/#/
-// Client https://amritb.github.io/socketio-client-tool
-
-io.use((socket, next) => {
-    const username = socket.handshake.auth.username;
-    if (!username) {
-        return next(new Error("Invalid authentication"))
+io.use(function (socket, next) {
+    if (socket.handshake.auth && socket.handshake.auth.token) {
+        jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
+            if (err) return next(new Error('Authentication error'));
+            socket.decoded = decoded;
+            exp = decoded.iat + 3600000;
+            next();
+        });
     }
-    socket.username = socket.handshake.auth.username;
-    socket.userId = uuidv4();
-    next();
-});
+    else {
+        console.log("Authentication failed!")
+        next(new Error('Authentication error'));
+    }
+})
 
 io.on('connection', socket => {
-    socket.emit('XRTLAuth', { userId: socket.userId, username: socket.username })
-    console.log('connection made successfully');
+    console.log('Connection made successfully');
     socket.emit("newLog", 'Connection made successfully')
+
+    if (socket.decoded.component === 'client') {
+        var checkIfExpired = setInterval(() => {
+            if (exp < Date.now()) {
+                console.log("Client token expired");
+                clearInterval(checkIfExpired);
+                socket.disconnect();
+            }
+        }, 60000);
+    };
 
     socket.on('GUI', () => {
         GUIId = socket.id
