@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext, createContext } from "react";
+import { useState, useContext, createContext } from "react";
 import { useSocketContext } from "./SocketContext";
 import { Alert, Snackbar } from '@mui/material';
 import styles from "./PopUp.module.css";
@@ -16,6 +16,12 @@ export function PopUpContextProvider({ children }) {
 
     const socketCtx = useSocketContext();
 
+    socketCtx.socket.on('error', error => {
+        setShowPopUp(true);
+        setText(error.errmsg);
+        setType('error');
+    })
+
 
     const toggleShowPopUp = (newText, newType) => {
         setText(newText);
@@ -24,10 +30,10 @@ export function PopUpContextProvider({ children }) {
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId:"nckdj",
+            componentId: "nckdj",
             command: {
-              controlId:'cdcd',
-              val: 'dfcvdfc'
+                controlId: 'cdcd',
+                val: 'dfcvdfc'
             }
         });
     }
@@ -38,7 +44,6 @@ export function PopUpContextProvider({ children }) {
         }
         setShowPopUp(false);
     };
-
 
     return (
         <PopUpContext.Provider

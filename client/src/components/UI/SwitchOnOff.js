@@ -8,8 +8,8 @@ import { GiLaserWarning } from "react-icons/gi"
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-  const [footer, setFooter] = useState(props.footer);
-  const [mouted, setMounted] = useState(true);
+  const [onlineStatus, setOnlineStatus] = useState('');
+  var [mounted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
   const appCtx = useAppContext();
@@ -27,7 +27,7 @@ const SwitchOnOff = (props) => {
   })
 
   const switchFunction = () => {
-    if (mouted) {
+    if (mounted) {
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
@@ -42,7 +42,6 @@ const SwitchOnOff = (props) => {
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
-          setFooter(payload.status)
           props.newStatus(String(payload.status))
         }
       })
@@ -50,15 +49,22 @@ const SwitchOnOff = (props) => {
       socketCtx.socket.emit('getFooter', props.component)
 
       socketCtx.socket.on('getFooter', payload => {
+        if (props.component === 'Michelson_laser') {
+          setOnlineStatus(payload.online)
+
+        }
+
         if (payload.componentId === props.component) {
-          setFooter(payload.status)
           props.newStatus(String(payload.status))
         }
       })
 
       appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
     }
-    return () => setMounted(false)
+    return () => {
+      mounted = false;
+      setMounted(false);
+    }
   }
 
   tempSwitch.current = switchFunction
@@ -70,7 +76,7 @@ const SwitchOnOff = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} />
+          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

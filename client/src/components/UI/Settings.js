@@ -1,6 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
-import { useAppContext } from "../../services/AppContext";
 import { useState, useRef, useEffect } from "react";
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
@@ -11,12 +10,11 @@ import Box from '@mui/material/Box';
 import styles from "./Settings.module.css"
 
 const Settings = (props) => {
-    const [footer, setFooter] = useState(props.footer);
     const socketCtx = useSocketContext();
-    const [mouted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(true);
     const [onlineStatus, setOnlineStatus] = useState('');
     const settingCtrl = useRef();
-    const appCtx = useAppContext();
+
 
     const theme = createTheme({
         palette: {
@@ -30,12 +28,8 @@ const Settings = (props) => {
         }
     })
 
-    const handleChangeFooter = (newFooter) => {
-        setFooter(newFooter);
-    };
-
     const settingEmit = () => {
-        if (mouted) {
+        if (mounted) {
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
                 componentId: props.component,
@@ -44,13 +38,13 @@ const Settings = (props) => {
 
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.footer)
+                    console.log("Status of settings:   ", payload)
+
                 }
             });
 
             socketCtx.socket.on('footer', payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.status)
                     props.newStatus(String(payload.status))
                 }
             })
@@ -59,13 +53,15 @@ const Settings = (props) => {
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
-                    setFooter(payload.status)
                     setOnlineStatus(payload.online)
                     props.newStatus(String(payload.status))
                 }
             });
         }
-        return () => setMounted(false)
+        return () => {
+            mounted = false;
+            setMounted(false)
+        }
     }
     settingCtrl.current = settingEmit;
 
@@ -76,16 +72,16 @@ const Settings = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
-                <UpDownCtrl component={props.component} footer={props.footer} />
+                <UpDownCtrl component={props.component} online={onlineStatus} />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} footer={props.footer} />
+                <LeftRightCtrl component={props.component} online={onlineStatus}  />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} footer={props.footer} newStatus={handleChangeFooter} command="frame size" />
-            <Switch component={props.component} footer={props.footer} command="gray" start='Color' end='Grey' />
-            <Slider title="Contrast" component={props.component} footer={props.footer} command="contrast" min='-2' max='2' online={onlineStatus} />
-            <Slider title="Brightness" component={props.component} footer={props.footer} command="brightness" min='-2' max='2' online={onlineStatus} />
+            <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
+            <Switch component={props.component}  command="gray" start='Color' end='Grey' online={onlineStatus} />
+            <Slider title="Contrast" component={props.component}  command="contrast" min='-2' max='2' online={onlineStatus} />
+            <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>
     )
 }

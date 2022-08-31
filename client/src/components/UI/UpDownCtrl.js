@@ -9,13 +9,11 @@ import { useState } from "react";
 const UpDownCtrl = (props) => {
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
-  const [onlineStatus, setOnlineStatus] = useState('');
-  const [mouted, setMounted] = useState(true);
-  const [footer, setFooter] = useState(props.footer);
+  var [mounted, setMounted] = useState(true);
 
   const handleCtrl = (direction, negativ) => (event) => {
     event.preventDefault();
-    if (mouted) {
+    if (mounted) {
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
@@ -30,27 +28,20 @@ const UpDownCtrl = (props) => {
         componentId: props.component
       })
 
-      socketCtx.socket.emit('getFooter', props.component)
-
-      socketCtx.socket.on('getFooter', payload => {
-        if (payload.componentId === props.component) {
-            (payload.status === "Init") ? setFooter("Connected") : setFooter(payload.status);
-          setOnlineStatus(payload.online)
-          props.newStatus(String(payload.status))
-        }
-      })
-
       appCtx.addLog("User changed the position on " + props.component)
     }
-    return () => setMounted(false)
+    return () => {
+      mounted = false;
+      setMounted(false)
+    }
   }
 
   return (
     <Stack >
-      <IconButton onClick={handleCtrl("tilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} >
+      <IconButton onClick={handleCtrl("virtualTilt", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} >
         <Up />
       </IconButton>
-      <IconButton onClick={handleCtrl("tilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}  >
+      <IconButton onClick={handleCtrl("virtualTilt", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
         <Down />
       </IconButton>
     </Stack>

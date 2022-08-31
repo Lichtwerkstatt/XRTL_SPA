@@ -8,9 +8,7 @@ const SwiitchCtrl = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
-    const [onlineStatus, setOnlineStatus] = useState('');
-    const [mouted, setMounted] = useState(true);
-    const [footer, setFooter] = useState(props.footer);
+    var [mounted, setMounted] = useState(true);
 
     const sliderEmit = () => {
         socketCtx.socket.on("status", payload => {
@@ -26,7 +24,7 @@ const SwiitchCtrl = (props) => {
     }, [socketCtx.socket])
 
     const handleSettingChanges = (event, newValue) => {
-        if (mouted) {
+        if (mounted) {
             setSwitchValue(newValue);
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
@@ -42,23 +40,16 @@ const SwiitchCtrl = (props) => {
                 componentId: props.component
             })
 
-            socketCtx.socket.emit('getFooter', props.component)
-
-            socketCtx.socket.on('getFooter', payload => {
-                if (payload.componentId === props.component) {
-                    setFooter(payload.status)
-                    setOnlineStatus(payload.online)
-                    props.newStatus(String(payload.status))
-                }
-            })
-
             appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
             try {
                 props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
             } catch (error) { }
         }
-        return () => setMounted(false)
+        return () => {
+            mounted = false;
+            setMounted(false)
+        }
     }
 
     return (
@@ -69,7 +60,7 @@ const SwiitchCtrl = (props) => {
                     <Switch checked={switchValue}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true} />
+                        disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>

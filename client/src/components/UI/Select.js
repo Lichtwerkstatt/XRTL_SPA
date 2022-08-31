@@ -7,12 +7,10 @@ const SelectCtrl = (props) => {
     const [selectValue, setSelectValue] = useState(false);
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [onlineStatus, setOnlineStatus] = useState('');
-    const [mouted, setMounted] = useState(true);
-    const [footer, setFooter] = useState(props.footer);
+    var [mounted, setMounted] = useState(true);
 
     const handleSettingChanges = (event, newValue) => {
-        if (mouted) {
+        if (mounted) {
             setSelectValue(newValue.props.value);
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
@@ -23,16 +21,6 @@ const SelectCtrl = (props) => {
                 }
             })
 
-            socketCtx.socket.emit('getFooter', props.component)
-
-            socketCtx.socket.on('getFooter', payload => {
-                if (payload.componentId === props.component) {
-                    setFooter(payload.status)
-                    setOnlineStatus(payload.online)
-                    if (mouted) { props.newStatus(String(payload.status)) }
-                }
-            })
-
             socketCtx.socket.emit("footer", {
                 status: "Last change by: " + socketCtx.username,
                 componentId: props.component
@@ -40,7 +28,10 @@ const SelectCtrl = (props) => {
 
             appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
         }
-        return () => setMounted(false)
+        return () => {
+            mounted = false;
+            setMounted(false);
+        }
     }
 
     return (
@@ -51,7 +42,7 @@ const SelectCtrl = (props) => {
                     value={selectValue}
                     label={props.title}
                     onChange={handleSettingChanges}
-                    disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}
+                    disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
                 >
                     <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
                     <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
