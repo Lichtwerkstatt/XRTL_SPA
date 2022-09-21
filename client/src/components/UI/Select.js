@@ -4,7 +4,7 @@ import { useSocketContext } from "../../services/SocketContext";
 import { MenuItem, Select, FormControl, InputLabel, Box } from '@mui/material';
 
 const SelectCtrl = (props) => {
-    const [selectValue, setSelectValue] = useState(false);
+    const [selectValue, setSelectValue] = useState('');
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
     var [mounted, setMounted] = useState(true);
@@ -25,7 +25,7 @@ const SelectCtrl = (props) => {
                 status: "Last change by: " + socketCtx.username,
                 componentId: props.component
             })
-
+            
             appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
         }
         return () => {

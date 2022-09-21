@@ -18,7 +18,7 @@ const Console = (props) => {
     <div className={styles.consoleContainer + " " + animation}>
       <div className={styles.consoleMain}>
         {appCtx.logs.map((payload, index) => {
-          return (<span key={index}>:{payload}<br /></span>)
+          return (<span key={index}>{payload}<br /></span>)
         })}
       </div>
       <div className={styles.consoleHandler}><span>
