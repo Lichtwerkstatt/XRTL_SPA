@@ -18,6 +18,13 @@ const RotaryCtrl = (props) => {
 
   const rotaryCtrlEmit = () => {
     if (mounted) {
+      return () => {
+        mounted = false;
+        setMounted(false);
+      };
+    } else {
+      mounted = true
+      setMounted(true)
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
@@ -49,11 +56,12 @@ const RotaryCtrl = (props) => {
           props.newStatus(String(payload.status))
         }
       })
+      mounted = false;
+      setMounted(false);
     }
-
     return () => {
       mounted = false;
-      setMounted(false)
+      setMounted(false);
     }
   }
   tempRotaryCtrl.current = rotaryCtrlEmit;
@@ -62,7 +70,7 @@ const RotaryCtrl = (props) => {
     tempRotaryCtrl.current();
   }, [socketCtx.socket]);
 
-    const rotCW_Handler = name => (event) => {
+  const rotCW_Handler = name => (event) => {
     event.preventDefault();
     if (mounted) {
       direction = 0
@@ -80,7 +88,7 @@ const RotaryCtrl = (props) => {
             val: direction
           }
         })
-        
+
         socketCtx.socket.emit("footer", {
           status: "Last change by: " + socketCtx.username,
           componentId: props.component
@@ -93,7 +101,7 @@ const RotaryCtrl = (props) => {
       setMounted(false)
     }
   };
-  
+
   const changeRotationHandler = (event) => {
     setEnteredRotation(event.target.value);
   };
