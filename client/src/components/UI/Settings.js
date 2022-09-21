@@ -29,12 +29,7 @@ const Settings = (props) => {
     })
 
     const settingEmit = () => {
-        if (mounted) {
-            return () => {
-                mounted = false;
-                setMounted(false);
-            };
-        } else {
+        if (!mounted) {
             mounted = true
             setMounted(true)
 

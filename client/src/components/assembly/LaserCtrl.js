@@ -21,12 +21,7 @@ const LaserCtrl = (props) => {
   }
 
   const handleChangeFooter = (newFooter) => {
-    if (mounted) {
-      return () => {
-        mounted = false;
-        setMounted(false);
-      };
-    } else {
+    if (!mounted) {
       mounted = true
       setMounted(true)
       var time = new Date();

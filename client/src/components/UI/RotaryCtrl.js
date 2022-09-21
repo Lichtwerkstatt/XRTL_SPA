@@ -17,12 +17,7 @@ const RotaryCtrl = (props) => {
 
 
   const rotaryCtrlEmit = () => {
-    if (mounted) {
-      return () => {
-        mounted = false;
-        setMounted(false);
-      };
-    } else {
+    if (!mounted) {
       mounted = true
       setMounted(true)
       socketCtx.socket.emit("command", {
@@ -72,34 +67,29 @@ const RotaryCtrl = (props) => {
 
   const rotCW_Handler = name => (event) => {
     event.preventDefault();
-    if (mounted) {
-      direction = 0
-      if (name === "left") {
-        direction = -1 * Number(enteredRotation)
-      } else if (name === "right") {
-        direction = Number(enteredRotation)
-      }
-      if (direction !== 0) {
-        socketCtx.socket.emit("command", {
-          userId: socketCtx.username,
-          componentId: props.component,
-          command: {
-            controlId: props.control,
-            val: direction
-          }
-        })
 
-        socketCtx.socket.emit("footer", {
-          status: "Last change by: " + socketCtx.username,
-          componentId: props.component
-        })
-      }
-      appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
+    direction = 0
+    if (name === "left") {
+      direction = -1 * Number(enteredRotation)
+    } else if (name === "right") {
+      direction = Number(enteredRotation)
     }
-    return () => {
-      mounted = false;
-      setMounted(false)
+    if (direction !== 0) {
+      socketCtx.socket.emit("command", {
+        userId: socketCtx.username,
+        componentId: props.component,
+        command: {
+          controlId: props.control,
+          val: direction
+        }
+      })
+
+      socketCtx.socket.emit("footer", {
+        status: "Last change by: " + socketCtx.username,
+        componentId: props.component
+      })
     }
+    appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
   };
 
   const changeRotationHandler = (event) => {

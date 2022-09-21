@@ -9,7 +9,6 @@ import { GiLaserWarning } from "react-icons/gi"
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState('');
-  var [mounted, setMounted] = useState(true);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
   const appCtx = useAppContext();
@@ -27,44 +26,38 @@ const SwitchOnOff = (props) => {
   })
 
   const switchFunction = () => {
-    if (mounted) {
-      socketCtx.socket.emit("command", {
-        userId: socketCtx.username,
-        componentId: props.component,
-        command: "getStatus"
-      })
+    socketCtx.socket.emit("command", {
+      userId: socketCtx.username,
+      componentId: props.component,
+      command: "getStatus"
+    })
 
-      socketCtx.socket.on("status", payload => {
-        if (payload.componentId === props.component) {
-          setSwitchStatus(payload.status['laser'])
-        }
-      })
+    socketCtx.socket.on("status", payload => {
+      if (payload.componentId === props.component) {
+        setSwitchStatus(payload.status['laser'])
+      }
+    })
 
-      socketCtx.socket.on('footer', payload => {
-        if (payload.componentId === props.component) {
-          props.newStatus(String(payload.status))
-        }
-      })
+    socketCtx.socket.on('footer', payload => {
+      if (payload.componentId === props.component) {
+        props.newStatus(String(payload.status))
+      }
+    })
 
-      socketCtx.socket.emit('getFooter', props.component)
+    socketCtx.socket.emit('getFooter', props.component)
 
-      socketCtx.socket.on('getFooter', payload => {
-        if (props.component === 'Michelson_laser') {
-          setOnlineStatus(payload.online)
+    socketCtx.socket.on('getFooter', payload => {
+      if (props.component === 'Michelson_laser') {
+        setOnlineStatus(payload.online)
 
-        }
+      }
 
-        if (payload.componentId === props.component) {
-          props.newStatus(String(payload.status))
-        }
-      })
+      if (payload.componentId === props.component) {
+        props.newStatus(String(payload.status))
+      }
+    })
 
-      appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
   }
 
   tempSwitch.current = switchFunction
