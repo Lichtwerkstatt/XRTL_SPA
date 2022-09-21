@@ -25,9 +25,8 @@ const Chat = (props) => {
   }, [socketCtx, chat])
 
   const sendMessage = (event) => {
-    event.preventDefault()
-    //console.log(message)
-    socketCtx.socket.emit("message", { userId: socketCtx.username, message, color: socketCtx.fontColor })
+    event.preventDefault();
+    socketCtx.socket.emit("message", { userId: socketCtx.username, message, color: socketCtx.fontColor });
     setMessage("");
   }
 

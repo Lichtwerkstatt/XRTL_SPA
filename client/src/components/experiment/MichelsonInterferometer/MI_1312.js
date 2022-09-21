@@ -123,7 +123,6 @@ export default function Model({ ...props }) {
         position={[1.56, 0.67, 0.14]}
         rotation={[Math.PI / 2, 0, -Math.PI / 2]}
         onPointerDown={(e) => {
-          console.log("Clicked on laser")
           e.stopPropagation()
           props.toggleSelect("KM100_2")
         }}
@@ -148,7 +147,6 @@ export default function Model({ ...props }) {
         material={nodes.SD5.material}
         position={[1.61, 0.25, -0.9]}
         onPointerDown={(e) => {
-          console.log("Clicked on LaserPower")
           e.stopPropagation()
           props.toggleSelect("LaserPower")
         }}

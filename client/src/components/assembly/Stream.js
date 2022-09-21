@@ -22,7 +22,6 @@ const Stream = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
-    //console.log("Stop Streaming.");
     socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
   };
 
