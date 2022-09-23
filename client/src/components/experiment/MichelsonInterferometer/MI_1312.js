@@ -5,7 +5,7 @@ import DescriptiveTag from "../../UI/DescriptiveTag"
 
 export default function Model({ ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/model/MI_1312.glb");
+  const { nodes, materials } = useGLTF("/XRTL_SPA/model/MI_1312.glb");
 
   return (
     <group ref={group} {...props} dispose={null}>
