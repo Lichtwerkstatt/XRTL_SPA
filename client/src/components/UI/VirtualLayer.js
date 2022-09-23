@@ -22,7 +22,7 @@ const VirtualLayer = () => {
       >
         <Suspense fallback={null}>
           {/* <Stats showPanel={0}  /> */}
-          <Environment files="../hdri/autoshop.hdr" />
+          <Environment files="/autoshop.hdr" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
           <MI_110422
             toggleSelect={appCtx.toggleSelectedComp}
