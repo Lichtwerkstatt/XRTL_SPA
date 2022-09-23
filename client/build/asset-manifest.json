@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/XRTL_SPA/static/css/main.5a4bf43f.chunk.css",
+    "main.js": "/XRTL_SPA/static/js/main.a6be0f58.chunk.js",
+    "main.js.map": "/XRTL_SPA/static/js/main.a6be0f58.chunk.js.map",
+    "runtime-main.js": "/XRTL_SPA/static/js/runtime-main.39834f44.js",
+    "runtime-main.js.map": "/XRTL_SPA/static/js/runtime-main.39834f44.js.map",
+    "static/js/2.3a7d1e17.chunk.js": "/XRTL_SPA/static/js/2.3a7d1e17.chunk.js",
+    "static/js/2.3a7d1e17.chunk.js.map": "/XRTL_SPA/static/js/2.3a7d1e17.chunk.js.map",
+    "index.html": "/XRTL_SPA/index.html",
+    "static/css/main.5a4bf43f.chunk.css.map": "/XRTL_SPA/static/css/main.5a4bf43f.chunk.css.map",
+    "static/js/2.3a7d1e17.chunk.js.LICENSE.txt": "/XRTL_SPA/static/js/2.3a7d1e17.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/XRTL_SPA/static/media/RobotoCondensed-Regular.db6d9169.ttf",
+    "static/media/km100_outline.5cffd463.png": "/XRTL_SPA/static/media/km100_outline.5cffd463.png",
+    "static/media/linear_outline.7ac97702.png": "/XRTL_SPA/static/media/linear_outline.7ac97702.png",
+    "static/media/xrtl_team.519a843e.png": "/XRTL_SPA/static/media/xrtl_team.519a843e.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.39834f44.js",
+    "static/js/2.3a7d1e17.chunk.js",
+    "static/css/main.5a4bf43f.chunk.css",
+    "static/js/main.a6be0f58.chunk.js"
+  ]
+}

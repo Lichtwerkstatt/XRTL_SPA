@@ -21,59 +21,54 @@ const KM100 = (props) => {
     appCtx.toggleSelectedComp(props.id)
   }
   const handleReset = () => {
-    if (mounted){
-      socketCtx.socket.emit('command', {
-        userId: socketCtx.username,
-        componentId: props.id,
-        command: "reset"
-      })
-    }
-    return () => {
-      mounted = false;
-      setMounted(false)
-    }
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      componentId: props.id,
+      command: "reset"
+    })
   }
 
 
   const handleInfo = () => {
-    if (mounted) {
-      var timeNow = new Date();
-      let difH, difMin, difSec = 0;
-      alert = '';
+    var timeNow = new Date();
+    let difH, difMin, difSec = 0;
+    alert = '';
 
-      timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
-      if (lastChange[0] === '') {
-        alert = 'No last change detected!'
-      } else if (timeNow[0] > lastChange[0]) {
-        difH = timeNow[0] - lastChange[0];
-        alert = 'Last change is more than ' + difH + ' h ago!'
-      } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
-        difSec = timeNow[2] - lastChange[2]
-        alert = 'Last change is ' + difSec + ' s ago!'
-      } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
-        difMin = timeNow[1] - lastChange[1]
-        alert = 'Last change is more than ' + difMin + ' min ago!'
-      } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
-        alert = 'Last change is more than 24 h ago!'
-      } else {
-        alert = 'No last change detected!'
-      }
-
-      setAlert(alert);
-      setAlertType('info');
-      popupCtx.toggleShowPopUp(alert, alertType);
+    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
+    if (lastChange[0] === '') {
+      alert = 'No last change detected!'
+    } else if (timeNow[0] > lastChange[0]) {
+      difH = timeNow[0] - lastChange[0];
+      alert = 'Last change is more than ' + difH + ' h ago!'
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
+      difSec = timeNow[2] - lastChange[2]
+      alert = 'Last change is ' + difSec + ' s ago!'
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
+      difMin = timeNow[1] - lastChange[1]
+      alert = 'Last change is more than ' + difMin + ' min ago!'
+    } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
+      alert = 'Last change is more than 24 h ago!'
+    } else {
+      alert = 'No last change detected!'
     }
 
-    return () => {
-      mounted = false;
-      setMounted(false)
-    }
+    setAlert(alert);
+    setAlertType('info');
+    popupCtx.toggleShowPopUp(alert, alertType);
   }
 
   const handleChangeFooter = (newFooter) => {
-    var time = new Date();
-    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-    setFooter(newFooter);
+    if (!mounted) {
+      mounted = true
+      setMounted(true)
+      var time = new Date();
+      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+      setFooter(newFooter);
+    }
+    return () => {
+      mounted = false;
+      setMounted(false);
+    }
   };
 
   return (

@@ -38,7 +38,8 @@ io.use(function (socket, next) {
 
 io.on('connection', socket => {
     console.log('Connection made successfully');
-    socket.emit("newLog", 'Connection made successfully')
+    socket.emit("newLog", 'Connection made successfully');
+    io.to(socket.id).emit('Auth');
 
    /* if (socket.decoded.component === 'client') {
         var checkIfExpired = setInterval(() => {
@@ -55,8 +56,8 @@ io.on('connection', socket => {
     })
 
     socket.on('newLogGUI', (payload) => {
-        socket.emit("newLog", payload)
-    })
+        io.to(GUIId).emit("newLog", payload)
+    });
 
     socket.on("userId", (newUser) => {
         var today = new Date();

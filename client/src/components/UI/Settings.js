@@ -29,7 +29,10 @@ const Settings = (props) => {
     })
 
     const settingEmit = () => {
-        if (mounted) {
+        if (!mounted) {
+            mounted = true
+            setMounted(true)
+
             socketCtx.socket.emit("command", {
                 userId: socketCtx.username,
                 componentId: props.component,
@@ -39,7 +42,6 @@ const Settings = (props) => {
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
                     console.log("Status of settings:   ", payload)
-
                 }
             });
 
@@ -57,10 +59,12 @@ const Settings = (props) => {
                     props.newStatus(String(payload.status))
                 }
             });
+            mounted = false;
+            setMounted(false);
         }
         return () => {
             mounted = false;
-            setMounted(false)
+            setMounted(false);
         }
     }
     settingCtrl.current = settingEmit;
@@ -75,12 +79,12 @@ const Settings = (props) => {
                 <UpDownCtrl component={props.component} online={onlineStatus} />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} online={onlineStatus}  />
+                <LeftRightCtrl component={props.component} online={onlineStatus} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
-            <Switch component={props.component}  command="gray" start='Color' end='Grey' online={onlineStatus} />
-            <Slider title="Contrast" component={props.component}  command="contrast" min='-2' max='2' online={onlineStatus} />
+            <Switch component={props.component} command="gray" start='Color' end='Grey' online={onlineStatus} />
+            <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' online={onlineStatus} />
             <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' online={onlineStatus} />
         </ThemeProvider>
     )

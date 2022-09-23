@@ -21,111 +21,87 @@ const Stream = (props) => {
   const tempWebcam2 = useRef();
 
   const handleCloseWindow = () => {
-    if (mounted) {
-      appCtx.toggleSelectedComp(props.id);
-      //console.log("Stop Streaming.");
-      socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    appCtx.toggleSelectedComp(props.id);
+    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
   };
 
   const handleReset = () => {
-    if (mounted) {
-      socketCtx.socket.emit('command', {
-        userId: socketCtx.username,
-        componentId: props.id,
-        command: "reset"
-      })
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      componentId: props.id,
+      command: "reset"
+    })
   }
 
   const handleInfo = () => {
-    if (mounted) {
-      var timeNow = new Date();
-      let difH, difMin, difSec = 0;
-      alert = '';
+    var timeNow = new Date();
+    let difH, difMin, difSec = 0;
+    alert = '';
 
-      timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
-      if (lastChange[0] === '') {
-        alert = 'No last change detected!'
-      } else if (timeNow[0] > lastChange[0]) {
-        difH = timeNow[0] - lastChange[0];
-        alert = 'Last change is more than ' + difH + ' h ago!'
-      } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
-        difSec = timeNow[2] - lastChange[2]
-        alert = 'Last change is ' + difSec + ' s ago!'
-      } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
-        difMin = timeNow[1] - lastChange[1]
-        alert = 'Last change is more than ' + difMin + ' min ago!'
-      } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
-        alert = 'Last change is more than 24 h ago!'
-      } else {
-        alert = 'No last change detected!'
-      }
+    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
+    if (lastChange[0] === '') {
+      alert = 'No last change detected!'
+    } else if (timeNow[0] > lastChange[0]) {
+      difH = timeNow[0] - lastChange[0];
+      alert = 'Last change is more than ' + difH + ' h ago!'
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
+      difSec = timeNow[2] - lastChange[2]
+      alert = 'Last change is ' + difSec + ' s ago!'
+    } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
+      difMin = timeNow[1] - lastChange[1]
+      alert = 'Last change is more than ' + difMin + ' min ago!'
+    } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
+      alert = 'Last change is more than 24 h ago!'
+    } else {
+      alert = 'No last change detected!'
+    }
 
-      setAlert(alert);
-      setAlertType('info');
-      popupCtx.toggleShowPopUp(alert, alertType);
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    setAlert(alert);
+    setAlertType('info');
+    popupCtx.toggleShowPopUp(alert, alertType);
   }
 
   const handleChangeFooter = (newFooter) => {
-    var time = new Date();
-    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds()])
-    setFooter(newFooter);
-    console.log("Footer Stream: ", newFooter)
+    if (!mounted) {
+      mounted = true
+      setMounted(true)
+      var time = new Date();
+      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+      setFooter(newFooter);
+    }
+    return () => {
+      mounted = false;
+      setMounted(false);
+    }
   };
 
   const webcamEmitPic = () => {
-    if (mounted) {
-      socketCtx.socket.on("data", function (payload) {
-        var uint8Arr = new Uint8Array(payload.data.data);
-        var binary = "";
-        for (var i = 0; i < uint8Arr.length; i++) {
-          binary += String.fromCharCode(uint8Arr[i]);
-        }
-        var base64String = window.btoa(binary);
+    socketCtx.socket.on("data", function (payload) {
+      var uint8Arr = new Uint8Array(payload.data.data);
+      var binary = "";
+      for (var i = 0; i < uint8Arr.length; i++) {
+        binary += String.fromCharCode(uint8Arr[i]);
+      }
+      var base64String = window.btoa(binary);
 
-        var img = new Image();
-        img.onload = function () {
-          var canvas = document.getElementById("ScreenCanvas");
-          if (canvas != null) {
-            var ctx = canvas.getContext("2d");
-            var x1 = 0,
-              y1 = 0,
-              x2 = 300,
-              y2 = 200;
-            ctx.drawImage(this, x1, y1, x2, y2);
-          }
-        };
-        img.src = "data:image/jpg;base64," + base64String;
-      });
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+      var img = new Image();
+      img.onload = function () {
+        var canvas = document.getElementById("ScreenCanvas");
+        if (canvas != null) {
+          var ctx = canvas.getContext("2d");
+          var x1 = 0,
+            y1 = 0,
+            x2 = 300,
+            y2 = 200;
+          ctx.drawImage(this, x1, y1, x2, y2);
+        }
+      };
+      img.src = "data:image/jpg;base64," + base64String;
+    });
   }
 
   const webcamStartStreaming = () => {
-    if (mounted) {
-      socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
   }
 
   tempWebcam.current = webcamEmitPic;

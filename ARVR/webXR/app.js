@@ -136,7 +136,7 @@ class App {
             },
             // called when loading has errors
             function (error) {
-                console.log('An error happened');
+                console.error('An error happened');
             }
         );
     }

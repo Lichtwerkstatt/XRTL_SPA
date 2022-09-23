@@ -8,7 +8,6 @@ const SwiitchCtrl = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const tempSlider = useRef();
-    var [mounted, setMounted] = useState(true);
 
     const sliderEmit = () => {
         socketCtx.socket.on("status", payload => {
@@ -24,32 +23,26 @@ const SwiitchCtrl = (props) => {
     }, [socketCtx.socket])
 
     const handleSettingChanges = (event, newValue) => {
-        if (mounted) {
-            setSwitchValue(newValue);
-            socketCtx.socket.emit("command", {
-                userId: socketCtx.username,
-                componentId: props.component,
-                command: {
-                    controlId: props.command,
-                    val: newValue
-                }
-            })
+        setSwitchValue(newValue);
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            componentId: props.component,
+            command: {
+                controlId: props.command,
+                val: newValue
+            }
+        })
 
-            socketCtx.socket.emit("footer", {
-                status: "Last change by: " + socketCtx.username,
-                componentId: props.component
-            })
+        socketCtx.socket.emit("footer", {
+            status: "Last change by: " + socketCtx.username,
+            componentId: props.component
+        })
 
-            appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
-            try {
-                props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
-            } catch (error) { }
-        }
-        return () => {
-            mounted = false;
-            setMounted(false)
-        }
+        try {
+            props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
+        } catch (error) { }
     }
 
     return (
