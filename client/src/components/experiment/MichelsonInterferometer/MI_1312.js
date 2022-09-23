@@ -160,4 +160,4 @@ export default function Model({ ...props }) {
     </group>
   );
 }
-useGLTF.preload("/model/MI_1312.glb");
+useGLTF.preload("/XRTL_SPA/model/MI_1312.glb");
