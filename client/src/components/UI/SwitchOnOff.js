@@ -8,7 +8,7 @@ import { GiLaserWarning } from "react-icons/gi"
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-  const [onlineStatus, setOnlineStatus] = useState('');
+  const [onlineStatus, setOnlineStatus] = useState(false);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
   const appCtx = useAppContext();
