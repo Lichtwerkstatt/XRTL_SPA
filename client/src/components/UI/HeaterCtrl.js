@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useSocketContext } from "../../services/SocketContext";
 import { useAppContext } from "../../services/AppContext";
-import IconButton from '@mui/material/IconButton';
+import SpeedIcon from '@mui/icons-material/Speed';
+import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
+import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import Box from '@mui/material/Box';
 import Slider from './SliderCtrl'
 import Select from './Select'
@@ -50,13 +52,16 @@ const HeaterCtrl = (props) => {
         <ThemeProvider theme={theme}>
             <div className={styles.Switch} >
                 <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                    {/* <IconButton onClick={handleCtrl("virtualPan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
+                        <SpeedIcon />
+                    </IconButton> */}
                     <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
                     <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
                 </Box>
             </div>
             <div className={styles.Heater} >
                 <h2>Measured temperature is:</h2>
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -3 }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                     <div style={{ paddingLeft: 10 }}>
                         <h3>Gauge settings</h3>
                         <Select title="Average time (ms)" component={props.component} online={onlineStatus} command="frame size" />
