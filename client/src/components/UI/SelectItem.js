@@ -28,7 +28,7 @@ const SelectItem = (props) => {
     }
 
 
-    if (props === 'Resolution') {
+    if (props.title === 'Resolution') {
         return (
             <Select
                 value={selectValue}

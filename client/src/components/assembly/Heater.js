@@ -76,8 +76,8 @@ const Heater = (props) => {
             footer={footer}
             top={props.top}
             left={props.left}
-            height="500px"
-            width="800px"
+            height="250px"
+            width="680px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}

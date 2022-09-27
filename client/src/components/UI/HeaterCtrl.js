@@ -48,38 +48,37 @@ const HeaterCtrl = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
+            <div className={styles.Switch} >
+                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                    <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
+                    <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
+                </Box>
+            </div>
             <div className={styles.Heater} >
-
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', m: 4, p: 2 }}>
-                    <div>
-                        <h3>Header settings</h3>
-                        <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
+                <h2>Measured temperature is:</h2>
+                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -3 }}>
+                    <div style={{ paddingLeft: 10 }}>
+                        <h3>Gauge settings</h3>
+                        <Select title="Average time (ms)" component={props.component} online={onlineStatus} command="frame size" />
+                        <Select title="Update time (s)" component={props.component} online={onlineStatus} command="frame size" />
+                    </div>
+                    <div style={{ paddingLeft: 15 }}>
+                        <h3>Heater settings</h3>
                         <Slider title="Power" component={props.component} command="brightness" min='0' max='255' online={onlineStatus} />
 
                     </div>
-                    <div>
-                        <h3>Gauge settings</h3>
-                        <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
-                        <Select title="Average time (ms)" component={props.component} online={onlineStatus} command="frame size" />
-                        <Select title="Update time (s)" component={props.component} online={onlineStatus} command="frame size" />
+                </Box>
+                <div className={styles.Canvas1}>
+                    <canvas id="Gauge" />
+                </div>
 
-                    </div>
-                </Box>
-                <Box>
-                    
-                </Box>
+                <div className={styles.Canvas2}>
+                    <canvas id="Heater" />
+                </div>
             </div>
 
 
         </ThemeProvider>
-        /*         <Box>
-                    <IconButton onClick={handleCtrl("virtualPan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
-                        <Left />
-                    </IconButton>
-                    <IconButton onClick={handleCtrl("virtualPan", true)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
-                        <Right />
-                    </IconButton>
-                </Box> */
     )
 }
 
