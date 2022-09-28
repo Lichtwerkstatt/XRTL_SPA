@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useSocketContext } from "../../services/SocketContext";
 import { useAppContext } from "../../services/AppContext";
 import SpeedIcon from '@mui/icons-material/Speed';
-import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
+import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Box from '@mui/material/Box';
 import Slider from './SliderCtrl'
 import Select from './Select'
 import Switch from './Switch'
+import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "./HeaterCtrl.module.css";
 
@@ -50,39 +52,44 @@ const HeaterCtrl = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
+
+            <div className={styles.Temp}>
+                <canvas text="hdhdh">
+
+                </canvas>
+            </div>
+
             <div className={styles.Switch} >
                 <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
                     {/* <IconButton onClick={handleCtrl("virtualPan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
                         <SpeedIcon />
                     </IconButton> */}
                     <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
+
                     <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
                 </Box>
             </div>
             <div className={styles.Heater} >
-                <h2>Measured temperature is:</h2>
+
                 <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                     <div style={{ paddingLeft: 10 }}>
-                        <h3>Gauge settings</h3>
+                        <Button f sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
+                        <Slider title="Power" component={props.component} command="brightness" min='0' max='255' online={onlineStatus} />
+                    </div>
+                    <div style={{ paddingLeft: 15 }}>
+                        <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
                         <Select title="Average time (ms)" component={props.component} online={onlineStatus} command="frame size" />
                         <Select title="Update time (s)" component={props.component} online={onlineStatus} command="frame size" />
                     </div>
-                    <div style={{ paddingLeft: 15 }}>
-                        <h3>Heater settings</h3>
-                        <Slider title="Power" component={props.component} command="brightness" min='0' max='255' online={onlineStatus} />
-
-                    </div>
                 </Box>
+                <div className={styles.Canvas2}>
+                    <canvas id="Heater" />
+                </div>
                 <div className={styles.Canvas1}>
                     <canvas id="Gauge" />
                 </div>
 
-                <div className={styles.Canvas2}>
-                    <canvas id="Heater" />
-                </div>
             </div>
-
-
         </ThemeProvider>
     )
 }
