@@ -12,6 +12,7 @@ import Switch from './Switch'
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "./HeaterCtrl.module.css";
+import IconButton from '@mui/material/IconButton';
 
 const HeaterCtrl = (props) => {
     const [switchStatus, setSwitchStatus] = useState(false);
@@ -57,23 +58,22 @@ const HeaterCtrl = (props) => {
                 <canvas text="hdhdh">
 
                 </canvas>
-            </div>
+                <IconButton onClick={handleCtrl("virtualPan", false)}  >
+                    <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                </IconButton>
 
+            </div>
             <div className={styles.Switch} >
                 <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                    {/* <IconButton onClick={handleCtrl("virtualPan", false)} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}  >
-                        <SpeedIcon />
-                    </IconButton> */}
-                    <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
-
-                    <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
+                    <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus}  online={onlineStatus} />
+                    <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus}  online={onlineStatus} />
                 </Box>
             </div>
             <div className={styles.Heater} >
 
                 <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                     <div style={{ paddingLeft: 10 }}>
-                        <Button f sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
+                        <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
                         <Slider title="Power" component={props.component} command="brightness" min='0' max='255' online={onlineStatus} />
                     </div>
                     <div style={{ paddingLeft: 15 }}>

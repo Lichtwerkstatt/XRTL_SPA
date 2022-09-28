@@ -7,6 +7,11 @@ div.Temp Canvas{
     left: 40%;
     top: 10px
 }
+div.Temp button{
+    position: absolute;
+    left:575px;
+    top: 30px;
+}
 
 
 div.Heater{
@@ -38,7 +43,7 @@ div.Canvas1 {
     width: 295px;
     height: 185px;
     top: -10px;
-    left: 312px;
+    left: 314px;
     border: 2px solid #01bd7d;
     border-radius: 15px;
  }
