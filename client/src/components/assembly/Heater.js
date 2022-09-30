@@ -73,24 +73,19 @@ const Heater = (props) => {
     return (
         <Window
             header={props.title + " (" + props.id + ")"}
-            footer={footer}
             top={props.top}
             left={props.left}
-            height="340px"
+            height="320px"
             width="623px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
+            footer={footer}
         >
-
             <HeaterCtrl
-                rotation={props.rotation}
                 component={props.id}
                 newStatus={handleChangeFooter}
                 footer={footer}
-                control="linear"
-                top="50"
-                left="160"
             />
 
         </Window>

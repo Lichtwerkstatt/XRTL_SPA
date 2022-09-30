@@ -8,6 +8,8 @@ const SliderCtrl = (props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
+  var option=''
+
 
   const marks = [
     { value: parseInt(props.min), label: props.min, },
@@ -29,6 +31,8 @@ const SliderCtrl = (props) => {
   }, [socketCtx.socket])
 
   const handleSettingChanges = (event, newValue) => {
+   
+    console.log(props)
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,

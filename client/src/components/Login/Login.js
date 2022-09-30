@@ -98,7 +98,7 @@ const Login = (props) => {
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            < IconButton onClick={(e) => {
+                            <IconButton onClick={(e) => {
                                 col = col[Math.floor(Math.random() * 16)]
                                 document.getElementById("colorIcon").style.color = col
                                 setfontColor(col);

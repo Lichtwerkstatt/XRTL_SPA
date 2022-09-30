@@ -22,7 +22,7 @@ div.Heater{
 }
 div.Switch{
     position: relative;
-    top:1px;
+    top:-1px;
     left: 160px;
     margin: 0 0 0 12px; 
     padding: 0;
@@ -32,7 +32,7 @@ div.Canvas1 {
     position: absolute;
     width: 295px;
     height: 130px;
-    top: -10px;
+    top: 173px;
     left: 8px;
     border: 2px solid #01bd7d;
     border-radius: 15px;
@@ -41,8 +41,8 @@ div.Canvas1 {
  div.Canvas2 {
     position: absolute;
     width: 295px;
-    height: 185px;
-    top: -10px;
+    height: 160px;
+    top: 173px;
     left: 314px;
     border: 2px solid #01bd7d;
     border-radius: 15px;
