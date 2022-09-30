@@ -57,8 +57,8 @@ const SliderCtrl = (props) => {
           defaultValue={0}
           valueLabelDisplay="auto"
           step={1}
-          min={-2}
-          max={2}
+          min={props.min}
+          max={props.max}
           value={sliderPos}
           onChangeCommitted={handleSettingChanges}
           marks={marks}

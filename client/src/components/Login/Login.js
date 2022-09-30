@@ -132,7 +132,7 @@ const Login = (props) => {
                         style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
                     >Login</Button>
 
-                </div >
+                </div>
             </ThemeProvider>
         );
     } else {
