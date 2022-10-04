@@ -6,6 +6,7 @@ import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Slider from './SliderCtrl'
 import Switch1 from './Switch'
+import Select from './Select'
 import { Switch, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
 import styles from "./HeaterCtrl.module.css";
 import { createFilterOptions } from '@mui/material/Autocomplete';
@@ -56,7 +57,6 @@ const HeaterCtrl = (props) => {
     }
 
     const autoCompleteHandle = (event, newValue, option) => {
-        console.log(newValue)
         if (option === 'average') {
             if (typeof newValue === 'string') {
                 setAverage({ title: newValue, });
@@ -145,7 +145,6 @@ const HeaterCtrl = (props) => {
         settingCtrl.current()
     }, [socketCtx.socket]);
 
-    //<Switch1 component={props.component} command="switch" start='Off' end='On' online={onlineStatus} />
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.Temp}>
@@ -157,21 +156,17 @@ const HeaterCtrl = (props) => {
                 </IconButton>
 
             </div>
-            <div className={styles.Switch} >
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                    <Switch1 component={props.component} command="output" start='Off' end='On' online={onlineStatus} checked={checked} />
-                    <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                </Box>
-            </div>
             <div className={styles.Canvas2}>
                 <canvas id="Heater" />
             </div>
             <div className={styles.Canvas1}>
                 <canvas id="Gauge" />
+            </div>
+            <div className={styles.Switch} >
+                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                    <Switch1 component={props.component} command="output" start='Off' end='On' online={onlineStatus} checked={checked} />
+                    <Switch1 component={props.component} command="switch" start='Off' end='On' online={onlineStatus} />
+                </Box>
             </div>
             <div className={styles.Heater} >
                 <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
@@ -179,41 +174,10 @@ const HeaterCtrl = (props) => {
                         <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
                         <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='power' />
                     </div>
-                    <div style={{ paddingLeft: 25 }}>
+                    <div style={{ paddingLeft: 20 }}>
                         <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
-                        <Box sx={{ ml: 2 }} >
-
-                            <Autocomplete
-                                value={average}
-                                freeSolo
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Average time (ms)" />)}
-                                onChange={autoCompleteHandle('average')}
-                                onKeyPress={(e) => { if (e.key === 'Enter') { handleSettingChanges('thermister') } }}
-                                filterOptions={filterOption}
-                                selectOnFocus
-                                clearOnBlur
-                                handleHomeEndKeys
-                                options={AverageTimeOption}
-                                getOptionLabel={getLabel}
-                                renderOption={(props, option) => <li {...props}>{option.title}</li>}
-                            />
-                            <Autocomplete
-                                value={update}
-                                freeSolo
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Update time (s) " />)}
-                                onChange={autoCompleteHandle('update')}
-                                onKeyPress={(e) => { if (e.key === 'Enter') { console.log('') } }}
-                                filterOptions={filterOption}
-                                selectOnFocus
-                                clearOnBlur
-                                handleHomeEndKeys
-                                options={UpdateTimeOption}
-                                getOptionLabel={getLabel}
-                                renderOption={(props, option) => <li {...props}>{option.title}</li>}
-                            />
-                        </Box>
+                        <Select title="Average time (ms)" component={props.component} online={onlineStatus} command="thermistor" option="averageTime" />
+                        <Select title="Update time (s)" component={props.component} online={onlineStatus} command="thermistor" option="updateTime" />
                     </div>
                 </Box>
 

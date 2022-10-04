@@ -75,7 +75,7 @@ const Heater = (props) => {
             header={props.title + " (" + props.id + ")"}
             top={props.top}
             left={props.left}
-            height="320px"
+            height="340px"
             width="623px"
             onClose={handleCloseWindow}
             onReset={handleReset}

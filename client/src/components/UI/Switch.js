@@ -24,7 +24,6 @@ const SwiitchCtrl = (props) => {
 
     const handleSettingChanges = (event, newValue) => {
         setSwitchValue(newValue);
-        console.log("hier")
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             componentId: props.component,
