@@ -12,7 +12,17 @@ div.Temp button{
     left:575px;
     top: 30px;
 }
-
+div.Temp h2{
+    position: absolute;
+    width: 120px;
+    height: 80px;
+    left:40%;
+    top: 60px;
+    background-color: #01bd7d;
+    border-radius: 15px;
+    text-align: center;
+    
+}
 
 div.Heater{
     position: absolute;
@@ -22,7 +32,7 @@ div.Heater{
 }
 div.Switch{
     position: relative;
-    top:-1px;
+    top:125px;
     left: 160px;
     margin: 0 0 0 12px; 
     padding: 0;

@@ -8,8 +8,6 @@ const SliderCtrl = (props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const tempSlider = useRef();
-  var option = ''
-
 
   const marks = [
     { value: parseInt(props.min), label: props.min, },

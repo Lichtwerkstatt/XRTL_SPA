@@ -29,7 +29,7 @@ const SwiitchCtrl = (props) => {
             componentId: props.component,
             command: {
                 controlId: props.command,
-                val: newValue,
+                [props.option]: newValue,
             }
         })
 

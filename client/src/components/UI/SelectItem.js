@@ -1,4 +1,4 @@
-import { MenuItem, Select, FormControl, InputLabel, Box } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
 import { useSocketContext } from "../../services/SocketContext";
 import { useAppContext } from "../../services/AppContext";
 import { useState } from "react";
@@ -27,24 +27,7 @@ const SelectItem = (props) => {
         appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
     }
 
-    if (props.title === 'Resolution') {
-        return (
-            <Select
-                value={selectValue}
-                label={props.title}
-                onChange={handleSettingChanges}
-                disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
-            >
-                <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
-                <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
-                <MenuItem value={'XGA'}>XGA (1024x768)</MenuItem>
-                <MenuItem value={'SVGA'}>SVGA (800x600)</MenuItem>
-                <MenuItem value={'VGA'}>VGA (640x480)</MenuItem>
-                <MenuItem value={'QVGA'}>QVGA (320x240)</MenuItem>
-                <MenuItem value={'CIF'}>CIF (352x288)</MenuItem>
-            </Select>
-        )
-    } else if (props.title === 'Average time (ms)') {
+    if (props.title === 'Average time (ms)') {
         return (
             <Select
                 value={selectValue}
