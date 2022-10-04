@@ -8,7 +8,6 @@ import { AppContextProvider } from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
 import Cam from "./components/Chat/Webcam";
 import {PopUpContextProvider} from "./services/PopUpContext"
-//import { WebView } from 'react-native-webview';
 
 const App = () => {
   process.title = 'XRTLApp';

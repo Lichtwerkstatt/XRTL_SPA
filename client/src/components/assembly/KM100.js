@@ -20,6 +20,7 @@ const KM100 = (props) => {
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
+  
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
@@ -27,7 +28,6 @@ const KM100 = (props) => {
       command: "reset"
     })
   }
-
 
   const handleInfo = () => {
     var timeNow = new Date();

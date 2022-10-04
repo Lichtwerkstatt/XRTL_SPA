@@ -1,13 +1,13 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
 import { useState, useRef, useEffect } from "react";
+import LeftRightCtrl from "./LeftRightCtrl";
+import styles from "./Settings.module.css"
+import UpDownCtrl from "./UpDownCtrl"
+import Box from '@mui/material/Box';
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
 import Select from "./Select";
-import UpDownCtrl from "./UpDownCtrl"
-import LeftRightCtrl from "./LeftRightCtrl";
-import Box from '@mui/material/Box';
-import styles from "./Settings.module.css"
 
 const Settings = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);

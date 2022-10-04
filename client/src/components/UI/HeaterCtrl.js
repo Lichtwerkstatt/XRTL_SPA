@@ -65,7 +65,9 @@ const HeaterCtrl = (props) => {
             });
 
             socketCtx.socket.on("data", (payload) => {
-                setTemp(payload.data.data);
+                if (payload.componentId === props.component) {
+                    setTemp(payload.data.data);
+                }
             });
 
             mounted = false;

@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext";
 import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
+import { useSocketContext } from "../../services/SocketContext";
+import { useAppContext } from "../../services/AppContext";
+import { useState, useEffect, useRef } from "react";
 
 const SwiitchCtrl = (props) => {
     const [switchValue, setSwitchValue] = useState(false);

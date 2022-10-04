@@ -37,7 +37,7 @@ export function SocketContextProvider({ children }) {
 
   const setNewURL = (newURL, username) => {
     socket.disconnect();
-    manager = new Manager(newURL, { autoConnect: false});
+    manager = new Manager(newURL, { autoConnect: false });
     socket = manager.socket("/");
     SocketContext = createContext();
     setURL(newURL);

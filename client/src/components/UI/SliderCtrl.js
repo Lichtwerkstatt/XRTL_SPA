@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { Box, Stack, Typography, Slider } from "@mui/material";
+import { useAppContext } from "../../services/AppContext";
+import { useState, useEffect, useRef } from "react";
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
@@ -28,7 +28,7 @@ const SliderCtrl = (props) => {
     tempSlider.current();
   }, [socketCtx.socket])
 
-  const handleSettingChanges = (event, newValue ) => {
+  const handleSettingChanges = (event, newValue) => {
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
