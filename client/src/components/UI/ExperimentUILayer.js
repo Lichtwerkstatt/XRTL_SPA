@@ -14,7 +14,6 @@ const ExperimentUILayer = () => {
 
   const ConnectionSuccess = () => {
     socketCtx.socket.on('Auth', () => {
-      console.log("hier")
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
       setConnection(true);
     });
