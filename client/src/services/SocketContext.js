@@ -50,7 +50,7 @@ export function SocketContextProvider({ children }) {
 
   const toggleConnection = (username) => {
     if (!connected) {
-    /*  var payload = {
+      var payload = {
         sub: username,
         component: 'client',
         iat: Date.now(),
@@ -58,7 +58,7 @@ export function SocketContextProvider({ children }) {
       }
 
       var token = jwt.sign(payload, "keysecret");
-      socket.auth = { token: token }*/
+      socket.auth = { token: token }
       socket.connect();
 
       setConnected(true)
