@@ -48,7 +48,7 @@ const Webcam = () => {
                 });
 
                 socketCtx.socket.emit('client join room', (roomID)); // new client will be added to the userList
-                socketCtx.socket.emit('Webcam stream', (payload)); // 
+                socketCtx.socket.emit('Webcam stream', ); // 
 
 
                 socketCtx.socket.on('all users', users => {
