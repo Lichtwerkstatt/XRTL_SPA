@@ -21,7 +21,7 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 
-/*
+
 io.use(function (socket, next) {
     console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -36,14 +36,14 @@ io.use(function (socket, next) {
         console.log("Authentication failed!")
         next(new Error('Authentication error'));
     }
-}) */
+}) 
 
 io.on('connection', socket => {
     console.log('Connection made successfully');
     socket.emit("newLog", 'Connection made successfully');
     io.to(socket.id).emit('Auth');
 
-   /* if (socket.decoded.component === 'client') {
+   if (socket.decoded.component === 'client') {
         var checkIfExpired = setInterval(() => {
             if (exp < Date.now()) {
                 console.log("Client token expired");
@@ -51,7 +51,7 @@ io.on('connection', socket => {
                 socket.disconnect();
             }
         }, 60000);
-    };*/
+    };
 
     socket.on('GUI', () => {
         GUIId = socket.id
