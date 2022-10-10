@@ -1,22 +1,25 @@
-import { useSocketContext } from '../../services/SocketContext'
-import React, { useState } from "react";
-import styles from "./Login.module.css"
-import { useAppContext } from "../../services/AppContext";
 import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import { createFilterOptions } from '@mui/material/Autocomplete';
+import { useSocketContext } from '../../services/SocketContext'
+import { useAppContext } from "../../services/AppContext";
+import SendIcon from '@mui/icons-material/Send';
+import React, { useState } from "react";
+import styles from "./Login.module.css"
+
 
 const Login = (props) => {
     var col = ['IndianRed', 'FireBrick', 'MediumVioletRed', 'HotPink', 'Coral', 'DarkOrange', 'Yellow',
         'Khaki', 'Plum', 'DarkOrchid', 'ForestGreen', 'DarkOliveGreen', 'LightGreen', 'Teal', 'Aqua', 'Blue', 'LightSkyBlue']
-    const [username, setUsername] = useState("");
+    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://192.168.1.42:7000' }, { title: 'http://10.232.37.40:7000' }]
+
     const [fontColor, setfontColor] = useState("white");
+    const [connection, setConnection] = useState(null);
+    const [username, setUsername] = useState("");
+    const filter = createFilterOptions();
+
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [connection, setConnection] = useState(null);
-    const filter = createFilterOptions();
-    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://192.168.1.42:7000' }, { title: 'http://10.232.37.40:7000' }]
 
     const theme = createTheme({
         palette: {
@@ -35,8 +38,8 @@ const Login = (props) => {
         if (username !== "") {
             try {
                 socketCtx.setNewURL(String(connection.title), String(username));
-                socketCtx.toggleConnection(String(username));
-                appCtx.setShowLogin(false)
+                socketCtx.toggleConnection(String(username));               
+                appCtx.setShowLogin(false);   
             }
             catch (error) { }
         }
@@ -98,7 +101,7 @@ const Login = (props) => {
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            < IconButton onClick={(e) => {
+                            <IconButton onClick={(e) => {
                                 col = col[Math.floor(Math.random() * 16)]
                                 document.getElementById("colorIcon").style.color = col
                                 setfontColor(col);
@@ -132,7 +135,7 @@ const Login = (props) => {
                         style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
                     >Login</Button>
 
-                </div >
+                </div>
             </ThemeProvider>
         );
     } else {

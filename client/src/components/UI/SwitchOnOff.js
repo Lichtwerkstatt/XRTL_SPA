@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
 import { useAppContext } from "../../services/AppContext";
-import { Box } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Switch from './Switch';
+import { useState, useEffect, useRef } from "react";
 import { GiLaserWarning } from "react-icons/gi"
+import { Box } from '@mui/material';
+import Switch from './Switch';
 
 const SwitchOnOff = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
-  const [onlineStatus, setOnlineStatus] = useState('');
+  const [onlineStatus, setOnlineStatus] = useState(false);
   const socketCtx = useSocketContext();
   const tempSwitch = useRef();
   const appCtx = useAppContext();

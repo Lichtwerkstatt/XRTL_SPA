@@ -42,12 +42,14 @@ const Webcam = () => {
 
         if (appCtx.showWebcam) {
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
-                userVideo.current.srcObject = stream;
+                userVideo.current.srcObject = stream; //setzen unseren Stream auf das 1. <video>
                 socketCtx.socket.emit('roomID', (data) => { //Transmission of the roomID
                     roomID = data;
                 });
 
                 socketCtx.socket.emit('client join room', (roomID)); // new client will be added to the userList
+                socketCtx.socket.emit('Webcam stream', (payload)); // 
+
 
                 socketCtx.socket.on('all users', users => {
                     const peers = [];
@@ -80,7 +82,7 @@ const Webcam = () => {
         }
         function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer für alle bisher Clienten die sich bisher im Raum schon befinden
             const peer = new Peer({
-                initiator: true,        //wichtig, damit Stream in die gesendet werden kann
+                initiator: true,        //wichtig, damit Stream in die Anderen gesendet werden kann
                 trickle: false,
                 stream,     //eigener Stream
             });

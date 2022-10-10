@@ -22,20 +22,10 @@ export function PopUpContextProvider({ children }) {
         setType('error');
     })
 
-
     const toggleShowPopUp = (newText, newType) => {
         setText(newText);
         setType(newType);
         setShowPopUp(!showPopUp);
-
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: "nckdj",
-            command: {
-                controlId: 'cdcd',
-                val: 'dfcvdfc'
-            }
-        });
     }
 
     const handleClose = (event, reason) => {

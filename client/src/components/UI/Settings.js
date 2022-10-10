@@ -1,18 +1,18 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../services/SocketContext";
 import { useState, useRef, useEffect } from "react";
+import LeftRightCtrl from "./LeftRightCtrl";
+import styles from "./Settings.module.css"
+import UpDownCtrl from "./UpDownCtrl"
+import Box from '@mui/material/Box';
 import Slider from "./SliderCtrl";
 import Switch from "./Switch"
 import Select from "./Select";
-import UpDownCtrl from "./UpDownCtrl"
-import LeftRightCtrl from "./LeftRightCtrl";
-import Box from '@mui/material/Box';
-import styles from "./Settings.module.css"
 
 const Settings = (props) => {
-    const socketCtx = useSocketContext();
+    const [onlineStatus, setOnlineStatus] = useState(false);
     var [mounted, setMounted] = useState(true);
-    const [onlineStatus, setOnlineStatus] = useState('');
+    const socketCtx = useSocketContext();
     const settingCtrl = useRef();
 
 
@@ -83,9 +83,9 @@ const Settings = (props) => {
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
-            <Switch component={props.component} command="gray" start='Color' end='Grey' online={onlineStatus} />
-            <Slider title="Contrast" component={props.component} command="contrast" min='-2' max='2' online={onlineStatus} />
-            <Slider title="Brightness" component={props.component} command="brightness" min='-2' max='2' online={onlineStatus} />
+            <Switch component={props.component} command="gray" start='Color' end='Grey' online={true} option="val" />
+            <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" />
+            <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" />
         </ThemeProvider>
     )
 }

@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { Box, Stack, Typography, Slider } from "@mui/material";
+import { useAppContext } from "../../services/AppContext";
+import { useState, useEffect, useRef } from "react";
 
 const SliderCtrl = (props) => {
   const [sliderPos, setSliderPos] = useState(props.sliderPos);
@@ -34,7 +34,7 @@ const SliderCtrl = (props) => {
       componentId: props.component,
       command: {
         controlId: props.command,
-        val: newValue
+        [props.option]: newValue
       }
     })
 
@@ -57,8 +57,8 @@ const SliderCtrl = (props) => {
           defaultValue={0}
           valueLabelDisplay="auto"
           step={1}
-          min={-2}
-          max={2}
+          min={props.min}
+          max={props.max}
           value={sliderPos}
           onChangeCommitted={handleSettingChanges}
           marks={marks}

@@ -1,12 +1,12 @@
+import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
+import { useSocketContext } from "../../services/SocketContext"
+import { useAppContext } from "../../services/AppContext";
 import { useState, useEffect, useRef } from "react";
 import styles from "./RotaryCtrl.module.css";
-import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
-import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext"
 
 const RotaryCtrl = (props) => {
   const [enteredRotation, setEnteredRotation] = useState(0);
-  const [onlineStatus, setOnlineStatus] = useState('');
+  const [onlineStatus, setOnlineStatus] = useState(false);
   const [rotation, setRotation] = useState(0);
   var [mounted, setMounted] = useState(true);
   var direction;
@@ -18,21 +18,23 @@ const RotaryCtrl = (props) => {
 
   const rotaryCtrlEmit = () => {
     if (!mounted) {
-      mounted = true
-      setMounted(true)
+      mounted = true;
+      setMounted(true);
+
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
         command: "getStatus"
-      })
-      socketCtx.socket.emit('getFooter', props.component)
+      });
+
+      socketCtx.socket.emit('getFooter', props.component);
 
       socketCtx.socket.on('getFooter', payload => {
         if (payload.componentId === props.component) {
           setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))
         }
-      })
+      });
 
       socketCtx.socket.on("status", payload => {
         if (payload.componentId === props.component) {
@@ -50,7 +52,8 @@ const RotaryCtrl = (props) => {
         if (payload.componentId === props.component) {
           props.newStatus(String(payload.status))
         }
-      })
+      });
+
       mounted = false;
       setMounted(false);
     }
@@ -67,12 +70,12 @@ const RotaryCtrl = (props) => {
 
   const rotCW_Handler = name => (event) => {
     event.preventDefault();
+    direction = 0;
 
-    direction = 0
     if (name === "left") {
-      direction = -1 * Number(enteredRotation)
+      direction = -1 * Number(enteredRotation);
     } else if (name === "right") {
-      direction = Number(enteredRotation)
+      direction = Number(enteredRotation);
     }
     if (direction !== 0) {
       socketCtx.socket.emit("command", {
@@ -82,14 +85,14 @@ const RotaryCtrl = (props) => {
           controlId: props.control,
           val: direction
         }
-      })
+      });
 
       socketCtx.socket.emit("footer", {
         status: "Last change by: " + socketCtx.username,
         componentId: props.component
-      })
+      });
     }
-    appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.")
+    appCtx.addLog("User initiated CW rotation on " + props.component + " / " + props.control + " by " + enteredRotation + " steps.");
   };
 
   const changeRotationHandler = (event) => {
@@ -114,7 +117,7 @@ const RotaryCtrl = (props) => {
       <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && onlineStatus) ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
-    </form >
+    </form>
   );
 };
 export default RotaryCtrl;

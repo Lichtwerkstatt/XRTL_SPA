@@ -4,6 +4,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
         origin: '*',
+        methods: ["GET", "POST"]
     }
 })
 const { v4: uuidv4 } = require('uuid');
@@ -22,6 +23,7 @@ var exp = ''
 
 /*
 io.use(function (socket, next) {
+    console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
             if (err) return next(new Error('Authentication error'));
@@ -87,9 +89,13 @@ io.on('connection', socket => {
     //The handshakes of the VIDEO CHAT
 
     //Sends the random generated roomID to the client how wants to join the video chat
-    socket.once('roomID', (room) => {
+    socket.on('roomID', (room) => {
         room(roomID);
     });
+
+   /*  socket.on('Webcam stream', payload => { */
+        socket.emit('Webcam stream')
+  //  });
 
     //Sends an array with all the users in the room except the client how sends this command
     socket.on("client join room", roomID => {

@@ -1,13 +1,13 @@
 
-import styles from "./NavBar.module.css"
-import { GiLaserWarning } from "react-icons/gi"
-import { ImConnection } from "react-icons/im"
-import { BsBox } from "react-icons/bs"
-import { FaTags } from "react-icons/fa"
 import { MdOutlineScreenRotation, MdInfoOutline } from "react-icons/md"
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from '../../services/AppContext'
+import { GiLaserWarning } from "react-icons/gi"
+import { ImConnection } from "react-icons/im"
 import { BsCamera } from 'react-icons/bs'
+import styles from "./NavBar.module.css"
+import { BsBox } from "react-icons/bs"
+import { FaTags } from "react-icons/fa"
 const NavBar = () => {
 
     const appCtx = useAppContext();

@@ -1,0 +1,59 @@
+div.Temp Canvas{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background-color: #01bd7d;
+    border-radius: 15px;
+    left: 40%;
+    top: 10px
+}
+div.Temp button{
+    position: absolute;
+    left:575px;
+    top: 30px;
+}
+div.Temp h2{
+    position: absolute;
+    width: 120px;
+    height: 80px;
+    left:40%;
+    top: 60px;
+    background-color: #01bd7d;
+    border-radius: 15px;
+    text-align: center;
+    
+}
+
+div.Heater{
+    position: absolute;
+    display: flex;
+
+    top: 185px
+}
+div.Switch{
+    position: relative;
+    top:125px;
+    left: 160px;
+    margin: 0 0 0 12px; 
+    padding: 0;
+}
+
+div.Canvas1 {
+    position: absolute;
+    width: 295px;
+    height: 130px;
+    top: 173px;
+    left: 8px;
+    border: 2px solid #01bd7d;
+    border-radius: 15px;
+ }
+
+ div.Canvas2 {
+    position: absolute;
+    width: 295px;
+    height: 185px;
+    top: 173px;
+    left: 314px;
+    border: 2px solid #01bd7d;
+    border-radius: 15px;
+ }
