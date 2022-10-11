@@ -1,6 +1,11 @@
+const express = require('express')();
+const https = require('https');
+const fs = require('fs');
+const key = fs.readFileSync('./certs/key.pem');
+const cert = fs.readFileSync('./certs/cert.pem');
+const app = express();
 const jwt = require('jsonwebtoken');
-const app = require('express')();
-const server = require('http').createServer(app);
+const server = https.createServer({ key: key, cert: cert }, app);
 const io = require('socket.io')(server, {
     cors: {
         origin: '*',
@@ -20,7 +25,6 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
-
 
 io.use(function (socket, next) {
     console.log(socket)
@@ -93,9 +97,9 @@ io.on('connection', socket => {
         room(roomID);
     });
 
-   /*  socket.on('Webcam stream', payload => { */
-        socket.emit('Webcam stream')
-  //  });
+    /*  socket.on('Webcam stream', payload => { */
+    socket.emit('Webcam stream')
+    //  });
 
     //Sends an array with all the users in the room except the client how sends this command
     socket.on("client join room", roomID => {
@@ -274,3 +278,4 @@ server.listen(7000, () => {
     console.log('I am listening at port: 7000!');
 
 })
+
