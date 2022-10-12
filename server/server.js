@@ -1,15 +1,17 @@
-const express = require('express')();
+const express = require('express');
 const https = require('https');
 const fs = require('fs');
-const key = fs.readFileSync('./certs/key.pem');
-const cert = fs.readFileSync('./certs/cert.pem');
+const path = require('path')
+
 const app = express();
 const jwt = require('jsonwebtoken');
-const server = https.createServer({ key: key, cert: cert }, app);
+const server = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'))
+}, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: '*',
-        methods: ["GET", "POST"]
+        origin: '*'
     }
 })
 const { v4: uuidv4 } = require('uuid');
