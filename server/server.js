@@ -1,7 +1,20 @@
+const fs = require("fs");
+const path = require('path')
+const httpServer = require("https").createServer({
+    key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'))
+});
+
+const io = require('socket.io')(httpServer, {
+    cors: {
+        origin: '*'
+    }
+})
+
+/* 
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
-const path = require('path')
 
 const app = express();
 const jwt = require('jsonwebtoken');
@@ -13,7 +26,7 @@ const io = require('socket.io')(server, {
     cors: {
         origin: '*'
     }
-})
+}) */
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
 const users = {};
@@ -27,6 +40,8 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
+
+
 
 io.use(function (socket, next) {
     console.log(socket)
@@ -276,7 +291,7 @@ io.on('connection', socket => {
     });
 })
 
-server.listen(7000, () => {
+httpServer.listen(7000, () => {
     console.log('I am listening at port: 7000!');
 
 })
