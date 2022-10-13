@@ -2,6 +2,12 @@ div.login {
     display: block;
 }
 
+div.close{
+    position:absolute;
+    top: 10px;
+    left: 85%;
+}
+
 div.popupWindow {
     position: fixed;
     width: 100%;

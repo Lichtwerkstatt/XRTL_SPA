@@ -1,10 +1,17 @@
+const express = require('express');
+const https = require('https');
+const fs = require('fs');
+const path = require('path')
+
+const app = express();
 const jwt = require('jsonwebtoken');
-const app = require('express')();
-const server = require('http').createServer(app);
+const server = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'))
+}, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: '*',
-        methods: ["GET", "POST"]
+        origin: '*'
     }
 })
 const { v4: uuidv4 } = require('uuid');
@@ -21,7 +28,6 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 
-
 io.use(function (socket, next) {
     console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -36,14 +42,14 @@ io.use(function (socket, next) {
         console.log("Authentication failed!")
         next(new Error('Authentication error'));
     }
-}) 
+})
 
 io.on('connection', socket => {
     console.log('Connection made successfully');
     socket.emit("newLog", 'Connection made successfully');
     io.to(socket.id).emit('Auth');
 
-   if (socket.decoded.component === 'client') {
+    if (socket.decoded.component === 'client') {
         var checkIfExpired = setInterval(() => {
             if (exp < Date.now()) {
                 console.log("Client token expired");
@@ -93,9 +99,9 @@ io.on('connection', socket => {
         room(roomID);
     });
 
-   /*  socket.on('Webcam stream', payload => { */
-        socket.emit('Webcam stream')
-  //  });
+    /*  socket.on('Webcam stream', payload => { */
+    socket.emit('Webcam stream')
+    //  });
 
     //Sends an array with all the users in the room except the client how sends this command
     socket.on("client join room", roomID => {

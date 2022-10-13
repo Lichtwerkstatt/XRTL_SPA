@@ -7,19 +7,19 @@ import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider } from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
 import Cam from "./components/Chat/Webcam";
-import { PopUpContextProvider } from "./services/PopUpContext"
+import {PopUpContextProvider} from "./services/PopUpContext"
 
 const App = () => {
   process.title = 'XRTLApp';
   return (
     <AppContextProvider>
       <SocketContextProvider>
-          <Cam />
-        <VirtualLayer />
+          <VirtualLayer />
         <PopUpContextProvider>
           <ExperimentUILayer />
           <Console />
           <Chat />
+          <Cam />
           <NavBar />
           <Login />
         </PopUpContextProvider>
