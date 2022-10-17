@@ -1,17 +1,4 @@
-const fs = require("fs");
 const path = require('path')
-const httpServer = require("https").createServer({
-    key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'))
-});
-
-const io = require('socket.io')(httpServer, {
-    cors: {
-        origin: '*'
-    }
-})
-
-/* 
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
@@ -24,9 +11,11 @@ const server = https.createServer({
 }, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: '*'
+        origin: 'https://lichtwerkstatt.github.io/XRTL_SPA/',
+        allowedHeaders: ['Content-Type','Authorization'],
+        credentials: true
     }
-}) */
+}) 
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
 const users = {};
@@ -44,9 +33,9 @@ var exp = ''
 
 
 io.use(function (socket, next) {
-    console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
+            console.log(socket)
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
             exp = decoded.iat + 3600000;
@@ -291,7 +280,7 @@ io.on('connection', socket => {
     });
 })
 
-httpServer.listen(7000, () => {
+server.listen(7000, () => {
     console.log('I am listening at port: 7000!');
 
 })
