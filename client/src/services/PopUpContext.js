@@ -23,19 +23,9 @@ export function PopUpContextProvider({ children }) {
     })
 
     const toggleShowPopUp = (newText, newType) => {
-        console.log("???")
         setText(newText);
         setType(newType);
         setShowPopUp(!showPopUp);
-
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            componentId: "nckdj",
-            command: {
-                controlId: 'cdcd',
-                val: 'dfcvdfc'
-            }
-        });
     }
 
     const handleClose = (event, reason) => {

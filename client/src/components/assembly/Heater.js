@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Window from "../UI/Window";
 import HeaterCtrl from "../UI/HeaterCtrl";
 import { useAppContext } from "../../services/AppContext";
@@ -16,10 +16,14 @@ const Heater = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
+    const tempWebcam = useRef();
+    const tempWebcam2 = useRef();
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-    }
+        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+    };
+
     const handleReset = () => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
@@ -69,6 +73,27 @@ const Heater = (props) => {
             setMounted(false);
         }
     };
+
+    const webcamEmitPic = () => {
+        socketCtx.socket.on("data", function (payload) {
+            console.log("Dat payload", payload)
+        });
+    }
+
+    const webcamStartStreaming = () => {
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
+    }
+
+    tempWebcam.current = webcamEmitPic;
+    tempWebcam2.current = webcamStartStreaming;
+
+    useEffect(() => {
+        tempWebcam.current();
+    }, [socketCtx.socket]);
+
+    useEffect(() => {
+        tempWebcam2.current();
+    }, []);
 
     return (
         <Window

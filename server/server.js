@@ -11,11 +11,11 @@ const server = https.createServer({
 }, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://lichtwerkstatt.github.io/XRTL_SPA/',
-        allowedHeaders: ['Content-Type','Authorization'],
+        origin: ['http://localhost:3000', 'https://lichtwerkstatt.github.io/XRTL_SPA'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
     }
-}) 
+})
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
 const users = {};
@@ -143,6 +143,8 @@ io.on('connection', socket => {
 
     //Client how starts the stream is added to a room
     socket.on('join stream room', (data) => {
+
+        console.log(data)
         componentID = data.id;
         socket.to(GUIId).emit("newLog", "User has joined the room " + String(componentID));
         socket.join(componentID);
@@ -164,6 +166,7 @@ io.on('connection', socket => {
 
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
+        console.log("stopp")
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
         try {
             let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;

@@ -65,6 +65,7 @@ const HeaterCtrl = (props) => {
             });
 
             socketCtx.socket.on("data", (payload) => {
+                console.log("hier ")
                 if (payload.componentId === props.component) {
                     setTemp(payload.data.data);
                 }
