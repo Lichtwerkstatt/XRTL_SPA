@@ -11,11 +11,11 @@ const server = https.createServer({
 }, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://lichtwerkstatt.github.io/XRTL_SPA/',
-        allowedHeaders: ['Content-Type','Authorization'],
+        origin: ['https://lichtwerkstatt.github.io/XRTL_SPA/', 'http://localhost:3000'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
     }
-}) 
+})
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
 const users = {};
