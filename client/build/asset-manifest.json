@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.428b3098.chunk.css",
-    "main.js": "/static/js/main.633b7339.chunk.js",
-    "main.js.map": "/static/js/main.633b7339.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.9cd0c069.js",
-    "runtime-main.js.map": "/static/js/runtime-main.9cd0c069.js.map",
-    "static/js/2.ba5446ff.chunk.js": "/static/js/2.ba5446ff.chunk.js",
-    "static/js/2.ba5446ff.chunk.js.map": "/static/js/2.ba5446ff.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.428b3098.chunk.css.map": "/static/css/main.428b3098.chunk.css.map",
-    "static/js/2.ba5446ff.chunk.js.LICENSE.txt": "/static/js/2.ba5446ff.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/RobotoCondensed-Regular.db6d9169.ttf",
-    "static/media/km100_outline.5cffd463.png": "/static/media/km100_outline.5cffd463.png",
-    "static/media/linear_outline.7ac97702.png": "/static/media/linear_outline.7ac97702.png",
-    "static/media/xrtl_team.519a843e.png": "/static/media/xrtl_team.519a843e.png"
+    "main.css": "/XRTL_SPA/static/css/main.3a481d1a.chunk.css",
+    "main.js": "/XRTL_SPA/static/js/main.633b7339.chunk.js",
+    "main.js.map": "/XRTL_SPA/static/js/main.633b7339.chunk.js.map",
+    "runtime-main.js": "/XRTL_SPA/static/js/runtime-main.39834f44.js",
+    "runtime-main.js.map": "/XRTL_SPA/static/js/runtime-main.39834f44.js.map",
+    "static/js/2.d5cdcc17.chunk.js": "/XRTL_SPA/static/js/2.d5cdcc17.chunk.js",
+    "static/js/2.d5cdcc17.chunk.js.map": "/XRTL_SPA/static/js/2.d5cdcc17.chunk.js.map",
+    "index.html": "/XRTL_SPA/index.html",
+    "static/css/main.3a481d1a.chunk.css.map": "/XRTL_SPA/static/css/main.3a481d1a.chunk.css.map",
+    "static/js/2.d5cdcc17.chunk.js.LICENSE.txt": "/XRTL_SPA/static/js/2.d5cdcc17.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/XRTL_SPA/static/media/RobotoCondensed-Regular.db6d9169.ttf",
+    "static/media/km100_outline.5cffd463.png": "/XRTL_SPA/static/media/km100_outline.5cffd463.png",
+    "static/media/linear_outline.7ac97702.png": "/XRTL_SPA/static/media/linear_outline.7ac97702.png",
+    "static/media/xrtl_team.519a843e.png": "/XRTL_SPA/static/media/xrtl_team.519a843e.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.9cd0c069.js",
-    "static/js/2.ba5446ff.chunk.js",
-    "static/css/main.428b3098.chunk.css",
+    "static/js/runtime-main.39834f44.js",
+    "static/js/2.d5cdcc17.chunk.js",
+    "static/css/main.3a481d1a.chunk.css",
     "static/js/main.633b7339.chunk.js"
   ]
 }
