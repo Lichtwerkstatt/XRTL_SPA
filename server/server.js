@@ -13,8 +13,9 @@ const io = require('socket.io')(server, {
     cors: {
         origin: ['https://lichtwerkstatt.github.io', 'http://localhost:3000', 'http://10.232.37.40:7000'],
         allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true
-    }
+        credentials: true,
+    },
+   
 })
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
@@ -30,6 +31,10 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://lichtwerkstatt.github.io');
+    next();
+  });
 
 
 io.use(function (socket, next) {
@@ -282,8 +287,8 @@ io.on('connection', socket => {
         process.exit(0);
     });
 })
-
-server.listen(7000, () => {
+const IP = process.env.IP || 7000;
+server.listen(7000, IP, () => {
     console.log('I am listening at port: 7000!');
 
 })
