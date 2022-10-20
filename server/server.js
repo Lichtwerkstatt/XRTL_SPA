@@ -2,8 +2,10 @@ const path = require('path')
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
-
+const cors = require("cors");
 const app = express();
+app.use(express.json()); 
+app.use(cors()); 
 const jwt = require('jsonwebtoken');
 const server = https.createServer({
     key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
@@ -15,8 +17,10 @@ const io = require('socket.io')(server, {
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     },
-   
+
 })
+
+
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
 const users = {};
@@ -30,11 +34,6 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://lichtwerkstatt.github.io');
-    next();
-  });
 
 
 io.use(function (socket, next) {
