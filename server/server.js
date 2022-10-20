@@ -11,7 +11,7 @@ const server = https.createServer({
 }, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: ['https://lichtwerkstatt.github.io', 'http://localhost:3000', 'http://10.232.37.40:7000'],
+        origin: ['https://lichtwerkstatt.github.io', 'http://localhost:3000', 'http://10.232.37.40:7000', 'http://localhost:4000', 'http://10.232.37.40:4000'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     },
