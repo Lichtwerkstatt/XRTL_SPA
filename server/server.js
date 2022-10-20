@@ -2,10 +2,8 @@ const path = require('path')
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
-const cors = require("cors");
 const app = express();
-app.use(express.json()); 
-app.use(cors()); 
+
 const jwt = require('jsonwebtoken');
 const server = https.createServer({
     key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
