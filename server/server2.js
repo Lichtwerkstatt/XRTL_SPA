@@ -23,7 +23,6 @@ var exp = ''
 
 
 io.use(function (socket, next) {
-    console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
             if (err) return next(new Error('Authentication error'));
