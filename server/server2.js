@@ -15,7 +15,7 @@ var userIDServerList = [];
 var componentList = [];
 var footerList = [];
 var componentID = '';
-const socketToRoom = {};
+const socketToRoom = [];
 var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
@@ -90,11 +90,11 @@ io.on('connection', socket => {
     //Sends the random generated roomID to the client how wants to join the video chat
     socket.on('roomID', (room) => {
         room(roomID);
+
     });
 
-   /*  socket.on('Webcam stream', payload => { */
         socket.emit('Webcam stream')
-  //  });
+
 
     //Sends an array with all the users in the room except the client how sends this command
     socket.on("client join room", roomID => {
@@ -105,7 +105,8 @@ io.on('connection', socket => {
         }
         socketToRoom[socket.id] = roomID;
         const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-
+console.log("hier", socketToRoom)
+console.log(users[roomID])
         socket.emit("all users", usersInThisRoom);
     });
 
@@ -238,14 +239,18 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', (e) => {
-        if (socketToRoom[socket.id]) {
+        console.log(userIDServerList)
+        console.log()
+        /* if (users[roomID].includes(socket.id)) {
+            console.log("hier")
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
             if (room) {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-        }
+            users[roomID]
+        } */
 
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)

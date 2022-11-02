@@ -42,13 +42,6 @@ const HeaterCtrl = (props) => {
                 componentId: props.component,
                 command: "getStatus"
             })
-
-            socketCtx.socket.on("status", payload => {
-                if (payload.componentId === props.component) {
-                    console.log("Status of settings:   ", payload)
-                }
-            });
-
             socketCtx.socket.on('footer', payload => {
                 if (payload.componentId === props.component) {
                     props.newStatus(String(payload.status))
@@ -59,7 +52,7 @@ const HeaterCtrl = (props) => {
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
-                    setOnlineStatus(payload.online)
+                    setOnlineStatus(true)//(payload.online)
                     props.newStatus(String(payload.status))
                 }
             });
@@ -70,6 +63,13 @@ const HeaterCtrl = (props) => {
                     setTemp(payload.data.data);
                 }
             });
+            
+            socketCtx.socket.on("status", payload => {
+                if (payload.componentId === props.component) {
+                    console.log("Status of settings:   ", payload)
+                }
+            });
+
 
             mounted = false;
             setMounted(false);

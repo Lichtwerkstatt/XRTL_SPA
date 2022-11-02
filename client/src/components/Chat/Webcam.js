@@ -36,13 +36,13 @@ const Webcam = () => {
 
     const webcamEmit = () => {
         const videoConstraints = {
-            height: window.innerHeight / 2,
-            width: window.innerWidth / 2
+            height: window.innerHeight ,
+            width: window.innerWidth
         };
 
         if (appCtx.showWebcam) {
             navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
-               // userVideo.current.srcObject = stream;
+                userVideo.current.srcObject = stream;
                 socketCtx.socket.emit('roomID', (data) => { //Transmission of the roomID
                     roomID = data;
                 });
@@ -78,11 +78,11 @@ const Webcam = () => {
                 });
             })
         }
-        function createPeer(userToSignal, callerID) {       //Erstellen von peer für alle bisher Clienten die sich bisher im Raum schon befinden
+        function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer für alle bisher Clienten die sich bisher im Raum schon befinden
             const peer = new Peer({
                 initiator: true,        //wichtig, damit Stream in die gesendet werden kann
                 trickle: false,
-
+                stream,     //eigener Stream
             });
 
             peer.on("signal", signal => {
@@ -115,6 +115,7 @@ const Webcam = () => {
     if (appCtx.showWebcam) {
         return (
             <div className={styles.webcamDiv}>
+                <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />
                 {peers.map((peer, index) => {           //wenn man diese Schleife weglässt, dann wird nur der eigene Stream dargestellt
                     return (
                         <Video key={index} peer={peer} />

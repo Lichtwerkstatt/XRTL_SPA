@@ -6,7 +6,6 @@ import VirtualLayer from "./components/UI/VirtualLayer";
 import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider } from "./services/AppContext";
 import ExperimentUILayer from "./components/UI/ExperimentUILayer";
-import Cam from "./components/Chat/Webcam";
 import {PopUpContextProvider} from "./services/PopUpContext"
 
 const App = () => {
@@ -19,7 +18,7 @@ const App = () => {
           <ExperimentUILayer />
           <Console />
           <Chat />
-          <Cam />
+
           <NavBar />
           <Login />
         </PopUpContextProvider>

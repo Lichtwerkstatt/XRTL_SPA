@@ -10,7 +10,7 @@ import Switch from "./Switch"
 import Select from "./Select";
 
 const Settings = (props) => {
-    const [onlineStatus, setOnlineStatus] = useState(false);
+    const [onlineStatus, setOnlineStatus] = useState(true);
     var [mounted, setMounted] = useState(false);
     const socketCtx = useSocketContext();
     const settingCtrl = useRef();
@@ -39,6 +39,15 @@ const Settings = (props) => {
                 command: "getStatus"
             })
 
+            socketCtx.socket.emit('getFooter', props.component)
+
+            socketCtx.socket.on('getFooter', payload => {
+                if (payload.componentId === props.component) {
+                    setOnlineStatus(true)
+                    props.newStatus(String(payload.status))
+                }
+            });
+
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
                     console.log("Status of settings:   ", payload)
@@ -50,15 +59,6 @@ const Settings = (props) => {
                     props.newStatus(String(payload.status))
                 }
             })
-
-            socketCtx.socket.emit('getFooter', props.component)
-
-            socketCtx.socket.on('getFooter', payload => {
-                if (payload.componentId === props.component) {
-                    setOnlineStatus(payload.online)
-                    props.newStatus(String(payload.status))
-                }
-            });
             mounted = false;
             setMounted(false);
         }

@@ -18,7 +18,7 @@ const Heater = (props) => {
     const popupCtx = usePopUpContext();
     const tempWebcam = useRef();
     const tempWebcam2 = useRef();
-
+    
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
         socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
