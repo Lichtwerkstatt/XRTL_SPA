@@ -11,7 +11,7 @@ import Select from "./Select";
 
 const Settings = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
-    var [mounted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(false);
     const socketCtx = useSocketContext();
     const settingCtrl = useRef();
 

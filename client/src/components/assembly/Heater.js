@@ -11,7 +11,7 @@ const Heater = (props) => {
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
-    var [mounted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(false);
 
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
@@ -76,7 +76,7 @@ const Heater = (props) => {
 
     const webcamEmitPic = () => {
         socketCtx.socket.on("data", function (payload) {
-            console.log("Dat payload", payload)
+            console.log("Data payload", payload)
         });
     }
 

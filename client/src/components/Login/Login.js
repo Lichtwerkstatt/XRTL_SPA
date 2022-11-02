@@ -12,7 +12,7 @@ import styles from "./Login.module.css"
 const Login = (props) => {
     var col = ['IndianRed', 'FireBrick', 'MediumVioletRed', 'HotPink', 'Coral', 'DarkOrange', 'Yellow',
         'Khaki', 'Plum', 'DarkOrchid', 'ForestGreen', 'DarkOliveGreen', 'LightGreen', 'Teal', 'Aqua', 'Blue', 'LightSkyBlue']
-    const connectionOption = [{ title: 'https://localhost:7000' }, { title: 'https://192.168.1.42:7000' }, { title: 'https://10.232.37.40:7000' }]
+    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://192.168.1.42:7000' }, { title: 'http://10.232.37.40:7000' }]
 
     const [fontColor, setfontColor] = useState("white");
     const [connection, setConnection] = useState(null);
@@ -89,7 +89,6 @@ const Login = (props) => {
                     <h3 title="settings">Settings</h3>
                     <div className={styles.close}>
                         <IconButton onClick={(e) => {
-                            console.log("click")
                             appCtx.setShowLogin(false);
 
                         }} >

@@ -12,7 +12,7 @@ import styles from "./HeaterCtrl.module.css";
 const HeaterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [setting, setSettings] = useState(true);
-    var [mounted, setMounted] = useState(true);
+    var [mounted, setMounted] = useState(false);
     const [temp, setTemp] = useState('-°C')
     const socketCtx = useSocketContext();
     const settingCtrl = useRef();
