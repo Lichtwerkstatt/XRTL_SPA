@@ -18,7 +18,6 @@ const App = () => {
           <ExperimentUILayer />
           <Console />
           <Chat />
-
           <NavBar />
           <Login />
         </PopUpContextProvider>

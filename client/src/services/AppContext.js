@@ -9,7 +9,6 @@ export function useAppContext() {
 export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
-  const [showWebcam, setShowWebcam] = useState(false);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [busyComps, setBusyComps] = useState(new Set());
   const [logs, setLogs] = useState([]);
@@ -54,10 +53,6 @@ export function AppContextProvider({ children }) {
     setLogs(prev => [log, ...prev])
   };
 
-  const toggleShowWebcam = () => {
-    setShowWebcam(!showWebcam);
-  };
-
   const toggleShowBeam = () => {
     setShowBeam(!showBeam);
   }
@@ -86,8 +81,6 @@ export function AppContextProvider({ children }) {
         removeBusyComp,
         showTags,
         toggleShowTags,
-        showWebcam,
-        toggleShowWebcam,
         showBeam,
         toggleShowBeam,
         showLogin,

@@ -12,10 +12,11 @@ const roomID = uuidv4();
 const users = {};
 var userIDs = [];
 var userIDServerList = [];
+var usersInThisRoom = [];
 var componentList = [];
 var footerList = [];
 var componentID = '';
-const socketToRoom = [];
+const socketToRoom = {};
 var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
@@ -93,20 +94,21 @@ io.on('connection', socket => {
 
     });
 
-        socket.emit('Webcam stream')
+    socket.emit('Webcam stream')
 
 
     //Sends an array with all the users in the room except the client how sends this command
-    socket.on("client join room", roomID => {
+    socket.on("client join room", () => {
         if (users[roomID]) {
             users[roomID].push(socket.id);
         } else {
             users[roomID] = [socket.id];
         }
         socketToRoom[socket.id] = roomID;
-        const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-console.log("hier", socketToRoom)
-console.log(users[roomID])
+        usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+        console.log("hier", socketToRoom)
+        console.log(users[roomID])
+        console.log(usersInThisRoom)
         socket.emit("all users", usersInThisRoom);
     });
 
@@ -155,6 +157,7 @@ console.log(users[roomID])
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
+        io.emit('user left', socket.id);
         try {
             let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
         } catch (error) {
@@ -239,22 +242,22 @@ console.log(users[roomID])
     });
 
     socket.on('disconnect', (e) => {
-        console.log(userIDServerList)
-        console.log()
-        /* if (users[roomID].includes(socket.id)) {
+        if (socketToRoom[socket.id]) {
+            io.emit('user left', socket.id)
             console.log("hier")
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
             if (room) {
+                usersInThisRoom = room.filter(id => id !== socket.id);
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
-            users[roomID]
-        } */
+        }
 
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
         }
+
         if (componentList.includes(socket.id)) {
             let com = componentList.indexOf(socket.id);
             footerStatus = 'Component went offline!';

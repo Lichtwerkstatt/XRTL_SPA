@@ -29,55 +29,72 @@ const Video = (props) => {
 const Webcam = () => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const [peers, setPeers] = useState([]);
+    var [peers, setPeers] = useState([]);
     const userVideo = useRef();
     const peersRef = useRef([]);
     const tempWebcam = useRef();
 
     const webcamEmit = () => {
         const videoConstraints = {
-            height: window.innerHeight ,
+            height: window.innerHeight,
             width: window.innerWidth
         };
 
-        if (appCtx.showWebcam) {
-            navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
-                userVideo.current.srcObject = stream;
-                socketCtx.socket.emit('roomID', (data) => { //Transmission of the roomID
-                    roomID = data;
-                });
 
-                socketCtx.socket.emit('client join room', (roomID)); // new client will be added to the userList
+        navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
+            userVideo.current.srcObject = stream;
 
-                socketCtx.socket.on('all users', users => {
-                    const peers = [];
-                    users.forEach(userID => {
-                        const peer = createPeer(userID, socketCtx.socket.id, stream);       // creates a peer for each client that is already in the room
-                        peersRef.current.push({
-                            peerID: userID,
-                            peer,
-                        })
-                        peers.push(peer);
-                    })
-                    setPeers(peers);
-                })
+            socketCtx.socket.emit('client join room'); // new client will be added to the userList
 
-                socketCtx.socket.on("user joined", payload => {
-                    const peer = addPeer(payload.signal, payload.callerID, stream); //creates a new peer & adds it to the list for a freshly joining client
+            socketCtx.socket.on('all users', users => {
+                const peers = [];
+                users.forEach(userID => {
+                    const peer = createPeer(userID, socketCtx.socket.id, stream);       // creates a peer for each client that is already in the room
                     peersRef.current.push({
-                        peerID: payload.callerID,
+                        peerID: userID,
                         peer,
-                    })
-
-                    setPeers(users => [...users, peer]);
-                });
-
-                socketCtx.socket.on("receiving returned signal", payload => {
-                    const item = peersRef.current.find(p => p.peerID === payload.id);
-                    item.peer.signal(payload.signal);
-                });
+                    });
+                    peers.push({
+                        peerID: userID,
+                        peer,
+                    });
+                })
+                setPeers(peers);
             })
-        }
+
+            socketCtx.socket.on("user joined", payload => {
+                const peer = addPeer(payload.signal, payload.callerID, stream); //creates a new peer & adds it to the list for a freshly joining client
+                peersRef.current.push({
+                    peerID: payload.callerID,
+                    peer,
+                });
+
+                const peerObj = {
+                    peer,
+                    peerID: payload.callerID
+                }
+
+                setPeers(users => [...users, peerObj]);
+            });
+
+            socketCtx.socket.on("receiving returned signal", payload => {
+                const item = peersRef.current.find(p => p.peerID === payload.id);
+                item.peer.signal(payload.signal);
+            });
+
+            socketCtx.socket.on('user left', (id) => {
+                console.log("hier")
+                const peerObj = peersRef.current.find(p => p.peerID === id)
+
+                if (peerObj) {
+                    peerObj.peer.destroy();
+                }
+                const peers = peersRef.current.filter(p => p.peerID !== id);
+                peersRef.current = peers;
+                setPeers(peers)
+            })
+        })
+
         function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer für alle bisher Clienten die sich bisher im Raum schon befinden
             const peer = new Peer({
                 initiator: true,        //wichtig, damit Stream in die gesendet werden kann
@@ -112,21 +129,18 @@ const Webcam = () => {
         tempWebcam.current();
     }, [appCtx.showWebcam])
 
-    if (appCtx.showWebcam) {
-        return (
-            <div className={styles.webcamDiv}>
-                <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />
-                {peers.map((peer, index) => {           //wenn man diese Schleife weglässt, dann wird nur der eigene Stream dargestellt
-                    return (
-                        <Video key={index} peer={peer} />
-                    );
-                })}
-            </div>
-        );
-    }
-    else {
-        return <></>;
-    }
+
+    return (
+        <div className={styles.webcamDiv}>
+            <video className={styles.videoSt} muted ref={userVideo} autoPlay playsInline />
+            {peers.map((peer) => {           //wenn man diese Schleife weglässt, dann wird nur der eigene Stream dargestellt
+                return (
+                    <Video key={peer.peerID} peer={peer.peer} />
+                );
+            })}
+        </div>
+    );
+
 };
 
 export default Webcam;
