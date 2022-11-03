@@ -45,28 +45,51 @@ const SliderCtrl = (props) => {
 
     appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
   }
-
-  return (
-    <Box sx={{ width: 250, m: 2 }}>
-      <Typography id="input-slider" gutterBottom>
-        {props.title}
-      </Typography>
-      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-        <Slider aria-label="Temperature"
-          id="brightnessSlider"
-          defaultValue={0}
-          valueLabelDisplay="auto"
-          step={1}
-          min={props.min}
-          max={props.max}
-          value={sliderPos}
-          onChangeCommitted={handleSettingChanges}
-          marks={marks}
-          disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
-        />
-      </Stack>
-    </Box>
-  )
+  if (props.text) {
+    return (
+      <Box sx={{ width: 250, m: 2 }}>
+        <Typography id="input-slider" gutterBottom>
+          {props.title}
+        </Typography>
+        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          <Slider aria-label="Temperature"
+            id="brightnessSlider"
+            defaultValue={0}
+            valueLabelDisplay="auto"
+            step={1}
+            min={props.min}
+            max={props.max}
+            value={sliderPos}
+            onChangeCommitted={handleSettingChanges}
+            marks={props.text}
+            disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
+          />
+        </Stack>
+      </Box>
+    )
+  } else {
+    return (
+      <Box sx={{ width: 250, m: 2 }}>
+        <Typography id="input-slider" gutterBottom>
+          {props.title}
+        </Typography>
+        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          <Slider aria-label="Temperature"
+            id="brightnessSlider"
+            defaultValue={0}
+            valueLabelDisplay="auto"
+            step={1}
+            min={props.min}
+            max={props.max}
+            value={sliderPos}
+            onChangeCommitted={handleSettingChanges}
+            marks={marks}
+            disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
+          />
+        </Stack>
+      </Box>
+    )
+  }
 }
 
 export default SliderCtrl;

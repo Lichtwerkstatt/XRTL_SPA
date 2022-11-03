@@ -286,6 +286,32 @@ export default function Model({ ...props }) {
           />
         </Box>
       </group>
+      <group
+        name="Glas"
+        position={[3.56, 0.47, 0.14]}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("Michelson_glas");
+        }} >
+        <Box
+          position={[-3.3, 0.1, -0.3]}
+          args={[1, 1, 1]}
+          scale={[0.25, 0.25, 0.25]}
+        >
+          <meshPhysicalMaterial
+            thickness={1}
+            roughness={0.1}
+            transmission={1}
+            clearcoat={0.5}
+            clearcoatRoughness={0}
+            ior={1.1}
+            envMapIntensity={25}
+            color={"#ffffff"}
+            attenuationColor={"#00ffff"}
+            attenuationDistance={5}
+          />
+        </Box>
+      </group>
   </group >
   );
 }
