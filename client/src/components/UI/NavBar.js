@@ -3,6 +3,7 @@ import { MdOutlineScreenRotation, MdInfoOutline } from "react-icons/md"
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from '../../services/AppContext'
 import { GiLaserWarning } from "react-icons/gi"
+import Tooltip from '@mui/material/Tooltip'
 import { ImConnection } from "react-icons/im"
 import { BsCamera } from 'react-icons/bs'
 import styles from "./NavBar.module.css"
@@ -30,18 +31,33 @@ const NavBar = () => {
         <h1>XR TwinLab</h1>
         <div className={styles.navMenu}>
             <ul>
-                <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29}
-                    color={connectionStatusColor} /></li>
-                <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
-                <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>
+                <Tooltip title="Connnection">
+                    <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
+                </Tooltip>
 
-                <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
-                <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
+                <Tooltip title="2D model">
+                    <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
+                </Tooltip>
 
-                <li onClick={appCtx.toggleShowWebcam}><BsCamera size={26}
-                    color={cameraStatusColor} /></li>
+                <Tooltip title="Laser beam">
+                    <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>
+                </Tooltip>
 
-                <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
+                <Tooltip title="Rotation">
+                    <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
+                </Tooltip>
+
+                <Tooltip title="Labels">
+                    <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
+                </Tooltip>
+
+                <Tooltip title="Webcam">
+                    <li onClick={appCtx.toggleShowWebcam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                </Tooltip>
+
+                <Tooltip title="Information">
+                    <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
+                </Tooltip>
 
             </ul>
         </div>

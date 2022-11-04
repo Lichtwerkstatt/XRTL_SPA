@@ -1,4 +1,5 @@
 import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { useSocketContext } from '../../services/SocketContext'
@@ -38,8 +39,8 @@ const Login = (props) => {
         if (username !== "") {
             try {
                 socketCtx.setNewURL(String(connection.title), String(username));
-                socketCtx.toggleConnection(String(username));               
-                appCtx.setShowLogin(false);   
+                socketCtx.toggleConnection(String(username));
+                appCtx.setShowLogin(false);
             }
             catch (error) { }
         }
@@ -86,6 +87,14 @@ const Login = (props) => {
                 </div>
                 <div className={styles.popupInner} >
                     <h3 title="settings">Settings</h3>
+                    <div className={styles.close}>
+                        <IconButton onClick={(e) => {
+                            appCtx.setShowLogin(false);
+
+                        }} >
+                            <HighlightOffOutlinedIcon fontSize="large" />
+                        </IconButton>
+                    </div>
                     <Grid container columnSpacing={{ md: 95 }}>
                         <Grid item xs={6}>
                             <TextField

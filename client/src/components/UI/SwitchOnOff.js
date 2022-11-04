@@ -47,12 +47,8 @@ const SwitchOnOff = (props) => {
     socketCtx.socket.emit('getFooter', props.component)
 
     socketCtx.socket.on('getFooter', payload => {
-      if (props.component === 'Michelson_laser') {
-        setOnlineStatus(payload.online)
-
-      }
-
       if (payload.componentId === props.component) {
+        setOnlineStatus(!payload.online)
         props.newStatus(String(payload.status))
       }
     })
@@ -69,7 +65,7 @@ const SwitchOnOff = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} />
+          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} option = "val"/>
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

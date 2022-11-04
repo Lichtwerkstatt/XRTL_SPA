@@ -11,7 +11,7 @@ const SM1ZP = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
-  var [mounted, setMounted] = useState(true);
+  var [mounted, setMounted] = useState(false);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();

@@ -232,8 +232,88 @@ export default function Model({ ...props }) {
             position={[-0.3, 0.66, -0.15]}
           />}
       </group>
-    </group>
+
+      <group
+        name="Cam_1"
+        position={[1.56, 0.67, 0.14]}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("Cam_1");
+        }} >
+        <Box
+          position={[-3.5, 0.1, -2]}
+          args={[1, 1, 1]}
+          scale={[0.25, 0.25, 0.25]}
+        >
+          <meshPhysicalMaterial
+            thickness={1}
+            roughness={0.1}
+            transmission={1}
+            clearcoat={0.5}
+            clearcoatRoughness={0}
+            ior={1.1}
+            envMapIntensity={25}
+            color={"#ffffff"}
+            attenuationColor={"#00ffff"}
+            attenuationDistance={5}
+          />
+        </Box>
+      </group>
+
+      <group
+        name="Heater"
+        position={[3.56, 0.47, 0.14]}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("Michelson_heater");
+        }} >
+        <Box
+          position={[-4.7, 0.1, -0.3]}
+          args={[1, 1, 1]}
+          scale={[0.25, 0.25, 0.25]}
+        >
+          <meshPhysicalMaterial
+            thickness={1}
+            roughness={0.1}
+            transmission={1}
+            clearcoat={0.5}
+            clearcoatRoughness={0}
+            ior={1.1}
+            envMapIntensity={25}
+            color={"#ffffff"}
+            attenuationColor={"#00ffff"}
+            attenuationDistance={5}
+          />
+        </Box>
+      </group>
+      <group
+        name="Glas"
+        position={[3.56, 0.47, 0.14]}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("Michelson_glas");
+        }} >
+        <Box
+          position={[-3.3, 0.1, -0.3]}
+          args={[1, 1, 1]}
+          scale={[0.25, 0.25, 0.25]}
+        >
+          <meshPhysicalMaterial
+            thickness={1}
+            roughness={0.1}
+            transmission={1}
+            clearcoat={0.5}
+            clearcoatRoughness={0}
+            ior={1.1}
+            envMapIntensity={25}
+            color={"#ffffff"}
+            attenuationColor={"#00ffff"}
+            attenuationDistance={5}
+          />
+        </Box>
+      </group>
+  </group >
   );
 }
 
-useGLTF.preload("/MI_110422.glb");
+useGLTF.preload("/model/MI_110422.glb");

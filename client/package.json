@@ -1,5 +1,4 @@
 {
-  "homepage": "https://lichtwerkstatt.github.io/XRTL_SPA/",
   "name": "xrtl-spa",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +12,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "dotenv": "^16.0.1",
+    "express": "^4.18.2",
     "gh-pages": "^4.0.0",
     "jest": "^26.6.0",
     "jsonwebtoken": "^8.5.1",
@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "node app_server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

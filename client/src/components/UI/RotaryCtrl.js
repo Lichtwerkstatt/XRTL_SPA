@@ -8,7 +8,7 @@ const RotaryCtrl = (props) => {
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [rotation, setRotation] = useState(0);
-  var [mounted, setMounted] = useState(true);
+  var [mounted, setMounted] = useState(false);
   var direction;
 
   const appCtx = useAppContext();
@@ -20,7 +20,6 @@ const RotaryCtrl = (props) => {
     if (!mounted) {
       mounted = true;
       setMounted(true);
-
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
