@@ -16,7 +16,8 @@
     "nodemon": "^2.0.7",
     "openssl": "^2.0.0",
     "socket.io": "^4.4.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "wrtc": "^0.4.7"
   },
   "devDependencies": {
     "@socket.io/admin-ui": "^0.2.0"

@@ -1,4 +1,3 @@
-const webrtc = require("wrtc");
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -13,6 +12,7 @@ const roomID = uuidv4();
 const users = {};
 var userIDs = [];
 var userIDServerList = [];
+var usersInThisRoom = [];
 var componentList = [];
 var footerList = [];
 var componentID = '';
@@ -21,11 +21,9 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
-let senderStream;
 
 
 io.use(function (socket, next) {
-    console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
             if (err) return next(new Error('Authentication error'));
@@ -93,22 +91,24 @@ io.on('connection', socket => {
     //Sends the random generated roomID to the client how wants to join the video chat
     socket.on('roomID', (room) => {
         room(roomID);
+
     });
 
-   /*  socket.on('Webcam stream', payload => { */
-        socket.emit('Webcam stream')
-  //  });
+    socket.emit('Webcam stream')
+
 
     //Sends an array with all the users in the room except the client how sends this command
-    socket.on("client join room", roomID => {
+    socket.on("client join room", () => {
         if (users[roomID]) {
             users[roomID].push(socket.id);
         } else {
             users[roomID] = [socket.id];
         }
         socketToRoom[socket.id] = roomID;
-        const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-
+        usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+        console.log("hier", socketToRoom)
+        console.log(users[roomID])
+        console.log(usersInThisRoom)
         socket.emit("all users", usersInThisRoom);
     });
 
@@ -157,6 +157,7 @@ io.on('connection', socket => {
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
+        io.emit('user left', socket.id);
         try {
             let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
         } catch (error) {
@@ -228,58 +229,6 @@ io.on('connection', socket => {
         io.emit('getFooter', { componentId: payload, status: footerStatus, online: online });
     })
 
-    socket.on('consumer', async (payload) => {
-        const peer = new webrtc.RTCPeerConnection({
-            iceServers: [
-                {
-                    urls: "stun:stun.stunprotocol.org"
-                }
-            ]
-        });
-        const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        await peer.setRemoteDescription(desc);
-        senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
-        const answer = await peer.createAnswer();
-        await peer.setLocalDescription(answer);
-        const data = {
-            sdp: peer.localDescription
-        }
-        console.log("consumer", data)
-
-        io.emit('consumer', data)
-    });
-
-
-    socket.on('broadcast', async payload => {
-        const peer = new webrtc.RTCPeerConnection({
-            iceServers: [
-                {
-                    urls: "stun:stun.stunprotocol.org"
-                }
-            ]
-        });
-        peer.ontrack = (e) => handleTrackEvent(e, peer);
-        const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        await peer.setRemoteDescription(desc);
-        const answer = await peer.createAnswer();
-        await peer.setLocalDescription(answer);
-        const data = {
-            sdp: peer.localDescription
-        }
-        
-        console.log("broadcast", data)
-
-        io.emit('broadcast', data)
-    });
-
-    function handleTrackEvent(e, peer) {
-        senderStream = e.streams[0];
-    };
-
-
-
-
-
     socket.on('error', (er) => {
         io.emit('error', er);
         socket.emit("newLog", "Error " + String(er.number) + ": " + String(er.message));
@@ -294,9 +243,12 @@ io.on('connection', socket => {
 
     socket.on('disconnect', (e) => {
         if (socketToRoom[socket.id]) {
+            io.emit('user left', socket.id)
+            console.log("hier")
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
             if (room) {
+                usersInThisRoom = room.filter(id => id !== socket.id);
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
@@ -305,6 +257,7 @@ io.on('connection', socket => {
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
         }
+
         if (componentList.includes(socket.id)) {
             let com = componentList.indexOf(socket.id);
             footerStatus = 'Component went offline!';
