@@ -2,9 +2,10 @@ import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import Cam1 from "../../assembly/Stream";
 import Heater from "../../assembly/Heater";
-import Glas from "../../assembly/Glas"
 import LaserCtrl from "../../assembly/LaserCtrl";
 import Cam from "../../assembly/Cam";
+import Cam2 from "../../assembly/Cam2";
+import Publisher from "../../assembly/Publisher2";
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
@@ -22,7 +23,7 @@ const MichelsonInterferometer = (props) => {
   var leftMiddleRight = String(width - (halfWidth * 0.4))
   var leftCam = String(width - (halfWidth * 1.485))
 
-  var componentList = ['Michelson_KM100', 'Michelson_linear', 'Michelson_laser', 'Michelson_LaserPower', 'Michelson_cam', 'Michelson_heater', 'Cam_1', 'Michelson_glas']
+  var componentList = ['Michelson_KM100', 'Michelson_linear', 'Michelson_laser', 'Michelson_LaserPower', 'Michelson_cam', 'Michelson_heater']
   return (
     <div>
       {/* KM100 */}
@@ -81,10 +82,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Heater */}
-      {props.selected.has(componentList[5]) && (
+      {props.selected.has(componentList[3]) && (
         <Heater
           title="Heater"
-          id={componentList[5]}
+          id={componentList[3]}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -93,7 +94,7 @@ const MichelsonInterferometer = (props) => {
 
       {/* Cam 1 */}
       {props.selected.has(componentList[6]) && (
-        <Cam
+        <Cam2
           title="Cam_1"
           id={componentList[6]}
           footer={footer}
@@ -105,7 +106,7 @@ const MichelsonInterferometer = (props) => {
       
       {/* Glas */}
       {props.selected.has(componentList[7]) && (
-        <Glas
+        <Publisher
           title="Glas"
           id={componentList[7]}
           footer={footer}

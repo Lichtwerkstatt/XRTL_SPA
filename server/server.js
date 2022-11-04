@@ -1,9 +1,9 @@
-const path = require('path')
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
-const app = express();
+const path = require('path')
 
+const app = express();
 const jwt = require('jsonwebtoken');
 const server = https.createServer({
     key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
@@ -11,14 +11,9 @@ const server = https.createServer({
 }, app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: ['https://lichtwerkstatt.github.io', 'http://localhost:3000', 'http://10.232.37.40:7000', 'http://localhost:4000', 'http://10.232.37.40:4000'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        preflightContinue: true
-    },
-
+        origin: '*'
+    }
 })
-
-
 const { v4: uuidv4 } = require('uuid');
 const roomID = uuidv4();
 const users = {};
@@ -33,11 +28,10 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 
-
 io.use(function (socket, next) {
+    console.log(socket)
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
-            console.log(socket)
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
             exp = decoded.iat + 3600000;
@@ -145,8 +139,6 @@ io.on('connection', socket => {
 
     //Client how starts the stream is added to a room
     socket.on('join stream room', (data) => {
-
-        console.log(data)
         componentID = data.id;
         socket.to(GUIId).emit("newLog", "User has joined the room " + String(componentID));
         socket.join(componentID);
@@ -168,7 +160,6 @@ io.on('connection', socket => {
 
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
-        console.log("stopp")
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
         try {
             let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
@@ -284,8 +275,9 @@ io.on('connection', socket => {
         process.exit(0);
     });
 })
-const IP = process.env.IP || 7000;
-server.listen(7000, IP, () => {
+
+server.listen(7000, () => {
     console.log('I am listening at port: 7000!');
 
 })
+
