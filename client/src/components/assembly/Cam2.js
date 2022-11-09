@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import Window from "../UI/Window";
-import CamCtrl from "../Chat/Webcam";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"

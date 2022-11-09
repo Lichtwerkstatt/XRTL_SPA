@@ -125,7 +125,6 @@ io.on('connection', socket => {
     });
 
     socket.on("consumer", async (payload) => {
-        console.log("Consumer", payload)
         const peer = new webrtc.RTCPeerConnection({
             iceServers: [
                 {
@@ -141,7 +140,6 @@ io.on('connection', socket => {
         const data = {
             sdp: peer.localDescription
         }
-        console.log("consumer send ", data)
         socket.emit('consumer', data);
     });
 
@@ -161,13 +159,11 @@ io.on('connection', socket => {
         const data = {
             sdp: peer.localDescription
         }
-        console.log("broadcaster send ", data)
         socket.emit('broadcast', data);
     });
 
     function handleTrackEvent(e, peer) {
         senderStream = e.streams[0];
-        console.log("senderstream ", senderStream)
     };
 
 

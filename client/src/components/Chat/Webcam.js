@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useAppContext } from "../../services/AppContext";
 import styles from "./Webcam.module.css";
 var Peer = require('simple-peer');
-var roomID = '';
+//var roomID = '';
 
 const Video = (props) => {
     const ref = useRef();

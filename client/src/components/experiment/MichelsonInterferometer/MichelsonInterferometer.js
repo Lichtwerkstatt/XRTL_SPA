@@ -1,11 +1,12 @@
+import LaserCtrl from "../../assembly/LaserCtrl";
+import Heater from "../../assembly/Heater";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import Cam1 from "../../assembly/Stream";
-import Heater from "../../assembly/Heater";
-import LaserCtrl from "../../assembly/LaserCtrl";
-import Cam from "../../assembly/Cam";
 import Cam2 from "../../assembly/Cam2";
-import Publisher from "../../assembly/Publisher2";
+import Glas from "../../assembly/Glas"
+//import Publisher from "../../assembly/Publisher2";
+//import Cam from "../../assembly/Cam";
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
@@ -103,10 +104,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
 
-      
+
       {/* Glas */}
       {props.selected.has(componentList[7]) && (
-        <Publisher
+        <Glas
           title="Glas"
           id={componentList[7]}
           footer={footer}

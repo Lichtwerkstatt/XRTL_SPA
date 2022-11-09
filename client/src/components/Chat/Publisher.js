@@ -1,19 +1,13 @@
-
 import { useSocketContext } from "../../services/SocketContext";
-import { useAppContext } from "../../services/AppContext";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Publisher = () => {
-    const [switchStatus, setSwitchStatus] = useState(false);
-    const [onlineStatus, setOnlineStatus] = useState(false);
     const socketCtx = useSocketContext();
     const tempSwitch = useRef();
-
-    const appCtx = useAppContext();
     const webcamEmit = () => {
         console.log("hier")
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-            
+
             document.getElementById("video").srcObject = stream;
             const peer = createPeer();
             stream.getTracks().forEach(track => peer.addTrack(track, stream));
