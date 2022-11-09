@@ -15,11 +15,13 @@ const Webcam2 = () => {
     const tempWebcam = useRef();
 
 
-    function init() {
+    async function init() {
+
+        console.log("COnsumeer hier!!!")
         const peer = createPeer();
         peer.addTransceiver("video", { direction: "recvonly" })
+        console.log(peer)
     }
-    //
 
     function createPeer() {
         const peer = new RTCPeerConnection({
@@ -45,8 +47,7 @@ const Webcam2 = () => {
         socketCtx.socket.emit('consumer', payload);
 
         socketCtx.socket.on('consumer', payload => {
-            const data = payload
-            const desc = new RTCSessionDescription(data.sdp);
+            const desc = new RTCSessionDescription(payload.sdp);
             peer.setRemoteDescription(desc).catch(e => console.log(e));
         })
 
@@ -55,22 +56,23 @@ const Webcam2 = () => {
 
     function handleTrackEvent(e) {
         document.getElementById("video").srcObject = e.streams[0];
+
     };
-    /* }
 
 
 
-    tempWebcam.current = webcamEmit;
 
-    useEffect(() => {
-        tempWebcam.current();
-    }, [appCtx.showWebcam])
- */
+    // tempWebcam.current = webcamEmit;
+
+    // useEffect(() => {
+    //     tempWebcam.current();
+    // }, [appCtx.showWebcam])
+
 
     return (
-        <div className={styles.webcamDiv}>
-            <video autoplay id='video'></video>
-            <button onClick={init}>Click me!</button>
+        <div >
+            <video autoPlay id='video'></video>
+            <button onClick={init}>hallo</button>
         </div>
     );
 

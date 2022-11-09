@@ -8,17 +8,19 @@ const Publisher = () => {
     const [onlineStatus, setOnlineStatus] = useState(false);
     const socketCtx = useSocketContext();
     const tempSwitch = useRef();
-    const appCtx = useAppContext();
-  
 
-    async function init() {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        document.getElementById("video").srcObject = stream;
-        const peer = createPeer();
-        stream.getTracks().forEach(track => peer.addTrack(track, stream));
+    const appCtx = useAppContext();
+    const webcamEmit = () => {
+        console.log("hier")
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+            
+            document.getElementById("video").srcObject = stream;
+            const peer = createPeer();
+            stream.getTracks().forEach(track => peer.addTrack(track, stream));
+
+        })
     }
-    
-    
+
     function createPeer() {
         const peer = new RTCPeerConnection({
             iceServers: [
@@ -39,22 +41,25 @@ const Publisher = () => {
             sdp: peer.localDescription
         };
 
-        
+
         socketCtx.socket.emit('broadcast', payload);
-        
+
         socketCtx.socket.on('broadcast', payload => {
-            const data  = payload;
-            const desc = new RTCSessionDescription(data.sdp);
+            const desc = new RTCSessionDescription(payload.sdp);
             peer.setRemoteDescription(desc).catch(e => console.log(e));
         })
     }
-    
-    
+
+    tempSwitch.current = webcamEmit
+
+    useEffect(() => {
+        tempSwitch.current();
+    }, [socketCtx.socket])
+
 
     return (
         <div >
-            <video autoplay id='video'></video>
-            <button onClick={init}>Start stream!</button>
+            <video id='video' autoPlay playsInline></video>
         </div>
     );
 

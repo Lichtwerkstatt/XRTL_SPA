@@ -7,7 +7,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
-  const [autoRotate, setAutoRotate] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [busyComps, setBusyComps] = useState(new Set());

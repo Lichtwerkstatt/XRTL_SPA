@@ -1,3 +1,4 @@
+const webrtc = require("wrtc");
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -21,6 +22,7 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
+let senderStream;
 
 
 io.use(function (socket, next) {
@@ -121,6 +123,53 @@ io.on('connection', socket => {
     socket.on("returning signal", payload => {
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
+
+    socket.on("consumer", async (payload) => {
+        console.log("Consumer", payload)
+        const peer = new webrtc.RTCPeerConnection({
+            iceServers: [
+                {
+                    urls: "stun:stun.stunprotocol.org"
+                }
+            ]
+        });
+        const desc = new webrtc.RTCSessionDescription(payload.sdp);
+        peer.setRemoteDescription(desc);
+        senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
+        const answer = await peer.createAnswer();
+        peer.setLocalDescription(answer);
+        const data = {
+            sdp: peer.localDescription
+        }
+        console.log("consumer send ", data)
+        socket.emit('consumer', data);
+    });
+
+    socket.on('broadcast', async (payload) => {
+        const peer = new webrtc.RTCPeerConnection({
+            iceServers: [
+                {
+                    urls: "stun:stun.stunprotocol.org"
+                }
+            ]
+        });
+        peer.ontrack = (e) => handleTrackEvent(e, peer);
+        const desc = new webrtc.RTCSessionDescription(payload.sdp);
+        peer.setRemoteDescription(desc);
+        const answer = await peer.createAnswer();
+        peer.setLocalDescription(answer);
+        const data = {
+            sdp: peer.localDescription
+        }
+        console.log("broadcaster send ", data)
+        socket.emit('broadcast', data);
+    });
+
+    function handleTrackEvent(e, peer) {
+        senderStream = e.streams[0];
+        console.log("senderstream ", senderStream)
+    };
+
 
     //Handshake to handle the CHAT MESSAGES
 

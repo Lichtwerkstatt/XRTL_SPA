@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "local": "nodemon server_local.js",
+    "local": "nodemon server2.js",
     "himbeere": "nodemon server_himbeere.js"
   },
   "author": "Clara Henkel",
@@ -17,6 +17,7 @@
     "openssl": "^2.0.0",
     "socket.io": "^4.4.1",
     "uuid": "^8.3.2",
+    "webrtc": "^1.14.1",
     "wrtc": "^0.4.7"
   },
   "devDependencies": {
