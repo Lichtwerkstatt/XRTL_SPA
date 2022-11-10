@@ -7,7 +7,6 @@ const Webcam2 = () => {
     const tempSwitch = useRef();
 
     async function init() {
-        console.log("COnsumeer hier!!!")
         const peer = createPeer();
         peer.addTransceiver("video", { direction: "recvonly" })
     }
@@ -16,12 +15,13 @@ const Webcam2 = () => {
         const peer = new RTCPeerConnection({
             iceServers: [
                 {
-                    urls: "stun:stun.stunprotocol.org"
+                    urls: ["stun:stun.stunprotocol.org"]
                 }
             ]
         });
 
         peer.ontrack = event => {
+            console.log(event)
             document.getElementById("video").srcObject = event.streams[0];
             console.log(document.getElementById("video"))
 
@@ -49,12 +49,6 @@ const Webcam2 = () => {
 
     }
 
-    function handleTrackEvent(e) {
-        document.getElementById("video").srcObject = e.streams[0];
-
-        console.log(e.streams[0])
-
-    };
 
     tempSwitch.current = init
 

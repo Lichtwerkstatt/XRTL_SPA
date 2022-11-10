@@ -140,6 +140,7 @@ io.on('connection', socket => {
         const data = {
             sdp: peer.localDescription
         }
+        console.log("Consumer sendet!")
         socket.emit('consumer', data);
     });
 
@@ -159,6 +160,7 @@ io.on('connection', socket => {
         const data = {
             sdp: peer.localDescription
         }
+        console.log("Boradcaster sendet!")
         socket.emit('broadcast', data);
     });
 

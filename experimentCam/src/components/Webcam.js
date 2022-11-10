@@ -41,18 +41,18 @@ const Webcam = () => {
 
     const [peers, setPeers] = useState([]);
     var [showWebcam, setShowWebcam] = useState(false);
+    
     const userVideo = useRef();
     const peersRef = useRef([]);
     const tempSwitch = useRef();
-    const webcamEmit = () => {
+    const webcamEmit = async () => {
         console.log("hier")
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        document.getElementById("video").srcObject = stream;
+        const peer = createPeer();
+        stream.getTracks().forEach(track => peer.addTrack(track, stream));
 
-            document.getElementById("video").srcObject = stream;
-            const peer = createPeer();
-            stream.getTracks().forEach(track => peer.addTrack(track, stream));
 
-        })
     }
 
     function createPeer() {
@@ -82,6 +82,8 @@ const Webcam = () => {
             const desc = new RTCSessionDescription(payload.sdp);
             peer.setRemoteDescription(desc).catch(e => console.log(e));
         })
+        
+        console.log(peer)
     }
 
     tempSwitch.current = webcamEmit
