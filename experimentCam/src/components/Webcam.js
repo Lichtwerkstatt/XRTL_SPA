@@ -1,30 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 
-import styles from "./Webcam.module.css";
-var Peer = require('simple-peer');
-var roomID = '';
-
-const Video = (props) => {
-
-    const ref = useRef();
-    const tempRef = useRef();
-
-    const peerStream = () => {
-        props.peer.on("stream", stream => {
-            ref.current.srcObject = stream;
-        })
-    }
-
-    tempRef.current = peerStream;
-
-    useEffect(() => {
-        tempRef.current();
-    }, []);
-
-    return (
-        <video playsInline autoPlay ref={ref} />
-    );
-}
 
 const Webcam = () => {
     var jwt = require('jsonwebtoken');
@@ -39,15 +14,10 @@ const Webcam = () => {
     const socket = io.connect("http://localhost:7000", { auth: { token: token } });
 
 
-    const [peers, setPeers] = useState([]);
-    var [showWebcam, setShowWebcam] = useState(false);
-    
-    const userVideo = useRef();
-    const peersRef = useRef([]);
     const tempSwitch = useRef();
     const webcamEmit = async () => {
         console.log("hier")
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         document.getElementById("video").srcObject = stream;
         const peer = createPeer();
         stream.getTracks().forEach(track => peer.addTrack(track, stream));
@@ -82,7 +52,7 @@ const Webcam = () => {
             const desc = new RTCSessionDescription(payload.sdp);
             peer.setRemoteDescription(desc).catch(e => console.log(e));
         })
-        
+
         console.log(peer)
     }
 

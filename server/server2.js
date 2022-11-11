@@ -133,10 +133,10 @@ io.on('connection', socket => {
             ]
         });
         const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        peer.setRemoteDescription(desc);
+        await peer.setRemoteDescription(desc);
         senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
         const answer = await peer.createAnswer();
-        peer.setLocalDescription(answer);
+        await peer.setLocalDescription(answer);
         const data = {
             sdp: peer.localDescription
         }
@@ -152,11 +152,15 @@ io.on('connection', socket => {
                 }
             ]
         });
-        peer.ontrack = (e) => handleTrackEvent(e, peer);
+        peer.ontrack = e => {
+            console.log(e.streams[0])
+            senderStream = e.streams[0];
+        };
+        //console.log(peer.ontrack)
         const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        peer.setRemoteDescription(desc);
+        await peer.setRemoteDescription(desc);
         const answer = await peer.createAnswer();
-        peer.setLocalDescription(answer);
+        await peer.setLocalDescription(answer);
         const data = {
             sdp: peer.localDescription
         }
@@ -164,9 +168,6 @@ io.on('connection', socket => {
         socket.emit('broadcast', data);
     });
 
-    function handleTrackEvent(e, peer) {
-        senderStream = e.streams[0];
-    };
 
 
     //Handshake to handle the CHAT MESSAGES

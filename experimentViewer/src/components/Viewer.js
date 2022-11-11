@@ -13,7 +13,7 @@ const Video = () => {
     const io = require("socket.io-client");
     const socket = io.connect("http://localhost:7000", { auth: { token: token } });
 
-    
+
     const tempSwitch = useRef();
 
     async function init() {
@@ -29,14 +29,15 @@ const Video = () => {
                 }
             ]
         });
-        const remoteVideo = document.querySelector('video');
 
+        const video = document.querySelector('video')
         peer.ontrack = async event => {
-            const [remoteStream]= event.streams;
-            console.log(event)
-            remoteVideo.srcObject = remoteStream
-            console.log(remoteStream)
-
+            const [remoteStream] = event.streams;
+            video.srcObject = remoteStream;
+            video.autoPlay = true;
+            video.playsInline = true;
+            video.muted = true;
+            ;
         }
         peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer);
 
@@ -66,7 +67,7 @@ const Video = () => {
 
     useEffect(() => {
         tempSwitch.current();
-    }, [socket]) 
+    }, [socket])
 
 
 

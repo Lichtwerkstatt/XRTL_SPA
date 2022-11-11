@@ -20,10 +20,13 @@ const Webcam2 = () => {
             ]
         });
 
+        const video = document.querySelector('video')
         peer.ontrack = event => {
-            console.log(event)
-            document.getElementById("video").srcObject = event.streams[0];
-            console.log(document.getElementById("video"))
+            const [remoteStream] = event.streams;
+            video.srcObject = remoteStream;
+            video.autoPlay = true;
+            video.playsInline = true;
+            video.muted = true;
 
         }
         peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer);
@@ -49,18 +52,14 @@ const Webcam2 = () => {
 
     }
 
-
     tempSwitch.current = init
 
     useEffect(() => {
         tempSwitch.current();
     }, [socketCtx.socket])
 
-
-
-
     return (
-        <div className={styles.webcamDiv}>
+        <div >
             <video id='video' autoPlay playsInline></video>
         </div>
     );
