@@ -9,6 +9,7 @@ const io = require('socket.io')(server, {
     }
 })
 const { v4: uuidv4 } = require('uuid');
+const { Console } = require("console");
 const roomID = uuidv4();
 const users = {};
 var userIDs = [];
@@ -23,6 +24,7 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 let senderStream;
+var broadcaster = {};
 
 
 io.use(function (socket, next) {
@@ -124,39 +126,37 @@ io.on('connection', socket => {
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
-    socket.on("consumer", async (payload) => {
-        const peer = new webrtc.RTCPeerConnection({
-            iceServers: [
-                {
-                    urls: "stun:stun.stunprotocol.org"
-                }
-            ]
-        });
-        const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        await peer.setRemoteDescription(desc);
-        senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
-        const answer = await peer.createAnswer();
-        await peer.setLocalDescription(answer);
-        const data = {
-            sdp: peer.localDescription
+    socket.on('broadcaster join', (component) => {
+        if (broadcaster[component]) {
+            broadcaster[component] = [socket.id];
+        } else {
+            broadcaster[component] = [socket.id];
         }
-        console.log("Consumer sendet!")
-        socket.emit('consumer', data);
-    });
+        console.log(broadcaster)
 
-    socket.on('broadcast', async (payload) => {
+    })
+
+    socket.on('viewer', component => {
+        console.log('Viewer income to Server')
+        console.log("Viewer send to ", broadcaster[component][0])
+        io.to(broadcaster[component][0]).emit('viewer', socket.id);
+    })
+
+    socket.on('candidate', (payload) => {
+        console.log("Candiate Event is send")
+        io.to(viewerId).emit('candidate', payload);
+    })
+
+
+    /* socket.on('broadcast', async (payload) => {
         const peer = new webrtc.RTCPeerConnection({
-            iceServers: [
-                {
-                    urls: "stun:stun.stunprotocol.org"
-                }
-            ]
+            iceServers: [{ urls: "stun:stun.stunprotocol.org" }]
         });
         peer.ontrack = e => {
-            console.log(e.streams[0])
+            
             senderStream = e.streams[0];
         };
-        //console.log(peer.ontrack)
+
         const desc = new webrtc.RTCSessionDescription(payload.sdp);
         await peer.setRemoteDescription(desc);
         const answer = await peer.createAnswer();
@@ -168,7 +168,26 @@ io.on('connection', socket => {
         socket.emit('broadcast', data);
     });
 
-
+    socket.on("consumer", async (payload) => {
+        const peer = new webrtc.RTCPeerConnection({
+            iceServers:  [{ urls: "stun:stun.stunprotocol.org" }]
+        });
+        const desc = new webrtc.RTCSessionDescription(payload.sdp);
+        await peer.setRemoteDescription(desc);
+        try {
+            console.log("Try to set sender stream")
+            senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
+        }
+        catch { console.error("Broadcaster videostream is not send correctly!") }
+        const answer = await peer.createAnswer();
+        await peer.setLocalDescription(answer);
+        const data = {
+            sdp: peer.localDescription
+        }
+        console.log("Consumer sendet!")
+        socket.emit('consumer', data);
+    });
+ */
 
     //Handshake to handle the CHAT MESSAGES
 

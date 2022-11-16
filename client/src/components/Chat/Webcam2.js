@@ -1,12 +1,12 @@
 import { useSocketContext } from '../../services/SocketContext'
-import styles from "./Webcam.module.css";
 import { useRef, useEffect } from 'react';
 
 const Webcam2 = () => {
     const socketCtx = useSocketContext();
     const tempSwitch = useRef();
 
-    async function init() {
+    function init() {
+  //        socketCtx.socket.emit('Livestream start')
         const peer = createPeer();
         peer.addTransceiver("video", { direction: "recvonly" })
     }
@@ -48,8 +48,6 @@ const Webcam2 = () => {
             const desc = new RTCSessionDescription(payload.sdp);
             peer.setRemoteDescription(desc).catch(e => console.log(e));
         })
-
-
     }
 
     tempSwitch.current = init
@@ -59,7 +57,7 @@ const Webcam2 = () => {
     }, [socketCtx.socket])
 
     return (
-        <div >
+        <div  >
             <video id='video' autoPlay playsInline></video>
         </div>
     );
