@@ -20,27 +20,36 @@ const Webcam = () => {
     }
     var token = jwt.sign(payload, "keysecret");
     const io = require("socket.io-client");
-    const socket = io.connect("http://localhost:7000", { auth: { token: token } });
+    var socket = io.connect("http://localhost:7000", { auth: { token: token } });
+    
+    
     const [peerConnection, setPeerConnection] = useState({});
     const videoRef = useRef();
-
-    const tempSwitch = useRef();
-
     
-    const peerConn = async () => {
-        socket.emit('broadcaster join', 'Cam_1')
-
+    const tempSwitch = useRef();
+    
+    
+    const peerConn =  () => {
+        
         const contraints = { audio: false, video: { facingMode: "user" } };
         const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+        
+        navigator.mediaDevices.getUserMedia({ video: true  }).then(stream => {
+            socket.disconnect()
+             socket = io.connect("http://localhost:7000", { auth: { token: token } });
+            socket.emit('broadcaster join', 'Cam_1')
+            videoRef.current.srcObject = stream;
+        })
 
-        const stream = await navigator.mediaDevices.getUserMedia(contraints);
-        document.getElementById("video").srcObject = stream;
 
+        
+        
+        
         socket.on('viewer', viwerId => {
             console.log("da sind wir")
             const peerConnection = new RTCPeerConnection(config);
             peerConnection[viwerId] = peerConnection;
-
+    
             setPeerConnection(peerConnection[viwerId] = peerConnection);
             let stream = document.getElementById("video").srcObject;
             console.log(stream)
@@ -49,17 +58,14 @@ const Webcam = () => {
                 .forEach(track => {
                     peerConnection.addTrack(track, stream);
                 });
-
+    
             peerConnection.onicecandidate = (event) => {
                 if (event.candidate) {
                     socket.emit('candidate', viwerId, event.candidate);
                 }
             }
-
+    
         })
-
-
-
     }
 
 
@@ -127,7 +133,7 @@ const Webcam = () => {
 
     return (
         <div >
-            <video id='video' autoPlay playsInline></video>
+            <video id='video' autoPlay playsInline ref={videoRef}></video>
         </div>
     );
 
