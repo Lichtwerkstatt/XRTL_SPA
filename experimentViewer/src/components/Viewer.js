@@ -28,29 +28,30 @@ const Video = () => {
     }
 
     const view = () => {
-        socket.on('offer', (id, payload) => {
+        socket.on('offer', (payload) => {
             peerConnection = new RTCPeerConnection(config);
-            console.log(payload)
+
             peerConnection
-                .setRemoteDescription(payload)
+                .setRemoteDescription(payload.data)
                 .then(() => peerConnection.createAnswer())
                 .then((sdp) => peerConnection.setLocalDescription(sdp))
-                .then(() => socket.emit('answer', id, peerConnection.localDescription))
+                .then(() => socket.emit('answer', { id: payload.id, data: peerConnection.localDescription }))
 
             peerConnection.ontrack = (event) => {
+                console.log(event);
                 document.getElementById('video').srcObject = event.stream[0];
             }
 
             peerConnection.onicecandidate = (event) => {
                 if (event.candidate) {
-                    socket.emit('candidate', id, event.candidate)
+                    socket.emit('candidate', { id: payload.id, data: event.candidate })
                 }
             }
         })
 
-        socket.on('candidate', (id, payload) => {
+        socket.on('candidate', (payload) => {
             peerConnection
-                .addIceCandidate(new RTCIceCandidate(payload))
+                .addIceCandidate(new RTCIceCandidate(payload.data))
                 .catch(e => console.error(e))
         })
 

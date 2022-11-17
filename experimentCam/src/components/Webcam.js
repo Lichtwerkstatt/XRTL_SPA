@@ -31,24 +31,15 @@ const Webcam = () => {
 
     const webcamEmit = async () => {
         const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
-        console.log("Einmaliges Cam ausführen")
+        const contraints = { audio: false, video: { facingMode: "user" } };
+        const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] };
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         document.getElementById("video").srcObject = stream;
 
-        const contraints = { audio: false, video: { facingMode: "user" } };
-        const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
-
-            ;
 
         socket.emit('broadcaster join', 'Cam_1')
 
-
-
-
-
-
         socket.on('viewer', viewerId => {
-
             const peerConnection = new RTCPeerConnection(config);
             peerConnections[viewerId] = peerConnection;
 
@@ -63,8 +54,8 @@ const Webcam = () => {
             peerConnection.onicecandidate = (event) => {
 
                 if (event.candidate) {
-                    console.log("candidate")
-                    socket.emit('candidate', viewerId, event.candidate);
+
+                    socket.emit('candidate', { id: viewerId, data: event.candidate });
                 }
             }
 
@@ -72,20 +63,21 @@ const Webcam = () => {
                 .createOffer()
                 .then((sdp) => peerConnection.setLocalDescription(sdp))
                 .then(() => {
-                    console.log(peerConnection.localDescription)
 
-                    socket.emit('offer', (viewerId, peerConnection.localDescription))
+                    console.log(viewerId)
+                    const data =
+                        socket.emit('offer', { id: viewerId, data: peerConnection.localDescription })
                 });
 
 
         })
 
-        socket.on('answer', (viewerId, payload) => {
-            peerConnections[viewerId].setRemoteDescription(payload);
+        socket.on('answer', (payload) => {
+            peerConnections[payload.id].setRemoteDescription(payload.data);
         });
 
-        socket.on('candidate', (viewerId, payload) => {
-            peerConnections[viewerId].addIceCandidate(new RTCIceCandidate(payload))
+        socket.on('candidate', (payload) => {
+            peerConnections[payload.id].addIceCandidate(new RTCIceCandidate(payload.data))
         })
 
     }
@@ -100,8 +92,8 @@ const Webcam = () => {
 
 
     /* socket.emit('broadcaster join', 'Cam_1')
-    
-    
+     
+     
      
     const webcamEmit = async () => {
         console.log("hier")
@@ -109,10 +101,10 @@ const Webcam = () => {
         document.getElementById("video").srcObject = stream;
         const peer = createPeer();
         stream.getTracks().forEach(track => peer.addTrack(track, stream));
-    
-    
+     
+     
     }
-    
+     
      function createPeer() {
         const peer = new RTCPeerConnection({
             iceServers: [
@@ -122,10 +114,10 @@ const Webcam = () => {
             ]
         });
         peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer);
-    
+     
         return peer;
     }
-    
+     
     async function handleNegotiationNeededEvent(peer) {
         const offer = await peer.createOffer();
         await peer.setLocalDescription(offer);
@@ -137,7 +129,7 @@ const Webcam = () => {
             
         })
         socket.emit('broadcast', payload);
-    
+     
         socket.on('broadcast', payload => {
             const desc = new RTCSessionDescription(payload.sdp);
             peer.setRemoteDescription(desc).catch(e => console.log(e));
@@ -145,13 +137,13 @@ const Webcam = () => {
         
         console.log(peer) 
     }
-  
+     
     tempSwitch.current = peerConn
-
+    
     useEffect(() => {
         tempSwitch.current();
     }, [])
-  */
+    */
     tempSwitch2.current = webcamEmit
 
     useEffect(() => {
