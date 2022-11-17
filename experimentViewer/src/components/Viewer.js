@@ -13,7 +13,8 @@ const Video = () => {
     var token = jwt.sign(payload, "keysecret");
     const io = require("socket.io-client");
     const socket = io.connect("http://localhost:7000", { auth: { token: token } });
-
+    const tempSwitch = useRef();
+    var peerConnection;
     console.log("verbindung steht")
 
     const config = {
@@ -22,6 +23,37 @@ const Video = () => {
 
     const handleViewer = () => {
         socket.emit('viewer', 'Cam_1')//props.component)
+
+
+    }
+
+    const view = () => {
+        socket.on('offer', (id, payload) => {
+            peerConnection = new RTCPeerConnection(config);
+            console.log(payload)
+            peerConnection
+                .setRemoteDescription(payload)
+                .then(() => peerConnection.createAnswer())
+                .then((sdp) => peerConnection.setLocalDescription(sdp))
+                .then(() => socket.emit('answer', id, peerConnection.localDescription))
+
+            peerConnection.ontrack = (event) => {
+                document.getElementById('video').srcObject = event.stream[0];
+            }
+
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    socket.emit('candidate', id, event.candidate)
+                }
+            }
+        })
+
+        socket.on('candidate', (id, payload) => {
+            peerConnection
+                .addIceCandidate(new RTCIceCandidate(payload))
+                .catch(e => console.error(e))
+        })
+
     }
 
 
@@ -73,12 +105,12 @@ const Video = () => {
             })
         }
     
-    
-        tempSwitch.current = init
-    
-        useEffect(() => {
-            tempSwitch.current();
-        }, [socket]) */
+    */
+    tempSwitch.current = view
+
+    useEffect(() => {
+        tempSwitch.current();
+    }, [socket])
 
     return (
         <div className={styles.webcamDiv}>

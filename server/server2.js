@@ -128,7 +128,7 @@ io.on('connection', socket => {
 
     socket.on('broadcaster join', (component) => {
         if (broadcaster[component]) {
-            broadcaster[component] = [socket.id];
+            broadcaster[component] = [socket.id]//.push(socket.id);
         } else {
             broadcaster[component] = [socket.id];
         }
@@ -136,15 +136,26 @@ io.on('connection', socket => {
 
     })
 
-    socket.on('viewer', component => {
+    socket.on('viewer', (component) => {
         console.log('Viewer income to Server')
         console.log("Viewer send to ", broadcaster[component][0])
         io.to(broadcaster[component][0]).emit('viewer', socket.id);
     })
 
-    socket.on('candidate', (payload) => {
+    socket.on('offer', (id, payload) => {
+        console.log("Offer Event is send")
+        console.log(payload)
+        io.to(id).emit('offer', (socket.id, payload));
+    })
+
+    socket.on('answer', (id, payload) => {
+        console.log('answer was send')
+        socket.to(id).emit('answer', (socket.id, payload))
+    })
+
+    socket.on('candidate', (id, payload) => {
         console.log("Candiate Event is send")
-        io.to(viewerId).emit('candidate', payload);
+        io.to(id).emit('candidate', (socket.id, payload));
     })
 
 
