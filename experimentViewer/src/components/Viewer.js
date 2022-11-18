@@ -17,6 +17,7 @@ const Video = () => {
     const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
 
     const handleViewer = () => {
+        document.getElementById('video').setAttribute('style', 'display: true')
         socket.emit('viewer', 'Cam_1')//props.component)
     }
 
@@ -52,6 +53,12 @@ const Video = () => {
         })
     }
 
+    const disConnect = () => {
+        document.getElementById('video').setAttribute('style', 'display: none');
+        socket.emit('watcher disconnect')
+        peerConnection.close();
+    }
+
     tempSwitch.current = view
 
     useEffect(() => {
@@ -60,6 +67,7 @@ const Video = () => {
 
     return (
         <div className={styles.webcamDiv}>
+            <button onClick={disConnect}>Disconnect</button>
             <button onClick={handleViewer}>Click me</button>
             <video className="video" id='video' autoPlay playsInline ></video>
         </div>

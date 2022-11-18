@@ -65,10 +65,10 @@ const Webcam = () => {
         socket.on('candidate', (payload) => {
             peerConnections[payload.id].addIceCandidate(new RTCIceCandidate(payload.data))
         })
-    }
 
-    const disConn = () => {
-      socket.emit("stop broadcast");
+        socket.on('disconnect peerConnection', (id) => {
+            delete peerConnections[id]
+        })
     }
 
     tempSwitch2.current = webcamEmit
@@ -79,7 +79,6 @@ const Webcam = () => {
 
     return (
         <div >
-    <button onClick={disConn}>Disconnect</button>
             <video id='video' autoPlay playsInline ref={videoRef}></video>
         </div>
     );

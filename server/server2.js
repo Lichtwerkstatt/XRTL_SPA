@@ -24,7 +24,7 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 let senderStream;
-var broadcaster = {};
+var broadcaster = [];
 
 
 io.use(function (socket, next) {
@@ -110,9 +110,6 @@ io.on('connection', socket => {
         }
         socketToRoom[socket.id] = roomID;
         usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-        console.log("hier", socketToRoom)
-        console.log(users[roomID])
-        console.log(usersInThisRoom)
         socket.emit("all users", usersInThisRoom);
     });
 
@@ -127,15 +124,16 @@ io.on('connection', socket => {
     });
 
     socket.on('broadcaster join', (component) => {
-        if (broadcaster[component]) {
-            broadcaster[component] = [socket.id]//.push(socket.id);
+        if (broadcaster) {
+            broadcaster.push(socket.id, component,);
         } else {
-            broadcaster[component] = [socket.id];
+            broadcaster = [socket.id, component];
         }
     })
 
     socket.on('viewer', (component) => {
-        io.to(broadcaster[component][0]).emit('viewer', socket.id);
+        const id = broadcaster[broadcaster.indexOf(component) - 1]
+        io.to(id).emit('viewer', socket.id);
     })
 
     socket.on('offer', (payload) => {
@@ -150,9 +148,8 @@ io.on('connection', socket => {
         io.to(payload.id).emit('candidate', { id: socket.id, data: payload.data });
     })
 
-    socket.on('watcher disconnect',() => {
-      console.log("watcher dicon")
-      socket.emit('disconnect peercon', socket.id);
+    socket.on('watcher disconnect', () => {
+        io.emit('disconnect peerConnection', socket.id);
     })
 
     //Handshake to handle the CHAT MESSAGES
@@ -277,7 +274,6 @@ io.on('connection', socket => {
     socket.on('disconnect', (e) => {
         if (socketToRoom[socket.id]) {
             io.emit('user left', socket.id)
-            console.log("hier")
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
             if (room) {
@@ -289,6 +285,10 @@ io.on('connection', socket => {
 
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
+        }
+
+        if (broadcaster.includes(socket.id)) {
+            broadcaster.splice(broadcaster.indexOf(socket.id), 2)
         }
 
         if (componentList.includes(socket.id)) {
