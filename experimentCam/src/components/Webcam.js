@@ -23,12 +23,10 @@ const Webcam = () => {
 
     const webcamEmit = async () => {
         const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
-        const contraints = {
-            audio: false, video: { facingMode: "user" }, height: window.innerHeight, width: window.innerWidth
-        };
+        const contraints = { audio: false, video: { facingMode: "user" } };
         const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
         const stream = await navigator.mediaDevices.getUserMedia(contraints);
-        // document.getElementById("video").srcObject = stream;
+        document.getElementById("video").srcObject = stream;
 
         socket.emit('broadcaster join', 'Cam_1')
 
@@ -37,7 +35,7 @@ const Webcam = () => {
             peerConnections[viewerId] = peerConnection;
 
             setPeerConnections(peerConnections[viewerId] = peerConnection);
-            // let stream = document.getElementById("video").srcObject;
+            let stream = document.getElementById("video").srcObject;
 
             stream
                 .getTracks()
@@ -76,6 +74,11 @@ const Webcam = () => {
         tempSwitch2.current();
     }, [])
 
+    return (
+        <div >
+            <video id='video' autoPlay playsInline ref={videoRef}></video>
+        </div>
+    );
 };
 
 export default Webcam;
