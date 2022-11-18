@@ -132,72 +132,28 @@ io.on('connection', socket => {
         } else {
             broadcaster[component] = [socket.id];
         }
-       // console.log(broadcaster)
-
     })
 
     socket.on('viewer', (component) => {
-       // console.log("Viewer send to ", broadcaster[component][0])
         io.to(broadcaster[component][0]).emit('viewer', socket.id);
     })
 
     socket.on('offer', (payload) => {
-       // console.log("Offer Event is send")
         io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
     })
 
     socket.on('answer', (payload) => {
-        console.log('answer was send', payload)
         socket.to(payload.id).emit('answer', { id: socket.id, data: payload.data })
     })
 
-    socket.once('candidate', (payload) => {
-        console.log("Candiate Event is send")
-        //console.log(payload.data)
+    socket.on('candidate', (payload) => {
         io.to(payload.id).emit('candidate', { id: socket.id, data: payload.data });
     })
 
-
-    /* socket.on('broadcast', async (payload) => {
-        const peer = new webrtc.RTCPeerConnection({
-            iceServers: [{ urls: "stun:stun.stunprotocol.org" }]
-        });
-        peer.ontrack = e => {
-            
-            senderStream = e.streams[0];
-        };
-
-        const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        await peer.setRemoteDescription(desc);
-        const answer = await peer.createAnswer();
-        await peer.setLocalDescription(answer);
-        const data = {
-            sdp: peer.localDescription
-        }
-        console.log("Boradcaster sendet!")
-        socket.emit('broadcast', data);
-    });
-
-    socket.on("consumer", async (payload) => {
-        const peer = new webrtc.RTCPeerConnection({
-            iceServers:  [{ urls: "stun:stun.stunprotocol.org" }]
-        });
-        const desc = new webrtc.RTCSessionDescription(payload.sdp);
-        await peer.setRemoteDescription(desc);
-        try {
-            console.log("Try to set sender stream")
-            senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
-        }
-        catch { console.error("Broadcaster videostream is not send correctly!") }
-        const answer = await peer.createAnswer();
-        await peer.setLocalDescription(answer);
-        const data = {
-            sdp: peer.localDescription
-        }
-        console.log("Consumer sendet!")
-        socket.emit('consumer', data);
-    });
- */
+    socket.on('watcher disconnect',() => {
+      console.log("watcher dicon")
+      socket.emit('disconnect peercon', socket.id);
+    })
 
     //Handshake to handle the CHAT MESSAGES
 
