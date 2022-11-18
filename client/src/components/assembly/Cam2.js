@@ -100,8 +100,8 @@ const Cam = (props) => {
             header={props.title + " (" + props.id + ")"}
             top={props.top}
             left={props.left}
-            height="340px"
-            width="623px"
+            height="380px"
+            width="600px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
