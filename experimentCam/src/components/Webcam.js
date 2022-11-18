@@ -32,8 +32,14 @@ const Webcam = () => {
     const webcamEmit = async () => {
         const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
         const contraints = { audio: false, video: { facingMode: "user" } };
-        const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] };
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const config = {
+            iceServers: [
+                {
+                    urls: ["stun:stun.stunprotocol.org"]
+                }
+            ]
+        }
+        const stream = await navigator.mediaDevices.getUserMedia(contraints);
         document.getElementById("video").srcObject = stream;
 
 
@@ -45,12 +51,12 @@ const Webcam = () => {
 
             setPeerConnections(peerConnections[viewerId] = peerConnection);
             let stream = document.getElementById("video").srcObject;
-            console.log(stream)
+       //     console.log(stream)
             stream
                 .getTracks()
                 .forEach(track => peerConnection.addTrack(track, stream));
 
-            console.log(peerConnection)
+          //  console.log(peerConnection)
             peerConnection.onicecandidate = (event) => {
 
                 if (event.candidate) {
@@ -77,6 +83,8 @@ const Webcam = () => {
         });
 
         socket.on('candidate', (payload) => {
+            console.log("on candidate", payload)
+            console.log("can? ", peerConnections[payload.id])
             peerConnections[payload.id].addIceCandidate(new RTCIceCandidate(payload.data))
         })
 

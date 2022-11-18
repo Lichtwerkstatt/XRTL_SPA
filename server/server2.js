@@ -132,29 +132,29 @@ io.on('connection', socket => {
         } else {
             broadcaster[component] = [socket.id];
         }
-        console.log(broadcaster)
+       // console.log(broadcaster)
 
     })
 
     socket.on('viewer', (component) => {
-        console.log("Viewer send to ", broadcaster[component][0])
+       // console.log("Viewer send to ", broadcaster[component][0])
         io.to(broadcaster[component][0]).emit('viewer', socket.id);
     })
 
     socket.on('offer', (payload) => {
-        console.log("Offer Event is send")
+       // console.log("Offer Event is send")
         io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
     })
 
     socket.on('answer', (payload) => {
-        console.log('answer was send')
-        socket.to(payload.i).emit('answer', { id: socket.id, data: payload.data })
+        console.log('answer was send', payload)
+        socket.to(payload.id).emit('answer', { id: socket.id, data: payload.data })
     })
 
-    socket.on('candidate', (payload) => {
+    socket.once('candidate', (payload) => {
         console.log("Candiate Event is send")
-        console.log(payload.data)
-        io.to(payload.id).emit('candidate', { id: socket.id, data: payload });
+        //console.log(payload.data)
+        io.to(payload.id).emit('candidate', { id: socket.id, data: payload.data });
     })
 
 

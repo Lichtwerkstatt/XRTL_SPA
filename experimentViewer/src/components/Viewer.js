@@ -18,10 +18,15 @@ const Video = () => {
     console.log("verbindung steht")
 
     const config = {
-        iceServer: [{ urls: ["stun:stun.stunprotocol.org"] }]
+        iceServers: [
+            {
+                urls: ["stun:stun.stunprotocol.org"]
+            }
+        ]
     }
 
     const handleViewer = () => {
+
         socket.emit('viewer', 'Cam_1')//props.component)
 
 
@@ -39,7 +44,7 @@ const Video = () => {
 
             peerConnection.ontrack = (event) => {
                 console.log(event);
-                document.getElementById('video').srcObject = event.stream[0];
+                document.getElementById('video').srcObject = event.streams[0];
             }
 
             peerConnection.onicecandidate = (event) => {
@@ -50,6 +55,7 @@ const Video = () => {
         })
 
         socket.on('candidate', (payload) => {
+            console.log("Viewer candiate", payload)
             peerConnection
                 .addIceCandidate(new RTCIceCandidate(payload.data))
                 .catch(e => console.error(e))
@@ -111,7 +117,7 @@ const Video = () => {
 
     useEffect(() => {
         tempSwitch.current();
-    }, [socket])
+    }, [])
 
     return (
         <div className={styles.webcamDiv}>
