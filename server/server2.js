@@ -8,6 +8,7 @@ const io = require('socket.io')(server, {
     }
 })
 const { v4: uuidv4 } = require('uuid');
+
 const roomID = uuidv4();
 const users = {};
 var userIDs = [];
@@ -21,6 +22,7 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
+var broadcaster = [];
 
 
 io.use(function (socket, next) {
@@ -106,9 +108,6 @@ io.on('connection', socket => {
         }
         socketToRoom[socket.id] = roomID;
         usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-        console.log("hier", socketToRoom)
-        console.log(users[roomID])
-        console.log(usersInThisRoom)
         socket.emit("all users", usersInThisRoom);
     });
 
@@ -121,6 +120,38 @@ io.on('connection', socket => {
     socket.on("returning signal", payload => {
         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
+
+    socket.on('broadcaster join', (component) => {
+        if (broadcaster) {
+            broadcaster.push(socket.id, component,);
+        } else {
+            broadcaster = [socket.id, component];
+        }
+    })
+
+    socket.on('viewer', (component) => {
+        console.log(component)
+        const id = broadcaster[broadcaster.indexOf(component) - 1]
+        io.to(id).emit('viewer', socket.id);
+    })
+
+    socket.on('offer', (payload) => {
+    console.log("offer?")
+        io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
+    })
+
+    socket.on('answer', (payload) => {
+        socket.to(payload.id).emit('answer', { id: socket.id, data: payload.data })
+    })
+
+    socket.on('candidate', (payload) => {
+        io.to(payload.id).emit('candidate', { id: socket.id, data: payload.data });
+    })
+
+    socket.on('watcher disconnect', () => {
+        console.log("hier i am ")
+        io.emit('disconnect peerConnection', socket.id);
+    })
 
     //Handshake to handle the CHAT MESSAGES
 
@@ -244,7 +275,6 @@ io.on('connection', socket => {
     socket.on('disconnect', (e) => {
         if (socketToRoom[socket.id]) {
             io.emit('user left', socket.id)
-            console.log("hier")
             const roomID = socketToRoom[socket.id];
             let room = users[roomID];
             if (room) {
@@ -256,6 +286,10 @@ io.on('connection', socket => {
 
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3)
+        }
+
+        if (broadcaster.includes(socket.id)) {
+            broadcaster.splice(broadcaster.indexOf(socket.id), 2)
         }
 
         if (componentList.includes(socket.id)) {
