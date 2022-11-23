@@ -23,7 +23,7 @@ const Webcam = () => {
 
     const webcamEmit = async () => {
         const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
-        const contraints = { audio: false, video: { facingMode: "user" } };
+        const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
         const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
         const stream = await navigator.mediaDevices.getUserMedia(contraints);
         document.getElementById("video").srcObject = stream;
@@ -56,7 +56,10 @@ const Webcam = () => {
         })
 
         socket.on('answer', (payload) => {
-            peerConnections[payload.id].setRemoteDescription(payload.data);
+            try { peerConnections[payload.id].setRemoteDescription(payload.data); }
+            catch (e) {
+                console.error("Remote answer is in stable state stable!")
+            }
         });
 
         socket.on('candidate', (payload) => {
@@ -64,6 +67,7 @@ const Webcam = () => {
         })
 
         socket.on('disconnect peerConnection', (id) => {
+            console.log("dis")
             delete peerConnections[id]
         })
     }

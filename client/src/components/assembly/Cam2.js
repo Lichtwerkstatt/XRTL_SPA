@@ -19,9 +19,15 @@ const Cam = (props) => {
     const tempWebcam = useRef();
     const tempWebcam2 = useRef();
 
+    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+    var peerConnection = new RTCPeerConnection(config);
+
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+        peerConnection.close();
+        socketCtx.socket.emit('watcher disconnect')
+        //peerConnection = new RTCPeerConnection(config);
+
     };
 
     const handleReset = () => {
@@ -100,14 +106,15 @@ const Cam = (props) => {
             header={props.title + " (" + props.id + ")"}
             top={props.top}
             left={props.left}
-            height="380px"
-            width="600px"
+            height="480px"
+            width="620px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
             footer={footer}
         >
             <Webcam2
+                peer={peerConnection}
                 component={props.id}
                 newStatus={handleChangeFooter}
                 footer={footer}

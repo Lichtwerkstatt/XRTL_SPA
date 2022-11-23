@@ -1,24 +1,24 @@
 import { useSocketContext } from '../../services/SocketContext'
 import { useRef, useEffect } from 'react';
-import styles from "./Webcam.module.css";
 
-const Webcam2 = () => {
+
+const Webcam2 = (props) => {
     const socketCtx = useSocketContext();
     const tempSwitch = useRef();
-    var peerConnection;
-    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+    var peerConnection
 
 
-    socketCtx.socket.emit('viewer', 'Cam_1')//props.component)
+
+    socketCtx.socket.emit('viewer', props.component)
 
 
     const view = () => {
         document.getElementById('video').setAttribute('style', 'display: true')
-        socketCtx.socket.emit('viewer', 'Cam_1')//props.component)
+        socketCtx.socket.emit('viewer', props.component)
 
         socketCtx.socket.on('offer', (payload) => {
-            peerConnection = new RTCPeerConnection(config);
-
+            peerConnection = props.peer;
+            console.log(peerConnection)
             peerConnection
                 .setRemoteDescription(payload.data)
                 .then(() => peerConnection.createAnswer())
@@ -41,15 +41,6 @@ const Webcam2 = () => {
                 .addIceCandidate(new RTCIceCandidate(payload.data))
                 .catch(e => console.error(e))
         })
-
-        socketCtx.socket.on('disconnect peercon', () => {
-            peerConnection.close();
-        })
-    }
-
-    const disConnect = () => {
-        socketCtx.socket.emit('watcher disconnect')
-        peerConnection.close();
     }
 
     tempSwitch.current = view
@@ -59,8 +50,8 @@ const Webcam2 = () => {
     }, [])
 
     return (
-        <div className={styles.div}>
-            <video className="video" id='video' autoPlay playsInline ></video>
+        <div>
+            <video className="video" id='video' autoPlay playsInline width="640px" height="480px" ></video>
         </div>
     );
 };

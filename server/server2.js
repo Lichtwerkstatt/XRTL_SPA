@@ -1,4 +1,3 @@
-const webrtc = require("wrtc");
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -9,7 +8,7 @@ const io = require('socket.io')(server, {
     }
 })
 const { v4: uuidv4 } = require('uuid');
-const { Console } = require("console");
+
 const roomID = uuidv4();
 const users = {};
 var userIDs = [];
@@ -23,7 +22,6 @@ var GUIId = ""
 var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
-let senderStream;
 var broadcaster = [];
 
 
@@ -132,11 +130,13 @@ io.on('connection', socket => {
     })
 
     socket.on('viewer', (component) => {
+        console.log(component)
         const id = broadcaster[broadcaster.indexOf(component) - 1]
         io.to(id).emit('viewer', socket.id);
     })
 
     socket.on('offer', (payload) => {
+    console.log("offer?")
         io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
     })
 
@@ -149,6 +149,7 @@ io.on('connection', socket => {
     })
 
     socket.on('watcher disconnect', () => {
+        console.log("hier i am ")
         io.emit('disconnect peerConnection', socket.id);
     })
 
