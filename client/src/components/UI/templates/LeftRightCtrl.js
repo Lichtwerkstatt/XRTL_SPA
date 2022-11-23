@@ -1,7 +1,7 @@
 import Right from '@mui/icons-material/ArrowCircleRightOutlined';
-import { useSocketContext } from "../../services/SocketContext";
+import { useSocketContext } from "../../../services/SocketContext";
 import Left from '@mui/icons-material/ArrowCircleLeftOutlined';
-import { useAppContext } from "../../services/AppContext";
+import { useAppContext } from "../../../services/AppContext";
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 

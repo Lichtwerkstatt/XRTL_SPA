@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import Window from "../UI/Window";
+import CamCtrl from "../Chat/Webcam_NOT_IN_USE";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"
 
-import Publisher from "../Chat/Publisher";
 
-
-const Publisher2 = (props) => {
+const Cam = (props) => {
     const [footer, setFooter] = useState(props.footer);
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
@@ -22,7 +21,7 @@ const Publisher2 = (props) => {
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-     
+        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
     };
 
     const handleReset = () => {
@@ -108,7 +107,7 @@ const Publisher2 = (props) => {
             onInfo={handleInfo}
             footer={footer}
         >
-            <Publisher
+            <CamCtrl
                 component={props.id}
                 newStatus={handleChangeFooter}
                 footer={footer}
@@ -118,4 +117,4 @@ const Publisher2 = (props) => {
     )
 }
 
-export default Publisher2;
+export default Cam;

@@ -1,5 +1,5 @@
-import { useSocketContext } from "../../services/SocketContext";
-import { useAppContext } from "../../services/AppContext";
+import { useSocketContext } from "../../../services/SocketContext";
+import { useAppContext } from "../../../services/AppContext";
 import {Stack, IconButton } from '@mui/material';
 import Up from '@mui/icons-material/ArrowCircleUpOutlined';
 import Down from '@mui/icons-material/ArrowCircleDownOutlined';

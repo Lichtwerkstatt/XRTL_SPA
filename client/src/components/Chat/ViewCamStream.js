@@ -2,7 +2,7 @@ import { useSocketContext } from '../../services/SocketContext'
 import { useRef, useEffect } from 'react';
 
 
-const Webcam2 = (props) => {
+const ViewCam = (props) => {
     const socketCtx = useSocketContext();
     const tempSwitch = useRef();
     var peerConnection
@@ -56,4 +56,4 @@ const Webcam2 = (props) => {
     );
 };
 
-export default Webcam2;
+export default ViewCam;

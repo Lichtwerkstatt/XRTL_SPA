@@ -1,6 +1,6 @@
 import { useState } from "react";
-import RotaryCtrl from "../UI/RotaryCtrl";
-import Window from "../UI/Window";
+import RotaryCtrl from "../UI/CtrlUnits/RotaryCtrl";
+import Window from "../UI/experimentUI/Window";
 import KM100_Background from "./media/km100_outline.png"
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import GlasCtrl from "../UI/GlasCtrl";
-import Window from "../UI/Window";
+import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
+import Window from "../UI/experimentUI/Window";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"
 
-const Glas = (props) => {
+const BeamSplitter = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
@@ -82,7 +82,7 @@ const Glas = (props) => {
       onReset={handleReset}
       onInfo={handleInfo}
     >
-      <GlasCtrl
+      <BeamSplitterCtrl
         rotation={props.rotationTop}
         component={props.id}
         control="top"
@@ -95,4 +95,4 @@ const Glas = (props) => {
   );
 };
 
-export default Glas;
+export default BeamSplitter;

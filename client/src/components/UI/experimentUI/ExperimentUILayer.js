@@ -1,9 +1,9 @@
-import MichelsonInterferometer from "../experiment/MichelsonInterferometer/MichelsonInterferometer";
-import { useSocketContext } from "../../services/SocketContext";
-import { usePopUpContext } from "../../services/PopUpContext";
+import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
+import { useSocketContext } from "../../../services/SocketContext";
+import { usePopUpContext } from "../../../services/PopUpContext";
 import React, { useEffect, useState, useRef } from "react";
-import { useAppContext } from "../../services/AppContext";
-import InfoWindow from "../windows/InfoWindow";
+import { useAppContext } from "../../../services/AppContext";
+import InfoWindow from "../../windows/InfoWindow";
 
 const ExperimentUILayer = () => {
   var [connection, setConnection] = useState(false);

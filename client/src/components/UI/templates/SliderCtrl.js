@@ -1,6 +1,6 @@
-import { useSocketContext } from "../../services/SocketContext";
+import { useSocketContext } from "../../../services/SocketContext";
 import { Box, Stack, Typography, Slider } from "@mui/material";
-import { useAppContext } from "../../services/AppContext";
+import { useAppContext } from "../../../services/AppContext";
 import { useState, useEffect, useRef } from "react";
 
 const SliderCtrl = (props) => {

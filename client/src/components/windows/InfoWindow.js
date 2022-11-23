@@ -1,5 +1,5 @@
 import { useAppContext } from "../../services/AppContext";
-import Window from "../UI/Window";
+import Window from "../UI/experimentUI/Window";
 import InfoWindowContent from "./InfoWindowContent";
 
 const InfoWindow = (props) => {

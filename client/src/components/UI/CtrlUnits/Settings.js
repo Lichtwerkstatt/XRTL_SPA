@@ -1,16 +1,20 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useSocketContext } from "../../services/SocketContext";
+import { useSocketContext } from "../../../services/SocketContext";
 import { useState, useRef, useEffect } from "react";
+import LeftRightCtrl from "../templates/LeftRightCtrl";
+import styles from "../CSS/Settings.module.css"
+import UpDownCtrl from "../templates/UpDownCtrl"
 import Box from '@mui/material/Box';
-import Slider from "./SliderCtrl";
-
+import Slider from "../templates/SliderCtrl";
+import Switch from "../templates/Switch"
+import Select from "../templates/Select";
 
 const Settings = (props) => {
-    const marks = [{ value: 0, label: 'None', }, { value: 1, label: 'Glas', }, { value: 2, label: 'Laser', },];
     const [onlineStatus, setOnlineStatus] = useState(true);
     var [mounted, setMounted] = useState(false);
     const socketCtx = useSocketContext();
     const settingCtrl = useRef();
+
 
     const theme = createTheme({
         palette: {
@@ -39,7 +43,7 @@ const Settings = (props) => {
 
             socketCtx.socket.on('getFooter', payload => {
                 if (payload.componentId === props.component) {
-                    setOnlineStatus(props.online)
+                    setOnlineStatus(true)
                     props.newStatus(String(payload.status))
                 }
             });
@@ -71,9 +75,17 @@ const Settings = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ mx: 1 }}>
-                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="pos" />
-            </Box>
+            <div className={styles.UpDown}>
+                <UpDownCtrl component={props.component} online={onlineStatus} />
+            </div>
+            <div className={styles.LeftRight}>
+                <LeftRightCtrl component={props.component} online={onlineStatus} />
+            </div>
+            <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
+            <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
+            <Switch component={props.component} command="gray" start='Color' end='Grey' online={true} option="val" />
+            <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" />
+            <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" />
         </ThemeProvider>
     )
 }

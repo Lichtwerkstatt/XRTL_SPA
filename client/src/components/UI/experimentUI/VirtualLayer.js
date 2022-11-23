@@ -1,6 +1,6 @@
-import MI_110422 from "../experiment/MichelsonInterferometer/MI_110422";
+import MI_110422 from "../../experiment/MichelsonInterferometer/MI_110422";
 import { OrbitControls, Environment } from "@react-three/drei";
-import { useAppContext } from "../../services/AppContext";
+import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 

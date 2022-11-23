@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { useSocketContext } from "../../services/SocketContext";
+import { useSocketContext } from "../../../services/SocketContext";
 import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Slider from './SliderCtrl'
-import Switch from './Switch'
-import Select from './Select'
+import Slider from '../templates/SliderCtrl'
+import Switch from '../templates/Switch'
+import Select from '../templates/Select'
 import { Box, createTheme, ThemeProvider, Button, IconButton, Typography } from '@mui/material';
-import styles from "./HeaterCtrl.module.css";
+import styles from "../CSS/HeaterCtrl.module.css";
 
 const HeaterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);

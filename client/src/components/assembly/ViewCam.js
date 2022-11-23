@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import Window from "../UI/Window";
-import CamCtrl from "../Chat/Webcam";
+import Window from "../UI/experimentUI/Window";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"
+import  ViewCamStream from "../Chat/ViewCamStream";
 
 
 const Cam = (props) => {
@@ -19,9 +19,15 @@ const Cam = (props) => {
     const tempWebcam = useRef();
     const tempWebcam2 = useRef();
 
+    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+    var peerConnection = new RTCPeerConnection(config);
+
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+        peerConnection.close();
+        socketCtx.socket.emit('watcher disconnect')
+        //peerConnection = new RTCPeerConnection(config);
+
     };
 
     const handleReset = () => {
@@ -100,14 +106,15 @@ const Cam = (props) => {
             header={props.title + " (" + props.id + ")"}
             top={props.top}
             left={props.left}
-            height="340px"
-            width="623px"
+            height="480px"
+            width="620px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
             footer={footer}
         >
-            <CamCtrl
+            <ViewCamStream
+                peer={peerConnection}
                 component={props.id}
                 newStatus={handleChangeFooter}
                 footer={footer}

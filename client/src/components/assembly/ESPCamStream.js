@@ -1,12 +1,12 @@
-import Window from "../UI/Window";
-import Settings from "../UI/Settings";
+import Window from "../UI/experimentUI/Window";
+import Settings from "../UI/CtrlUnits/Settings";
 import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
 import { useEffect, useRef, useState } from "react";
 import { usePopUpContext } from "../../services/PopUpContext"
 
-const Stream = (props) => {
+const ESPCamStream = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
@@ -138,4 +138,4 @@ const Stream = (props) => {
     </Window>
   );
 };
-export default Stream;
+export default ESPCamStream;

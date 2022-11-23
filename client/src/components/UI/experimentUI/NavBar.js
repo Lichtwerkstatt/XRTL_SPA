@@ -1,12 +1,12 @@
 
 import { MdOutlineScreenRotation, MdInfoOutline } from "react-icons/md"
-import { useSocketContext } from '../../services/SocketContext'
-import { useAppContext } from '../../services/AppContext'
+import { useSocketContext } from '../../../services/SocketContext'
+import { useAppContext } from '../../../services/AppContext'
 import { GiLaserWarning } from "react-icons/gi"
 import Tooltip from '@mui/material/Tooltip'
 import { ImConnection } from "react-icons/im"
 import { BsCamera } from 'react-icons/bs'
-import styles from "./NavBar.module.css"
+import styles from "../CSS/NavBar.module.css"
 import { BsBox } from "react-icons/bs"
 import { FaTags } from "react-icons/fa"
 const NavBar = () => {

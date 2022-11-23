@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import Window from "../UI/Window";
-import HeaterCtrl from "../UI/HeaterCtrl";
+import Window from "../UI/experimentUI/Window";
+import HeaterCtrl from "../UI/CtrlUnits/HeaterCtrl";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"

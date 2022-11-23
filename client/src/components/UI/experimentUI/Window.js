@@ -1,6 +1,6 @@
 import { IoReloadOutline, IoInformationCircleOutline } from "react-icons/io5"
 import { CgCloseO } from "react-icons/cg"
-import styles from "./Window.module.css"
+import styles from "../CSS/Window.module.css"
 import Draggable from "react-draggable"
 
 const Window = (props) => {
