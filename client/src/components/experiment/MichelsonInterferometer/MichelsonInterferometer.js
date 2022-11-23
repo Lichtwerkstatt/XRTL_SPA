@@ -83,10 +83,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Heater */}
-      {props.selected.has(componentList[3]) && (
+      {props.selected.has(componentList[5]) && (
         <Heater
           title="Heater"
-          id={componentList[3]}
+          id={componentList[5]}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
