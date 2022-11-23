@@ -233,7 +233,7 @@ export default function Model({ ...props }) {
           />}
       </group>
 
-      <group
+{/*       <group
         name="Cam_1"
         position={[1.56, 0.67, 0.14]}
         onPointerDown={(e) => {
@@ -311,7 +311,7 @@ export default function Model({ ...props }) {
             attenuationDistance={5}
           />
         </Box>
-      </group>
+      </group> */}
   </group >
   );
 }
