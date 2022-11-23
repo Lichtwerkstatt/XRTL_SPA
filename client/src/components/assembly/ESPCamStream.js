@@ -1,26 +1,30 @@
-import { useState } from "react";
-import RotaryCtrl from "../UI/CtrlUnits/RotaryCtrl";
 import Window from "../UI/experimentUI/Window";
-import KM100_Background from "./media/km100_outline.png"
+import Settings from "../UI/CtrlUnits/Settings";
+import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
+import { useSocketContext } from "../../services/SocketContext";
+import { useEffect, useRef, useState } from "react";
 import { usePopUpContext } from "../../services/PopUpContext"
-import { useSocketContext } from "../../services/SocketContext"
 
-const KM100 = (props) => {
+const ESPCamStream = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
   var [mounted, setMounted] = useState(false);
 
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
+  const appCtx = useAppContext();
   const popupCtx = usePopUpContext();
 
+  const tempWebcam = useRef();
+  const tempWebcam2 = useRef();
+
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
-  }
-  
+    appCtx.toggleSelectedComp(props.id);
+    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+  };
+
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
@@ -71,39 +75,67 @@ const KM100 = (props) => {
     }
   };
 
+  const webcamEmitPic = () => {
+    socketCtx.socket.on("data", function (payload) {
+      var uint8Arr = new Uint8Array(payload.data.data);
+      var binary = "";
+      for (var i = 0; i < uint8Arr.length; i++) {
+        binary += String.fromCharCode(uint8Arr[i]);
+      }
+      var base64String = window.btoa(binary);
+
+      var img = new Image();
+      img.onload = function () {
+        var canvas = document.getElementById("ScreenCanvas");
+        if (canvas != null) {
+          var ctx = canvas.getContext("2d");
+          var x1 = 0,
+            y1 = 0,
+            x2 = 300,
+            y2 = 200;
+          ctx.drawImage(this, x1, y1, x2, y2);
+        }
+      };
+      img.src = "data:image/jpg;base64," + base64String;
+    });
+  }
+
+  const webcamStartStreaming = () => {
+    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
+  }
+
+  tempWebcam.current = webcamEmitPic;
+  tempWebcam2.current = webcamStartStreaming;
+
+  useEffect(() => {
+    tempWebcam.current();
+  }, [socketCtx.socket]);
+
+  useEffect(() => {
+    tempWebcam2.current();
+  }, []);
+
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
-      footer={footer}
       top={props.top}
       left={props.left}
-      height="240px"
-      width="250px"
-      background={KM100_Background}
+      width="1000px"
+      height="430px"
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
+      footer={footer}
+      newStatus={handleChangeFooter}
     >
-      <RotaryCtrl
-        rotation={props.rotationTop}
-        component={props.id}
-        control="top"
-        newStatus={handleChangeFooter}
-        footer={footer}
-        top="20"
-        left="160"
-      />
-      <RotaryCtrl
-        rotation={props.rotationBottom}
-        component={props.id}
-        control="bottom"
-        newStatus={handleChangeFooter}
-        footer={footer}
-        top="50"
-        left="160"
-      />
+      <div className={styles.Canvas}>
+        <canvas id="ScreenCanvas" />
+      </div>
+      <div className={styles.Settings}>
+        <Settings component={props.id} footer={footer} newStatus={handleChangeFooter} />
+      </div>
+
     </Window>
   );
 };
-
-export default KM100;
+export default ESPCamStream;

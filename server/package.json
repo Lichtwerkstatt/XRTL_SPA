@@ -4,23 +4,16 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "local": "nodemon server2.js",
-    "himbeere": "nodemon server_himbeere.js"
+    "local": "nodemon server2.js"
   },
-  "author": "Clara Henkel",
+  "author": "",
   "license": "MIT",
   "dependencies": {
-    "console": "^0.7.2",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.7",
-    "openssl": "^2.0.0",
     "socket.io": "^4.4.1",
     "uuid": "^8.3.2",
-    "webrtc": "^1.14.1",
-    "wrtc": "^0.4.7"
-  },
-  "devDependencies": {
-    "@socket.io/admin-ui": "^0.2.0"
+    "webrtc": "^1.14.1"
   }
 }

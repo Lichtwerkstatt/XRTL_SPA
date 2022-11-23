@@ -1,6 +1,6 @@
 import { useState } from "react";
-import RotaryCtrl from "../UI/RotaryCtrl";
-import Window from "../UI/Window";
+import RotaryCtrl from "../UI/CtrlUnits/RotaryCtrl";
+import Window from "../UI/experimentUI/Window";
 import { useAppContext } from "../../services/AppContext";
 import SM1ZP_bg from "./media/linear_outline.png";
 import { useSocketContext } from "../../services/SocketContext";

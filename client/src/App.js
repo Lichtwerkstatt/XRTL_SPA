@@ -1,11 +1,11 @@
-import NavBar from "./components/UI/NavBar";
+import NavBar from "./components/UI/experimentUI/NavBar";
 import Console from "./components/Console/Console";
 import Chat from "./components/Chat/Chat";
 import Login from "./components/Login/Login";
-import VirtualLayer from "./components/UI/VirtualLayer";
+import VirtualLayer from "./components/UI/experimentUI/VirtualLayer";
 import { SocketContextProvider } from "./services/SocketContext";
 import { AppContextProvider } from "./services/AppContext";
-import ExperimentUILayer from "./components/UI/ExperimentUILayer";
+import ExperimentUILayer from "./components/UI/experimentUI/ExperimentUILayer";
 import {PopUpContextProvider} from "./services/PopUpContext"
 
 const App = () => {

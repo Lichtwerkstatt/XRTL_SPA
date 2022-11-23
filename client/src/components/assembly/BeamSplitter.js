@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Window from "../UI/experimentUI/Window"
-import SwitchOnOff from "../UI/templates/SwitchOnOff";
+import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
+import Window from "../UI/experimentUI/Window";
 import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext"
 import { usePopUpContext } from "../../services/PopUpContext"
+import { useSocketContext } from "../../services/SocketContext"
 
-const LaserCtrl = (props) => {
+const BeamSplitter = (props) => {
   const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
@@ -19,28 +19,13 @@ const LaserCtrl = (props) => {
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
-
-  const handleChangeFooter = (newFooter) => {
-    if (!mounted) {
-      mounted = true
-      setMounted(true)
-      var time = new Date();
-      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-      setFooter(newFooter);
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    };
-  };
-
+  
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
       componentId: props.id,
       command: "reset"
     })
-
   }
 
   const handleInfo = () => {
@@ -71,27 +56,43 @@ const LaserCtrl = (props) => {
     popupCtx.toggleShowPopUp(alert, alertType);
   }
 
+  const handleChangeFooter = (newFooter) => {
+    if (!mounted) {
+      mounted = true
+      setMounted(true)
+      var time = new Date();
+      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+      setFooter(newFooter);
+    }
+    return () => {
+      mounted = false;
+      setMounted(false);
+    }
+  };
+
   return (
     <Window
       header={props.title + " (" + props.id + ")"}
+      footer={footer}
       top={props.top}
       left={props.left}
-      height="200px"
-      width="300px"
+      height="140px"
+      width="320px"
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
-      newStatus={handleChangeFooter}
-      footer={footer}
     >
-      <SwitchOnOff
+      <BeamSplitterCtrl
+        rotation={props.rotationTop}
         component={props.id}
-        top="0"
-        left="0"
+        control="top"
         newStatus={handleChangeFooter}
         footer={footer}
+        top="20"
+        left="160"
       />
     </Window>
-  )
-}
-export default LaserCtrl;
+  );
+};
+
+export default BeamSplitter;

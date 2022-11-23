@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import Window from "../UI/experimentUI/Window";
-import HeaterCtrl from "../UI/CtrlUnits/HeaterCtrl";
+import Window from "../UI/Window";
+import CamCtrl from "../Chat/Webcam_NOT_IN_USE";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"
 
 
-const Heater = (props) => {
+const Cam = (props) => {
     const [footer, setFooter] = useState(props.footer);
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
@@ -18,7 +18,7 @@ const Heater = (props) => {
     const popupCtx = usePopUpContext();
     const tempWebcam = useRef();
     const tempWebcam2 = useRef();
-    
+
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
         socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
@@ -107,7 +107,7 @@ const Heater = (props) => {
             onInfo={handleInfo}
             footer={footer}
         >
-            <HeaterCtrl
+            <CamCtrl
                 component={props.id}
                 newStatus={handleChangeFooter}
                 footer={footer}
@@ -117,4 +117,4 @@ const Heater = (props) => {
     )
 }
 
-export default Heater;
+export default Cam;
