@@ -20,12 +20,14 @@ const RotaryCtrl = (props) => {
     if (!mounted) {
       mounted = true;
       setMounted(true);
-      socketCtx.socket.emit("command", {
-        userId: socketCtx.username,
-        componentId: props.component,
-        command: "getStatus"
-      });
-
+ 
+      if (props.control !== 'bottom') {
+        socketCtx.socket.emit("command", {
+          userId: socketCtx.username,
+          componentId: props.component,
+          command: "getStatus"
+        });
+      }
       socketCtx.socket.emit('getFooter', props.component);
 
       socketCtx.socket.on('getFooter', payload => {
@@ -34,7 +36,7 @@ const RotaryCtrl = (props) => {
           props.newStatus(String(payload.status))
         }
       });
-      
+
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
           props.newStatus(String(payload.status))
