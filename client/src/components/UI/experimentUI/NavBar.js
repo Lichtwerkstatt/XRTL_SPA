@@ -9,8 +9,10 @@ import { BsCamera } from 'react-icons/bs'
 import styles from "../CSS/NavBar.module.css"
 import { BsBox } from "react-icons/bs"
 import { FaTags } from "react-icons/fa"
-const NavBar = () => {
+import { memo } from "react"
+import {isEqual} from 'lodash';
 
+const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
@@ -63,4 +65,4 @@ const NavBar = () => {
         </div>
     </div>
 }
-export default NavBar
+export default memo(NavBar, isEqual)

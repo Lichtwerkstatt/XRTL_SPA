@@ -1,8 +1,10 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, memo } from "react"
 import styles from "./CSS/Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
 import { useSocketContext } from "../../services/SocketContext";
+import {isEqual} from 'lodash';
+
 
 const Chat = (props) => {
   const [message, setMessage] = useState("")
@@ -70,4 +72,4 @@ const Chat = (props) => {
     </div>
   )
 }
-export default Chat
+export default memo(Chat, isEqual);

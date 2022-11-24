@@ -4,9 +4,9 @@ import { useAppContext } from "../../../services/AppContext";
 import { useState, useEffect, useRef } from "react";
 import { GiLaserWarning } from "react-icons/gi"
 import { Box } from '@mui/material';
-import Switch from './Switch';
+import Switch from '../templates/Switch';
 
-const SwitchOnOff = (props) => {
+const LaserCtrl = (props) => {
   const [switchStatus, setSwitchStatus] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const socketCtx = useSocketContext();
@@ -72,4 +72,4 @@ const SwitchOnOff = (props) => {
     </div>
   )
 }
-export default SwitchOnOff
+export default LaserCtrl

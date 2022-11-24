@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Window from "../UI/experimentUI/Window"
-import SwitchOnOff from "../UI/templates/SwitchOnOff";
+import SwitchOnOff from "../UI/CtrlUnits/LaserCtrl";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext"
 import { usePopUpContext } from "../../services/PopUpContext"
