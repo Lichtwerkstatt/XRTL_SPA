@@ -4,6 +4,8 @@ import { usePopUpContext } from "../../../services/PopUpContext";
 import React, { useEffect, useState, useRef } from "react";
 import { useAppContext } from "../../../services/AppContext";
 import InfoWindow from "../../windows/InfoWindow";
+import { memo } from "react"
+import {isEqual} from 'lodash';
 
 const ExperimentUILayer = () => {
   var [connection, setConnection] = useState(false);
@@ -41,4 +43,4 @@ const ExperimentUILayer = () => {
   );
 };
 
-export default ExperimentUILayer;
+export default memo(ExperimentUILayer, isEqual);
