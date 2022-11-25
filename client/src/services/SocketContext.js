@@ -28,11 +28,11 @@ export function SocketContextProvider({ children }) {
       setConnected(false)
       appCtx.addLog("Server : Client disconnect.")
     })
-    socket.on('status', payload => {
+/*     socket.on('status', payload => {
       if (payload.status.busy) { appCtx.addBusyComp(payload.componentId) } else {
         appCtx.removeBusyComp(payload.componentId)
       }
-    })
+    }) */
   })
 
   const setNewURL = (newURL, username) => {

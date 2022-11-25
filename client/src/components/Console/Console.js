@@ -1,10 +1,11 @@
-import { useState } from "react"
-// import { socket } from "../../services/SocketContext"
+import { useState, memo } from "react"
 import { RiTerminalBoxFill } from "react-icons/ri"
 import styles from "./Console.module.css"
 import { useAppContext } from "../../services/AppContext"
+import {isEqual} from 'lodash';
 
 const Console = (props) => {
+  
   const [showConsole, setShowConsole] = useState(false)
   const [animation, setAnimation] = useState("")
   const appCtx = useAppContext();
@@ -27,4 +28,4 @@ const Console = (props) => {
     </div>
   )
 }
-export default Console
+export default memo(Console, isEqual);

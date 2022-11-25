@@ -61,8 +61,8 @@ const BeamSplitter = (props) => {
       mounted = true
       setMounted(true)
       var time = new Date();
-      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
       setFooter(newFooter);
+      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
     }
     return () => {
       mounted = false;

@@ -2,6 +2,8 @@ import { IoReloadOutline, IoInformationCircleOutline } from "react-icons/io5"
 import { CgCloseO } from "react-icons/cg"
 import styles from "../CSS/Window.module.css"
 import Draggable from "react-draggable"
+import { memo } from "react"
+import {isEqual} from 'lodash';
 
 const Window = (props) => {
   return (
@@ -48,4 +50,4 @@ const Window = (props) => {
     </Draggable>
   )
 }
-export default Window
+export default memo(Window, isEqual);

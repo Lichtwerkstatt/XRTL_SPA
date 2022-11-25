@@ -1,4 +1,6 @@
 import { Html } from "@react-three/drei";
+import { memo } from "react"
+import {isEqual} from 'lodash';
 
 const DescriptiveTag = (props) => {
   const wrapperStyle = {
@@ -30,4 +32,4 @@ const DescriptiveTag = (props) => {
 
 };
 
-export default DescriptiveTag;
+export default memo(DescriptiveTag, isEqual);
