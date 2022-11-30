@@ -40,7 +40,6 @@ const LaserCtrl = (props) => {
       componentId: props.id,
       command: "reset"
     })
-
   }
 
   const handleInfo = () => {

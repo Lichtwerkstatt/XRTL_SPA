@@ -87,7 +87,7 @@ const Cam = (props) => {
     }
 
     const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId:'Cam' });
     }
 
     tempWebcam.current = webcamEmitPic;

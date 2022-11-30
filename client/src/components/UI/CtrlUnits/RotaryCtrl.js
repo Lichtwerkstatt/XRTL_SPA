@@ -18,7 +18,6 @@ const RotaryCtrl = (props) => {
   const button1 = props.component + props.control + "1"
   const button2 = props.component + props.control + "2"
 
-
   const rotaryCtrlEmit = () => {
     if (!mounted) {
       mounted = true;
@@ -62,7 +61,6 @@ const RotaryCtrl = (props) => {
             document.getElementById(button2).disabled = false;
           }
         }
-
       });
 
       mounted = false;

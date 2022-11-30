@@ -136,7 +136,7 @@ io.on('connection', socket => {
     })
 
     socket.on('offer', (payload) => {
-    console.log("offer?")
+        console.log("offer?")
         io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
     })
 
@@ -175,7 +175,11 @@ io.on('connection', socket => {
             io.emit("command", {
                 userId: data.username,
                 componentId: componentID,
-                command: "startStreaming",
+                command: {
+                    controlId: data.controlId,
+                    stream: true
+                }
+
             });
         }
     });
@@ -199,7 +203,11 @@ io.on('connection', socket => {
             io.emit("command", {
                 userId: data.username,
                 componentId: data.id,
-                command: "stopStreaming",
+                command: {
+                    controlId: data.controlId,
+                    stream: false
+                }
+                
             });
         }
         socket.leave(data.id);

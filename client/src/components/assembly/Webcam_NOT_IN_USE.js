@@ -21,7 +21,7 @@ const Cam = (props) => {
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
     };
 
     const handleReset = () => {
@@ -81,7 +81,7 @@ const Cam = (props) => {
     }
 
     const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId:'Cam' });
     }
 
     tempWebcam.current = webcamEmitPic;

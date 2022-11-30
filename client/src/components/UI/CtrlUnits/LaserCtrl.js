@@ -24,6 +24,7 @@ const LaserCtrl = (props) => {
       },
     }
   })
+ // console.log(props)
 
   const switchFunction = () => {
     socketCtx.socket.emit("command", {
@@ -33,13 +34,16 @@ const LaserCtrl = (props) => {
     })
 
     socketCtx.socket.on("status", payload => {
+      console.log("pay", payload)
       if (payload.componentId === props.component) {
         setSwitchStatus(payload.status['laser'])
       }
     })
 
     socketCtx.socket.on('footer', payload => {
+      
       if (payload.componentId === props.component) {
+      //  console.log("Footer", payload)
         props.newStatus(String(payload.status))
       }
     })

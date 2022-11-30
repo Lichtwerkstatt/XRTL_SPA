@@ -21,7 +21,7 @@ const Heater = (props) => {
     
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'thermistor'});
     };
 
     const handleReset = () => {
@@ -75,13 +75,13 @@ const Heater = (props) => {
     };
 
     const webcamEmitPic = () => {
-        socketCtx.socket.on("data", function (payload) {
+      socketCtx.socket.on("data", function (payload) {
             console.log("Data payload", payload)
-        });
+        }); 
     }
 
     const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
     }
 
     tempWebcam.current = webcamEmitPic;
