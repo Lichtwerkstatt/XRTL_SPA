@@ -75,9 +75,7 @@ const Heater = (props) => {
     };
 
     const webcamEmitPic = () => {
-      socketCtx.socket.on("data", function (payload) {
-            console.log("Data payload", payload)
-        }); 
+
     }
 
     const webcamStartStreaming = () => {

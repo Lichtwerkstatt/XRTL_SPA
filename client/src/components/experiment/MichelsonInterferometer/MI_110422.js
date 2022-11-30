@@ -288,7 +288,7 @@ function Model({ ...props }) {
         </Box>
       </group>
       <group
-        name="Glas"
+        name="Beam splitter"
         position={[3.56, 0.47, 0.14]}
         onPointerDown={(e) => {
           e.stopPropagation();
@@ -313,7 +313,7 @@ function Model({ ...props }) {
           />
         </Box>
       </group> 
-  </group >
+  </group>
   );
 }
 

@@ -58,17 +58,17 @@ const HeaterCtrl = (props) => {
             });
 
             socketCtx.socket.on("data", (payload) => {
-                console.log("hier ")
-                if (payload.componentId === props.component) {
-                    setTemp(payload.data.data);
-                }
+                var string = payload.data.data.data;
+                string = String(string.toFixed(2)) + " °C"
+                setTemp(string);
             });
-            
+
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
                     console.log("Status of settings:   ", payload)
                 }
             });
+
 
 
             mounted = false;

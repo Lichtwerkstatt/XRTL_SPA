@@ -103,10 +103,10 @@ const MichelsonInterferometer = (props) => {
       )}
 
 
-      {/* Glas */}
+      {/* Beam splitter */}
       {props.selected.has(componentList[7]) && (
         <BeamSplitter
-          title="Glas"
+          title="Beam splitter"
           id={componentList[7]}
           footer={footer}
           top={topMiddle}
