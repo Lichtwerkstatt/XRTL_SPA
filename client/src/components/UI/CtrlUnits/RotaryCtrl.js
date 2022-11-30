@@ -30,24 +30,24 @@ const RotaryCtrl = (props) => {
           componentId: props.component,
           command: "getStatus"
         });
+      }
+      socketCtx.socket.emit('getFooter', props.component);
 
-        socketCtx.socket.emit('getFooter', props.component);
+      socketCtx.socket.on('getFooter', payload => {
+        if (payload.componentId === props.component) {
+          setOnlineStatus(payload.online)
+          props.newStatus(String(payload.status))
+        }
+      });
 
-        socketCtx.socket.on('getFooter', payload => {
-          if (payload.componentId === props.component) {
-            setOnlineStatus(payload.online)
+      socketCtx.socket.on('footer', payload => {
+        if (payload.componentId === props.component) {
+          if (props.control !== 'bottom') {
             props.newStatus(String(payload.status))
           }
-        });
+        }
+      });
 
-        socketCtx.socket.on('footer', payload => {
-          if (payload.componentId === props.component) {
-            if (props.control !== 'bottom') {
-              props.newStatus(String(payload.status))
-            }
-          }
-        });
-      }
       socketCtx.socket.on("status", payload => {
         if (payload.componentId === props.component) {
           if (props.control === "top") {
