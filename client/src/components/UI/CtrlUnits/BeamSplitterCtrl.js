@@ -42,6 +42,7 @@ const BeamSplitterCtrl = (props) => {
                     setOnlineStatus(props.online)
                     props.newStatus(String(payload.status))
                 }
+                socketCtx.socket.off('getFooter')
             });
 
             socketCtx.socket.on("status", payload => {

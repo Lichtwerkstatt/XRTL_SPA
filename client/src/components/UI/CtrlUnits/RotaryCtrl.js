@@ -33,20 +33,23 @@ const RotaryCtrl = (props) => {
       socketCtx.socket.emit('getFooter', props.component);
 
       socketCtx.socket.on('getFooter', payload => {
-        if (payload.componentId === props.component) {
+        if (payload.componentId === props.component && props.control !== 'bottom' ) {
           setOnlineStatus(payload.online)
           props.newStatus(String(payload.status))
         }
+      socketCtx.socket.off('getFooter')
       });
 
       socketCtx.socket.on('footer', payload => {
         if (payload.componentId === props.component) {
           if (props.control !== 'bottom') {
+            console.log('hier')
             props.newStatus(String(payload.status))
           }
+
         }
       });
-
+      
       socketCtx.socket.on("status", payload => {
         if (payload.componentId === props.component) {
           if (props.control === "top") {
@@ -62,13 +65,18 @@ const RotaryCtrl = (props) => {
           }
         }
       });
-
+      
       mounted = false;
       setMounted(false);
     }
+    
     return () => {
       mounted = false;
       setMounted(false);
+      console.log('daaaaaaaaa')
+ 
+
+
     }
   }
   tempRotaryCtrl.current = rotaryCtrlEmit;

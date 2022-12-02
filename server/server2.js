@@ -30,7 +30,7 @@ io.use(function (socket, next) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', function (err, decoded) {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            exp = decoded.iat + 3600000;
+            exp = decoded.iat + 1800000;
             next();
         });
     }
@@ -77,7 +77,7 @@ io.on('connection', socket => {
     })
 
     socket.on("updateUser", () => {
-        socket.emit("updateUser", userIDServerList)
+        socket.to(GUIId).emit("updateUser", userIDServerList)
     })
 
     socket.on("updateUserList", (newList) => {
@@ -85,7 +85,7 @@ io.on('connection', socket => {
     })
 
     socket.on("updateComponents", () => {
-        socket.emit("updateComponents", componentList)
+        socket.to(GUIId).emit("updateComponents", componentList)
     })
 
     //The handshakes of the VIDEO CHAT
@@ -93,11 +93,7 @@ io.on('connection', socket => {
     //Sends the random generated roomID to the client how wants to join the video chat
     socket.on('roomID', (room) => {
         room(roomID);
-
     });
-
-    socket.emit('Webcam stream')
-
 
     //Sends an array with all the users in the room except the client how sends this command
     socket.on("client join room", () => {
@@ -149,7 +145,6 @@ io.on('connection', socket => {
     })
 
     socket.on('watcher disconnect', () => {
-        console.log("hier i am ")
         io.emit('disconnect peerConnection', socket.id);
     })
 
@@ -192,7 +187,7 @@ io.on('connection', socket => {
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (data) => {
         socket.to(GUIId).emit("newLog", "User has left the room " + String(data.id));
-        io.emit('user left', socket.id);
+        socket.emit('user left', socket.id);
         try {
             let roomSize = io.sockets.adapter.rooms.get(data.id).size - 1;
         } catch (error) {

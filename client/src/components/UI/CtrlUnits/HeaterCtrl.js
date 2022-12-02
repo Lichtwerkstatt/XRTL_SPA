@@ -55,6 +55,7 @@ const HeaterCtrl = (props) => {
                     setOnlineStatus(true)//(payload.online)
                     props.newStatus(String(payload.status))
                 }
+                socketCtx.socket.off('getFooter')
             });
 
             socketCtx.socket.on("data", (payload) => {

@@ -34,7 +34,7 @@ const LaserCtrl = (props) => {
     })
 
     socketCtx.socket.on("status", payload => {
-      console.log("pay", payload)
+      //console.log("pay", payload)
       if (payload.componentId === props.component) {
         setSwitchStatus(payload.status['laser'])
       }
@@ -55,6 +55,7 @@ const LaserCtrl = (props) => {
         setOnlineStatus(!payload.online)
         props.newStatus(String(payload.status))
       }
+      socketCtx.socket.off('getFooter')
     })
 
     appCtx.addLog("User set position on " + props.component + " to " + switchStatus)

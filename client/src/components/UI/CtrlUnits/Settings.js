@@ -46,6 +46,7 @@ const Settings = (props) => {
                     setOnlineStatus(true)
                     props.newStatus(String(payload.status))
                 }
+                socketCtx.socket.off('getFooter')
             });
 
             socketCtx.socket.on("status", payload => {
