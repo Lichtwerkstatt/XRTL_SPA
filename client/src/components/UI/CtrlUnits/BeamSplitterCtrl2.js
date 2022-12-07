@@ -2,15 +2,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../../services/SocketContext";
 import { useState, useRef, useEffect } from "react";
 import Box from '@mui/material/Box';
-import Switch from "../templates/Switch";
+import Slider from "../templates/SliderCtrl";
 
 
 const BeamSplitterCtrl = (props) => {
+    const marks = [{ value: 0, label: 'None', }, { value: 1, label: 'Glas', }, { value: 2, label: 'Laser', },];
     const [onlineStatus, setOnlineStatus] = useState(true);
     var [mounted, setMounted] = useState(false);
     const socketCtx = useSocketContext();
     const settingCtrl = useRef();
-    const [switchStatus, setSwitchStatus] = useState(false);
 
     const theme = createTheme({
         palette: {
@@ -47,9 +47,9 @@ const BeamSplitterCtrl = (props) => {
 
             socketCtx.socket.on("status", payload => {
                 if (payload.componentId === props.component) {
-                    setSwitchStatus(payload.status['laser'])
+                    console.log("Status of settings:   ", payload)
                 }
-            })
+            });
 
             socketCtx.socket.on('footer', payload => {
                 if (payload.componentId === props.component) {
@@ -73,7 +73,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Switch component={props.component} command="beamSplit" start='Off' end='On' checked={switchStatus} online={onlineStatus} option="val" />
+                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="pos" />
             </Box>
         </ThemeProvider>
     )

@@ -41,7 +41,6 @@ const LaserCtrl = (props) => {
     })
 
     socketCtx.socket.on('footer', payload => {
-      
       if (payload.componentId === props.component) {
       //  console.log("Footer", payload)
         props.newStatus(String(payload.status))

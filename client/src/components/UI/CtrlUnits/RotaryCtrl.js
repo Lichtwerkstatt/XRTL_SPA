@@ -18,6 +18,8 @@ const RotaryCtrl = (props) => {
   const button1 = props.component + props.control + "1"
   const button2 = props.component + props.control + "2"
 
+  socketCtx.socket.off('footer')
+
   const rotaryCtrlEmit = () => {
     if (!mounted) {
       mounted = true;
@@ -68,12 +70,14 @@ const RotaryCtrl = (props) => {
       
       mounted = false;
       setMounted(false);
+    }else{
+      socketCtx.socket.off('footer')
+      console.log('daaaaaaaaa')
     }
     
     return () => {
       mounted = false;
       setMounted(false);
-      console.log('daaaaaaaaa')
  
 
 

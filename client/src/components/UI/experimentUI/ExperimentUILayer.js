@@ -5,7 +5,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useAppContext } from "../../../services/AppContext";
 import InfoWindow from "../../windows/InfoWindow";
 import { memo } from "react"
-import {isEqual} from 'lodash';
+import { isEqual } from 'lodash';
+import CamWindow from "../../windows/CamWindow";
 
 const ExperimentUILayer = () => {
   var [connection, setConnection] = useState(false);
@@ -25,7 +26,7 @@ const ExperimentUILayer = () => {
       setConnection('');
     }
   }
- 
+
   connCtrl.current = ConnectionSuccess;
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const ExperimentUILayer = () => {
   return (
     <React.Fragment>
       {appCtx.showInfoWindow && <InfoWindow />}
+      {appCtx.showCam && <CamWindow />}
       <MichelsonInterferometer
         toggleSelect={appCtx.toggleSelectedComp}
         selected={appCtx.selectedComps}

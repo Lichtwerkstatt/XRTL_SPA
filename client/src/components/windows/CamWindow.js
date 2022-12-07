@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import Window from "../UI/experimentUI/Window";
 import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../../services/PopUpContext"
-import { useSocketContext } from "../../services/SocketContext"
-import ViewCamStream from "../Chat/ViewCamStream";
+import { usePopUpContext } from "../../services/PopUpContext";
+import { useSocketContext } from "../../services/SocketContext";
+import Window from "../UI/experimentUI/Window";
+import ViewCam from "../Chat/ViewCamStream";
+import { useState } from "react";
 
-
-const Cam = (props) => {
-    const [footer, setFooter] = useState(props.footer);
+const InfoWindow = (props) => {
+    const [footer, setFooter] = useState("Initializing...");
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
@@ -16,16 +15,23 @@ const Cam = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
-    const tempWebcam = useRef();
-    const tempWebcam2 = useRef();
-
-    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
-    var peerConnection = new RTCPeerConnection(config);
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        peerConnection.close();
-        socketCtx.socket.emit('watcher disconnect')
+    }
+
+    const handleChangeFooter = (newFooter) => {
+        if (!mounted) {
+            mounted = true
+            setMounted(true)
+            var time = new Date();
+            setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+            setFooter(newFooter);
+        }
+        return () => {
+            mounted = false;
+            setMounted(false);
+        };
     };
 
     const handleReset = () => {
@@ -64,62 +70,28 @@ const Cam = (props) => {
         popupCtx.toggleShowPopUp(alert, alertType);
     }
 
-    const handleChangeFooter = (newFooter) => {
-        if (!mounted) {
-            mounted = true
-            setMounted(true)
-            var time = new Date();
-            setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-            setFooter(newFooter);
-        }
-        return () => {
-            mounted = false;
-            setMounted(false);
-        }
-    };
-
-    const webcamEmitPic = () => {
-        socketCtx.socket.on("data", function (payload) {
-            console.log("Data payload", payload)
-        });
-    }
-
-    const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
-    }
-
-    tempWebcam.current = webcamEmitPic;
-    tempWebcam2.current = webcamStartStreaming;
-
-    useEffect(() => {
-        tempWebcam.current();
-    }, [socketCtx.socket]);
-
-    useEffect(() => {
-        tempWebcam2.current();
-    }, []);
-
     return (
         <Window
-            header={props.title + " (" + props.id + ")"}
-            top={props.top}
-            left={props.left}
-            height="480px"
-            width="620px"
+            header="Cam_1"
+            top="200"
+            left="250"
+            title="Cam_1"
+            id="Cam_1"
+            footer={footer}
+            width="600px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
-            footer={footer}
+            newStatus={handleChangeFooter}
+
         >
-            <ViewCamStream
-                peer={peerConnection}
-                component={props.id}
-                newStatus={handleChangeFooter}
+            <ViewCam
+                title="Cam_1"
+                id="Cam_1"
                 footer={footer}
+                newStatus={handleChangeFooter}
             />
-
         </Window>
-    )
-}
-
-export default Cam;
+    );
+};
+export default InfoWindow;
