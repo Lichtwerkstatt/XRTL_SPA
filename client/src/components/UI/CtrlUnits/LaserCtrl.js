@@ -24,52 +24,55 @@ const LaserCtrl = (props) => {
       },
     }
   })
- // console.log(props)
+  console.log(socketCtx.socket.listeners('getFooter', 'command'))
+  useEffect(() => {
+  const status = (payload) => {
+    if (payload.componentId === props.component) {
+      setSwitchStatus(payload.status['laser'])
+    }
+  }
 
-  const switchFunction = () => {
+  const footer = (payload) => {
+    if (payload.componentId === props.component) {
+      //  console.log("Footer", payload)
+      props.newStatus(String(payload.status))
+    }
+  }
+
+  const getFooter = (payload) => {
+    if (payload.componentId === props.component) {
+      setOnlineStatus(!payload.online)
+      props.newStatus(String(payload.status))
+    }
+  }
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
     })
-
-    socketCtx.socket.on("status", payload => {
-      //console.log("pay", payload)
-      if (payload.componentId === props.component) {
-        setSwitchStatus(payload.status['laser'])
-      }
-    })
-
-    socketCtx.socket.on('footer', payload => {
-      if (payload.componentId === props.component) {
-      //  console.log("Footer", payload)
-        props.newStatus(String(payload.status))
-      }
-    })
-
     socketCtx.socket.emit('getFooter', props.component)
 
-    socketCtx.socket.on('getFooter', payload => {
-      if (payload.componentId === props.component) {
-        setOnlineStatus(!payload.online)
-        props.newStatus(String(payload.status))
-      }
-      socketCtx.socket.off('getFooter')
-    })
+    socketCtx.socket.on("status", status)
 
-    appCtx.addLog("User set position on " + props.component + " to " + switchStatus)
-  }
+    socketCtx.socket.on('footer', footer)
 
-  tempSwitch.current = switchFunction
-  useEffect(() => {
-    tempSwitch.current();
+
+    socketCtx.socket.on('getFooter', getFooter);
+
+    return () => {
+      socketCtx.socket.off('getFooter', getFooter)
+      console.log("hello", socketCtx.socket.listeners())
+    }
+    //Comment needed to prevent a warning
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket])
-
+  
+ 
   return (
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} option = "val"/>
+          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} option="val" />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

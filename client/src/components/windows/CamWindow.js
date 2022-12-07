@@ -6,8 +6,8 @@ import ViewCam from "../Chat/ViewCamStream";
 import { useState } from "react";
 
 const InfoWindow = (props) => {
-    const [footer, setFooter] = useState("Initializing...");
     const [lastChange, setLastChange] = useState(['', '', '']);
+    const [footer, setFooter] = useState("Initializing...");
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
     var [mounted, setMounted] = useState(false);

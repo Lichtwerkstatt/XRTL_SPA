@@ -17,11 +17,14 @@ const RotaryCtrl = (props) => {
 
   const button1 = props.component + props.control + "1"
   const button2 = props.component + props.control + "2"
-
-  socketCtx.socket.off('footer')
-
+  // socketCtx.socket.removeAllListeners('getFooter')
+  //console.log(socketCtx.socket)
+  
   const rotaryCtrlEmit = () => {
     if (!mounted) {
+      const ja =(payload)  => {
+        
+      }
       mounted = true;
       setMounted(true);
 
@@ -48,7 +51,6 @@ const RotaryCtrl = (props) => {
             console.log('hier')
             props.newStatus(String(payload.status))
           }
-
         }
       });
       
@@ -68,18 +70,17 @@ const RotaryCtrl = (props) => {
         }
       });
       
+      console.log(socketCtx.socket.listeners('getFooter'))
+      socketCtx.socket.offAnyOutgoing('getFooter')
+      console.log(socketCtx.socket.listeners('getFooter'))
       mounted = false;
       setMounted(false);
-    }else{
-      socketCtx.socket.off('footer')
-      console.log('daaaaaaaaa')
     }
     
     return () => {
       mounted = false;
       setMounted(false);
- 
-
+      console.log('daaaaaaaaa')
 
     }
   }
