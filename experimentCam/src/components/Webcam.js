@@ -12,70 +12,83 @@ const Webcam = () => {
         sub: 'webcam',
         component: 'client',
         iat: Date.now(),
-        exp: Date.now() + 3600000,
+        exp: Date.now() + 1800000,
     }
     var token = jwt.sign(payload, "keysecret");
     const io = require("socket.io-client");
 
     const [peerConnections, setPeerConnections] = useState({});
     const videoRef = useRef();
-    const tempSwitch2 = useRef();
 
-    const webcamEmit = async () => {
-        const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
-        const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
-        const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
-        const stream = await navigator.mediaDevices.getUserMedia(contraints);
-        document.getElementById("video").srcObject = stream;
+    useEffect(() => {
+        const webcamEmit = async () => {
+            const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
+            const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
+            const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+            const stream = await navigator.mediaDevices.getUserMedia(contraints);
 
-        socket.emit('broadcaster join', 'Cam_1')
+            const viewer = (viewerId) => {
+                const peerConnection = new RTCPeerConnection(config);
+                peerConnections[viewerId] = peerConnection;
 
-        socket.on('viewer', viewerId => {
-            const peerConnection = new RTCPeerConnection(config);
-            peerConnections[viewerId] = peerConnection;
+                setPeerConnections(peerConnections[viewerId] = peerConnection);
+                let stream = document.getElementById("video").srcObject;
 
-            setPeerConnections(peerConnections[viewerId] = peerConnection);
-            let stream = document.getElementById("video").srcObject;
+                stream
+                    .getTracks()
+                    .forEach(track => peerConnection.addTrack(track, stream));
 
-            stream
-                .getTracks()
-                .forEach(track => peerConnection.addTrack(track, stream));
+                peerConnection.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        socket.emit('candidate', { id: viewerId, data: event.candidate });
+                    }
+                }
 
-            peerConnection.onicecandidate = (event) => {
-                if (event.candidate) {
-                    socket.emit('candidate', { id: viewerId, data: event.candidate });
+                peerConnection
+                    .createOffer()
+                    .then((sdp) => peerConnection.setLocalDescription(sdp))
+                    .then(() => {
+                        socket.emit('offer', { id: viewerId, data: peerConnection.localDescription })
+                    });
+            }
+
+            const answer = (payload) => {
+                try { peerConnections[payload.id].setRemoteDescription(payload.data); }
+                catch (e) {
+                    console.error("Remote answer is in stable state stable!")
                 }
             }
 
-            peerConnection
-                .createOffer()
-                .then((sdp) => peerConnection.setLocalDescription(sdp))
-                .then(() => {
-                    socket.emit('offer', { id: viewerId, data: peerConnection.localDescription })
-                });
-        })
-
-        socket.on('answer', (payload) => {
-            try { peerConnections[payload.id].setRemoteDescription(payload.data); }
-            catch (e) {
-                console.error("Remote answer is in stable state stable!")
+            const candidate = (payload) => {
+                peerConnections[payload.id].addIceCandidate(new RTCIceCandidate(payload.data))
             }
-        });
 
-        socket.on('candidate', (payload) => {
-            peerConnections[payload.id].addIceCandidate(new RTCIceCandidate(payload.data))
-        })
+            const disconnect = (id) => {
+                console.log("dis")
+                delete peerConnections[id]
+            }
 
-        socket.on('disconnect peerConnection', (id) => {
-            console.log("dis")
-            delete peerConnections[id]
-        })
-    }
+            document.getElementById("video").srcObject = stream;
 
-    tempSwitch2.current = webcamEmit
+            socket.emit('broadcaster join', 'Cam_1')
 
-    useEffect(() => {
-        tempSwitch2.current();
+            socket.on('viewer', viewer)
+
+            socket.on('answer', answer);
+
+            socket.on('candidate', candidate)
+
+            socket.on('disconnect peerConnection', disconnect)
+        }
+
+        webcamEmit() //function call
+
+        return () => {
+            socketCtx.socket.removeAllListeners('viewer', viewer)
+            socketCtx.socket.removeAllListeners('answer', answer)
+            socketCtx.socket.removeAllListeners('candidate', candidate)
+            socketCtx.socket.removeAllListeners('disconnect peerConnection', disconnect)
+        }
     }, [])
 
     return (
@@ -84,5 +97,4 @@ const Webcam = () => {
         </div>
     );
 };
-
 export default Webcam;
