@@ -8,20 +8,15 @@ const RotaryCtrl = (props) => {
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [rotation, setRotation] = useState(0);
-
   var direction;
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
-
   const button1 = props.component + props.control + "1"
   const button2 = props.component + props.control + "2"
-  // socketCtx.socket.removeAllListeners('getFooter')
-  //console.log(socketCtx.socket)
 
   useEffect(() => {
-
     const status = (payload) => {
       if (payload.componentId === props.component) {
         if (props.control === "top") {
@@ -69,15 +64,10 @@ const RotaryCtrl = (props) => {
 
     socketCtx.socket.on("status", status);
 
-    console.log(socketCtx.socket.listeners('getFooter'))
-    socketCtx.socket.offAnyOutgoing('getFooter')
-    console.log(socketCtx.socket.listeners('getFooter'))
-
     return () => {
       socketCtx.socket.removeAllListeners('status', status)
       socketCtx.socket.removeAllListeners('footer', footer)
       socketCtx.socket.removeAllListeners('getFooter', getFooter)
-      console.log("ach", socketCtx.socket.listeners('getFooter'))
     }
     //Comment needed to prevent a warning
      // eslint-disable-next-line react-hooks/exhaustive-deps
