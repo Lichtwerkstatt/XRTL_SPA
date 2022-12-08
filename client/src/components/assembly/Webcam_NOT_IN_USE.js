@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Window from "../UI/Window";
 import CamCtrl from "../Chat/Webcam_NOT_IN_USE";
 import { useAppContext } from "../../services/AppContext";
@@ -16,8 +16,6 @@ const Cam = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
-    const tempWebcam = useRef();
-    const tempWebcam2 = useRef();
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
@@ -74,25 +72,22 @@ const Cam = (props) => {
         }
     };
 
-    const webcamEmitPic = () => {
-        socketCtx.socket.on("data", function (payload) {
-            console.log("Data payload", payload)
-        });
-    }
-
-    const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId:'Cam' });
-    }
-
-    tempWebcam.current = webcamEmitPic;
-    tempWebcam2.current = webcamStartStreaming;
-
     useEffect(() => {
-        tempWebcam.current();
+        const data = (payload) => {
+            console.log("Data payload", payload)
+        }
+
+        socketCtx.socket.on("data", data);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('data', data)
+        }
+
     }, [socketCtx.socket]);
 
     useEffect(() => {
-        tempWebcam2.current();
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
+
     }, []);
 
     return (
@@ -112,7 +107,6 @@ const Cam = (props) => {
                 newStatus={handleChangeFooter}
                 footer={footer}
             />
-
         </Window>
     )
 }

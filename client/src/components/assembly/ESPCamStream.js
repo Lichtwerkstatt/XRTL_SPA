@@ -3,7 +3,7 @@ import Settings from "../UI/CtrlUnits/Settings";
 import styles from "./Stream.module.css";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePopUpContext } from "../../services/PopUpContext"
 
 const ESPCamStream = (props) => {
@@ -17,12 +17,9 @@ const ESPCamStream = (props) => {
   const appCtx = useAppContext();
   const popupCtx = usePopUpContext();
 
-  const tempWebcam = useRef();
-  const tempWebcam2 = useRef();
-
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
-    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPCam'});
+    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPCam' });
   };
 
   const handleReset = () => {
@@ -75,8 +72,8 @@ const ESPCamStream = (props) => {
     }
   };
 
-  const webcamEmitPic = () => {
-    socketCtx.socket.on("data", function (payload) {
+  useEffect(() => {
+    const data = (payload) => {
       var uint8Arr = new Uint8Array(payload.data.data);
       var binary = "";
       for (var i = 0; i < uint8Arr.length; i++) {
@@ -97,22 +94,19 @@ const ESPCamStream = (props) => {
         }
       };
       img.src = "data:image/jpg;base64," + base64String;
-    });
-  }
+    }
 
-  const webcamStartStreaming = () => {
-    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId:'ESPCam' });
-  }
+    socketCtx.socket.on("data", data);
 
-  tempWebcam.current = webcamEmitPic;
-  tempWebcam2.current = webcamStartStreaming;
-
-  useEffect(() => {
-    tempWebcam.current();
+    return () => {
+      socketCtx.socket.removeAllListeners('data', data)
+    }
   }, [socketCtx.socket]);
 
   useEffect(() => {
-    tempWebcam2.current();
+    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPCam' });
+    //Comment needed to prevent a warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

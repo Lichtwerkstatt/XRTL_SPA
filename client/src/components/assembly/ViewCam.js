@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
-import Window from "../UI/experimentUI/Window";
 import { useAppContext } from "../../services/AppContext";
 import { usePopUpContext } from "../../services/PopUpContext"
 import { useSocketContext } from "../../services/SocketContext"
 import ViewCamStream from "../Chat/ViewCamStream";
+import Window from "../UI/experimentUI/Window";
+import { useState, useEffect } from "react";
 
 
 const Cam = (props) => {
@@ -16,8 +16,6 @@ const Cam = (props) => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
-    const tempWebcam = useRef();
-    const tempWebcam2 = useRef();
 
     const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
     var peerConnection = new RTCPeerConnection(config);
@@ -78,25 +76,22 @@ const Cam = (props) => {
         }
     };
 
-    const webcamEmitPic = () => {
-        socketCtx.socket.on("data", function (payload) {
-            console.log("Data payload", payload)
-        });
-    }
-
-    const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
-    }
-
-    tempWebcam.current = webcamEmitPic;
-    tempWebcam2.current = webcamStartStreaming;
-
     useEffect(() => {
-        tempWebcam.current();
+        const data = (payload) => {
+            console.log("Data payload", payload)
+        }
+
+        socketCtx.socket.on("data", data);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('data', data)
+        }
+
     }, [socketCtx.socket]);
 
     useEffect(() => {
-        tempWebcam2.current();
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
+
     }, []);
 
     return (
@@ -117,7 +112,6 @@ const Cam = (props) => {
                 newStatus={handleChangeFooter}
                 footer={footer}
             />
-
         </Window>
     )
 }

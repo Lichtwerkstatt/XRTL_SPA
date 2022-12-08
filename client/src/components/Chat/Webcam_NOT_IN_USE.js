@@ -3,22 +3,14 @@ import React, { useRef, useEffect, useState } from "react";
 import { useAppContext } from "../../services/AppContext";
 import styles from "./Webcam.module.css";
 var Peer = require('simple-peer');
-//var roomID = '';
 
 const Video = (props) => {
     const ref = useRef();
-    const tempRef = useRef();
 
-    const peerStream = () => {
+    useEffect(() => {
         props.peer.on("stream", stream => {
             ref.current.srcObject = stream;
         })
-    }
-
-    tempRef.current = peerStream;
-
-    useEffect(() => {
-        tempRef.current();
     }, []);
 
     return (
@@ -32,21 +24,18 @@ const Webcam = () => {
     var [peers, setPeers] = useState([]);
     const userVideo = useRef();
     const peersRef = useRef([]);
-    const tempWebcam = useRef();
 
-    const webcamEmit = () => {
+
+    useEffect(() => {
         const videoConstraints = {
             height: window.innerHeight,
             width: window.innerWidth
         };
 
-
         navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
             userVideo.current.srcObject = stream;
 
-            socketCtx.socket.emit('client join room'); // new client will be added to the userList
-
-            socketCtx.socket.on('all users', users => {
+            const user = (users) => {
                 const peers = [];
                 users.forEach(userID => {
                     const peer = createPeer(userID, socketCtx.socket.id, stream);       // creates a peer for each client that is already in the room
@@ -60,9 +49,9 @@ const Webcam = () => {
                     });
                 })
                 setPeers(peers);
-            })
+            }
 
-            socketCtx.socket.on("user joined", payload => {
+            const joined = (payload) => {
                 const peer = addPeer(payload.signal, payload.callerID, stream); //creates a new peer & adds it to the list for a freshly joining client
                 peersRef.current.push({
                     peerID: payload.callerID,
@@ -75,24 +64,43 @@ const Webcam = () => {
                 }
 
                 setPeers(users => [...users, peerObj]);
-            });
+            }
 
-            socketCtx.socket.on("receiving returned signal", payload => {
+            const returned = (payload) => {
                 const item = peersRef.current.find(p => p.peerID === payload.id);
                 item.peer.signal(payload.signal);
-            });
+            }
 
-            socketCtx.socket.on('user left', (id) => {
-                console.log("hier")
+            const userLeft = (id) => {
                 const peerObj = peersRef.current.find(p => p.peerID === id)
 
                 if (peerObj) {
                     peerObj.peer.destroy();
                 }
+
                 const peers = peersRef.current.filter(p => p.peerID !== id);
                 peersRef.current = peers;
                 setPeers(peers)
-            })
+            }
+
+            socketCtx.socket.emit('client join room'); // new client will be added to the userList
+
+            socketCtx.socket.on('all users', user)
+
+            socketCtx.socket.on("user joined", joined);
+
+            socketCtx.socket.on("receiving returned signal", returned);
+
+            socketCtx.socket.on('user left', userLeft);
+
+            return () => {
+                socketCtx.socket.removeAllListeners('all users', user)
+                socketCtx.socket.removeAllListeners('user joined', joined)
+                socketCtx.socket.removeAllListeners('receiving returned signal', returned)
+                socketCtx.socket.removeAllListeners('user left', userLeft)
+
+            }
+
         })
 
         function createPeer(userToSignal, callerID, stream) {       //Erstellen von peer für alle bisher Clienten die sich bisher im Raum schon befinden
@@ -121,12 +129,10 @@ const Webcam = () => {
             peer.signal(incomingSignal);
             return peer;
         }
-    }
+        return () => {
 
-    tempWebcam.current = webcamEmit;
+        }
 
-    useEffect(() => {
-        tempWebcam.current();
     }, [appCtx.showWebcam])
 
 
