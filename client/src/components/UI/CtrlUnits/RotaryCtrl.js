@@ -1,93 +1,86 @@
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from "react-icons/md";
 import { useSocketContext } from "../../../services/SocketContext"
 import { useAppContext } from "../../../services/AppContext";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import styles from "../CSS/RotaryCtrl.module.css";
 
 const RotaryCtrl = (props) => {
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [rotation, setRotation] = useState(0);
-  var [mounted, setMounted] = useState(false);
+
   var direction;
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
-  const tempRotaryCtrl = useRef();
+
 
   const button1 = props.component + props.control + "1"
   const button2 = props.component + props.control + "2"
   // socketCtx.socket.removeAllListeners('getFooter')
   //console.log(socketCtx.socket)
-  
-  const rotaryCtrlEmit = () => {
-    if (!mounted) {
-      const ja =(payload)  => {
-        
-      }
-      mounted = true;
-      setMounted(true);
-
-      if (props.control !== 'bottom') {
-        socketCtx.socket.emit("command", {
-          userId: socketCtx.username,
-          componentId: props.component,
-          command: "getStatus"
-        });
-      }
-      socketCtx.socket.emit('getFooter', props.component);
-
-      socketCtx.socket.on('getFooter', payload => {
-        if (payload.componentId === props.component && props.control !== 'bottom' ) {
-          setOnlineStatus(payload.online)
-          props.newStatus(String(payload.status))
-        }
-      socketCtx.socket.off('getFooter')
-      });
-
-      socketCtx.socket.on('footer', payload => {
-        if (payload.componentId === props.component) {
-          if (props.control !== 'bottom') {
-            console.log('hier')
-            props.newStatus(String(payload.status))
-          }
-        }
-      });
-      
-      socketCtx.socket.on("status", payload => {
-        if (payload.componentId === props.component) {
-          if (props.control === "top") {
-            setRotation(payload.status.top.absolute)
-          } else if (props.control === "bottom") {
-            setRotation(payload.status.bottom.absolute)
-          } else {
-            setRotation(payload.status.linear.absolute)
-          }
-          if (!payload.status.busy) {
-            document.getElementById(button1).disabled = false;
-            document.getElementById(button2).disabled = false;
-          }
-        }
-      });
-      
-      console.log(socketCtx.socket.listeners('getFooter'))
-      socketCtx.socket.offAnyOutgoing('getFooter')
-      console.log(socketCtx.socket.listeners('getFooter'))
-      mounted = false;
-      setMounted(false);
-    }
-    
-    return () => {
-      mounted = false;
-      setMounted(false);
-      console.log('daaaaaaaaa')
-
-    }
-  }
-  tempRotaryCtrl.current = rotaryCtrlEmit;
 
   useEffect(() => {
-    tempRotaryCtrl.current();
+
+    const status = (payload) => {
+      if (payload.componentId === props.component) {
+        if (props.control === "top") {
+          setRotation(payload.status.top.absolute)
+        } else if (props.control === "bottom") {
+          setRotation(payload.status.bottom.absolute)
+        } else {
+          setRotation(payload.status.linear.absolute)
+        }
+        if (!payload.status.busy) {
+          document.getElementById(button1).disabled = false;
+          document.getElementById(button2).disabled = false;
+        }
+      }
+    }
+
+    const footer = (payload) => {
+      if (payload.componentId === props.component) {
+        if (props.control !== 'bottom') {
+          console.log('hier')
+          props.newStatus(String(payload.status))
+        }
+      }
+    }
+
+    const getFooter = (payload) => {
+      if (payload.componentId === props.component && props.control !== 'bottom') {
+        setOnlineStatus(payload.online)
+        props.newStatus(String(payload.status))
+      }
+    }
+
+    if (props.control !== 'bottom') {
+      socketCtx.socket.emit("command", {
+        userId: socketCtx.username,
+        componentId: props.component,
+        command: "getStatus"
+      });
+    }
+    socketCtx.socket.emit('getFooter', props.component);
+
+    socketCtx.socket.on('getFooter', getFooter);
+
+    socketCtx.socket.on('footer', footer);
+
+    socketCtx.socket.on("status", status);
+
+    console.log(socketCtx.socket.listeners('getFooter'))
+    socketCtx.socket.offAnyOutgoing('getFooter')
+    console.log(socketCtx.socket.listeners('getFooter'))
+
+    return () => {
+      socketCtx.socket.removeAllListeners('status', status)
+      socketCtx.socket.removeAllListeners('footer', footer)
+      socketCtx.socket.removeAllListeners('getFooter', getFooter)
+      console.log("ach", socketCtx.socket.listeners('getFooter'))
+    }
+    //Comment needed to prevent a warning
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket]);
 
   const rotCW_Handler = name => (event) => {

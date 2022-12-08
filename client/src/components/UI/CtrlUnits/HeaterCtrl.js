@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSocketContext } from "../../../services/SocketContext";
 import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
@@ -12,10 +12,8 @@ import styles from "../CSS/HeaterCtrl.module.css";
 const HeaterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [setting, setSettings] = useState(true);
-    var [mounted, setMounted] = useState(false);
     const [temp, setTemp] = useState('-°C')
     const socketCtx = useSocketContext();
-    const settingCtrl = useRef();
 
     const theme = createTheme({
         palette: {
@@ -32,58 +30,55 @@ const HeaterCtrl = (props) => {
     const hiddenSetting = () => {
         setSettings(!setting);
     }
-    const heaterEmit = () => {
-        if (!mounted) {
-            mounted = true
-            setMounted(true)
-
-            socketCtx.socket.emit("command", {
-                userId: socketCtx.username,
-                componentId: props.component,
-                command: "getStatus"
-            })
-            socketCtx.socket.on('footer', payload => {
-                if (payload.componentId === props.component) {
-                    props.newStatus(String(payload.status))
-                }
-            })
-
-            socketCtx.socket.emit('getFooter', props.component)
-
-            socketCtx.socket.on('getFooter', payload => {
-                if (payload.componentId === props.component) {
-                    setOnlineStatus(true)//(payload.online)
-                    props.newStatus(String(payload.status))
-                }
-                socketCtx.socket.off('getFooter')
-            });
-
-            socketCtx.socket.on("data", (payload) => {
-                var string = payload.data.data.data;
-                string = String(string.toFixed(2)) + " °C"
-                setTemp(string);
-            });
-
-            socketCtx.socket.on("status", payload => {
-                if (payload.componentId === props.component) {
-                    console.log("Status of settings:   ", payload)
-                }
-            });
-
-
-
-            mounted = false;
-            setMounted(false);
-        }
-        return () => {
-            mounted = false;
-            setMounted(false);
-        }
-    }
-    settingCtrl.current = heaterEmit;
-
     useEffect(() => {
-        settingCtrl.current()
+        const status = (payload) => {
+            if (payload.componentId === props.component) {
+                console.log("Status of settings:   ", payload)
+            }
+        }
+
+        const footer = (payload) => {
+            if (payload.componentId === props.component) {
+                props.newStatus(String(payload.status))
+            }
+        }
+
+        const getFooter = (payload) => {
+            if (payload.componentId === props.component) {
+                setOnlineStatus(true)//(payload.online)
+                props.newStatus(String(payload.status))
+            }
+        }
+
+        const data = (payload) => {
+            var string = payload.data.data.data;
+            string = String(string.toFixed(2)) + " °C"
+            setTemp(string);
+        }
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            componentId: props.component,
+            command: "getStatus"
+        })
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on("status", status);
+
+        socketCtx.socket.on('footer', footer)
+
+        socketCtx.socket.on('getFooter', getFooter);
+
+        socketCtx.socket.on("data", data);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+            socketCtx.socket.removeAllListeners('footer', footer)
+            socketCtx.socket.removeAllListeners('getFooter', getFooter)
+            socketCtx.socket.removeAllListeners('data', data)
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketCtx.socket]);
 
     if (setting) {
@@ -151,5 +146,4 @@ const HeaterCtrl = (props) => {
         )
     }
 }
-
 export default HeaterCtrl;
