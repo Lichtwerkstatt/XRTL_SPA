@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef, memo } from "react"
+import { useEffect, useState, memo } from "react"
 import styles from "./CSS/Chat.module.css"
 import { ImBubble } from "react-icons/im"
 import { MdSend } from "react-icons/md"
 import { useSocketContext } from "../../services/SocketContext";
-import {isEqual} from 'lodash';
+import { isEqual } from 'lodash';
 
 
 const Chat = (props) => {
@@ -12,18 +12,17 @@ const Chat = (props) => {
   const [animation, setAnimation] = useState("")
   const [chat, setChat] = useState([]);
   const socketCtx = useSocketContext();
-  const tempChat = useRef();
-
-  const ChatEmit = () => {
-    socketCtx.socket.on("message", (payload) => {
-      setChat([...chat, payload])
-    })
-  }
-
-  tempChat.current = ChatEmit;
 
   useEffect(() => {
-    tempChat.current();
+    const message = (payload) => {
+      setChat([...chat, payload])
+    }
+
+    socketCtx.socket.on("message", message)
+
+    return () => {
+      socketCtx.socket.removeAllListeners('message', message)
+    }
   }, [socketCtx, chat])
 
   const sendMessage = (event) => {
