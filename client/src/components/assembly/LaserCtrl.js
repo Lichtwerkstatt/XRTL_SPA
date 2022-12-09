@@ -10,30 +10,19 @@ const LaserCtrl = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
-  var [mounted, setMounted] = useState(false);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
 
   const handleCloseWindow = () => {
-    console.log("??")
     appCtx.toggleSelectedComp(props.id)
-
   }
 
   const handleChangeFooter = (newFooter) => {
-    if (!mounted) {
-      mounted = true
-      setMounted(true)
-      var time = new Date();
-      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-      setFooter(newFooter);
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    };
+    var time = new Date();
+    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+    setFooter(newFooter);
   };
 
   const handleReset = () => {

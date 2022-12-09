@@ -10,7 +10,6 @@ const InfoWindow = (props) => {
     const [footer, setFooter] = useState("Initializing...");
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
-    var [mounted, setMounted] = useState(false);
 
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
@@ -21,17 +20,9 @@ const InfoWindow = (props) => {
     }
 
     const handleChangeFooter = (newFooter) => {
-        if (!mounted) {
-            mounted = true
-            setMounted(true)
-            var time = new Date();
-            setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-            setFooter(newFooter);
-        }
-        return () => {
-            mounted = false;
-            setMounted(false);
-        };
+        var time = new Date();
+        setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+        setFooter(newFooter);
     };
 
     const handleReset = () => {
@@ -83,7 +74,6 @@ const InfoWindow = (props) => {
             onReset={handleReset}
             onInfo={handleInfo}
             newStatus={handleChangeFooter}
-
         >
             <ViewCam
                 title="Cam_1"

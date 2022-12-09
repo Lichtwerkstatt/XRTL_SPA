@@ -10,7 +10,6 @@ const BeamSplitter = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
-  var [mounted, setMounted] = useState(false);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -19,7 +18,7 @@ const BeamSplitter = (props) => {
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
   }
-  
+
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
@@ -57,17 +56,9 @@ const BeamSplitter = (props) => {
   }
 
   const handleChangeFooter = (newFooter) => {
-    if (!mounted) {
-      mounted = true
-      setMounted(true)
-      var time = new Date();
-      setFooter(newFooter);
-      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    var time = new Date();
+    setFooter(newFooter);
+    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
   };
 
   return (

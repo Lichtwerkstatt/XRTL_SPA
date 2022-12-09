@@ -11,7 +11,6 @@ const Heater = (props) => {
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
-    var [mounted, setMounted] = useState(false);
 
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
@@ -59,17 +58,9 @@ const Heater = (props) => {
     }
 
     const handleChangeFooter = (newFooter) => {
-        if (!mounted) {
-            mounted = true
-            setMounted(true)
             var time = new Date();
             setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
             setFooter(newFooter);
-        }
-        return () => {
-            mounted = false;
-            setMounted(false);
-        }
     };
 
     useEffect(() => {
