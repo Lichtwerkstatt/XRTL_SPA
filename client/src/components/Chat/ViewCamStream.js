@@ -3,11 +3,10 @@ import { useEffect } from 'react';
 
 const ViewCam = (props) => {
     const socketCtx = useSocketContext();
-    var peerConnection
-    //notwendig?
-    //  socketCtx.socket.emit('viewer', props.component)
-
+        
     useEffect(() => {
+        socketCtx.socket.emit('viewer', props.component)
+        var peerConnection;
         const offer = (payload) => {
             peerConnection = props.peer;
 
