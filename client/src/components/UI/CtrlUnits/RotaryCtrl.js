@@ -43,7 +43,7 @@ const RotaryCtrl = (props) => {
     }
 
     const getFooter = (payload) => {
-      if (payload.componentId === props.component && props.control !== 'bottom') {
+      if (payload.componentId === props.component && props.control) {
         setOnlineStatus(payload.online)
         props.newStatus(String(payload.status))
       }

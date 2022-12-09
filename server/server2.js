@@ -52,7 +52,7 @@ io.on('connection', socket => {
                 clearInterval(checkIfExpired);
                 socket.disconnect();
             }
-        }, 60000);
+        }, 300000);     //checks every 5 min
     };
 
     socket.on('GUI', () => {
