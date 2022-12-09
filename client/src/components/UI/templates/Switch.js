@@ -10,8 +10,8 @@ const SwiitchCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            if (payload.component === props.component) {
-                setSwitchValue(payload.status[props.control]);
+            if (payload.componentId === props.component) {
+               // setSwitchValue(payload.status.switch.isOn);
             }
         }
 

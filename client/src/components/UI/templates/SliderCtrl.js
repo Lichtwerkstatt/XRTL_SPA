@@ -4,8 +4,8 @@ import { useAppContext } from "../../../services/AppContext";
 import { useState, useEffect } from "react";
 
 const SliderCtrl = (props) => {
-  const [sliderPos, setSliderPos] = useState(props.sliderPos);
-
+  const [sliderPos, setSliderPos] = useState(props.value);
+console.log(props)
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
@@ -18,7 +18,7 @@ const SliderCtrl = (props) => {
   useEffect(() => {
     const status = (payload) => {
       if (payload.component === props.component) {
-        setSliderPos(payload.status[props.control]);
+      setSliderPos(payload.status[props.control]);
       }
     }
 
@@ -32,6 +32,8 @@ const SliderCtrl = (props) => {
   }, [socketCtx.socket])
 
   const handleSettingChanges = (event, newValue) => {
+setSliderPos(newValue)
+
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
