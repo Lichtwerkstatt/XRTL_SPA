@@ -1,18 +1,15 @@
-import { useSocketContext } from "../../../services/SocketContext";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LeftRightCtrl from "../templates/LeftRightCtrl";
-import styles from "../CSS/Settings.module.css"
-import UpDownCtrl from "../templates/UpDownCtrl"
-import Slider from "../templates/SliderCtrl";
+import { useSocketContext } from "../../../services/SocketContext";
 import { useState, useEffect } from "react";
-import Switch from "../templates/Switch"
-import Select from "../templates/Select";
 import Box from '@mui/material/Box';
+import Slider from "../templates/SliderCtrl";
 
-const Settings = (props) => {
+
+const BeamSplitterCtrl = (props) => {
+    const marks = [{ value: 0, label: 'None', }, { value: 1, label: 'Glas', }, { value: 2, label: 'Laser', },];
     const [onlineStatus, setOnlineStatus] = useState(true);
     const socketCtx = useSocketContext();
-
+   
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -40,7 +37,7 @@ const Settings = (props) => {
 
         const getFooter = (payload) => {
             if (payload.componentId === props.component) {
-                setOnlineStatus(true)
+                setOnlineStatus(props.online)
                 props.newStatus(String(payload.status))
             }
         }
@@ -65,23 +62,15 @@ const Settings = (props) => {
             socketCtx.socket.removeAllListeners('getFooter', getFooter)
         }
         //Comment needed to prevent a warning
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps      
     }, [socketCtx.socket]);
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={styles.UpDown}>
-                <UpDownCtrl component={props.component} online={onlineStatus} />
-            </div>
-            <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} online={onlineStatus} />
-            </div>
-            <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
-            <Switch component={props.component} command="gray" start='Color' end='Grey' online={true} option="val" />
-            <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" />
-            <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" />
+            <Box sx={{ mx: 1 }}>
+                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="pos" />
+            </Box>
         </ThemeProvider>
     )
 }
-export default Settings
+export default BeamSplitterCtrl

@@ -1,4 +1,4 @@
-import ViewCamStream1 from "../../assembly/ViewCam";
+//import ViewCamStream1 from "../../assembly/ViewCam";
 import LaserCtrl from "../../assembly/LaserCtrl";
 import Heater from "../../assembly/Heater";
 import KM100 from "../../assembly/KM100";
@@ -92,7 +92,7 @@ const MichelsonInterferometer = (props) => {
       )}
 
       {/* Cam 1 */}
-      {props.selected.has(componentList[6]) && (
+      {/*       {props.selected.has(componentList[6]) && (
         <ViewCamStream1
           title="Cam_1"
           id={componentList[6]}
@@ -100,13 +100,13 @@ const MichelsonInterferometer = (props) => {
           top={topHighMiddle}
           left={leftCam}
         />
-      )}
+      )} */}
 
 
-      {/* Glas */}
+      {/* Beam splitter */}
       {props.selected.has(componentList[7]) && (
         <BeamSplitter
-          title="Glas"
+          title="Beam splitter"
           id={componentList[7]}
           footer={footer}
           top={topMiddle}

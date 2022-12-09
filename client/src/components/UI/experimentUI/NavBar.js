@@ -9,8 +9,10 @@ import { BsCamera } from 'react-icons/bs'
 import styles from "../CSS/NavBar.module.css"
 import { BsBox } from "react-icons/bs"
 import { FaTags } from "react-icons/fa"
-const NavBar = () => {
+import { memo } from "react"
+import { isEqual } from 'lodash';
 
+const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
@@ -21,7 +23,7 @@ const NavBar = () => {
     let showTagsColor = ""
     if (appCtx.showTags) { showTagsColor = "white" }
     let cameraStatusColor = "";
-    if (appCtx.showWebcam) { cameraStatusColor = "white" }
+    if (appCtx.showCam) { cameraStatusColor = "white" }
     let showBeamColor = "";
     if (appCtx.showBeam) { showBeamColor = "white" }
     let showInfoWindowColor = "";
@@ -52,7 +54,7 @@ const NavBar = () => {
                 </Tooltip>
 
                 <Tooltip title="Webcam">
-                    <li onClick={appCtx.toggleShowWebcam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                    <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                 </Tooltip>
 
                 <Tooltip title="Information">
@@ -63,4 +65,4 @@ const NavBar = () => {
         </div>
     </div>
 }
-export default NavBar
+export default memo(NavBar, isEqual)

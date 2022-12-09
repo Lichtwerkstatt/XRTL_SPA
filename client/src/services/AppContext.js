@@ -16,6 +16,7 @@ export function AppContextProvider({ children }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showBeam, setShowBeam] = useState(false);
+  const [showCam, setShowCam] = useState(false);
 
 
   const toggleSelectedComp = compId => {
@@ -65,6 +66,10 @@ export function AppContextProvider({ children }) {
     setShowLogin(!showLogin);
   }
 
+  const toggleCam = () => {
+    setShowCam(!showCam);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -87,7 +92,9 @@ export function AppContextProvider({ children }) {
         setShowLogin,
         showInfoWindow,
         toggleShowInfoWindow,
-        toggleLogin
+        toggleLogin,
+        toggleCam,
+        showCam
       }}
     >
       {children}

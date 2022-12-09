@@ -28,11 +28,11 @@ export function SocketContextProvider({ children }) {
       setConnected(false)
       appCtx.addLog("Server : Client disconnect.")
     })
-    socket.on('status', payload => {
+/*     socket.on('status', payload => {
       if (payload.status.busy) { appCtx.addBusyComp(payload.componentId) } else {
         appCtx.removeBusyComp(payload.componentId)
       }
-    })
+    }) */
   })
 
   const setNewURL = (newURL, username) => {
@@ -54,7 +54,7 @@ export function SocketContextProvider({ children }) {
         sub: username,
         component: 'client',
         iat: Date.now(),
-        exp: Date.now() + 3600000,
+        exp: Date.now() + 1800000,
       }
 
       var token = jwt.sign(payload, "keysecret");

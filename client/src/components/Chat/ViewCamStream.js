@@ -1,24 +1,16 @@
 import { useSocketContext } from '../../services/SocketContext'
-import { useRef, useEffect } from 'react';
-
+import { useEffect } from 'react';
 
 const ViewCam = (props) => {
     const socketCtx = useSocketContext();
-    const tempSwitch = useRef();
     var peerConnection
+    //notwendig?
+    //  socketCtx.socket.emit('viewer', props.component)
 
-
-
-    socketCtx.socket.emit('viewer', props.component)
-
-
-    const view = () => {
-        document.getElementById('video').setAttribute('style', 'display: true')
-        socketCtx.socket.emit('viewer', props.component)
-
-        socketCtx.socket.on('offer', (payload) => {
+    useEffect(() => {
+        const offer = (payload) => {
             peerConnection = props.peer;
-            console.log(peerConnection)
+
             peerConnection
                 .setRemoteDescription(payload.data)
                 .then(() => peerConnection.createAnswer())
@@ -34,19 +26,28 @@ const ViewCam = (props) => {
                     socketCtx.socket.emit('candidate', { id: payload.id, data: event.candidate })
                 }
             }
-        })
+        }
 
-        socketCtx.socket.on('candidate', (payload) => {
+        const candidate = (payload) => {
             peerConnection
                 .addIceCandidate(new RTCIceCandidate(payload.data))
                 .catch(e => console.error(e))
-        })
-    }
+        }
 
-    tempSwitch.current = view
+        document.getElementById('video').setAttribute('style', 'display: true')
 
-    useEffect(() => {
-        tempSwitch.current();
+        socketCtx.socket.emit('viewer', props.component)
+
+        socketCtx.socket.on('offer', offer)
+
+        socketCtx.socket.on('candidate', candidate)
+
+        return () => {
+            socketCtx.socket.removeAllListeners('offer', offer)
+            socketCtx.socket.removeAllListeners('candidate', candidate)
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -55,5 +56,4 @@ const ViewCam = (props) => {
         </div>
     );
 };
-
 export default ViewCam;

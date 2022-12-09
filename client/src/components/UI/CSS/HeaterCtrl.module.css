@@ -14,9 +14,9 @@ div.Temp button{
 }
 div.Temp h2{
     position: absolute;
-    width: 120px;
+    width: 210px;
     height: 80px;
-    left:40%;
+    left:32%;
     top: 60px;
     background-color: #01bd7d;
     border-radius: 15px;
@@ -27,7 +27,6 @@ div.Temp h2{
 div.Heater{
     position: absolute;
     display: flex;
-
     top: 185px
 }
 div.Switch{

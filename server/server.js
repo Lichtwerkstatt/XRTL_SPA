@@ -99,10 +99,6 @@ io.on('connection', socket => {
         room(roomID);
     });
 
-    /*  socket.on('Webcam stream', payload => { */
-    socket.emit('Webcam stream')
-    //  });
-
     //Sends an array with all the users in the room except the client how sends this command
     socket.on("client join room", roomID => {
         if (users[roomID]) {

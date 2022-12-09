@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Window from "../UI/experimentUI/Window";
 import HeaterCtrl from "../UI/CtrlUnits/HeaterCtrl";
 import { useAppContext } from "../../services/AppContext";
@@ -11,17 +11,14 @@ const Heater = (props) => {
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
-    var [mounted, setMounted] = useState(false);
 
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
-    const tempWebcam = useRef();
-    const tempWebcam2 = useRef();
-    
+
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username });
+        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
     };
 
     const handleReset = () => {
@@ -61,38 +58,26 @@ const Heater = (props) => {
     }
 
     const handleChangeFooter = (newFooter) => {
-        if (!mounted) {
-            mounted = true
-            setMounted(true)
             var time = new Date();
             setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
             setFooter(newFooter);
-        }
-        return () => {
-            mounted = false;
-            setMounted(false);
-        }
     };
 
-    const webcamEmitPic = () => {
-        socketCtx.socket.on("data", function (payload) {
-            console.log("Data payload", payload)
-        });
-    }
-
-    const webcamStartStreaming = () => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username });
-    }
-
-    tempWebcam.current = webcamEmitPic;
-    tempWebcam2.current = webcamStartStreaming;
-
     useEffect(() => {
-        tempWebcam.current();
+
+        return () => {
+
+        }
     }, [socketCtx.socket]);
 
     useEffect(() => {
-        tempWebcam2.current();
+        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
+
+        return () => {
+
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

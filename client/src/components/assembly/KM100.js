@@ -11,7 +11,6 @@ const KM100 = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
-  var [mounted, setMounted] = useState(false);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -19,8 +18,9 @@ const KM100 = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
+    console.log(socketCtx.socket.listenersAny())
   }
-  
+
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
@@ -58,17 +58,9 @@ const KM100 = (props) => {
   }
 
   const handleChangeFooter = (newFooter) => {
-    if (!mounted) {
-      mounted = true
-      setMounted(true)
-      var time = new Date();
-      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-      setFooter(newFooter);
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    }
+    var time = new Date();
+    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+    setFooter(newFooter);
   };
 
   return (

@@ -5,9 +5,9 @@ import { createFilterOptions } from '@mui/material/Autocomplete';
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from "../../services/AppContext";
 import SendIcon from '@mui/icons-material/Send';
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import styles from "./Login.module.css"
-
+import {isEqual} from 'lodash';
 
 const Login = (props) => {
     var col = ['IndianRed', 'FireBrick', 'MediumVioletRed', 'HotPink', 'Coral', 'DarkOrange', 'Yellow',
@@ -151,4 +151,4 @@ const Login = (props) => {
         return (<div></div>)
     }
 }
-export default Login;
+export default memo(Login, isEqual);

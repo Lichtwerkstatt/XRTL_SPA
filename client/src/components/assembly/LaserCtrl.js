@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Window from "../UI/experimentUI/Window"
-import SwitchOnOff from "../UI/templates/SwitchOnOff";
+import SwitchOnOff from "../UI/CtrlUnits/LaserCtrl";
 import { useAppContext } from "../../services/AppContext";
 import { useSocketContext } from "../../services/SocketContext"
 import { usePopUpContext } from "../../services/PopUpContext"
@@ -10,7 +10,6 @@ const LaserCtrl = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
-  var [mounted, setMounted] = useState(false);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
@@ -21,17 +20,9 @@ const LaserCtrl = (props) => {
   }
 
   const handleChangeFooter = (newFooter) => {
-    if (!mounted) {
-      mounted = true
-      setMounted(true)
-      var time = new Date();
-      setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-      setFooter(newFooter);
-    }
-    return () => {
-      mounted = false;
-      setMounted(false);
-    };
+    var time = new Date();
+    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+    setFooter(newFooter);
   };
 
   const handleReset = () => {
@@ -40,7 +31,6 @@ const LaserCtrl = (props) => {
       componentId: props.id,
       command: "reset"
     })
-
   }
 
   const handleInfo = () => {

@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
-import Window from "../UI/Window";
-import CamCtrl from "../Chat/Webcam_NOT_IN_USE";
 import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../../services/PopUpContext"
-import { useSocketContext } from "../../services/SocketContext"
+import { usePopUpContext } from "../../services/PopUpContext";
+import { useSocketContext } from "../../services/SocketContext";
+import Window from "../UI/experimentUI/Window";
+import ViewCam from "../Chat/ViewCamStream";
+import { useState } from "react";
 
-
-const Cam = (props) => {
-    const [footer, setFooter] = useState(props.footer);
+const InfoWindow = (props) => {
     const [lastChange, setLastChange] = useState(['', '', '']);
+    const [footer, setFooter] = useState("Initializing...");
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
 
@@ -18,7 +17,12 @@ const Cam = (props) => {
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
+    }
+
+    const handleChangeFooter = (newFooter) => {
+        var time = new Date();
+        setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+        setFooter(newFooter);
     };
 
     const handleReset = () => {
@@ -57,49 +61,27 @@ const Cam = (props) => {
         popupCtx.toggleShowPopUp(alert, alertType);
     }
 
-    const handleChangeFooter = (newFooter) => {
-        var time = new Date();
-        setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-        setFooter(newFooter);
-    };
-
-    useEffect(() => {
-        const data = (payload) => {
-            console.log("Data payload", payload)
-        }
-
-        socketCtx.socket.on("data", data);
-
-        return () => {
-            socketCtx.socket.removeAllListeners('data', data)
-        }
-
-    }, [socketCtx.socket]);
-
-    useEffect(() => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
-
-    }, []);
-
     return (
         <Window
-            header={props.title + " (" + props.id + ")"}
-            top={props.top}
-            left={props.left}
-            height="340px"
-            width="623px"
+            header="Cam_1"
+            top="200"
+            left="250"
+            title="Cam_1"
+            id="Cam_1"
+            footer={footer}
+            width="600px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
-            footer={footer}
+            newStatus={handleChangeFooter}
         >
-            <CamCtrl
-                component={props.id}
-                newStatus={handleChangeFooter}
+            <ViewCam
+                title="Cam_1"
+                id="Cam_1"
                 footer={footer}
+                newStatus={handleChangeFooter}
             />
         </Window>
-    )
-}
-
-export default Cam;
+    );
+};
+export default InfoWindow;

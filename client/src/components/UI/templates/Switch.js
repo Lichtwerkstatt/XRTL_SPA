@@ -1,25 +1,27 @@
 import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const SwiitchCtrl = (props) => {
     const [switchValue, setSwitchValue] = useState(false);
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
-    const tempSlider = useRef();
 
-    const sliderEmit = () => {
-        socketCtx.socket.on("status", payload => {
+    useEffect(() => {
+        const status = (payload) => {
             if (payload.component === props.component) {
                 setSwitchValue(payload.status[props.control]);
             }
-        })
-    }
-    tempSlider.current = sliderEmit;
+        }
 
-    useEffect(() => {
-        tempSlider.current();
+        socketCtx.socket.on("status", status);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketCtx.socket])
 
     const handleSettingChanges = (event, newValue) => {
