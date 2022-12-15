@@ -97,13 +97,13 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='power' />
+                            <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' />
                         </div>
                     </Box>
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="stream" />
+                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="val" />
                     </Box>
                 </div>
             </ThemeProvider>
@@ -112,7 +112,7 @@ const HeaterCtrl = (props) => {
         return (
             <ThemeProvider theme={theme}>
                 <div className={styles.Temp}>
-                    <Typography variant="h2">{temp}</Typography>
+                    <Typography variant="h2" value ={temp}></Typography>
                     <IconButton onClick={hiddenSetting}  >
                         <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                     </IconButton>
@@ -127,7 +127,7 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='power' />
+                            <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' />
                         </div>
                         <div style={{ paddingLeft: 20 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
@@ -138,7 +138,6 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="stream" />
                         <Switch component={props.component} command="thermistor" start='Off' end='On' online={onlineStatus} option="val" />
                     </Box>
                 </div>

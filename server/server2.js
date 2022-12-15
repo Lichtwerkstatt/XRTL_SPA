@@ -201,8 +201,7 @@ io.on('connection', socket => {
                 command: {
                     controlId: data.controlId,
                     stream: false
-                }
-                
+                }    
             });
         }
         socket.leave(data.id);
