@@ -37,7 +37,7 @@ const BeamSplitterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.componentId === props.component) {
-                setOnlineStatus(props.online)
+                setOnlineStatus(!payload.online)
                 props.newStatus(String(payload.status))
             }
         }
@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="pos" />
+                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="binaryCtrl" />
             </Box>
         </ThemeProvider>
     )

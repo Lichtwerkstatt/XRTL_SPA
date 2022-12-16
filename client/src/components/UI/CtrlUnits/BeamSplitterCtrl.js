@@ -40,7 +40,7 @@ const BeamSplitterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.componentId === props.component) {
-                setOnlineStatus(props.online)
+                setOnlineStatus(!payload.online)
                 props.newStatus(String(payload.status))
             }
         }
@@ -71,7 +71,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Switch component={props.component} command="beamSplitter" start='Off' end='On' checked={switchStatus} online={onlineStatus} option="val" />
+                <Switch component={props.component} command="beamSplitter" start='Off' end='On' checked={switchStatus} online={onlineStatus} option="binaryCtrl" />
             </Box>
         </ThemeProvider>
     )
