@@ -1,11 +1,11 @@
 import { useSocketContext } from "../../../services/SocketContext";
 import { Box, Stack, Typography, Slider } from "@mui/material";
 import { useAppContext } from "../../../services/AppContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const SliderCtrl = (props) => {
-  const [sliderPos, setSliderPos] = useState(props.value);
-console.log(props)
+  const [sliderPos, setSliderPos] = useState(props.sliderValue);
+
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
@@ -15,25 +15,9 @@ console.log(props)
     { value: parseInt(props.max), label: props.max, },
   ]
 
-  useEffect(() => {
-    const status = (payload) => {
-      if (payload.component === props.component) {
-      setSliderPos(payload.status[props.control]);
-      }
-    }
-
-    socketCtx.socket.on("status", status);
-
-    return () => {
-      socketCtx.socket.removeAllListeners('status', status)
-    }
-    //Comment needed to prevent a warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socketCtx.socket])
-
   const handleSettingChanges = (event, newValue) => {
-setSliderPos(newValue)
-
+//setSliderPos(newValue)
+//console.log(newValue)
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
@@ -60,12 +44,12 @@ setSliderPos(newValue)
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
             id="brightnessSlider"
-            defaultValue={0}
+      
             valueLabelDisplay="auto"
             step={1}
             min={props.min}
             max={props.max}
-            value={sliderPos}
+            value={props.sliderValue}
             onChangeCommitted={handleSettingChanges}
             marks={props.text}
             disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
@@ -82,12 +66,12 @@ setSliderPos(newValue)
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
             id="brightnessSlider"
-            defaultValue={0}
+       
             valueLabelDisplay="auto"
             step={1}
             min={props.min}
             max={props.max}
-            value={sliderPos}
+            value={props.sliderValue}
             onChangeCommitted={handleSettingChanges}
             marks={marks}
             disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}

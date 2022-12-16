@@ -24,7 +24,7 @@ const SelectItem = (props) => {
             componentId: props.component
         })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
+        appCtx.addLog("User set selected " + props.component + " with " + selectValue)
     }
 
     if (props.title === 'Average time (ms)') {

@@ -6,8 +6,7 @@ import { Box } from '@mui/material';
 import Switch from '../templates/Switch';
 
 const LaserCtrl = (props) => {
-
-
+  const [switchValue, setSwitch] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const socketCtx = useSocketContext();
 
@@ -24,8 +23,11 @@ const LaserCtrl = (props) => {
   })
 
   useEffect(() => {
-
-
+    const status = (payload) => {
+      if (payload.componentId === props.component) {
+        setSwitch(payload.status.switch.isOn)
+      }
+    }
     const footer = (payload) => {
       if (payload.componentId === props.component) {
         props.newStatus(String(payload.status))
@@ -45,14 +47,14 @@ const LaserCtrl = (props) => {
     })
     socketCtx.socket.emit('getFooter', props.component)
 
-
+    socketCtx.socket.on("status", status);
 
     socketCtx.socket.on('footer', footer)
 
     socketCtx.socket.on('getFooter', getFooter);
 
     return () => {
-      
+      socketCtx.socket.removeAllListeners('status', status)
       socketCtx.socket.removeAllListeners('footer', footer)
       socketCtx.socket.removeAllListeners('getFooter', getFooter)
     }
@@ -65,7 +67,7 @@ const LaserCtrl = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' icon={document.getElementById("icon")} online={onlineStatus} option="val" />
+          <Switch component={props.component} command="switch" start='Off' end='On' icon={document.getElementById("icon")} online={onlineStatus} option="val" switchStatus={switchValue} />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

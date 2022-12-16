@@ -10,6 +10,8 @@ import { Box, createTheme, ThemeProvider, Button, IconButton, Typography } from 
 import styles from "../CSS/HeaterCtrl.module.css";
 
 const HeaterCtrl = (props) => {
+    const [powerSwitch, setPowerSwitch] = useState(false);
+    const [powerValue, setPowerValue] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [setting, setSettings] = useState(true);
     const [temp, setTemp] = useState('-°C')
@@ -33,7 +35,8 @@ const HeaterCtrl = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.componentId === props.component) {
-                console.log("Status of settings:   ", payload)
+                setPowerSwitch(payload.status.output.isOn)
+                setPowerValue(payload.status.output.pwm)
             }
         }
 
@@ -45,14 +48,14 @@ const HeaterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.componentId === props.component) {
-                setOnlineStatus(true)//(payload.online)
+                setOnlineStatus(payload.online)
                 props.newStatus(String(payload.status))
             }
         }
 
         const data = (payload) => {
             var string = payload.data.data.data;
-            string = String(string.toFixed(2)) + " °C"
+            try{string = String(string.toFixed(2)) + " °C"} catch(e){string='-°C'}
             setTemp(string);
         }
 
@@ -85,7 +88,7 @@ const HeaterCtrl = (props) => {
         return (
             <ThemeProvider theme={theme}>
                 <div className={styles.Temp}>
-                    <Typography variant="h2">{temp}</Typography>
+                    <Typography variant="h2" value={temp}></Typography>
                     <IconButton onClick={hiddenSetting}  >
                         <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                     </IconButton>
@@ -97,13 +100,13 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' />
+                            <Slider title="PowerSwitch" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' sliderValue ={powerValue}/>
                         </div>
                     </Box>
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="val" />
+                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="val" switchStatus={powerSwitch}/>
                     </Box>
                 </div>
             </ThemeProvider>
@@ -127,7 +130,7 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="Power" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' />
+                            <Slider title="PowerSwitch" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' />
                         </div>
                         <div style={{ paddingLeft: 20 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
@@ -138,7 +141,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} command="thermistor" start='Off' end='On' online={onlineStatus} option="val" />
+                        <Switch component={props.component} command="thermistor" start='Off' end='On' online={onlineStatus} option="val" switchStatus={powerSwitch}/>
                     </Box>
                 </div>
             </ThemeProvider>

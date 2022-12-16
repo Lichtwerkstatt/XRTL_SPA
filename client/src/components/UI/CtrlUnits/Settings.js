@@ -10,6 +10,9 @@ import Select from "../templates/Select";
 import Box from '@mui/material/Box';
 
 const Settings = (props) => {
+    const [switchValue, setSwitch] = useState(false);
+    const [contrast, setContrast] = useState(0);
+    const [brightness, setBrightness] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
     const socketCtx = useSocketContext();
 
@@ -28,6 +31,9 @@ const Settings = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.componentId === props.component) {
+                setSwitch(payload.status.ESPcam.gray)
+                setBrightness(payload.status.ESPcam.brightness)
+                setContrast(payload.status.ESPcam.contrast)
                 console.log("Status of settings:   ", payload)
             }
         }
@@ -78,9 +84,9 @@ const Settings = (props) => {
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
-            <Switch component={props.component} command="gray" start='Color' end='Grey' online={true} option="val" />
-            <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" />
-            <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" />
+            <Switch component={props.component} command="gray" start='Color' end='Gray' online={true} option="val" switchStatus={switchValue}/>
+            <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" sliderValue ={contrast}/>
+            <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" sliderValue={brightness}/>
         </ThemeProvider>
     )
 }

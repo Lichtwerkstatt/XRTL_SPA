@@ -1,28 +1,16 @@
 import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const SwiitchCtrl = (props) => {
     const [switchValue, setSwitchValue] = useState(false);
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
-
-    useEffect(() => {
-        const status = (payload) => {
-            if (payload.componentId === props.component) {
-               // setSwitchValue(payload.status.switch.isOn);
-            }
-        }
-
-        socketCtx.socket.on("status", status);
-
-        return () => {
-            socketCtx.socket.removeAllListeners('status', status)
-        }
-        //Comment needed to prevent a warning
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [socketCtx.socket])
+    
+    try {
+        props.icon.style.color = (props.switchStatus !== true) ? 'grey' : 'white';
+    } catch (error) { }
 
     const handleSettingChanges = (event, newValue) => {
         setSwitchValue(newValue);
@@ -43,7 +31,7 @@ const SwiitchCtrl = (props) => {
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
 
         try {
-            props.icon.style.color = (switchValue === true) ? 'grey' : 'white';
+            props.icon.style.color = (props.switchStatus !== true) ? 'grey' : 'white';
         } catch (error) { }
     }
 
@@ -52,7 +40,7 @@ const SwiitchCtrl = (props) => {
             <FormGroup>
                 <Stack direction="row" spacing={1} alignItems="center">
                     <Typography>{props.start}</Typography>
-                    <Switch checked={switchValue}
+                    <Switch checked={props.switchStatus}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }}
                         disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} />

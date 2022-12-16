@@ -19,6 +19,12 @@ const RotaryCtrl = (props) => {
   useEffect(() => {
     const status = (payload) => {
       if (payload.componentId === props.component) {
+        if (payload.status.busy) {
+          appCtx.addBusyComp(payload.componentId)
+        } else {
+          appCtx.removeBusyComp(payload.componentId)
+        }
+
         if (props.control === "top") {
           setRotation(payload.status.top.absolute)
         } else if (props.control === "bottom") {
@@ -30,6 +36,7 @@ const RotaryCtrl = (props) => {
           document.getElementById(button1).disabled = false;
           document.getElementById(button2).disabled = false;
         }
+
       }
     }
 
@@ -70,7 +77,7 @@ const RotaryCtrl = (props) => {
       socketCtx.socket.removeAllListeners('getFooter', getFooter)
     }
     //Comment needed to prevent a warning
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket]);
 
   const rotCW_Handler = name => (event) => {
