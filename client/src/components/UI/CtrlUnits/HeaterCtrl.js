@@ -56,7 +56,7 @@ const HeaterCtrl = (props) => {
         const data = (payload) => {
             if (payload.dataId === 'thermistor') {
                 var string = payload.data.data.data;
-                try { string = String(string.toFixed(2)) + " °C" } catch (e) { string = '-°C' }
+                try { string = string.toFixed(2) + " °C" } catch (e) { string = '-°C' }
                 setTemp(string);
             }
         }

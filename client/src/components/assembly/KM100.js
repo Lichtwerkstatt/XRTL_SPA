@@ -18,7 +18,6 @@ const KM100 = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
-    console.log(socketCtx.socket.listenersAny())
   }
 
   const handleReset = () => {

@@ -28,6 +28,11 @@ export function SocketContextProvider({ children }) {
       setConnected(false)
       appCtx.addLog("Server : Client disconnect.")
     })
+
+    socket.on('Auth', () => {
+      console.log(username)
+      socket.emit('newUserInfo', username)
+    })
   })
 
   const setNewURL = (newURL, username) => {

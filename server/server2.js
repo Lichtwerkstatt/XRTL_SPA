@@ -59,6 +59,10 @@ io.on('connection', socket => {
         GUIId = socket.id
     })
 
+    socket.on('newUserInfo', (payload) => {
+        socket.broadcast.emit('newUserInfo', payload)
+    })
+
     socket.on('newLogGUI', (payload) => {
         io.to(GUIId).emit("newLog", payload)
     });
@@ -201,7 +205,7 @@ io.on('connection', socket => {
                 command: {
                     controlId: data.controlId,
                     stream: false
-                }    
+                }
             });
         }
         socket.leave(data.id);
