@@ -46,6 +46,10 @@ export function SocketContextProvider({ children }) {
     })
   })
 
+  const helperEmit = (event, payload) => {
+    socket.emit(event, payload)
+  }
+
   const setNewURL = (newURL, username) => {
     socket.disconnect();
     manager = new Manager(newURL, { autoConnect: false });
@@ -84,7 +88,7 @@ export function SocketContextProvider({ children }) {
   }
 
   return (
-    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setNewFont, username, fontColor }}>
+    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setNewFont, username, fontColor, helperEmit }}>
       {children}
     </SocketContext.Provider>
   );

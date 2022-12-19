@@ -7,6 +7,8 @@ import { Suspense } from "react";
 const VirtualLayer = () => {
   const appCtx = useAppContext();
 
+
+
   if (appCtx.showVirtualLayer) {
     return (
       <Canvas
@@ -34,6 +36,7 @@ const VirtualLayer = () => {
       </Canvas>
     );
   } else {
+    // Hier kommt die Camera hin!
     return <></>;
   }
 };

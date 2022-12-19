@@ -17,7 +17,6 @@ export function AppContextProvider({ children }) {
   const [showBeam, setShowBeam] = useState(false);
   const [showCam, setShowCam] = useState(false);
 
-
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)))
