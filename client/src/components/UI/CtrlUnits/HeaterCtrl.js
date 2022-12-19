@@ -54,9 +54,11 @@ const HeaterCtrl = (props) => {
         }
 
         const data = (payload) => {
-            var string = payload.data.data.data;
-            try{string = String(string.toFixed(2)) + " °C"} catch(e){string='-°C'}
-            setTemp(string);
+            if (payload.dataId === 'thermistor') {
+                var string = payload.data.data.data;
+                try { string = String(string.toFixed(2)) + " °C" } catch (e) { string = '-°C' }
+                setTemp(string);
+            }
         }
 
         socketCtx.socket.emit("command", {
@@ -88,7 +90,7 @@ const HeaterCtrl = (props) => {
         return (
             <ThemeProvider theme={theme}>
                 <div className={styles.Temp}>
-                    <Typography variant="h2" value={temp}></Typography>
+                    <Typography id='temp' variant="h2" >{temp}</Typography>
                     <IconButton onClick={hiddenSetting}  >
                         <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                     </IconButton>
@@ -100,13 +102,13 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="PowerSwitch" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' sliderValue ={powerValue}/>
+                            <Slider title="PowerSwitch" component={props.component} command="output" min={0} max={255} online={onlineStatus} option='pwm' sliderValue={powerValue} />
                         </div>
                     </Box>
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="val" switchStatus={powerSwitch}/>
+                        <Switch component={props.component} command="output" start='Off' end='On' online={onlineStatus} option="val" switchStatus={powerSwitch} />
                     </Box>
                 </div>
             </ThemeProvider>
@@ -115,7 +117,7 @@ const HeaterCtrl = (props) => {
         return (
             <ThemeProvider theme={theme}>
                 <div className={styles.Temp}>
-                    <Typography variant="h2" value ={temp}></Typography>
+                    <Typography id='temp' variant="h2">{temp}</Typography>
                     <IconButton onClick={hiddenSetting}  >
                         <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                     </IconButton>
@@ -141,7 +143,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} command="thermistor" start='Off' end='On' online={onlineStatus} option="val" switchStatus={powerSwitch}/>
+                        <Switch component={props.component} command="thermistor" start='Off' end='On' online={onlineStatus} option="val" switchStatus={powerSwitch} />
                     </Box>
                 </div>
             </ThemeProvider>

@@ -16,7 +16,6 @@ const RotaryCtrl = (props) => {
   useEffect(() => {
     const status = (payload) => {
       if (payload.componentId === props.component) {
-        console.log(payload)
         if (props.control === "top") {
           setRotation(payload.status.top.absolute)
         } else if (props.control === "bottom") {
@@ -67,10 +66,6 @@ const RotaryCtrl = (props) => {
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket]);
-
-  const handleStatus = () => {
-    setOnlineStatus(!onlineStatus)
-  }
 
   const rotCW_Handler = name => (event) => {
     event.preventDefault();
