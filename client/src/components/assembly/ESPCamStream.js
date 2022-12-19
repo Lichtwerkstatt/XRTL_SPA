@@ -18,7 +18,7 @@ const ESPCamStream = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
-    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPCam' });
+    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPcam' });
   };
 
   const handleReset = () => {

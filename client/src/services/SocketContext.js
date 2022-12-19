@@ -19,19 +19,30 @@ export function SocketContextProvider({ children }) {
   const appCtx = useAppContext();
 
   useEffect(() => {
-    socket.on('connect', (e) => {
+    const Auth = () => {
+      socket.emit('newUserInfo', username)
+    }
+
+    const connect = (e) => {
       setConnected(true)
       appCtx.addLog("Server : Client connected to " + URL)
-    });
+    }
 
-    socket.on('disconnect', (e) => {
+    const disconnect = (e) => {
       setConnected(false)
       appCtx.addLog("Server : Client disconnect.")
-    })
+    }
 
-    socket.on('Auth', () => {
-      console.log(username)
-      socket.emit('newUserInfo', username)
+    socket.on('connect', connect);
+
+    socket.on('disconnect', disconnect)
+
+    socket.on('Auth', Auth)
+
+    return (() => {
+      socket.removeAllListeners('Auth', Auth)
+      socket.removeAllListeners('connect', connect)
+      socket.removeAllListeners('disconnect', disconnect)
     })
   })
 

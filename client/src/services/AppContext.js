@@ -21,7 +21,6 @@ export function AppContextProvider({ children }) {
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)))
-
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
     }
