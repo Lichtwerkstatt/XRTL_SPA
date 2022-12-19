@@ -23,8 +23,7 @@ export function PopUpContextProvider({ children }) {
     })
 
     socketCtx.socket.on('newUserInfo', (payload) => {
-        console.log("jdjdj")
-        toggleShowPopUp({ payload } + ' has joined the experiment!', 'info')
+        toggleShowPopUp(payload + ' has joined the experiment!', 'info')
     })
 
     const toggleShowPopUp = (newText, newType) => {
