@@ -13,18 +13,10 @@ const RotaryCtrl = (props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
-  const button1 = props.component + props.control + "1"
-  const button2 = props.component + props.control + "2"
-
   useEffect(() => {
     const status = (payload) => {
       if (payload.componentId === props.component) {
-        if (payload.status.busy) {
-          appCtx.addBusyComp(payload.componentId)
-        } else {
-          appCtx.removeBusyComp(payload.componentId)
-        }
-
+        console.log(payload)
         if (props.control === "top") {
           setRotation(payload.status.top.absolute)
         } else if (props.control === "bottom") {
@@ -32,10 +24,7 @@ const RotaryCtrl = (props) => {
         } else {
           setRotation(payload.status.linear.absolute)
         }
-        if (!payload.status.busy) {
-          document.getElementById(button1).disabled = false;
-          document.getElementById(button2).disabled = false;
-        }
+        (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true)
 
       }
     }
@@ -43,7 +32,6 @@ const RotaryCtrl = (props) => {
     const footer = (payload) => {
       if (payload.componentId === props.component) {
         if (props.control !== 'bottom') {
-          console.log('hier')
           props.newStatus(String(payload.status))
         }
       }
@@ -80,19 +68,17 @@ const RotaryCtrl = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket]);
 
+  const handleStatus = () => {
+    setOnlineStatus(!onlineStatus)
+  }
+
   const rotCW_Handler = name => (event) => {
     event.preventDefault();
     direction = 0;
 
-    if (name === "left") {
-      direction = -1 * Number(enteredRotation);
-    } else if (name === "right") {
-      direction = Number(enteredRotation);
-    }
-    if (direction !== 0) {
-      document.getElementById(button1).disabled = true;
-      document.getElementById(button2).disabled = true;
+    (name === "left") ? direction = -1 * Number(enteredRotation) : direction = Number(enteredRotation);
 
+    if (direction !== 0) {
       socketCtx.socket.emit("command", {
         userId: socketCtx.username,
         componentId: props.component,
@@ -126,10 +112,10 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button id={button1} onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && onlineStatus) ? false : true}  >
+      <button onClick={rotCW_Handler("left")} className={styles.CtrlLeft} disabled={(socketCtx.connected && onlineStatus) ? false : true}  >
         <MdOutlineRotateLeft size={28} />
       </button>
-      <button id={button2} onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && onlineStatus) ? false : true}>
+      <button onClick={rotCW_Handler("right")} className={styles.CtrlRight} disabled={(socketCtx.connected && onlineStatus) ? false : true}>
         <MdOutlineRotateRight size={28} />
       </button>
     </form>

@@ -40,11 +40,13 @@ const LaserCtrl = (props) => {
         props.newStatus(String(payload.status))
       }
     }
+
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
       command: "getStatus"
     })
+
     socketCtx.socket.emit('getFooter', props.component)
 
     socketCtx.socket.on("status", status);
