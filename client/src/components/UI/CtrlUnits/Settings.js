@@ -83,7 +83,7 @@ const Settings = (props) => {
                 <LeftRightCtrl component={props.component} online={onlineStatus} />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} online={onlineStatus} command="frame size" />
+            <Select title="Resolution" component={props.component} online={onlineStatus} command="ESPcam" option="frame size" />
             <Switch component={props.component} command="gray" start='Color' end='Gray' online={true} option="val" switchStatus={switchValue}/>
             <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" sliderValue ={contrast}/>
             <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" sliderValue={brightness}/>
