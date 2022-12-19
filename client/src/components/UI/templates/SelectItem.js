@@ -34,13 +34,13 @@ const SelectItem = (props) => {
                 onChange={handleSettingChanges}
                 disabled={(socketCtx.connected && props.online) ? false : true}
             >
-                <MenuItem value={'UXGA'}>UXGA (1600x1200)</MenuItem>
-                <MenuItem value={'SXGA'}>SXGA (1280x1024)</MenuItem>
-                <MenuItem value={'XGA'}>XGA (1024x768)</MenuItem>
-                <MenuItem value={'SVGA'}>SVGA (800x600)</MenuItem>
-                <MenuItem value={'VGA'}>VGA (640x480)</MenuItem>
-                <MenuItem value={'QVGA'}>QVGA (320x240)</MenuItem>
-                <MenuItem value={'CIF'}>CIF (352x288)</MenuItem>
+                <MenuItem value={13}>UXGA (1600x1200)</MenuItem>
+                <MenuItem value={12}>SXGA (1280x1024)</MenuItem>
+                <MenuItem value={10}>XGA (1024x768)</MenuItem>
+                <MenuItem value={9}>SVGA (800x600)</MenuItem>
+                <MenuItem value={8}>VGA (640x480)</MenuItem>
+                <MenuItem value={6}>CIF (400x296)</MenuItem>
+                <MenuItem value={5}>QVGA (320x240)</MenuItem>
             </Select>
         )
     }
