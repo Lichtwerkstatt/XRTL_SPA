@@ -16,8 +16,8 @@ const SliderCtrl = (props) => {
   ]
 
   const handleSettingChanges = (event, newValue) => {
-//setSliderPos(newValue)
-//console.log(newValue)
+    setSliderPos(newValue)
+    //console.log(newValue)
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       componentId: props.component,
@@ -44,7 +44,7 @@ const SliderCtrl = (props) => {
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
             id="brightnessSlider"
-      
+
             valueLabelDisplay="auto"
             step={1}
             min={props.min}
@@ -52,7 +52,7 @@ const SliderCtrl = (props) => {
             value={props.sliderValue}
             onChangeCommitted={handleSettingChanges}
             marks={props.text}
-            disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
+            disabled={(socketCtx.connected && props.online) ? false : true}
           />
         </Stack>
       </Box>
@@ -66,7 +66,7 @@ const SliderCtrl = (props) => {
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
             id="brightnessSlider"
-       
+
             valueLabelDisplay="auto"
             step={1}
             min={props.min}
@@ -74,12 +74,11 @@ const SliderCtrl = (props) => {
             value={props.sliderValue}
             onChangeCommitted={handleSettingChanges}
             marks={marks}
-            disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
+            disabled={(socketCtx.connected && props.online) ? false : true}
           />
         </Stack>
       </Box>
     )
   }
 }
-
 export default SliderCtrl;

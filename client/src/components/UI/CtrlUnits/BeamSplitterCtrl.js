@@ -7,11 +7,9 @@ import Switch from "../templates/Switch";
 
 const BeamSplitterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(true);
-    const [switchValue, setSwitchValue] =useState(0);
+    const [switchStatus, setSwitchStatus] = useState(false);
 
     const socketCtx = useSocketContext();
-
-    const [switchStatus, setSwitchStatus] = useState(false);
 
     const theme = createTheme({
         palette: {

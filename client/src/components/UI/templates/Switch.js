@@ -7,7 +7,7 @@ const SwiitchCtrl = (props) => {
     const [switchValue, setSwitchValue] = useState(false);
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
-    
+
     try {
         props.icon.style.color = (props.switchStatus !== true) ? 'grey' : 'white';
     } catch (error) { }
@@ -43,7 +43,7 @@ const SwiitchCtrl = (props) => {
                     <Switch checked={props.switchStatus}
                         onChange={handleSettingChanges}
                         inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true} />
+                        disabled={(socketCtx.connected && props.online) ? false : true} />
                     <Typography>{props.end}</Typography>
                 </Stack>
             </FormGroup>
