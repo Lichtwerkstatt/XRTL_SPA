@@ -10,7 +10,6 @@ export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
-  const [busyComps, setBusyComps] = useState(new Set());
   const [logs, setLogs] = useState([]);
   const [showTags, setShowTags] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
@@ -22,20 +21,9 @@ export function AppContextProvider({ children }) {
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)))
+
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
-    }
-  };
-
-  const addBusyComp = compId => {
-    if (!busyComps.has(compId)) {
-      setBusyComps(prev => new Set(prev.add(compId)))
-    }
-  };
-
-  const removeBusyComp = compId => {
-    if (busyComps.has(compId)) {
-      setBusyComps(prev => new Set([...prev].filter(x => x !== compId)))
     }
   };
 
@@ -46,6 +34,7 @@ export function AppContextProvider({ children }) {
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
+
   const toggleShowTags = () => {
     setShowTags(!showTags)
   }
@@ -81,9 +70,6 @@ export function AppContextProvider({ children }) {
         toggleSelectedComp,
         logs,
         addLog,
-        busyComps,
-        addBusyComp,
-        removeBusyComp,
         showTags,
         toggleShowTags,
         showBeam,
