@@ -23,7 +23,8 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 var broadcaster = [];
-
+var color = [0, 60, 180, 300];
+var colorList = [];
 
 io.use(function (socket, next) {
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -41,19 +42,27 @@ io.use(function (socket, next) {
 })
 
 io.on('connection', socket => {
-    console.log('Connection made successfully');
-    socket.emit("newLog", 'Connection made successfully');
-    io.to(socket.id).emit('Auth');
+    if (color.length != 0) {
+        console.log('Connection made successfully');
+        socket.emit("newLog", 'Connection made successfully');
+        io.to(socket.id).emit('Auth'); //hier Farbe senden?
 
-    if (socket.decoded.component === 'client') {
-        var checkIfExpired = setInterval(() => {
-            if (exp < Date.now()) {
-                console.log("Client token expired");
-                clearInterval(checkIfExpired);
-                socket.disconnect();
-            }
-        }, 300000);     //checks every 5 min
-    };
+        colorList.push(socket.id, color[0]);
+        color.splice(0, 1);
+
+        if (socket.decoded.component === 'client') {
+            var checkIfExpired = setInterval(() => {
+                if (exp < Date.now()) {
+                    console.log("Client token expired");
+                    clearInterval(checkIfExpired);
+                    socket.disconnect();
+                }
+            }, 300000);     //checks every 5 min
+        };
+    } else {
+        socket.disconnect()
+    }
+
 
     socket.on('GUI', () => {
         GUIId = socket.id
@@ -288,6 +297,11 @@ io.on('connection', socket => {
                 room = room.filter(id => id !== socket.id);
                 users[roomID] = room;
             }
+        }
+        if (colorList.includes(socket.id)) {
+            var indexColor = colorList.indexOf(socket.id) + 1;
+            color.push(colorList[indexColor]);
+            colorList.splice(colorList.indexOf(socket.id), 2);
         }
 
         if (userIDServerList.includes(socket.id)) {
