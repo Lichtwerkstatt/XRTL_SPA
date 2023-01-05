@@ -7,15 +7,16 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
-  const [autoRotate, setAutoRotate] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
-  const [logs, setLogs] = useState([]);
-  const [showTags, setShowTags] = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [autoRotate, setAutoRotate] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState(false);
+  const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
+  const [logs, setLogs] = useState([]);
+
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {

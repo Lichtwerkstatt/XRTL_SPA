@@ -83,12 +83,12 @@ const Webcam = () => {
 
         webcamEmit() //function call
 
-        return () => {
-            socketCtx.socket.removeAllListeners('viewer', viewer)
-            socketCtx.socket.removeAllListeners('answer', answer)
-            socketCtx.socket.removeAllListeners('candidate', candidate)
-            socketCtx.socket.removeAllListeners('disconnect peerConnection', disconnect)
-        }
+    /*     return () => {
+            socket.removeAllListeners('viewer', viewer)
+            socket.removeAllListeners('answer', answer)
+            socket.removeAllListeners('candidate', candidate)
+            socket.removeAllListeners('disconnect peerConnection', disconnect)
+        } */
     }, [])
 
     return (

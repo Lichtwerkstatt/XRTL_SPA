@@ -19,7 +19,8 @@ export function SocketContextProvider({ children }) {
   const appCtx = useAppContext();
 
   useEffect(() => {
-    const Auth = () => {
+    const Auth = (color) => {
+      setFontColor(color);
       socket.emit('newUserInfo', username)
     }
 

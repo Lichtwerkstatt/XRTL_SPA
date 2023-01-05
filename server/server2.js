@@ -42,24 +42,25 @@ io.use(function (socket, next) {
 })
 
 io.on('connection', socket => {
-    if (color.length != 0) {
+    if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Connection made successfully');
         socket.emit("newLog", 'Connection made successfully');
-        io.to(socket.id).emit('Auth'); //hier Farbe senden?
+        io.to(socket.id).emit('Auth', color[0]); //hier Farbe senden?
 
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
 
-        if (socket.decoded.component === 'client') {
-            var checkIfExpired = setInterval(() => {
-                if (exp < Date.now()) {
-                    console.log("Client token expired");
-                    clearInterval(checkIfExpired);
-                    socket.disconnect();
-                }
-            }, 300000);     //checks every 5 min
-        };
+        var checkIfExpired = setInterval(() => {
+            if (exp < Date.now()) {
+                console.log("Client token expired");
+                clearInterval(checkIfExpired);
+                socket.disconnect();
+            }
+        }, 300000);     //checks every 5 min
+
     } else {
+        io.to(socket.id).emit('AuthFailed');
+        console.log("To many user are connected right now!")
         socket.disconnect()
     }
 
