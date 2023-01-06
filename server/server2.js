@@ -63,8 +63,12 @@ io.on('connection', socket => {
         console.log("To many user are connected right now!")
         socket.disconnect()
     }
+    else if (socket.decoded.component === 'component') {
+        io.to(socket.id).emit('Auth');
+        console.log('Component connected successfully');
+    }
     else {
-        console.log('Componente connected successfully');
+        socket.disconnect();
     }
 
 
