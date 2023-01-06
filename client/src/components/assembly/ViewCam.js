@@ -91,11 +91,11 @@ const Cam = (props) => {
             top={props.top}
             left={props.left}
             height="480px"
-            width="620px"
+            width="640px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
-            footer={footer}
+
         >
             <ViewCamStream
                 peer={peerConnection}

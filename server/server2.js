@@ -153,7 +153,6 @@ io.on('connection', socket => {
     })
 
     socket.on('offer', (payload) => {
-        console.log("offer?")
         io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
     })
 
@@ -340,6 +339,6 @@ io.on('connection', socket => {
 })
 
 server.listen(7000, () => {
-    console.log('I am listening at port: 7000!');
+    console.log('Server is listening at port: 7000!');
 
 })
