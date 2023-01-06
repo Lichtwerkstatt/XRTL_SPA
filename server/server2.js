@@ -43,7 +43,7 @@ io.use(function (socket, next) {
 
 io.on('connection', socket => {
     if (color.length != 0 && socket.decoded.component === 'client') {
-        console.log('Connection made successfully');
+        console.log('Client connected successfully');
         socket.emit("newLog", 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]); //hier Farbe senden?
 
@@ -57,11 +57,14 @@ io.on('connection', socket => {
                 socket.disconnect();
             }
         }, 300000);     //checks every 5 min
-
-    } else {
+    }
+    else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');
         console.log("To many user are connected right now!")
         socket.disconnect()
+    }
+    else {
+        console.log('Componente connected successfully');
     }
 
 
