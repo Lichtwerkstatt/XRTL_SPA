@@ -3,31 +3,31 @@ import { useEffect } from 'react';
 
 const ViewCam = (props) => {
     const socketCtx = useSocketContext();
-        
+
     useEffect(() => {
         socketCtx.socket.emit('viewer', props.component)
         var peerConnection;
         const offer = (payload) => {
             peerConnection = props.peer;
-
             peerConnection
-                .setRemoteDescription(payload.data)
-                .then(() => peerConnection.createAnswer())
-                .then((sdp) => peerConnection.setLocalDescription(sdp))
-                .then(() => socketCtx.socket.emit('answer', { id: payload.id, data: peerConnection.localDescription }))
-
+            .setRemoteDescription(payload.data)
+            .then(() => peerConnection.createAnswer())
+            .then((sdp) => peerConnection.setLocalDescription(sdp))
+            .then(() => socketCtx.socket.emit('answer', { id: payload.id, data: peerConnection.localDescription }))
+            
             peerConnection.ontrack = (event) => {
                 document.getElementById('video').srcObject = event.streams[0];
             }
-
+            
             peerConnection.onicecandidate = (event) => {
                 if (event.candidate) {
                     socketCtx.socket.emit('candidate', { id: payload.id, data: event.candidate })
                 }
             }
         }
-
+        
         const candidate = (payload) => {
+            console.log("hier")
             peerConnection
                 .addIceCandidate(new RTCIceCandidate(payload.data))
                 .catch(e => console.error(e))

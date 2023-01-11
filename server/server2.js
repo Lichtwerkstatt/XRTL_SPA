@@ -23,7 +23,7 @@ var footerStatus = "Initializing ..."
 var online = false;
 var exp = ''
 var broadcaster = [];
-var color = [0, 60, 180, 300];
+var color = ['White', 'Yellow', 'Cyan', 'Magenta'];
 var colorList = [];
 
 io.use(function (socket, next) {

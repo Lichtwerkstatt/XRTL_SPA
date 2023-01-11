@@ -61,6 +61,7 @@ export function SocketContextProvider({ children }) {
   }
 
   const setNewFont = (newFont) => {
+    console.log(newFont)
     setFontColor(newFont);
   }
 

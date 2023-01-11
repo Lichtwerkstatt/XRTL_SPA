@@ -83,6 +83,8 @@ const Cam = (props) => {
     useEffect(() => {
         socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
 
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

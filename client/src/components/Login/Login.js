@@ -1,6 +1,5 @@
 import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from "../../services/AppContext";
@@ -10,11 +9,7 @@ import styles from "./Login.module.css"
 import { isEqual } from 'lodash';
 
 const Login = (props) => {
-    var col = ['IndianRed', 'FireBrick', 'MediumVioletRed', 'HotPink', 'Coral', 'DarkOrange', 'Yellow',
-        'Khaki', 'Plum', 'DarkOrchid', 'ForestGreen', 'DarkOliveGreen', 'LightGreen', 'Teal', 'Aqua', 'Blue', 'LightSkyBlue']
     const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://10.232.37.40:7000' }]
-
-    const [fontColor, setfontColor] = useState("white");
     const [connection, setConnection] = useState(null);
     const [username, setUsername] = useState("");
     const filter = createFilterOptions();
@@ -108,16 +103,6 @@ const Login = (props) => {
                                 error={username === ""}
                                 helperText={username === "" ? 'Please enter your username!' : ' '}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <IconButton onClick={(e) => {
-                                col = col[Math.floor(Math.random() * 16)]
-                                document.getElementById("colorIcon").style.color = col
-                                setfontColor(col);
-                                socketCtx.setNewFont(col);
-                            }} >
-                                <FormatColorTextIcon id="colorIcon" color={fontColor} fontSize="large" />
-                            </IconButton>
                         </Grid>
                     </Grid>
                     <Box sx={{ m: 8, width: 250 }} >
