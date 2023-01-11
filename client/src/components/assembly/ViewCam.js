@@ -16,7 +16,7 @@ const Cam = (props) => {
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
 
-    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+    const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] } //stun:stun.stunprotocol.org
     var peerConnection = new RTCPeerConnection(config);
 
     const handleCloseWindow = () => {
@@ -97,7 +97,6 @@ const Cam = (props) => {
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
-
         >
             <ViewCamStream
                 peer={peerConnection}
@@ -108,5 +107,4 @@ const Cam = (props) => {
         </Window>
     )
 }
-
 export default Cam;
