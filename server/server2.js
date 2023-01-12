@@ -199,7 +199,7 @@ io.on('connection', socket => {
                 stream: false
             });
         }
-        socket.leave(data.id);
+        socket.leave(payload.id);
     });
 
     //Error & diconnect handling
