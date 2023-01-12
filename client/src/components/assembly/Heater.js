@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
-import Window from "../UI/experimentUI/Window";
-import HeaterCtrl from "../UI/CtrlUnits/HeaterCtrl";
-import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../../services/PopUpContext"
-import { useSocketContext } from "../../services/SocketContext"
+import { useSocketContext } from '../../services/SocketContext';
+import { usePopUpContext } from '../../services/PopUpContext';
+import { useAppContext } from '../../services/AppContext';
+import HeaterCtrl from '../UI/CtrlUnits/HeaterCtrl';
+import Window from '../UI/experimentUI/Window';
+import { useState, useEffect } from 'react';
 
 
 const Heater = (props) => {
-    const [footer, setFooter] = useState(props.footer);
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
+    const [footer, setFooter] = useState(props.footer);
     var [alert, setAlert] = useState(false);
 
-    const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
+    const appCtx = useAppContext();
 
     const handleCloseWindow = () => {
         appCtx.toggleSelectedComp(props.id)
-        socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
+        socketCtx.socket.emit('leave stream room', { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
     };
 
     const handleReset = () => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
-            componentId: props.id,
-            command: "reset"
+            controlId: props.id,
+            command: 'reset'
         })
     }
 
@@ -58,9 +58,9 @@ const Heater = (props) => {
     }
 
     const handleChangeFooter = (newFooter) => {
-            var time = new Date();
-            setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-            setFooter(newFooter);
+        var time = new Date();
+        setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
+        setFooter(newFooter);
     };
 
     useEffect(() => {
@@ -71,7 +71,7 @@ const Heater = (props) => {
     }, [socketCtx.socket]);
 
     useEffect(() => {
-        socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
+        socketCtx.socket.emit('join stream room', { id: props.id, userId: socketCtx.username, controlId: 'thermistor' });
 
         return () => {
 
@@ -82,18 +82,18 @@ const Heater = (props) => {
 
     return (
         <Window
-            header={props.title + " (" + props.id + ")"}
+            header={props.title + ' (' + props.id + ')'}
             top={props.top}
             left={props.left}
-            height="340px"
-            width="623px"
+            height='340px'
+            width='623px'
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
             footer={footer}
         >
             <HeaterCtrl
-                component={props.id}
+                component={props.controlId}
                 newStatus={handleChangeFooter}
                 footer={footer}
             />
