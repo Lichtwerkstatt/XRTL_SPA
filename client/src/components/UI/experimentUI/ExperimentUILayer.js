@@ -3,7 +3,7 @@ import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
 import { useEffect, useState, Fragment } from "react";
-import InfoWindow from "../../windows/InfoWindow";
+import InfoWindow from "../../assembly/InfoWindow";
 import CamWindow from "../../windows/CamWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react"

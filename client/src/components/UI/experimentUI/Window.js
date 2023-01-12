@@ -1,25 +1,25 @@
-import { IoReloadOutline, IoInformationCircleOutline } from "react-icons/io5"
-import { CgCloseO } from "react-icons/cg"
-import styles from "../CSS/Window.module.css"
-import Draggable from "react-draggable"
-import { memo } from "react"
-import {isEqual} from 'lodash';
+import { IoReloadOutline, IoInformationCircleOutline } from 'react-icons/io5'
+import { CgCloseO } from 'react-icons/cg'
+import styles from '../CSS/Window.module.css'
+import Draggable from 'react-draggable'
+import { memo } from 'react'
+import { isEqual } from 'lodash';
 
 const Window = (props) => {
   return (
-    <Draggable handle=".draggableHandler">
+    <Draggable handle='.draggableHandler'>
       <div
         className={styles.window}
-        style={{ top: props.top + "px", left: props.left + "px" }}
+        style={{ top: props.top + 'px', left: props.left + 'px' }}
       >
         <div className={styles.windowHeader}>
           <span
-            className="draggableHandler" //FIXME draggable doesnt seem to work with inline JSX classes. 
+            className='draggableHandler' //FIXME draggable doesnt seem to work with inline JSX classes. 
             style={{
               display: 'block',
-              width: "calc(100% - 50px)",
-              cursor: "move",
-              float: "left"
+              width: 'calc(100% - 50px)',
+              cursor: 'move',
+              float: 'left'
             }}
           >
             {props.header}
@@ -32,7 +32,7 @@ const Window = (props) => {
           style={{
             height: props.height,
             width: props.width,
-            background: "url(" + props.background + ")",
+            background: 'url(' + props.background + ')',
           }}
         >
           {props.children}
@@ -44,7 +44,6 @@ const Window = (props) => {
           </div>
         )}
         <div className={styles.windowInfo}>
-
         </div>
       </div>
     </Draggable>
