@@ -1,20 +1,20 @@
-import { useState } from "react";
-import RotaryCtrl from "../UI/CtrlUnits/RotaryCtrl";
-import Window from "../UI/experimentUI/Window";
-import { useAppContext } from "../../services/AppContext";
-import SM1ZP_bg from "./media/linear_outline.png";
-import { useSocketContext } from "../../services/SocketContext";
-import { usePopUpContext } from "../../services/PopUpContext"
+import { useSocketContext } from '../../services/SocketContext';
+import { usePopUpContext } from '../../services/PopUpContext';
+import { useAppContext } from '../../services/AppContext';
+import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
+import SM1ZP_bg from './media/linear_outline.png';
+import Window from '../UI/experimentUI/Window';
+import { useState } from 'react';
 
 const SM1ZP = (props) => {
-  const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
+  const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
@@ -29,8 +29,8 @@ const SM1ZP = (props) => {
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      controlId: props.id,
+      command: 'reset'
     })
   }
 
@@ -65,11 +65,11 @@ const SM1ZP = (props) => {
 
   return (
     <Window
-      header={props.title + " (" + props.id + ")"}
+      header={props.title}
       top={props.top}
       left={props.left}
-      width="250px"
-      height="235px"
+      width='250px'
+      height='235px'
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
@@ -79,12 +79,12 @@ const SM1ZP = (props) => {
     >
       <RotaryCtrl
         rotation={props.rotation}
-        component={props.id}
+        component={props.controlId}
         newStatus={handleChangeFooter}
         footer={footer}
-        control="linear"
-        top="35"
-        left="160"
+        control='linear'
+        top='35'
+        left='160'
       />
     </Window>
   );
