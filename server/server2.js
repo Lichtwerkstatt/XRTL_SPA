@@ -184,10 +184,10 @@ io.on('connection', socket => {
 
     //Clients leaves the room after ending the stream
     socket.on('leave stream room', (payload) => {
-        socket.to(GUIId).emit('newLog', 'User has left the room ' + String(payload.id));
+        socket.to(GUIId).emit('newLog', 'User has left the room ' + String(payload.controlId));
         socket.emit('user left', socket.id);
         try {
-            var roomSize = io.sockets.adapter.rooms.get(payload.id).size - 1;
+            var roomSize = io.sockets.adapter.rooms.get(payload.controlId).size - 1;
         } catch (error) {
             var roomSize = 0
         }
@@ -195,11 +195,11 @@ io.on('connection', socket => {
         if (roomSize == 0) {
             socket.broadcast.emit('command', {
                 userId: payload.username,
-                controlId: payload.id,
+                controlId: payload.controlId,
                 stream: false
             });
         }
-        socket.leave(payload.id);
+        socket.leave(payload.controlId);
     });
 
     //Error & diconnect handling

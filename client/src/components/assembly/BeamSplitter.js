@@ -22,13 +22,7 @@ const BeamSplitter = (props) => {
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      controlId: props.controlIdHeater,
-      reset: true
-    })
-
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlIdThermistor,
+      controlId: props.controlId,
       reset: true
     })
   }
@@ -81,8 +75,7 @@ const BeamSplitter = (props) => {
     >
       <BeamSplitterCtrl
         rotation={props.rotationTop}
-        component={props.controlIdHeater}
-        componentT={props.controlIdThermistor}
+        component={props.controlId}
         newStatus={handleChangeFooter}
         footer={footer}
         top="20"

@@ -109,7 +109,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
+                        <Switch component={props.componentT} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>
@@ -137,14 +137,14 @@ const HeaterCtrl = (props) => {
                         </div>
                         <div style={{ paddingLeft: 20 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
-                            <Select title="Average time (ms)" component={props.component} online={onlineStatus} option="averageTime" />
-                            <Select title="Update time (s)" component={props.component} online={onlineStatus} option="updateTime" />
+                            <Select title="Average time (ms)" component={props.componentT} online={onlineStatus} option="averageTime" />
+                            <Select title="Update time (s)" component={props.componentT} online={onlineStatus} option="updateTime" />
                         </div>
                     </Box>
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
+                        <Switch component={props.componentT} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>

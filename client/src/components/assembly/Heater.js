@@ -24,7 +24,13 @@ const Heater = (props) => {
     const handleReset = () => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
-            controlId: props.controlId,
+            controlId: props.controlIdHeater,
+            reset: true
+        })
+
+        socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: props.controlIdThermistor,
             reset: true
         })
     }
@@ -93,7 +99,8 @@ const Heater = (props) => {
             footer={footer}
         >
             <HeaterCtrl
-                component={props.controlId}
+                component={props.controlIdHeater}
+                componentT={props.controlIdThermistor}
                 newStatus={handleChangeFooter}
                 footer={footer}
             />
