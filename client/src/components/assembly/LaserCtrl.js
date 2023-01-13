@@ -75,7 +75,7 @@ const LaserCtrl = (props) => {
       footer={footer}
     >
       <SwitchOnOff
-        component={props.id}
+        component={props.controlId}
         top="0"
         left="0"
         newStatus={handleChangeFooter}
