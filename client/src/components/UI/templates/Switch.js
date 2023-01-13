@@ -23,7 +23,7 @@ const SwiitchCtrl = (props) => {
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
-            componentId: props.component
+            controlId: props.component
         })
 
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)

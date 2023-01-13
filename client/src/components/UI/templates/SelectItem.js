@@ -18,7 +18,7 @@ const SelectItem = (props) => {
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
-            componentId: props.component
+            controlId: props.component
         })
 
         appCtx.addLog("User set selected " + props.component + " with " + selectValue)
