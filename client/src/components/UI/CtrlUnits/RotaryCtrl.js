@@ -66,6 +66,7 @@ const RotaryCtrl = (props) => {
     if (direction !== 0) {
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
+        color: socketCtx.fontColor,
         controlId: props.control,
         move: direction
       });

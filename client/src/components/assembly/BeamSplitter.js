@@ -72,6 +72,7 @@ const BeamSplitter = (props) => {
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
+
     >
       <BeamSplitterCtrl
         rotation={props.rotationTop}

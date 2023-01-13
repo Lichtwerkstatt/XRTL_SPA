@@ -25,7 +25,7 @@ const LaserCtrl = (props) => {
   useEffect(() => {
     const status = (payload) => {
       if (payload.controlId === props.component) {
-        setSwitch(payload.status.switch.isOn)
+        setSwitch(payload.status.isOn)
       }
     }
     const footer = (payload) => {
