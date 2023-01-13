@@ -36,8 +36,8 @@ const HeaterCtrl = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
-                setPowerSwitch(payload.status.output.isOn)
-                setPowerValue(payload.status.output.pwm)
+                setPowerSwitch(payload.status.isOn)
+                setPowerValue(payload.status.pwm)
             }
         }
 
@@ -109,7 +109,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="val" />
+                        <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>
@@ -144,7 +144,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="val" />
+                        <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>

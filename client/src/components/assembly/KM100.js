@@ -22,10 +22,17 @@ const KM100 = (props) => {
 
   //wie handhaben wir das?
   const handleReset = () => {
+
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      controlId: props.id,
-      command: 'reset'
+      controlId: props.controlIdBottom,
+      reset: true
+    })
+
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      controlId: props.controlIdTop,
+      reset: true
     })
   }
 

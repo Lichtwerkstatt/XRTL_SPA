@@ -28,8 +28,8 @@ const LaserCtrl = (props) => {
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      componentId: props.controlId,
+      reset: true
     })
   }
 
@@ -63,7 +63,7 @@ const LaserCtrl = (props) => {
 
   return (
     <Window
-      header={props.title + " (" + props.id + ")"}
+      header={props.title}
       top={props.top}
       left={props.left}
       height="200px"

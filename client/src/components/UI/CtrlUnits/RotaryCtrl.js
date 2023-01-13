@@ -10,7 +10,6 @@ const RotaryCtrl = (props) => {
   const [rotation, setRotation] = useState(0);
   var direction;
 
-  console.log(props)
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 

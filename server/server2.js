@@ -164,13 +164,13 @@ io.on('connection', socket => {
 
     //Client how starts the stream is added to a room
     socket.on('join stream room', (payload) => {
-        socket.to(GUIId).emit('newLog', 'User has joined the room ' + String(payload.id));
-        socket.join(payload.id);
-        let roomSize = io.sockets.adapter.rooms.get(payload.id).size;
+        socket.to(GUIId).emit('newLog', 'User has joined the room ' + String(payload.controlId));
+        socket.join(payload.controlId);
+        let roomSize = io.sockets.adapter.rooms.get(payload.controlId).size;
         if (roomSize == 1) {
             socket.broadcast.emit('command', {
                 userId: payload.username,
-                controlId: payload.id,
+                controlId: payload.controlId,
                 string: true
             });
         }
@@ -179,7 +179,7 @@ io.on('connection', socket => {
 
     //Sends pictures of the stream to the clients
     socket.on('data', (payload) => {//hier einfach payload senden?
-        socket.to(controlId).emit('data', { controlId: controlId, type: payload.image, dataId: payload.dataId, data: { type: payload.buffer, data: payload.data } })
+        socket.to(payload.controlId).emit('data', (payload))
     });
 
     //Clients leaves the room after ending the stream

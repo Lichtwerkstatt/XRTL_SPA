@@ -18,14 +18,14 @@ const ESPCamStream = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id);
-    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPcam' });
+    socketCtx.socket.emit("leave stream room", { controlId: props.controlId, userId: socketCtx.username });
   };
 
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      controlId: props.controlId,
+      reset: true
     })
   }
 
@@ -95,7 +95,7 @@ const ESPCamStream = (props) => {
   }, [socketCtx.socket]);
 
   useEffect(() => {
-    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPCam' });
+    socketCtx.socket.emit("join stream room", { controlId: props.controlId, userId: socketCtx.username });
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

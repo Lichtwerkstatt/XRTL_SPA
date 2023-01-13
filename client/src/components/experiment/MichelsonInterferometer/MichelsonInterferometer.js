@@ -91,26 +91,14 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[5]) && (
         <Heater
           title="Heater"
-          controlId={'thermistor'}
+          controlIdHeater={'heater'}
+          controlIdThermistor={'thermistor'}
           id={componentList[5]}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
         />
       )}
-
-      {/* Cam 1 */}
-      {props.selected.has(componentList[6]) && (
-        <ViewCamStream1
-          title="Cam_1"
-          controlId={'ESPcam_1'}
-          id={componentList[6]}
-          footer={footer}
-          top={topHighMiddle}
-          left={leftCam}
-        />
-      )}
-
 
       {/* Beam splitter */}
       {props.selected.has(componentList[7]) && (
@@ -126,5 +114,4 @@ const MichelsonInterferometer = (props) => {
     </div>
   );
 };
-
 export default MichelsonInterferometer;

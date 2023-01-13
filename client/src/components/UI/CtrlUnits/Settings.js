@@ -31,9 +31,9 @@ const Settings = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
-                setSwitchStatus(payload.status.ESPcam.gray)
-                setBrightness(payload.status.ESPcam.brightness)
-                setContrast(payload.status.ESPcam.contrast)
+                setSwitchStatus(payload.status.gray)
+                setBrightness(payload.status.brightness)
+                setContrast(payload.status.contrast)
                 console.log("Status of settings:   ", payload)
             }
         }
@@ -83,8 +83,8 @@ const Settings = (props) => {
                 <LeftRightCtrl component={props.component} online={onlineStatus} option='virtualPan' />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} online={onlineStatus} option="frame_size" />
-            <Switch component={props.component} checked={switchStatus} online={onlineStatus} start='Color' end='Gray' option="switch" />
+            <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" />
+            <Switch component={props.component} checked={switchStatus} online={onlineStatus} start='Color' end='Gray' option="gray" />
             <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
             <Slider title="Brightness" component={props.component} online={onlineStatus} sliderValue={brightness} min={-2} max={2} option="brightness" />
         </ThemeProvider>
