@@ -171,7 +171,7 @@ io.on('connection', socket => {
             socket.broadcast.emit('command', {
                 userId: payload.username,
                 controlId: payload.controlId,
-                string: true
+                stream: true
             });
         }
 
