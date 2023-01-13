@@ -8,7 +8,7 @@ const io = require('socket.io')(server, {
     }
 })
 
-var color = ['White', 'Yellow', 'Cyan', 'Magenta'];
+var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
 var componentList = [];
