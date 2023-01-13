@@ -16,7 +16,7 @@ const LaserCtrl = (props) => {
   const popupCtx = usePopUpContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
+    appCtx.toggleSelectedComp(props.controlId)
   }
 
   const handleChangeFooter = (newFooter) => {

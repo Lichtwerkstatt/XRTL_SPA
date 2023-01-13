@@ -1,10 +1,10 @@
-import ViewCamStream1 from "../../assembly/ViewCam";
 import LaserCtrl from "../../assembly/LaserCtrl";
 import Heater from "../../assembly/Heater";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import ESPCam from "../../assembly/ESPCamStream";
 import BeamSplitter from "../../assembly/BeamSplitter"
+
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
@@ -26,10 +26,10 @@ const MichelsonInterferometer = (props) => {
   return (
     <div>
       {/* KM100 */}
-      {props.selected.has(componentList[0]) && (
+      {props.selected.has('KM100_1') && (
         <KM100
           title="Mirror"
-          id={componentList[0]}
+          id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
           rotationTop={zero}
@@ -40,7 +40,7 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Linear stage */}
-      {props.selected.has(componentList[1]) && (
+      {props.selected.has('linear_1') && (
         <SM1ZP
           title="Mirror Stage"
           controlId={'linear_1'}
@@ -52,10 +52,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Laser ctrl */}
-      {props.selected.has(componentList[2]) && (
+      {props.selected.has('greenlaser_1') && (
         <KM100
           title="Laser"
-          id={componentList[2]}
+          id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
           rotationTop={zero}
@@ -66,34 +66,32 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Laser power */}
-      {props.selected.has(componentList[3]) && (
+      {props.selected.has('greenlaserPower_1') && (
         <LaserCtrl
           title="Power Supply"
-          controlId={'greenlaser_1'}
-          id={componentList[3]}
+          controlId={'greenlaserPower_1'}
           footer={footer}
           top={topHigh}
           left={leftRight}
         />
       )}
       {/* Cam1 */}
-      {props.selected.has(componentList[4]) && (
+      {props.selected.has('screen') && (
         <ESPCam
           title="Screen"
           controlId={'screen'}
-          id={componentList[4]}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
         />
       )}
       {/* Heater */}
-      {props.selected.has(componentList[5]) && (
+      {props.selected.has('heater') && (
         <Heater
           title="Heater"
           controlIdHeater={'heater'}
           controlIdThermistor={'thermistor'}
-          id={componentList[5]}
+          id={'heater'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -101,11 +99,10 @@ const MichelsonInterferometer = (props) => {
       )}
 
       {/* Beam splitter */}
-      {props.selected.has(componentList[7]) && (
+      {props.selected.has('beamSplitter') && (
         <BeamSplitter
           title="Beam splitter"
           controlId={'beamSplitter'}
-          id={componentList[7]}
           footer={footer}
           top={topMiddle}
           left={halfWidth}

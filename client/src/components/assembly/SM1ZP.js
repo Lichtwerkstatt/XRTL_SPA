@@ -17,7 +17,7 @@ const SM1ZP = (props) => {
   const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
+    appCtx.toggleSelectedComp(props.controlId)
   }
 
   const handleChangeFooter = (newFooter) => {

@@ -17,7 +17,7 @@ const ESPCamStream = (props) => {
   const popupCtx = usePopUpContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id);
+    appCtx.toggleSelectedComp(props.controlId);
     socketCtx.socket.emit("leave stream room", { controlId: props.controlId, userId: socketCtx.username });
   };
 

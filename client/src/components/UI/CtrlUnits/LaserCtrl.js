@@ -24,18 +24,18 @@ const LaserCtrl = (props) => {
 
   useEffect(() => {
     const status = (payload) => {
-      if (payload.componentId === props.component) {
+      if (payload.controlId === props.component) {
         setSwitch(payload.status.switch.isOn)
       }
     }
     const footer = (payload) => {
-      if (payload.componentId === props.component) {
+      if (payload.controlId === props.component) {
         props.newStatus(String(payload.status))
       }
     }
 
     const getFooter = (payload) => {
-      if (payload.componentId === props.component) {
+      if (payload.controlId === props.component) {
         setOnlineStatus(!payload.online)
         props.newStatus(String(payload.status))
       }
@@ -43,7 +43,7 @@ const LaserCtrl = (props) => {
 
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
-      componentId: props.component,
+      controlId: props.component,
       command: "getStatus"
     })
 
