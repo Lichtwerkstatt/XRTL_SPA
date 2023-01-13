@@ -117,7 +117,10 @@ const ESPCamStream = (props) => {
         <canvas id="ScreenCanvas" />
       </div>
       <div className={styles.Settings}>
-        <Settings component={props.id} footer={footer} newStatus={handleChangeFooter} />
+        <Settings
+          component={props.controlId}
+          footer={footer}
+          newStatus={handleChangeFooter} />
       </div>
 
     </Window>
