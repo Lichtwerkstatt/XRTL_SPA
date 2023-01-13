@@ -45,7 +45,7 @@ const BeamSplitterCtrl = (props) => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
             controlId: props.component,
-            command: 'getStatus'
+            getStatus: true
         })
 
         socketCtx.socket.emit('getFooter', props.component)
@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Switch component={props.component} checked={switchStatus} online={onlineStatus} start='Off' end='On' option='switch' />
+                <Switch component={props.component} checked={switchStatus} online={onlineStatus} start='Off' end='On' option='binaryCtrl' />
             </Box>
         </ThemeProvider>
     )

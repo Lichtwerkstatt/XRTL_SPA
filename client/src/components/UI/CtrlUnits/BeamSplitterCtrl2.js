@@ -45,7 +45,7 @@ const BeamSplitterCtrl = (props) => {
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
-            command: "getStatus"
+            getStatus: true
         })
 
         socketCtx.socket.emit('getFooter', props.component)
