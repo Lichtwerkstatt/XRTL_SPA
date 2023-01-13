@@ -16,11 +16,9 @@ const SwiitchCtrl = (props) => {
         setSwitchValue(newValue);
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                [props.option]: newValue,
-            }
+            controlId: props.component,
+            [props.option]: newValue,
+
         })
 
         socketCtx.socket.emit("footer", {

@@ -12,11 +12,8 @@ const SelectItem = (props) => {
         setSelectValue(newValue.props.value);
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                [props.option]: newValue.props.value
-            }
+            controlId: props.component,
+            [props.option]: newValue.props.value
         })
 
         socketCtx.socket.emit("footer", {

@@ -30,6 +30,8 @@ const MichelsonInterferometer = (props) => {
         <KM100
           title="Mirror"
           id={componentList[0]}
+          controlIdTop={'KM100_top_1'}
+          controlIdBottom={'KM100_bottom_1'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -41,6 +43,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[1]) && (
         <SM1ZP
           title="Mirror Stage"
+          controlId={'linear_1'}
           id={componentList[1]}
           footer={footer}
           rotation={zero}
@@ -53,6 +56,8 @@ const MichelsonInterferometer = (props) => {
         <KM100
           title="Laser"
           id={componentList[2]}
+          controlIdTop={'greenlaser_top_1'}
+          controlIdBottom={'greenlaser_bottom_1'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -64,6 +69,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[3]) && (
         <LaserCtrl
           title="Power Supply"
+          controlId={'greenlaser_1'}
           id={componentList[3]}
           footer={footer}
           top={topHigh}
@@ -74,6 +80,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[4]) && (
         <ESPCam
           title="Screen"
+          controlId={'screen'}
           id={componentList[4]}
           footer={footer}
           top={topHighMiddle}
@@ -84,6 +91,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[5]) && (
         <Heater
           title="Heater"
+          controlId={'thermistor'}
           id={componentList[5]}
           footer={footer}
           top={topHighMiddle}
@@ -95,6 +103,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[6]) && (
         <ViewCamStream1
           title="Cam_1"
+          controlId={'ESPcam_1'}
           id={componentList[6]}
           footer={footer}
           top={topHighMiddle}
@@ -107,6 +116,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has(componentList[7]) && (
         <BeamSplitter
           title="Beam splitter"
+          controlId={'beamSplitter'}
           id={componentList[7]}
           footer={footer}
           top={topMiddle}

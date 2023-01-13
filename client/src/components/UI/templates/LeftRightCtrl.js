@@ -13,11 +13,8 @@ const LeftRightCtrl = (props) => {
         event.preventDefault();
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: direction,
-                val: negativ ? 15 : -15
-            }
+            controlId: props.component,
+            [props.option]: negativ ? 15 : -15
         })
 
         socketCtx.socket.emit("footer", {
