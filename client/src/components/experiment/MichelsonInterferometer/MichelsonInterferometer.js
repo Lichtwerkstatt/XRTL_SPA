@@ -48,6 +48,28 @@ const MichelsonInterferometer = (props) => {
           left={leftMiddle}
         />
       )}
+      {/* Rotary stage Prism*/}
+      {props.selected.has('Michelson_prism') && (
+        <SM1ZP
+          title="Prism Stage"
+          id={componentList[1]}
+          footer={footer}
+          rotation={zero}
+          top={topMiddle}
+          left={leftRight}
+        />
+      )}
+      {/* Rotary stage Measurement Mirror*/}
+      {props.selected.has('Michelson_measure') && (
+        <SM1ZP
+          title="Measure Stage"
+          id={componentList[1]}
+          footer={footer}
+          rotation={zero}
+          top={topHighMiddle}
+          left={leftMiddle}
+        />
+      )}
       {/* Laser ctrl */}
       {props.selected.has(componentList[2]) && (
         <KM100

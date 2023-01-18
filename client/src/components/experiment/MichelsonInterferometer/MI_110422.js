@@ -232,9 +232,9 @@ function Model({ ...props }) {
             material={materials.Laser}
             position={[-0.3, 0.66, -0.15]}
           />}
-      </group>
+      </group> {/* End of Scene */}
 
-       <group
+      <group
         name="Cam_1"
         position={[1.56, 0.67, 0.14]}
         onPointerDown={(e) => {
