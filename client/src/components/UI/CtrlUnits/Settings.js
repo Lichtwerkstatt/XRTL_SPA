@@ -10,7 +10,7 @@ import Select from "../templates/Select";
 import Box from '@mui/material/Box';
 
 const Settings = (props) => {
-    const [switchStatus, setSwitchStatus] = useState(false);
+    const [switchIsOn, setSwitchStatus] = useState(false);
     const [contrast, setContrast] = useState(0);
     const [brightness, setBrightness] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
@@ -31,6 +31,7 @@ const Settings = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
+                console.log(payload)
                 setSwitchStatus(payload.status.gray)
                 setBrightness(payload.status.brightness)
                 setContrast(payload.status.contrast)
@@ -84,7 +85,7 @@ const Settings = (props) => {
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
             <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" />
-            <Switch component={props.component} checked={switchStatus} online={onlineStatus} start='Color' end='Gray' option="gray" />
+            <Switch component={props.component} switchStatus={switchIsOn} online={onlineStatus} start='Color' end='Gray' option="gray" />
             <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
             <Slider title="Brightness" component={props.component} online={onlineStatus} sliderValue={brightness} min={-2} max={2} option="brightness" />
         </ThemeProvider>

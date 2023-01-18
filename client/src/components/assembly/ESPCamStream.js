@@ -65,7 +65,7 @@ const ESPCamStream = (props) => {
 
   useEffect(() => {
     const data = (payload) => {
-      var uint8Arr = new Uint8Array(payload.data.data);
+      var uint8Arr = new Uint8Array(payload.data);
       var binary = "";
       for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
