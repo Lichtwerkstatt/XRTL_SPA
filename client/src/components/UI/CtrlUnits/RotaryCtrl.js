@@ -71,8 +71,8 @@ const RotaryCtrl = (props) => {
         move: direction
       });
 
-      socketCtx.socket.emit('LED', {
-        LED: props.led,
+      socketCtx.socket.emit('command', {
+        controlId: props.led,
         color: socketCtx.fontColor,
       });
 

@@ -16,8 +16,8 @@ const UpDownCtrl = (props) => {
       [props.option]: negativ ? 15 : -15
     })
 
-    socketCtx.socket.emit('LED', {
-      LED: props.led,
+    socketCtx.socket.emit('command', {
+      controlId: props.led,
       color: socketCtx.fontColor,
     });
 

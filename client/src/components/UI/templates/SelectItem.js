@@ -16,8 +16,8 @@ const SelectItem = (props) => {
             [props.option]: newValue.props.value
         })
 
-        socketCtx.socket.emit('LED', {
-            LED: props.led,
+        socketCtx.socket.emit('command', {
+            controlId: props.led,
             color: socketCtx.fontColor,
         });
 

@@ -73,7 +73,7 @@ const MichelsonInterferometer = (props) => {
         <LaserCtrl
           title="Power Supply"
           controlId={'greenlaser_1'}
-          LED={'led_laser'}
+          LED={'led_linear'}
           footer={footer}
           top={topHigh}
           left={leftRight}
