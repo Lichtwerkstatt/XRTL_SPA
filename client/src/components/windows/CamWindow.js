@@ -28,7 +28,7 @@ const InfoWindow = (props) => {
     const handleReset = () => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
-            componentId: props.id,
+            controlId: props.id,
             command: "reset"
         })
     }

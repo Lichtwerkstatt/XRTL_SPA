@@ -24,19 +24,19 @@ const BeamSplitterCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 console.log("Status of settings:   ", payload)
             }
         }
 
         const footer = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 props.newStatus(String(payload.status))
             }
         }
 
         const getFooter = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 setOnlineStatus(!payload.online)
                 props.newStatus(String(payload.status))
             }
@@ -44,8 +44,8 @@ const BeamSplitterCtrl = (props) => {
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: "getStatus"
+            controlId: props.component,
+            getStatus: true
         })
 
         socketCtx.socket.emit('getFooter', props.component)

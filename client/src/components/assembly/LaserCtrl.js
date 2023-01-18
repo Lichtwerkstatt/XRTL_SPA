@@ -16,7 +16,7 @@ const LaserCtrl = (props) => {
   const popupCtx = usePopUpContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
+    appCtx.toggleSelectedComp(props.controlId)
   }
 
   const handleChangeFooter = (newFooter) => {
@@ -28,8 +28,8 @@ const LaserCtrl = (props) => {
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      controlId: props.controlId,
+      reset: true
     })
   }
 
@@ -63,7 +63,7 @@ const LaserCtrl = (props) => {
 
   return (
     <Window
-      header={props.title + " (" + props.id + ")"}
+      header={props.title}
       top={props.top}
       left={props.left}
       height="200px"
@@ -75,7 +75,7 @@ const LaserCtrl = (props) => {
       footer={footer}
     >
       <SwitchOnOff
-        component={props.id}
+        component={props.controlId}
         top="0"
         left="0"
         newStatus={handleChangeFooter}
