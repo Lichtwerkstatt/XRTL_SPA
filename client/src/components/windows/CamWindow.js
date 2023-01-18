@@ -6,8 +6,8 @@ import ViewCam from "../Chat/ViewCamStream";
 import { useState } from "react";
 
 const InfoWindow = (props) => {
+    const [footer, setFooter] = useState(props.footer);
     const [lastChange, setLastChange] = useState(['', '', '']);
-    const [footer, setFooter] = useState("Initializing...");
     const [alertType, setAlertType] = useState('info');
     var [alert, setAlert] = useState(false);
 
@@ -15,10 +15,15 @@ const InfoWindow = (props) => {
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
 
-    const handleCloseWindow = () => {
-        appCtx.toggleSelectedComp(props.id)
-    }
+    const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] } //stun:stun.stunprotocol.org
+    var peerConnection = new RTCPeerConnection(config);
 
+    const handleCloseWindow = () => {
+        //appCtx.toggleSelectedComp(props.id);
+        appCtx.toggleCam();
+        peerConnection.close();
+        socketCtx.socket.emit('watcher disconnect')
+    };
     const handleChangeFooter = (newFooter) => {
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -26,11 +31,7 @@ const InfoWindow = (props) => {
     };
 
     const handleReset = () => {
-        socketCtx.socket.emit('command', {
-            userId: socketCtx.username,
-            controlId: props.id,
-            command: "reset"
-        })
+        peerConnection.close();
     }
 
     const handleInfo = () => {

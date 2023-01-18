@@ -71,6 +71,11 @@ const RotaryCtrl = (props) => {
         move: direction
       });
 
+      socketCtx.socket.emit('LED', {
+        LED: props.led,
+        color: socketCtx.fontColor,
+      });
+
       socketCtx.socket.emit('footer', {
         status: 'Last change by: ' + socketCtx.username,
         controlId: props.component

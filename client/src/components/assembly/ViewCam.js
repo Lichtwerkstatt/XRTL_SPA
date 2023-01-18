@@ -89,7 +89,7 @@ const Cam = (props) => {
 
     return (
         <Window
-            header={props.title + " (" + props.id + ")"}
+            header={props.title}
             top={props.top}
             left={props.left}
             height="480px"

@@ -78,6 +78,7 @@ const BeamSplitter = (props) => {
         rotation={props.rotationTop}
         component={props.controlId}
         newStatus={handleChangeFooter}
+        led={props.LED}
         footer={footer}
         top="20"
         left="160"

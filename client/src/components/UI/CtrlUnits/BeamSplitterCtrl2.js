@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="binaryCtrl" />
+                <Slider title="Glas option" component={props.component} led={props.led} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="binaryCtrl" />
             </Box>
         </ThemeProvider>
     )

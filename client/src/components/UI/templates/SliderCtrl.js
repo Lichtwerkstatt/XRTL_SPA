@@ -19,10 +19,14 @@ const SliderCtrl = (props) => {
     setSliderPos(newValue)
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
-      color: socketCtx.fontColor,
       controlId: props.component,
       [props.option]: newValue
     })
+
+    socketCtx.socket.emit('LED', {
+      LED: props.led,
+      color: socketCtx.fontColor,
+    });
 
     socketCtx.socket.emit("footer", {
       status: "Last change by: " + socketCtx.username,

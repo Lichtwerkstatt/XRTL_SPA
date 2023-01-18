@@ -31,7 +31,6 @@ const Settings = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
-                console.log(payload)
                 setSwitchStatus(payload.status.gray)
                 setBrightness(payload.status.brightness)
                 setContrast(payload.status.contrast)
