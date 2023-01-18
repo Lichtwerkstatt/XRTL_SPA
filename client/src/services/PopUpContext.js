@@ -26,14 +26,6 @@ export function PopUpContextProvider({ children }) {
         toggleShowPopUp(payload + ' has joined the experiment!', 'info')
     })
 
-    socketCtx.socket.on('AuthFailed', () => {
-   
-        console.log("da drinnen")
-        setTimeout(() => {
-            toggleShowPopUp('To many user are connected right now!', 'error')
-        }, 2000)
-    })
-
     const toggleShowPopUp = (newText, newType) => {
         setText(newText);
         setType(newType);

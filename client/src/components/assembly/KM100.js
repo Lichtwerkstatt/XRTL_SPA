@@ -1,10 +1,10 @@
-import { useState } from "react";
-import RotaryCtrl from "../UI/CtrlUnits/RotaryCtrl";
-import Window from "../UI/experimentUI/Window";
-import KM100_Background from "./media/km100_outline.png"
-import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../../services/PopUpContext"
-import { useSocketContext } from "../../services/SocketContext"
+import { useSocketContext } from '../../services/SocketContext'
+import { usePopUpContext } from '../../services/PopUpContext'
+import { useAppContext } from '../../services/AppContext';
+import KM100_Background from './media/km100_outline.png'
+import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
+import Window from '../UI/experimentUI/Window';
+import { useState } from 'react';
 
 const KM100 = (props) => {
   const [footer, setFooter] = useState(props.footer);
@@ -20,11 +20,19 @@ const KM100 = (props) => {
     appCtx.toggleSelectedComp(props.id)
   }
 
+  //wie handhaben wir das?
   const handleReset = () => {
+
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      controlId: props.controlIdBottom,
+      reset: true
+    })
+
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      controlId: props.controlIdTop,
+      reset: true
     })
   }
 
@@ -64,12 +72,12 @@ const KM100 = (props) => {
 
   return (
     <Window
-      header={props.title + " (" + props.id + ")"}
+      header={props.title}
       footer={footer}
       top={props.top}
       left={props.left}
-      height="240px"
-      width="250px"
+      height='240px'
+      width='250px'
       background={KM100_Background}
       onClose={handleCloseWindow}
       onReset={handleReset}
@@ -77,24 +85,21 @@ const KM100 = (props) => {
     >
       <RotaryCtrl
         rotation={props.rotationTop}
-        component={props.id}
-        control="top"
+        component={props.controlIdTop}
         newStatus={handleChangeFooter}
         footer={footer}
-        top="20"
-        left="160"
+        top='20'
+        left='160'
       />
       <RotaryCtrl
         rotation={props.rotationBottom}
-        component={props.id}
-        control="bottom"
+        component={props.controlIdBottom}
         newStatus={handleChangeFooter}
         footer={footer}
-        top="50"
-        left="160"
+        top='50'
+        left='160'
       />
     </Window>
   );
 };
-
 export default KM100;

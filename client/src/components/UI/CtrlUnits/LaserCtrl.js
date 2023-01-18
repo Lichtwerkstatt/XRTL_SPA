@@ -24,18 +24,18 @@ const LaserCtrl = (props) => {
 
   useEffect(() => {
     const status = (payload) => {
-      if (payload.componentId === props.component) {
-        setSwitch(payload.status.switch.isOn)
+      if (payload.controlId === props.component) {
+        setSwitch(payload.status.isOn)
       }
     }
     const footer = (payload) => {
-      if (payload.componentId === props.component) {
+      if (payload.controlId === props.component) {
         props.newStatus(String(payload.status))
       }
     }
 
     const getFooter = (payload) => {
-      if (payload.componentId === props.component) {
+      if (payload.controlId === props.component) {
         setOnlineStatus(!payload.online)
         props.newStatus(String(payload.status))
       }
@@ -43,8 +43,8 @@ const LaserCtrl = (props) => {
 
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
-      componentId: props.component,
-      command: "getStatus"
+      controlId: props.component,
+      getStatus: true
     })
 
     socketCtx.socket.emit('getFooter', props.component)
@@ -69,7 +69,7 @@ const LaserCtrl = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' icon={document.getElementById("icon")} online={onlineStatus} option="val" switchStatus={switchValue} />
+          <Switch component={props.component} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchValue} start='Off' end='On' option="switch" />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

@@ -12,16 +12,14 @@ const SelectItem = (props) => {
         setSelectValue(newValue.props.value);
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                [props.option]: newValue.props.value
-            }
+            color: socketCtx.fontColor,
+            controlId: props.component,
+            [props.option]: newValue.props.value
         })
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
-            componentId: props.component
+            controlId: props.component
         })
 
         appCtx.addLog("User set selected " + props.component + " with " + selectValue)

@@ -1,25 +1,25 @@
-import { Html } from "@react-three/drei";
-import { memo } from "react"
-import {isEqual} from 'lodash';
+import { Html } from '@react-three/drei';
+import { isEqual } from 'lodash';
+import { memo } from 'react'
 
 const DescriptiveTag = (props) => {
   const wrapperStyle = {
-    color: "white",
-    width: "200px",
-    height: "30px",
+    color: 'white',
+    width: '200px',
+    height: '30px',
   };
   return <Html position={props.position} style={wrapperStyle} zIndexRange={[0, 10]} >
 
     <div
       style={{
-        height: "150px",
-        width: "0px",
-        "borderLeft": "2px solid white",
-        float: "left",
+        height: '150px',
+        width: '0px',
+        borderLeft: '2px solid white',
+        float: 'left',
       }}
     ></div>
-    
-    <div style={{ "marginLeft": "12px" }}>
+
+    <div style={{ 'marginLeft': '12px' }}>
       <span>
         <b>{props.title}</b>
       </span>

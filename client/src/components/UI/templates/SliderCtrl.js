@@ -17,19 +17,16 @@ const SliderCtrl = (props) => {
 
   const handleSettingChanges = (event, newValue) => {
     setSliderPos(newValue)
-    //console.log(newValue)
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
-      componentId: props.component,
-      command: {
-        controlId: props.command,
-        [props.option]: newValue
-      }
+      color: socketCtx.fontColor,
+      controlId: props.component,
+      [props.option]: newValue
     })
 
     socketCtx.socket.emit("footer", {
       status: "Last change by: " + socketCtx.username,
-      componentId: props.component
+      controlId: props.component
     })
 
     appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
