@@ -16,12 +16,30 @@
     margin-left: 20px;
 }
 
+.navbar h3{
+    display: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: -37px;
+    margin-left: 1200px;
+    right: 600px;
+}
+
 .navMenu {
     position: absolute;
     top: 0px;
-    right: 20px;
+    right: 10px;
     height: 100%;
 }
+
+.navMenuLaser {
+    position: absolute;
+    top: -20px;
+    right: 530px;
+}
+
+
 
 .navMenu ul {
     margin: 0px;
