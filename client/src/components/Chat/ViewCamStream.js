@@ -27,7 +27,6 @@ const ViewCam = (props) => {
         }
         
         const candidate = (payload) => {
-            console.log("hier")
             peerConnection
                 .addIceCandidate(new RTCIceCandidate(payload.data))
                 .catch(e => console.error(e))

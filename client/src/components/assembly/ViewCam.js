@@ -28,8 +28,8 @@ const Cam = (props) => {
     const handleReset = () => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
-            componentId: props.id,
-            command: "reset"
+            controlId: props.controlId,
+            reset: true
         })
     }
 
@@ -89,7 +89,7 @@ const Cam = (props) => {
 
     return (
         <Window
-            header={props.title + " (" + props.id + ")"}
+            header={props.title}
             top={props.top}
             left={props.left}
             height="480px"
@@ -100,7 +100,7 @@ const Cam = (props) => {
         >
             <ViewCamStream
                 peer={peerConnection}
-                component={props.id}
+                component={props.controlId}
                 newStatus={handleChangeFooter}
                 footer={footer}
             />

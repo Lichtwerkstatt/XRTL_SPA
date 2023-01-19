@@ -16,16 +16,19 @@ const SwiitchCtrl = (props) => {
         setSwitchValue(newValue);
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                [props.option]: newValue,
-            }
+            controlId: props.component,
+            [props.option]: newValue,
+
         })
+
+        socketCtx.socket.emit('command', {
+            controlId: props.led,
+            color: socketCtx.fontColor,
+        });
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
-            componentId: props.component
+            controlId: props.component
         })
 
         appCtx.addLog("User set switch on " + props.component + " to " + switchValue)

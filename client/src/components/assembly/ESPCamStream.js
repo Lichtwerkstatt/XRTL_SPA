@@ -17,15 +17,14 @@ const ESPCamStream = (props) => {
   const popupCtx = usePopUpContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id);
-    socketCtx.socket.emit("leave stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPcam' });
+    appCtx.toggleSelectedComp(props.controlId);
   };
 
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      controlId: props.controlId,
+      reset: true
     })
   }
 
@@ -65,7 +64,7 @@ const ESPCamStream = (props) => {
 
   useEffect(() => {
     const data = (payload) => {
-      var uint8Arr = new Uint8Array(payload.data.data);
+      var uint8Arr = new Uint8Array(payload.data);
       var binary = "";
       for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
@@ -95,7 +94,7 @@ const ESPCamStream = (props) => {
   }, [socketCtx.socket]);
 
   useEffect(() => {
-    socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'ESPCam' });
+    socketCtx.socket.emit("join stream room", { controlId: props.controlId, userId: socketCtx.username });
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -117,7 +116,11 @@ const ESPCamStream = (props) => {
         <canvas id="ScreenCanvas" />
       </div>
       <div className={styles.Settings}>
-        <Settings component={props.id} footer={footer} newStatus={handleChangeFooter} />
+        <Settings
+          component={props.controlId}
+          led={props.LED}
+          footer={footer}
+          newStatus={handleChangeFooter} />
       </div>
 
     </Window>

@@ -10,7 +10,7 @@ import Select from "../templates/Select";
 import Box from '@mui/material/Box';
 
 const Settings = (props) => {
-    const [switchValue, setSwitch] = useState(false);
+    const [switchIsOn, setSwitchStatus] = useState(false);
     const [contrast, setContrast] = useState(0);
     const [brightness, setBrightness] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
@@ -30,22 +30,22 @@ const Settings = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            if (payload.componentId === props.component) {
-                setSwitch(payload.status.ESPcam.gray)
-                setBrightness(payload.status.ESPcam.brightness)
-                setContrast(payload.status.ESPcam.contrast)
+            if (payload.controlId === props.component) {
+                setSwitchStatus(payload.status.gray)
+                setBrightness(payload.status.brightness)
+                setContrast(payload.status.contrast)
                 console.log("Status of settings:   ", payload)
             }
         }
 
         const footer = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 props.newStatus(String(payload.status))
             }
         }
 
         const getFooter = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 setOnlineStatus(true)
                 props.newStatus(String(payload.status))
             }
@@ -53,8 +53,8 @@ const Settings = (props) => {
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: "getStatus"
+            controlId: props.component,
+            getStatus: true
         })
 
         socketCtx.socket.emit('getFooter', props.component)
@@ -77,16 +77,16 @@ const Settings = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.UpDown}>
-                <UpDownCtrl component={props.component} online={onlineStatus} />
+                <UpDownCtrl component={props.component} online={onlineStatus} option='virtualTilt' />
             </div>
             <div className={styles.LeftRight}>
-                <LeftRightCtrl component={props.component} online={onlineStatus} />
+                <LeftRightCtrl component={props.component} online={onlineStatus} option='virtualPan' />
             </div>
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-            <Select title="Resolution" component={props.component} online={onlineStatus} command="ESPcam" option="frame size" />
-            <Switch component={props.component} command="gray" start='Color' end='Gray' online={true} option="val" switchStatus={switchValue}/>
-            <Slider title="Contrast" component={props.component} command="contrast" min={-2} max={2} online={onlineStatus} option="val" sliderValue ={contrast}/>
-            <Slider title="Brightness" component={props.component} command="brightness" min={-2} max={2} online={onlineStatus} option="val" sliderValue={brightness}/>
+            <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" />
+            <Switch component={props.component} switchStatus={switchIsOn} online={onlineStatus} start='Color' end='Gray' option="gray" />
+            <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
+            <Slider title="Brightness" component={props.component} online={onlineStatus} sliderValue={brightness} min={-2} max={2} option="brightness" />
         </ThemeProvider>
     )
 }
