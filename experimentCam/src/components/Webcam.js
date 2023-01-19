@@ -10,7 +10,7 @@ const Webcam = () => {
     var jwt = require('jsonwebtoken');
     var payload = {
         sub: 'webcam',
-        component: 'client',
+        component: 'component',
         iat: Date.now(),
         exp: Date.now() + 1800000,
     }
@@ -22,9 +22,9 @@ const Webcam = () => {
 
     useEffect(() => {
         const webcamEmit = async () => {
-            const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
+            const socket = io.connect("http://10.232.37.40:7000", { auth: { token: token }, autoConnect: true });
             const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
-            const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+            const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] }
             const stream = await navigator.mediaDevices.getUserMedia(contraints);
 
             const viewer = (viewerId) => {
@@ -64,7 +64,6 @@ const Webcam = () => {
             }
 
             const disconnect = (id) => {
-                console.log("dis")
                 delete peerConnections[id]
             }
 
@@ -79,16 +78,17 @@ const Webcam = () => {
             socket.on('candidate', candidate)
 
             socket.on('disconnect peerConnection', disconnect)
+
+            return () => {
+                socket.removeAllListeners('viewer', viewer)
+                socket.removeAllListeners('answer', answer)
+                socket.removeAllListeners('candidate', candidate)
+                socket.removeAllListeners('disconnect peerConnection', disconnect)
+            }
         }
 
         webcamEmit() //function call
 
-        return () => {
-            socketCtx.socket.removeAllListeners('viewer', viewer)
-            socketCtx.socket.removeAllListeners('answer', answer)
-            socketCtx.socket.removeAllListeners('candidate', candidate)
-            socketCtx.socket.removeAllListeners('disconnect peerConnection', disconnect)
-        }
     }, [])
 
     return (

@@ -24,28 +24,28 @@ const BeamSplitterCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 console.log("Status of settings:   ", payload)
             }
         }
 
         const footer = (payload) => {
-            if (payload.componentId === props.component) {
+            if (payload.controlId === props.component) {
                 props.newStatus(String(payload.status))
             }
         }
 
         const getFooter = (payload) => {
-            if (payload.componentId === props.component) {
-                setOnlineStatus(props.online)
+            if (payload.controlId === props.component) {
+                setOnlineStatus(!payload.online)
                 props.newStatus(String(payload.status))
             }
         }
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: "getStatus"
+            controlId: props.component,
+            getStatus: true
         })
 
         socketCtx.socket.emit('getFooter', props.component)
@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="pos" />
+                <Slider title="Glas option" component={props.component} led={props.led} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="binaryCtrl" />
             </Box>
         </ThemeProvider>
     )

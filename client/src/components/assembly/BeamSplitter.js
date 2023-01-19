@@ -1,13 +1,13 @@
-import { useState } from "react";
 import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
-import Window from "../UI/experimentUI/Window";
+import { useSocketContext } from "../../services/SocketContext";
+import { usePopUpContext } from "../../services/PopUpContext";
 import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../../services/PopUpContext"
-import { useSocketContext } from "../../services/SocketContext"
+import Window from "../UI/experimentUI/Window";
+import { useState } from "react";
 
 const BeamSplitter = (props) => {
-  const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
+  const [footer, setFooter] = useState(props.footer);
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
 
@@ -22,8 +22,8 @@ const BeamSplitter = (props) => {
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
-      componentId: props.id,
-      command: "reset"
+      controlId: props.controlId,
+      reset: true
     })
   }
 
@@ -63,7 +63,7 @@ const BeamSplitter = (props) => {
 
   return (
     <Window
-      header={props.title + " (" + props.id + ")"}
+      header={props.title}
       footer={footer}
       top={props.top}
       left={props.left}
@@ -72,12 +72,13 @@ const BeamSplitter = (props) => {
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
+
     >
       <BeamSplitterCtrl
         rotation={props.rotationTop}
-        component={props.id}
-        control="top"
+        component={props.controlId}
         newStatus={handleChangeFooter}
+        led={props.LED}
         footer={footer}
         top="20"
         left="160"

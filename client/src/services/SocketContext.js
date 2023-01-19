@@ -19,21 +19,52 @@ export function SocketContextProvider({ children }) {
   const appCtx = useAppContext();
 
   useEffect(() => {
-    socket.on('connect', (e) => {
+    const Auth = (color) => {
+      setFontColor(color);
+      socket.emit('newUserInfo', username)
+    }
+
+    const connect = (e) => {
       setConnected(true)
       appCtx.addLog("Server : Client connected to " + URL)
-    });
+    }
 
-    socket.on('disconnect', (e) => {
+    const disconnect = (e) => {
       setConnected(false)
       appCtx.addLog("Server : Client disconnect.")
+    }
+
+    socket.on('connect', connect);
+
+    socket.on('disconnect', disconnect)
+
+    socket.on('Auth', Auth);
+
+    if (appCtx.lastClosedComponent === 'screen') {
+      socket.emit("leave stream room", { controlId: 'screen', userId: username });
+      appCtx.toogleLastComp();
+    }
+
+    if (appCtx.lastClosedComponent === 'heater') {
+      socket.emit('leave stream room', { controlId: 'heater', userId: username });
+      appCtx.toogleLastComp();
+    }
+
+    if (appCtx.lastClosedComponent === 'Cam_1') {
+      socket.emit('watcher disconnect');
+      appCtx.toogleLastComp();
+    }
+
+    return (() => {
+      socket.removeAllListeners('Auth', Auth)
+      socket.removeAllListeners('connect', connect)
+      socket.removeAllListeners('disconnect', disconnect)
     })
-/*     socket.on('status', payload => {
-      if (payload.status.busy) { appCtx.addBusyComp(payload.componentId) } else {
-        appCtx.removeBusyComp(payload.componentId)
-      }
-    }) */
   })
+
+  const helperEmit = (event, payload) => {
+    socket.emit(event, payload)
+  }
 
   const setNewURL = (newURL, username) => {
     socket.disconnect();
@@ -59,6 +90,7 @@ export function SocketContextProvider({ children }) {
 
       var token = jwt.sign(payload, "keysecret");
       socket.auth = { token: token }
+      //secure: true, rejectUnauthorized: false}
       socket.connect();
 
       setConnected(true)
@@ -73,7 +105,7 @@ export function SocketContextProvider({ children }) {
   }
 
   return (
-    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setNewFont, username, fontColor }}>
+    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setNewFont, username, fontColor, helperEmit }}>
       {children}
     </SocketContext.Provider>
   );

@@ -16,7 +16,7 @@ const Cam = (props) => {
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
 
-    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+    const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] } //stun:stun.stunprotocol.org
     var peerConnection = new RTCPeerConnection(config);
 
     const handleCloseWindow = () => {
@@ -28,8 +28,8 @@ const Cam = (props) => {
     const handleReset = () => {
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
-            componentId: props.id,
-            command: "reset"
+            controlId: props.controlId,
+            reset: true
         })
     }
 
@@ -83,28 +83,28 @@ const Cam = (props) => {
     useEffect(() => {
         socketCtx.socket.emit("join stream room", { id: props.id, userId: socketCtx.username, controlId: 'Cam' });
 
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <Window
-            header={props.title + " (" + props.id + ")"}
+            header={props.title}
             top={props.top}
             left={props.left}
             height="480px"
-            width="620px"
+            width="640px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
-            footer={footer}
         >
             <ViewCamStream
                 peer={peerConnection}
-                component={props.id}
+                component={props.controlId}
                 newStatus={handleChangeFooter}
                 footer={footer}
             />
         </Window>
     )
 }
-
 export default Cam;

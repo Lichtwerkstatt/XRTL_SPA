@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import Switch from '../templates/Switch';
 
 const LaserCtrl = (props) => {
-  const [switchStatus, setSwitchStatus] = useState(false);
+  const [switchIsOn, setSwitch] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const socketCtx = useSocketContext();
 
@@ -24,31 +24,32 @@ const LaserCtrl = (props) => {
 
   useEffect(() => {
     const status = (payload) => {
-      if (payload.componentId === props.component) {
-        setSwitchStatus(payload.status['laser'])
+      if (payload.controlId === props.component) {
+        setSwitch(payload.status.isOn)
       }
     }
-
     const footer = (payload) => {
-      if (payload.componentId === props.component) {
+      if (payload.controlId === props.component) {
         props.newStatus(String(payload.status))
       }
     }
 
     const getFooter = (payload) => {
-      if (payload.componentId === props.component) {
-        setOnlineStatus(!payload.online)
+      if (payload.controlId === props.component) {
+        setOnlineStatus(true)
         props.newStatus(String(payload.status))
       }
     }
+
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
-      componentId: props.component,
-      command: "getStatus"
+      controlId: props.component,
+      getStatus: true
     })
+
     socketCtx.socket.emit('getFooter', props.component)
 
-    socketCtx.socket.on("status", status)
+    socketCtx.socket.on("status", status);
 
     socketCtx.socket.on('footer', footer)
 
@@ -68,7 +69,7 @@ const LaserCtrl = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} command="switch" start='Off' end='On' checked={switchStatus} icon={document.getElementById("icon")} online={onlineStatus} option="val" />
+          <Switch component={props.component} led={props.led} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

@@ -32,6 +32,7 @@ const ID15 = (props) => {
         sliderPos={props.sliderPos}
         component={props.id}
         newStatus={handleChangeFooter}
+        led={props.LED}
         footer={footer}
         top="50"
         left="50"

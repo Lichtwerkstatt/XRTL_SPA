@@ -12,28 +12,47 @@ const SelectItem = (props) => {
         setSelectValue(newValue.props.value);
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            componentId: props.component,
-            command: {
-                controlId: props.command,
-                [props.option]: newValue.props.value
-            }
+            controlId: props.component,
+            [props.option]: newValue.props.value
         })
+
+        socketCtx.socket.emit('command', {
+            controlId: props.led,
+            color: socketCtx.fontColor,
+        });
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
-            componentId: props.component
+            controlId: props.component
         })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + selectValue)
+        appCtx.addLog("User set selected " + props.component + " with " + selectValue)
     }
-
-    if (props.title === 'Average time (ms)') {
+    if (props.title === 'Resolution') {
         return (
             <Select
                 value={selectValue}
                 label={props.title}
                 onChange={handleSettingChanges}
-                disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
+                disabled={(socketCtx.connected && props.online) ? false : true}
+            >
+                <MenuItem value={13}>UXGA (1600x1200)</MenuItem>
+                <MenuItem value={12}>SXGA (1280x1024)</MenuItem>
+                <MenuItem value={10}>XGA (1024x768)</MenuItem>
+                <MenuItem value={9}>SVGA (800x600)</MenuItem>
+                <MenuItem value={8}>VGA (640x480)</MenuItem>
+                <MenuItem value={6}>CIF (400x296)</MenuItem>
+                <MenuItem value={5}>QVGA (320x240)</MenuItem>
+            </Select>
+        )
+    }
+    else if (props.title === 'Average time (ms)') {
+        return (
+            <Select
+                value={selectValue}
+                label={props.title}
+                onChange={handleSettingChanges}
+                disabled={(socketCtx.connected && props.online) ? false : true}
             >
                 <MenuItem value={100}>100</MenuItem>
                 <MenuItem value={500}>500</MenuItem>
@@ -48,11 +67,11 @@ const SelectItem = (props) => {
                 value={selectValue}
                 label={props.title}
                 onChange={handleSettingChanges}
-                disabled={(socketCtx.connected && !appCtx.busyComps.has(props.component) && props.online) ? false : true}
+                disabled={(socketCtx.connected && props.online) ? false : true}
             >
-                <MenuItem value={1000}>100</MenuItem>
-                <MenuItem value={5000}>500</MenuItem>
-                <MenuItem value={10000}>1000</MenuItem>
+                <MenuItem value={1000}>1</MenuItem>
+                <MenuItem value={5000}>5</MenuItem>
+                <MenuItem value={10000}>10</MenuItem>
             </Select>
         )
     } else {

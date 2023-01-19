@@ -7,37 +7,30 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
-  const [autoRotate, setAutoRotate] = useState(false);
+  const [lastClosedComponent, setLastClosedComponent] = useState('');
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
-  const [busyComps, setBusyComps] = useState(new Set());
-  const [logs, setLogs] = useState([]);
-  const [showTags, setShowTags] = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [autoRotate, setAutoRotate] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState(false);
+  const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
+  const [logs, setLogs] = useState([]);
 
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
-      setSelectedComps(prev => new Set(prev.add(compId)))
+      setSelectedComps(prev => new Set(prev.add(compId)));
     } else {
-      setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
+      setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
+      setLastClosedComponent(compId);
     }
   };
 
-  const addBusyComp = compId => {
-    if (!busyComps.has(compId)) {
-      setBusyComps(prev => new Set(prev.add(compId)))
-    }
-  };
-
-  const removeBusyComp = compId => {
-    if (busyComps.has(compId)) {
-      setBusyComps(prev => new Set([...prev].filter(x => x !== compId)))
-    }
-  };
+  const toogleLastComp = () => {
+    setLastClosedComponent('');
+  }
 
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
@@ -46,6 +39,7 @@ export function AppContextProvider({ children }) {
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
+
   const toggleShowTags = () => {
     setShowTags(!showTags)
   }
@@ -68,6 +62,7 @@ export function AppContextProvider({ children }) {
 
   const toggleCam = () => {
     setShowCam(!showCam);
+    toggleSelectedComp('Cam_1')
   }
 
   return (
@@ -81,9 +76,6 @@ export function AppContextProvider({ children }) {
         toggleSelectedComp,
         logs,
         addLog,
-        busyComps,
-        addBusyComp,
-        removeBusyComp,
         showTags,
         toggleShowTags,
         showBeam,
@@ -94,7 +86,10 @@ export function AppContextProvider({ children }) {
         toggleShowInfoWindow,
         toggleLogin,
         toggleCam,
-        showCam
+        showCam,
+        lastClosedComponent,
+        toogleLastComp
+
       }}
     >
       {children}

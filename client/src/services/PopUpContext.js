@@ -1,5 +1,5 @@
-import { useSocketContext } from "./SocketContext";
 import { useState, useContext, createContext } from "react";
+import { useSocketContext } from "./SocketContext";
 import { Alert, Snackbar } from '@mui/material';
 import styles from "./PopUp.module.css";
 
@@ -12,7 +12,7 @@ export function usePopUpContext() {
 export function PopUpContextProvider({ children }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [text, setText] = useState('');
-    const [type, setType] = useState('info')
+    const [type, setType] = useState('info');
 
     const socketCtx = useSocketContext();
 
@@ -20,6 +20,10 @@ export function PopUpContextProvider({ children }) {
         setShowPopUp(true);
         setText(error.errmsg);
         setType('error');
+    })
+
+    socketCtx.socket.on('newUserInfo', (payload) => {
+        toggleShowPopUp(payload + ' has joined the experiment!', 'info')
     })
 
     const toggleShowPopUp = (newText, newType) => {
