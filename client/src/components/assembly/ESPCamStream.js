@@ -18,7 +18,6 @@ const ESPCamStream = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.controlId);
-    socketCtx.socket.emit("leave stream room", { controlId: props.controlId, userId: socketCtx.username });
   };
 
   const handleReset = () => {
@@ -65,7 +64,7 @@ const ESPCamStream = (props) => {
 
   useEffect(() => {
     const data = (payload) => {
-      var uint8Arr = new Uint8Array(payload.data.data);
+      var uint8Arr = new Uint8Array(payload.data);
       var binary = "";
       for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
@@ -119,6 +118,7 @@ const ESPCamStream = (props) => {
       <div className={styles.Settings}>
         <Settings
           component={props.controlId}
+          led={props.LED}
           footer={footer}
           newStatus={handleChangeFooter} />
       </div>

@@ -5,7 +5,7 @@ import Switch from '../templates/Switch';
 import Box from '@mui/material/Box';
 
 const BeamSplitterCtrl = (props) => {
-    const [switchStatus, setSwitchStatus] = useState(false);
+    const [switchIsOn, setSwitchStatus] = useState(false);
     const [onlineStatus, setOnlineStatus] = useState(true);
 
     const socketCtx = useSocketContext();
@@ -25,7 +25,7 @@ const BeamSplitterCtrl = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
-                setSwitchStatus(payload.status['laser'])
+                setSwitchStatus(payload.status)
             }
         }
 
@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Switch component={props.component} checked={switchStatus} online={onlineStatus} start='Off' end='On' option='binaryCtrl' />
+                <Switch component={props.component} led={props.led} switchStatus={switchIsOn} online={onlineStatus} start='Off' end='On' option='binaryCtrl' />
             </Box>
         </ThemeProvider>
     )

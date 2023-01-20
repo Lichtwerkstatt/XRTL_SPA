@@ -7,6 +7,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
+  const [lastClosedComponent, setLastClosedComponent] = useState('');
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -15,16 +16,22 @@ export function AppContextProvider({ children }) {
   const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
+  const [showLED, setShowLED] = useState(false);
   const [logs, setLogs] = useState([]);
 
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
-      setSelectedComps(prev => new Set(prev.add(compId)))
+      setSelectedComps(prev => new Set(prev.add(compId)));
     } else {
-      setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)))
+      setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
+      setLastClosedComponent(compId);
     }
   };
+
+  const toogleLastComp = () => {
+    setLastClosedComponent('');
+  }
 
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
@@ -42,10 +49,6 @@ export function AppContextProvider({ children }) {
     setLogs(prev => [log, ...prev])
   };
 
-  const toggleShowBeam = () => {
-    setShowBeam(!showBeam);
-  }
-
   const toggleShowInfoWindow = () => {
     setShowInfoWindow(!showInfoWindow);
   }
@@ -56,6 +59,17 @@ export function AppContextProvider({ children }) {
 
   const toggleCam = () => {
     setShowCam(!showCam);
+    toggleSelectedComp('Cam_1')
+  }
+
+  const toggleShowLED = (newVal) => {
+    console.log(newVal)
+    setShowLED(newVal);
+  }
+
+  const toggleShowBeam = (newVal) => {
+    console.log(newVal)
+    setShowBeam(newVal);
   }
 
   return (
@@ -79,7 +93,11 @@ export function AppContextProvider({ children }) {
         toggleShowInfoWindow,
         toggleLogin,
         toggleCam,
-        showCam
+        showCam,
+        lastClosedComponent,
+        toogleLastComp,
+        showLED,
+        toggleShowLED
       }}
     >
       {children}

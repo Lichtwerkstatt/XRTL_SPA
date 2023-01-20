@@ -19,10 +19,14 @@ const SliderCtrl = (props) => {
     setSliderPos(newValue)
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
-      color: socketCtx.fontColor,
       controlId: props.component,
       [props.option]: newValue
     })
+
+    socketCtx.socket.emit('command', {
+      controlId: props.led,
+      color: socketCtx.fontColor,
+    });
 
     socketCtx.socket.emit("footer", {
       status: "Last change by: " + socketCtx.username,
@@ -34,16 +38,15 @@ const SliderCtrl = (props) => {
 
   if (props.text) {
     return (
-      <Box sx={{ width: 250, m: 2 }}>
+      <Box sx={{ width: 300, m: 2 }}>
         <Typography id="input-slider" gutterBottom>
           {props.title}
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
             id="brightnessSlider"
-
             valueLabelDisplay="auto"
-            step={1}
+            step={90}
             min={props.min}
             max={props.max}
             value={props.sliderValue}
@@ -63,7 +66,6 @@ const SliderCtrl = (props) => {
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
             id="brightnessSlider"
-
             valueLabelDisplay="auto"
             step={1}
             min={props.min}

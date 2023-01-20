@@ -32,6 +32,7 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
+          LED={'led_KM100'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -45,6 +46,7 @@ const MichelsonInterferometer = (props) => {
           title="Mirror Stage"
           controlId={'linear_1'}
           id={componentList[1]}
+          LED={'led_linear'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -58,6 +60,7 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
+          LED={'led_laser'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -70,6 +73,7 @@ const MichelsonInterferometer = (props) => {
         <LaserCtrl
           title="Power Supply"
           controlId={'greenlaser_1'}
+          LED={'led_linear'}
           footer={footer}
           top={topHigh}
           left={leftRight}
@@ -80,6 +84,7 @@ const MichelsonInterferometer = (props) => {
         <ESPCam
           title="Screen"
           controlId={'screen'}
+          LED={'led_screen'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -89,9 +94,10 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has('heater') && (
         <Heater
           title="Heater"
+          id={'heater'}
           controlIdHeater={'heater'}
           controlIdThermistor={'thermistor'}
-          id={'heater'}
+          LED={'led_heater'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -99,10 +105,11 @@ const MichelsonInterferometer = (props) => {
       )}
 
       {/* Beam splitter */}
-      {props.selected.has('beamSplitter') && (
+      {props.selected.has('experimentSelection') && (
         <BeamSplitter
           title="Beam splitter"
-          controlId={'beamSplitter'}
+          controlId={'experimentSelection'}
+          LED={'led_beamSplitter'}
           footer={footer}
           top={topMiddle}
           left={halfWidth}

@@ -67,6 +67,7 @@ const HeaterCtrl = (props) => {
             controlId: props.component,
             getStatus: true
         })
+
         socketCtx.socket.emit('getFooter', props.component)
 
         socketCtx.socket.on("status", status);
@@ -103,13 +104,13 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="PowerSwitch" component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+                            <Slider title="PowerSwitch" component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
                         </div>
                     </Box>
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.componentT} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
+                        <Switch component={props.componentT} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>
@@ -133,18 +134,18 @@ const HeaterCtrl = (props) => {
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title="PowerSwitch" component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+                            <Slider title="PowerSwitch" component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
                         </div>
                         <div style={{ paddingLeft: 20 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
-                            <Select title="Average time (ms)" component={props.componentT} online={onlineStatus} option="averageTime" />
-                            <Select title="Update time (s)" component={props.componentT} online={onlineStatus} option="updateTime" />
+                            <Select title="Average time (ms)" component={props.componentT} led={props.led} online={onlineStatus} option="averageTime" />
+                            <Select title="Update time (s)" component={props.componentT} led={props.led} online={onlineStatus} option="updateTime" />
                         </div>
                     </Box>
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.componentT} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
+                        <Switch component={props.componentT} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>

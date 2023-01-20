@@ -82,6 +82,12 @@ io.on('connection', socket => {
         console.log('Command received: ', payload);
     });
 
+    socket.on('LED', payload => {
+        socket.broadcast.emit('LED', payload);
+        console.log('LED received: ', payload);
+    });
+
+
     //Returns the status of a experiment component
     socket.on('status', payload => {
         var today = new Date();
@@ -157,6 +163,7 @@ io.on('connection', socket => {
     })
 
     socket.on('watcher disconnect', () => {
+        console.log("atcher weg")
         io.emit('disconnect peerConnection', socket.id);
     })
 
@@ -199,6 +206,7 @@ io.on('connection', socket => {
                 stream: false
             });
         }
+        console.log("dort   ", payload);
         socket.leave(payload.controlId);
     });
 

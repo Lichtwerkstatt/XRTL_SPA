@@ -6,10 +6,10 @@ import Slider from "../templates/SliderCtrl";
 
 
 const BeamSplitterCtrl = (props) => {
-    const marks = [{ value: 0, label: 'None', }, { value: 1, label: 'Glas', }, { value: 2, label: 'Laser', },];
+    const marks = [{ value: 0, label: 'None', }, { value: 90, label: 'Beam splitter', }, { value: 180, label: 'Pinhole', }, { value: 270, label: 'White LED', }, { value: 360, label: 'Red LED', },];
     const [onlineStatus, setOnlineStatus] = useState(true);
     const socketCtx = useSocketContext();
-   
+
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -37,7 +37,7 @@ const BeamSplitterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.controlId === props.component) {
-                setOnlineStatus(!payload.online)
+                setOnlineStatus(payload.online)
                 props.newStatus(String(payload.status))
             }
         }
@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider title="Glas option" component={props.component} min={0} max={2} command="glas" text={marks} online={onlineStatus} option="binaryCtrl" />
+                <Slider title="Glas option" component={props.component} online={onlineStatus} led={props.led} min={0} max={360} text={marks} option="moveTo" />
             </Box>
         </ThemeProvider>
     )

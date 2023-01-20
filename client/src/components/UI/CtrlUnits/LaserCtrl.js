@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import Switch from '../templates/Switch';
 
 const LaserCtrl = (props) => {
-  const [switchValue, setSwitch] = useState(false);
+  const [switchIsOn, setSwitch] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const socketCtx = useSocketContext();
 
@@ -36,7 +36,7 @@ const LaserCtrl = (props) => {
 
     const getFooter = (payload) => {
       if (payload.controlId === props.component) {
-        setOnlineStatus(!payload.online)
+        setOnlineStatus(payload.online)
         props.newStatus(String(payload.status))
       }
     }
@@ -69,7 +69,7 @@ const LaserCtrl = (props) => {
     <div className="switchOnOff">
       <ThemeProvider theme={theme} >
         <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchValue} start='Off' end='On' option="switch" />
+          <Switch component={props.component} led={props.led} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>

@@ -1,4 +1,4 @@
-import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
+import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl2";
 import { useSocketContext } from "../../services/SocketContext";
 import { usePopUpContext } from "../../services/PopUpContext";
 import { useAppContext } from "../../services/AppContext";
@@ -68,7 +68,7 @@ const BeamSplitter = (props) => {
       top={props.top}
       left={props.left}
       height="140px"
-      width="320px"
+      width="360px"
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
@@ -78,6 +78,7 @@ const BeamSplitter = (props) => {
         rotation={props.rotationTop}
         component={props.controlId}
         newStatus={handleChangeFooter}
+        led={props.LED}
         footer={footer}
         top="20"
         left="160"
