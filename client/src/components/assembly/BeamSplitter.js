@@ -67,7 +67,7 @@ const BeamSplitter = (props) => {
       footer={footer}
       top={props.top}
       left={props.left}
-      height="140px"
+      height="190px"
       width="360px"
       onClose={handleCloseWindow}
       onReset={handleReset}
