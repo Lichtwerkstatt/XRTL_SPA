@@ -21,7 +21,7 @@ const peerConnections ={};
 const webcamEmit = async () => {
     const socket = io.connect("http://localhost:7000", { auth: { token: token }, autoConnect: true });
     const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
-    const config = { iceServers: [{ urls: ["stun:stun.stunprotocol.org"] }] }
+    const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] }
     const stream = await navigator.mediaDevices.getUserMedia(contraints);
 
     console.log("connected?")
