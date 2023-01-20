@@ -38,7 +38,7 @@ const SliderCtrl = (props) => {
 
   if (props.text) {
     return (
-      <Box sx={{ width: 250, m: 2 }}>
+      <Box sx={{ width: 300, m: 2 }}>
         <Typography id="input-slider" gutterBottom>
           {props.title}
         </Typography>

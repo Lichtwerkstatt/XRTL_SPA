@@ -1,7 +1,7 @@
 import { useSocketContext } from '../../../services/SocketContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
-import Slider from '../templates/SliderCtrl';
+import Switch from '../templates/Switch';
 import Box from '@mui/material/Box';
 
 const BeamSplitterCtrl = (props) => {
@@ -68,7 +68,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider title="Beam Options"  component={props.component} led={props.led} switchStatus={switchIsOn} online={onlineStatus} sliderValue={contrast} min={-2} max={2}   option='binaryCtrl' />
+                <Switch component={props.component} led={props.led} switchStatus={switchIsOn} online={onlineStatus} start='Off' end='On' option='binaryCtrl' />
             </Box>
         </ThemeProvider>
     )
