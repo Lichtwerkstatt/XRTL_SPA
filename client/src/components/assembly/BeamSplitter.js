@@ -1,4 +1,4 @@
-import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
+import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl2";
 import { useSocketContext } from "../../services/SocketContext";
 import { usePopUpContext } from "../../services/PopUpContext";
 import { useAppContext } from "../../services/AppContext";

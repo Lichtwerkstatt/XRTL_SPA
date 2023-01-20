@@ -21,6 +21,18 @@ const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
+    // const theme = createTheme({
+    //     palette: {
+    //       mode: 'dark',
+    //       primary: {
+    //         light: '#01bd7d',
+    //         main: '#01bd7d',
+    //         dark: '#01bd7d',
+    //         contrastText: '#fff',
+    //       },
+    //     }
+    //   })
+
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
     let autoRotateColor = '';
@@ -42,10 +54,17 @@ const NavBar = () => {
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <Fragment>
-                            <IconButton variant="contained" {...bindTrigger(popupState)}>
+                            <IconButton variant="contained" {...bindTrigger(popupState)} sx={{
+                                borderRadius: 1,
+                                color: 'black',
+                                ':hover': {
+                                    bgcolor: 'darkgreen',
+                                    color: '#00ffa8',
+                                }
+                            }}>
                                 <AutoAwesomeOutlinedIcon />
                             </IconButton>
-                            <Menu {...bindMenu(popupState)}>
+                            <Menu {...bindMenu(popupState)} sx={{ color: { mode: 'dark' } }} >
                                 <MenuItem onClick={() => {
                                     popupState.close();
                                     appCtx.toggleShowLED('none');
@@ -65,7 +84,15 @@ const NavBar = () => {
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <Fragment>
-                            <IconButton variant="contained" {...bindTrigger(popupState)}>
+                            <IconButton variant="contained" size='20' sx={{
+
+                                borderRadius: 1,
+                                color: 'black',
+                                ':hover': {
+                                    bgcolor: 'darkgreen',
+                                    color: '#00ffa8',
+                                }
+                            }}  {...bindTrigger(popupState)}>
                                 <GiLaserWarning />
                             </IconButton>
                             <Menu {...bindMenu(popupState)}>
