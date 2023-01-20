@@ -37,7 +37,7 @@ const BeamSplitterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.controlId === props.component) {
-                setOnlineStatus(!payload.online)
+                setOnlineStatus(payload.online)
                 props.newStatus(String(payload.status))
             }
         }

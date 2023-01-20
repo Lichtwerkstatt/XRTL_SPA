@@ -36,7 +36,7 @@ const LaserCtrl = (props) => {
 
     const getFooter = (payload) => {
       if (payload.controlId === props.component) {
-        setOnlineStatus(true)
+        setOnlineStatus(payload.online)
         props.newStatus(String(payload.status))
       }
     }

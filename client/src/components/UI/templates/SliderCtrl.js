@@ -46,7 +46,7 @@ const SliderCtrl = (props) => {
           <Slider aria-label="Temperature"
             id="brightnessSlider"
             valueLabelDisplay="auto"
-            step={1}
+            step={90}
             min={props.min}
             max={props.max}
             value={props.sliderValue}

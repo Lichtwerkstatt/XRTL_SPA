@@ -264,7 +264,7 @@ function Model({ ...props }) {
         position={[3.56, 0.47, 0.14]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("beamSplitter");
+          props.toggleSelect("experimentSelection");
         }} >
         <Box
           position={[-3.3, 0.1, -0.3]}
