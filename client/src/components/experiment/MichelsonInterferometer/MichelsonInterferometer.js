@@ -22,7 +22,6 @@ const MichelsonInterferometer = (props) => {
   var leftMiddleRight = String(width - (halfWidth * 0.4))
   var leftCam = String(width - (halfWidth * 1.485))
 
-  var componentList = ['Michelson_KM100', 'Michelson_linear', 'Michelson_laser', 'Michelson_LaserPower', 'Michelson_cam', 'Michelson_heater', 'Cam_1', 'Michelson_beamSplitter']
   return (
     <div>
       {/* KM100 */}
@@ -66,7 +65,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has('roatary_2') && (
         <SM1ZP
           title="Measure Stage"
-          id={componentList[1]}
+          controlId={'heater_rotation'}
           footer={footer}
           rotation={zero}
           top={topHighMiddle}

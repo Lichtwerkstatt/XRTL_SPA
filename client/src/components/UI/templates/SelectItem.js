@@ -15,11 +15,12 @@ const SelectItem = (props) => {
             controlId: props.component,
             [props.option]: newValue.props.value
         })
-
-        socketCtx.socket.emit('command', {
-            controlId: props.led,
-            color: socketCtx.fontColor,
-        });
+        if (props.led) {
+            socketCtx.socket.emit('command', {
+                controlId: props.led,
+                color: socketCtx.fontColor,
+            });
+        }
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,

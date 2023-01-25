@@ -55,8 +55,6 @@ const HeaterCtrl = (props) => {
         }
 
         const data = (payload) => {
-            console.log(payload)
-
             var string = payload.data.data;
             try { string = string.toFixed(2) + " °C" } catch (e) { string = '-°C' }
             setTemp(string);
