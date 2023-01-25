@@ -287,7 +287,7 @@ export function Model(props) {
           position={[-1.76, 0.62, 0.03]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("roatary_1");
+            props.toggleSelect("linear_1");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 0.8, 0]} title="Transtlate Mirror" description="Linear Stage" />}
@@ -304,7 +304,7 @@ export function Model(props) {
               <meshStandardMaterial color="#222222" opacity={1.0} />
             )}
           </mesh>
-          
+
           <mesh
             name="TranslateMirrorMesh005_1"
             castShadow
