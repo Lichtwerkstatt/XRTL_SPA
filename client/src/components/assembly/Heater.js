@@ -76,7 +76,7 @@ const Heater = (props) => {
     }, [socketCtx.socket]);
 
     useEffect(() => {
-        socketCtx.socket.emit('join stream room', { controlId: props.controlId, userId: socketCtx.username });
+        socketCtx.socket.emit('join stream room', { controlId: props.controlIdThermistor, userId: socketCtx.username });
 
         return () => {
 

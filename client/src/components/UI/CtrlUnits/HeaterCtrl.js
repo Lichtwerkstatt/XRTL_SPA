@@ -55,11 +55,12 @@ const HeaterCtrl = (props) => {
         }
 
         const data = (payload) => {
-            if (payload.dataId === 'thermistor') {
-                var string = payload.data.data.data;
-                try { string = string.toFixed(2) + " °C" } catch (e) { string = '-°C' }
-                setTemp(string);
-            }
+            console.log(payload)
+
+            var string = payload.data.data;
+            try { string = string.toFixed(2) + " °C" } catch (e) { string = '-°C' }
+            setTemp(string);
+
         }
 
         socketCtx.socket.emit("command", {
@@ -110,7 +111,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.componentT} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
+                        <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>
@@ -145,7 +146,7 @@ const HeaterCtrl = (props) => {
                 </div>
                 <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.componentT} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
+                        <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>
                 </div>
             </ThemeProvider>

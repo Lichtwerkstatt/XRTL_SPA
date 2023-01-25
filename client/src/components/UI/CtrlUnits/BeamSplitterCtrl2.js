@@ -28,8 +28,8 @@ const BeamSplitterCtrl = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
-                setSwitchWhiteStatus(payload.whiteIsOn);
-                setSwitchRedStatus(payload.redIsOn);
+                setSwitchWhiteStatus(payload.isOn);
+                setSwitchRedStatus(payload.isOn);
                 console.log("Status of settings:   ", payload)
             }
         }
