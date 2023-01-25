@@ -45,7 +45,6 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Mirror Stage"
           controlId={'linear_1'}
-          id={componentList[1]}
           LED={'led_linear'}
           footer={footer}
           rotation={zero}
@@ -54,10 +53,9 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Prism*/}
-      {props.selected.has('Michelson_prism') && (
+      {props.selected.has('roatary_1') && (
         <SM1ZP
           title="Prism Stage"
-          id={componentList[1]}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -65,7 +63,7 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Measurement Mirror*/}
-      {props.selected.has('Michelson_measure') && (
+      {props.selected.has('roatary_2') && (
         <SM1ZP
           title="Measure Stage"
           id={componentList[1]}
@@ -131,8 +129,8 @@ const MichelsonInterferometer = (props) => {
         <BeamSplitter
           title="Experimental selection"
           controlId={'experimentSelection'}
-          controlLED ={'redLED'}
-          controlLED2 ={'whiteLED'}
+          controlLED={'redLED'}
+          controlLED2={'whiteLED'}
           LED={'led_selection'}
           footer={footer}
           top={topMiddle}
