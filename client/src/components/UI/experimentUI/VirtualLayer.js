@@ -28,6 +28,7 @@ const VirtualLayer = () => {
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
             showBeam={appCtx.showBeam}
+            showLED={appCtx.showLED}
           />
         </Suspense>
       </Canvas>

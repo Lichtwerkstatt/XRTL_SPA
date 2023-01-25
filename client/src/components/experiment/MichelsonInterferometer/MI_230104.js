@@ -6,6 +6,7 @@ import React, { useRef, memo } from 'react';
 import { useGLTF, Box, Cylinder} from '@react-three/drei';
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
 import {isEqual} from 'lodash';
+import {useAppContext} from '../../../services/AppContext'
 
 export function Model(props) {
   const group = useRef()
@@ -118,7 +119,7 @@ export function Model(props) {
           position={[0,0,0]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_KM100");
+            props.toggleSelect("KM100_1");
           }}
         >
           {props.showTags && <DescriptiveTag position={[-0.5, 1.3, 0.9]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
@@ -129,7 +130,7 @@ export function Model(props) {
             geometry={nodes.SideMirrorMesh.geometry}
             material={materials.BlackParts}
           >
-            {props.selected.has("Michelson_KM100") ? (
+            {props.selected.has("KM100_1") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
               ) : (
                 <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -157,7 +158,7 @@ export function Model(props) {
           position={[0, 0, 0]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_cam");
+            props.toggleSelect("screen");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.5, -1.3]} title="Screen" description="Screen with Interference Pattern" />}
@@ -182,7 +183,7 @@ export function Model(props) {
           position={[0, 0, 0]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_laser");
+            props.toggleSelect("greenlaser_1");
           }}
         >
           {props.showTags && <DescriptiveTag position={[1.6, 1.3, 0]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
@@ -193,7 +194,7 @@ export function Model(props) {
             geometry={nodes.LaserMesh.geometry}
             material={materials.BlackParts}
           >
-            {props.selected.has("Michelson_laser") ? (
+            {props.selected.has("greenlaser_1") ? (
                 <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
               ) : (
                 <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -216,34 +217,90 @@ export function Model(props) {
           material={materials.BlackParts}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_LaserPower")
+            props.toggleSelect("greenlaserPower_1")
           }}
         >
           {props.showTags && <DescriptiveTag position={[1.4, 1.1, -0.8]} title="Power Supply" description="5V Laser Power Supply" />}
-          {props.selected.has("Michelson_LaserPower") ? (
+          {props.selected.has("greenlaserPower_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
           )}
         </mesh>
-        {props.showBeam &&
-          <mesh
+
+        {/* switch (props.showBeam) {
+          case 'split':
+            <mesh
+            name="LaserBeamBS"
+            geometry={nodes.LaserBeamBS.geometry}
+            material={materials.Laser}
+            position={[-0.53, 0.68, -0.13]}
+            rotation={[0, 0, -Math.PI / 2]}
+            scale={0.17}
+            >
+              <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
+            </mesh>
+          case 'on':
+            <mesh
             name="LaserBeam"
             castShadow
             receiveShadow
             geometry={nodes.LaserBeam.geometry}
             material={materials.Laser}
-          >
-            <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
-          </mesh>
-          }
+            >
+              <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
+            </mesh>
+            break;
+          case 'off':
+          default:      
+        }  */}
+
+        {
+          (props.showLED === 'white') ? (
+            <mesh
+              name="LEDLightWhite"
+              geometry={nodes.LEDLightWhite.geometry}
+              material={materials.LEDWhite}
+              position={[-0.7, 0.67, -0.12]}
+              rotation={[-Math.PI / 2, Math.PI / 2, 0]}
+              scale={0.17}
+            >
+              <meshStandardMaterial color="#ffffff" transparent opacity={0} emissive emissiveIntensity={1}/>
+            </mesh>
+          ) : (
+            <mesh/>
+          )
+        }
+
+{
+          (props.showLED === 'red') ? (
+            <mesh
+              name="LEDLightRed"
+              geometry={nodes.LEDLightRed.geometry}
+              material={materials.LEDRed}
+              position={[-0.7, 0.67, -0.12]}
+              rotation={[-Math.PI / 2, Math.PI / 2, 0]}
+              scale={0.17}
+            >
+              <meshStandardMaterial color="#ff3900" transparent opacity={0.8} emissive emissiveIntensity={1}/>
+            </mesh>
+          ) : (
+            <mesh/>
+          )
+        }
+
+
+
+        
+        
+
      
         <group
           name="BS_slim"
           position={[0.64, 0, -0.52]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_beamSplitter");
+            props.toggleSelect("beamSplitter");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Beam Splitter" description="Observation of second IM Path" />}
@@ -254,7 +311,7 @@ export function Model(props) {
             geometry={nodes.Cylinder.geometry}
             material={materials.BlackParts}
           >
-            {props.selected.has("Michelson_beamSplitter") ? (
+            {props.selected.has("beamSplitter") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -267,27 +324,14 @@ export function Model(props) {
             geometry={nodes.Cylinder_1.geometry}
             material={materials.ShinyParts}
           />
-        </group>
-        
-        {props.showBeam &&
-        <mesh
-          name="LaserBeamBS"
-          geometry={nodes.LaserBeamBS.geometry}
-          material={materials.Laser}
-          position={[-0.53, 0.68, -0.13]}
-          rotation={[0, 0, -Math.PI / 2]}
-          scale={0.17}
-        >
-          <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
-        </mesh>
-        }       
+        </group>     
           
         <group
           name="TranslateMirror"
           position={[-1.76, 0.62, 0.03]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_linear");
+            props.toggleSelect("linear_1");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 0.8, 0]} title="Transtlate Mirror" description="Linear Stage" />}
@@ -298,7 +342,7 @@ export function Model(props) {
             geometry={nodes.TranslateMirrorMesh005.geometry}
             material={materials.BlackParts}
           >
-            {props.selected.has("Michelson_linear") ? (
+            {props.selected.has("linear_1") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
               ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -335,7 +379,7 @@ export function Model(props) {
           rotation={[0, -Math.PI / 2, 0]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_heater");
+            props.toggleSelect("heater");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Heated Mirror" description="Observation of Thermal Expansion" />}
@@ -346,7 +390,7 @@ export function Model(props) {
             geometry={nodes.Cylinder008.geometry}
             material={materials['Material.002']}
           >
-            {props.selected.has("Michelson_heater") ? (
+            {props.selected.has("heater") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#884422" opacity={1.0} />
@@ -359,7 +403,7 @@ export function Model(props) {
             geometry={nodes.Cylinder008_1.geometry}
             material={materials['BlackParts.001']}
           >
-            {props.selected.has("Michelson_heater") ? (
+            {props.selected.has("heater") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -393,7 +437,7 @@ export function Model(props) {
             geometry={nodes.Cylinder008_5.geometry}
             material={materials.BlackParts}
           >
-            {props.selected.has("Michelson_heater") ? (
+            {props.selected.has("heater") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -406,7 +450,7 @@ export function Model(props) {
           position={[-2.38, 0.11, -1.01]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_measure");
+            props.toggleSelect("rotary_2");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Measurement" description="Choose betweene Translate Mirror and Heated Mirror" />}
@@ -417,7 +461,7 @@ export function Model(props) {
             geometry={nodes.TranslateMirrorMesh004.geometry}
             material={materials.BlackParts}
           >  
-            {props.selected.has("Michelson_measure") ? (
+            {props.selected.has("rotary_2") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -438,7 +482,7 @@ export function Model(props) {
           rotation={[0, -1.57, 0]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_prism");
+            props.toggleSelect("rotary_1");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Rotating Prisms" description="Measurement of Refractive Index" />}
@@ -449,7 +493,7 @@ export function Model(props) {
             geometry={nodes['PR01_M-Step001'].geometry}
             material={materials['BlackParts.004']}
           >
-            {props.selected.has("Michelson_prism") ? (
+            {props.selected.has("rotary_1") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -463,7 +507,7 @@ export function Model(props) {
             geometry={nodes['PR01_M-Step001_1'].geometry}
             material={materials['BlackParts.003']}
           >
-            {props.selected.has("Michelson_prism") ? (
+            {props.selected.has("rotary_1") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -491,28 +535,7 @@ export function Model(props) {
           material={materials.BlackParts}
         />
         
-        <mesh
-          name="LEDLightWhite"
-          geometry={nodes.LEDLightWhite.geometry}
-          material={materials.LEDWhite}
-          position={[-0.7, 0.67, -0.12]}
-          rotation={[-Math.PI / 2, Math.PI / 2, 0]}
-          scale={0.17}
-        >
-          <meshStandardMaterial color="#ffffff" transparent opacity={0} emissive emissiveIntensity={1}/>
-        </mesh>
-        
-        
-        <mesh
-          name="LEDLightRed"
-          geometry={nodes.LEDLightRed.geometry}
-          material={materials.LEDRed}
-          position={[-0.7, 0.67, -0.12]}
-          rotation={[-Math.PI / 2, Math.PI / 2, 0]}
-          scale={0.17}
-        >
-          <meshStandardMaterial color="#ff3900" transparent opacity={0.8} emissive emissiveIntensity={1}/>
-        </mesh>
+
         
         <mesh
           name="BS_slimHolder"
@@ -531,7 +554,7 @@ export function Model(props) {
           scale={0.05}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("Michelson_beamSplitter");
+            props.toggleSelect("beamSplitter");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 17, 0]} title="LED" description="Measurement of Coherent Length" />}
@@ -549,7 +572,7 @@ export function Model(props) {
             geometry={nodes.Cylinder007_1.geometry}
             material={materials['BlackParts.005']}
           >
-            {props.selected.has("Michelson_beamSplitter") ? (
+            {props.selected.has("beamSplitter") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />

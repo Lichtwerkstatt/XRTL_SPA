@@ -4,6 +4,7 @@ import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import ESPCam from "../../assembly/ESPCamStream";
 import BeamSplitter from "../../assembly/BeamSplitter"
+import Rotary from "../../assembly/Rotary"
 
 
 const MichelsonInterferometer = (props) => {
@@ -52,10 +53,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Prism*/}
-      {props.selected.has('Michelson_prism') && (
-        <SM1ZP
+      {props.selected.has('rotary_1') && (
+        <Rotary
           title="Prism Stage"
-          id={componentList[1]}
+          controlId={'rotary_1'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -63,10 +64,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Measurement Mirror*/}
-      {props.selected.has('Michelson_measure') && (
-        <SM1ZP
+      {props.selected.has('rotary_2') && (
+        <Rotary
           title="Measure Stage"
-          id={componentList[1]}
+          controlId={'rotary_2'}
           footer={footer}
           rotation={zero}
           top={topHighMiddle}
