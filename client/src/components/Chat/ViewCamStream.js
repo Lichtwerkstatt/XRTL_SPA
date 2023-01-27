@@ -5,8 +5,8 @@ const ViewCam = (props) => {
     const socketCtx = useSocketContext();
 
     useEffect(() => {
-        socketCtx.socket.emit('viewer', props.component)
         var peerConnection;
+        
         const offer = (payload) => {
             peerConnection = props.peer;
             peerConnection
