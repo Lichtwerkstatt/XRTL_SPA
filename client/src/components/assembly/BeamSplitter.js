@@ -16,7 +16,7 @@ const BeamSplitter = (props) => {
   const popupCtx = usePopUpContext();
 
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
+    appCtx.toggleSelectedComp(props.controlId)
   }
 
   const handleReset = () => {
