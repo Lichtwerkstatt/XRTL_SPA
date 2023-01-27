@@ -78,7 +78,8 @@ const InfoWindow = (props) => {
         >
             <ViewCam
                 title="Cam_1"
-                id="Cam_1"
+                component="Cam_1"
+                peer ={peerConnection}
                 footer={footer}
                 newStatus={handleChangeFooter}
             />
