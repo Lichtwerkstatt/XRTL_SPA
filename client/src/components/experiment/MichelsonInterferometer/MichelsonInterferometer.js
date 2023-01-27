@@ -52,9 +52,10 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Prism*/}
-      {props.selected.has('roatary_1') && (
+      {props.selected.has('rotary_1') && (
         <SM1ZP
           title="Prism Stage"
+          controlId={'prism_rotation'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -62,7 +63,7 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Measurement Mirror*/}
-      {props.selected.has('roatary_2') && (
+      {props.selected.has('rotary_2') && (
         <SM1ZP
           title="Measure Stage"
           controlId={'heater_rotation'}
