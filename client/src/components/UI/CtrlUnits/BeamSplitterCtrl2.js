@@ -27,11 +27,14 @@ const BeamSplitterCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            if (payload.controlId === props.component) {
+            if (payload.controlId === props.redLED) {
                 setSwitchWhiteStatus(payload.isOn);
-                setSwitchRedStatus(payload.isOn);
-                console.log("Status of settings:   ", payload)
             }
+            if (payload.controlId === props.whiteLED) {
+                setSwitchRedStatus(payload.isOn);
+            }
+
+            console.log("Status of settings:   ", payload)
         }
 
         const footer = (payload) => {
@@ -73,9 +76,9 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider  component={props.component} online={onlineStatus} led={props.led} min={14} max={117} text={marks} option="moveTo" />
-                <Switch component={props.component} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='binaryCtrl' />
-                <Switch component={props.component} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='binaryCtrl' />
+                <Slider component={props.component} online={onlineStatus} led={props.led} min={14} max={117} text={marks} option="moveTo" />
+                <Switch component={props.whiteLED} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='switch' />
+                <Switch component={props.redLED} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='switch' />
             </Box>
         </ThemeProvider>
     )
