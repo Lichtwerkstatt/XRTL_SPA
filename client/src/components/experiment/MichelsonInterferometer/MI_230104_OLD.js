@@ -442,7 +442,7 @@ export function Model(props) {
             props.toggleSelect("roatary_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Rotating Prisms" description="Measurement of Refractive Index" />}
+          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Rotating Plats" description="Measurement of Refractive Index" />}
           <mesh
             name="PR01_M-Step001"
             castShadow

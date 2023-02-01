@@ -48,7 +48,7 @@ const NavBar = () => {
 
     return <div id='navbar' className={styles.navbar} >
         <h1>XR TwinLab</h1>
-        <h3>Setup-laser:</h3>
+        <h3>Overlay:</h3>
         <div className={styles.navMenuLaser}>
             <ul>
                 <PopupState variant="popover" popupId="demo-popup-menu">

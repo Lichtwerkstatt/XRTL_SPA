@@ -52,11 +52,11 @@ const MichelsonInterferometer = (props) => {
           left={leftMiddle}
         />
       )}
-      {/* Rotary stage Prism*/}
+      {/* Rotary stage plate*/}
       {props.selected.has('rotary_1') && (
         <Rotary
-          title="Prism Stage"
-          controlId={'prism_rotation'}
+          title="Plate Stage"
+          controlId={'plate_rotation'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -129,7 +129,7 @@ const MichelsonInterferometer = (props) => {
       {/* Beam splitter */}
       {props.selected.has('experimentSelection') && (
         <BeamSplitter
-          title="Experimental selection"
+          title="Beam modifier/LED"
           controlId={'experimentSelection'}
           controlLED={'redLED'}
           controlLED2={'whiteLED'}
