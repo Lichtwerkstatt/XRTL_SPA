@@ -5,7 +5,7 @@ div.login {
 div.close{
     position:absolute;
     top: 10px;
-    left: 85%;
+    left: 87%;
 }
 
 div.popupWindow {
@@ -17,7 +17,7 @@ div.popupWindow {
 }
 
 div.popupInner {
-    width: 370px;
+    width: 450px;
     height: 275px;
     position:absolute;
     top: 45%;

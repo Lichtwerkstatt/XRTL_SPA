@@ -79,10 +79,12 @@ export function SocketContextProvider({ children }) {
     setFontColor(newFont);
   }
 
-  const toggleConnection = (username) => {
+  const toggleConnection = (username, accessCode) => {
+    accessCode='access';
     if (!connected) {
       var payload = {
         sub: username,
+        code: accessCode,
         component: 'client',
         iat: Date.now(),
         exp: Date.now() + 1800000,
