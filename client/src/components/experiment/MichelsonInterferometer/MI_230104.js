@@ -6,7 +6,6 @@ import React, { useRef, memo } from 'react';
 import { useGLTF, Box, Cylinder} from '@react-three/drei';
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
 import {isEqual} from 'lodash';
-import {useAppContext} from '../../../services/AppContext'
 
 export function Model(props) {
   const group = useRef()

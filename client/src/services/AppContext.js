@@ -12,6 +12,7 @@ export function AppContextProvider({ children }) {
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
+  const [showRotary, setShowRotary] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
@@ -71,6 +72,11 @@ export function AppContextProvider({ children }) {
     console.log(newVal)
     setShowBeam(newVal);
   }
+  
+  const toggleChangeRotary = () => {
+   
+    setShowBeam(!showRotary);
+  }
 
   return (
     <AppContext.Provider
@@ -97,7 +103,9 @@ export function AppContextProvider({ children }) {
         lastClosedComponent,
         toogleLastComp,
         showLED,
-        toggleShowLED
+        toggleShowLED,
+        setShowRotary,
+        toggleChangeRotary
       }}
     >
       {children}
