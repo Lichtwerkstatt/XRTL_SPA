@@ -13,10 +13,10 @@ export function AppContextProvider({ children }) {
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [showBeam, setShowBeam] = useState(false);
+  const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
-  const [showLED, setShowLED] = useState(false);
+  const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);
 
 
