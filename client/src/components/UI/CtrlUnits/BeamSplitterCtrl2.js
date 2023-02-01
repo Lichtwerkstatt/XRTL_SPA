@@ -73,7 +73,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Slider title="Experimental selection" component={props.component} online={onlineStatus} led={props.led} min={0} max={360} text={marks} option="moveTo" />
+                <Slider  component={props.component} online={onlineStatus} led={props.led} min={0} max={360} text={marks} option="moveTo" />
                 <Switch component={props.component} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='binaryCtrl' />
                 <Switch component={props.component} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='binaryCtrl' />
             </Box>
