@@ -15,7 +15,7 @@ export function Model(props) {
       <group name="Scene">
         <group name="Optical elements">
           {/* Glass Materials need to be generated here*/}
-          {/* experimentSelection */}
+          {/* Beam Splitter cube */}
           <Box
             position={[-0.55, 0.66, -0.1]}
             args={[1, 1, 1]}
@@ -34,7 +34,7 @@ export function Model(props) {
               attenuationDistance={5}
             />
           </Box>
-          {/* Prism1 */}
+          {/* Refraction Plate 1 */}
           <Box
             position={[-0.45, 0.55, 0.58]}
             args={[1, 1, 1]}
@@ -53,7 +53,7 @@ export function Model(props) {
               attenuationDistance={5}
             />
           </Box>
-          {/* Prism2 */}
+          {/* Refraction Plate 2 */}
           <Box
             position={[0.2, 0.55, 0.44]}
             args={[1, 1, 1]}
@@ -72,7 +72,7 @@ export function Model(props) {
               attenuationDistance={5}
             />
           </Box>
-          {/* experimentSelection slim */}
+          {/* Beam Splitter slim is defined in 'off' Overlay*/}
 
           {/* Lens */}
           <Cylinder
@@ -416,36 +416,7 @@ export function Model(props) {
         }
 
         {(props.showLED === 'none') &&
-          <group
-          name="BS_slim"
-          position={[0.64, 0, -0.52]}
-          onPointerDown={(e) => {
-            e.stopPropagation();
-            props.toggleSelect("experimentSelection");
-          }}
-        >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Beam Splitter" description="Observation of second IM Path" />}
-          <mesh
-            name="Cylinder"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder.geometry}
-            material={materials.BlackParts}
-          >
-            {props.selected.has("experimentSelection") ? (
-              <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
-            ) : (
-              <meshStandardMaterial color="#222222" opacity={1.0} />
-            )}
-          </mesh>
-          <mesh
-            name="Cylinder_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder_1.geometry}
-            material={materials.ShinyParts}
-          />
-        </group>
+        <mesh/>
         }
 
         {(props.showLED === 'white') &&
@@ -801,7 +772,7 @@ export function Model(props) {
             props.toggleSelect("rotary_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Rotating Prisms" description="Measurement of Refractive Index" />}
+          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Difraction Plates" description="Measurement of Refractive Index" />}
           <mesh
             name="PR01_M-Step001"
             castShadow
