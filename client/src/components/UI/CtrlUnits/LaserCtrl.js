@@ -6,8 +6,8 @@ import { Box } from '@mui/material';
 import Switch from '../templates/Switch';
 
 const LaserCtrl = (props) => {
-  const [switchIsOn, setSwitch] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState(false);
+  const [switchIsOn, setSwitch] = useState(false);
   const socketCtx = useSocketContext();
 
   const theme = createTheme({

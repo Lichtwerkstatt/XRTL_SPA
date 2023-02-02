@@ -117,19 +117,19 @@ const HeaterCtrl = (props) => {
     } else {
         return (
             <ThemeProvider theme={theme}>
-                <div className={styles.Temp}>
+                <div className={styles.Temp2}>
                     <Typography id='temp' variant="h2">{temp}</Typography>
                     <IconButton onClick={hiddenSetting}  >
                         <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                     </IconButton>
                 </div>
-                <div className={styles.Canvas2}>
+                <div className={styles.Canvas22}>
                     <canvas id="Heater" />
                 </div>
-                <div className={styles.Canvas1}>
+                <div className={styles.Canvas12}>
                     <canvas id="Gauge" />
                 </div>
-                <div className={styles.Heater} >
+                <div className={styles.Heater2} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
@@ -142,7 +142,7 @@ const HeaterCtrl = (props) => {
                         </div>
                     </Box>
                 </div>
-                <div className={styles.Switch} >
+                <div className={styles.Switch2} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
                         <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>

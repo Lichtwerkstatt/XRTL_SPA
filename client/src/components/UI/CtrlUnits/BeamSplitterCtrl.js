@@ -1,13 +1,17 @@
-import { useSocketContext } from '../../../services/SocketContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
-import Switch from '../templates/Switch';
+import { useSocketContext } from "../../../services/SocketContext";
+import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
+import Slider from "../templates/SliderCtrl";
+import Switch from '../templates/Switch';
+import RadioButton from '../templates/RadioButton';
+
 
 const BeamSplitterCtrl = (props) => {
-    const [switchIsOn, setSwitchStatus] = useState(false);
+    const marks = [{ value: 14, label: 'Pinhole', }, { value: 41, label: 'White LED', }, { value: 65, label: 'Red LED', }, { value: 80, label: 'None', }, { value: 115, label: 'Beam splitter', }];
     const [onlineStatus, setOnlineStatus] = useState(true);
-
+    const [switchRedIsOn, setSwitchRedStatus] = useState(false);
+    const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
     const socketCtx = useSocketContext();
 
     const theme = createTheme({
@@ -24,9 +28,14 @@ const BeamSplitterCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            if (payload.controlId === props.component) {
-                setSwitchStatus(payload.status)
+            if (payload.controlId === props.redLED) {
+                setSwitchWhiteStatus(payload.isOn);
             }
+            if (payload.controlId === props.whiteLED) {
+                setSwitchRedStatus(payload.isOn);
+            }
+
+            console.log("Status of settings:   ", payload)
         }
 
         const footer = (payload) => {
@@ -37,12 +46,12 @@ const BeamSplitterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.controlId === props.component) {
-                setOnlineStatus(!payload.online)
+                setOnlineStatus(payload.online)
                 props.newStatus(String(payload.status))
             }
         }
 
-        socketCtx.socket.emit('command', {
+        socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
             getStatus: true
@@ -50,7 +59,7 @@ const BeamSplitterCtrl = (props) => {
 
         socketCtx.socket.emit('getFooter', props.component)
 
-        socketCtx.socket.on('status', status)
+        socketCtx.socket.on("status", status);
 
         socketCtx.socket.on('footer', footer)
 
@@ -62,13 +71,15 @@ const BeamSplitterCtrl = (props) => {
             socketCtx.socket.removeAllListeners('getFooter', getFooter)
         }
         //Comment needed to prevent a warning
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps      
     }, [socketCtx.socket]);
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <Switch component={props.component} led={props.led} switchStatus={switchIsOn} online={onlineStatus} start='Off' end='On' option='binaryCtrl' />
+                <RadioButton component={props.component} online={onlineStatus} led={props.led} min={14} max={117} text={marks} option="moveTo" />
+                <Switch component={props.whiteLED} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='switch' />
+                <Switch component={props.redLED} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='switch' />
             </Box>
         </ThemeProvider>
     )

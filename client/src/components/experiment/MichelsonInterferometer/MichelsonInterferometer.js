@@ -1,15 +1,15 @@
-import Laser from "../../assembly/Laser";
-import Heater from "../../assembly/Heater";
-import KM100 from "../../assembly/KM100";
-import SM1ZP from "../../assembly/SM1ZP";
-import ESPCam from "../../assembly/ESPCamStream";
-import BeamSplitter from "../../assembly/BeamSplitter";
-import Rotary from "../../assembly/Rotary";
+import BeamSplitter from '../../assembly/BeamSplitter';
+import ESPCam from '../../assembly/ESPCamStream';
+import Heater from '../../assembly/Heater';
+import Rotary from '../../assembly/Rotary';
+import Laser from '../../assembly/Laser';
+import KM100 from '../../assembly/KM100';
+import SM1ZP from '../../assembly/SM1ZP';
 
 
 const MichelsonInterferometer = (props) => {
-  let footer = "Initializing..."
-  var zero = "0"
+  let footer = 'Initializing...'
+  var zero = '0'
 
   var height = window.innerHeight;
   var width = window.innerWidth;
@@ -28,7 +28,7 @@ const MichelsonInterferometer = (props) => {
       {/* KM100 */}
       {props.selected.has('KM100_1') && (
         <KM100
-          title="Mirror"
+          title='Mirror'
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
@@ -43,7 +43,7 @@ const MichelsonInterferometer = (props) => {
       {/* Linear stage */}
       {props.selected.has('linear_1') && (
         <SM1ZP
-          title="Mirror Stage"
+          title='Mirror Stage'
           controlId={'linear_1'}
           LED={'led_linear'}
           footer={footer}
@@ -55,7 +55,7 @@ const MichelsonInterferometer = (props) => {
       {/* Rotary stage plate*/}
       {props.selected.has('rotary_1') && (
         <Rotary
-          title="Plate Stage"
+          title='Plate Stage'
           controlId={'plate_rotation'}
           footer={footer}
           rotation={zero}
@@ -66,7 +66,7 @@ const MichelsonInterferometer = (props) => {
       {/* Rotary stage Measurement Mirror*/}
       {props.selected.has('rotary_2') && (
         <Rotary
-          title="Measure Stage"
+          title='Measure Stage'
           controlId={'heater_rotation'}
           footer={footer}
           rotation={zero}
@@ -77,7 +77,7 @@ const MichelsonInterferometer = (props) => {
       {/* Laser ctrl */}
       {props.selected.has('greenlaser_1') && (
         <KM100
-          title="Laser"
+          title='Laser'
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
@@ -92,7 +92,7 @@ const MichelsonInterferometer = (props) => {
       {/* Laser power */}
       {props.selected.has('greenlaserPower_1') && (
         <Laser
-          title="Power Supply"
+          title='Power Supply'
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
           LED={'led_linear'}
@@ -104,7 +104,7 @@ const MichelsonInterferometer = (props) => {
       {/* Cam1 */}
       {props.selected.has('screen') && (
         <ESPCam
-          title="Screen"
+          title='Screen'
           controlId={'screen'}
           LED={'led_screen'}
           footer={footer}
@@ -115,7 +115,7 @@ const MichelsonInterferometer = (props) => {
       {/* Heater */}
       {props.selected.has('heater') && (
         <Heater
-          title="Heater"
+          title='Heater'
           id={'heater'}
           controlIdHeater={'heater'}
           controlIdThermistor={'thermistor'}
@@ -129,7 +129,7 @@ const MichelsonInterferometer = (props) => {
       {/* Beam splitter */}
       {props.selected.has('experimentSelection') && (
         <BeamSplitter
-          title="Beam modifier/LED"
+          title='Beam modifier/LED'
           controlId={'experimentSelection'}
           controlLED={'redLED'}
           controlLED2={'whiteLED'}
