@@ -68,7 +68,8 @@ io.on('connection', socket => {
         else {
             socket.disconnect();
         }
-    } else {
+    }
+    else if (socket.decoded.component === 'client' && socket.decoded.code !== 'access') {
         console.error("Connection failed: Wrong access code!")
         socket.disconnect();
     }
