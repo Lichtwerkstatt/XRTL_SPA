@@ -39,38 +39,31 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    if (socket.decoded.component === 'client' && socket.decoded.code === 'access') {            //rand) {
-        if (color.length != 0 && socket.decoded.component === 'client') {
-            console.log('Client connected successfully');
-            socket.emit('newLog', 'Connection made successfully');
-            io.to(socket.id).emit('Auth', color[0]);
+    if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === 'access') {            //rand) {
+        console.log('Client connected successfully');
+        socket.emit('newLog', 'Connection made successfully');
+        io.to(socket.id).emit('Auth', color[0]);
 
-            colorList.push(socket.id, color[0]);
-            color.splice(0, 1);
+        colorList.push(socket.id, color[0]);
+        color.splice(0, 1);
 
-            var checkIfExpired = setInterval(() => {
-                if (exp < Date.now()) {
-                    clearInterval(checkIfExpired);
-                    socket.disconnect();
-                    console.log('Client token expired');
-                }
-            }, 300000);     //checks every 5 min
-        }
-        else if (color.length === 0 && socket.decoded.component === 'client') {
-            io.to(socket.id).emit('AuthFailed');
-            socket.disconnect();
-            console.log('To many user are connected right now!');
-        }
-        else if (socket.decoded.component === 'component') {
-            io.to(socket.id).emit('Auth');
-            console.log('Component connected successfully');
-        }
-        else {
-            socket.disconnect();
-        }
+        var checkIfExpired = setInterval(() => {
+            if (exp < Date.now()) {
+                clearInterval(checkIfExpired);
+                socket.disconnect();
+                console.log('Client token expired');
+            }
+        }, 300000);     //checks every 5 min
+
+    } else if (color.length === 0 && socket.decoded.component === 'client') {
+        io.to(socket.id).emit('AuthFailed');
+        socket.disconnect();
+        console.log('To many user are connected right now!');
+    } else if (socket.decoded.component === 'component') {
+        io.to(socket.id).emit('Auth');
+        console.log('Component connected successfully');
     }
-    else if (socket.decoded.component === 'client' && socket.decoded.code !== 'access') {
-        console.error("Connection failed: Wrong access code!")
+    else {
         socket.disconnect();
     }
 
