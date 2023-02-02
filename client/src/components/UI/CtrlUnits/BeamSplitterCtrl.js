@@ -1,17 +1,15 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../../services/SocketContext";
-import { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
-import Slider from "../templates/SliderCtrl";
-import Switch from '../templates/Switch';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RadioButton from '../templates/RadioButton';
-
+import { useState, useEffect } from "react";
+import Switch from '../templates/Switch';
+import Box from '@mui/material/Box';
 
 const BeamSplitterCtrl = (props) => {
-    const marks = [{ value: 14, label: 'Pinhole', }, { value: 41, label: 'White LED', }, { value: 65, label: 'Red LED', }, { value: 80, label: 'None', }, { value: 115, label: 'Beam splitter', }];
-    const [onlineStatus, setOnlineStatus] = useState(true);
-    const [switchRedIsOn, setSwitchRedStatus] = useState(false);
     const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
+    const [switchRedIsOn, setSwitchRedStatus] = useState(false);
+    const [onlineStatus, setOnlineStatus] = useState(true);
+    
     const socketCtx = useSocketContext();
 
     const theme = createTheme({
@@ -34,7 +32,6 @@ const BeamSplitterCtrl = (props) => {
             if (payload.controlId === props.whiteLED) {
                 setSwitchRedStatus(payload.isOn);
             }
-
             console.log("Status of settings:   ", payload)
         }
 
@@ -77,7 +74,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <RadioButton component={props.component} online={onlineStatus} led={props.led} min={14} max={117} text={marks} option="moveTo" />
+                <RadioButton component={props.component} online={onlineStatus} led={props.led} option="moveTo" />
                 <Switch component={props.whiteLED} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='switch' />
                 <Switch component={props.redLED} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='switch' />
             </Box>
