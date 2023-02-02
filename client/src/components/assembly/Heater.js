@@ -104,7 +104,6 @@ const Heater = (props) => {
                 led={props.LED}
                 footer={footer}
             />
-
         </Window>
     )
 }

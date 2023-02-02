@@ -1,19 +1,19 @@
-import { useState } from "react";
-import Window from "../UI/experimentUI/Window"
-import SwitchOnOff from "../UI/CtrlUnits/LaserCtrl";
-import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext"
-import { usePopUpContext } from "../../services/PopUpContext"
+import { useSocketContext } from '../../services/SocketContext';
+import { usePopUpContext } from '../../services/PopUpContext';
+import { useAppContext } from '../../services/AppContext';
+import LaserCtrl from '../UI/CtrlUnits/LaserCtrl';
+import Window from '../UI/experimentUI/Window';
+import { useState } from 'react';
 
-const LaserCtrl = (props) => {
-  const [footer, setFooter] = useState(props.footer);
+const Laser = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
+  const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
@@ -66,18 +66,18 @@ const LaserCtrl = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
-      height="200px"
-      width="300px"
+      height='200px'
+      width='300px'
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
       newStatus={handleChangeFooter}
       footer={footer}
     >
-      <SwitchOnOff
+      <LaserCtrl
         component={props.controlId}
-        top="0"
-        left="0"
+        top='0'
+        left='0'
         newStatus={handleChangeFooter}
         led={props.LED}
         footer={footer}
@@ -85,4 +85,4 @@ const LaserCtrl = (props) => {
     </Window>
   )
 }
-export default LaserCtrl;
+export default Laser;

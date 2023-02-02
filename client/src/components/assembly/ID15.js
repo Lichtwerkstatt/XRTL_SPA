@@ -1,8 +1,8 @@
-import { useState } from "react";
-import Window from "../UI/Window";
 import { useAppContext } from "../../services/AppContext";
-import SliderCtrl from "../UI/SliderCtrl";
 import ID15_Background from "./media/id15_outline.png";
+import SliderCtrl from "../UI/SliderCtrl";
+import Window from "../UI/Window";
+import { useState } from "react";
 
 const ID15 = (props) => {
   const [footer, setFooter] = useState(props.footer);

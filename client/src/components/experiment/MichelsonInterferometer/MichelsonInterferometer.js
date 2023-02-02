@@ -1,4 +1,4 @@
-import LaserCtrl from "../../assembly/LaserCtrl";
+import Laser from "../../assembly/Laser";
 import Heater from "../../assembly/Heater";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
@@ -91,7 +91,7 @@ const MichelsonInterferometer = (props) => {
       )}
       {/* Laser power */}
       {props.selected.has('greenlaserPower_1') && (
-        <LaserCtrl
+        <Laser
           title="Power Supply"
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
