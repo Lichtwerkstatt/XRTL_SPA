@@ -11,7 +11,7 @@ const RadioButton = (props) => {
 
     const handleChange = (event) => {
         setRadioButton(event.target.value)
-        console.log(event.target.value)
+        
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
@@ -41,13 +41,12 @@ const RadioButton = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
                 value={radioButton}
-                onChange={handleChange}
             >
-                <FormControlLabel value={80} control={<Radio />} label="None" />
-                <FormControlLabel value={115} control={<Radio />} label="Beam splitter" />
-                <FormControlLabel value={14} control={<Radio />} label="Pinhole" />
-                <FormControlLabel value={41} control={<Radio />} label="Red LED" />
-                <FormControlLabel value={45} control={<Radio />} label="White LED" />
+                <FormControlLabel onChange={handleChange} value={80} control={<Radio />} label="None" />
+                <FormControlLabel onChange={handleChange} value={115} control={<Radio />} label="Beam splitter" />
+                <FormControlLabel onChange={handleChange} value={14} control={<Radio />} label="Pinhole" />
+                <FormControlLabel onChange={handleChange} value={41} control={<Radio />} label="Red LED" />
+                <FormControlLabel onChange={handleChange} value={45} control={<Radio />} label="White LED" />
             </RadioGroup>
         </FormControl>
     )
