@@ -1,10 +1,7 @@
-import LaserCtrl from "../../assembly/LaserCtrl";
-import Heater from "../../assembly/Heater";
+import LaserCtrl from "../../assembly/Laser";
+import ESPCam from "../../assembly/ESPCamStream";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
-import ESPCam from "../../assembly/ESPCamStream";
-import BeamSplitter from "../../assembly/BeamSplitter"
-
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
@@ -88,31 +85,6 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
-        />
-      )}
-      {/* Heater */}
-      {props.selected.has('heater') && (
-        <Heater
-          title="Heater"
-          id={'heater'}
-          controlIdHeater={'heater'}
-          controlIdThermistor={'thermistor'}
-          LED={'led_heater'}
-          footer={footer}
-          top={topHighMiddle}
-          left={leftCam}
-        />
-      )}
-
-      {/* Beam splitter */}
-      {props.selected.has('beamSplitter') && (
-        <BeamSplitter
-          title="Beam splitter"
-          controlId={'beamSplitter'}
-          LED={'led_beamSplitter'}
-          footer={footer}
-          top={topMiddle}
-          left={halfWidth}
         />
       )}
     </div>

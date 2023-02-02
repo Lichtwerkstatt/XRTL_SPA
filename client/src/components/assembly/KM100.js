@@ -1,5 +1,5 @@
-import { useSocketContext } from '../../services/SocketContext'
-import { usePopUpContext } from '../../services/PopUpContext'
+import { useSocketContext } from '../../services/SocketContext';
+import { usePopUpContext } from '../../services/PopUpContext';
 import { useAppContext } from '../../services/AppContext';
 import KM100_Background from './media/km100_outline.png'
 import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
@@ -7,14 +7,14 @@ import Window from '../UI/experimentUI/Window';
 import { useState } from 'react';
 
 const KM100 = (props) => {
-  const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
+  const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
