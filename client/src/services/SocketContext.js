@@ -87,7 +87,6 @@ export function SocketContextProvider({ children }) {
         code: accessCode,
         component: 'client',
         iat: Date.now(),
-        exp: Date.now() + 1800000,
       }
 
       var token = jwt.sign(payload, "keysecret");

@@ -1,20 +1,20 @@
-import Window from "../UI/experimentUI/Window";
-import Settings from "../UI/CtrlUnits/Settings";
-import styles from "./Stream.module.css";
-import { useAppContext } from "../../services/AppContext";
-import { useSocketContext } from "../../services/SocketContext";
-import { useEffect, useState } from "react";
-import { usePopUpContext } from "../../services/PopUpContext"
+import { useSocketContext } from '../../services/SocketContext';
+import { usePopUpContext } from '../../services/PopUpContext';
+import { useAppContext } from '../../services/AppContext';
+import Settings from '../UI/CtrlUnits/Settings';
+import Window from '../UI/experimentUI/Window';
+import { useEffect, useState } from 'react';
+import styles from './Stream.module.css';
 
 const ESPCamStream = (props) => {
-  const [footer, setFooter] = useState(props.footer);
   const [lastChange, setLastChange] = useState(['', '', '']);
   const [alertType, setAlertType] = useState('info');
+  const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
   const socketCtx = useSocketContext();
-  const appCtx = useAppContext();
   const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.controlId);
@@ -65,7 +65,7 @@ const ESPCamStream = (props) => {
   useEffect(() => {
     const data = (payload) => {
       var uint8Arr = new Uint8Array(payload.data);
-      var binary = "";
+      var binary = '';
       for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
       }
@@ -73,9 +73,9 @@ const ESPCamStream = (props) => {
 
       var img = new Image();
       img.onload = function () {
-        var canvas = document.getElementById("ScreenCanvas");
+        var canvas = document.getElementById('ScreenCanvas');
         if (canvas != null) {
-          var ctx = canvas.getContext("2d");
+          var ctx = canvas.getContext('2d');
           var x1 = 0,
             y1 = 0,
             x2 = 300,
@@ -83,10 +83,10 @@ const ESPCamStream = (props) => {
           ctx.drawImage(this, x1, y1, x2, y2);
         }
       };
-      img.src = "data:image/jpg;base64," + base64String;
+      img.src = 'data:image/jpg;base64,' + base64String;
     }
 
-    socketCtx.socket.on("data", data);
+    socketCtx.socket.on('data', data);
 
     return () => {
       socketCtx.socket.removeAllListeners('data', data)
@@ -94,18 +94,18 @@ const ESPCamStream = (props) => {
   }, [socketCtx.socket]);
 
   useEffect(() => {
-    socketCtx.socket.emit("join stream room", { controlId: props.controlId, userId: socketCtx.username });
+    socketCtx.socket.emit('join stream room', { controlId: props.controlId, userId: socketCtx.username });
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Window
-      header={props.title + " (" + props.id + ")"}
+      header={props.title + ' (' + props.id + ')'}
       top={props.top}
       left={props.left}
-      width="1000px"
-      height="430px"
+      width='1000px'
+      height='430px'
       onClose={handleCloseWindow}
       onReset={handleReset}
       onInfo={handleInfo}
@@ -113,7 +113,7 @@ const ESPCamStream = (props) => {
       newStatus={handleChangeFooter}
     >
       <div className={styles.Canvas}>
-        <canvas id="ScreenCanvas" />
+        <canvas id='ScreenCanvas' />
       </div>
       <div className={styles.Settings}>
         <Settings

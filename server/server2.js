@@ -18,17 +18,14 @@ var colorList = [];
 var online = false;
 var userIDs = [];
 var GUIId = '';
-var exp = ''
 const rand = Math.random().toString(16).substr(2, 8);
 console.log(rand);
-
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            exp = decoded.iat + 1800000;
             next();
         });
     }
@@ -37,39 +34,25 @@ io.use((socket, next) => {
         next(new Error('Authentication error'));
     }
 })
-
 io.on('connection', socket => {
-    if (socket.decoded.component === 'client' && socket.decoded.code === 'access') {            //rand) {
-        if (color.length != 0 && socket.decoded.component === 'client') {
-            console.log('Client connected successfully');
-            socket.emit('newLog', 'Connection made successfully');
-            io.to(socket.id).emit('Auth', color[0]);
+    if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === 'access') {            //rand) {
+        console.log('Client connected successfully');
+        socket.emit('newLog', 'Connection made successfully');
+        io.to(socket.id).emit('Auth', color[0]);
 
-            colorList.push(socket.id, color[0]);
-            color.splice(0, 1);
-
-            var checkIfExpired = setInterval(() => {
-                if (exp < Date.now()) {
-                    clearInterval(checkIfExpired);
-                    socket.disconnect();
-                    console.log('Client token expired');
-                }
-            }, 300000);     //checks every 5 min
-        }
-        else if (color.length === 0 && socket.decoded.component === 'client') {
-            io.to(socket.id).emit('AuthFailed');
-            socket.disconnect();
-            console.log('To many user are connected right now!');
-        }
-        else if (socket.decoded.component === 'component') {
-            io.to(socket.id).emit('Auth');
-            console.log('Component connected successfully');
-        }
-        else {
-            socket.disconnect();
-        }
-    } else {
-        console.error("Connection failed: Wrong access code!")
+        colorList.push(socket.id, color[0]);
+        color.splice(0, 1);
+    }
+    else if (color.length === 0 && socket.decoded.component === 'client') {
+        io.to(socket.id).emit('AuthFailed');
+        socket.disconnect();
+        console.error('To many user are connected right now!');
+    }
+    else if (socket.decoded.component === 'component') {
+        io.to(socket.id).emit('Auth');
+        console.log('Component connected successfully');
+    }
+    else {
         socket.disconnect();
     }
 
@@ -171,7 +154,6 @@ io.on('connection', socket => {
     })
 
     socket.on('watcher disconnect', () => {
-        console.log("atcher weg")
         io.emit('disconnect peerConnection', socket.id);
     })
 
@@ -189,7 +171,6 @@ io.on('connection', socket => {
                 stream: true
             });
         }
-
     });
 
     //Sends pictures of the stream to the clients
@@ -214,7 +195,6 @@ io.on('connection', socket => {
                 stream: false
             });
         }
-        console.log("dort   ", payload);
         socket.leave(payload.controlId);
     });
 
@@ -304,5 +284,4 @@ io.on('connection', socket => {
 
 server.listen(7000, () => {
     console.log('Server is listening at port: 7000!');
-
 })

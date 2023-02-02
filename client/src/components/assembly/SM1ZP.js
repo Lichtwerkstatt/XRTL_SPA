@@ -60,7 +60,6 @@ const SM1ZP = (props) => {
     setAlert(alert);
     setAlertType('info');
     popupCtx.toggleShowPopUp(alert, alertType);
-
   }
 
   return (

@@ -1,4 +1,4 @@
-import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl2";
+import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
 import { useSocketContext } from "../../services/SocketContext";
 import { usePopUpContext } from "../../services/PopUpContext";
 import { useAppContext } from "../../services/AppContext";
@@ -7,13 +7,13 @@ import { useState } from "react";
 
 const BeamSplitter = (props) => {
   const [lastChange, setLastChange] = useState(['', '', '']);
-  const [footer, setFooter] = useState(props.footer);
   const [alertType, setAlertType] = useState('info');
+  const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.controlId)
