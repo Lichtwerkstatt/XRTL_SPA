@@ -1,9 +1,3 @@
-//TODO: 
-//* wenn Viewer Fenster schließt oder disconnected, dann überprüfen, ob noch jemand in dem Raum ist (wenn nicht Strema beenden)
-//* wenn kein Stream verfügbar Bild oder text einblenden
-//* Stream unabhängig machne --> uf raspberry
-//* testen, ob das auf Raspberry funktioniert
-//* 
 import React, { useRef, useEffect, useState } from "react";
 
 const Webcam = () => {

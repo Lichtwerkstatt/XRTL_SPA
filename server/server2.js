@@ -94,7 +94,7 @@ io.on('connection', socket => {
         var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
         if (componentList) {
-            if (componentList.includes(socket.id) === false) {
+            if (componentList.includes(payload.controlId) === false) {
                 componentList.push(socket.id, time, payload.controlId, payload.status.busy);
             }
         } else {
@@ -103,7 +103,7 @@ io.on('connection', socket => {
 
         // GUI
         socket.to(GUIId).emit('newLog', 'New Status' + JSON.stringify(payload));
-        socket.emit('newComponent', componentList);
+        socket.to(GUIId).emit('newComponent', componentList);
 
         //For the clients
         socket.broadcast.emit('status', payload);
@@ -163,7 +163,6 @@ io.on('connection', socket => {
     })
 
     socket.on('watcher disconnect', () => {
-        console.log("atcher weg")
         io.emit('disconnect peerConnection', socket.id);
     })
 
@@ -181,7 +180,6 @@ io.on('connection', socket => {
                 stream: true
             });
         }
-
     });
 
     //Sends pictures of the stream to the clients
@@ -206,7 +204,6 @@ io.on('connection', socket => {
                 stream: false
             });
         }
-        console.log("dort   ", payload);
         socket.leave(payload.controlId);
     });
 
