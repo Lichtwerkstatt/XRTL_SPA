@@ -9,7 +9,7 @@ import styles from './Login.module.css'
 import { isEqual } from 'lodash';
 
 const Login = (props) => {
-    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://10.232.37.40:7000' }]
+    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://10.232.37.40:7000' }];
     const [connection, setConnection] = useState(null);
     const [username, setUsername] = useState('');
     const filter = createFilterOptions();

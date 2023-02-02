@@ -19,7 +19,6 @@ const MichelsonInterferometer = (props) => {
   var leftMiddleRight = String(width - (halfWidth * 0.4))
   var leftCam = String(width - (halfWidth * 1.485))
 
-  var componentList = ['Michelson_KM100', 'Michelson_linear', 'Michelson_laser', 'Michelson_LaserPower', 'Michelson_cam', 'Michelson_heater', 'Cam_1', 'Michelson_beamSplitter']
   return (
     <div>
       {/* KM100 */}
@@ -42,7 +41,6 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Mirror Stage"
           controlId={'linear_1'}
-          id={componentList[1]}
           LED={'led_linear'}
           footer={footer}
           rotation={zero}
