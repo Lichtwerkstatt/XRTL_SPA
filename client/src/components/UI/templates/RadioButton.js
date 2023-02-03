@@ -43,9 +43,9 @@ const RadioButton = (props) => {
                 value={radioButton}
             >
                 <FormControlLabel onChange={handleChange} value={80} control={<Radio />} label="None" />
-                <FormControlLabel onChange={handleChange} value={115} control={<Radio />} label="Beam splitter" />
+                <FormControlLabel onChange={handleChange} value={112} control={<Radio />} label="Beam splitter" />
                 <FormControlLabel onChange={handleChange} value={14} control={<Radio />} label="Pinhole" />
-                <FormControlLabel onChange={handleChange} value={41} control={<Radio />} label="Red LED" />
+                <FormControlLabel onChange={handleChange} value={40} control={<Radio />} label="Red LED" />
                 <FormControlLabel onChange={handleChange} value={45} control={<Radio />} label="White LED" />
             </RadioGroup>
         </FormControl>

@@ -101,7 +101,7 @@ const ESPCamStream = (props) => {
 
   return (
     <Window
-      header={props.title + ' (' + props.id + ')'}
+      header={props.title}
       top={props.top}
       left={props.left}
       width='1000px'
