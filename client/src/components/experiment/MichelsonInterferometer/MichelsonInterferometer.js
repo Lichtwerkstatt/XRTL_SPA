@@ -57,6 +57,7 @@ const MichelsonInterferometer = (props) => {
         <Rotary
           title='Plate Stage'
           controlId={'plate_rotation'}
+          LED={'led_plate'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -68,6 +69,7 @@ const MichelsonInterferometer = (props) => {
         <Rotary
           title='Measure Stage'
           controlId={'heater_rotation'}
+          LED={'led_heater'}
           footer={footer}
           rotation={zero}
           top={topHighMiddle}
@@ -95,7 +97,7 @@ const MichelsonInterferometer = (props) => {
           title='Power Supply'
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
-          LED={'led_linear'}
+          LED={'led_laser'}
           footer={footer}
           top={topHigh}
           left={leftRight}
@@ -106,7 +108,6 @@ const MichelsonInterferometer = (props) => {
         <ESPCam
           title='Screen'
           controlId={'screen'}
-          LED={'led_screen'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -119,7 +120,7 @@ const MichelsonInterferometer = (props) => {
           id={'heater'}
           controlIdHeater={'heater'}
           controlIdThermistor={'thermistor'}
-          LED={'led_heater'}
+          LED={'led_linear'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}

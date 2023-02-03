@@ -41,8 +41,6 @@ const NavBar = () => {
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
-    let showBeamColor = '';
-    if (appCtx.showBeam) { showBeamColor = 'white' }
     let showInfoWindowColor = '';
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
 
@@ -122,10 +120,6 @@ const NavBar = () => {
 
                 <Tooltip title='2D model'>
                     <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
-                </Tooltip>
-
-                <Tooltip title='Laser beam'>
-                    <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>
                 </Tooltip>
 
                 <Tooltip title='Rotation'>
