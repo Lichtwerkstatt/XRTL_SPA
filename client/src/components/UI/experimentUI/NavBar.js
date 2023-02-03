@@ -1,4 +1,3 @@
-import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md'
 import { useSocketContext } from '../../../services/SocketContext'
@@ -12,10 +11,10 @@ import Tooltip from '@mui/material/Tooltip'
 import { BsCamera } from 'react-icons/bs'
 import { FaTags } from 'react-icons/fa'
 import { BsBox } from 'react-icons/bs'
-import { isEqual } from 'lodash';
-import { memo, Fragment } from 'react'
 import Menu from '@mui/material/Menu';
-
+import { Icon } from '@iconify/react';
+import { memo, Fragment } from 'react'
+import { isEqual } from 'lodash';
 
 const NavBar = () => {
     const appCtx = useAppContext();
@@ -60,7 +59,7 @@ const NavBar = () => {
                                     color: '#00ffa8',
                                 }
                             }}>
-                                <AutoAwesomeOutlinedIcon />
+                                <Icon icon="mdi:led-off"  width="27"  height="27" />
                             </IconButton>
                             <Menu {...bindMenu(popupState)} sx={{ color: { mode: 'dark' } }} >
                                 <MenuItem onClick={() => {

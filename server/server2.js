@@ -282,6 +282,6 @@ io.on('connection', socket => {
     });
 })
 
-server.listen(7000, () => {
-    console.log('Server is listening at port: 7000!');
+server.listen(3000, () => {
+    console.log('Server is listening at port: 3000!');
 })
