@@ -737,7 +737,7 @@ export function Model(props) {
           position={[-2.38, 0.11, -1.01]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("rotary_2");
+            props.toggleSelect('heater_rotation');
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Measurement" description="Choose betweene Translate Mirror and Heated Mirror" />}
@@ -748,7 +748,7 @@ export function Model(props) {
             geometry={nodes.TranslateMirrorMesh004.geometry}
             material={materials.BlackParts}
           >  
-            {props.selected.has("rotary_2") ? (
+            {props.selected.has('heater_rotation') ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -769,7 +769,7 @@ export function Model(props) {
           rotation={[0, -1.57, 0]}
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("rotary_1");
+            props.toggleSelect('plate_rotation');
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Difraction Plates" description="Measurement of Refractive Index" />}
@@ -780,7 +780,7 @@ export function Model(props) {
             geometry={nodes['PR01_M-Step001'].geometry}
             material={materials['BlackParts.004']}
           >
-            {props.selected.has("rotary_1") ? (
+            {props.selected.has('plate_rotation') ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -794,7 +794,7 @@ export function Model(props) {
             geometry={nodes['PR01_M-Step001_1'].geometry}
             material={materials['BlackParts.003']}
           >
-            {props.selected.has("rotary_1") ? (
+            {props.selected.has('plate_rotation') ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />

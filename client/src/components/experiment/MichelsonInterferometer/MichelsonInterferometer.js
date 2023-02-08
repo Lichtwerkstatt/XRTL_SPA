@@ -53,7 +53,7 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage plate*/}
-      {props.selected.has('rotary_1') && (
+      {props.selected.has('plate_rotation') && (
         <Rotary
           title='Plate Stage'
           controlId={'plate_rotation'}
@@ -65,7 +65,7 @@ const MichelsonInterferometer = (props) => {
         />
       )}
       {/* Rotary stage Measurement Mirror*/}
-      {props.selected.has('rotary_2') && (
+      {props.selected.has('heater_rotation') && (
         <Rotary
           title='Measure Stage'
           controlId={'heater_rotation'}
