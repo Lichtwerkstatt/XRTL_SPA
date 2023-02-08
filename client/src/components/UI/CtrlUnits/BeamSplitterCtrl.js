@@ -8,8 +8,9 @@ import Box from '@mui/material/Box';
 const BeamSplitterCtrl = (props) => {
     const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
     const [switchRedIsOn, setSwitchRedStatus] = useState(false);
+    const [selectionStatus, setSelectionStatus] = useState(80);
     const [onlineStatus, setOnlineStatus] = useState(false);
-    
+
     const socketCtx = useSocketContext();
 
     const theme = createTheme({
@@ -27,12 +28,15 @@ const BeamSplitterCtrl = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.redLED) {
-                setSwitchWhiteStatus(payload.isOn);
+                setSwitchRedStatus(payload.status.isOn);
             }
-            if (payload.controlId === props.whiteLED) {
-                setSwitchRedStatus(payload.isOn);
+            else if (payload.controlId === props.whiteLED) {
+                setSwitchWhiteStatus(payload.status.isOn);
             }
-            console.log("Status of settings:   ", payload)
+            else if (payload.controlId === 'experimentSelection') {
+                setSelectionStatus(payload.status.absolute)
+            }
+            //console.log("Status of settings:   ", payload)
         }
 
         const footer = (payload) => {
@@ -43,6 +47,7 @@ const BeamSplitterCtrl = (props) => {
 
         const getFooter = (payload) => {
             if (payload.controlId === props.component) {
+
                 setOnlineStatus(payload.online)
                 props.newStatus(String(payload.status))
             }
@@ -54,7 +59,30 @@ const BeamSplitterCtrl = (props) => {
             getStatus: true
         })
 
-        socketCtx.socket.emit('getFooter', props.component)
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.pinhole,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.redLED,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.whiteLED,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit('getFooter', props.component);
+        socketCtx.socket.emit('getFooter', props.pinhole);
+        socketCtx.socket.emit('getFooter', props.redLED)
+        socketCtx.socket.emit('getFooter', props.whiteLED)
+
+
 
         socketCtx.socket.on("status", status);
 
@@ -74,7 +102,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} led={props.led} option="moveTo" option2="binaryCtrl" />
+                <RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} val={selectionStatus} led={props.led} option="moveTo" option2="binaryCtrl" />
                 <Switch component={props.whiteLED} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='switch' />
                 <Switch component={props.redLED} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='switch' />
             </Box>
