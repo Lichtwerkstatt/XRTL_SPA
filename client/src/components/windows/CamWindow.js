@@ -70,7 +70,7 @@ const InfoWindow = (props) => {
             title="Cam_1"
             id="Cam_1"
             footer={footer}
-            width="600px"
+            width="640px"
             onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
