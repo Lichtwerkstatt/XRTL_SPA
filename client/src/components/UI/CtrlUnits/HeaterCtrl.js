@@ -56,9 +56,8 @@ const HeaterCtrl = (props) => {
 
         const data = (payload) => {
             var string = payload.data.data;
-            try { string = string.toFixed(2) + " °C" } catch (e) { string = '-°C' }
+            try { string = string.toFixed(1) + " °C" } catch (e) { string = '-°C' }
             setTemp(string);
-
         }
 
         socketCtx.socket.emit("command", {
@@ -117,32 +116,32 @@ const HeaterCtrl = (props) => {
     } else {
         return (
             <ThemeProvider theme={theme}>
-                <div className={styles.Temp2}>
+                <div className={styles.Temp}>
                     <Typography id='temp' variant="h2">{temp}</Typography>
                     <IconButton onClick={hiddenSetting}  >
                         <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                     </IconButton>
                 </div>
-                <div className={styles.Canvas22}>
+                <div className={styles.Canvas2}>
                     <canvas id="Heater" />
                 </div>
-                <div className={styles.Canvas12}>
+                <div className={styles.Canvas1}>
                     <canvas id="Gauge" />
                 </div>
-                <div className={styles.Heater2} >
+                <div className={styles.Heater} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
                         <div style={{ paddingLeft: 10 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
                             <Slider title="PowerSwitch" component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
                         </div>
-                        <div style={{ paddingLeft: 20 }}>
+                        <div style={{ paddingLeft: 40 }}>
                             <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
                             <Select title="Average time (ms)" component={props.componentT} led={props.led} online={onlineStatus} option="averageTime" />
                             <Select title="Update time (s)" component={props.componentT} led={props.led} online={onlineStatus} option="updateTime" />
                         </div>
                     </Box>
                 </div>
-                <div className={styles.Switch2} >
+                <div className={styles.Switch} >
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
                         <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option="switch" />
                     </Box>

@@ -9,19 +9,18 @@ div.Temp Canvas{
 }
 div.Temp button{
     position: absolute;
-    left:575px;
+    left:92%;
     top: 30px;
 }
 div.Temp h2{
     position: absolute;
-    width: 210px;
+    width: 220px;
     height: 80px;
-    left:32%;
+    left:35%;
     top: 60px;
     background-color: #01bd7d;
     border-radius: 15px;
     text-align: center;
-    
 }
 
 div.Heater{
@@ -32,17 +31,17 @@ div.Heater{
 div.Switch{
     position: relative;
     top:125px;
-    left: 160px;
+    left: 27%;
     margin: 0 0 0 12px; 
     padding: 0;
 }
 
 div.Canvas1 {
     position: absolute;
-    width: 295px;
+    width: 325px;
     height: 130px;
     top: 173px;
-    left: 8px;
+    left: 1%;
     border: 2px solid #01bd7d;
     border-radius: 15px;
  }
@@ -52,7 +51,7 @@ div.Canvas1 {
     width: 295px;
     height: 185px;
     top: 173px;
-    left: 314px;
+    left: 53%;
     border: 2px solid #01bd7d;
     border-radius: 15px;
  }
