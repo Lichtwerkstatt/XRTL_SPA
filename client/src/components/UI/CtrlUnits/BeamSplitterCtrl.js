@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 const BeamSplitterCtrl = (props) => {
     const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
     const [switchRedIsOn, setSwitchRedStatus] = useState(false);
-    const [onlineStatus, setOnlineStatus] = useState(true);
+    const [onlineStatus, setOnlineStatus] = useState(false);
     
     const socketCtx = useSocketContext();
 
@@ -74,7 +74,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <RadioButton component={props.component} online={onlineStatus} led={props.led} option="moveTo" />
+                <RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} led={props.led} option="moveTo" option2="binaryCtrl" />
                 <Switch component={props.whiteLED} led={props.led} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='switch' />
                 <Switch component={props.redLED} led={props.led} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='switch' />
             </Box>

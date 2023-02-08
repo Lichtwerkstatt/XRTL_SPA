@@ -5,18 +5,33 @@ import { useState } from "react";
 
 const RadioButton = (props) => {
     const [radioButton, setRadioButton] = useState(props.sliderValue);
+    var val = false;
 
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
     const handleChange = (event) => {
         setRadioButton(event.target.value)
-        
+
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
             [props.option]: Number(event.target.value)
         })
+        if (event.target.value === '79') {
+            val = true;
+
+        } else {
+            val = false;
+        }
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.component2,
+            [props.option2]: val
+        })
+
+
 
         if (props.led) {
             socketCtx.socket.emit('command', {
@@ -41,12 +56,13 @@ const RadioButton = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
                 value={radioButton}
+                onChange={handleChange}
             >
-                <FormControlLabel onChange={handleChange} value={80} control={<Radio />} label="None" />
-                <FormControlLabel onChange={handleChange} value={112} control={<Radio />} label="Beam splitter" />
-                <FormControlLabel onChange={handleChange} value={14} control={<Radio />} label="Pinhole" />
-                <FormControlLabel onChange={handleChange} value={40} control={<Radio />} label="Red LED" />
-                <FormControlLabel onChange={handleChange} value={45} control={<Radio />} label="White LED" />
+                <FormControlLabel disabled={(socketCtx.connected && props.online)} value={80} control={<Radio />} label="None" />
+                <FormControlLabel disabled={(socketCtx.connected && props.online)} value={112} control={<Radio />} label="Beam splitter" />
+                <FormControlLabel disabled={(socketCtx.connected && props.online)} value={79} control={<Radio />} label="Pinhole" />
+                <FormControlLabel disabled={(socketCtx.connected && props.online)} value={40} control={<Radio />} label="Red LED" />
+                <FormControlLabel disabled={(socketCtx.connected && props.online)} value={41} control={<Radio />} label="White LED" />
             </RadioGroup>
         </FormControl>
     )

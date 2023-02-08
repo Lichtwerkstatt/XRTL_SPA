@@ -132,6 +132,7 @@ const MichelsonInterferometer = (props) => {
         <BeamSplitter
           title='Beam modifier/LED'
           controlId={'experimentSelection'}
+          controlId2={'pinhole'}
           controlLED={'redLED'}
           controlLED2={'whiteLED'}
           LED={'led_selection'}

@@ -77,6 +77,7 @@ const BeamSplitter = (props) => {
       <BeamSplitterCtrl
         rotation={props.rotationTop}
         component={props.controlId}
+        pinhole={props.controlId2}
         newStatus={handleChangeFooter}
         redLED={props.controlLED}
         whiteLED={props.controlLED2}
