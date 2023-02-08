@@ -16,15 +16,6 @@
     margin-left: 20px;
 }
 
-.navbar h3{
-    display: absolute;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    margin-top: -37px;
-    margin-left: 1245px;
-    right: 600px;
-}
 
 .navMenu {
     position: absolute;
@@ -35,10 +26,28 @@
 
 .navMenuLaser {
     position: absolute;
-    top: -20px;
-    right: 530px;
+    top: -18px;
+    left: 60%;
+    height: 100%;
 }
 
+.navMenuLaser h3 {
+    display: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navMenuLaser button {
+
+    margin-left: 5px;
+    padding-left: 0px;
+    height: 100%;
+    top: -45px;
+    left: 100%;
+    align-items: center;
+   
+}
 
 
 .navMenu ul {

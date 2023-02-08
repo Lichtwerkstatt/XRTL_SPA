@@ -20,18 +20,6 @@ const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
-    // const theme = createTheme({
-    //     palette: {
-    //       mode: 'dark',
-    //       primary: {
-    //         light: '#01bd7d',
-    //         main: '#01bd7d',
-    //         dark: '#01bd7d',
-    //         contrastText: '#fff',
-    //       },
-    //     }
-    //   })
-
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
     let autoRotateColor = '';
@@ -45,9 +33,9 @@ const NavBar = () => {
 
     return <div id='navbar' className={styles.navbar} >
         <h1>XR TwinLab</h1>
-        <h3>Overlay:</h3>
         <div className={styles.navMenuLaser}>
-            <ul>
+        <h3>Overlay:</h3>
+   
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <Fragment>
@@ -81,8 +69,7 @@ const NavBar = () => {
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <Fragment>
-                            <IconButton variant="contained" size='20' sx={{
-
+                            <IconButton variant="contained" size='25' sx={{
                                 borderRadius: 1,
                                 color: 'black',
                                 ':hover': {
@@ -109,7 +96,7 @@ const NavBar = () => {
                         </Fragment>
                     )}
                 </PopupState>
-            </ul>
+           
         </div>
         <div className={styles.navMenu}>
             <ul>
