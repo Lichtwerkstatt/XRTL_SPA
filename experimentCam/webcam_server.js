@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-app.listen(3005, () => {
-    console.log('Webcam is listening at port: 3005!');
+app.listen(4005, () => {
+    console.log('Webcam is listening at port: 4005!');
 
 })

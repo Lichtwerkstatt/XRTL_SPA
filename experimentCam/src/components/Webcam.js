@@ -22,10 +22,16 @@ const Webcam = () => {
 
     useEffect(() => {
         const webcamEmit = async () => {
-            const socket = io.connect("http://10.232.37.40:7000", { auth: { token: token }, autoConnect: true });
+            const socket = io.connect("http://10.232.37.40:3000", { auth: { token: token }, autoConnect: true }); 
             const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
             const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] }
             const stream = await navigator.mediaDevices.getUserMedia(contraints);
+
+            if(socket.connected){
+                document.getElementById('background').style.background = '#b6d7a8'
+            }else{
+                document.getElementById('background').style.background = '#ea9999'
+            }
 
             const viewer = (viewerId) => {
                 const peerConnection = new RTCPeerConnection(config);
@@ -92,7 +98,7 @@ const Webcam = () => {
     }, [])
 
     return (
-        <div >
+        <div id='background' >
             <video id='video' autoPlay playsInline ref={videoRef}></video>
         </div>
     );

@@ -24,7 +24,7 @@
 
   "scripts": {
 
-    "start": "set PORT=3005 && react-scripts start",
+    "start": "set PORT=4005 && react-scripts start",
 
     "build": "react-scripts build",
 
