@@ -104,9 +104,9 @@ const NavBar = () => {
                     <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
                 </Tooltip>
 
-                <Tooltip title='2D model'>
+{/*                 <Tooltip title='2D model'>
                     <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
-                </Tooltip>
+                </Tooltip> */}
 
                 <Tooltip title='Rotation'>
                     <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>

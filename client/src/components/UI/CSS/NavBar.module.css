@@ -27,7 +27,7 @@
 .navMenuLaser {
     position: absolute;
     top: -18px;
-    left: 60%;
+    left: 70%;
     height: 100%;
 }
 
@@ -39,7 +39,6 @@
 }
 
 .navMenuLaser button {
-
     margin-left: 5px;
     padding-left: 0px;
     height: 100%;
