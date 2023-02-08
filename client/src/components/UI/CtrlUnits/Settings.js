@@ -86,7 +86,7 @@ const Settings = (props) => {
             <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" />
             <Switch component={props.component} switchStatus={switchIsOn} online={onlineStatus} start='Color' end='Gray' option="gray" />
             <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
-            <Slider title="Exposure" component={props.component} online={onlineStatus} sliderValue={exposure} min={0} max={1200} option="exposure" />
+            <Slider title="Exposure" component={props.component} online={onlineStatus} sliderValue={exposure} min={0} max={500} option="exposure" />
         </ThemeProvider>
     )
 }
