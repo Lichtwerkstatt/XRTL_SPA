@@ -10,7 +10,7 @@ import styles from '../CSS/NavBar.module.css'
 import Tooltip from '@mui/material/Tooltip'
 import { BsCamera } from 'react-icons/bs'
 import { FaTags } from 'react-icons/fa'
-import { BsBox } from 'react-icons/bs'
+//import { BsBox } from 'react-icons/bs'
 import Menu from '@mui/material/Menu';
 import { Icon } from '@iconify/react';
 import { memo, Fragment } from 'react'
