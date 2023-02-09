@@ -12,7 +12,8 @@ import Box from '@mui/material/Box';
 const Settings = (props) => {
     const [switchIsOn, setSwitchStatus] = useState(false);
     const [contrast, setContrast] = useState(0);
-    const [brightness, setBrightness] = useState(0);
+    const [exposure, setExposure] = useState(0);
+   // const [brightness, setBrightness] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
     const socketCtx = useSocketContext();
 
@@ -32,7 +33,7 @@ const Settings = (props) => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setSwitchStatus(payload.status.gray)
-                setBrightness(payload.status.brightness)
+                setExposure(payload.status.brightness)
                 setContrast(payload.status.contrast)
                 console.log("Status of settings:   ", payload)
             }
@@ -86,7 +87,8 @@ const Settings = (props) => {
             <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" />
             <Switch component={props.component} switchStatus={switchIsOn} online={onlineStatus} start='Color' end='Gray' option="gray" />
             <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
-            <Slider title="Brightness" component={props.component} online={onlineStatus} sliderValue={brightness} min={-2} max={2} option="brightness" />
+            <Slider title="Exposure" component={props.component} online={onlineStatus} sliderValue={exposure} min={0} max={500} option="exposure" />
+            {/* <Slider title="Brightness" component={props.component} online={onlineStatus} sliderValue={brightness} min={-2} max={2} option="brightness" /> */}
         </ThemeProvider>
     )
 }
