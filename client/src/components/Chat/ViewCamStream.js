@@ -1,4 +1,4 @@
-import { useSocketContext } from '../../services/SocketContext';
+import { useSocketContext } from '../../services/SocketContext'
 import { useEffect } from 'react';
 
 const ViewCam = (props) => {
@@ -32,7 +32,7 @@ const ViewCam = (props) => {
                 .catch(e => console.error(e))
         }
 
-        document.getElementById('video').setAttribute('style', 'display: true')
+        document.getElementById('video').setAttribute('style', 'transform: rotate(180deg)')
 
         socketCtx.socket.emit('viewer', props.component)
 
