@@ -8,7 +8,7 @@ import styles from '../CSS/NavBar.module.css'
 import Tooltip from '@mui/material/Tooltip'
 import { BsCamera } from 'react-icons/bs'
 import { FaTags } from 'react-icons/fa'
-import { BsBox } from 'react-icons/bs'
+//import { BsBox } from 'react-icons/bs'
 import { isEqual } from 'lodash';
 import { memo } from 'react'
 
@@ -37,9 +37,9 @@ const NavBar = () => {
                     <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
                 </Tooltip>
 
-                <Tooltip title='2D model'>
+           {/*      <Tooltip title='2D model'>
                     <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
-                </Tooltip>
+                </Tooltip> */}
 
                 <Tooltip title='Laser beam'>
                     <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={29} color={showBeamColor} /></li>
