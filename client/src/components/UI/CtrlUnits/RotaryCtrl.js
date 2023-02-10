@@ -80,11 +80,11 @@ const RotaryCtrl = (props) => {
         controlId: props.component
       });
 
-      if (rotation > 5000 || rotation > -5000) {
+     /*  if (rotation > 5000 || rotation > -5000) {
         appCtx.toggleChangeRotary();
       } else {
         appCtx.toggleChangeRotary();
-      }
+      } */
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };

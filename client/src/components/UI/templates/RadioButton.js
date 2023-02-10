@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const RadioButton = (props) => {
     const [radioButton, setRadioButton] = useState(props.val);
+    const [busy, setBusy] = useState(false);
     var val = false;
 
     const appCtx = useAppContext();
@@ -25,13 +26,24 @@ const RadioButton = (props) => {
         } else {
             val = false;
         }
-        //socketCtx.socket.on()
+        socketCtx.socket.on("status", payload => {
+            if (payload.controlId === 'experimentSelection') {
+                (payload.status.busy) ? setBusy(false) : setBusy(true);
 
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            controlId: props.component2,
-            [props.option2]: val
-        })
+                console.log("davor ", busy)
+
+                if (!busy) {
+                    console.log("busy false ", busy)
+
+                    socketCtx.socket.emit("command", {
+                        userId: socketCtx.username,
+                        controlId: props.component2,
+                        [props.option2]: val
+                    })
+
+                }
+            }
+        });
 
         if (props.led) {
             socketCtx.socket.emit('command', {
@@ -63,7 +75,7 @@ const RadioButton = (props) => {
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={112} control={<Radio />} label="Beam splitter" />
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={79} control={<Radio />} label="Pinhole" />
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={40} control={<Radio />} label="LED" />
-          
+
             </RadioGroup>
         </FormControl>
     )
