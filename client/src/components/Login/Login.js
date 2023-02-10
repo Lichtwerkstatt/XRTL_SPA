@@ -117,7 +117,7 @@ const Login = (props) => {
                                 value={accessCode}
                                 onChange={handleAccessCode}
                                 onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                                style={{ marginLeft: -30, width: 150 }}
+                                style={{ marginLeft: -40, width: 150 }}
                                 error={accessCode === ''}
                                 helperText={accessCode === '' ? 'Enter the access code!' : ' '}
                             />
@@ -144,7 +144,7 @@ const Login = (props) => {
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
                         endIcon={<SendIcon />}
-                        style={{ width: 90, height: 30, marginTop: -3, marginLeft: 350 }}
+                        style={{ width: 100, height: 35 }}
                     >Login</Button>
 
                 </div>
