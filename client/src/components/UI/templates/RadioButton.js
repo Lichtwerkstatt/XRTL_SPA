@@ -18,12 +18,14 @@ const RadioButton = (props) => {
             controlId: props.component,
             [props.option]: Number(event.target.value)
         })
+
         if (event.target.value === '79') {
             val = true;
 
         } else {
             val = false;
         }
+        //socketCtx.socket.on()
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
@@ -60,8 +62,8 @@ const RadioButton = (props) => {
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={80} control={<Radio />} label="None" />
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={112} control={<Radio />} label="Beam splitter" />
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={79} control={<Radio />} label="Pinhole" />
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={40} control={<Radio />} label="Red LED" />
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={41} control={<Radio />} label="White LED" />
+                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={40} control={<Radio />} label="LED" />
+          
             </RadioGroup>
         </FormControl>
     )

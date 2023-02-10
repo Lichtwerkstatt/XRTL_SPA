@@ -34,6 +34,7 @@ const BeamSplitterCtrl = (props) => {
                 setSwitchWhiteStatus(payload.status.isOn);
             }
             else if (payload.controlId === 'experimentSelection') {
+                (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
                 setSelectionStatus(payload.status.absolute)
             }
             //console.log("Status of settings:   ", payload)
