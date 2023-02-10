@@ -31,7 +31,7 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3005 && react-scripts start",
     "server": "node app_server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
