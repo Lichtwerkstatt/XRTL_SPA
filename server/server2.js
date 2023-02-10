@@ -25,7 +25,7 @@ io.use((socket, next) => {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            exp = decoded.iat + 1800000;
+            //exp = decoded.iat + 1800000;
             next();
         });
     }
@@ -44,13 +44,13 @@ io.on('connection', socket => {
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
 
-        var checkIfExpired = setInterval(() => {
+/*         var checkIfExpired = setInterval(() => {
             if (exp < Date.now()) {
                 clearInterval(checkIfExpired);
                 socket.disconnect();
                 console.log('Client token expired');
             }
-        }, 300000);     //checks every 5 min
+        }, 300000);     //checks every 5 min */
     }
     else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');
