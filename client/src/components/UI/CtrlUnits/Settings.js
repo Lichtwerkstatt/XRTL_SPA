@@ -1,8 +1,8 @@
 import { useSocketContext } from "../../../services/SocketContext";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LeftRightCtrl from "../templates/LeftRightCtrl";
-import styles from "../CSS/Settings.module.css"
-import UpDownCtrl from "../templates/UpDownCtrl"
+/*import LeftRightCtrl from "../templates/LeftRightCtrl";
+ import styles from "../CSS/Settings.module.css"
+import UpDownCtrl from "../templates/UpDownCtrl" */
 import Slider from "../templates/SliderCtrl";
 import { useState, useEffect } from "react";
 import Switch from "../templates/Switch"
@@ -76,14 +76,14 @@ const Settings = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={styles.UpDown}>
+            {/* <div className={styles.UpDown}>
                 <UpDownCtrl component={props.component} online={onlineStatus} option='virtualTilt' />
             </div>
             <div className={styles.LeftRight}>
                 <LeftRightCtrl component={props.component} online={onlineStatus} option='virtualPan' />
-            </div>
+            </div> */}
             <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-           {/*  <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" /> */}
+            {/*  <Select title="Resolution" component={props.component} online={onlineStatus} option="frameSize" /> */}
             <Switch component={props.component} switchStatus={switchIsOn} online={onlineStatus} start='Color' end='Gray' option="gray" />
             <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
             <Slider title="Exposure" component={props.component} online={onlineStatus} sliderValue={exposure} min={0} max={500} option="exposure" />
