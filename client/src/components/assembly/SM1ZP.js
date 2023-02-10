@@ -80,6 +80,7 @@ const SM1ZP = (props) => {
         rotation={props.rotation}
         component={props.controlId}
         newStatus={handleChangeFooter}
+        led={props.LED}
         footer={footer}
         control='linear'
         top='35'
