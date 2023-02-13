@@ -79,7 +79,7 @@ const Laser = (props) => {
         top='0'
         left='0'
         newStatus={handleChangeFooter}
-        led={props.LED}
+       // led={props.LED}
         footer={footer}
       />
     </Window>

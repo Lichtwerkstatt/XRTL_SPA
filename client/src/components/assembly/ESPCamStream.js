@@ -118,7 +118,7 @@ const ESPCamStream = (props) => {
       <div className={styles.Settings}>
         <Settings
           component={props.controlId}
-          led={props.LED}
+        //  led={props.LED}
           footer={footer}
           newStatus={handleChangeFooter} />
       </div>

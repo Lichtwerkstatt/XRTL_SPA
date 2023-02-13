@@ -95,7 +95,7 @@ const KM100 = (props) => {
         rotation={props.rotationBottom}
         component={props.controlIdBottom}
         newStatus={handleChangeFooter}
-        led={props.LED}
+      //  led={props.LED}
         footer={footer}
         top='50'
         left='160'
