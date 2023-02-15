@@ -32,7 +32,7 @@ const Login = (props) => {
     })
 
     const handleLogin = () => {
-        if (username !== ''){ //&& accessCode !== '') {
+        if (username !== '' && accessCode !== '') {
             try {
                 socketCtx.setNewURL(String(connection.title), String(username));
                 socketCtx.toggleConnection(String(username), String(accessCode));
@@ -109,7 +109,7 @@ const Login = (props) => {
                                 helperText={username === '' ? 'Enter your username!' : ' '}
                             />
                         </Grid>
-                 
+
                         <Grid item xs={6}>
                             <TextField
                                 variant='outlined'

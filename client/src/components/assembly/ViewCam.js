@@ -69,7 +69,7 @@ const Cam = (props) => {
 
     useEffect(() => {
         const data = (payload) => {
-            console.log("Data payload", payload)
+         //   console.log("Data payload", payload)
         }
 
         socketCtx.socket.on("data", data);

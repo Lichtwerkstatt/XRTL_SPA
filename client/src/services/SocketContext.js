@@ -80,7 +80,6 @@ export function SocketContextProvider({ children }) {
   }
 
   const toggleConnection = (username, accessCode) => {
-    accessCode='access';
     if (!connected) {
       var payload = {
         sub: username,
@@ -89,6 +88,7 @@ export function SocketContextProvider({ children }) {
         iat: Date.now(),
       }
 
+      console.log(accessCode)
       var token = jwt.sign(payload, "keysecret");
       socket.auth = { token: token }
       //secure: true, rejectUnauthorized: false}

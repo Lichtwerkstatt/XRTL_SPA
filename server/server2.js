@@ -19,7 +19,7 @@ var online = false;
 var userIDs = [];
 var GUIId = '';
 const rand = Math.random().toString(16).substr(2, 8);
-console.log(rand);
+console.log("Acesse Code: ", rand);
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -35,7 +35,7 @@ io.use((socket, next) => {
     }
 })
 io.on('connection', socket => {
-    if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === 'access') {            //rand) {
+    if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === rand) {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);

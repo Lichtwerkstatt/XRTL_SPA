@@ -34,7 +34,7 @@ const Settings = (props) => {
                 setSwitchStatus(payload.status.gray)
                 setExposure(payload.status.exposure)
                 setContrast(payload.status.contrast)
-                console.log("Status of settings:   ", payload)
+                //console.log("Status of settings:   ", payload)
             }
         }
 

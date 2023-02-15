@@ -64,17 +64,15 @@ export function AppContextProvider({ children }) {
   }
 
   const toggleShowLED = (newVal) => {
-    console.log(newVal)
     setShowLED(newVal);
   }
 
   const toggleShowBeam = (newVal) => {
-    console.log(newVal)
     setShowBeam(newVal);
   }
-  
+
   const toggleChangeRotary = () => {
-   
+
     setShowBeam(!showRotary);
   }
 
