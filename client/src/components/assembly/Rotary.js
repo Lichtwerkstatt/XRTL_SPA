@@ -57,7 +57,6 @@ const Rotary = (props) => {
       height='235px'
       onInfo={handleInfo}
       background={Rotary_bg}
-      newStatus={handleChangeFooter}
       footer={footer}
     >
       <RotaryCtrl

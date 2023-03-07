@@ -25,19 +25,8 @@ const LaserCtrl = (props) => {
   useEffect(() => {
     const status = (payload) => {
       if (payload.controlId === props.component) {
+        setOnlineStatus(true)
         setSwitch(payload.status.isOn)
-      }
-    }
-    const footer = (payload) => {
-      if (payload.controlId === props.component) {
-        props.newStatus(String(payload.status))
-      }
-    }
-
-    const getFooter = (payload) => {
-      if (payload.controlId === props.component) {
-        setOnlineStatus(payload.online)
-        props.newStatus(String(payload.status))
       }
     }
 
@@ -50,15 +39,9 @@ const LaserCtrl = (props) => {
     socketCtx.socket.emit('getFooter', props.component)
 
     socketCtx.socket.on("status", status);
-
-    socketCtx.socket.on('footer', footer)
-
-    socketCtx.socket.on('getFooter', getFooter);
-
+    
     return () => {
       socketCtx.socket.removeAllListeners('status', status)
-      socketCtx.socket.removeAllListeners('footer', footer)
-      socketCtx.socket.removeAllListeners('getFooter', getFooter)
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps

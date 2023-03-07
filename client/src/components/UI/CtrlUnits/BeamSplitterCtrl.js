@@ -27,6 +27,7 @@ const BeamSplitterCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
+            setOnlineStatus(true)
             if (payload.controlId === props.redLED) {
                 setSwitchRedStatus(payload.status.isOn);
             }
@@ -40,19 +41,6 @@ const BeamSplitterCtrl = (props) => {
             //console.log("Status of settings:   ", payload)
         }
 
-        const footer = (payload) => {
-            if (payload.controlId === props.component) {
-                props.newStatus(String(payload.status))
-            }
-        }
-
-        const getFooter = (payload) => {
-            if (payload.controlId === props.component) {
-
-                setOnlineStatus(payload.online)
-                props.newStatus(String(payload.status))
-            }
-        }
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
@@ -78,23 +66,11 @@ const BeamSplitterCtrl = (props) => {
             getStatus: true
         })
 
-        socketCtx.socket.emit('getFooter', props.component);
-        socketCtx.socket.emit('getFooter', props.pinhole);
-        socketCtx.socket.emit('getFooter', props.redLED)
-        socketCtx.socket.emit('getFooter', props.whiteLED)
-
-
-
-        socketCtx.socket.on("status", status);
-
-        socketCtx.socket.on('footer', footer)
-
-        socketCtx.socket.on('getFooter', getFooter);
+        socketCtx.socket.emit('getFooter', props.component)
 
         return () => {
             socketCtx.socket.removeAllListeners('status', status)
-            socketCtx.socket.removeAllListeners('footer', footer)
-            socketCtx.socket.removeAllListeners('getFooter', getFooter)
+
         }
         //Comment needed to prevent a warning
         // eslint-disable-next-line react-hooks/exhaustive-deps      

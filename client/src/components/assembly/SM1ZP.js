@@ -58,7 +58,6 @@ const SM1ZP = (props) => {
       height='235px'
       onInfo={handleInfo}
       background={SM1ZP_bg}
-      newStatus={handleChangeFooter}
       footer={footer}
     >
       <RotaryCtrl

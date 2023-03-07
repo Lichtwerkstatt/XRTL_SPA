@@ -14,21 +14,6 @@ const Heater = (props) => {
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
 
-
-    const handleReset = () => {
-        socketCtx.socket.emit('command', {
-            userId: socketCtx.username,
-            controlId: props.controlIdHeater,
-            reset: true
-        })
-
-        socketCtx.socket.emit('command', {
-            userId: socketCtx.username,
-            controlId: props.controlIdThermistor,
-            reset: true
-        })
-    }
-
     const handleInfo = () => {
         var timeNow = new Date();
         let difH, difMin, difSec = 0;
@@ -90,7 +75,6 @@ const Heater = (props) => {
             left={props.left}
             height='340px'
             width='673px'
-            onReset={handleReset}
             onInfo={handleInfo}
             footer={footer}
         >

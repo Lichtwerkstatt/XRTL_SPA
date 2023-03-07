@@ -1,52 +1,11 @@
 import { useSocketContext } from '../../services/SocketContext';
-import { usePopUpContext } from '../../services/PopUpContext';
 import Settings from '../UI/CtrlUnits/Settings';
 import Window from '../UI/experimentUI/Window';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './Stream.module.css';
 
 const ESPCamStream = (props) => {
-  const [lastChange, setLastChange] = useState(['', '', '']);
-  const [alertType, setAlertType] = useState('info');
-  const [footer, setFooter] = useState(props.footer);
-  var [alert, setAlert] = useState(false);
-
   const socketCtx = useSocketContext();
-  const popupCtx = usePopUpContext();
-
-  const handleInfo = () => {
-    var timeNow = new Date();
-    let difH, difMin, difSec = 0;
-    alert = '';
-
-    timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
-    if (lastChange[0] === '') {
-      alert = 'No last change detected!'
-    } else if (timeNow[0] > lastChange[0]) {
-      difH = timeNow[0] - lastChange[0];
-      alert = 'Last change is more than ' + difH + ' h ago!'
-    } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
-      difSec = timeNow[2] - lastChange[2]
-      alert = 'Last change is ' + difSec + ' s ago!'
-    } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
-      difMin = timeNow[1] - lastChange[1]
-      alert = 'Last change is more than ' + difMin + ' min ago!'
-    } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
-      alert = 'Last change is more than 24 h ago!'
-    } else {
-      alert = 'No last change detected!'
-    }
-
-    setAlert(alert);
-    setAlertType('info');
-    popupCtx.toggleShowPopUp(alert, alertType);
-  }
-
-  const handleChangeFooter = (newFooter) => {
-    var time = new Date();
-    setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-    setFooter(newFooter);
-  };
 
   useEffect(() => {
     const data = (payload) => {
@@ -94,9 +53,6 @@ const ESPCamStream = (props) => {
       left={props.left}
       width='1000px'
       height='430px'
-      onInfo={handleInfo}
-      footer={footer}
-      newStatus={handleChangeFooter}
     >
       <div className={styles.Canvas}>
         <canvas id='ScreenCanvas' />
@@ -105,8 +61,7 @@ const ESPCamStream = (props) => {
         <Settings
           component={props.controlId}
           led={props.LED}
-          footer={footer}
-          newStatus={handleChangeFooter} />
+        />
       </div>
 
     </Window>

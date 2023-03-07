@@ -31,23 +31,11 @@ const Settings = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
+                setOnlineStatus(true)
                 setSwitchStatus(payload.status.gray)
                 setExposure(payload.status.exposure)
                 setContrast(payload.status.contrast)
                 //console.log("Status of settings:   ", payload)
-            }
-        }
-
-        const footer = (payload) => {
-            if (payload.controlId === props.component) {
-                props.newStatus(String(payload.status))
-            }
-        }
-
-        const getFooter = (payload) => {
-            if (payload.controlId === props.component) {
-                setOnlineStatus(true)
-                props.newStatus(String(payload.status))
             }
         }
 
@@ -61,14 +49,8 @@ const Settings = (props) => {
 
         socketCtx.socket.on("status", status);
 
-        socketCtx.socket.on('footer', footer)
-
-        socketCtx.socket.on('getFooter', getFooter);
-
         return () => {
             socketCtx.socket.removeAllListeners('status', status)
-            socketCtx.socket.removeAllListeners('footer', footer)
-            socketCtx.socket.removeAllListeners('getFooter', getFooter)
         }
         //Comment needed to prevent a warning
         // eslint-disable-next-line react-hooks/exhaustive-deps
