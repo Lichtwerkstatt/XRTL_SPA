@@ -21,17 +21,12 @@ const Window = (props) => {
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
-
-
   useEffect(() => {
-    console.log(props.componentList)
-
     const Footer = (payload) => {
       if (props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-        console.log(" Footer ", payload)
       }
     }
 
@@ -40,7 +35,6 @@ const Window = (props) => {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
-        console.log("Payload ", payload)
       }
     }
 

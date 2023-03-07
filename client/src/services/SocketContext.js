@@ -88,7 +88,6 @@ export function SocketContextProvider({ children }) {
         iat: Date.now(),
       }
 
-      console.log(accessCode)
       var token = jwt.sign(payload, "keysecret");
       socket.auth = { token: token }
       //secure: true, rejectUnauthorized: false}
