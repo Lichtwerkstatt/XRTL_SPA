@@ -1,6 +1,4 @@
-import { useSocketContext } from '../../services/SocketContext'
 import { usePopUpContext } from '../../services/PopUpContext'
-import { useAppContext } from '../../services/AppContext';
 import KM100_Background from './media/km100_outline.png'
 import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import Window from '../UI/experimentUI/Window';
@@ -12,29 +10,8 @@ const KM100 = (props) => {
   const [alertType, setAlertType] = useState('info');
   var [alert, setAlert] = useState(false);
 
-  const appCtx = useAppContext();
-  const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
 
-  const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
-  }
-
-  //wie handhaben wir das?
-  const handleReset = () => {
-
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlIdBottom,
-      reset: true
-    })
-
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlIdTop,
-      reset: true
-    })
-  }
 
   const handleInfo = () => {
     var timeNow = new Date();
@@ -72,6 +49,9 @@ const KM100 = (props) => {
 
   return (
     <Window
+      id={props.id}
+      controlId={props.controlIdBottom}
+      controlId2={props.controlIdTop}
       header={props.title}
       footer={footer}
       top={props.top}
@@ -79,8 +59,6 @@ const KM100 = (props) => {
       height='240px'
       width='250px'
       background={KM100_Background}
-      onClose={handleCloseWindow}
-      onReset={handleReset}
       onInfo={handleInfo}
     >
       <RotaryCtrl

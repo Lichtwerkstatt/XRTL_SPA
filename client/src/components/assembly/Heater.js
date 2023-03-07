@@ -1,6 +1,5 @@
 import { useSocketContext } from '../../services/SocketContext';
 import { usePopUpContext } from '../../services/PopUpContext';
-import { useAppContext } from '../../services/AppContext';
 import HeaterCtrl from '../UI/CtrlUnits/HeaterCtrl';
 import Window from '../UI/experimentUI/Window';
 import { useState, useEffect } from 'react';
@@ -14,11 +13,7 @@ const Heater = (props) => {
 
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
-    const appCtx = useAppContext();
 
-    const handleCloseWindow = () => {
-        appCtx.toggleSelectedComp(props.id);    
-    };
 
     const handleReset = () => {
         socketCtx.socket.emit('command', {
@@ -87,12 +82,14 @@ const Heater = (props) => {
 
     return (
         <Window
+            id={props.id}
+            controlId={props.controlIdHeater}
+            controlId2={props.controlIdThermistor}
             header={props.title}
             top={props.top}
             left={props.left}
             height='340px'
             width='673px'
-            onClose={handleCloseWindow}
             onReset={handleReset}
             onInfo={handleInfo}
             footer={footer}

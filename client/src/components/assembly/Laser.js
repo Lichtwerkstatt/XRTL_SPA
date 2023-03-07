@@ -1,6 +1,4 @@
-import { useSocketContext } from '../../services/SocketContext';
 import { usePopUpContext } from '../../services/PopUpContext';
-import { useAppContext } from '../../services/AppContext';
 import LaserCtrl from '../UI/CtrlUnits/LaserCtrl';
 import Window from '../UI/experimentUI/Window';
 import { useState } from 'react';
@@ -11,27 +9,13 @@ const Laser = (props) => {
   const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
-  const appCtx = useAppContext();
-
-  const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
-  }
 
   const handleChangeFooter = (newFooter) => {
     var time = new Date();
     setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
     setFooter(newFooter);
   };
-
-  const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlId,
-      reset: true
-    })
-  }
 
   const handleInfo = () => {
     var timeNow = new Date();
@@ -63,13 +47,13 @@ const Laser = (props) => {
 
   return (
     <Window
+      id={props.id}
+      controlId={props.controlId}
       header={props.title}
       top={props.top}
       left={props.left}
       height='200px'
       width='300px'
-      onClose={handleCloseWindow}
-      onReset={handleReset}
       onInfo={handleInfo}
       newStatus={handleChangeFooter}
       footer={footer}

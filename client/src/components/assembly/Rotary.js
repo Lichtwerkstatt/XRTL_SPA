@@ -1,6 +1,4 @@
-import { useSocketContext } from '../../services/SocketContext';
 import { usePopUpContext } from '../../services/PopUpContext';
-import { useAppContext } from '../../services/AppContext';
 import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import Rotary_bg from './media/rotary_outline.png';
 import Window from '../UI/experimentUI/Window';
@@ -12,27 +10,13 @@ const Rotary = (props) => {
   const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
-  const appCtx = useAppContext();
-
-  const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.controlId)
-  }
 
   const handleChangeFooter = (newFooter) => {
     var time = new Date();
     setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
     setFooter(newFooter);
   };
-
-  const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlId,
-      reset: true
-    })
-  }
 
   const handleInfo = () => {
     var timeNow = new Date();
@@ -64,13 +48,13 @@ const Rotary = (props) => {
 
   return (
     <Window
+      id={props.controlId}
+      controlId={props.controlId}
       header={props.title}
       top={props.top}
       left={props.left}
       width='250px'
       height='235px'
-      onClose={handleCloseWindow}
-      onReset={handleReset}
       onInfo={handleInfo}
       background={Rotary_bg}
       newStatus={handleChangeFooter}

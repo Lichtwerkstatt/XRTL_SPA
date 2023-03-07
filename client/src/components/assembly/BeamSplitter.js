@@ -1,7 +1,5 @@
 import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
-import { useSocketContext } from "../../services/SocketContext";
 import { usePopUpContext } from "../../services/PopUpContext";
-import { useAppContext } from "../../services/AppContext";
 import Window from "../UI/experimentUI/Window";
 import { useState } from "react";
 
@@ -11,21 +9,7 @@ const BeamSplitter = (props) => {
   const [footer, setFooter] = useState(props.footer);
   var [alert, setAlert] = useState(false);
 
-  const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
-  const appCtx = useAppContext();
-
-  const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.controlId)
-  }
-
-  const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlId,
-      reset: true
-    })
-  }
 
   const handleInfo = () => {
     var timeNow = new Date();
@@ -63,14 +47,14 @@ const BeamSplitter = (props) => {
 
   return (
     <Window
+      id={props.controlId}
+      controlId={props.controlId}
       header={props.title}
       footer={footer}
       top={props.top}
       left={props.left}
       height="190px"
       width="360px"
-      onClose={handleCloseWindow}
-      onReset={handleReset}
       onInfo={handleInfo}
 
     >
