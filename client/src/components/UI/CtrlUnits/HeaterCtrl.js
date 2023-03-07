@@ -36,23 +36,12 @@ const HeaterCtrl = (props) => {
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
+                setOnlineStatus(true)
                 setPowerSwitch(payload.status.isOn)
                 setPowerValue(payload.status.pwm)
             }
         }
 
-        const footer = (payload) => {
-            if (payload.controlId === props.component) {
-                props.newStatus(String(payload.status))
-            }
-        }
-
-        const getFooter = (payload) => {
-            if (payload.controlId === props.component) {
-                setOnlineStatus(payload.online)
-                props.newStatus(String(payload.status))
-            }
-        }
 
         const data = (payload) => {
             var string = payload.data.data;
@@ -70,16 +59,10 @@ const HeaterCtrl = (props) => {
 
         socketCtx.socket.on("status", status);
 
-        socketCtx.socket.on('footer', footer)
-
-        socketCtx.socket.on('getFooter', getFooter);
-
         socketCtx.socket.on("data", data);
 
         return () => {
             socketCtx.socket.removeAllListeners('status', status)
-            socketCtx.socket.removeAllListeners('footer', footer)
-            socketCtx.socket.removeAllListeners('getFooter', getFooter)
             socketCtx.socket.removeAllListeners('data', data)
         }
         //Comment needed to prevent a warning
