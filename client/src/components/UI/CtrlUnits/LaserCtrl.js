@@ -1,26 +1,15 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../../services/SocketContext";
+import { GiLaserWarning } from "react-icons/gi";
 import { useState, useEffect } from "react";
-import { GiLaserWarning } from "react-icons/gi"
-import { Box } from '@mui/material';
+import { theme } from '../templates/Theme.js';
 import Switch from '../templates/Switch';
+import { Box } from '@mui/material';
 
 const LaserCtrl = (props) => {
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [switchIsOn, setSwitch] = useState(false);
   const socketCtx = useSocketContext();
-
-  const theme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        light: '#01bd7d',
-        main: '#01bd7d',
-        dark: '#01bd7d',
-        contrastText: '#fff',
-      },
-    }
-  })
 
   useEffect(() => {
     const status = (payload) => {
@@ -39,7 +28,7 @@ const LaserCtrl = (props) => {
     socketCtx.socket.emit('getFooter', props.component)
 
     socketCtx.socket.on("status", status);
-    
+
     return () => {
       socketCtx.socket.removeAllListeners('status', status)
     }

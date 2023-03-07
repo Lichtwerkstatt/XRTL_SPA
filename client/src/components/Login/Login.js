@@ -1,7 +1,8 @@
-import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
+import { Grid, Autocomplete, Box, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { themeLogin } from '../../components/UI/templates/Theme';
 import { createFilterOptions } from '@mui/material/Autocomplete';
-import { useSocketContext } from '../../services/SocketContext'
+import { useSocketContext } from '../../services/SocketContext';
 import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
@@ -18,18 +19,7 @@ const Login = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                light: '#01bd7d',
-                main: '#01bd7d',
-                dark: '#01bd7d',
-                contrastText: '#fff',
-            },
-        },
-        spacing: 2,
-    })
+
 
     const handleLogin = () => {
         if (username !== '' && accessCode !== '') {
@@ -83,7 +73,7 @@ const Login = (props) => {
 
     if (appCtx.showLogin) {
         return (
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={themeLogin}>
                 <div className={styles.popupWindow}>
                 </div>
                 <div className={styles.popupInner} >

@@ -1,9 +1,10 @@
 import { useSocketContext } from "../../../services/SocketContext";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 /*import LeftRightCtrl from "../templates/LeftRightCtrl";
  import styles from "../CSS/Settings.module.css"
 import UpDownCtrl from "../templates/UpDownCtrl" */
 import Slider from "../templates/SliderCtrl";
+import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from "react";
 import Switch from "../templates/Switch"
 //import Select from "../templates/Select";
@@ -15,18 +16,6 @@ const Settings = (props) => {
     const [exposure, setExposure] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
     const socketCtx = useSocketContext();
-
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                light: '#01bd7d',
-                main: '#01bd7d',
-                dark: '#01bd7d',
-                contrastText: '#01bd7d',
-            },
-        }
-    })
 
     useEffect(() => {
         const status = (payload) => {

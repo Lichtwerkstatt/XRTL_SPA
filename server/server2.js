@@ -34,6 +34,7 @@ io.use((socket, next) => {
         next(new Error('Authentication error'));
     }
 })
+
 io.on('connection', socket => {
     if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === rand) {
         console.log('Client connected successfully');

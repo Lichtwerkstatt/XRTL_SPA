@@ -1,9 +1,10 @@
-import { Box, createTheme, ThemeProvider, Button, IconButton, Typography } from '@mui/material';
+import { Box, ThemeProvider, Button, IconButton, Typography } from '@mui/material';
 import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from "../../../services/SocketContext";
 import styles from "../CSS/HeaterCtrl.module.css";
+import { theme } from '../templates/Theme.js';
 import Slider from '../templates/SliderCtrl';
 import { useState, useEffect } from "react";
 import Switch from '../templates/Switch'
@@ -17,18 +18,6 @@ const HeaterCtrl = (props) => {
     const [temp, setTemp] = useState('-°C');
 
     const socketCtx = useSocketContext();
-
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                light: '#01bd7d',
-                main: '#01bd7d',
-                dark: '#01bd7d',
-                contrastText: '#01bd7d',
-            },
-        }
-    })
 
     const hiddenSetting = () => {
         setSettings(!setting);

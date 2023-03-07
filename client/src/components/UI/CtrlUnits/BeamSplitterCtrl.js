@@ -1,5 +1,6 @@
 import { useSocketContext } from "../../../services/SocketContext";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../templates/Theme.js'
 import RadioButton from '../templates/RadioButton';
 import { useState, useEffect } from "react";
 import Switch from '../templates/Switch';
@@ -12,18 +13,6 @@ const BeamSplitterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
 
     const socketCtx = useSocketContext();
-
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                light: '#01bd7d',
-                main: '#01bd7d',
-                dark: '#01bd7d',
-                contrastText: '#01bd7d',
-            },
-        }
-    })
 
     useEffect(() => {
         const status = (payload) => {
@@ -40,7 +29,6 @@ const BeamSplitterCtrl = (props) => {
             }
             //console.log("Status of settings:   ", payload)
         }
-
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,

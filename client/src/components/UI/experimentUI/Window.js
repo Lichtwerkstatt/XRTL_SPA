@@ -13,7 +13,7 @@ import { useState } from 'react';
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [alertType, setAlertType] = useState('info');
-  const [footer, setFooter] = useState('');
+  const [footer, setFooter] = useState('Initializing... ');
   var [alert, setAlert] = useState(false);
 
 
