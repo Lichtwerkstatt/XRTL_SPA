@@ -28,8 +28,7 @@ const Heater = (props) => {
     return (
         <Window
             id={props.id}
-            controlId={props.controlIdHeater}
-            controlId2={props.controlIdThermistor}
+            componentList={[props.controlIdHeater, props.controlIdThermistor]}
             header={props.title}
             top={props.top}
             left={props.left}

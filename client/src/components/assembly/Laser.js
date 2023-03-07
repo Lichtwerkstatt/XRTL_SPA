@@ -6,7 +6,7 @@ const Laser = (props) => {
   return (
     <Window
       id={props.id}
-      controlId={props.controlId}
+      componentList={[props.controlId]}
       header={props.title}
       top={props.top}
       left={props.left}

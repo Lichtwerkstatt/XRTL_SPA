@@ -47,7 +47,7 @@ const ESPCamStream = (props) => {
   return (
     <Window
       id={props.controlId}
-      controlId={props.controlId}
+      componentList={[props.controlId]}
       header={props.title}
       top={props.top}
       left={props.left}

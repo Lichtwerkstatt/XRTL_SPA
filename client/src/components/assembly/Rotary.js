@@ -1,15 +1,12 @@
-import { usePopUpContext } from '../../services/PopUpContext';
 import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import Rotary_bg from './media/rotary_outline.png';
 import Window from '../UI/experimentUI/Window';
-import { useState } from 'react';
 
 const Rotary = (props) => {
-
   return (
     <Window
       id={props.controlId}
-      controlId={props.controlId}
+      componentList={[props.controlId]}
       header={props.title}
       top={props.top}
       left={props.left}

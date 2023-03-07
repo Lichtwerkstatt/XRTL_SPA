@@ -1,50 +1,33 @@
 import { IoReloadOutline, IoInformationCircleOutline } from 'react-icons/io5'
-import { CgCloseO } from 'react-icons/cg'
-import styles from '../CSS/Window.module.css'
-import Draggable from 'react-draggable'
-import { memo, useEffect } from 'react'
-import { isEqual } from 'lodash';
-import { useAppContext } from '../../../services/AppContext';
 import { useSocketContext } from '../../../services/SocketContext';
-import { useState } from 'react';
 import { usePopUpContext } from '../../../services/PopUpContext';
+import { useAppContext } from '../../../services/AppContext';
+import styles from '../CSS/Window.module.css';
+import { CgCloseO } from 'react-icons/cg';
+import { memo, useEffect } from 'react';
+import Draggable from 'react-draggable';
+import { isEqual } from 'lodash';
+import { useState } from 'react';
 
 
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [alertType, setAlertType] = useState('info');
-  var [alert, setAlert] = useState(false);
   const [footer, setFooter] = useState('');
+  var [alert, setAlert] = useState(false);
 
-  //console.log(lastChange)
 
-  const appCtx = useAppContext();
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
 
-  const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
-  }
 
-  const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.controlId,
-      reset: true
-    })
-
-    if (props.controlId2) {
-      socketCtx.socket.emit('command', {
-        userId: socketCtx.username,
-        controlId: props.controlId2,
-        reset: true
-      })
-    }
-  }
 
   useEffect(() => {
+    console.log(props.componentList)
+
     const Footer = (payload) => {
-      if (payload.controlId === props.controlId) {
+      if (props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -53,7 +36,7 @@ const Window = (props) => {
     }
 
     const getFooter = (payload) => {
-      if (payload.controlId === props.controlId) {
+      if (props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -65,7 +48,6 @@ const Window = (props) => {
 
     socketCtx.socket.on('getFooter', getFooter);
 
-
     return () => {
       socketCtx.socket.removeAllListeners('footer', Footer)
       socketCtx.socket.removeAllListeners('getFooter', getFooter)
@@ -73,6 +55,26 @@ const Window = (props) => {
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket])
+
+  const handleCloseWindow = () => {
+    appCtx.toggleSelectedComp(props.id)
+  }
+
+  const handleReset = () => {
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      controlId: props.componentList[0],
+      reset: true
+    })
+
+    if (props.props.componentList[1]) {
+      socketCtx.socket.emit('command', {
+        userId: socketCtx.username,
+        controlId: props.componentList[1],
+        reset: true
+      })
+    }
+  }
 
   const handleInfo = () => {
     var timeNow = new Date();

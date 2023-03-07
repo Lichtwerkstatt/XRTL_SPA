@@ -2,12 +2,11 @@ import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import SM1ZP_bg from './media/linear_outline.png';
 import Window from '../UI/experimentUI/Window';
 
-
 const SM1ZP = (props) => {
   return (
     <Window
       id={props.controlId}
-      controlId={props.controlId}
+      componentList={[props.controlId]}
       header={props.title}
       top={props.top}
       left={props.left}

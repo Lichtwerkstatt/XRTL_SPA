@@ -6,7 +6,7 @@ const BeamSplitter = (props) => {
   return (
     <Window
       id={props.controlId}
-      controlId={props.controlId}
+      componentList={[props.controlId, props.controlId2, props.controlLED, props.controlLED2]}
       header={props.title}
       top={props.top}
       left={props.left}

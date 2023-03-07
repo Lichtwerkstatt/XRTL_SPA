@@ -3,12 +3,10 @@ import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import Window from '../UI/experimentUI/Window';
 
 const KM100 = (props) => {
-
   return (
     <Window
       id={props.id}
-      controlId={props.controlIdBottom}
-      controlId2={props.controlIdTop}
+      componentList={[props.controlIdBottom, props.controlIdTop]}
       header={props.title}
       top={props.top}
       left={props.left}
