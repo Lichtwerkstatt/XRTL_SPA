@@ -1,9 +1,10 @@
 import { useSocketContext } from "../../../services/SocketContext";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import LeftRightCtrl from "../templates/LeftRightCtrl";
 import styles from "../CSS/Settings.module.css"
 import UpDownCtrl from "../templates/UpDownCtrl"
 import Slider from "../templates/SliderCtrl";
+import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from "react";
 import Switch from "../templates/Switch"
 import Select from "../templates/Select";
@@ -13,42 +14,17 @@ const Settings = (props) => {
     const [switchIsOn, setSwitchStatus] = useState(false);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
-   // const [brightness, setBrightness] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
     const socketCtx = useSocketContext();
-
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                light: '#01bd7d',
-                main: '#01bd7d',
-                dark: '#01bd7d',
-                contrastText: '#01bd7d',
-            },
-        }
-    })
 
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
-                setSwitchStatus(payload.status.gray)
-                setExposure(payload.status.brightness)
-                setContrast(payload.status.contrast)
-                console.log("Status of settings:   ", payload)
-            }
-        }
-
-        const footer = (payload) => {
-            if (payload.controlId === props.component) {
-                props.newStatus(String(payload.status))
-            }
-        }
-
-        const getFooter = (payload) => {
-            if (payload.controlId === props.component) {
                 setOnlineStatus(true)
-                props.newStatus(String(payload.status))
+                setSwitchStatus(payload.status.gray)
+                setExposure(payload.status.exposure)
+                setContrast(payload.status.contrast)
+                //console.log("Status of settings:   ", payload)
             }
         }
 
@@ -62,14 +38,8 @@ const Settings = (props) => {
 
         socketCtx.socket.on("status", status);
 
-        socketCtx.socket.on('footer', footer)
-
-        socketCtx.socket.on('getFooter', getFooter);
-
         return () => {
             socketCtx.socket.removeAllListeners('status', status)
-            socketCtx.socket.removeAllListeners('footer', footer)
-            socketCtx.socket.removeAllListeners('getFooter', getFooter)
         }
         //Comment needed to prevent a warning
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +58,6 @@ const Settings = (props) => {
             <Switch component={props.component} switchStatus={switchIsOn} online={onlineStatus} start='Color' end='Gray' option="gray" />
             <Slider title="Contrast" component={props.component} online={onlineStatus} sliderValue={contrast} min={-2} max={2} option="contrast" />
             <Slider title="Exposure" component={props.component} online={onlineStatus} sliderValue={exposure} min={0} max={500} option="exposure" />
-            {/* <Slider title="Brightness" component={props.component} online={onlineStatus} sliderValue={brightness} min={-2} max={2} option="brightness" /> */}
         </ThemeProvider>
     )
 }
