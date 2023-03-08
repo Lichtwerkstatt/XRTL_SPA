@@ -1,4 +1,4 @@
-import { Grid, Autocomplete, Box, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
+import { Grid, Autocomplete, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import { themeLogin } from '../../components/UI/templates/Theme';
 import { createFilterOptions } from '@mui/material/Autocomplete';
@@ -113,22 +113,22 @@ const Login = (props) => {
                             />
                         </Grid>
                     </Grid>
-                        <Autocomplete  sx={{ m: 8, width: 250 }}
-                            value={connection}
-                            freeSolo
-                            renderInput={(params) => (
-                                <TextField {...params} label='Choose server address' />)}
-                            onChange={autoCompleteHandle}
-                            onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                            filterOptions={filterOption}
-                            selectOnFocus
-                            clearOnBlur
-                            disableClearable
-                            handleHomeEndKeys
-                            options={connectionOption}
-                            getOptionLabel={getLabel}
-                            renderOption={(props, option) => <li {...props}>{option.title}</li>}
-                        /> 
+                    <Autocomplete sx={{ m: 8, width: 250 }}
+                        value={connection}
+                        freeSolo
+                        renderInput={(params) => (
+                            <TextField {...params} label='Choose server address' />)}
+                        onChange={autoCompleteHandle}
+                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        filterOptions={filterOption}
+                        selectOnFocus
+                        clearOnBlur
+                        disableClearable
+                        handleHomeEndKeys
+                        options={connectionOption}
+                        getOptionLabel={getLabel}
+                        renderOption={(props, option) => <li {...props}>{option.title}</li>}
+                    />
 
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
