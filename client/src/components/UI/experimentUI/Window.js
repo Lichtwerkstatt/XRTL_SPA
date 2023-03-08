@@ -61,7 +61,7 @@ const Window = (props) => {
       reset: true
     })
 
-    if (props.props.componentList[1]) {
+    if (props.componentList[1]) {
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
         controlId: props.componentList[1],
