@@ -219,7 +219,7 @@ export function Model(props) {
                   props.toggleSelect("experimentSelection");
                 }}
               >
-                {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Beam Splitter" description="Observation of second IM Path" />}
+                {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
                 <mesh
                   name="Cylinder"
                   castShadow
@@ -339,7 +339,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Beam Splitter" description="Observation of second IM Path" />}
+              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
               <mesh
                 name="Cylinder"
                 castShadow
@@ -439,7 +439,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Beam Splitter" description="Observation of second IM Path" />}
+              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
               <mesh
                 name="Cylinder"
                 castShadow
@@ -621,7 +621,7 @@ export function Model(props) {
             props.toggleSelect("linear_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 0.8, 0]} title="Transtlate Mirror" description="Linear Stage" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.8, 0]} title="Linear Movable Mirror" description="SM1ZP/M Translation Mount" />}
           <mesh
             name="TranslateMirrorMesh005"
             castShadow
@@ -669,7 +669,7 @@ export function Model(props) {
             props.toggleSelect("heater");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Heated Mirror" description="Observation of Thermal Expansion" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Heatable Mirror Stage" description="Mirror Mounted on an Aluminum Rod" />}
           <mesh 
             name="Cylinder008"
             castShadow
@@ -740,7 +740,7 @@ export function Model(props) {
             props.toggleSelect('heater_rotation');
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Measurement" description="Choose betweene Translate Mirror and Heated Mirror" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Mirror Changing Stage" description="PR01/M Rotation Stage" />}
           <mesh
             name="TranslateMirrorMesh004"
             castShadow
@@ -772,7 +772,7 @@ export function Model(props) {
             props.toggleSelect('plate_rotation');
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Difraction Plates" description="Measurement of Refractive Index" />}
+          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Glass Plate Rotation Stage" description="PR01/M Rotation Stage" />}
           <mesh
             name="PR01_M-Step001"
             castShadow
