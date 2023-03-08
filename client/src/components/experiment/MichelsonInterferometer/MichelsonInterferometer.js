@@ -28,7 +28,7 @@ const MichelsonInterferometer = (props) => {
       {/* KM100 */}
       {props.selected.has('KM100_1') && (
         <KM100
-          title='Mirror'
+          title='Reference Mirror'
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
@@ -43,7 +43,7 @@ const MichelsonInterferometer = (props) => {
       {/* Linear stage */}
       {props.selected.has('linear_1') && (
         <SM1ZP
-          title='Mirror Stage'
+          title='Linear Movable Mirror'
           controlId={'linear_1'}
           LED={'led_linear'}
           footer={footer}
@@ -55,7 +55,7 @@ const MichelsonInterferometer = (props) => {
       {/* Rotary stage plate*/}
       {props.selected.has('plate_rotation') && (
         <Rotary
-          title='Plate Stage'
+          title='Glass Plate Rotation Stage'
           controlId={'plate_rotation'}
           LED={'led_plate'}
           footer={footer}
@@ -67,7 +67,7 @@ const MichelsonInterferometer = (props) => {
       {/* Rotary stage Measurement Mirror*/}
       {props.selected.has('heater_rotation') && (
         <Rotary
-          title='Measure Stage'
+          title='Mirror Changing Stage'
           controlId={'heater_rotation'}
           LED={'led_heater'}
           footer={footer}
@@ -79,7 +79,7 @@ const MichelsonInterferometer = (props) => {
       {/* Laser ctrl */}
       {props.selected.has('greenlaser_1') && (
         <KM100
-          title='Laser'
+          title='Laser Alignment'
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
@@ -116,7 +116,7 @@ const MichelsonInterferometer = (props) => {
       {/* Heater */}
       {props.selected.has('heater') && (
         <Heater
-          title='Heater'
+          title='Heatable Mirror Stage'
           id={'heater'}
           controlIdHeater={'heater'}
           controlIdThermistor={'thermistor'}
@@ -130,7 +130,7 @@ const MichelsonInterferometer = (props) => {
       {/* Beam splitter */}
       {props.selected.has('experimentSelection') && (
         <BeamSplitter
-          title='Beam modifier/LED'
+          title='Multi Component Selection'
           controlId={'experimentSelection'}
           controlId2={'pinhole'}
           controlLED={'redLED'}

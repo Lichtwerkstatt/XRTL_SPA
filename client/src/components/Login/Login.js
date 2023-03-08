@@ -113,23 +113,22 @@ const Login = (props) => {
                             />
                         </Grid>
                     </Grid>
-                    <Box sx={{ m: 8, width: 250 }} >
-                        <Autocomplete
+                        <Autocomplete  sx={{ m: 8, width: 250 }}
                             value={connection}
                             freeSolo
                             renderInput={(params) => (
-                                <TextField {...params} label='Choose server address ' />)}
+                                <TextField {...params} label='Choose server address' />)}
                             onChange={autoCompleteHandle}
                             onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
                             filterOptions={filterOption}
                             selectOnFocus
                             clearOnBlur
+                            disableClearable
                             handleHomeEndKeys
                             options={connectionOption}
                             getOptionLabel={getLabel}
                             renderOption={(props, option) => <li {...props}>{option.title}</li>}
-                        />
-                    </Box>
+                        /> 
 
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
