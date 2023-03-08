@@ -44,13 +44,13 @@ io.on('connection', socket => {
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
 
-/*         var checkIfExpired = setInterval(() => {
-            if (exp < Date.now()) {
-                clearInterval(checkIfExpired);
-                socket.disconnect();
-                console.log('Client token expired');
-            }
-        }, 300000);     //checks every 5 min */
+        /*         var checkIfExpired = setInterval(() => {
+                    if (exp < Date.now()) {
+                        clearInterval(checkIfExpired);
+                        socket.disconnect();
+                        console.log('Client token expired');
+                    }
+                }, 300000);     //checks every 5 min */
     }
     else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');
@@ -122,6 +122,7 @@ io.on('connection', socket => {
 
     socket.on('getFooter', payload => { //reicht unteren zwei Fälle?
         if (footerList.includes(payload) === true) {
+            console.log("Fall eins")
             var footerPos = footerList.indexOf(payload);
             footerStatus = footerList[footerPos + 1];
             if (footerStatus === 'Component went offline!') {
