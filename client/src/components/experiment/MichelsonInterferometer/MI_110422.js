@@ -98,7 +98,7 @@ function Model({ ...props }) {
             props.toggleSelect("linear_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Transtlate Mirror" description="Linear Stage" />}
+          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Linear Movable Mirror" description="SM1ZP/M Translation Mount" />}
           <mesh
             name="TranslateMirrorMesh"
             castShadow

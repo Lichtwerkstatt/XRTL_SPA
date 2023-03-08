@@ -24,7 +24,7 @@ const MichelsonInterferometer = (props) => {
       {/* KM100 */}
       {props.selected.has('KM100_1') && (
         <KM100
-          title="Mirror"
+          title="Reference Mirror"
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
@@ -39,7 +39,7 @@ const MichelsonInterferometer = (props) => {
       {/* Linear stage */}
       {props.selected.has('linear_1') && (
         <SM1ZP
-          title="Mirror Stage"
+          title="Linear Movable Mirror"
           controlId={'linear_1'}
           LED={'led_linear'}
           footer={footer}
@@ -51,7 +51,7 @@ const MichelsonInterferometer = (props) => {
       {/* Laser ctrl */}
       {props.selected.has('greenlaser_1') && (
         <KM100
-          title="Laser"
+          title="Laser Alignment"
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
