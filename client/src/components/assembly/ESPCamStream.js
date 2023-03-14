@@ -61,11 +61,9 @@ const ESPCamStream = (props) => {
     setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
     setFooter(newFooter);
   };
-  console.log(props)
 
   useEffect(() => {
     const data = (payload) => {
-      console.log("DATA", payload)
       if (payload.controlId === props.controlId) {
 
         var uint8Arr = new Uint8Array(payload.data);
@@ -90,7 +88,7 @@ const ESPCamStream = (props) => {
         img.src = 'data:image/jpg;base64,' + base64String;
       }
     }
-    
+
     socketCtx.socket.on('data', data);
 
     return () => {
