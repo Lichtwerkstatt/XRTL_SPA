@@ -9,3 +9,21 @@ div.LeftRight{
     right: -20px;
     top: 20px
 }
+
+div.Canvas canvas{
+    position: absolute;
+    width:600px;
+    height: 400px;
+    top: 2px;
+    left: -655px;
+    border: 2px solid #01bd7d;
+    border-radius: 15px;
+ }
+
+ div.Settings{
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    right: 30px;
+    top: 40px
+}
