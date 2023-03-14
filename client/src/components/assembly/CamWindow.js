@@ -13,6 +13,7 @@ const InfoWindow = (props) => {
             top="200"
             left="250"
             width="640px"
+            footer={'empty'}
         >
             <ViewCam
                 component="Cam_1"

@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 
 const ViewCam = (props) => {
     const socketCtx = useSocketContext();
-   
+
     useEffect(() => {
         var peerConnection;
-    
+
         const offer = (payload) => {
             peerConnection = props.peer;
             peerConnection
@@ -40,28 +40,21 @@ const ViewCam = (props) => {
             userId: socketCtx.username,
             controlId: 'Cam'
         });
-       
-        
-          
-          socketCtx.socket.emit('command', {
+
+        socketCtx.socket.emit('command', {
             userId: socketCtx.username,
             controlId: props.component,
             getStatus: true
-          });
+        });
 
-      
-          socketCtx.socket.emit('getFooter', props.component);
-      
-        
-          
-          socketCtx.socket.emit('viewer', props.component)
- 
-          socketCtx.socket.on('offer', offer)
-  
-          socketCtx.socket.on('candidate', candidate)
+        socketCtx.socket.emit('viewer', props.component)
+
+        socketCtx.socket.on('offer', offer)
+
+        socketCtx.socket.on('candidate', candidate)
 
 
-          return () => {
+        return () => {
             socketCtx.socket.removeAllListeners('offer', offer)
             socketCtx.socket.removeAllListeners('candidate', candidate)
         }

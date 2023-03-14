@@ -20,7 +20,12 @@ const Window = (props) => {
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
+
   useEffect(() => {
+    if (props.footer) {
+      setFooter('empty');
+    }
+
     const Footer = (payload) => {
       if (props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
@@ -132,7 +137,7 @@ const Window = (props) => {
         >
           {props.children}
         </div>
-        {footer !== undefined && (
+        {footer !== 'empty' && (
           <div className={styles.windowFooter}>
             <span onClick={handleInfo}> <IoInformationCircleOutline size={25} /></span>
             <label>{footer}</label>
