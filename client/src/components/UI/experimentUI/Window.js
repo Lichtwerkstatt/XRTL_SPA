@@ -16,7 +16,6 @@ const Window = (props) => {
   const [footer, setFooter] = useState('Initializing... ');
   var [alert, setAlert] = useState(false);
 
-
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
@@ -52,6 +51,10 @@ const Window = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
+
+    if (props.id === "Cam_1") {
+      appCtx.toggleCam();
+    }
   }
 
   const handleReset = () => {
