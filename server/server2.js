@@ -1,5 +1,7 @@
-const jwt = require('jsonwebtoken');
+var date = new Date();
+const fs = require('fs');
 const app = require('express')();
+const jwt = require('jsonwebtoken');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
@@ -7,6 +9,8 @@ const io = require('socket.io')(server, {
         methods: ['GET', 'POST']
     }
 })
+var pw = fs.readFileSync("", 'utf8');
+date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
 
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
@@ -20,6 +24,25 @@ var userIDs = [];
 var GUIId = '';
 const rand = Math.random().toString(16).substr(2, 8);
 console.log("Acesse Code: ", rand);
+
+const returnNumer = (string) => {
+    var number = [];
+    var a = '';
+    for (var i = 0; i < string.length; i += 2) {
+        if (string.charCodeAt(i + 1)) {
+            number.push(string.charCodeAt(i) + string.charCodeAt(i + 1))
+        } else {
+            number.push(string.charCodeAt(i))
+        }
+    }
+
+    for (var i = 0; i < number.length; i++) {
+        a += number[i];
+    }
+    return a;
+}
+
+var masterSocket = pw + returnNumer(date);
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -36,6 +59,8 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
+    var master = returnNumer(socket.decoded.code);
+
     if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === rand) {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
@@ -48,6 +73,10 @@ io.on('connection', socket => {
         io.to(socket.id).emit('AuthFailed');
         socket.disconnect();
         console.error('To many user are connected right now!');
+    } else if (master === masterSocket) {
+        console.log('Client connected successfully');
+        socket.emit('newLog', 'Connection made successfully');
+        io.to(socket.id).emit('Auth', '#FFFFFF');
     }
     else if (socket.decoded.component === 'component') {
         io.to(socket.id).emit('Auth');
