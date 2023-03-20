@@ -535,7 +535,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Beam Splitter" description="Observation of second IM Path" />}
+              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="LED" description="Measurement of Coherent Length" />}
               <mesh
                 name="Cylinder"
                 castShadow
@@ -612,7 +612,6 @@ export function Model(props) {
         }
 
     
-          
         <group
           name="TranslateMirror"
           position={[-1.76, 0.62, 0.03]}

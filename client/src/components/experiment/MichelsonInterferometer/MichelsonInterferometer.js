@@ -141,6 +141,7 @@ const MichelsonInterferometer = (props) => {
           left={halfWidth}
         />
       )}
+      
     </div>
   );
 };
