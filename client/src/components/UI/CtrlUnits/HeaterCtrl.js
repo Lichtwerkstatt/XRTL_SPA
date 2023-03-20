@@ -35,7 +35,7 @@ const HeaterCtrl = (props) => {
         const data = (payload) => {
             if (payload.controlId === props.componentT) {
                 var string = payload.data.data;
-                try { string = string.toFixed(1) + ' °C' } catch (e) { string = '-°C' }
+                try { string = string.toFixed(1) + " °C" } catch (e) { string = '-°C' }
                 setTemp(string);
             }
         }
