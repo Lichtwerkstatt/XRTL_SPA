@@ -232,6 +232,33 @@ function Model({ ...props }) {
             material={materials.Laser}
             position={[-0.3, 0.66, -0.15]}
           />}
+      </group> {/* End of Scene */}
+
+      <group
+        name="Cam_1"
+        position={[1.56, 0.67, 0.14]}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("Cam_1");
+        }} >
+        <Box
+          position={[-3.5, 0.1, -2]}
+          args={[1, 1, 1]}
+          scale={[0.25, 0.25, 0.25]}
+        >
+          <meshPhysicalMaterial
+            thickness={1}
+            roughness={0.1}
+            transmission={1}
+            clearcoat={0.5}
+            clearcoatRoughness={0}
+            ior={1.1}
+            envMapIntensity={25}
+            color={"#ffffff"}
+            attenuationColor={"#00ffff"}
+            attenuationDistance={5}
+          />
+        </Box>
       </group>
     </group>
   );
