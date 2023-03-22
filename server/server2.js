@@ -25,7 +25,7 @@ io.use((socket, next) => {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            exp = decoded.iat + 1800000;
+            //exp = decoded.iat + 1800000;
             next();
         });
     }
@@ -44,13 +44,13 @@ io.on('connection', socket => {
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
 
-        var checkIfExpired = setInterval(() => {
-            if (exp < Date.now()) {
-                clearInterval(checkIfExpired);
-                socket.disconnect();
-                console.log('Client token expired');
-            }
-        }, 300000);     //checks every 5 min
+        /*         var checkIfExpired = setInterval(() => {
+                    if (exp < Date.now()) {
+                        clearInterval(checkIfExpired);
+                        socket.disconnect();
+                        console.log('Client token expired');
+                    }
+                }, 300000);     //checks every 5 min */
     }
     else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');
@@ -94,7 +94,7 @@ io.on('connection', socket => {
         var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
         if (componentList) {
-            if (componentList.includes(socket.id) === false) {
+            if (componentList.includes(payload.controlId) === false) {
                 componentList.push(socket.id, time, payload.controlId, payload.status.busy);
             }
         } else {
@@ -103,7 +103,7 @@ io.on('connection', socket => {
 
         // GUI
         socket.to(GUIId).emit('newLog', 'New Status' + JSON.stringify(payload));
-        socket.emit('newComponent', componentList);
+        socket.to(GUIId).emit('newComponent', componentList);
 
         //For the clients
         socket.broadcast.emit('status', payload);
@@ -122,6 +122,7 @@ io.on('connection', socket => {
 
     socket.on('getFooter', payload => { //reicht unteren zwei Fälle?
         if (footerList.includes(payload) === true) {
+            console.log("Fall eins")
             var footerPos = footerList.indexOf(payload);
             footerStatus = footerList[footerPos + 1];
             if (footerStatus === 'Component went offline!') {
@@ -163,7 +164,6 @@ io.on('connection', socket => {
     })
 
     socket.on('watcher disconnect', () => {
-        console.log("atcher weg")
         io.emit('disconnect peerConnection', socket.id);
     })
 
@@ -181,7 +181,6 @@ io.on('connection', socket => {
                 stream: true
             });
         }
-
     });
 
     //Sends pictures of the stream to the clients
@@ -206,7 +205,6 @@ io.on('connection', socket => {
                 stream: false
             });
         }
-        console.log("dort   ", payload);
         socket.leave(payload.controlId);
     });
 
@@ -294,7 +292,7 @@ io.on('connection', socket => {
     });
 })
 
-server.listen(7000, () => {
-    console.log('Server is listening at port: 7000!');
+server.listen(3000, () => {
+    console.log('Server is listening at port: 3000!');
 
 })

@@ -1,19 +1,19 @@
-import { useAppContext } from "../../services/AppContext";
-import { usePopUpContext } from "../../services/PopUpContext";
 import { useSocketContext } from "../../services/SocketContext";
+import { usePopUpContext } from "../../services/PopUpContext";
+import { useAppContext } from "../../services/AppContext";
 import Window from "../UI/experimentUI/Window";
 import ViewCam from "../Chat/ViewCamStream";
 import { useState } from "react";
 
 const InfoWindow = (props) => {
-    const [footer, setFooter] = useState(props.footer);
     const [lastChange, setLastChange] = useState(['', '', '']);
     const [alertType, setAlertType] = useState('info');
+    const [footer, setFooter] = useState(props.footer);
     var [alert, setAlert] = useState(false);
 
-    const appCtx = useAppContext();
     const socketCtx = useSocketContext();
     const popupCtx = usePopUpContext();
+    const appCtx = useAppContext();
 
     const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] } //stun:stun.stunprotocol.org
     var peerConnection = new RTCPeerConnection(config);
@@ -78,7 +78,8 @@ const InfoWindow = (props) => {
         >
             <ViewCam
                 title="Cam_1"
-                id="Cam_1"
+                component="Cam_1"
+                peer ={peerConnection}
                 footer={footer}
                 newStatus={handleChangeFooter}
             />

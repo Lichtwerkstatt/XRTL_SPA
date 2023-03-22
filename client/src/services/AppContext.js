@@ -89,7 +89,6 @@ export function AppContextProvider({ children }) {
         showCam,
         lastClosedComponent,
         toogleLastComp
-
       }}
     >
       {children}

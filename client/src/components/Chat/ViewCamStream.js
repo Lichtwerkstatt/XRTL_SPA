@@ -5,8 +5,8 @@ const ViewCam = (props) => {
     const socketCtx = useSocketContext();
 
     useEffect(() => {
-        socketCtx.socket.emit('viewer', props.component)
         var peerConnection;
+        
         const offer = (payload) => {
             peerConnection = props.peer;
             peerConnection
@@ -32,7 +32,7 @@ const ViewCam = (props) => {
                 .catch(e => console.error(e))
         }
 
-        document.getElementById('video').setAttribute('style', 'display: true')
+        document.getElementById('video').setAttribute('style', 'transform: rotate(180deg)')
 
         socketCtx.socket.emit('viewer', props.component)
 

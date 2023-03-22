@@ -16,21 +16,9 @@ const RotaryCtrl = (props) => {
   useEffect(() => {
     const status = (payload) => {
       if (payload.controlId === props.component) {
+        setOnlineStatus(true)
         setRotation(payload.status.absolute);
         (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
-      }
-    }
-
-    const footer = (payload) => {
-      if (payload.controlId === props.component) {
-        props.newStatus(String(payload.status))
-      }
-    }
-
-    const getFooter = (payload) => {
-      if (payload.controlId === props.component) {
-        setOnlineStatus(payload.online)
-        props.newStatus(String(payload.status))
       }
     }
 
@@ -42,16 +30,11 @@ const RotaryCtrl = (props) => {
 
     socketCtx.socket.emit('getFooter', props.component);
 
-    socketCtx.socket.on('getFooter', getFooter);
-
-    socketCtx.socket.on('footer', footer);
-
     socketCtx.socket.on('status', status);
 
     return () => {
       socketCtx.socket.removeAllListeners('status', status)
-      socketCtx.socket.removeAllListeners('footer', footer)
-      socketCtx.socket.removeAllListeners('getFooter', getFooter)
+
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,8 +49,7 @@ const RotaryCtrl = (props) => {
     if (direction !== 0) {
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
-        color: socketCtx.fontColor,
-        controlId: props.control,
+        controlId: props.component,
         move: direction
       });
 
@@ -80,6 +62,12 @@ const RotaryCtrl = (props) => {
         status: 'Last change by: ' + socketCtx.username,
         controlId: props.component
       });
+
+     /*  if (rotation > 5000 || rotation > -5000) {
+        appCtx.toggleChangeRotary();
+      } else {
+        appCtx.toggleChangeRotary();
+      } */
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };

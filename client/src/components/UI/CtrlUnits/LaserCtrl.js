@@ -1,43 +1,21 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../../services/SocketContext";
+import { GiLaserWarning } from "react-icons/gi";
 import { useState, useEffect } from "react";
-import { GiLaserWarning } from "react-icons/gi"
-import { Box } from '@mui/material';
+import { theme } from '../templates/Theme.js';
 import Switch from '../templates/Switch';
+import { Box } from '@mui/material';
 
 const LaserCtrl = (props) => {
-  const [switchIsOn, setSwitch] = useState(false);
   const [onlineStatus, setOnlineStatus] = useState(false);
+  const [switchIsOn, setSwitch] = useState(false);
   const socketCtx = useSocketContext();
-
-  const theme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        light: '#01bd7d',
-        main: '#01bd7d',
-        dark: '#01bd7d',
-        contrastText: '#fff',
-      },
-    }
-  })
 
   useEffect(() => {
     const status = (payload) => {
       if (payload.controlId === props.component) {
-        setSwitch(payload.status.isOn)
-      }
-    }
-    const footer = (payload) => {
-      if (payload.controlId === props.component) {
-        props.newStatus(String(payload.status))
-      }
-    }
-
-    const getFooter = (payload) => {
-      if (payload.controlId === props.component) {
         setOnlineStatus(true)
-        props.newStatus(String(payload.status))
+        setSwitch(payload.status.isOn)
       }
     }
 
@@ -51,14 +29,8 @@ const LaserCtrl = (props) => {
 
     socketCtx.socket.on("status", status);
 
-    socketCtx.socket.on('footer', footer)
-
-    socketCtx.socket.on('getFooter', getFooter);
-
     return () => {
       socketCtx.socket.removeAllListeners('status', status)
-      socketCtx.socket.removeAllListeners('footer', footer)
-      socketCtx.socket.removeAllListeners('getFooter', getFooter)
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,6 @@
-import { Grid, Autocomplete, Box, TextField, createTheme, ThemeProvider, Button, IconButton } from '@mui/material';
+import { Grid, Autocomplete, Box, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { themeLogin } from '../../components/UI/templates/Theme';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { useSocketContext } from '../../services/SocketContext'
 import { useAppContext } from '../../services/AppContext';
@@ -9,26 +10,13 @@ import styles from './Login.module.css'
 import { isEqual } from 'lodash';
 
 const Login = (props) => {
-    const connectionOption = [{ title: 'http://localhost:7000' }, { title: 'http://10.232.37.40:7000' }]
+    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'http://10.232.37.41:3000' }];
     const [connection, setConnection] = useState(null);
     const [username, setUsername] = useState('');
     const filter = createFilterOptions();
 
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                light: '#01bd7d',
-                main: '#01bd7d',
-                dark: '#01bd7d',
-                contrastText: '#fff',
-            },
-        },
-        spacing: 2,
-    })
 
     const handleLogin = () => {
         if (username !== '') {
@@ -77,7 +65,7 @@ const Login = (props) => {
 
     if (appCtx.showLogin) {
         return (
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={themeLogin}>
                 <div className={styles.popupWindow}>
                 </div>
                 <div className={styles.popupInner} >
