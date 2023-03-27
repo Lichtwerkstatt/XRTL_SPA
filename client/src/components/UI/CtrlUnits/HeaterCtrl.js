@@ -29,6 +29,8 @@ const HeaterCtrl = (props) => {
                 setOnlineStatus(true)
                 setPowerSwitch(payload.status.isOn)
                 setPowerValue(payload.status.pwm)
+
+                console.log("Status  ", payload)
             }
         }
 
