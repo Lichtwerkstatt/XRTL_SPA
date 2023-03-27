@@ -1,8 +1,8 @@
-import MI_230104 from "../../experiment/MichelsonInterferometer/MI_230104";
-import { OrbitControls, Environment } from "@react-three/drei";
-import { useAppContext } from "../../../services/AppContext";
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import MI_110422 from '../../experiment/MichelsonInterferometer/MI_110422';
+import { OrbitControls, Environment } from '@react-three/drei';
+import { useAppContext } from '../../../services/AppContext';
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
 
 const VirtualLayer = () => {
   const appCtx = useAppContext();
@@ -23,12 +23,11 @@ const VirtualLayer = () => {
         <Suspense fallback={null}>
           <Environment files='../hdri/autoshop.hdr' />
           <OrbitControls autoRotate={appCtx.autoRotate} />
-          <MI_230104
+          <MI_110422
             toggleSelect={appCtx.toggleSelectedComp}
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
             showBeam={appCtx.showBeam}
-            showLED={appCtx.showLED}
           />
         </Suspense>
       </Canvas>
