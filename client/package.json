@@ -34,7 +34,7 @@
     "start": "set PORT=3005 && react-scripts start",
     "start_18": "SET NODE_OPTIONS=--openssl-legacy-provider && set PORT=3005 &&  react-scripts start",
     "server": "node app_server.js",
-    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

@@ -16,12 +16,16 @@ const Window = (props) => {
   const [footer, setFooter] = useState('Initializing... ');
   var [alert, setAlert] = useState(false);
 
-
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
+
   useEffect(() => {
+    if (props.footer) {
+      setFooter('empty');
+    }
+
     const Footer = (payload) => {
       if (props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
@@ -52,6 +56,14 @@ const Window = (props) => {
 
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
+
+    if (props.id === "Cam_1") {
+      appCtx.toggleCam();
+    }
+
+    if (props.id === "info") {
+      appCtx.toggleShowInfoWindow();
+    }
   }
 
   const handleReset = () => {
@@ -129,7 +141,7 @@ const Window = (props) => {
         >
           {props.children}
         </div>
-        {footer !== undefined && (
+        {footer !== 'empty' && (
           <div className={styles.windowFooter}>
             <span onClick={handleInfo}> <IoInformationCircleOutline size={25} /></span>
             <label>{footer}</label>

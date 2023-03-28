@@ -1,8 +1,8 @@
-import { Grid, Autocomplete, Box, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
+import { Autocomplete, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import { themeLogin } from '../../components/UI/templates/Theme';
 import { createFilterOptions } from '@mui/material/Autocomplete';
-import { useSocketContext } from '../../services/SocketContext'
+import { useSocketContext } from '../../services/SocketContext';
 import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
@@ -10,19 +10,22 @@ import styles from './Login.module.css'
 import { isEqual } from 'lodash';
 
 const Login = (props) => {
-    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'http://10.232.37.41:3000' }];
+    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'http://10.232.37.40:3000' }]
     const [connection, setConnection] = useState(null);
     const [username, setUsername] = useState('');
+    const [accessCode, setAccessCode] = useState('');
     const filter = createFilterOptions();
 
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
+
+
     const handleLogin = () => {
-        if (username !== '') {
+        if (username !== '' && accessCode !== '') {
             try {
                 socketCtx.setNewURL(String(connection.title), String(username));
-                socketCtx.toggleConnection(String(username));
+                socketCtx.toggleConnection(String(username), String(accessCode));
                 appCtx.toggleLogin();
             }
             catch (error) { }
@@ -32,6 +35,11 @@ const Login = (props) => {
     const handleChange = (event) => {
         setUsername(event.target.value);
     };
+
+    const handleAccessCode = (event) => {
+        setAccessCode(event.target.value);
+    };
+
 
     const autoCompleteHandle = (event, newValue) => {
         if (typeof newValue === 'string') {
@@ -69,7 +77,7 @@ const Login = (props) => {
                 <div className={styles.popupWindow}>
                 </div>
                 <div className={styles.popupInner} >
-                    <h3 title='settings'>Settings</h3>
+                    <h3 title='settings'>Login</h3>
                     <div className={styles.close}>
                         <IconButton onClick={(e) => {
                             appCtx.toggleLogin();
@@ -77,43 +85,51 @@ const Login = (props) => {
                             <HighlightOffOutlinedIcon fontSize='large' />
                         </IconButton>
                     </div>
-                    <Grid container columnSpacing={{ md: 95 }}>
-                        <Grid item xs={6}>
-                            <TextField
-                                autoFocus
-                                variant='outlined'
-                                label='Username '
-                                value={username}
-                                onChange={handleChange}
-                                onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                                style={{ marginLeft: 17, width: 250 }}
-                                error={username === ''}
-                                helperText={username === '' ? 'Please enter your username!' : ' '}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Box sx={{ m: 8, width: 250 }} >
-                        <Autocomplete
-                            value={connection}
-                            freeSolo
-                            renderInput={(params) => (
-                                <TextField {...params} label='Choose server address ' />)}
-                            onChange={autoCompleteHandle}
-                            onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                            filterOptions={filterOption}
-                            selectOnFocus
-                            clearOnBlur
-                            handleHomeEndKeys
-                            options={connectionOption}
-                            getOptionLabel={getLabel}
-                            renderOption={(props, option) => <li {...props}>{option.title}</li>}
-                        />
-                    </Box>
+
+                    <TextField
+                        autoFocus
+                        variant='outlined'
+                        label='Username '
+                        value={username}
+                        onChange={handleChange}
+                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        style={{ marginLeft: '4%', width: '50%', paddingRight: '25%' }}
+                        error={username === ''}
+                        helperText={username === '' ? 'Enter your username!' : ' '}
+                    />
+
+                    <TextField
+                        variant='outlined'
+                        label='Access code '
+                        value={accessCode}
+                        onChange={handleAccessCode}
+                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        style={{ marginLeft: '-20%', width: '40%' }}
+                        error={accessCode === ''}
+                        helperText={accessCode === '' ? 'Enter the access code!' : ' '}
+                    />
+
+                    <Autocomplete sx={{ marginLeft: '4%', marginTop: '3%', width: '50%', marginBottom: 10 }}
+                        value={connection}
+                        freeSolo
+                        renderInput={(params) => (
+                            <TextField {...params} label='Choose server address' />)}
+                        onChange={autoCompleteHandle}
+                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        filterOptions={filterOption}
+                        selectOnFocus
+                        clearOnBlur
+                        disableClearable
+                        handleHomeEndKeys
+                        options={connectionOption}
+                        getOptionLabel={getLabel}
+                        renderOption={(props, option) => <li {...props}>{option.title}</li>}
+                    />
 
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
                         endIcon={<SendIcon />}
-                        style={{ width: 90, height: 30, marginTop: -3, marginLeft: 270 }}
+                        style={{ width: '20%', height: '15%' }}
                     >Login</Button>
 
                 </div>

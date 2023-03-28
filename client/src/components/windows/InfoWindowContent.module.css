@@ -1,8 +1,10 @@
-div .mainWrapper{
-  height:500px;
+div .mainWrapper {
+  height: 100%;
   column-count: 2;
-  padding:15px;
-  background-position: bottom right;
-  background-size:80% auto;
-  background-repeat:no-repeat;
+  padding: 15px 15px 10px 15px;
+}
+
+div img {
+  float: right;
+  width: 65%;
 }
