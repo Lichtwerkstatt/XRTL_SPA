@@ -6,10 +6,11 @@ const InfoWindow = (props) => {
         <Window
             header="About XR TwinLab"
             id='info'
-            top="250"
-            left="200"
+            top="10"
+            left="20"
+            width="30"
+            height="80"
             footer={'empty'}
-            width="600px"
         >
             <InfoWindowContent />
         </Window>
