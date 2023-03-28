@@ -79,7 +79,7 @@ const NavBar = () => {
                                 },
                                 marginTop: '-1%',
                                 paddingLeft: 20,
-                                margin:'auto'
+                                margin: 'auto'
                             }}  {...bindTrigger(popupState)}>
                                 <GiLaserWarning />
                             </IconButton>
