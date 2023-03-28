@@ -60,6 +60,10 @@ const Window = (props) => {
     if (props.id === "Cam_1") {
       appCtx.toggleCam();
     }
+
+    if (props.id === "info") {
+      appCtx.toggleShowInfoWindow();
+    }
   }
 
   const handleReset = () => {

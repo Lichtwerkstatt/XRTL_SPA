@@ -12,11 +12,11 @@ const InfoWindow = (props) => {
     return (
         <Window
             header="About XR TwinLab"
+            id='info'
             top="250"
             left="200"
-
+            footer={'empty'}
             width="600px"
-            onClose={handleCloseWindow}
         >
             <InfoWindowContent />
         </Window>

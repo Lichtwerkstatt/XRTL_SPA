@@ -21,13 +21,6 @@ div.windowHeader {
   color: white;
 }
 
-/* DEPRECATED
-span.windowTitle { 
-  display:block;
-  width: 200px;
-  cursor:move;
-} */
-
 div.windowFooter {
   position: relative;
   width: 100%;
