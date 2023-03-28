@@ -1,4 +1,4 @@
-import { Grid, Autocomplete, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
+import { Autocomplete, TextField, ThemeProvider, Button, IconButton } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import { themeLogin } from '../../components/UI/templates/Theme';
 import { createFilterOptions } from '@mui/material/Autocomplete';
@@ -85,35 +85,31 @@ const Login = (props) => {
                             <HighlightOffOutlinedIcon fontSize='large' />
                         </IconButton>
                     </div>
-                    <Grid container columnSpacing={{ md: 95 }}>
-                        <Grid item xs={6}>
-                            <TextField
-                                autoFocus
-                                variant='outlined'
-                                label='Username '
-                                value={username}
-                                onChange={handleChange}
-                                onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                                style={{ marginLeft: 17, width: 250 }}
-                                error={username === ''}
-                                helperText={username === '' ? 'Enter your username!' : ' '}
-                            />
-                        </Grid>
 
-                        <Grid item xs={6}>
-                            <TextField
-                                variant='outlined'
-                                label='Access code '
-                                value={accessCode}
-                                onChange={handleAccessCode}
-                                onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                                style={{ marginLeft: -40, width: 150 }}
-                                error={accessCode === ''}
-                                helperText={accessCode === '' ? 'Enter the access code!' : ' '}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Autocomplete sx={{ m: 8, width: 250 }}
+                    <TextField
+                        autoFocus
+                        variant='outlined'
+                        label='Username '
+                        value={username}
+                        onChange={handleChange}
+                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        style={{ marginLeft: '4%', width: '50%', paddingRight: '25%' }}
+                        error={username === ''}
+                        helperText={username === '' ? 'Enter your username!' : ' '}
+                    />
+
+                    <TextField
+                        variant='outlined'
+                        label='Access code '
+                        value={accessCode}
+                        onChange={handleAccessCode}
+                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                        style={{ marginLeft: '-20%', width: '40%' }}
+                        error={accessCode === ''}
+                        helperText={accessCode === '' ? 'Enter the access code!' : ' '}
+                    />
+
+                    <Autocomplete sx={{ marginLeft: '4%', marginTop: '3%', width: '50%', marginBottom: 10 }}
                         value={connection}
                         freeSolo
                         renderInput={(params) => (
@@ -133,7 +129,7 @@ const Login = (props) => {
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
                         endIcon={<SendIcon />}
-                        style={{ width: 100, height: 35 }}
+                        style={{ width: '20%', height: '15%' }}
                     >Login</Button>
 
                 </div>
