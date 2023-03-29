@@ -1,3 +1,4 @@
+var date = new Date();
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -7,7 +8,9 @@ const io = require('socket.io')(server, {
         methods: ['GET', 'POST']
     }
 })
-
+//var pw = fs.readFileSync("", 'utf8');
+date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+var master = 'digiPHOTON' + date;
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -36,7 +39,12 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    if (color.length != 0 && socket.decoded.component === 'client') {
+    if (socket.decoded.component === 'client' && socket.decoded.sub === master) {
+        console.log('Supervisor connected successfully');
+        socket.emit('newLog', 'Connection made successfully');
+        io.to(socket.id).emit('Auth', '#FFFFF');
+    }
+    else if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);

@@ -67,7 +67,11 @@ export function SocketContextProvider({ children }) {
     socket = manager.socket("/");
     SocketContext = createContext();
     setURL(newURL);
-    setUsername(username);
+    if (username && username.includes('digiPHOTON')) {
+      setUsername('Supervisor')
+    } else {
+      setUsername(username);
+    }
   }
 
   const setNewFont = (newFont) => {
