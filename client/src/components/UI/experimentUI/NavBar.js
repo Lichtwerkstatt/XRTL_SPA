@@ -1,5 +1,5 @@
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md'
+import { MdOutlineScreenRotation, MdInfoOutline, MdOutlineHelp, MdOutlineMenuBook } from 'react-icons/md'
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
 import { GiLaserWarning } from 'react-icons/gi'
@@ -122,6 +122,14 @@ const NavBar = () => {
 
                 <Tooltip title='Webcam'>
                     <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                </Tooltip>
+
+                <Tooltip title='Manual'>
+                    <li onClick={appCtx.toggleShowInfoWindow}><MdOutlineMenuBook size={26} color={showInfoWindowColor} /></li>
+                </Tooltip>
+
+                <Tooltip title='Help'>
+                    <li onClick={appCtx.toggleShowInfoWindow}><MdOutlineHelp size={26} color={showInfoWindowColor} /></li>
                 </Tooltip>
 
                 <Tooltip title='Information'>

@@ -11,8 +11,10 @@ export function AppContextProvider({ children }) {
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [showManual, setShowManual] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
+  const [showHelp, setShowHelp] = useState(false);
   const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
@@ -56,6 +58,14 @@ export function AppContextProvider({ children }) {
     setShowInfoWindow(!showInfoWindow);
   }
 
+  const toggleShowHelp = () => {
+    setShowHelp(!showHelp);
+  }
+
+  const toggleShowManual = () => {
+    setShowManual(!showManual);
+  }
+
   const toggleLogin = () => {
     setShowLogin(!showLogin);
   }
@@ -88,7 +98,9 @@ export function AppContextProvider({ children }) {
         toggleCam,
         showCam,
         lastClosedComponent,
-        toogleLastComp
+        toogleLastComp,
+        toggleShowManual,
+        toggleShowHelp
       }}
     >
       {children}
