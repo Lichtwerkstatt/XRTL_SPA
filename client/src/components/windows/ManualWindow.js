@@ -1,7 +1,7 @@
 import Window from "../UI/experimentUI/Window";
-import InfoWindowContent from "./Content/InfoWindowContent";
+import ManualWindowContent from "./Content/ManualWindowContent";
 
-const InfoWindow = (props) => {
+const ManualWindow = (props) => {
     return (
         <Window
             header="About XR TwinLab"
@@ -12,8 +12,8 @@ const InfoWindow = (props) => {
             height="547"
             footer={'empty'}
         >
-            <InfoWindowContent />
+            <ManualWindowContent />
         </Window>
     );
 };
-export default InfoWindow;
+export default ManualWindow;
