@@ -114,7 +114,7 @@ const Window = (props) => {
     <Draggable handle='.draggableHandler'>
       <div
         className={styles.window}
-        style={{ top: props.top + 'px', left: props.left + 'px' }}
+        style={{ top: props.top + 'px', left: props.left + 'px', width: props.height + 'px', height: props.height + 'px' }}
       >
         <div className={styles.windowHeader}>
           <span
