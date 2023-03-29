@@ -1,10 +1,9 @@
-
 div.chatContainer {
     height: calc(100% - 100px);
-    width: calc(100% - 75%);
+    width: calc(100% - 80%);
     position: fixed;
     bottom: 4%;
-    left: -25.25%;
+    left: calc(-100% + 79.7%);
     background: rgba(0, 0, 0, 0.6);
     border-top: 3px solid #01bd7d;
     border-right: 3px solid #01bd7d;
@@ -21,13 +20,13 @@ div.chatMain {
     height: calc(100% - 63px);
     width: 100%;
     color: #00ffa8;
-   }
+}
 
-   div.chatMain b{
+div.chatMain b {
     display: block;
     padding-left: 2%;
-   }
-   
+}
+
 form.msgForm {
     display: block;
     padding-left: 40px;
@@ -70,7 +69,7 @@ div.chatHandler span {
 
 @keyframes openChat {
     0% {
-        left: -405px;
+        left: calc(-100% + 79.7%);
     }
 
     100% {
@@ -84,7 +83,7 @@ div.chatHandler span {
     }
 
     100% {
-        left: -405px;
+        left: calc(-100% + 79.7%);
     }
 }
 
