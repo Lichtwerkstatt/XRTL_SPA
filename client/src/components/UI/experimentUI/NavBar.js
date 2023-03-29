@@ -28,6 +28,10 @@ const NavBar = () => {
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
+    let showHelpWindowColor = '';
+    if (appCtx.showHelpWindow) { showHelpWindowColor = 'white' }
+    let showManualWindowColor = '';
+    if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
 
     return <div id='navbar' className={styles.navbar} >
         <h1>XR TwinLab</h1>
@@ -125,11 +129,11 @@ const NavBar = () => {
                 </Tooltip>
 
                 <Tooltip title='Manual'>
-                    <li onClick={appCtx.toggleShowInfoWindow}><MdOutlineMenuBook size={26} color={showInfoWindowColor} /></li>
+                    <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                 </Tooltip>
 
                 <Tooltip title='Help'>
-                    <li onClick={appCtx.toggleShowInfoWindow}><MdOutlineHelp size={26} color={showInfoWindowColor} /></li>
+                    <li onClick={appCtx.toggleShowHelpWindow}><MdOutlineHelp size={26} color={showHelpWindowColor} /></li>
                 </Tooltip>
 
                 <Tooltip title='Information'>

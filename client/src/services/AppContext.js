@@ -11,15 +11,14 @@ export function AppContextProvider({ children }) {
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
-  const [showManual, setShowManual] = useState(false);
+  const [showManualWindow, setShowManual] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
-  const [showHelp, setShowHelp] = useState(false);
+  const [showHelpWindow, setShowHelp] = useState(false);
   const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
   const [logs, setLogs] = useState([]);
-
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
@@ -58,12 +57,12 @@ export function AppContextProvider({ children }) {
     setShowInfoWindow(!showInfoWindow);
   }
 
-  const toggleShowHelp = () => {
-    setShowHelp(!showHelp);
+  const toggleShowHelpWindow = () => {
+    setShowHelp(!showHelpWindow);
   }
 
-  const toggleShowManual = () => {
-    setShowManual(!showManual);
+  const toggleShowManualWindow = () => {
+    setShowManual(!showManualWindow);
   }
 
   const toggleLogin = () => {
@@ -99,8 +98,10 @@ export function AppContextProvider({ children }) {
         showCam,
         lastClosedComponent,
         toogleLastComp,
-        toggleShowManual,
-        toggleShowHelp
+        toggleShowManualWindow,
+        showManualWindow,
+        toggleShowHelpWindow,
+        showHelpWindow
       }}
     >
       {children}

@@ -4,8 +4,8 @@ import ManualWindowContent from "./Content/ManualWindowContent";
 const ManualWindow = (props) => {
     return (
         <Window
-            header="About XR TwinLab"
-            id='info'
+            header="XR TwinLab Manual"
+            id='manual'
             top="100"
             left="200"
             width="300"

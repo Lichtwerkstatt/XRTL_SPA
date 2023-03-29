@@ -1,13 +1,12 @@
-import styles from "./CSS/ManualWindowContent.module.css"
+import styles from "../CSS/ManualWindowContent.module.css"
 
 const ManualWindowContent = (props) => {
   return (
     <div>
-
       <div className={styles.mainWrapper}      >
-       Manual :)
+        Manual :)
       </div>
-      
+
     </div>
   )
 }

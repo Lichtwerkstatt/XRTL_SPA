@@ -3,7 +3,9 @@ import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
 import { useEffect, useState, Fragment } from "react";
+import ManualWindow from "../../windows/ManualWindow";
 import InfoWindow from "../../windows/InfoWindow";
+import HelpWindow from "../../windows/HelpWindow";
 import CamWindow from "../../windows/CamWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react"
@@ -15,6 +17,7 @@ const ExperimentUILayer = () => {
   const appCtx = useAppContext();
 
   useEffect(() => {
+
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
       socketCtx.setNewFont(color);
@@ -41,6 +44,8 @@ const ExperimentUILayer = () => {
   return (
     <Fragment>
       {appCtx.showInfoWindow && <InfoWindow />}
+      {appCtx.showHelpWindow && <HelpWindow />}
+      {appCtx.showManualWindow && <ManualWindow />}
       {appCtx.showCam && <CamWindow />}
       <MichelsonInterferometer
         toggleSelect={appCtx.toggleSelectedComp}

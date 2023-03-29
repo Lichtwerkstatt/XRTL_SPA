@@ -4,8 +4,8 @@ import HelpWindowContent from "./Content/HelpWindowContent";
 const HelpWindow = (props) => {
     return (
         <Window
-            header="About XR TwinLab"
-            id='info'
+            header="XR TwinLab Help"
+            id='help'
             top="100"
             left="200"
             width="300"

@@ -64,6 +64,14 @@ const Window = (props) => {
     if (props.id === "info") {
       appCtx.toggleShowInfoWindow();
     }
+
+    if (props.id === "help") {
+      appCtx.toggleShowHelpWindow();
+    }
+
+    if (props.id === "manual") {
+      appCtx.toggleShowManualWindow();
+    }
   }
 
   const handleReset = () => {
