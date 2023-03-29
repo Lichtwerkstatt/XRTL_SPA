@@ -2,8 +2,8 @@ div.login {
     display: block;
 }
 
-div.close{
-    position:absolute;
+div.close {
+    position: absolute;
     top: 1%;
     left: 89%;
 }
@@ -17,9 +17,7 @@ div.popupWindow {
 }
 
 div.popupInner {
-    width: 450px;
-    height: 270px;
-    position:absolute;
+    position: absolute;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -34,9 +32,8 @@ div.popupInner h3 {
     margin-left: 15px;
 }
 
-
 div.popupInner button {
-    position:absolute;
+    position: absolute;
     top: 83%;
     left: 74%;
 }

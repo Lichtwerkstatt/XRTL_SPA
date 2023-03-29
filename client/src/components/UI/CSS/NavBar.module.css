@@ -27,7 +27,7 @@
 .navMenuLaser {
     position: absolute;
     top: -18px;
-    left: 70%;
+    right: calc(100% / 2.5);
     height: 100%;
 }
 
@@ -45,7 +45,7 @@
     top: -45px;
     left: 100%;
     align-items: center;
-   
+
 }
 
 

@@ -2,19 +2,17 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md'
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
-import IconButton from '@mui/material/IconButton';
 import { GiLaserWarning } from 'react-icons/gi'
-import MenuItem from '@mui/material/MenuItem';
+import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import { ImConnection } from 'react-icons/im'
 import styles from '../CSS/NavBar.module.css'
-import Tooltip from '@mui/material/Tooltip'
 import { BsCamera } from 'react-icons/bs'
 import { FaTags } from 'react-icons/fa'
 //import { BsBox } from 'react-icons/bs'
-import Menu from '@mui/material/Menu';
 import { Icon } from '@iconify/react';
 import { memo, Fragment } from 'react'
 import { isEqual } from 'lodash';
+import { theme } from './../templates/Theme'
 
 const NavBar = () => {
     const appCtx = useAppContext();
@@ -34,8 +32,8 @@ const NavBar = () => {
     return <div id='navbar' className={styles.navbar} >
         <h1>XR TwinLab</h1>
         <div className={styles.navMenuLaser}>
-        <h3>Overlay:</h3>
-   
+            <h3>Overlay:</h3>
+            <ThemeProvider theme={theme} >
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <Fragment>
@@ -45,11 +43,14 @@ const NavBar = () => {
                                 ':hover': {
                                     bgcolor: 'darkgreen',
                                     color: '#00ffa8',
-                                }
+                                },
+                                marginTop: '-2%',
+                                paddingLeft: 20
+
                             }}>
-                                <Icon icon="mdi:led-off"  width="27"  height="27" />
+                                <Icon icon="mdi:led-off" width="27" height="27" />
                             </IconButton>
-                            <Menu {...bindMenu(popupState)} sx={{ color: { mode: 'dark' } }} >
+                            <Menu {...bindMenu(popupState)}  >
                                 <MenuItem onClick={() => {
                                     popupState.close();
                                     appCtx.toggleShowLED('none');
@@ -75,7 +76,10 @@ const NavBar = () => {
                                 ':hover': {
                                     bgcolor: 'darkgreen',
                                     color: '#00ffa8',
-                                }
+                                },
+                                marginTop: '-1%',
+                                paddingLeft: 20,
+                                margin: 'auto'
                             }}  {...bindTrigger(popupState)}>
                                 <GiLaserWarning />
                             </IconButton>
@@ -96,7 +100,7 @@ const NavBar = () => {
                         </Fragment>
                     )}
                 </PopupState>
-           
+            </ThemeProvider>
         </div>
         <div className={styles.navMenu}>
             <ul>
@@ -104,7 +108,7 @@ const NavBar = () => {
                     <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
                 </Tooltip>
 
-{/*                 <Tooltip title='2D model'>
+                {/*                 <Tooltip title='2D model'>
                     <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
                 </Tooltip> */}
 

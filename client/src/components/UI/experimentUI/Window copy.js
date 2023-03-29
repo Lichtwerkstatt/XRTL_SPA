@@ -114,7 +114,7 @@ const Window = (props) => {
     <Draggable handle='.draggableHandler'>
       <div
         className={styles.window}
-        style={{ top: props.top + 'px', left: props.left + 'px' }}
+        style={{ top: props.top + '%', left: props.left + '%', height: props.height + 'v', width: props.width + 'v',  }}
       >
         <div className={styles.windowHeader}>
           <span
@@ -134,15 +134,16 @@ const Window = (props) => {
         <div
           className={styles.windowContent}
           style={{
-            height: props.height,
-            width: props.width,
             background: 'url(' + props.background + ')',
+            height: '100%',
+            width: '100%',
+            backgroundRepeat: 'no-repeat'
           }}
         >
           {props.children}
         </div>
         {footer !== 'empty' && (
-          <div className={styles.windowFooter}>
+          <div className={styles.windowFooter} style={{ position: 'absolute', bottom: '0px' }}>
             <span onClick={handleInfo}> <IoInformationCircleOutline size={25} /></span>
             <label>{footer}</label>
           </div>
