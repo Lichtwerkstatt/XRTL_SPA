@@ -1,10 +1,11 @@
 import { useSocketContext } from '../../services/SocketContext';
+import { theme } from '../../components/UI/templates/Theme';
 import { useEffect, useState, memo } from 'react'
 import styles from './CSS/Chat.module.css'
 import { ImBubble } from 'react-icons/im'
 import { MdSend } from 'react-icons/md'
 import { isEqual } from 'lodash';
-
+import { ThemeProvider, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 const Chat = () => {
   const [showChat, setShowChat] = useState(false);
   const [animation, setAnimation] = useState('');
@@ -35,6 +36,10 @@ const Chat = () => {
     setShowChat(!showChat);
   }
 
+  const handleChange = (event) => {
+    setMessage(event.target.value);
+  };
+
   return (
     <div
       className={styles.chatContainer + ' ' + animation}
@@ -49,18 +54,29 @@ const Chat = () => {
           )
         })}
       </div>
-      <form className={styles.msgForm} onSubmit={sendMessage}>
-        <input
-          type='text'
-          name='message'
-          placeholder='Type message here...'
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value)
-          }}
-          required
-        />
-        <button type='submit'><MdSend size={25} /></button>
+      <form className={styles.msgForm}>
+        <ThemeProvider theme={theme}>
+
+          <FormControl sx={{ marginLeft: -4, width: 3 / 3, paddingTop: 1 }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">Message  </InputLabel>
+            <OutlinedInput
+              onChange={handleChange}
+              onKeyPress={(e) => { if (e.key === 'Enter') { sendMessage(e); } }}
+              value={message}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={sendMessage}
+                    edge="end"
+                  >
+                    <MdSend />
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Message"
+            />
+          </FormControl>
+        </ThemeProvider>
       </form>
       <div className={styles.chatHandler + ' ' + animation}>
         <span>
