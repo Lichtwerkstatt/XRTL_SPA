@@ -94,10 +94,16 @@ const Settings = (props) => {
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
+
                 <div className={styles.Canvas}>
                     <canvas id='ScreenCanvas' width={'600px'} height={'400px'} />
                 </div>
-                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} />}       </div>
+
+                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} />}
+            </div>
+
+            <div className={styles.circle} />
+
         </ThemeProvider>
     )
 }

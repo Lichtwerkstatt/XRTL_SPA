@@ -1,12 +1,12 @@
-div.Canvas canvas{
+div.Canvas canvas {
     position: absolute;
-     top: 15px;
+    top: 15px;
     left: -655px;
     border: 2px solid #01bd7d;
     border-radius: 15px;
- }
+}
 
- div.Settings{
+div.Settings {
     position: absolute;
     height: 400px;
     width: 300px;
@@ -14,7 +14,7 @@ div.Canvas canvas{
     top: 25px
 }
 
-div.Cam{
+div.Cam {
     position: absolute;
     height: 400px;
     width: 300px;
@@ -22,8 +22,18 @@ div.Cam{
     top: 25px
 }
 
-div.Settings button{
+div.Settings button {
     position: absolute;
-    left:92%;
+    left: 92%;
     top: 3px;
+}
+
+div.circle {
+    position: absolute;
+    top: 200px;
+    left: 230px;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #01bd7d;
+    border-radius: 50px;
 }
