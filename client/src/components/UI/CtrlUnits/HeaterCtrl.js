@@ -13,7 +13,7 @@ const HeaterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [powerSwitch, setPowerSwitch] = useState(false);
     const [powerValue, setPowerValue] = useState(0);
-    const [setting, setSettings] = useState(true);
+    const [setting, setSettings] = useState(false);
     const [temp, setTemp] = useState('-°C');
 
     const socketCtx = useSocketContext();
