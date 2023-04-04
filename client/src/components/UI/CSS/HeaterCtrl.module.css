@@ -23,14 +23,9 @@ div.Temp h2{
     text-align: center;
 }
 
-div.Heater{
-    position: absolute;
-    display: flex;
-    top: 185px
-}
 div.Switch{
     position: relative;
-    top:125px;
+    top:130px;
     left: 27%;
     margin: 0 0 0 12px; 
     padding: 0;
@@ -39,7 +34,7 @@ div.Switch{
 div.Canvas1 {
     position: absolute;
     width: 325px;
-    height: 130px;
+    height: 150px;
     top: 173px;
     left: 1%;
     border: 2px solid #01bd7d;
@@ -49,9 +44,13 @@ div.Canvas1 {
  div.Canvas2 {
     position: absolute;
     width: 295px;
-    height: 185px;
+    height: 195px;
     top: 173px;
     left: 53%;
     border: 2px solid #01bd7d;
     border-radius: 15px;
+ }
+
+ div.Select{
+    padding-top: 30px;
  }

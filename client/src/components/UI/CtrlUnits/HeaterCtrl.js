@@ -1,5 +1,4 @@
-import { Box, ThemeProvider, Button, IconButton, Typography } from '@mui/material';
-import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
+import { ThemeProvider, Button, IconButton, Typography } from '@mui/material';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
@@ -8,7 +7,7 @@ import { theme } from '../templates/Theme.js';
 import Slider from '../templates/SliderCtrl';
 import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch'
-import Select from '../templates/Select'
+import HeaterSettings from '../templates/HeaterSettings'
 
 const HeaterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
@@ -22,7 +21,7 @@ const HeaterCtrl = (props) => {
     const hiddenSetting = () => {
         setSettings(!setting);
     }
-    
+
     useEffect(() => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
@@ -68,68 +67,25 @@ const HeaterCtrl = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketCtx.socket]);
 
-    if (setting) {
-        return (
-            <ThemeProvider theme={theme}>
-                <div className={styles.Temp}>
-                    <Typography id='temp' variant='h2' >{temp}</Typography>
-                    <IconButton onClick={hiddenSetting}  >
-                        <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
-                    </IconButton>
-                </div>
-                <div className={styles.Canvas1}>
-                    <canvas id='Gauge' />
-                </div>
-                <div className={styles.Heater} >
-                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
-                        <div style={{ paddingLeft: 10 }}>
-                            <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title='PowerSwitch' component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
-                        </div>
-                    </Box>
-                </div>
-                <div className={styles.Switch} >
-                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
-                    </Box>
-                </div>
-            </ThemeProvider>
-        )
-    } else {
-        return (
-            <ThemeProvider theme={theme}>
-                <div className={styles.Temp}>
-                    <Typography id='temp' variant='h2'>{temp}</Typography>
-                    <IconButton onClick={hiddenSetting}  >
-                        <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
-                    </IconButton>
-                </div>
-                <div className={styles.Canvas2}>
-                    <canvas id='Heater' />
-                </div>
-                <div className={styles.Canvas1}>
-                    <canvas id='Gauge' />
-                </div>
-                <div className={styles.Heater} >
-                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', mt: -2 }}>
-                        <div style={{ paddingLeft: 10 }}>
-                            <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                            <Slider title='PowerSwitch' component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
-                        </div>
-                        <div style={{ paddingLeft: 40 }}>
-                            <Button sx={{ fontSize: 17 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
-                            <Select title='Average time (ms)' component={props.componentT} led={props.led} online={onlineStatus} option='averageTime' />
-                            <Select title='Update time (s)' component={props.componentT} led={props.led} online={onlineStatus} option='updateTime' />
-                        </div>
-                    </Box>
-                </div>
-                <div className={styles.Switch} >
-                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
-                    </Box>
-                </div>
-            </ThemeProvider>
-        )
-    }
+    return (
+        <ThemeProvider theme={theme}>
+            <div className={styles.Temp}>
+                <Typography id='temp' variant='h2'>{temp}</Typography>
+                <IconButton onClick={hiddenSetting}  >
+                    <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                </IconButton>
+            </div>
+            <div className={styles.Canvas1}>
+                <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
+                <Slider title='PowerSwitch' component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+
+            </div>
+            <div className={styles.Switch} >
+                <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+            </div>
+            {setting && <HeaterSettings online={true} component={props.componentT} led={props.led} />}
+        </ThemeProvider>
+    )
+
 }
 export default HeaterCtrl;
