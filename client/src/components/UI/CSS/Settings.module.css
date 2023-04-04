@@ -1,20 +1,6 @@
-div.UpDown{
-    position: absolute;
-    right: 0px;
-    top: 0px
-}
-
-div.LeftRight{
-    position: absolute;
-    right: -20px;
-    top: 20px
-}
-
 div.Canvas canvas{
     position: absolute;
-    width:600px;
-    height: 400px;
-    top: 2px;
+     top: 15px;
     left: -655px;
     border: 2px solid #01bd7d;
     border-radius: 15px;
@@ -25,5 +11,19 @@ div.Canvas canvas{
     height: 400px;
     width: 300px;
     right: 30px;
-    top: 40px
+    top: 25px
+}
+
+div.Cam{
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    right: 30px;
+    top: 25px
+}
+
+div.Settings button{
+    position: absolute;
+    left:92%;
+    top: 3px;
 }
