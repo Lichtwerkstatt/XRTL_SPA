@@ -1,20 +1,22 @@
-import { IoReloadOutline, IoInformationCircleOutline } from 'react-icons/io5'
+import { IoReloadOutline, IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5'
+import { MdOutlineUpdate } from 'react-icons/md';
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
 import styles from '../CSS/Window.module.css';
-import { CgCloseO } from 'react-icons/cg';
+//import { CgCloseO } from 'react-icons/cg';
 import { memo, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { isEqual } from 'lodash';
 import { useState } from 'react';
-
+import Test from '../ComponentDescription/Description_Laser'
 
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [alertType, setAlertType] = useState('info');
   const [footer, setFooter] = useState('Initializing... ');
   var [alert, setAlert] = useState(false);
+  const [info, setInfo] = useState(true);
 
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
@@ -90,6 +92,11 @@ const Window = (props) => {
     }
   }
 
+  const handleInformation = () => {
+    setInfo(!info)
+    console.log(info)
+  }
+
   const handleInfo = () => {
     var timeNow = new Date();
     let difH, difMin, difSec = 0;
@@ -118,6 +125,9 @@ const Window = (props) => {
     popupCtx.toggleShowPopUp(alert, alertType);
   }
 
+
+  console.log(props)
+
   return (
     <Draggable handle='.draggableHandler'>
       <div
@@ -129,29 +139,52 @@ const Window = (props) => {
             className='draggableHandler' //FIXME draggable doesnt seem to work with inline JSX classes. 
             style={{
               display: 'block',
-              width: 'calc(100% - 50px)',
+              width: 'calc(100% - 70px)',
               cursor: 'move',
               float: 'left'
             }}
           >
             {props.header}
           </span>
-          <span onClick={handleReset} > <IoReloadOutline size={20} />        </span>
-          <span onClick={handleCloseWindow}><CgCloseO size={20} /></span>
+          {/* <span onClick={handleReset} > <IoReloadOutline size={20} />        </span> */}
+          <p>
+
+            <span onClick={handleInformation} > <IoInformationCircleOutline size={30} /> </span>
+            <span onClick={handleCloseWindow}><IoCloseCircleOutline size={30} /></span>
+          </p>
         </div>
-        <div
-          className={styles.windowContent}
-          style={{
-            height: props.height,
-            width: props.width,
-            background: 'url(' + props.background + ')',
-          }}
-        >
-          {props.children}
-        </div>
+        {info ?
+          <div
+            className={styles.windowContent}
+            style={{
+              height: props.height,
+              width: props.width,
+              background: 'url(' + props.background + ')',
+            }}
+          >
+            {props.children}
+          </div>
+
+          :
+          <div
+            className={styles.windowContent}
+            style={{
+              height: props.height,
+              width: props.width,
+
+            }}
+          >
+            <Test height={props.height} />
+          </div>
+        }
+
+
+
+
+
         {footer !== 'empty' && (
           <div className={styles.windowFooter}>
-            <span onClick={handleInfo}> <IoInformationCircleOutline size={25} /></span>
+            <span onClick={handleInfo}> <MdOutlineUpdate size={25} /></span>
             <label>{footer}</label>
           </div>
         )}
