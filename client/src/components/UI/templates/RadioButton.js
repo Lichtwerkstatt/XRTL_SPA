@@ -15,17 +15,9 @@ const RadioButton = (props) => {
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
-            [props.option]: event.target.value
+            [props.option]: event.target.value,
+            color: socketCtx.fontColor,
         })
-
-        console.log(event.target)
-
-        if (props.led) {
-            socketCtx.socket.emit('command', {
-                controlId: props.led,
-                color: socketCtx.fontColor,
-            });
-        }
 
         socketCtx.socket.emit("footer", {
             status: "Last change by: " + socketCtx.username,
@@ -43,7 +35,7 @@ const RadioButton = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
                 value={props.val}
-                onChange={handleChange} 
+                onChange={handleChange}
             >
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'none'} control={<Radio />} label="None" />
                 <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'splitter'} control={<Radio />} label="Beam splitter" />

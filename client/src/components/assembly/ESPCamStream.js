@@ -15,7 +15,6 @@ const ESPCamStream = (props) => {
     >
       <Settings
         component={props.controlId}
-        led={props.LED}
       />
     </Window>
   );

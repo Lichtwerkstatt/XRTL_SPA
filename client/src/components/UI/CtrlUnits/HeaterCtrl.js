@@ -77,13 +77,13 @@ const HeaterCtrl = (props) => {
             </div>
             <div className={styles.Canvas1}>
                 <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                <Slider title='PowerSwitch' component={props.component} led={props.led} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+                <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
 
             </div>
             <div className={styles.Switch} >
-                <Switch component={props.component} led={props.led} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+                <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
             </div>
-            {setting && <HeaterSettings online={true} component={props.componentT} led={props.led} />}
+            {setting && <HeaterSettings online={true} component={props.componentT} />}
         </ThemeProvider>
     )
 

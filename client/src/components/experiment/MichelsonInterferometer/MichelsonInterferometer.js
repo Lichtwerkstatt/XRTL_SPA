@@ -32,7 +32,6 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
-          LED={'led_KM100'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -45,7 +44,6 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title='Linear Movable Mirror'
           controlId={'linear_1'}
-          LED={'led_linear'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -57,7 +55,6 @@ const MichelsonInterferometer = (props) => {
         <Rotary
           title='Glass Plate Rotation Stage'
           controlId={'plate_rotation'}
-          LED={'led_plate'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -69,7 +66,6 @@ const MichelsonInterferometer = (props) => {
         <Rotary
           title='Mirror Changing Stage'
           controlId={'heater_rotation'}
-          LED={'led_heater'}
           footer={footer}
           rotation={zero}
           top={topHighMiddle}
@@ -83,7 +79,6 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
-          LED={'led_laser'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -97,7 +92,6 @@ const MichelsonInterferometer = (props) => {
           title='Power Supply'
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
-          LED={'led_laser'}
           footer={footer}
           top={topHigh}
           left={leftRight}
@@ -120,7 +114,6 @@ const MichelsonInterferometer = (props) => {
           id={'heater'}
           controlIdHeater={'heater'}
           controlIdThermistor={'thermistor'}
-          LED={'led_linear'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -135,13 +128,12 @@ const MichelsonInterferometer = (props) => {
           controlId2={'pinhole'}
           controlLED={'redLED'}
           controlLED2={'whiteLED'}
-          LED={'led_selection'}
           footer={footer}
           top={topMiddle}
           left={halfWidth}
         />
       )}
-      
+
     </div>
   );
 };

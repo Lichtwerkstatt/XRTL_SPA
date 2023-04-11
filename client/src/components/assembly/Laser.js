@@ -17,7 +17,6 @@ const Laser = (props) => {
         component={props.controlId}
         top='0'
         left='0'
-        led={props.LED}
       />
     </Window>
   )

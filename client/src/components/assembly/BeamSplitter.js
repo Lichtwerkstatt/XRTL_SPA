@@ -20,7 +20,6 @@ const BeamSplitter = (props) => {
         pinhole={props.controlId2}
         redLED={props.controlLED}
         whiteLED={props.controlLED2}
-        led={props.LED}
         top="20"
         left="160"
       />

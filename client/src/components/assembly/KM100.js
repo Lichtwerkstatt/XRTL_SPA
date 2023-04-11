@@ -18,14 +18,13 @@ const KM100 = (props) => {
       <RotaryCtrl
         rotation={props.rotationTop}
         component={props.controlIdTop}
-        led={props.LED}
         top='20'
         left='160'
       />
+      
       <RotaryCtrl
         rotation={props.rotationBottom}
         component={props.controlIdBottom}
-        led={props.LED}
         top='50'
         left='160'
       />

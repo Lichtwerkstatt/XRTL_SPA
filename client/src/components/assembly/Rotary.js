@@ -17,7 +17,6 @@ const Rotary = (props) => {
       <RotaryCtrl
         rotation={props.rotation}
         component={props.controlId}
-        led={props.LED}
         top='10'
         left='160'
       />

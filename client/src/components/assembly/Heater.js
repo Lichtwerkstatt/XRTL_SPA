@@ -16,7 +16,6 @@ const Heater = (props) => {
             <HeaterCtrl
                 component={props.controlIdHeater}
                 componentT={props.controlIdThermistor}
-                led={props.LED}
             />
         </Window>
     )
