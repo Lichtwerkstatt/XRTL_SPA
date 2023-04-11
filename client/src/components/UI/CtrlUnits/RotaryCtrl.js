@@ -50,11 +50,7 @@ const RotaryCtrl = (props) => {
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
         controlId: props.component,
-        move: direction
-      });
-
-      socketCtx.socket.emit('command', {
-        controlId: props.led,
+        move: direction,
         color: socketCtx.fontColor,
       });
 
@@ -63,11 +59,11 @@ const RotaryCtrl = (props) => {
         controlId: props.component
       });
 
-     /*  if (rotation > 5000 || rotation > -5000) {
-        appCtx.toggleChangeRotary();
-      } else {
-        appCtx.toggleChangeRotary();
-      } */
+      /*  if (rotation > 5000 || rotation > -5000) {
+         appCtx.toggleChangeRotary();
+       } else {
+         appCtx.toggleChangeRotary();
+       } */
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };
