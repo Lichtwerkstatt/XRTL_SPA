@@ -1,4 +1,4 @@
-import { IoReloadOutline, IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5'
+import {  IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5' //IoReloadOutline
 import { MdOutlineUpdate } from 'react-icons/md';
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
@@ -9,7 +9,7 @@ import { memo, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { isEqual } from 'lodash';
 import { useState } from 'react';
-import Test from '../ComponentDescription/Description_Laser'
+import DescriptionHandler from '../ComponentDescription/DescriptionHandler'
 
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
@@ -75,7 +75,7 @@ const Window = (props) => {
       appCtx.toggleShowManualWindow();
     }
   }
-
+/* 
   const handleReset = () => {
     socketCtx.socket.emit('command', {
       userId: socketCtx.username,
@@ -90,11 +90,10 @@ const Window = (props) => {
         reset: true
       })
     }
-  }
+  } */
 
   const handleInformation = () => {
     setInfo(!info)
-    console.log(info)
   }
 
   const handleInfo = () => {
@@ -124,9 +123,6 @@ const Window = (props) => {
     setAlertType('info');
     popupCtx.toggleShowPopUp(alert, alertType);
   }
-
-
-  console.log(props)
 
   return (
     <Draggable handle='.draggableHandler'>
@@ -174,14 +170,9 @@ const Window = (props) => {
 
             }}
           >
-            <Test height={props.height} />
+            <DescriptionHandler height={props.height} component={props.id}/>
           </div>
         }
-
-
-
-
-
         {footer !== 'empty' && (
           <div className={styles.windowFooter}>
             <span onClick={handleInfo}> <MdOutlineUpdate size={25} /></span>
