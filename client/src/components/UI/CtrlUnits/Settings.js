@@ -13,6 +13,7 @@ const Settings = (props) => {
     const [exposure, setExposure] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(true);
     const [settings, setSettings] = useState(true);
+    const [frameSize, setFrameSize] = useState(0);
     const socketCtx = useSocketContext();
 
 
@@ -31,13 +32,14 @@ const Settings = (props) => {
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
-        
+
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
                 setSwitchStatus(payload.status.gray)
                 setExposure(payload.status.exposure)
                 setContrast(payload.status.contrast)
+                setFrameSize(payload.status.frameSize)
                 //console.log('Status of settings:   ', payload)
             }
         }
@@ -109,7 +111,7 @@ const Settings = (props) => {
                 <div className={styles.Canvas}>
                     <canvas id='ScreenCanvas' width={'600px'} height={'400px'} />
                 </div>
-                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} />}       </div>
+                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} frameSize={frameSize} />}       </div>
         </ThemeProvider>
     )
 }
