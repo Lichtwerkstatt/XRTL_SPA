@@ -7,7 +7,7 @@ const SelectCtrl = (props) => {
         <Box sx={{ m: 2, width: 250 }}>
             <FormControl fullWidth>
                 <InputLabel >{props.title}</InputLabel>
-                <SelectItem title={props.title} component={props.component} online={props.online} command={props.command} option={props.option} />
+                <SelectItem title={props.title} component={props.component} online={props.online} command={props.command} option={props.option} selectValue={props.selectValue} />
             </FormControl>
         </Box>
     )

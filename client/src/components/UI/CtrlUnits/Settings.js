@@ -13,6 +13,8 @@ const Settings = (props) => {
     const [exposure, setExposure] = useState(0);
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [settings, setSettings] = useState(true);
+    const [frameSize, setFrameSize] = useState(0);
+
     const socketCtx = useSocketContext();
 
     const hiddenSetting = () => {
@@ -33,13 +35,14 @@ const Settings = (props) => {
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
-        
+
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
                 setSwitchStatus(payload.status.gray)
                 setExposure(payload.status.exposure)
                 setContrast(payload.status.contrast)
+                setFrameSize(payload.status.frameSize)
                 //console.log('Status of settings:   ', payload)
             }
         }
@@ -56,7 +59,7 @@ const Settings = (props) => {
                 var img = new Image();
                 img.onload = function () {
                     var canvas = document.getElementById('ScreenCanvas');
-                     if (canvas != null && settings) {
+                    if (canvas != null && settings) {
                         ctx = canvas.getContext('2d');
                         x1 = 0;
                         y1 = 0;
@@ -112,10 +115,10 @@ const Settings = (props) => {
                     <canvas id='ScreenCanvas' width={'600px'} height={'400px'} />
                 </div>
 
-                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} />}
+                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} frameSize={frameSize} switchIsOn={switchIsOn} />}
             </div>
 
-            <div id ='circle' className={styles.circle} />
+            <div id='circle' className={styles.circle} />
 
         </ThemeProvider>
     )

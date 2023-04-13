@@ -15,6 +15,8 @@ const HeaterCtrl = (props) => {
     const [powerValue, setPowerValue] = useState(0);
     const [setting, setSettings] = useState(false);
     const [temp, setTemp] = useState('-°C');
+    const [averageTime, setAverageTime] = useState(0);
+    const [updateTime, setUpdateTime] = useState(0);
 
     const socketCtx = useSocketContext();
 
@@ -29,7 +31,13 @@ const HeaterCtrl = (props) => {
                 setPowerSwitch(payload.status.isOn)
                 setPowerValue(payload.status.pwm)
 
-                console.log("Status  ", payload)
+                //console.log("Status  ", payload)
+            }
+
+            if (payload.controlId === props.componentT) {
+                setAverageTime(payload.status.averageTime);
+                setUpdateTime(payload.status.updateTime);
+                //console.log("Status  Thermistor", payload)
             }
         }
 
@@ -83,7 +91,7 @@ const HeaterCtrl = (props) => {
             <div className={styles.Switch} >
                 <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
             </div>
-            {setting && <HeaterSettings online={true} component={props.componentT} />}
+            {setting && <HeaterSettings online={true} component={props.componentT} updateTime={updateTime} averageTime={averageTime} />}
         </ThemeProvider>
     )
 

@@ -4,7 +4,7 @@ import { MenuItem, Select } from '@mui/material';
 import { useState } from "react";
 
 const SelectItem = (props) => {
-    const [selectValue, setSelectValue] = useState('');
+    const [selectValue, setSelectValue] = useState(props.selectValue);
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
@@ -27,7 +27,7 @@ const SelectItem = (props) => {
     if (props.title === 'Resolution') {
         return (
             <Select
-                value={selectValue}
+                value={props.selectValue}
                 label={props.title}
                 onChange={handleSettingChanges}
                 disabled={(socketCtx.connected && props.online) ? false : true}
@@ -42,7 +42,7 @@ const SelectItem = (props) => {
     else if (props.title === 'Average time (ms)') {
         return (
             <Select
-                value={selectValue}
+                value={props.selectValue}
                 label={props.title}
                 onChange={handleSettingChanges}
                 disabled={(socketCtx.connected && props.online) ? false : true}
@@ -57,7 +57,7 @@ const SelectItem = (props) => {
     } else if (props.title === 'Update time (s)') {
         return (
             <Select
-                value={selectValue}
+                value={props.selectValue}
                 label={props.title}
                 onChange={handleSettingChanges}
                 disabled={(socketCtx.connected && props.online) ? false : true}
