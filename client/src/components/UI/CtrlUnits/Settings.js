@@ -15,6 +15,7 @@ const Settings = (props) => {
     const [settings, setSettings] = useState(true);
     const socketCtx = useSocketContext();
 
+
     const hiddenSetting = () => {
         setSettings(!settings);
         if (settings) {
@@ -28,6 +29,9 @@ const Settings = (props) => {
     }
 
     useEffect(() => {
+        var x1, x2, y1, y2;
+        var ctx;
+        
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
@@ -50,17 +54,25 @@ const Settings = (props) => {
                 var img = new Image();
                 img.onload = function () {
                     var canvas = document.getElementById('ScreenCanvas');
-                    if (canvas != null) {
-                        var ctx = canvas.getContext('2d');
-                        var x1 = 0,
-                            y1 = 0,
-                            x2 = 300,
-                            y2 = 200;
+                    if (canvas != null && settings) {
+                        ctx = canvas.getContext('2d');
+                        x1 = 0;
+                        y1 = 0;
+                        x2 = 600;
+                        y2 = 400;
+                        ctx.drawImage(this, x1, y1, x2, y2);
+                    } else {
+                        ctx = canvas.getContext('2d');
+                        x1 = 0;
+                        y1 = 0;
+                        x2 = 800;
+                        y2 = 400;
                         ctx.drawImage(this, x1, y1, x2, y2);
                     }
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
             }
+
         }
 
         socketCtx.socket.emit('command', {
@@ -85,7 +97,7 @@ const Settings = (props) => {
             socketCtx.socket.removeAllListeners('data', data)
         }
         //Comment needed to prevent a warning
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketCtx.socket]);
 
     return (
