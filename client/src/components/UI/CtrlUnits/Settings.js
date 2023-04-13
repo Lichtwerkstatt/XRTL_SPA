@@ -11,7 +11,7 @@ const Settings = (props) => {
     const [switchIsOn, setSwitchStatus] = useState(false);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
-    const [onlineStatus, setOnlineStatus] = useState(true);
+    const [onlineStatus, setOnlineStatus] = useState(false);
     const [settings, setSettings] = useState(true);
     const socketCtx = useSocketContext();
 
