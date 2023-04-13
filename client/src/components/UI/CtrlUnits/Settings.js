@@ -20,10 +20,13 @@ const Settings = (props) => {
         if (settings) {
             document.getElementById('ScreenCanvas').style.height = '400px'
             document.getElementById('ScreenCanvas').style.width = '800px'
+            document.getElementById('circle').style.left = '400px'
+
         } else {
 
             document.getElementById('ScreenCanvas').style.height = '400px'
             document.getElementById('ScreenCanvas').style.width = '600px'
+            document.getElementById('circle').style.left = '200px'
         }
     }
 
@@ -112,7 +115,7 @@ const Settings = (props) => {
                 {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} />}
             </div>
 
-            <div className={styles.circle} />
+            <div id ='circle' className={styles.circle} />
 
         </ThemeProvider>
     )
