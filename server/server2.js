@@ -103,12 +103,6 @@ io.on('connection', socket => {
         console.log('Command received: ', payload);
     });
 
-    socket.on('LED', payload => {
-        socket.broadcast.emit('LED', payload);
-        console.log('LED received: ', payload);
-    });
-
-
     //Returns the status of a experiment component
     socket.on('status', payload => {
         var today = new Date();

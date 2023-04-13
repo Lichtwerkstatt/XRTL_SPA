@@ -55,11 +55,16 @@ const HeaterCtrl = (props) => {
             getStatus: true
         })
 
+        socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: props.componentT,
+            getStatus: true
+        })
+
         socketCtx.socket.emit('join stream room', {
             controlId: props.component,
             userId: socketCtx.username
         });
-
 
         socketCtx.socket.emit('getFooter', props.component)
 
