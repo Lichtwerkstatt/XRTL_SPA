@@ -25,7 +25,7 @@ const BeamSplitterCtrl = (props) => {
             }
             else if (payload.controlId === 'experimentSelection') {
                 (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
-                setSelectionStatus(payload.status.absolute)
+                setSelectionStatus(payload.status.state)
             }
             //console.log("Status of settings:   ", payload)
         }
