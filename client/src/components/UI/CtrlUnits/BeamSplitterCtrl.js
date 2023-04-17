@@ -16,14 +16,13 @@ const BeamSplitterCtrl = (props) => {
 
     useEffect(() => {
         const status = (payload) => {
-            setOnlineStatus(true)
             if (payload.controlId === props.redLED) {
                 setSwitchRedStatus(payload.status.isOn);
             }
             else if (payload.controlId === props.whiteLED) {
                 setSwitchWhiteStatus(payload.status.isOn);
             }
-            else if (payload.controlId === 'experimentSelection') {
+            else if (payload.controlId === props.component) {
                 (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
                 setSelectionStatus(payload.status.state)
             }
@@ -38,12 +37,6 @@ const BeamSplitterCtrl = (props) => {
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
-            controlId: props.pinhole,
-            getStatus: true
-        })
-
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
             controlId: props.redLED,
             getStatus: true
         })
@@ -53,6 +46,7 @@ const BeamSplitterCtrl = (props) => {
             controlId: props.whiteLED,
             getStatus: true
         })
+        socketCtx.socket.on('status', status);
 
         socketCtx.socket.emit('getFooter', props.component)
 
@@ -63,7 +57,6 @@ const BeamSplitterCtrl = (props) => {
         //Comment needed to prevent a warning
         // eslint-disable-next-line react-hooks/exhaustive-deps      
     }, [socketCtx.socket]);
-
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
