@@ -31,17 +31,18 @@ const HeaterCtrl = (props) => {
                 setPowerSwitch(payload.status.isOn)
                 setPowerValue(payload.status.pwm)
 
-                //console.log("Status  ", payload)
+               // console.log("Status  ", payload)
             }
 
             if (payload.controlId === props.componentT) {
                 setAverageTime(payload.status.averageTime);
                 setUpdateTime(payload.status.updateTime);
-                //console.log("Status  Thermistor", payload)
+                // console.log("Status  Thermistor", payload)
             }
         }
 
         const data = (payload) => {
+            console.log(payload)
             if (payload.controlId === props.componentT) {
                 var string = payload.data.data;
                 try { string = string.toFixed(1) + " °C" } catch (e) { string = '-°C' }
@@ -62,7 +63,7 @@ const HeaterCtrl = (props) => {
         })
 
         socketCtx.socket.emit('join stream room', {
-            controlId: props.component,
+            controlId: props.componentT,
             userId: socketCtx.username
         });
 
