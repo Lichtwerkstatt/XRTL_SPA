@@ -67,7 +67,7 @@ const BeamSplitterCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} val={selectionStatus} option="moveTo" option2="binaryCtrl" />
+                <RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} val={selectionStatus} option="state" />
                 <Switch component={props.whiteLED} switchStatus={switchWhiteIsOn} online={onlineStatus} start='LED white Off' end='On' option='switch' />
                 <Switch component={props.redLED} switchStatus={switchRedIsOn} online={onlineStatus} start='LED red Off' end='On' option='switch' />
             </Box>
