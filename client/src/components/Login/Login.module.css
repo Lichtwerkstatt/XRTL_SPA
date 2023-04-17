@@ -20,8 +20,8 @@ div.popupInner {
     position: absolute;
     top: 45%;
     left: 50%;
-    height: 20%;
-    width: 20%;
+    width: 370px;
+    height: 200px;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.6);
     border: 3px solid #01bd7d;
@@ -38,4 +38,67 @@ div.popupInner button {
     position: absolute;
     top: 80%;
     left: 74%;
+}
+
+
+/* Width */
+@media (max-width:420px) {
+    div.close {
+        position: absolute;
+        top: 1%;
+        left: 82%;
+    }
+
+    div.popupInner {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        width: 300px;
+        height: 175px;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.6);
+        border: 3px solid #01bd7d;
+        border-radius: 15px;
+    }
+}
+
+@media screen and (max-height:800px) {
+    div.close {
+        position: absolute;
+        top: 1%;
+        left: 85%;
+    }
+
+    div.popupInner {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        width: 330px;
+        height: 200px;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.6);
+        border: 3px solid #01bd7d;
+        border-radius: 15px;
+    }
+}
+
+/* Height*/
+@media screen and (max-height:500px) {
+    div.close {
+        position: absolute;
+        top: 1%;
+        left: 82%;
+    }
+
+    div.popupInner {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        width: 260px;
+        height: 160px;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.6);
+        border: 3px solid #01bd7d;
+        border-radius: 15px;
+    }
 }
