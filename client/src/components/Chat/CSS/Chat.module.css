@@ -178,7 +178,48 @@ div.chatHandler span {
 }
 
 
-@media (max-height:800px) {
+@media (max-height:810px) {
+    div.chatContainer {
+        height: calc(100% - 110px);
+        width: calc(100% - 60%);
+        position: fixed;
+        bottom: 4%;
+        left: calc(-100% + 59.5%);
+        background: rgba(0, 0, 0, 0.6);
+        border-top: 3px solid #01bd7d;
+        border-right: 3px solid #01bd7d;
+        border-bottom: 3px solid #01bd7d;
+        border-top-right-radius: 1%;
+        border-bottom-right-radius: 1%;
+        padding-bottom: 10px;
+    }
+
+    @keyframes openChat {
+        0% {
+            left: calc(-100% + 59.5%);
+        }
+
+        100% {
+            left: 0px;
+        }
+    }
+
+    @keyframes closeChat {
+        0% {
+            left: 0px;
+        }
+
+        100% {
+            left: calc(-100% + 59.5%);
+        }
+    }
+
+}
+
+
+
+
+@media (max-width:810px) {
     div.chatContainer {
         height: calc(100% - 110px);
         width: calc(100% - 60%);
