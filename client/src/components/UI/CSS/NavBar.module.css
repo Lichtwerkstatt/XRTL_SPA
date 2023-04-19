@@ -68,3 +68,23 @@
     background: darkgreen;
     color: #00ffa8
 }
+
+.mobile {
+    visibility: hidden;
+}
+
+@media (min-width:0px) and (max-width:576px) {
+    .mobile {
+        visibility: visible;
+        position: relative;
+        top: -45px;
+        left: 92%;
+        height: 10px;
+    }
+
+    .navMenu {
+        visibility: hidden;
+    }
+
+
+}
