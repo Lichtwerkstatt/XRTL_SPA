@@ -113,7 +113,7 @@ div.consoleHandler span {
 @media (min-width:577px) and (max-width:768px) {
     div.consoleContainer {
         position: fixed;
-        bottom:-26.5%;
+        bottom: -26.5%;
         right: 2%;
         width: calc(100% - 25%);
         height: 25.5%;
