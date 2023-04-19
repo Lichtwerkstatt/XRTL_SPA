@@ -48,7 +48,6 @@
 
 }
 
-
 .navMenu ul {
     margin: 0px;
     padding: 0px;
@@ -85,6 +84,34 @@
     .navMenu {
         visibility: hidden;
     }
+}
+
+@media (min-width:577px) and (max-width:768px) {
+    .mobile {
+        visibility: visible;
+        position: relative;
+        top: -45px;
+        left: 95%;
+        height: 10px;
+    }
+
+    .navMenu {
+        visibility: hidden;
+    }
 
 
+}
+
+@media (min-width:769px) and (max-width:992px) {
+    .mobile {
+        visibility: visible;
+        position: relative;
+        top: -45px;
+        left: 96%;
+        height: 10px;
+    }
+
+    .navMenu {
+        visibility: hidden;
+    }
 }

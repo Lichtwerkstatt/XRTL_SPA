@@ -177,7 +177,7 @@ const NavBar = () => {
                     }}>
                         <KeyboardArrowDownIcon color={'white'} />
                     </IconButton>
-                    
+
                     <Menu
                         id="demo-customized-menu"
                         MenuListProps={{
