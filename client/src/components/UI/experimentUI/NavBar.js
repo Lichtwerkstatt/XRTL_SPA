@@ -1,26 +1,19 @@
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { MdOutlineScreenRotation, MdInfoOutline, MdOutlineHelp, MdOutlineMenuBook } from 'react-icons/md'
+import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
 import { GiLaserWarning } from 'react-icons/gi'
-import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip, Button } from '@mui/material';
 import { ImConnection } from 'react-icons/im'
 import styles from '../CSS/NavBar.module.css'
+import { theme } from './../templates/Theme'
 import { BsCamera } from 'react-icons/bs'
 import { FaTags } from 'react-icons/fa'
 //import { BsBox } from 'react-icons/bs'
 import { Icon } from '@iconify/react';
-import { memo, Fragment } from 'react'
+import { memo, Fragment, useState } from 'react'
 import { isEqual } from 'lodash';
-import { theme } from './../templates/Theme'
-import { useState } from 'react';
-
-
-
-import Divider from '@mui/material/Divider';
-
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
 
 const NavBar = () => {
     const appCtx = useAppContext();
@@ -162,7 +155,6 @@ const NavBar = () => {
                 </ul>
             </div>
 
-
             <ThemeProvider theme={theme}>
                 <div className={styles.mobile}>
                     <IconButton onClick={handleClick} variant="contained" sx={{
@@ -195,7 +187,6 @@ const NavBar = () => {
                             <MdOutlineScreenRotation size={26} />
                             Rotation
                         </MenuItem>
-                        <Divider sx={{ my: 0.5 }} />
                         <MenuItem onClick={appCtx.toggleShowTags} disableRipple>
                             <FaTags size={25} />
                             Tags
@@ -222,6 +213,5 @@ const NavBar = () => {
             </ThemeProvider>
         </div>
     );
-
 }
 export default memo(NavBar, isEqual)
