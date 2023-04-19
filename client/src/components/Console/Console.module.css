@@ -53,7 +53,7 @@ div.consoleHandler span {
 
 @keyframes openConsole {
     0% {
-        bottom: -32.5%;
+        bottom: -32%;
     }
 
     100% {
@@ -67,17 +67,16 @@ div.consoleHandler span {
     }
 
     100% {
-        bottom: -32.5%;
+        bottom: -32%;
     }
 }
 
-
 /* Width */
 
-@media (max-width:420px) {
+@media (min-width:0px) and (max-width:576px) {
     div.consoleContainer {
         position: fixed;
-        bottom: -32.5%;
+        bottom: -20%;
         right: 2%;
         width: calc(100% - 20%);
         height: 19.5%;
@@ -110,14 +109,14 @@ div.consoleHandler span {
     }
 
 }
- 
-@media (max-width:820px) {
+
+@media (min-width:577px) and (max-width:768px) {
     div.consoleContainer {
         position: fixed;
-        bottom: -32.5%;
+        bottom: 10.5%;
         right: 2%;
         width: calc(100% - 25%);
-        height: 31.5%;
+        height: 25.5%;
         background: rgba(0, 0, 0, 0.6);
         border-top: 3px solid #01bd7d;
         border-right: 3px solid #01bd7d;
@@ -128,7 +127,7 @@ div.consoleHandler span {
 
     @keyframes openConsole {
         0% {
-            bottom: -32.5%;
+            bottom: -26%;
         }
 
         100% {
@@ -142,7 +141,7 @@ div.consoleHandler span {
         }
 
         100% {
-            bottom: -32.5%;
+            bottom: -26%;
         }
     }
 }

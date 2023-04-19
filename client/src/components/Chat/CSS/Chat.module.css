@@ -110,7 +110,7 @@ div.chatHandler span {
         left: calc(-100% + 49%);
         background: rgba(0, 0, 0, 0.6);
         border-top: 3px solid #01bd7d;
-        border-right: 3px solid #17bd01;
+        border-right: 3px solid #01bd7d;
         border-bottom: 3px solid #01bd7d;
         border-top-right-radius: 1%;
         border-bottom-right-radius: 1%;
@@ -148,7 +148,7 @@ div.chatHandler span {
         left: calc(-100% + 59.5%);
         background: rgba(0, 0, 0, 0.6);
         border-top: 3px solid #01bd7d;
-        border-right: 3px solid #0156bd;
+        border-right: 3px solid #01bd7d;
         border-bottom: 3px solid #01bd7d;
         border-top-right-radius: 1%;
         border-bottom-right-radius: 1%;
