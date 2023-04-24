@@ -46,7 +46,7 @@ export function SocketContextProvider({ children }) {
     }
 
     if (appCtx.lastClosedComponent === 'heater') {
-      socket.emit('leave stream room', { controlId: 'heater', userId: username });
+      socket.emit('leave stream room', { controlId: 'thermistor', userId: username });
       appCtx.toogleLastComp();
     }
 
