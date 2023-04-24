@@ -11,7 +11,7 @@ const Laser = (props) => {
       top={props.top}
       left={props.left}
       height='200px'
-      width='300px'
+      width='250px'
     >
       <LaserCtrl
         component={props.controlId}
