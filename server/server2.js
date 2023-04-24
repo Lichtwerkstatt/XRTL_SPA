@@ -59,8 +59,11 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    var master = returnNumer(socket.decoded.code);
-
+    try {
+        var master = returnNumer(socket.decoded.code);
+    }
+    catch (e) { }
+    
     if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === rand) {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
