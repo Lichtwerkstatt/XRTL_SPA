@@ -34,13 +34,37 @@ const NavBar = () => {
     let showManualWindowColor = '';
     if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const [mobileVersion, setMobileVersion] = useState(null);
+    const openMobileVersion = Boolean(mobileVersion);
+
+    const [led, setLED] = useState(null);
+    const openLED = Boolean(led)
+
+    const [laserBeam, setLaserBeam] = useState(null);
+    const openLaserBeam = Boolean(laserBeam)
+
+
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        setMobileVersion(event.currentTarget);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
+
+    const handleClick2 = (event) => {
+        setLED(event.currentTarget);
+    };
+
+    const handleLaserBeam = (event) => {
+        setLaserBeam(event.currentTarget);
+    };
+
+    const handleMobileVersion = () => {
+        setMobileVersion(null);
+    };
+    const handleLED = () => {
+        setLED(null);
+    };
+
+    const closeLaserBeam = () => {
+        setLaserBeam(null);
     };
 
     return (
@@ -50,72 +74,79 @@ const NavBar = () => {
             <div className={styles.navMenuLaser}>
                 <h3>Overlay:</h3>
                 <ThemeProvider theme={theme} >
-                    <PopupState variant="popover" popupId="demo-popup-menu">
-                        {(popupState) => (
-                            <Fragment>
-                                <IconButton variant="contained" {...bindTrigger(popupState)} sx={{
-                                    borderRadius: 1,
-                                    color: 'black',
-                                    ':hover': {
-                                        bgcolor: 'darkgreen',
-                                        color: '#00ffa8',
-                                    },
-                                    marginTop: '-2%',
-                                    paddingLeft: 20
 
-                                }}>
-                                    <Icon icon="mdi:led-off" width="27" height="27" />
-                                </IconButton>
-                                <Menu {...bindMenu(popupState)}  >
-                                    <MenuItem onClick={() => {
-                                        popupState.close();
-                                        appCtx.toggleShowLED('none');
-                                    }} >None</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        popupState.close();
-                                        appCtx.toggleShowLED('white');
-                                    }}>White</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        popupState.close();
-                                        appCtx.toggleShowLED('red');
-                                    }}>Red</MenuItem>
-                                </Menu>
-                            </Fragment>
-                        )}
-                    </PopupState>
-                    <PopupState variant="popover" popupId="demo-popup-menu">
-                        {(popupState) => (
-                            <Fragment>
-                                <IconButton variant="contained" size='25' sx={{
-                                    borderRadius: 1,
-                                    color: 'black',
-                                    ':hover': {
-                                        bgcolor: 'darkgreen',
-                                        color: '#00ffa8',
-                                    },
-                                    marginTop: '-1%',
-                                    paddingLeft: 20,
-                                    margin: 'auto'
-                                }}  {...bindTrigger(popupState)}>
-                                    <GiLaserWarning />
-                                </IconButton>
-                                <Menu {...bindMenu(popupState)}>
-                                    <MenuItem onClick={() => {
-                                        popupState.close();
-                                        appCtx.toggleShowBeam('on');
-                                    }} >On</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        popupState.close();
-                                        appCtx.toggleShowBeam('off');
-                                    }}>Off</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        popupState.close();
-                                        appCtx.toggleShowBeam('split');
-                                    }}>Beamsplitter</MenuItem>
-                                </Menu>
-                            </Fragment>
-                        )}
-                    </PopupState>
+                    <IconButton onClick={handleClick2} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        <Icon icon="mdi:led-off" width="70" height="70" />
+                    </IconButton>
+
+                    <Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                        }}
+                        mobileVersion={led}
+                        open={openLED}
+                        onClose={handleLED}
+                    >
+                        <MenuItem onClick={() => {
+                            handleLED();
+                            appCtx.toggleShowBeam('none');
+                        }} disableRipple >None</MenuItem>
+                        <MenuItem onClick={() => {
+                            handleLED();
+                            appCtx.toggleShowBeam('white');
+                        }} disableRipple>White</MenuItem>
+                        <MenuItem onClick={() => {
+                            handleLED();
+                            appCtx.toggleShowBeam('red');
+                        }} disableRipple>Red</MenuItem>
+                    </Menu>
+
+                    <IconButton onClick={handleLaserBeam} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        <GiLaserWarning color={'white'} />
+                    </IconButton>
+
+                    <Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                        }}
+                        mobileVersion={laserBeam}
+                        open={openLaserBeam}
+                        onClose={closeLaserBeam}
+                    >
+                        <MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('on');
+                        }} disableRipple >On</MenuItem>
+                        <MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('off');
+                        }} disableRipple>Off</MenuItem>
+                        <MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('split');
+                        }} disableRipple>Beamsplitter</MenuItem>
+                    </Menu>
+
                 </ThemeProvider>
             </div>
             <div className={styles.navMenu}>
@@ -175,9 +206,9 @@ const NavBar = () => {
                         MenuListProps={{
                             'aria-labelledby': 'demo-customized-button',
                         }}
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
+                        mobileVersion={mobileVersion}
+                        open={openMobileVersion}
+                        onClose={handleMobileVersion}
                     >
                         <MenuItem onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }} disableRipple>
                             <ImConnection size={29} sx={{ width: '10px' }} />
