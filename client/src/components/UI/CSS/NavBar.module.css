@@ -24,30 +24,6 @@
     height: 100%;
 }
 
-.navMenuLaser {
-    position: absolute;
-    top: -18px;
-    right: calc(100% / 2.5);
-    height: 100%;
-}
-
-.navMenuLaser h3 {
-    display: absolute;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.navMenuLaser button {
-    margin-left: 5px;
-    padding-left: 0px;
-    height: 100%;
-    top: -45px;
-    left: 100%;
-    align-items: center;
-
-}
-
 .navMenu ul {
     margin: 0px;
     padding: 0px;
