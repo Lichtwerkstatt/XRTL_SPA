@@ -3,6 +3,7 @@ import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/materia
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
+import { GiLaserWarning } from 'react-icons/gi'
 import { ImConnection } from 'react-icons/im'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
@@ -33,19 +34,71 @@ const NavBar = () => {
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
 
+    const [laserBeam, setLaserBeam] = useState(null);
+    const openLaserBeam = Boolean(laserBeam)
+
+
     const handleClick = (event) => {
         setMobileVersion(event.currentTarget);
     };
 
+    const handleLaserBeam = (event) => {
+        setLaserBeam(event.currentTarget);
+    };
+
     const handleMobileVersion = () => {
         setMobileVersion(null);
+    };
+  
+    const closeLaserBeam = () => {
+        setLaserBeam(null);
     };
 
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab</h1>
+                <div className={styles.navMenuLaser}>
+                    <h3>Overlay:</h3>
 
+                    <IconButton onClick={handleLaserBeam} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        <GiLaserWarning />
+                    </IconButton>
+
+                    <Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                        }}
+                        anchorEl={laserBeam}
+                        open={openLaserBeam}
+                        onClose={closeLaserBeam}
+                    >
+                        <MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('on');
+                        }} disableRipple >On</MenuItem>
+                        <MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('off');
+                        }} disableRipple>Off</MenuItem>
+                        <MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('split');
+                        }} disableRipple>Beamsplitter</MenuItem>
+                    </Menu>
+
+
+                </div>
                 <div className={styles.navMenu}>
                     <ul>
                         <Tooltip title='Connnection'>
@@ -75,6 +128,7 @@ const NavBar = () => {
                         <Tooltip title='Information'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
+
                     </ul>
                 </div>
 
