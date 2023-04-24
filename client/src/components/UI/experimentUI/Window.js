@@ -1,4 +1,4 @@
-import {  IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5' //IoReloadOutline
+import { IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5' //IoReloadOutline
 import { MdOutlineUpdate } from 'react-icons/md';
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
@@ -75,22 +75,22 @@ const Window = (props) => {
       appCtx.toggleShowManualWindow();
     }
   }
-/* 
-  const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.componentList[0],
-      reset: true
-    })
-
-    if (props.componentList[1]) {
+  /* 
+    const handleReset = () => {
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
-        controlId: props.componentList[1],
+        controlId: props.componentList[0],
         reset: true
       })
-    }
-  } */
+  
+      if (props.componentList[1]) {
+        socketCtx.socket.emit('command', {
+          userId: socketCtx.username,
+          controlId: props.componentList[1],
+          reset: true
+        })
+      }
+    } */
 
   const handleInformation = () => {
     setInfo(!info)
@@ -170,7 +170,7 @@ const Window = (props) => {
 
             }}
           >
-            <DescriptionHandler height={props.height} component={props.id}/>
+            <DescriptionHandler height={props.height} component={props.id} />
           </div>
         }
         {footer !== 'empty' && (
