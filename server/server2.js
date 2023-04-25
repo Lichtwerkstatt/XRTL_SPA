@@ -1,4 +1,3 @@
-var date = new Date();
 const fs = require('fs');
 const app = require('express')();
 const jwt = require('jsonwebtoken');
@@ -9,9 +8,8 @@ const io = require('socket.io')(server, {
         methods: ['GET', 'POST']
     }
 })
-var pw = fs.readFileSync("", 'utf8');
-date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
 
+var pw = fs.readFileSync("", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -42,8 +40,6 @@ const returnNumer = (string) => {
     return a;
 }
 
-var masterSocket = pw + returnNumer(date);
-
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
@@ -59,11 +55,13 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    try {
+    if (socket.decoded.component === 'client') {
         var master = returnNumer(socket.decoded.code);
+        var date = new Date();
+        date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+        var masterSocket = pw + returnNumer(date);
     }
-    catch (e) { }
-    
+
     if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === rand) {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
