@@ -9,7 +9,7 @@ import styles from './Login.module.css'
 import { isEqual } from 'lodash';
 
 const Login = (props) => {
-    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl-mi.uni-jena.de' }]
+    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl.uni-jena.de' }]
     const [connection, setConnection] = useState('');
     const [username, setUsername] = useState('');
 
