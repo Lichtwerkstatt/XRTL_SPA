@@ -52,12 +52,29 @@ div.windowFooter label {
   font-size: 18px;
 }
 
-@media (min-width:0px) and (max-width:576px) {
+@media (min-width:0px) and (max-width:992px) {
   .window {
     position: absolute;
-    top: 30% !important;
-    left: 15% !important;
-   
+    top: 25% !important;
+    left: 10% !important;
+  
   }
 
 }
+/* 
+@media (min-width:576px) and (max-width:768px) {
+  .window {
+    position: absolute;
+
+    width: 500px;
+   
+  }
+}
+
+@media (min-width:768px) and (max-width:992px) {
+  .window {
+    position: absolute;
+    width: 650px;
+   
+  }
+} */

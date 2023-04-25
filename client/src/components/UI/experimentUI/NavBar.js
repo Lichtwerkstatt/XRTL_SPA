@@ -46,10 +46,10 @@ const NavBar = () => {
         setLaserBeam(event.currentTarget);
     };
 
-    const handleMobileVersion = () => {
+    const closeMobileVersion = () => {
         setMobileVersion(null);
     };
-  
+
     const closeLaserBeam = () => {
         setLaserBeam(null);
     };
@@ -153,33 +153,51 @@ const NavBar = () => {
                         }}
                         anchorEl={mobileVersion}
                         open={openMobileVersion}
-                        onClose={handleMobileVersion}
+                        onClose={closeMobileVersion}
                     >
                         <MenuItem onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }} disableRipple>
                             <ImConnection size={29} sx={{ width: '10px' }} />
                             Connection
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleAutoRotate} disableRipple>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleAutoRotate()
+                        }} disableRipple>
                             <MdOutlineScreenRotation size={26} />
                             Rotation
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowTags} disableRipple>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowTags();
+                        }} disableRipple>
                             <FaTags size={25} />
                             Tags
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleCam} disableRipple>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleCam();
+                        }} disableRipple>
                             <MdOutlineMenuBook size={26} />
                             Manual
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowManualWindow} disableRipple>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowManualWindow();
+                        }} disableRipple>
                             <MdOutlineHelp size={26} />
                             Help
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowHelpWindow} disableRipple>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowHelpWindow();
+                        }} disableRipple>
                             <BsCamera size={26} />
                             Cam
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowInfoWindow} disableRipple>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowInfoWindow();
+                        }} disableRipple>
                             <MdInfoOutline size={26} />
                             Info
                         </MenuItem>
