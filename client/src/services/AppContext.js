@@ -19,6 +19,7 @@ export function AppContextProvider({ children }) {
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
   const [logs, setLogs] = useState([]);
+  const [smallSetting, setSmallSetting] = useState(false);
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
@@ -74,6 +75,10 @@ export function AppContextProvider({ children }) {
     toggleSelectedComp('Cam_1')
   }
 
+  const smallSettings = () => {
+    setSmallSetting(!smallSetting)
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -101,7 +106,9 @@ export function AppContextProvider({ children }) {
         toggleShowManualWindow,
         showManualWindow,
         toggleShowHelpWindow,
-        showHelpWindow
+        showHelpWindow,
+        smallSettings,
+        smallSetting
       }}
     >
       {children}

@@ -6,6 +6,7 @@ import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import ESPCamSettings from '../templates/ESPCamSettings';
+import { useAppContext } from '../../../services/AppContext';
 
 const Settings = (props) => {
     const [switchIsOn, setSwitchStatus] = useState(false);
@@ -17,15 +18,17 @@ const Settings = (props) => {
     const socketCtx = useSocketContext();
 
 
+    const appCtx = useAppContext();
+
     const hiddenSetting = () => {
         setSettings(!settings);
         if (settings) {
-            document.getElementById('ScreenCanvas').style.height = '400px'
-            document.getElementById('ScreenCanvas').style.width = '800px'
+            appCtx.smallSettings()
+            
         } else {
+            appCtx.smallSettings()
+            console.log("hier")
 
-            document.getElementById('ScreenCanvas').style.height = '400px'
-            document.getElementById('ScreenCanvas').style.width = '600px'
         }
     }
 
@@ -67,7 +70,7 @@ const Settings = (props) => {
                         ctx = canvas.getContext('2d');
                         x1 = 0;
                         y1 = 0;
-                        x2 = 800;
+                        x2 = 600;
                         y2 = 400;
                         ctx.drawImage(this, x1, y1, x2, y2);
                     }
