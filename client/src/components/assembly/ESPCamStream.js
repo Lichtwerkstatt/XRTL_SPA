@@ -16,6 +16,7 @@ const ESPCamStream = (props) => {
     width = '1000px'
   }
 
+  
   return (
     <Window
       id={props.controlId}
