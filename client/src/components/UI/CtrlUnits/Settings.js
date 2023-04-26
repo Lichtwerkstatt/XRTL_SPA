@@ -1,40 +1,40 @@
 import { useSocketContext } from '../../../services/SocketContext';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { useAppContext } from '../../../services/AppContext';
+import ESPCamSettings from '../templates/ESPCamSettings';
 import { ThemeProvider } from '@mui/material/styles';
 import styles from '../CSS/Settings.module.css'
 import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
-import ESPCamSettings from '../templates/ESPCamSettings';
-import { useAppContext } from '../../../services/AppContext';
 
 const Settings = (props) => {
+    const appCtx = useAppContext();
+    const [settings, setSettings] = useState(appCtx.smallSetting);
+    const [onlineStatus, setOnlineStatus] = useState(false);
     const [switchIsOn, setSwitchStatus] = useState(false);
+    const [frameSize, setFrameSize] = useState(0);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
-    const [onlineStatus, setOnlineStatus] = useState(false);
-    const [settings, setSettings] = useState(true);
-    const [frameSize, setFrameSize] = useState(0);
     const socketCtx = useSocketContext();
-
-
-    const appCtx = useAppContext();
 
     const hiddenSetting = () => {
         setSettings(!settings);
-        if (settings) {
-            appCtx.smallSettings()
-            
+        appCtx.smallSettings()
+        if (appCtx.smallSetting) {
+            document.getElementById('ScreenCanvas').style.left = '-340px'
         } else {
-            appCtx.smallSettings()
-            console.log("hier")
-
+            document.getElementById('ScreenCanvas').style.left = '-655px'
         }
     }
 
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
+
+        if (props.width == '700px') {
+            document.getElementById('ScreenCanvas').style.left = '-340px'
+        }
 
         const status = (payload) => {
             if (payload.controlId === props.component) {
@@ -77,7 +77,6 @@ const Settings = (props) => {
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
             }
-
         }
 
         socketCtx.socket.emit('command', {

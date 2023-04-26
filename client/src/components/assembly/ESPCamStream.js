@@ -3,10 +3,8 @@ import Window from '../UI/experimentUI/Window';
 import { useAppContext } from '../../services/AppContext';
 
 const ESPCamStream = (props) => {
-  var width = window.innerWidth
-
   const appCtx = useAppContext();
-
+  var width = window.innerWidth
   var height = 0;
 
   if (0 < width && width < 576) {
@@ -26,10 +24,9 @@ const ESPCamStream = (props) => {
   }
 
   if (appCtx.smallSetting) {
-    width = '800px'
-  } else {
     width = '1000px'
-
+  } else {
+    width = '700px'
   }
 
   return (
