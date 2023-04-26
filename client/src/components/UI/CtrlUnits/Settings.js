@@ -32,7 +32,7 @@ const Settings = (props) => {
         var x1, x2, y1, y2;
         var ctx;
 
-        if (props.width == '700px') {
+        if (props.width === '700px') {
             document.getElementById('ScreenCanvas').style.left = '-340px'
         }
 
