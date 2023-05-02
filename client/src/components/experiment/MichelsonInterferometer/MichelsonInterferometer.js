@@ -17,7 +17,6 @@ const MichelsonInterferometer = (props) => {
   var leftMiddle = String(width - (halfWidth * 1.8))
   var leftRight = String(width - (halfWidth * 0.47))
   var leftMiddleRight = String(width - (halfWidth * 0.4))
-  var leftCam = String(width - (halfWidth * 1.485))
 
   return (
     <div>
@@ -83,7 +82,7 @@ const MichelsonInterferometer = (props) => {
           LED={'led_screen'}
           footer={footer}
           top={topHighMiddle}
-          left={leftCam}
+          left={leftLeft}
         />
       )}
     </div>
