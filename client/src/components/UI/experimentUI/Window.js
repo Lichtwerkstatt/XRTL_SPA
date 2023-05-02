@@ -22,7 +22,6 @@ const Window = (props) => {
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
-  console.log(props)
   useEffect(() => {
     if (props.footer) {
       setFooter('empty');
