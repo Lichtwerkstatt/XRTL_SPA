@@ -1,7 +1,7 @@
-import HeaterCtrl from '../UI/CtrlUnits/HeaterCtrl';
+import BesmSplitterCtrl from '../UI/CtrlUnits/BesmSplitterCtrl';
 import Window from '../UI/experimentUI/Window';
 
-const Heater = (props) => {
+const BesmSplitter = (props) => {
 
     return (
         <Window
@@ -13,7 +13,7 @@ const Heater = (props) => {
             height='340px'
             width='623px'
         >
-            <HeaterCtrl
+            <BesmSplitterCtrl
                 component={props.controlId}
                 led={props.led}
             />
@@ -21,4 +21,4 @@ const Heater = (props) => {
         </Window>
     )
 };
-export default Heater;
+export default BesmSplitter;

@@ -85,6 +85,18 @@ const MichelsonInterferometer = (props) => {
           left={leftLeft}
         />
       )}
+
+      {/* Beamsplitter */}
+      {props.selected.has('beamsplitter') && (
+        <ESPCam
+          title="Beamsplitter"
+          controlId={'beamsplitter'}
+          LED={'led_screen'}
+          footer={footer}
+          top={topHighMiddle}
+          left={leftLeft}
+        />
+      )}
     </div>
   );
 };

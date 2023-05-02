@@ -5,6 +5,7 @@ Command: npx gltfjsx@6.1.2 MIS1_230321.glb -k
 
 import React, { useRef, memo } from 'react';
 import { useGLTF, Box, Cylinder } from '@react-three/drei';
+//import * as THREE from 'three'
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
 import { isEqual } from 'lodash';
 
