@@ -22,7 +22,7 @@ const Window = (props) => {
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
-
+  console.log(props)
   useEffect(() => {
     if (props.footer) {
       setFooter('empty');
@@ -94,6 +94,10 @@ const Window = (props) => {
 
   const handleInformation = () => {
     setInfo(!info)
+
+    if (props.id === 'screen' && appCtx.smallSetting === false) {
+      appCtx.smallSettings()
+    }
   }
 
   const handleInfo = () => {
