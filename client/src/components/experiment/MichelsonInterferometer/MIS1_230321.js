@@ -54,6 +54,32 @@ function Model({ ...props}) {
               attenuationDistance={5}
             />
           </Cylinder>
+
+        </group>
+
+{/* Beam Overlay */}
+
+        {
+        (props.showBeam === 'off') && 
+          <group
+          name="BSslim"
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            props.toggleSelect("bs_slim");
+          }}
+        >
+          {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
+  
+          <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
+            <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
+            <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
+            <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} />
+            {props.selected.has("bs_slim") ? (
+              <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+            ) : (
+              <meshStandardMaterial color="#222222" opacity={1.0} />
+            )}
+          </mesh>
           <Cylinder
             position={[-0.15, 0.65, -0.15]}
             args={[1, 1, 1, 26]}
@@ -94,11 +120,84 @@ function Model({ ...props}) {
             />
           </Box>
         </group>
-
-{/* Beam Overlay */}
+        }
 
         {
-        props.showBeam && 
+        (props.showBeam === 'on') && 
+          <group>
+            <mesh
+              name="LaserBeam"
+              geometry={nodes.LaserBeam.geometry}
+              material={materials.Laser}
+            >
+              <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
+            </mesh>
+            <group
+          name="BSslim"
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            props.toggleSelect("beamsplitter");
+          }}
+        >
+          {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
+  
+          <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
+            <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
+            <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
+            <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} position={[-23, 22, 0]} rotation={[0, 0, -Math.PI / 2]}/>
+            {props.selected.has("beamsplitter") ? (
+              <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+            ) : (
+              <meshStandardMaterial color="#222222" opacity={1.0} />
+            )}
+          </mesh>
+          
+        </group>
+        <Cylinder
+            position={[-0.15, 0.65, -0.15]}
+            args={[1, 1, 1, 26]}
+            rotation={[0, Math.PI / -4, Math.PI / 2]}
+            scale={[0.15, 0.02, 0.15]}
+            radialSegments={'26'}
+          >
+            <meshPhysicalMaterial
+              thickness={1}
+              roughness={0.1}
+              transmission={1}
+              clearcoat={0.5}
+              clearcoatRoughness={0}
+              ior={1.1}
+              envMapIntensity={25}
+              color={"#ffffff"}
+              attenuationColor={"#00ffff"}
+              attenuationDistance={5}
+            />
+          </Cylinder>
+          <Box
+            position={[-0.05, 0.22, -0.25]}
+            args={[1, 1, 1]}
+            scale={[0.019, 0.4, 0.13]}
+            rotation={[Math.PI / 2, 0, Math.PI / 4 ]}
+          >
+            <meshPhysicalMaterial
+              thickness={1}
+              roughness={0.1}
+              transmission={1}
+              clearcoat={0.5}
+              clearcoatRoughness={0}
+              ior={1.1}
+              envMapIntensity={25}
+              color={"#ffffff"}
+              attenuationColor={"#00ffff"}
+              attenuationDistance={5}
+            />
+          </Box> 
+          
+        </group>  
+        } 
+
+        {(props.showBeam === 'split') &&
+        <group>
           <mesh
             name="LaserBeam"
             geometry={nodes.LaserBeam.geometry}
@@ -106,19 +205,17 @@ function Model({ ...props}) {
           >
             <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
           </mesh>
-        } 
-
-        {(props.showBeam === 'split') &&
-        <mesh
+          <mesh
           name="LaserBeamBS"
           geometry={nodes.LaserBeamBS.geometry}
           material={materials.Laser}
           position={[-0.53, 0.68, -0.13]}
           rotation={[0, 0, -Math.PI / 2]}
           scale={0.17}
-        >
-          <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
-        </mesh>
+          >
+            <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
+          </mesh>
+        </group>  
         }
         
 {/* Other Components */}
@@ -294,15 +391,7 @@ function Model({ ...props}) {
           )}
         </mesh>
 
-        <group>
-        {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
-
-          <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
-            <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
-            <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
-            <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} />
-          </mesh>
-        </group>
+        
 
       </group>
     </group>

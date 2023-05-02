@@ -1,7 +1,7 @@
-import BesmSplitterCtrl from '../UI/CtrlUnits/BesmSplitterCtrl';
+import BesmSplitterCtrl from '../UI/CtrlUnits/BeamSplitterCtrl';
 import Window from '../UI/experimentUI/Window';
 
-const BesmSplitter = (props) => {
+const BeamSplitter = (props) => {
 
     return (
         <Window
@@ -21,4 +21,4 @@ const BesmSplitter = (props) => {
         </Window>
     )
 };
-export default BesmSplitter;
+export default BeamSplitter;

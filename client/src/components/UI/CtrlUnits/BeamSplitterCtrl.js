@@ -26,20 +26,14 @@ const BeamSplitterCtrl = (props) => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
-                setPowerSwitch(payload.status.isOn)
-                setPowerValue(payload.status.pwm)
+                // setPowerSwitch(payload.status.isOn)
+
 
                 console.log("Status  ", payload)
             }
         }
 
-        const data = (payload) => {
-            if (payload.controlId === props.componentT) {
-                var string = payload.data.data;
-                try { string = string.toFixed(1) + " °C" } catch (e) { string = '-°C' }
-                setTemp(string);
-            }
-        }
+        
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
             controlId: props.component,
@@ -56,13 +50,12 @@ const BeamSplitterCtrl = (props) => {
 
         socketCtx.socket.on('status', status);
 
-        socketCtx.socket.on('data', data);
+
 
         return () => {
             socketCtx.socket.removeAllListeners('status', status)
-            socketCtx.socket.removeAllListeners('data', data)
-            socketCtx.socket.removeAllListeners('footer', footer)
-            socketCtx.socket.removeAllListeners('getFooter', getFooter)
+
+
         }
         //Comment needed to prevent a warning
         // eslint-disable-next-line react-hooks/exhaustive-deps

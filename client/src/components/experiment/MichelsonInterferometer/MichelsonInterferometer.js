@@ -2,6 +2,7 @@ import LaserCtrl from "../../assembly/Laser";
 import ESPCam from "../../assembly/ESPCamStream";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
+import Beamsplitter from "../../assembly/BeamsSplitter";
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
@@ -88,7 +89,7 @@ const MichelsonInterferometer = (props) => {
 
       {/* Beamsplitter */}
       {props.selected.has('beamsplitter') && (
-        <ESPCam
+        <Beamsplitter
           title="Beamsplitter"
           controlId={'beamsplitter'}
           LED={'led_screen'}
