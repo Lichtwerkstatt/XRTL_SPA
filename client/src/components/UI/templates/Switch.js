@@ -22,7 +22,7 @@ const SwiitchCtrl = (props) => {
         })
 
         socketCtx.socket.emit("footer", {
-            status: "Last change by: " + socketCtx.username,
+            status: 'Used by: ' + socketCtx.username.substring(0, 17),
             controlId: props.component
         })
 
