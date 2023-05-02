@@ -65,7 +65,7 @@ function Model({ ...props}) {
           name="BSslim"
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("beamsplitter");
+            props.toggleSelect("beamSplitter");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
@@ -74,7 +74,7 @@ function Model({ ...props}) {
             <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
             <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
             <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} />
-            {props.selected.has("beamsplitter") ? (
+            {props.selected.has("beamSplitter") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -136,7 +136,7 @@ function Model({ ...props}) {
           name="BSslim"
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("beamsplitter");
+            props.toggleSelect("beamSplitter");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
@@ -145,7 +145,7 @@ function Model({ ...props}) {
             <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
             <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
             <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} position={[-23, 22, 0]} rotation={[0, 0, -Math.PI / 2]}/>
-            {props.selected.has("beamsplitter") ? (
+            {props.selected.has("beamSplitter") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -220,7 +220,7 @@ function Model({ ...props}) {
           name="BSslim"
           onPointerDown={(e) => {
             e.stopPropagation();
-            props.toggleSelect("beamsplitter");
+            props.toggleSelect("beamSplitter");
           }}
         >
           {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
@@ -229,7 +229,7 @@ function Model({ ...props}) {
             <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
             <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
             <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} />
-            {props.selected.has("beamsplitter") ? (
+            {props.selected.has("beamSplitter") ? (
               <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
             ) : (
               <meshStandardMaterial color="#222222" opacity={1.0} />
