@@ -5,7 +5,6 @@ Command: npx gltfjsx@6.1.2 MIS1_230321.glb -k
 
 import React, { useRef, memo } from 'react';
 import { useGLTF, Box, Cylinder } from '@react-three/drei';
-import * as THREE from 'three'
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
 import { isEqual } from 'lodash';
 
@@ -93,9 +92,12 @@ function Model({ ...props}) {
               attenuationDistance={5}
             />
           </Box>
-        </group> 
+        </group>
 
-        {props.showBeam && 
+{/* Beam Overlay */}
+
+        {
+        props.showBeam && 
           <mesh
             name="LaserBeam"
             geometry={nodes.LaserBeam.geometry}
@@ -104,7 +106,8 @@ function Model({ ...props}) {
             <meshStandardMaterial color="#65ff00" transparent opacity={0.8} emissive emissiveIntensity={1}/>
           </mesh>
         } 
-        {props.showBeam &&
+
+        {(props.showBeam === 'split') &&
         <mesh
           name="LaserBeamBS"
           geometry={nodes.LaserBeamBS.geometry}
@@ -117,6 +120,8 @@ function Model({ ...props}) {
         </mesh>
         }
         
+{/* Other Components */}
+
         <group
           name="Mirror1"
           
@@ -289,7 +294,7 @@ function Model({ ...props}) {
         </mesh>
 
         <group>
-        {props.showTags && <DescriptiveTag position={[0, 1.5, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
+        {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="10/90 Beam Splitter" />}
 
           <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
             <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
@@ -297,20 +302,6 @@ function Model({ ...props}) {
             <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} />
           </mesh>
         </group>
-
-        {/* <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter001" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter001.geometry} material={materials['BlackParts.001']} position={[-0.01, 0.03, -0.01]} rotation={[0, Math.PI / 4, 0]} />
-        <mesh name="SideMirrorMesh" geometry={nodes.SideMirrorMesh.geometry} material={materials.BlackParts} />
-        <mesh name="SideMirrorMesh_1" geometry={nodes.SideMirrorMesh_1.geometry} material={materials.ShinyParts} />
-        <mesh name="SideMirrorMesh_2" geometry={nodes.SideMirrorMesh_2.geometry} material={materials.Mirror} />
-        <mesh name="TranslateMirrorMesh" geometry={nodes.TranslateMirrorMesh.geometry} material={materials.BlackParts} />
-        <mesh name="TranslateMirrorMesh_1" geometry={nodes.TranslateMirrorMesh_1.geometry} material={materials.ShinyParts} />
-        <mesh name="TranslateMirrorMesh_2" geometry={nodes.TranslateMirrorMesh_2.geometry} material={materials.Mirror} />
-        <mesh name="PlaneMesh" geometry={nodes.PlaneMesh.geometry} material={materials.WhiteParts} />
-        <mesh name="PlaneMesh_1" geometry={nodes.PlaneMesh_1.geometry} material={materials.BlackParts} />
-        <mesh name="BaseMesh" geometry={nodes.BaseMesh.geometry} material={materials.BlackParts} />
-        <mesh name="BaseMesh_1" geometry={nodes.BaseMesh_1.geometry} material={materials.ShinyParts} />
-        <mesh name="LaserMesh" geometry={nodes.LaserMesh.geometry} material={materials.BlackParts} />
-        <mesh name="LaserMesh_1" geometry={nodes.LaserMesh_1.geometry} material={materials.ShinyParts} /> */}
 
       </group>
     </group>
