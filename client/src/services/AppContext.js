@@ -11,6 +11,7 @@ export function AppContextProvider({ children }) {
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [smallSetting, setSmallSetting] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showRotary, setShowRotary] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -19,7 +20,6 @@ export function AppContextProvider({ children }) {
   const [showCam, setShowCam] = useState(false);
   const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);
-
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
@@ -75,6 +75,9 @@ export function AppContextProvider({ children }) {
 
     setShowBeam(!showRotary);
   }
+  const smallSettings = () => {
+    setSmallSetting(!smallSetting)
+  }
 
   return (
     <AppContext.Provider
@@ -103,7 +106,9 @@ export function AppContextProvider({ children }) {
         showLED,
         toggleShowLED,
         setShowRotary,
-        toggleChangeRotary
+        toggleChangeRotary,
+        smallSettings,
+        smallSetting
       }}
     >
       {children}
