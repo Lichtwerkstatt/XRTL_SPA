@@ -53,7 +53,7 @@ div.consoleHandler span {
 
 @keyframes openConsole {
     0% {
-        bottom: -32.5%;
+        bottom: -32%;
     }
 
     100% {
@@ -67,6 +67,118 @@ div.consoleHandler span {
     }
 
     100% {
-        bottom: -32.5%;
+        bottom: -32%;
+    }
+}
+
+/* Width */
+
+@media (min-width:0px) and (max-width:576px) {
+    div.consoleContainer {
+        position: fixed;
+        bottom: -20%;
+        right: 2%;
+        width: calc(100% - 20%);
+        height: 19.5%;
+        background: rgba(0, 0, 0, 0.6);
+        border-top: 3px solid #01bd7d;
+        border-right: 3px solid #01bd7d;
+        border-left: 3px solid #01bd7d;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    @keyframes openConsole {
+        0% {
+            bottom: -20.5%;
+        }
+
+        100% {
+            bottom: 0px;
+        }
+    }
+
+    @keyframes closeConsole {
+        0% {
+            bottom: 0px;
+        }
+
+        100% {
+            bottom: -20.5%;
+        }
+    }
+
+}
+
+@media (min-width:577px) and (max-width:768px) {
+    div.consoleContainer {
+        position: fixed;
+        bottom: -26.5%;
+        right: 2%;
+        width: calc(100% - 25%);
+        height: 25.5%;
+        background: rgba(0, 0, 0, 0.6);
+        border-top: 3px solid #01bd7d;
+        border-right: 3px solid #01bd7d;
+        border-left: 3px solid #01bd7d;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    @keyframes openConsole {
+        0% {
+            bottom: -26%;
+        }
+
+        100% {
+            bottom: 0px;
+        }
+    }
+
+    @keyframes closeConsole {
+        0% {
+            bottom: 0px;
+        }
+
+        100% {
+            bottom: -26%;
+        }
+    }
+}
+
+
+@media (min-width:769px) and (max-width:922px) {
+    div.consoleContainer {
+        position: fixed;
+        bottom: -26%;
+        right: 2%;
+        width: calc(100% - 25%);
+        height: 25.5%;
+        background: rgba(0, 0, 0, 0.6);
+        border-top: 3px solid #01bd7d;
+        border-right: 3px solid #01bd7d;
+        border-left: 3px solid #01bd7d;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    @keyframes openConsole {
+        0% {
+            bottom: -26%;
+        }
+
+        100% {
+            bottom: 0px;
+        }
+    }
+
+    @keyframes closeConsole {
+        0% {
+            bottom: 0px;
+        }
+
+        100% {
+            bottom: -26%;
+        }
     }
 }
