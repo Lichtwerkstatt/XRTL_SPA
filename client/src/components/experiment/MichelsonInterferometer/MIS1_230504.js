@@ -35,8 +35,8 @@ function Model({...props}) {
             />
           </Box>
           <Cylinder
-            position={[0.7, 0.67, -0.13]}
-            args={[1, 1, 1]}
+            position={[0.7, 0.68, -0.13]}
+            args={[1, 1, 1, 26]}
             rotation={[0, 0, Math.PI / 2]}
             scale={[0.14, 0.05, 0.14]}
           >
@@ -84,7 +84,6 @@ function Model({...props}) {
             args={[1, 1, 1, 26]}
             rotation={[0, Math.PI / -4, Math.PI / 2]}
             scale={[0.15, 0.02, 0.15]}
-            radialSegments={'26'}
           >
             <meshPhysicalMaterial
               thickness={1}
@@ -157,7 +156,6 @@ function Model({...props}) {
             args={[1, 1, 1, 26]}
             rotation={[0, Math.PI / -4, Math.PI / 2]}
             scale={[0.15, 0.02, 0.15]}
-            radialSegments={'26'}
           >
             <meshPhysicalMaterial
               thickness={1}
@@ -239,7 +237,6 @@ function Model({...props}) {
             args={[1, 1, 1, 26]}
             rotation={[0, Math.PI / -4, Math.PI / 2]}
             scale={[0.15, 0.02, 0.15]}
-            radialSegments={'26'}
           >
             <meshPhysicalMaterial
               thickness={1}
@@ -512,49 +509,8 @@ function Model({...props}) {
           )}
         </mesh>
 
-        
-
       </group>
     </group>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // <group {...props} dispose={null}>
-    //   <mesh name="SD5" geometry={nodes.SD5.geometry} material={materials.BlackParts} />
-    //   <mesh name="LaserBeam" geometry={nodes.LaserBeam.geometry} material={materials.Laser} />
-    //   <mesh name="LaserBeamBS" geometry={nodes.LaserBeamBS.geometry} material={materials.Laser} position={[-0.53, 0.68, -0.13]} rotation={[0, 0, -Math.PI / 2]} scale={0.17} />
-    //   <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
-    //     <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
-    //     <mesh name="Cylinder002_2" geometry={nodes.Cylinder002_2.geometry} material={materials.Servo} />
-    //     <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter.geometry} material={materials['BlackParts.001']} />
-    //   </mesh>
-    //   <mesh name="Thorlabs_Servo_Mount_Loose_V1_Adapter001" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter001.geometry} material={materials['BlackParts.001']} position={[-0.01, 0.03, -0.01]} rotation={[0, Math.PI / 4, 0]} />
-    //   <mesh name="SideMirrorMesh" geometry={nodes.SideMirrorMesh.geometry} material={materials.BlackParts} />
-    //   <mesh name="SideMirrorMesh_1" geometry={nodes.SideMirrorMesh_1.geometry} material={materials.ShinyParts} />
-    //   <mesh name="SideMirrorMesh_2" geometry={nodes.SideMirrorMesh_2.geometry} material={materials.Mirror} />
-    //   <mesh name="TranslateMirrorMesh" geometry={nodes.TranslateMirrorMesh.geometry} material={materials.BlackParts} />
-    //   <mesh name="TranslateMirrorMesh_1" geometry={nodes.TranslateMirrorMesh_1.geometry} material={materials.ShinyParts} />
-    //   <mesh name="TranslateMirrorMesh_2" geometry={nodes.TranslateMirrorMesh_2.geometry} material={materials.Mirror} />
-    //   <mesh name="PlaneMesh" geometry={nodes.PlaneMesh.geometry} material={materials.WhiteParts} />
-    //   <mesh name="PlaneMesh_1" geometry={nodes.PlaneMesh_1.geometry} material={materials.BlackParts} />
-    //   <mesh name="BaseMesh" geometry={nodes.BaseMesh.geometry} material={materials.BlackParts} />
-    //   <mesh name="BaseMesh_1" geometry={nodes.BaseMesh_1.geometry} material={materials.ShinyParts} />
-    //   <mesh name="LaserMesh" geometry={nodes.LaserMesh.geometry} material={materials.BlackParts} />
-    //   <mesh name="LaserMesh_1" geometry={nodes.LaserMesh_1.geometry} material={materials.ShinyParts} />
-    //   <mesh name="LensMesh001" geometry={nodes.LensMesh001.geometry} material={materials.BlackParts} />
-    //   <mesh name="LensMesh001_1" geometry={nodes.LensMesh001_1.geometry} material={materials.ShinyParts} />
-    //   <mesh name="BeamSplitterMesh001" geometry={nodes.BeamSplitterMesh001.geometry} material={materials.BlackParts} />
-    //   <mesh name="BeamSplitterMesh001_1" geometry={nodes.BeamSplitterMesh001_1.geometry} material={materials.ShinyParts} />
-    // </group>
   )
 }
 
