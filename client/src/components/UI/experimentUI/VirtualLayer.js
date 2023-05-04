@@ -1,4 +1,4 @@
-import MIS1_230321 from '../../experiment/MichelsonInterferometer/MIS1_230321';
+import MIS1_230504 from '../../experiment/MichelsonInterferometer/MIS1_230504';
 import { OrbitControls, Environment } from '@react-three/drei';
 import { useAppContext } from '../../../services/AppContext';
 import { Canvas } from '@react-three/fiber';
@@ -23,7 +23,7 @@ const VirtualLayer = () => {
         <Suspense fallback={null}>
           <Environment files='../hdri/autoshop.hdr' />
           <OrbitControls autoRotate={appCtx.autoRotate} />
-          <MIS1_230321
+          <MIS1_230504
             toggleSelect={appCtx.toggleSelectedComp}
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
