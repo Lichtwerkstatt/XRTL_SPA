@@ -3,18 +3,16 @@ import bgTeam from "../../media/images/xrtl_team.png"
 
 const InfoWindowContent = (props) => {
   return (
-    <div>
+    <div className={styles.mainWrapper}
+      style={{ backgroundImage: "url(\"" + bgTeam + "\")" }}
+    >
+      Remote labs represent a groundbreaking approach to science education and collaboration, facilitating communication and experimentation from afar. However, creating remote access capabilities can be prohibitively expensive or technically challenging, particularly for non-IT and non-engineering disciplines. To make remote labs accessible across all fields, we need a user-friendly platform that enables researchers, assistants, and technical staff to implement them independently. To that end, we are proud to present XR TwinLab (XRTL), an open-source toolbox designed specifically for the field of Photonics. With its modular structure XRTL offers a flexible, web-based application for controlling optical experimental setups. This exciting project is currently being developed by the esteemed Abbe School of Photonics and the Open Makerspace Lichtwerkstatt Jena.
 
-      <div className={styles.mainWrapper}      >
-        Remote labs are a trendsetting way of teaching, communicating, and experiencing science as well as enabling collaborative work. Unfortunately, the implementation of remote access involves a cost-intensive development or at least requires a certain technical skillset. To establish remote labs across disciplines, especially outside the field of IT and engineering, the technical access threshold must be low enough to support a self-contained implementation by researchers, assistants, and technical staff. Hereby, we are developing the open-source toolbox XR Twin Lab for the research field of Photonics. XR Twin Lab (XRTL) provides a modular way of building a web-based application to control optical experimental setups with the integration of VR and AR endpoints.
-        <p>
-          This Project is currently developed within the DAAD-funded project "digiPhoton" and BMBF-funded project "Lichtwerkstatt" at the Abbe School of Photonics / Institute of Applied Physics / Friedrich Schiller University in Jena. Feel free to follow our <a href="https://github.com/Lichtwerkstatt/XRTL_SPA">Git Repo</a> or <a href="mailto:team@lichtwerkstatt-jena.de">Contact us.</a>
-        </p>
-        <p>
-          Best! Clara, Falko, Jari and Johannes
-        </p>
-      </div>
-      <img className={styles.img} src={bgTeam} alt='XRTL Team' />
+      Feel free to follow our <a href="https://github.com/Lichtwerkstatt/XRTL_SPA">Git Repo</a> or <a href="mailto:team@lichtwerkstatt-jena.de">Contact us.</a>
+
+      <p>
+        Best! Clara, Fabian, Falko, Jari and Johannes
+      </p>
     </div>
   )
 }
