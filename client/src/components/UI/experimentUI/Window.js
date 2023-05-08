@@ -94,7 +94,7 @@ const Window = (props) => {
   const handleInformation = () => {
     setInfo(!info)
 
-    if (props.id === 'screen' && appCtx.smallSetting === false) {
+    if (props.id === 'screen' && appCtx.smallSetting === true) {
       appCtx.smallSettings()
     }
   }
