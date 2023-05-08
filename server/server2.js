@@ -1,4 +1,3 @@
-var date = new Date();
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -9,8 +8,7 @@ const io = require('socket.io')(server, {
     }
 })
 //var pw = fs.readFileSync("", 'utf8');
-date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-var master = 'digiPHOTON' + date;
+
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -39,6 +37,9 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
+    var date = new Date();
+    date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+    var master = 'digiPHOTON' + date;
     if (socket.decoded.component === 'client' && socket.decoded.sub === master) {
         console.log('Supervisor connected successfully');
         socket.emit('newLog', 'Connection made successfully');
