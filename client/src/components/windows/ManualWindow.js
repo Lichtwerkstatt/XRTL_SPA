@@ -11,6 +11,7 @@ const ManualWindow = (props) => {
             width="300"
             height="547"
             footer={'empty'}
+            topper={'none'}
         >
             <ManualWindowContent />
         </Window>

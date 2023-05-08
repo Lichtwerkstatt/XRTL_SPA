@@ -10,6 +10,7 @@ const InfoWindow = (props) => {
             left="200"
             width="600px"
             footer={'empty'}
+            topper={'para'}
         >
             <InfoWindowContent />
         </Window>

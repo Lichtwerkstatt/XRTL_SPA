@@ -11,6 +11,7 @@ const HelpWindow = (props) => {
             width="300"
             height="547"
             footer={'empty'}
+            topper={'none'}
         >
             <HelpWindowContent />
         </Window>
