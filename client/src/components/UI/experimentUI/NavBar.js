@@ -1,10 +1,10 @@
-import { MdOutlineScreenRotation, MdInfoOutline, MdOutlineHelp, MdOutlineMenuBook } from 'react-icons/md';
+import { MdOutlineScreenRotation, MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
 import { GiLaserWarning } from 'react-icons/gi'
-import { ImConnection } from 'react-icons/im'
+import { ImConnection, ImEnter, ImExit } from 'react-icons/im'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
 import { BsCamera } from 'react-icons/bs'
@@ -18,16 +18,14 @@ const NavBar = () => {
 
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
-    let autoRotateColor = '';
-    if (appCtx.autoRotate) { autoRotateColor = 'white' }
+    /*     let autoRotateColor = '';
+        if (appCtx.autoRotate) { autoRotateColor = 'white' } */
     let showTagsColor = '';
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
-    let showHelpWindowColor = '';
-    if (appCtx.showHelpWindow) { showHelpWindowColor = 'white' }
     let showManualWindowColor = '';
     if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
 
@@ -102,12 +100,12 @@ const NavBar = () => {
                 <div className={styles.navMenu}>
                     <ul>
                         <Tooltip title='Connnection'>
-                            <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
+                            <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
-                        <Tooltip title='Rotation'>
+                        {/*   <Tooltip title='Rotation'>
                             <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         <Tooltip title='Labels'>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
@@ -121,9 +119,6 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Help'>
-                            <li onClick={appCtx.toggleShowHelpWindow}><MdOutlineHelp size={26} color={showHelpWindowColor} /></li>
-                        </Tooltip>
 
                         <Tooltip title='Information'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
@@ -155,8 +150,11 @@ const NavBar = () => {
                         open={openMobileVersion}
                         onClose={closeMobileVersion}
                     >
-                        <MenuItem onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }} disableRipple>
-                            <ImConnection size={29} sx={{ width: '10px' }} />
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
+                        }} disableRipple>
+                            {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />}
                             Connection
                         </MenuItem>
                         <MenuItem onClick={() => {
@@ -179,13 +177,6 @@ const NavBar = () => {
                         }} disableRipple>
                             <MdOutlineMenuBook size={26} />
                             Manual
-                        </MenuItem>
-                        <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            appCtx.toggleShowManualWindow();
-                        }} disableRipple>
-                            <MdOutlineHelp size={26} />
-                            Help
                         </MenuItem>
                         <MenuItem onClick={() => {
                             closeMobileVersion();

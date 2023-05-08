@@ -14,7 +14,6 @@ export function AppContextProvider({ children }) {
   const [showManualWindow, setShowManual] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
-  const [showHelpWindow, setShowHelp] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
@@ -56,10 +55,6 @@ export function AppContextProvider({ children }) {
 
   const toggleShowInfoWindow = () => {
     setShowInfoWindow(!showInfoWindow);
-  }
-
-  const toggleShowHelpWindow = () => {
-    setShowHelp(!showHelpWindow);
   }
 
   const toggleShowManualWindow = () => {
@@ -105,8 +100,6 @@ export function AppContextProvider({ children }) {
         toogleLastComp,
         toggleShowManualWindow,
         showManualWindow,
-        toggleShowHelpWindow,
-        showHelpWindow,
         smallSettings,
         smallSetting
       }}
