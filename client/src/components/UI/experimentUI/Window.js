@@ -66,8 +66,8 @@ const Window = (props) => {
       appCtx.toggleShowInfoWindow();
     }
 
-    if (props.id === "help") {
-      appCtx.toggleShowHelpWindow();
+    if (props.id === "welcome") {
+      appCtx.toggleShowWelcomeWindow();
     }
 
     if (props.id === "manual") {
@@ -152,7 +152,7 @@ const Window = (props) => {
             {props.topper ?
 
               <span onClick={handleInformation} >
-                <MdOutlineCircle size={30} color = {(props.topper === 'none')?'#01bd7d':'#FFFFFF'} />
+                <MdOutlineCircle size={30} color={(props.topper === 'none') ? '#01bd7d' : '#FFFFFF'} />
               </span>
               :
               <span onClick={handleInformation} >
@@ -160,7 +160,7 @@ const Window = (props) => {
               </span>
             }
 
-         
+
             <span onClick={handleCloseWindow}><IoCloseCircleOutline size={30} /></span>
           </p>
         </div>

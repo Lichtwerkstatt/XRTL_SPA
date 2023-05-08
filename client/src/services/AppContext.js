@@ -12,6 +12,7 @@ export function AppContextProvider({ children }) {
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
+  const [showWelcomeWindow, setShowWelcome] = useState(true);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [showBeam, setShowBeam] = useState('off');
@@ -61,6 +62,10 @@ export function AppContextProvider({ children }) {
     setShowManual(!showManualWindow);
   }
 
+  const toggleShowWelcomeWindow = () => {
+    setShowWelcome(!showWelcomeWindow);
+  }
+
   const toggleLogin = () => {
     setShowLogin(!showLogin);
   }
@@ -101,7 +106,9 @@ export function AppContextProvider({ children }) {
         toggleShowManualWindow,
         showManualWindow,
         smallSettings,
-        smallSetting
+        smallSetting,
+        toggleShowWelcomeWindow,
+        showWelcomeWindow
       }}
     >
       {children}

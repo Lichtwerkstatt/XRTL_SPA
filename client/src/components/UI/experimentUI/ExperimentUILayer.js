@@ -5,7 +5,7 @@ import { useAppContext } from "../../../services/AppContext";
 import { useEffect, useState, Fragment } from "react";
 import ManualWindow from "../../windows/ManualWindow";
 import InfoWindow from "../../windows/InfoWindow";
-import HelpWindow from "../../windows/HelpWindow";
+import WelcomeWindow from "../../windows/WelcomeWindow";
 import CamWindow from "../../windows/CamWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react"
@@ -44,7 +44,7 @@ const ExperimentUILayer = () => {
   return (
     <Fragment>
       {appCtx.showInfoWindow && <InfoWindow />}
-      {appCtx.showHelpWindow && <HelpWindow />}
+      {appCtx.showWelcomeWindow && <WelcomeWindow />}
       {appCtx.showManualWindow && <ManualWindow />}
       {appCtx.showCam && <CamWindow />}
       <MichelsonInterferometer
