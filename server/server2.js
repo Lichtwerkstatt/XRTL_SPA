@@ -1,3 +1,4 @@
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -7,8 +8,8 @@ const io = require('socket.io')(server, {
         methods: ['GET', 'POST']
     }
 })
-//var pw = fs.readFileSync("", 'utf8');
 
+var pw = fs.readFileSync("", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -20,6 +21,23 @@ var online = false;
 var userIDs = [];
 var GUIId = '';
 var exp = ''
+
+const returnNumber = (string) => {
+    var number = [];
+    var a = '';
+    for (var i = 0; i < string.length; i += 2) {
+        if (string.charCodeAt(i + 1)) {
+            number.push(string.charCodeAt(i) + string.charCodeAt(i + 1))
+        } else {
+            number.push(string.charCodeAt(i))
+        }
+    }
+
+    for (var i = 0; i < number.length; i++) {
+        a += number[i];
+    }
+    return a;
+}
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -37,10 +55,14 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    var date = new Date();
-    date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-    var master = 'digiPHOTON' + date;
-    if (socket.decoded.component === 'client' && socket.decoded.sub === master) {
+    if (socket.decoded.component === 'client') {
+        var master = returnNumber(socket.decoded.sub);
+        var date = new Date();
+        date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+        var masterSocket = pw + returnNumber(date);
+    }
+
+    if (socket.decoded.component === 'client' && masterSocket === master) {
         console.log('Supervisor connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', '#FFFFF');
