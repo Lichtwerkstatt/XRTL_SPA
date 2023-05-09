@@ -1,8 +1,33 @@
 div .mainWrapper {
   height: 500px;
   column-count: 2;
-  padding: 15px;
+  padding: 15px 15px 0px 15px;
   background-position: bottom right;
   background-size: 80% auto;
   background-repeat: no-repeat;
+}
+
+@media (min-width:0px) and (max-width:576px) {
+  div .mainWrapper {
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: normal;   
+    height: 100%;
+    column-count: 1;
+    padding: 15px 15px 0px 15px;
+    background-repeat: no-repeat;
+
+    background-attachment: scroll;
+  }
+}
+
+@media (min-width:576px) and (max-width:992px) {
+  div .mainWrapper {
+    height: 500px;
+    column-count: 2;
+    padding: 15px 15px 0px 15px;
+    background-position: bottom right;
+    background-size: 80% auto;
+    background-repeat: no-repeat;
+  }
 }
