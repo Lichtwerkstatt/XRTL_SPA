@@ -1,7 +1,7 @@
 import Window from '../UI/experimentUI/Window';
-import Lens from '../UI/ComponentDescription/Decription_Lens';
+import Cube from '../UI/ComponentDescription/Decription_Cube';
 
-const Laser = (props) => {
+const BsCube = (props) => {
 
   return (
     <Window
@@ -14,10 +14,10 @@ const Laser = (props) => {
       footer={'empty'}
       topper={'none'}
     >
-      <Lens
+      <Cube
         height='220px'
       />
     </Window>
   )
 }
-export default Laser;
+export default BsCube;

@@ -1,8 +1,9 @@
-import LaserCtrl from "../../assembly/Laser";
+import Beamsplitter from "../../assembly/BeamSplitter";
 import ESPCam from "../../assembly/ESPCamStream";
+import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
-import Beamsplitter from "../../assembly/BeamSplitter";
+import Cube from "../../assembly/BsCube";
 import Lens from "../../assembly/Lens";
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
@@ -104,6 +105,18 @@ const MichelsonInterferometer = (props) => {
         <Lens
           title="Lens"
           controlId={'lens'}
+          footer={footer}
+          top={600}
+          left={1100}
+        />
+      )}
+
+
+      {/* BeamSplitter Cube */}
+      {props.selected.has('bscube') && (
+        <Cube
+          title="Cube Beam Splitter"
+          controlId={'bscube'}
           footer={footer}
           top={600}
           left={1100}
