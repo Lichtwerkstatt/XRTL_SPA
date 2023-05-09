@@ -28,7 +28,7 @@ const Window = (props) => {
     }
 
     const Footer = (payload) => {
-      if (props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -36,7 +36,7 @@ const Window = (props) => {
     }
 
     const getFooter = (payload) => {
-      if (props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])

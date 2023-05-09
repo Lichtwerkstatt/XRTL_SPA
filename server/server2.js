@@ -26,7 +26,7 @@ io.use((socket, next) => {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            exp = decoded.iat + 1800000;
+            exp = decoded.iat + 300000;
             next();
         });
     }
@@ -59,7 +59,7 @@ io.on('connection', socket => {
                 socket.disconnect();
                 console.log('Client token expired');
             }
-        }, 300000);     //checks every 5 min 
+        }, 120000);     //checks every 2 min 
     }
     else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');
@@ -89,6 +89,7 @@ io.on('connection', socket => {
         socket.to(GUIId).emit('newLog', 'Command received: ' + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
         console.log('Command received: ', payload);
+        exp = Date.now() + 300000;
     });
 
     socket.on('LED', payload => {
@@ -131,7 +132,6 @@ io.on('connection', socket => {
 
     socket.on('getFooter', payload => { //reicht unteren zwei Fälle?
         if (footerList.includes(payload) === true) {
-            console.log("Fall eins")
             var footerPos = footerList.indexOf(payload);
             footerStatus = footerList[footerPos + 1];
             if (footerStatus === 'Component went offline!') {
