@@ -1,5 +1,5 @@
-import LaserCtrl from '../UI/CtrlUnits/LaserCtrl';
 import Window from '../UI/experimentUI/Window';
+import Lens from '../UI/ComponentDescription/Decription_Lens';
 
 const Laser = (props) => {
 
@@ -10,13 +10,13 @@ const Laser = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
-      height='200px'
-      width='250px'
+      height='220px'
+      width='300px'
+      footer={'empty'}
+      topper={'none'}
     >
-      <LaserCtrl
-        component={props.controlId}
-        top='0'
-        left='0'
+      <Lens
+        height='200px'
       />
     </Window>
   )

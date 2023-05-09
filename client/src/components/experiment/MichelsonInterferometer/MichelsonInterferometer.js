@@ -3,7 +3,7 @@ import ESPCam from "../../assembly/ESPCamStream";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import Beamsplitter from "../../assembly/BeamSplitter";
-
+import Lens from "../../assembly/Lens";
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
   var zero = "0"
@@ -96,6 +96,17 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topHighMiddle}
           left={leftLeft}
+        />
+      )}
+
+      {/* Lens */}
+      {props.selected.has('lens') && (
+        <Lens
+          title="Lens"
+          controlId={'lens'}
+          footer={footer}
+          top={600}
+          left={1100}
         />
       )}
     </div>
