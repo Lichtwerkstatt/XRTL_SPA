@@ -1,4 +1,3 @@
-import InfoWindow from '../../windows/InfoWindow'
 import ESPCam from './Description_ESPCam'
 import KM100 from './Description_KM100'
 import Laser from './Description_Laser'

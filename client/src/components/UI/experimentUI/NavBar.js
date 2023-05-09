@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
 import { GiLaserWarning } from 'react-icons/gi'
-import { ImConnection, ImEnter, ImExit } from 'react-icons/im'
+import { ImEnter, ImExit } from 'react-icons/im'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
 import { BsCamera } from 'react-icons/bs'
