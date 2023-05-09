@@ -67,7 +67,7 @@ function Model({ ...props }) {
               props.toggleSelect("beamSplitter");
             }}
           >
-            {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="Simple Plate Beam Splitter" />}
+            {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Retractable Beam Splitter" description="Simple Plate Beam Splitter" />}
 
             <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
               <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
@@ -358,7 +358,7 @@ function Model({ ...props }) {
             props.toggleSelect("screen");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[-0.37, 1.36, -1.22]} title="Screen" description="Screen with Interference Pattern" />}
+          {props.showTags && <DescriptiveTag position={[-0.37, 1.36, -1.22]} title="Screen" description="Polystyrene Viewing Screen" />}
           <mesh
             name="PlaneMesh"
             castShadow
