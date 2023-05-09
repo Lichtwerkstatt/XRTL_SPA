@@ -1,4 +1,4 @@
-import { MdOutlineScreenRotation, MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
+import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
@@ -157,13 +157,13 @@ const NavBar = () => {
                             {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />}
                             Connection
                         </MenuItem>
-                        <MenuItem onClick={() => {
+                        {/*                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleAutoRotate()
                         }} disableRipple>
                             <MdOutlineScreenRotation size={26} />
                             Rotation
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowTags();
@@ -173,14 +173,14 @@ const NavBar = () => {
                         </MenuItem>
                         <MenuItem onClick={() => {
                             closeMobileVersion();
-                            appCtx.toggleCam();
+                            appCtx.toggleShowManualWindow();
                         }} disableRipple>
                             <MdOutlineMenuBook size={26} />
                             Manual
                         </MenuItem>
                         <MenuItem onClick={() => {
                             closeMobileVersion();
-                            appCtx.toggleShowHelpWindow();
+                            appCtx.toggleCam();
                         }} disableRipple>
                             <BsCamera size={26} />
                             Cam
