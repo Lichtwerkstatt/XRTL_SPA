@@ -40,6 +40,12 @@ div.popupInner button {
     left: 74%;
 }
 
+div.Construction{
+    position: relative;
+    width: 100%;
+    top: -300px;
+    color:rgb(238, 255, 0) ;
+}
 
 /* Width */
 @media (min-width:0px) and  (max-width:576px) {

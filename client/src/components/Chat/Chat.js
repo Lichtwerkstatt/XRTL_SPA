@@ -1,4 +1,5 @@
 import { useSocketContext } from '../../services/SocketContext';
+import { useAppContext } from '../../services/AppContext';
 import { theme } from '../../components/UI/templates/Theme';
 import { useEffect, useState, memo } from 'react'
 import styles from './CSS/Chat.module.css'
@@ -9,9 +10,11 @@ import { ThemeProvider, InputAdornment, IconButton, FormControl, InputLabel, Out
 const Chat = () => {
   const [showChat, setShowChat] = useState(false);
   const [animation, setAnimation] = useState('');
-  const [message, setMessage] = useState('');
+  var [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
+
   const socketCtx = useSocketContext();
+  const appCtx = useAppContext();
 
   useEffect(() => {
     const message = (payload) => {
@@ -27,7 +30,28 @@ const Chat = () => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-    socketCtx.socket.emit('message', { userId: socketCtx.username, message: message, color: socketCtx.fontColor });
+    if (message.at(0) === '!') {
+
+      // console.log('message', message)
+
+      if (message === '!rotate' || message === '!r') {
+        appCtx.toggleAutoRotate();
+      } else if (message === '!constructiom' || message === '!c') {
+        appCtx.toggleunderConstruction();
+      }
+      else if (message === '!user' || message === '!u') {
+        // socketCtx.socket.emit ('updateUser') 
+      }
+      else if (message === '!reset') {
+        // socketCtx.socket.emit ('updateUser') 
+      }
+      else if (message === '!showcase' || message === '!s') {
+        // socketCtx.socket.emit ('updateUser') 
+      }
+
+    } else {
+      socketCtx.socket.emit('message', { userId: socketCtx.username, message: message, color: socketCtx.fontColor });
+    }
     setMessage('');
   }
 

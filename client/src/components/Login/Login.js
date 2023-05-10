@@ -1,10 +1,11 @@
-import { TextField, ThemeProvider, Button, IconButton } from '@mui/material';
+import { TextField, ThemeProvider, Button, IconButton, Stack } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import { themeLogin } from '../../components/UI/templates/Theme';
 import { useSocketContext } from '../../services/SocketContext';
 import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
+import { MdConstruction } from 'react-icons/md';
 import styles from './Login.module.css'
 import { isEqual } from 'lodash';
 
@@ -37,6 +38,7 @@ const Login = (props) => {
             <ThemeProvider theme={themeLogin}>
                 <div className={styles.popupWindow}>
                 </div>
+
                 <div className={styles.popupInner} >
                     <h3 title='settings'>Login</h3>
                     <div className={styles.close}>
@@ -64,7 +66,15 @@ const Login = (props) => {
                         endIcon={<SendIcon />}
                         style={{ width: '22%', height: '17%', marginBottom: '10%' }}
                     >Login</Button>
-
+                    {appCtx.underConstruction ?
+                        <div className={styles.Construction}>
+                            <Stack direction="row" spacing={2}>
+                                <MdConstruction size={100} color={'white'} />
+                                <h1 >Currently under construction! </h1>
+                            </Stack>
+                            <text>This can cause some things not to work as they should</text>
+                        </div> :
+                        <div />}
                 </div>
             </ThemeProvider>
         );

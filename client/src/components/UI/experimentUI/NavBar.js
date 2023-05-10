@@ -1,10 +1,10 @@
-import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useSocketContext } from '../../../services/SocketContext'
-import { useAppContext } from '../../../services/AppContext'
-import { GiLaserWarning } from 'react-icons/gi'
+import { useSocketContext } from '../../../services/SocketContext';
+import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
+import { useAppContext } from '../../../services/AppContext';
 import { ImEnter, ImExit } from 'react-icons/im'
+import { GiLaserWarning } from 'react-icons/gi'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
 import { BsCamera } from 'react-icons/bs'
