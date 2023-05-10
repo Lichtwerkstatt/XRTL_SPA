@@ -10,7 +10,7 @@ div.window {
 }
 
 div.windowHeader {
-  padding-left: 5px;
+  padding-left: 2%;
   padding-top: 5px;
   position: relative;
   width: 100%;
@@ -50,6 +50,18 @@ div.windowFooter span {
 div.windowFooter label {
   margin-top: 5px;
   font-size: 18px;
+}
+
+.icon {
+  position: relative;
+  top: -5px;
+
+}
+
+.iconClose {
+  position: relative;
+  top: -3px;
+
 }
 
 @media (min-width:0px) and (max-width:576px) {

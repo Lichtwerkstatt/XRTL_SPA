@@ -1,5 +1,6 @@
 import { IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5' //IoReloadOutline
-import { MdOutlineUpdate, MdOutlineCircle } from 'react-icons/md';
+import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
+import { ImSection } from 'react-icons/im';
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
@@ -148,20 +149,18 @@ const Window = (props) => {
           {/* <span onClick={handleReset} > <IoReloadOutline size={20} />        </span> */}
           <p>
 
-
             {props.topper ?
 
-              <span onClick={handleInformation} >
-                <MdOutlineCircle size={30} color={(props.topper === 'none') ? '#01bd7d' : '#FFFFFF'} />
+              <span onClick={handleInformation}>
+                <ImSection className={styles.icon} size={24} color={(props.topper === 'none') ? '#01bd7d' : '#FFFFFF'} />
               </span>
               :
               <span onClick={handleInformation} >
-                <IoInformationCircleOutline size={30} />
+                <IoInformationCircleOutline className={styles.iconClose} size={30} />
               </span>
             }
 
-
-            <span onClick={handleCloseWindow}><IoCloseCircleOutline size={30} /></span>
+            <span onClick={handleCloseWindow}><IoCloseCircleOutline className={styles.iconClose} size={30} /></span>
           </p>
         </div>
         {info ?

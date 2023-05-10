@@ -7,7 +7,7 @@ const InfoWindow = (props) => {
 
     return (
         <Window
-            header="Top view of experiment"
+            header="Top View of Experiment"
             top="200"
             left="250"
             title="Cam_1"
