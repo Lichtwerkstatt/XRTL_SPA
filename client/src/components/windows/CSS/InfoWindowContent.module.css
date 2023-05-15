@@ -11,12 +11,11 @@ div .mainWrapper {
   div .mainWrapper {
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-width: normal;   
+    scrollbar-width: normal;
     height: 100%;
     column-count: 1;
     padding: 15px 15px 0px 15px;
     background-repeat: no-repeat;
-
     background-attachment: scroll;
   }
 }

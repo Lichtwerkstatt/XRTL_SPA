@@ -45,9 +45,11 @@ export function SocketContextProvider({ children }) {
       appCtx.toogleLastComp();
     }
 
-    if (appCtx.lastClosedComponent === 'Cam_1') {
-      socket.emit('watcher disconnect');
+    if (appCtx.lastClosedComponent === 'overview') {
+      socket.emit("leave stream room", { controlId: 'overview', userId: username });
       appCtx.toogleLastComp();
+     /*  socket.emit('watcher disconnect');
+      appCtx.toogleLastComp(); */
     }
 
     return (() => {

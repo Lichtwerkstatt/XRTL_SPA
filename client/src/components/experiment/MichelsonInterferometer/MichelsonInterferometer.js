@@ -81,7 +81,6 @@ const MichelsonInterferometer = (props) => {
         <ESPCam
           title="Screen"
           controlId={'screen'}
-          LED={'led_screen'}
           footer={footer}
           top={topHighMiddle}
           left={leftLeft}
@@ -93,7 +92,6 @@ const MichelsonInterferometer = (props) => {
         <Beamsplitter
           title="Beamsplitter"
           controlId={'beamSplitter'}
-          LED={'led_screen'}
           footer={footer}
           top={topHighMiddle}
           left={leftLeft}

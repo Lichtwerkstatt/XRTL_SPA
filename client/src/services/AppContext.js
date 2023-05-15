@@ -73,7 +73,7 @@ export function AppContextProvider({ children }) {
 
   const toggleCam = () => {
     setShowCam(!showCam);
-    toggleSelectedComp('Cam_1')
+    toggleSelectedComp('overview')
   }
 
   const smallSettings = () => {
