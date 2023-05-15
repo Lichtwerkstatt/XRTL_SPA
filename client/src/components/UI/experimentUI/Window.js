@@ -59,7 +59,7 @@ const Window = (props) => {
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
 
-    if (props.id === "Cam_1") {
+    if (props.id === "overview") {
       appCtx.toggleCam();
     }
 

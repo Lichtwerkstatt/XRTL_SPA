@@ -1,9 +1,7 @@
-import Settings from '../UI/CtrlUnits/Settings';
+import Settings from '../UI/CtrlUnits/Settings2';
 import Window from '../UI/experimentUI/Window';
-import { useAppContext } from '../../services/AppContext';
 
 const CamWindow = (props) => {
-    const appCtx = useAppContext();
     var width = window.innerWidth
     var height = 0;
 
@@ -19,15 +17,10 @@ const CamWindow = (props) => {
         width = '650px'
         height = '430px'
     } else {
-        width = '1000px'
+        width = '700px'
         height = '430px'
     }
 
-    if (appCtx.smallSetting && width === '1000px') {
-        width = '1000px'
-    } else if (!appCtx.smallSetting && width === '1000px') {
-        width = '700px'
-    }
 
     return (
         <Window
@@ -38,6 +31,8 @@ const CamWindow = (props) => {
             componentList={['overview']}
             width={width}
             height={height}
+            footer={'empty'}
+            topper={'none'}
         >
             <Settings
                 component={'overview'}
