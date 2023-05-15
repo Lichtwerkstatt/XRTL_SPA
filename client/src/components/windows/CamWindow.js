@@ -1,47 +1,49 @@
-import Window from "../UI/experimentUI/Window";
-import ViewCam from "../Chat/ViewCamStream";
+import Settings from '../UI/CtrlUnits/Settings';
+import Window from '../UI/experimentUI/Window';
+import { useAppContext } from '../../services/AppContext';
 
-const InfoWindow = (props) => {
-    const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] } //stun:stun.stunprotocol.org
-    var peerConnection = new RTCPeerConnection(config);
+const CamWindow = (props) => {
+    const appCtx = useAppContext();
     var width = window.innerWidth
     var height = 0;
 
     if (0 < width && width < 576) {
-        width = '370px'
-        height = '278px'
+        width = '350px'
+        height = '260px'
     }
     else if (576 < width && width < 768) {
-        width = '500px'
-        height = '375px'
+        width = '510px'
+        height = '340px'
     }
     else if (768 < width && width < 1000) {
-        width = '600px'
-        height = '450px'
+        width = '650px'
+        height = '430px'
     } else {
-        width = '750px'
-        height = '563px'
+        width = '1000px'
+        height = '430px'
     }
 
+    if (appCtx.smallSetting && width === '1000px') {
+        width = '1000px'
+    } else if (!appCtx.smallSetting && width === '1000px') {
+        width = '700px'
+    }
 
     return (
         <Window
-            header="Top View of Experiment"
-            top="200"
-            left="250"
-            title="Cam_1"
-            id="Cam_1"
+            header={'Top View of Experiment'}
+            top={'200'}
+            left={'250'}
+            id={'overview'}
+            componentList={['overview']}
             width={width}
             height={height}
-            footer={'empty'}
-            topper={'none'}
         >
-            <ViewCam
-                title="Cam_1"
-                component="Cam_1"
-                peer={peerConnection}
+            <Settings
+                component={'overview'}
+                width={width}
             />
         </Window>
     );
 };
-export default InfoWindow;
+export default CamWindow;
