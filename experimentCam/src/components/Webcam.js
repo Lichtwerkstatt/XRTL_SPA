@@ -6,7 +6,7 @@ const Webcam = () => {
         sub: 'webcam',
         component: 'component',
         iat: Date.now(),
-        exp: Date.now() + 1800000,
+        exp: Date.now() + 180000000,
     }
     var token = jwt.sign(payload, "keysecret");
     const io = require("socket.io-client");
@@ -16,14 +16,14 @@ const Webcam = () => {
 
     useEffect(() => {
         const webcamEmit = async () => {
-            const socket = io.connect("http://10.232.37.41:3000", { auth: { token: token }, autoConnect: true }); 
+            const socket = io.connect("https://xrtl.uni-jena.de", { auth: { token: token }, autoConnect: true });
             const contraints = { audio: false, video: { facingMode: "user", width: 640, height: 480 }, };
             const config = { iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }] }
             const stream = await navigator.mediaDevices.getUserMedia(contraints);
 
-            if(socket.connected){
+            if (socket.connected) {
                 document.getElementById('background').style.background = '#b6d7a8'
-            }else{
+            } else {
                 document.getElementById('background').style.background = '#ea9999'
             }
 
