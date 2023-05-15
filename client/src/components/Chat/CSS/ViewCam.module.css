@@ -1,0 +1,17 @@
+div .mainWrapper {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 15px
+        /* background-position: bottom right;
+    background-size: 80% auto;
+    background-repeat: no-repeat; */
+
+}
+
+div .mainWrapper video {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
