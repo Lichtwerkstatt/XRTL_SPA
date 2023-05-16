@@ -26,7 +26,7 @@ const CamWindow = (props) => {
         <Window
             header={'Top View of Experiment'}
             top={'200'}
-            left={'250'}
+            left={'650'}
             id={'overview'}
             componentList={['overview']}
             width={width}

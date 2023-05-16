@@ -67,7 +67,7 @@ function Model({ ...props }) {
               props.toggleSelect("beamSplitter");
             }}
           >
-            {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Retractable Beam Splitter" description="Simple Plate Beam Splitter" />}
+            {props.showTags && <DescriptiveTag position={[0, 0.6, 0]} title="Retractable Beam Splitter" description="Simple Plate Beam Splitter" />}
 
             <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
               <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
@@ -137,7 +137,7 @@ function Model({ ...props }) {
                 props.toggleSelect("beamSplitter");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="Simple Plate Beam Splitter" />}
+              {props.showTags && <DescriptiveTag position={[0, 0.6, 0]} title="Retractable Beam Splitter" description="Simple Plate Beam Splitter" />}
 
               <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
                 <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
@@ -220,7 +220,7 @@ function Model({ ...props }) {
                 props.toggleSelect("beamSplitter");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Selectable Beam Splitter" description="Simple Plate Beam Splitter" />}
+              {props.showTags && <DescriptiveTag position={[0, 0.6, 0]} title="Retractable Beam Splitter" description="Simple Plate Beam Splitter" />}
 
               <mesh name="Thorlabs_Servo_Mount_Loose_V1_Stand" geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand.geometry} material={materials['BlackParts.001']} position={[-0.01, 0, -0.01]} rotation={[0, Math.PI / 4, 0]} scale={0.01}>
                 <mesh name="Cylinder002_1" geometry={nodes.Cylinder002_1.geometry} material={materials['ShinyParts.001']} />
@@ -284,7 +284,7 @@ function Model({ ...props }) {
             props.toggleSelect("KM100_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[-0.53, 1.17, 0.94]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
+          {props.showTags && <DescriptiveTag position={[-0.53, 0.9, 0.94]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
           <mesh
             name="SideMirrorMesh"
             castShadow
@@ -321,7 +321,7 @@ function Model({ ...props }) {
             props.toggleSelect("linear_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[-1.71, 1.17, -0.12]} title="Linear Movable Mirror" description="SM1ZP/M Translation Mount" />}
+          {props.showTags && <DescriptiveTag position={[-1.71, 0.9, -0.12]} title="Linear Movable Mirror" description="SM1ZP/M Translation Mount" />}
           <mesh
             name="TranslateMirrorMesh"
             castShadow
@@ -358,7 +358,7 @@ function Model({ ...props }) {
             props.toggleSelect("screen");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[-0.37, 1.36, -1.22]} title="Screen" description="Polystyrene Viewing Screen" />}
+          {props.showTags && <DescriptiveTag position={[-0.37, 1.5, -1.3]} title="Screen" description="Polystyrene Viewing Screen" />}
           <mesh
             name="PlaneMesh"
             castShadow
@@ -404,7 +404,7 @@ function Model({ ...props }) {
             props.toggleSelect("lens");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0.6, 1.5, -0.1]} title="Lens" description="Bi-Convex 50mm Focal Length" />}
+          {props.showTags && <DescriptiveTag position={[0.7, 0.9, -0.1]} title="Lens" description="Bi-Convex 50mm Focal Length" />}
 
           <mesh
             name="LensMesh001"
@@ -436,7 +436,7 @@ function Model({ ...props }) {
             props.toggleSelect("bscube");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[-0.5, 1.5, -0.1]} title="Beam Splitter" description="50:50 Cube Beam Splitter" />}
+          {props.showTags && <DescriptiveTag position={[-0.55, 0.9, -0.13]} title="Beam Splitter" description="50:50 Cube Beam Splitter" />}
           <mesh
             name="BeamSplitterMesh001"
             castShadow
@@ -467,7 +467,7 @@ function Model({ ...props }) {
             props.toggleSelect("greenlaser_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[1.56, 1.17, 0.14]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
+          {props.showTags && <DescriptiveTag position={[1.7, 0.9, -0.12]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
           <mesh
             name="LaserMesh"
             castShadow
@@ -501,7 +501,7 @@ function Model({ ...props }) {
             props.toggleSelect("greenlaserPower_1")
           }}
         >
-          {props.showTags && <DescriptiveTag position={[1.61, 0.75, -0.9]} title="Power Supply" description="5V Laser Power Supply" />}
+          {props.showTags && <DescriptiveTag position={[2.0, 0.5, -1.1]} title="Power Supply" description="5V Laser Power Supply" />}
           {props.selected.has("greenlaserPower_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (

@@ -83,7 +83,7 @@ const MichelsonInterferometer = (props) => {
           controlId={'screen'}
           footer={footer}
           top={topHighMiddle}
-          left={leftLeft}
+          left={'500'}
         />
       )}
 
@@ -93,8 +93,8 @@ const MichelsonInterferometer = (props) => {
           title="Beamsplitter"
           controlId={'beamSplitter'}
           footer={footer}
-          top={topHighMiddle}
-          left={leftLeft}
+          top={100}
+          left={1000}
         />
       )}
 
@@ -116,8 +116,8 @@ const MichelsonInterferometer = (props) => {
           title="Cube Beam Splitter"
           controlId={'bscube'}
           footer={footer}
-          top={600}
-          left={1100}
+          top={100}
+          left={600}
         />
       )}
     </div>

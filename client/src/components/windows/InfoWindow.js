@@ -7,25 +7,25 @@ const InfoWindow = (props) => {
 
     if (0 < width && width < 576) {
         width = '350px'
-        height = '545px'
+        height = '570px'
     }
     else if (576 < width && width < 768) {
         width = '600px'
-        height = '480px'
+        height = '517px'
     }
     else if (768 < width && width < 1000) {
         width = '600px'
-        height = '510px'
+        height = '517px'
     } else {
         width = '600px'
-        height = '500px'
+        height = '517px'
     }
 
     return (
         <Window
             header="About XR TwinLab"
             id='info'
-            top="250"
+            top="200"
             left="200"
             width={width}
             height={height}

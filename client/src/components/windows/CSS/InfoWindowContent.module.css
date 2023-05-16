@@ -3,7 +3,7 @@ div .mainWrapper {
   column-count: 2;
   padding: 15px 15px 0px 15px;
   background-position: bottom right;
-  background-size: 80% auto;
+  background-size: 100% auto;
   background-repeat: no-repeat;
 }
 
@@ -11,12 +11,8 @@ div .mainWrapper {
   div .mainWrapper {
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-width: normal;
-    height: 100%;
+    height: 97%;
     column-count: 1;
-    padding: 15px 15px 0px 15px;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
   }
 }
 
@@ -24,9 +20,5 @@ div .mainWrapper {
   div .mainWrapper {
     height: 500px;
     column-count: 2;
-    padding: 15px 15px 0px 15px;
-    background-position: bottom right;
-    background-size: 80% auto;
-    background-repeat: no-repeat;
   }
 }
