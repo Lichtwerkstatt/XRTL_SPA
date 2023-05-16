@@ -55,7 +55,7 @@ const RotaryCtrl = (props) => {
       });
 
       socketCtx.socket.emit('footer', {
-        status: 'Used by: ' + socketCtx.username.substring(0,17),
+        status: 'Used by: ' + socketCtx.username.substring(0, 17),
         controlId: props.component
       });
 
@@ -69,7 +69,9 @@ const RotaryCtrl = (props) => {
   };
 
   const changeRotationHandler = (event) => {
-    setEnteredRotation(event.target.value);
+    if (event.target.value > -1) {
+      setEnteredRotation(event.target.value);
+    }
   };
 
   return (
