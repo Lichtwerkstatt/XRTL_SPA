@@ -13,6 +13,7 @@ const Settings = (props) => {
 
         if (props.width === '700px') {
             document.getElementById('Canvas').style.left = '-340px'
+            document.getElementById('Canvas').style.transform = 'rotate(180deg)'
         }
 
         const status = (payload) => {

@@ -67,7 +67,7 @@ div.windowFooter label {
 @media (min-width:0px) and (max-width:576px) {
   .window {
     position: absolute;
-    top: 25% !important;
+    top: 30% !important;
     left: 5% !important;
   }
 
@@ -76,7 +76,7 @@ div.windowFooter label {
 @media (min-width:576px) and (max-width:768px) {
   .window {
     position: absolute;
-    top: 15% !important;
+    top: 20% !important;
     left: 7% !important;
 
   }
@@ -85,8 +85,8 @@ div.windowFooter label {
 @media (min-width:768px) and (max-width:992px) {
   .window {
     position: absolute;
-    top: 15% !important;
-    left: 7% !important;
+    top: 20% !important;
+    left: 20% !important;
 
   }
 }
