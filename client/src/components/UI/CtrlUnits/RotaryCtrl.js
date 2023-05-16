@@ -69,7 +69,9 @@ const RotaryCtrl = (props) => {
   };
 
   const changeRotationHandler = (event) => {
-    setEnteredRotation(event.target.value);
+       if (event.target.value > -1) {
+      setEnteredRotation(event.target.value);
+    }
   };
 
   return (
