@@ -14,7 +14,7 @@ const ESPCamSettings = (props) => {
                 <Select title='Resolution' component={props.component} online={props.online} option='frameSize' selectValue={props.frameSize}/>
                 <Switch component={props.component} switchStatus={props.switchIsOn} online={props.online} start='Color' end='Gray' option='gray' />
                 <Slider title='Contrast' component={props.component} online={props.online} sliderValue={props.contrast} min={-2} max={2} option='contrast' />
-                <Slider title='Exposure' component={props.component} online={props.online} sliderValue={props.exposure} min={0} max={500} option='exposure' />
+                <Slider title='Exposure' component={props.component} online={props.online} sliderValue={props.exposure} min={0} max={1200} option='exposure' />
             </div>
         </ThemeProvider>
     )
