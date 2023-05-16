@@ -58,19 +58,22 @@ const NavBar = () => {
                 <h1>XR TwinLab</h1>
                 <div className={styles.navMenuLaser}>
                     <h3>Overlay:</h3>
+                    <Tooltip title='Beam path'>
+                        <IconButton onClick={handleLaserBeam} variant="contained" sx={{
+                            borderRadius: 1,
+                            height: '33px',
+                            width: '30px',
+                            color: 'black',
+                            ':hover': {
+                                bgcolor: 'darkgreen',
+                                color: '#00ffa8',
+                            },
+                        }}>
 
-                    <IconButton onClick={handleLaserBeam} variant="contained" sx={{
-                        borderRadius: 1,
-                        height: '33px',
-                        width: '30px',
-                        color: 'black',
-                        ':hover': {
-                            bgcolor: 'darkgreen',
-                            color: '#00ffa8',
-                        },
-                    }}>
-                        <GiLaserWarning />
-                    </IconButton>
+                            <GiLaserWarning />
+
+                        </IconButton>
+                    </Tooltip>
 
                     <Menu
                         id="demo-customized-menu"
@@ -99,7 +102,7 @@ const NavBar = () => {
                 </div>
                 <div className={styles.navMenu}>
                     <ul>
-                        <Tooltip title='Connnection'>
+                        <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
@@ -111,7 +114,7 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Webcam'>
+                        <Tooltip title='Cam'>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
@@ -120,7 +123,7 @@ const NavBar = () => {
                         </Tooltip>
 
 
-                        <Tooltip title='Information'>
+                        <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
 
@@ -154,8 +157,8 @@ const NavBar = () => {
                             closeMobileVersion();
                             (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
                         }} disableRipple>
-                            {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />}
-                            Connection
+                            {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
+                            {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
                         {/*                         <MenuItem onClick={() => {
                             closeMobileVersion();
@@ -168,28 +171,28 @@ const NavBar = () => {
                             closeMobileVersion();
                             appCtx.toggleShowTags();
                         }} disableRipple>
-                            <FaTags size={25} />
-                            Tags
+                            <FaTags size={25} style={{ paddingRight: '20px' }} />
+                            Labels
                         </MenuItem>
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowManualWindow();
                         }} disableRipple>
-                            <MdOutlineMenuBook size={26} />
+                            <MdOutlineMenuBook size={26} style={{ paddingRight: '20px' }} />
                             Manual
                         </MenuItem>
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleCam();
                         }} disableRipple>
-                            <BsCamera size={26} />
+                            <BsCamera size={26} style={{ paddingRight: '20px' }} />
                             Cam
                         </MenuItem>
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowInfoWindow();
                         }} disableRipple>
-                            <MdInfoOutline size={26} />
+                            <MdInfoOutline size={26} style={{ paddingRight: '20px' }} />
                             Info
                         </MenuItem>
 

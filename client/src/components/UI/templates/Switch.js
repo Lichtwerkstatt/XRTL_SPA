@@ -18,7 +18,7 @@ const SwiitchCtrl = (props) => {
             userId: socketCtx.username,
             controlId: props.component,
             [props.option]: newValue,
-
+            color: socketCtx.fontColor,
         })
 
         socketCtx.socket.emit("footer", {
