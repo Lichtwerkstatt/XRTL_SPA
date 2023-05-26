@@ -9,8 +9,8 @@ const BsCube = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
-      height='220px'
-      width='300px'
+      height='240px'
+      width='250px'
       footer={'empty'}
       topper={'none'}
     >

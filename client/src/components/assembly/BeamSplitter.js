@@ -10,7 +10,7 @@ const BeamSplitter = (props) => {
             header={props.title}
             top={props.top}
             left={props.left}
-            height='200px'
+            height='240px'
             width='250px'
         >
             <BeamSplitterCtrl
