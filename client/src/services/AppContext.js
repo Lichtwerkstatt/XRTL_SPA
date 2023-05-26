@@ -12,7 +12,7 @@ export function AppContextProvider({ children }) {
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
-  const [showWelcomeWindow, setShowWelcome] = useState(false);
+  const [showWelcomeWindow, setShowWelcome] = useState(true);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [showBeam, setShowBeam] = useState('off');
