@@ -58,7 +58,7 @@ const NavBar = () => {
                 <h1>XR TwinLab</h1>
                 <div className={styles.navMenuLaser}>
                     <h3>Overlay:</h3>
-                    <Tooltip title='Beam path'>
+                    <Tooltip title='Beam Path'>
                         <IconButton onClick={handleLaserBeam} variant="contained" sx={{
                             borderRadius: 1,
                             height: '33px',
@@ -95,7 +95,7 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             closeLaserBeam();
                             appCtx.toggleShowBeam('split');
-                        }} disableRipple>Beamsplitter</MenuItem>
+                        }} disableRipple>On (with Beamsplitter)</MenuItem>
                     </Menu>
 
 
