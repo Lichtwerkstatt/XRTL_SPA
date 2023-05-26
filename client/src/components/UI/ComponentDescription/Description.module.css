@@ -1,6 +1,4 @@
 div .mainWrapper {
-  scrollbar-width: normal;
   padding: 0px 5px 5px 7px;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }

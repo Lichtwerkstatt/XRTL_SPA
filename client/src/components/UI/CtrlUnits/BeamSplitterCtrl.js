@@ -40,7 +40,7 @@ const BeamSplitterCtrl = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ mx: 1 }}>
+            <Box sx={{ px: 1, pl: 2, pt: 2 }}>
                 <Switch component={props.component} switchStatus={switchStatus} online={onlineStatus} start='Off' end='On' option='binaryCtrl' />
             </Box>
         </ThemeProvider>

@@ -34,7 +34,7 @@ const SwiitchCtrl = (props) => {
     }
 
     return (
-        <Box sx={{ width: 250, m: 2 }}>
+        <Box >
             <FormGroup>
                 <Stack direction="row" spacing={1} alignItems="center">
                     <Typography>{props.start}</Typography>
