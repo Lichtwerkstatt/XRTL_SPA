@@ -9,14 +9,14 @@ const WelcomeWindowContent = (props) => {
   const [buttonValue, setButtonValue] = useState(0)
 
   const handleButtonNext = (event) => {
-    setButtonValue(buttonValue + 1);
+    setButtonValue((buttonValue) => buttonValue + 1);
 
     document.getElementById(String(buttonValue)).style.display = 'none'
     document.getElementById(String(buttonValue + 1)).style.display = 'block'
   }
 
   const handleButtonBack = (event) => {
-    setButtonValue(buttonValue - 1);
+    setButtonValue((buttonValue) => buttonValue - 1);
 
     document.getElementById(String(buttonValue)).style.display = 'none'
     document.getElementById(String(buttonValue - 1)).style.display = 'block'
