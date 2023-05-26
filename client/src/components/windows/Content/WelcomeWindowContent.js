@@ -56,7 +56,7 @@ const WelcomeWindowContent = (props) => {
             <Button size='small' type='submit' variant='contained'
               onClick={handleButtonNext}
               endIcon={<KeyboardArrowRightOutlinedIcon />}
-              style={{ left: '80%' }}
+              style={props.width == '350px' ? { left: 260 } : { left: '80%' }}
             >Next</Button>
             :
             <div></div>}
@@ -66,7 +66,7 @@ const WelcomeWindowContent = (props) => {
             <Button size='small' type='submit' variant='contained'
               onClick={handleButtonBack}
               startIcon={<KeyboardArrowLeftOutlinedIcon />}
-              style={{ left: '5%' }}
+              style={props.width == '350px' ? { left: 17 } : { left: '5%' }}
             >Back</Button>
             :
             <div></div>}
@@ -75,7 +75,7 @@ const WelcomeWindowContent = (props) => {
             <Button size='small' type='submit' variant='contained'
               onClick={handleButtonNext}
               endIcon={<KeyboardArrowRightOutlinedIcon />}
-              style={{ left: '65.5%' }}
+              style={props.width == '350px' ? { left: 185.5 } : { left: '65.5%' }}
             >Next</Button>
             :
             <div></div>}

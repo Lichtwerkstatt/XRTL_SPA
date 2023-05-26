@@ -32,7 +32,7 @@ const WelcomeWindow = (props) => {
             footer={'empty'}
             topper={'none'}
         >
-            <WelcomeWindowContent />
+            <WelcomeWindowContent width={width} />
         </Window>
     );
 };
