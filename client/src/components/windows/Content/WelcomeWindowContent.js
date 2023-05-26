@@ -6,7 +6,6 @@ import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeft
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 const WelcomeWindowContent = (props) => {
-
   const [buttonValue, setButtonValue] = useState(0)
 
   const handleButtonNext = (event) => {
@@ -14,7 +13,6 @@ const WelcomeWindowContent = (props) => {
 
     document.getElementById(String(buttonValue)).style.display = 'none'
     document.getElementById(String(buttonValue + 1)).style.display = 'block'
-
   }
 
   const handleButtonBack = (event) => {
@@ -22,12 +20,9 @@ const WelcomeWindowContent = (props) => {
 
     document.getElementById(String(buttonValue)).style.display = 'none'
     document.getElementById(String(buttonValue - 1)).style.display = 'block'
-
   }
 
 
-  // document.getElementById('1').style.display = 'none'
-  // document.getElementById('2').style.display = 'none' 
   return (
     <ThemeProvider theme={themeLogin}>
       <div>
@@ -56,35 +51,35 @@ const WelcomeWindowContent = (props) => {
 
         </div>
 
-        {buttonValue === 0 ?
-          <Button size='small' type='submit' variant='contained'
-            onClick={handleButtonNext}
-            endIcon={<KeyboardArrowRightOutlinedIcon />}
-            style={{ width: '22%', height: '17%', marginTop: '5%', left: '70%' }}
-          >Next</Button>
-          :
-          <div></div>}
+        <div className={styles.buttons} >
+          {buttonValue === 0 ?
+            <Button size='small' type='submit' variant='contained'
+              onClick={handleButtonNext}
+              endIcon={<KeyboardArrowRightOutlinedIcon />}
+              style={{ left: '80%' }}
+            >Next</Button>
+            :
+            <div></div>}
 
 
-        {buttonValue !== 0 ?
-          <Button size='small' type='submit' variant='contained'
-            onClick={handleButtonBack}
-            startIcon={<KeyboardArrowLeftOutlinedIcon />}
-            style={{ width: '22%', height: '17%', marginTop: '5%', left: '5%' }}
-          >Back</Button>
-          :
-          <div></div>}
+          {buttonValue !== 0 ?
+            <Button size='small' type='submit' variant='contained'
+              onClick={handleButtonBack}
+              startIcon={<KeyboardArrowLeftOutlinedIcon />}
+              style={{ left: '5%' }}
+            >Back</Button>
+            :
+            <div></div>}
 
-        {buttonValue !== 0 && buttonValue !== 2 ?
-          <Button size='small' type='submit' variant='contained'
-            onClick={handleButtonNext}
-            endIcon={<KeyboardArrowRightOutlinedIcon />}
-            style={{ width: '22%', height: '17%', marginTop: '5%', left: '50%' }}
-          >Next</Button>
-          :
-          <div></div>}
-
-
+          {buttonValue !== 0 && buttonValue !== 2 ?
+            <Button size='small' type='submit' variant='contained'
+              onClick={handleButtonNext}
+              endIcon={<KeyboardArrowRightOutlinedIcon />}
+              style={{ left: '65.5%' }}
+            >Next</Button>
+            :
+            <div></div>}
+        </div>
       </div>
     </ThemeProvider>
   )
