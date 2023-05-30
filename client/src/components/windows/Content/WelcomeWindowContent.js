@@ -1,34 +1,13 @@
 import styles from "../CSS/WelcomeWindowContent.module.css"
-import { ThemeProvider, Button } from '@mui/material';
-import { themeLogin } from '../../UI/templates/Theme'
-import { useState } from "react";
-import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
-import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import { themeLogin } from '../../UI/templates/Theme';
+import Stepper from "../../UI/templates/Stepper";
+import { ThemeProvider } from '@mui/material';
 
 const WelcomeWindowContent = (props) => {
-  const [buttonValue, setButtonValue] = useState(0)
-
-  const handleButtonNext = (event) => {
-    setButtonValue((buttonValue) => buttonValue + 1);
-
-    document.getElementById(String(buttonValue)).style.display = 'none'
-    document.getElementById(String(buttonValue + 1)).style.display = 'block'
-  }
-
-  const handleButtonBack = (event) => {
-    setButtonValue((buttonValue) => buttonValue - 1);
-
-    document.getElementById(String(buttonValue)).style.display = 'none'
-    document.getElementById(String(buttonValue - 1)).style.display = 'block'
-  }
-
-
   return (
     <ThemeProvider theme={themeLogin}>
       <div>
-
         <div className={styles.mainWrapper} >
-
           <p id={'0'}>
             Welcome to XRTL website, where you can remotely control a simple Michelson interferometer and observe the interference pattern. Whether you're a student, researcher, or enthusiast, our
             user-friendly platform enables you to explore the fascinating world of optics and interferometry at your own pace. With real-time access to our experimental setup, you can adjust the paths and
@@ -47,39 +26,10 @@ const WelcomeWindowContent = (props) => {
             beginner, you can experiment and explore the physics of interferometry in any way you choose, either by playing around with the components or by following our detailed manual for a more
             structured approach. We encourage you to discover the fascinating world of optics and interferometry.
           </p>
-
-
         </div>
 
-        <div className={styles.buttons} >
-          {buttonValue === 0 ?
-            <Button size='small' type='submit' variant='contained'
-              onClick={handleButtonNext}
-              endIcon={<KeyboardArrowRightOutlinedIcon />}
-              style={props.width === '350px' ? { left: 260 } : { left: '80%' }}
-            >Next</Button>
-            :
-            <div></div>}
+        <Stepper left={'Back'} right={'Next'} buttonValue={0} length={3} />
 
-
-          {buttonValue !== 0 ?
-            <Button size='small' type='submit' variant='contained'
-              onClick={handleButtonBack}
-              startIcon={<KeyboardArrowLeftOutlinedIcon />}
-              style={props.width === '350px' ? { left: 17 } : { left: '5%' }}
-            >Back</Button>
-            :
-            <div></div>}
-
-          {buttonValue !== 0 && buttonValue !== 2 ?
-            <Button size='small' type='submit' variant='contained'
-              onClick={handleButtonNext}
-              endIcon={<KeyboardArrowRightOutlinedIcon />}
-              style={props.width === '350px' ? { left: 185.5 } : { left: '65.5%' }}
-            >Next</Button>
-            :
-            <div></div>}
-        </div>
       </div>
     </ThemeProvider>
   )
