@@ -1,7 +1,4 @@
 import { useSocketContext } from '../../../services/SocketContext';
-import { ThemeProvider } from '@mui/material/styles';
-import styles from '../CSS/Settings.module.css'
-import { theme } from '../templates/Theme.js';
 import { useEffect } from 'react';
 
 const Settings = (props) => {
@@ -10,10 +7,9 @@ const Settings = (props) => {
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
+        var height = Number(props.height.slice(0, -2))
+        var width = Number(props.width.slice(0, -2))
 
-        if (props.width === '700px') {
-            document.getElementById('Canvas').style.left = '-340px'
-        }
         document.getElementById('Canvas').style.transform = 'rotate(180deg)'
 
         const status = (payload) => {
@@ -38,10 +34,9 @@ const Settings = (props) => {
                     ctx = canvas.getContext('2d');
                     x1 = 0;
                     y1 = 0;
-                    x2 = 600;
-                    y2 = 400;
+                    x2 = width;
+                    y2 = height;
                     ctx.drawImage(this, x1, y1, x2, y2);
-
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
             }
@@ -73,15 +68,7 @@ const Settings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ThemeProvider theme={theme}>
-            <div className={styles.Settings}>
-
-                <div className={styles.Canvas}>
-                    <canvas id='Canvas' width={'600px'} height={'400px'} />
-                </div>
-
-            </div>
-        </ThemeProvider>
+        <canvas id='Canvas' width={props.width} height={props.height} style={{ borderRadius: '5px', backgroundSize: 'cover' }} />
     )
 }
 export default Settings;

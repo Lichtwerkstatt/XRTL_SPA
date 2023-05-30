@@ -12,13 +12,9 @@ const CamWindow = (props) => {
     else if (576 < width && width < 768) {
         width = '510px'
         height = '340px'
-    }
-    else if (768 < width && width < 1000) {
-        width = '650px'
-        height = '430px'
     } else {
-        width = '700px'
-        height = '430px'
+        width = '600px'
+        height = '400px'
     }
 
 
@@ -37,6 +33,7 @@ const CamWindow = (props) => {
             <Settings
                 component={'overview'}
                 width={width}
+                height={height}
             />
         </Window>
     );

@@ -22,7 +22,7 @@ const Settings = (props) => {
         setSettings(!settings);
         appCtx.smallSettings()
         if (appCtx.smallSetting) {
-            document.getElementById('ScreenCanvas').style.left = '-340px'
+            document.getElementById('ScreenCanvas').style.left = '-325px'
         } else {
             document.getElementById('ScreenCanvas').style.left = '-655px'
         }
@@ -32,8 +32,8 @@ const Settings = (props) => {
         var x1, x2, y1, y2;
         var ctx;
 
-        if (props.width === '700px') {
-            document.getElementById('ScreenCanvas').style.left = '-340px'
+        if (props.width === '670px') {
+            document.getElementById('ScreenCanvas').style.left = '-325px'
         }
 
         const status = (payload) => {

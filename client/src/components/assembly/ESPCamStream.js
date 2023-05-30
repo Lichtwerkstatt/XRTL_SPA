@@ -26,7 +26,7 @@ const ESPCamStream = (props) => {
   if (appCtx.smallSetting && width === '1000px') {
     width = '1000px'
   } else if(!appCtx.smallSetting && width === '1000px') {
-    width = '700px'
+    width = '670px'
   }
 
   return (
