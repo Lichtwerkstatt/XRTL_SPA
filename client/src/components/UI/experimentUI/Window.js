@@ -1,4 +1,4 @@
-import { IoInformationCircleOutline, IoCloseCircleOutline } from 'react-icons/io5' //IoReloadOutline
+import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline } from 'react-icons/io5' //IoReloadOutline
 import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
 import { ImSection } from 'react-icons/im';
 import { useSocketContext } from '../../../services/SocketContext';
@@ -12,6 +12,7 @@ import { isEqual } from 'lodash';
 import { useState } from 'react';
 import DescriptionHandler from '../ComponentDescription/DescriptionHandler'
 
+
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [alertType, setAlertType] = useState('info');
@@ -23,9 +24,23 @@ const Window = (props) => {
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
+  const [topper, setTopper] = useState('')
+
+  const renderOption = {
+    para: <ImSection className={styles.icon} size={24} />,
+    info: <IoInformationCircleOutline className={styles.iconClose} size={30} />,
+    setting: <IoSettingsOutline className={styles.icon} size={25} />,
+    none: <div />,
+  }
+
   useEffect(() => {
-    if (props.footer) {
-      setFooter('empty');
+    if (props.topper === 'none') {
+      setTopper('none')
+    } else if (props.topper === 'para') {
+      setTopper('para')
+    } else if (props.topper === undefined) {
+      console.log("hallo?")
+      setTopper('info')
     }
 
     const Footer = (payload) => {
@@ -75,28 +90,18 @@ const Window = (props) => {
       appCtx.toggleShowManualWindow();
     }
   }
-  /* 
-    const handleReset = () => {
-      socketCtx.socket.emit('command', {
-        userId: socketCtx.username,
-        controlId: props.componentList[0],
-        reset: true
-      })
-  
-      if (props.componentList[1]) {
-        socketCtx.socket.emit('command', {
-          userId: socketCtx.username,
-          controlId: props.componentList[1],
-          reset: true
-        })
-      }
-    } */
 
   const handleInformation = () => {
     setInfo(!info)
 
     if (props.id === 'screen' && appCtx.smallSetting === true) {
       appCtx.smallSettings()
+    }
+
+    if (props.id === 'info') {
+      topper === 'para' ? setTopper('info') : setTopper('para');
+    } else {
+      topper === 'info' ? setTopper('setting') : setTopper('info')
     }
   }
 
@@ -146,20 +151,11 @@ const Window = (props) => {
           >
             {props.header}
           </span>
-          {/* <span onClick={handleReset} > <IoReloadOutline size={20} />        </span> */}
+
           <p>
-
-            {props.topper ?
-
-              <span onClick={handleInformation}>
-                <ImSection className={styles.icon} size={24} color={(props.topper === 'none') ? '#01bd7d' : '#FFFFFF'} />
-              </span>
-              :
-              <span onClick={handleInformation} >
-                <IoInformationCircleOutline className={styles.iconClose} size={30} />
-              </span>
-            }
-
+            <span onClick={handleInformation}>
+              {renderOption[topper]}
+            </span>
             <span onClick={handleCloseWindow}><IoCloseCircleOutline className={styles.iconClose} size={30} /></span>
           </p>
         </div>
@@ -181,18 +177,21 @@ const Window = (props) => {
             style={{
               height: props.height,
               width: props.width,
-
             }}
           >
             <DescriptionHandler height={props.height} component={props.id} />
           </div>
         }
-        {footer !== 'empty' && (
+
+        {props.footer !== 'empty' ?
           <div className={styles.windowFooter}>
             <span onClick={handleInfo}> <MdOutlineUpdate size={25} /></span>
             <label>{footer}</label>
           </div>
-        )}
+          :
+          <div />
+        }
+
         <div className={styles.windowInfo}>
         </div>
       </div>
