@@ -3,6 +3,7 @@ import bgTeam from "../../media/images/xrtl_team.png"
 
 const InfoWindowContent = (props) => {
   return (
+    
     <div className={styles.mainWrapper}
       style={{ backgroundImage: "url(\"" + bgTeam + "\")" }}
     >
@@ -13,7 +14,9 @@ const InfoWindowContent = (props) => {
       <p>
         Best! Clara, Fabian, Falko, Jari and Johannes
       </p>
+
     </div>
+
   )
 }
 export default InfoWindowContent;
