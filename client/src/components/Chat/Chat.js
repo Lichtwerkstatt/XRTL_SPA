@@ -18,6 +18,7 @@ const Chat = () => {
 
   useEffect(() => {
     const message = (payload) => {
+      console.log(payload)
       setChat([...chat, payload]);
     }
 
@@ -36,15 +37,27 @@ const Chat = () => {
 
       if (message === '!rotate' || message === '!r') {
         appCtx.toggleAutoRotate();
-        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Rotation command was sent ...', color: '#FF7373' });
+        setChat([...chat, { userId: 'XRTL', message: 'HRotation command was sent ... ', color: '#FF7373' }]);
       } else if (message === '!constructiom' || message === '!c') {
         appCtx.toggleunderConstruction();
       }
       else if (message === '!user' || message === '!u') {
-        //  socketCtx.socket.emit('updateUser')
+
+        socketCtx.socket.emit('updateUser')
+
+        socketCtx.socket.on('updateUser', (payload) => {
+          console.log(payload)
+          var user = ''
+          for (var i = 2; i < payload.length; i += 3) {
+            user += payload[i] + ','
+          }
+          user = user.slice(0, -1)
+          setChat([...chat, { userId: 'XRTL', message: 'List of all the active user/s: ' + user, color: '#FF7373' }]);
+        })
       }
       else if (message === '!reset') {
-        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Reset command was emited ...', color: '#FF7373' });
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Attention the reset command was emited!', color: '#FF7373' });
+
         const controlIds = ['KM100_top_1', 'KM100_bottom_1', 'linear_1', 'greenlaser_top_1', 'greenlaser_bottom_1', 'beamSplitter']
 
         for (var i = 0; i < controlIds.length; i++) {
@@ -58,7 +71,7 @@ const Chat = () => {
       else if (message === '!showcase' || message === '!s') {
         // socketCtx.socket.emit ('updateUser') 
       } else {
-        socketCtx.socket.emit('message', { userId: 'XRTL', message: "Command doesn't exists!", color: '#FF7373' });
+        setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
       }
 
     } else {

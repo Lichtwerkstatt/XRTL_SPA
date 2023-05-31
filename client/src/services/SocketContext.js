@@ -48,8 +48,8 @@ export function SocketContextProvider({ children }) {
     if (appCtx.lastClosedComponent === 'overview') {
       socket.emit("leave stream room", { controlId: 'overview', userId: username });
       appCtx.toogleLastComp();
-     /*  socket.emit('watcher disconnect');
-      appCtx.toogleLastComp(); */
+      /*  socket.emit('watcher disconnect');
+       appCtx.toogleLastComp(); */
     }
 
     return (() => {
@@ -93,7 +93,7 @@ export function SocketContextProvider({ children }) {
       socket.auth = { token: token }
       //secure: true, rejectUnauthorized: false}
       socket.connect();
-
+      socket.emit('userId', username)
       setConnected(true)
       appCtx.addLog("Client connected by choice.")
     } else {

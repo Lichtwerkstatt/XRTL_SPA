@@ -308,6 +308,7 @@ io.on('connection', socket => {
     })
 
     socket.on('updateUser', () => {
+        io.emit('updateUser', userIDServerList);
         socket.to(GUIId).emit('updateUser', userIDServerList)
     })
 
