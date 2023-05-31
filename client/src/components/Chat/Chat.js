@@ -36,17 +36,29 @@ const Chat = () => {
 
       if (message === '!rotate' || message === '!r') {
         appCtx.toggleAutoRotate();
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Rotation command was sent ...', color: '#FF7373' });
       } else if (message === '!constructiom' || message === '!c') {
         appCtx.toggleunderConstruction();
       }
       else if (message === '!user' || message === '!u') {
-        // socketCtx.socket.emit ('updateUser') 
+        //  socketCtx.socket.emit('updateUser')
       }
       else if (message === '!reset') {
-        // socketCtx.socket.emit ('updateUser') 
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Reset command was emited ...', color: '#FF7373' });
+        const controlIds = ['KM100_top_1', 'KM100_bottom_1', 'linear_1', 'greenlaser_top_1', 'greenlaser_bottom_1', 'beamSplitter']
+
+        for (var i = 0; i < controlIds.length; i++) {
+          socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: controlIds[i],
+            reset: true
+          })
+        }
       }
       else if (message === '!showcase' || message === '!s') {
         // socketCtx.socket.emit ('updateUser') 
+      } else {
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: "Command doesn't exists!", color: '#FF7373' });
       }
 
     } else {
