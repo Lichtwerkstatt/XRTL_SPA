@@ -7,7 +7,7 @@ const InfoWindow = (props) => {
 
     if (0 < width && width < 576) {
         width = '350px'
-        height = '570px'
+        height = '650px'
     }
     else if (576 < width && width < 768) {
         width = '600px'

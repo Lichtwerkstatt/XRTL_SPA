@@ -12,7 +12,6 @@ import { isEqual } from 'lodash';
 import { useState } from 'react';
 import DescriptionHandler from '../ComponentDescription/DescriptionHandler'
 
-
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [alertType, setAlertType] = useState('info');
@@ -29,8 +28,8 @@ const Window = (props) => {
   const renderOption = {
     para: <ImSection className={styles.icon} size={24} />,
     info: <IoInformationCircleOutline className={styles.iconClose} size={30} />,
-    setting: <IoSettingsOutline className={styles.icon} size={25} />,
-    none: <div />,
+    setting: <IoSettingsOutline className={styles.iconClose} size={30} />,
+    none: <IoSettingsOutline className={styles.icon} size={25} color={'#01bd7d'} />,
   }
 
   useEffect(() => {
@@ -39,7 +38,6 @@ const Window = (props) => {
     } else if (props.topper === 'para') {
       setTopper('para')
     } else if (props.topper === undefined) {
-      console.log("hallo?")
       setTopper('info')
     }
 
