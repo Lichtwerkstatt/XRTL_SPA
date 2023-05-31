@@ -70,7 +70,17 @@ const Chat = () => {
       }
       else if (message === '!showcase' || message === '!s') {
         // socketCtx.socket.emit ('updateUser') 
-      } else {
+      }
+      else if (message === '!cam') {
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          frameSize: 10
+        })
+
+        setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
+      }
+      else {
         setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
       }
 
