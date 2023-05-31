@@ -15,7 +15,7 @@ buttonValue... indicates the beginning of the Ids of the paragraphs of the text
  */
 const Stepper = (props) => {
     const theme = useTheme();
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(1);
     const [buttonValue, setButtonValue] = useState(props.buttonValue)
 
     const handleNext = () => {
@@ -37,12 +37,12 @@ const Stepper = (props) => {
     return (
         <MobileStepper
             variant="progress"
-            steps={props.length}
+            steps={props.length + 1}
             position="static"
             activeStep={activeStep}
             sx={{ width: '97%', flexGrow: 1, top: '90%', position: 'absolute', background: 'transparent' }}
             nextButton={
-                <Button size="small" onClick={handleNext} disabled={activeStep === props.length - 1}>
+                <Button size="small" onClick={handleNext} disabled={activeStep === props.length}>
                     {props.right}
                     {theme.direction === 'rtl' ? (
                         <KeyboardArrowLeft />
@@ -52,7 +52,7 @@ const Stepper = (props) => {
                 </Button>
             }
             backButton={
-                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                <Button size="small" onClick={handleBack} disabled={activeStep === 1}>
                     {theme.direction === 'rtl' ? (
                         <KeyboardArrowRight />
                     ) : (
