@@ -18,7 +18,6 @@ const Chat = () => {
 
   useEffect(() => {
     const message = (payload) => {
-      console.log(payload)
       setChat([...chat, payload]);
     }
 
@@ -46,7 +45,7 @@ const Chat = () => {
         socketCtx.socket.emit('updateUser')
 
         socketCtx.socket.on('updateUser', (payload) => {
-          console.log(payload)
+          //console.log(payload)
           var user = ''
           for (var i = 2; i < payload.length; i += 3) {
             user += payload[i] + ','
