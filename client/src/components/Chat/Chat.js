@@ -41,7 +41,7 @@ const Chat = () => {
       } else if (message === '!constructiom' || message === '!c') {
         appCtx.toggleunderConstruction();
       }
-      else if (message === '!user' || message === '!u') {
+      else if (message === '!user' || message === '!users') {
 
         socketCtx.socket.emit('updateUser')
 
