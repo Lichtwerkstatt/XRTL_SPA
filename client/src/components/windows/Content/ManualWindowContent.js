@@ -3,6 +3,7 @@ import Stepper from "../../UI/templates/Stepper";
 import { theme } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/';
 
+
 const ManualWindowContent = (props) => {
   return (
     <div>
@@ -12,7 +13,9 @@ const ManualWindowContent = (props) => {
           <ul>
             <li>Welcome to our remote-controlled <b>Michelson&nbsp;Interferometer</b>! Today, we'll explore various physical effects and phenomena. Remember, this manual serves as a guide, and users can follow their own exploration path based on their interests and objectives. Enjoy your journey through the fascinating world of Michelson interferometry!
             </li><br/>
-            <li>Discover who is currently engaged in experimentation with you at the <b>XRTL&nbsp;Showcase</b>. Simply type <i>"!users"</i> in the chat (pinned on the left edge) to unveil the answer. You can communicate with them via the chat.
+            {/* <li>Discover who is currently engaged in experimentation with you at the <b>XRTL&nbsp;Showcase</b>. Simply type <i>"!users"</i> in the chat (pinned on the left edge) to unveil the answer. You can communicate with them via the chat.
+            </li> */}
+            <li>Discover who is currently engaged in experimentation with you at the <b>XRTL&nbsp;Showcase</b>. You can simply communicate with them via the chat (pinned on the left edge).
             </li>
           </ul>
         </p>
