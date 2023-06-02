@@ -34,6 +34,8 @@ const Settings = (props) => {
 
         if (props.width === '670px') {
             document.getElementById('ScreenCanvas').style.left = '-325px'
+        } else {
+            document.getElementById('ScreenCanvas').style.left = '-655px'
         }
 
         const status = (payload) => {
