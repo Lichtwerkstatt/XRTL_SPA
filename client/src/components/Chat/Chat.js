@@ -77,6 +77,20 @@ const Chat = () => {
           frameSize: 10
         })
 
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          exposure: 800,
+          color: socketCtx.fontColor,
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          contrast: 1,
+          color: socketCtx.fontColor,
+        })
+
         setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
       }
       else {
