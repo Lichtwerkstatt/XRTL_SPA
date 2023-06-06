@@ -25,7 +25,7 @@ const SliderCtrl = (props) => {
     })
 
     socketCtx.socket.emit("footer", {
-      status: "Last change by: " + socketCtx.username,
+      status: 'Used by: ' + socketCtx.username.substring(0, 17),
       controlId: props.component
     })
 
@@ -34,7 +34,7 @@ const SliderCtrl = (props) => {
 
   if (props.text) {
     return (
-      <Box sx={{ width: 300, m: 2 }}>
+      <Box sx={{ width: 250, m: 2 }}>
         <Typography id="input-slider" gutterBottom>
           {props.title}
         </Typography>
@@ -42,7 +42,7 @@ const SliderCtrl = (props) => {
           <Slider aria-label="Temperature"
             id="brightnessSlider"
             valueLabelDisplay="auto"
-            step={90}
+            step={1}
             min={props.min}
             max={props.max}
             value={props.sliderValue}

@@ -21,19 +21,25 @@ const Settings = (props) => {
     const hiddenSetting = () => {
         setSettings(!settings);
         appCtx.smallSettings()
-        if (appCtx.smallSetting) {
-            document.getElementById('ScreenCanvas').style.left = '-340px'
-        } else {
-            document.getElementById('ScreenCanvas').style.left = '-655px'
+
+        if (props.width === '670px' || props.width === '1000px') {
+            if (appCtx.smallSetting) {
+                document.getElementById('ScreenCanvas').style.left = '-325px'
+            } else {
+                document.getElementById('ScreenCanvas').style.left = '-655px'
+            }
         }
     }
 
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
-
-        if (props.width === '700px') {
-            document.getElementById('ScreenCanvas').style.left = '-340px'
+        if (props.width === '670px' || props.width === '1000px') {
+            if (props.width === '670px') {
+                document.getElementById('ScreenCanvas').style.left = '-325px'
+            } else {
+                document.getElementById('ScreenCanvas').style.left = '-655px'
+            }
         }
 
         const status = (payload) => {
