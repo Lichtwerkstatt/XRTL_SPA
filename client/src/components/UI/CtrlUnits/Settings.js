@@ -119,7 +119,7 @@ const Settings = (props) => {
                 <div className={styles.Canvas}>
                     <canvas id='ScreenCanvas' width={'600px'} height={'400px'} />
                 </div>
-                {settings && <ESPCamSettings component={props.component} online={onlineStatus} constrast={contrast} exposure={exposure} switchIsOn={switchIsOn} frameSize={frameSize} />}
+                {settings && <ESPCamSettings component={props.component} online={onlineStatus} contrast={contrast} exposure={exposure} switchIsOn={switchIsOn} frameSize={frameSize} />}
             </div>
         </ThemeProvider>
     )
