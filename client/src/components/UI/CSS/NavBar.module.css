@@ -68,6 +68,10 @@
     color: #00ffa8
 }
 
+.navRow {
+    float: left;
+}
+
 .mobile {
     visibility: hidden;
 }
