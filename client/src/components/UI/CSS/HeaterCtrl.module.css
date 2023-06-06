@@ -1,4 +1,4 @@
-div.Temp Canvas{
+div.Temp Canvas {
     position: relative;
     width: 120px;
     height: 120px;
@@ -7,28 +7,29 @@ div.Temp Canvas{
     left: 40%;
     top: 10px
 }
-div.Temp button{
+
+div.Temp button {
     position: absolute;
-    left:92%;
+    left: 92%;
     top: 30px;
 }
 
-div.Temp h2{
+div.Temp h2 {
     position: absolute;
     width: 220px;
     height: 80px;
-    left:35%;
+    left: 35%;
     top: 60px;
     background-color: #01bd7d;
     border-radius: 15px;
     text-align: center;
 }
 
-div.Switch{
+div.Switch {
     position: relative;
-    top:130px;
+    top: 147px;
     left: 27%;
-    margin: 0 0 0 12px; 
+    margin: 0 0 0 12px;
     padding: 0;
 }
 
@@ -37,21 +38,56 @@ div.Canvas1 {
     width: 325px;
     height: 150px;
     top: 173px;
-    left: 1%;
+    left: 10px;
     border: 2px solid #01bd7d;
     border-radius: 15px;
- }
+}
 
- div.Canvas2 {
+div.Canvas2 {
     position: absolute;
     width: 295px;
-    height: 195px;
+    height: 185px;
     top: 173px;
     left: 53%;
     border: 2px solid #01bd7d;
     border-radius: 15px;
- }
+}
 
- div.Select{
+div.Select {
     padding-top: 30px;
- }
+}
+
+div.TempSmall Canvas {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background-color: #01bd7d;
+    border-radius: 15px;
+    left: 10%;
+    top: 10px
+}
+
+div.TempSmall button {
+    position: absolute;
+    left: 87%;
+    top: 30px;
+}
+
+div.TempSmall h2 {
+    position: absolute;
+    width: 220px;
+    height: 80px;
+    left: 18%;
+    top: 60px;
+    background-color: #01bd7d;
+    border-radius: 15px;
+    text-align: center;
+}
+
+div.SwitchTemp {
+    position: relative;
+    top: 147px;
+    left: 57%;
+    margin: 0 0 0 12px;
+    padding: 0;
+}

@@ -8,6 +8,7 @@ export function useAppContext() {
 
 export function AppContextProvider({ children }) {
   const [lastClosedComponent, setLastClosedComponent] = useState('');
+  const [smallSettingTemp, setSmallSettingTemp] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -72,13 +73,16 @@ export function AppContextProvider({ children }) {
   }
 
   const toggleChangeRotary = () => {
-
     setShowBeam(!showRotary);
   }
+
   const smallSettings = () => {
     setSmallSetting(!smallSetting)
   }
 
+  const smallSettingsTemp = () => {
+    setSmallSettingTemp(!smallSettingTemp)
+  }
   return (
     <AppContext.Provider
       value={{
@@ -108,7 +112,9 @@ export function AppContextProvider({ children }) {
         setShowRotary,
         toggleChangeRotary,
         smallSettings,
-        smallSetting
+        smallSetting,
+        smallSettingsTemp,
+        smallSettingTemp
       }}
     >
       {children}

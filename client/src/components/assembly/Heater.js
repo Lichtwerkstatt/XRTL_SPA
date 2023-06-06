@@ -1,7 +1,16 @@
 import HeaterCtrl from '../UI/CtrlUnits/HeaterCtrl';
 import Window from '../UI/experimentUI/Window';
+import { useAppContext } from '../../services/AppContext';
 
 const Heater = (props) => {
+    const appCtx = useAppContext();
+    var width = window.innerWidth
+
+    if (appCtx.smallSettingTemp) {
+        width = '673px'
+    } else if (!appCtx.smallSettingTemp) {
+        width = '350px'
+    }
 
     return (
         <Window
@@ -11,7 +20,7 @@ const Heater = (props) => {
             top={props.top}
             left={props.left}
             height='340px'
-            width='673px'
+            width={width}
         >
             <HeaterCtrl
                 component={props.controlIdHeater}
