@@ -56,6 +56,8 @@ const NavBar = () => {
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab</h1>
+
+                {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
                 <div className={styles.navMenuLaser}>
                     <h3>Overlay:</h3>
                     <Tooltip title='Beam Path'>
@@ -105,10 +107,6 @@ const NavBar = () => {
                         <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
-
-                        {/*   <Tooltip title='Rotation'>
-                            <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
-                        </Tooltip> */}
 
                         <Tooltip title='Labels'>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
@@ -160,13 +158,6 @@ const NavBar = () => {
                             {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
                             {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
-                        {/*                         <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            appCtx.toggleAutoRotate()
-                        }} disableRipple>
-                            <MdOutlineScreenRotation size={26} />
-                            Rotation
-                        </MenuItem> */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowTags();

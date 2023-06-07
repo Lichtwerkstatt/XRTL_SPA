@@ -23,11 +23,18 @@ const ExperimentUILayer = () => {
       socketCtx.setNewFont(color);
       setConnection(true);
     }
+
+    const underConstruction = (payload) => {
+      appCtx.toggleunderConstruction(payload);
+    }
+
     socketCtx.socket.on('AuthFailed', () => {
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
     })
 
     socketCtx.socket.on('Auth', auth);
+
+    socketCtx.socket.on('underConstruction', underConstruction)
 
     if (!connection) {
       popupCtx.toggleShowPopUp('No server connection!', 'error');
@@ -35,7 +42,9 @@ const ExperimentUILayer = () => {
     }
 
     return () => {
+      socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
       socketCtx.socket.removeAllListeners('Auth', auth)
+
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps

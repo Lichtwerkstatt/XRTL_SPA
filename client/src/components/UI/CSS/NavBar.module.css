@@ -16,6 +16,14 @@
     margin-left: 20px;
 }
 
+.navbar h2 {
+    display: inline-block;
+    color: #c33535;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 30px;
+}
 
 .navMenu {
     position: absolute;

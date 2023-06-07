@@ -12,6 +12,7 @@ const io = require('socket.io')(server, {
 var pw = fs.readFileSync("", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
+var underConstruction = false;
 var userIDServerList = [];
 var componentList = [];
 var broadcaster = [];
@@ -66,11 +67,13 @@ io.on('connection', socket => {
         console.log('Supervisor connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', '#FFFFF');
+        socket.emit('underConstruction', underConstruction);
     }
     else if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);
+        socket.emit('underConstruction', underConstruction);
 
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
@@ -114,9 +117,10 @@ io.on('connection', socket => {
         exp = Date.now() + 300000;
     });
 
-    socket.on('LED', payload => {
-        socket.broadcast.emit('LED', payload);
-        console.log('LED received: ', payload);
+    socket.on('underConstruction', payload => {
+        underConstruction = payload;
+        socket.broadcast.emit('underConstruction', underConstruction);
+        console.log('underConstruction is now set on: ', payload);
     });
 
 

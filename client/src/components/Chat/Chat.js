@@ -36,9 +36,11 @@ const Chat = () => {
 
       if (message === '!rotate' || message === '!r') {
         appCtx.toggleAutoRotate();
-        setChat([...chat, { userId: 'XRTL', message: 'HRotation command was sent ... ', color: '#FF7373' }]);
+        setChat([...chat, { userId: 'XRTL', message: 'Rotation command was sent ... ', color: '#FF7373' }]);
       } else if (message === '!constructiom' || message === '!c') {
-        appCtx.toggleunderConstruction();
+        appCtx.toggleunderConstruction(!appCtx.underConstruction);
+        socketCtx.socket.emit('underConstruction', !appCtx.underConstruction)
+        setChat([...chat, { userId: 'XRTL', message: 'Under construction is now set to ' + !appCtx.underConstruction, color: '#FF7373' }]);
       }
       else if (message === '!user' || message === '!users') {
 

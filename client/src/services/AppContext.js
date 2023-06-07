@@ -81,8 +81,8 @@ export function AppContextProvider({ children }) {
     setSmallSetting(!smallSetting)
   }
 
-  const toggleunderConstruction = () => {
-    setUnderConstruction(!underConstruction)
+  const toggleunderConstruction = (newVal) => {
+      setUnderConstruction(newVal)
   }
 
   const toggleSetManualPage = (newVal) => {
