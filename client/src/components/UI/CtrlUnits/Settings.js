@@ -1,6 +1,5 @@
-import { useSocketContext } from '../../../services/SocketContext';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { useAppContext } from '../../../services/AppContext';
+import { useSocketContext } from '../../../services/SocketContext';
 import ESPCamSettings from '../templates/ESPCamSettings';
 import { ThemeProvider } from '@mui/material/styles';
 import styles from '../CSS/Settings.module.css'
@@ -9,8 +8,6 @@ import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
 
 const Settings = (props) => {
-    const appCtx = useAppContext();
-    const [settings, setSettings] = useState(appCtx.smallSetting);
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [switchIsOn, setSwitchStatus] = useState(false);
     const [frameSize, setFrameSize] = useState(0);
@@ -19,27 +16,23 @@ const Settings = (props) => {
     const socketCtx = useSocketContext();
 
     const hiddenSetting = () => {
-        setSettings(!settings);
-        appCtx.smallSettings()
+        props.setSetting(!props.setting)
 
-        if (props.width === '670px' || props.width === '1000px') {
-            if (appCtx.smallSetting) {
-                document.getElementById('ScreenCanvas').style.left = '-325px'
-            } else {
-                document.getElementById('ScreenCanvas').style.left = '-655px'
-            }
+        if (props.setting) {
+            document.getElementById('ScreenCanvas').style.left = '-325px'
+        } else {
+            document.getElementById('ScreenCanvas').style.left = '-655px'
         }
     }
 
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
-        if (props.width === '670px' || props.width === '1000px') {
-            if (props.width === '670px') {
-                document.getElementById('ScreenCanvas').style.left = '-325px'
-            } else {
-                document.getElementById('ScreenCanvas').style.left = '-655px'
-            }
+
+        if (!props.setting && !props.mobile) {
+            document.getElementById('ScreenCanvas').style.left = '-325px'
+        } else if (!props.mobile) {
+            document.getElementById('ScreenCanvas').style.left = '-655px'
         }
 
         const status = (payload) => {
@@ -65,21 +58,13 @@ const Settings = (props) => {
                 var img = new Image();
                 img.onload = function () {
                     var canvas = document.getElementById('ScreenCanvas');
-                    if (canvas != null && settings) {
-                        ctx = canvas.getContext('2d');
-                        x1 = 0;
-                        y1 = 0;
-                        x2 = 600;
-                        y2 = 400;
-                        ctx.drawImage(this, x1, y1, x2, y2);
-                    } else {
-                        ctx = canvas.getContext('2d');
-                        x1 = 0;
-                        y1 = 0;
-                        x2 = 600;
-                        y2 = 400;
-                        ctx.drawImage(this, x1, y1, x2, y2);
-                    }
+
+                    ctx = canvas.getContext('2d');
+                    x1 = 0;
+                    y1 = 0;
+                    x2 = 600;
+                    y2 = 400;
+                    ctx.drawImage(this, x1, y1, x2, y2);
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
             }
@@ -119,7 +104,7 @@ const Settings = (props) => {
                 <div className={styles.Canvas}>
                     <canvas id='ScreenCanvas' width={'600px'} height={'400px'} />
                 </div>
-                {settings && <ESPCamSettings component={props.component} online={onlineStatus} contrast={contrast} exposure={exposure} switchIsOn={switchIsOn} frameSize={frameSize} />}
+                {props.setting && <ESPCamSettings component={props.component} online={onlineStatus} contrast={contrast} exposure={exposure} switchIsOn={switchIsOn} frameSize={frameSize} />}
             </div>
         </ThemeProvider>
     )

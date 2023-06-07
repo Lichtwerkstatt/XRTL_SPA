@@ -5,9 +5,12 @@ import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import Cube from "../../assembly/BsCube";
 import Lens from "../../assembly/Lens";
+import { useState } from "react";
+
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
   var zero = "0"
+  const [setting, setSetting] = useState(false)
 
   var height = window.innerHeight;
   var width = window.innerWidth;
@@ -84,6 +87,8 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topHighMiddle}
           left={'500'}
+          setting={setting}
+          setSetting= {setSetting}
         />
       )}
 

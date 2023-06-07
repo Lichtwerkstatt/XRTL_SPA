@@ -19,7 +19,6 @@ export function AppContextProvider({ children }) {
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
   const [logs, setLogs] = useState([]);
-  const [smallSetting, setSmallSetting] = useState(false);
   const [underConstruction, setUnderConstruction] = useState(false);
   const [manualPage, setManualPage] = useState(1);
 
@@ -77,12 +76,8 @@ export function AppContextProvider({ children }) {
     toggleSelectedComp('overview')
   }
 
-  const smallSettings = () => {
-    setSmallSetting(!smallSetting)
-  }
-
   const toggleunderConstruction = (newVal) => {
-      setUnderConstruction(newVal)
+    setUnderConstruction(newVal)
   }
 
   const toggleSetManualPage = (newVal) => {
@@ -115,8 +110,6 @@ export function AppContextProvider({ children }) {
         toogleLastComp,
         toggleShowManualWindow,
         showManualWindow,
-        smallSettings,
-        smallSetting,
         toggleShowWelcomeWindow,
         showWelcomeWindow,
         toggleunderConstruction,

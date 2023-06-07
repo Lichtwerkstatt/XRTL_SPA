@@ -1,11 +1,10 @@
 import Settings from '../UI/CtrlUnits/Settings';
 import Window from '../UI/experimentUI/Window';
-import { useAppContext } from '../../services/AppContext';
 
 const ESPCamStream = (props) => {
-  const appCtx = useAppContext();
   var width = window.innerWidth
   var height = 0;
+  var mobile = true;
 
   if (0 < width && width < 576) {
     width = '350px'
@@ -23,10 +22,12 @@ const ESPCamStream = (props) => {
     height = '430px'
   }
 
-  if (appCtx.smallSetting && width === '1000px') {
-    width = '1000px'
-  } else if(!appCtx.smallSetting && width === '1000px') {
-    width = '670px'
+  if (props.setting && width === '1000px') {
+    width = '1000px';
+    mobile = false
+  } else if (!props.setting && width === '1000px') {
+    width = '670px';
+    mobile = false;
   }
 
   return (
@@ -42,6 +43,9 @@ const ESPCamStream = (props) => {
       <Settings
         component={props.controlId}
         width={width}
+        setting={props.setting}
+        setSetting={props.setSetting}
+        mobile= {mobile}
       />
     </Window>
   );
