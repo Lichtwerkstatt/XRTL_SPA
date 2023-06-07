@@ -21,6 +21,7 @@ export function AppContextProvider({ children }) {
   const [logs, setLogs] = useState([]);
   const [smallSetting, setSmallSetting] = useState(false);
   const [underConstruction, setUnderConstruction] = useState(false);
+  const [manualPage, setManualPage] = useState(1);
 
   const toggleSelectedComp = compId => {
     if (!selectedComps.has(compId)) {
@@ -84,6 +85,10 @@ export function AppContextProvider({ children }) {
     setUnderConstruction(!underConstruction)
   }
 
+  const toggleSetManualPage = (newVal) => {
+    setManualPage(newVal)
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -114,8 +119,10 @@ export function AppContextProvider({ children }) {
         smallSetting,
         toggleShowWelcomeWindow,
         showWelcomeWindow,
-        toggleunderConstruction, 
-        underConstruction
+        toggleunderConstruction,
+        underConstruction,
+        toggleSetManualPage,
+        manualPage
       }}
     >
       {children}

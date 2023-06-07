@@ -4,7 +4,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import MobileStepper from '@mui/material/MobileStepper';
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppContext } from '../../../services/AppContext';
 
 /* props:    
 length... Specifies the length of the slider
@@ -15,8 +16,19 @@ buttonValue... indicates the beginning of the Ids of the paragraphs of the text
  */
 const Stepper = (props) => {
     const theme = useTheme();
-    const [activeStep, setActiveStep] = useState(1);
-    const [buttonValue, setButtonValue] = useState(props.buttonValue)
+    const appCtx = useAppContext();
+    const [activeStep, setActiveStep] = useState(1 === appCtx.manualPage ? 1 : appCtx.manualPage)
+    const [buttonValue, setButtonValue] = useState(1 === appCtx.manualPage ? props.buttonValue : appCtx.manualPage + props.buttonValue - 1)
+
+    useEffect(() => {
+        if (1 !== appCtx.manualPage) {
+            document.getElementById(String(props.buttonValue)).style.display = 'none'
+            document.getElementById(String(appCtx.manualPage + props.buttonValue - 1)).style.display = 'block'
+        }
+        //Comment needed to prevent a warning
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -24,6 +36,10 @@ const Stepper = (props) => {
 
         document.getElementById(String(buttonValue)).style.display = 'none'
         document.getElementById(String(buttonValue + 1)).style.display = 'block'
+
+        if (props.component) {
+            appCtx.toggleSetManualPage(activeStep + 1)
+        }
     };
 
     const handleBack = () => {
@@ -32,6 +48,10 @@ const Stepper = (props) => {
 
         document.getElementById(String(buttonValue)).style.display = 'none'
         document.getElementById(String(buttonValue - 1)).style.display = 'block'
+
+        if (props.component) {
+            appCtx.toggleSetManualPage(activeStep - 1)
+        }
     };
 
     return (
@@ -51,6 +71,7 @@ const Stepper = (props) => {
                     )}
                 </Button>
             }
+
             backButton={
                 <Button size="small" onClick={handleBack} disabled={activeStep === 1}>
                     {theme.direction === 'rtl' ? (
