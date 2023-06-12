@@ -41,7 +41,7 @@ const LaserCtrl = (props) => {
     <div className="switchOnOff" style={{ top: "0px", position: "relative", paddingTop: '0px' }}>
       <ThemeProvider theme={theme} >
         <Box sx={{ pl: 2, pt: 2 }}>
-          <Switch component={props.component} led={props.led} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
+          <Switch component={props.component} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
           <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
         </Box>
       </ThemeProvider>
