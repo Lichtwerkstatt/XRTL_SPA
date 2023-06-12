@@ -1,6 +1,7 @@
 const fs = require('fs');
 const app = require('express')();
 const jwt = require('jsonwebtoken');
+var nodemailer = require('nodemailer');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
@@ -9,7 +10,7 @@ const io = require('socket.io')(server, {
     }
 })
 
-var pw = fs.readFileSync("", 'utf8');
+//var pw = fs.readFileSync("", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -21,7 +22,35 @@ var online = false;
 var userIDs = [];
 var GUIId = '';
 const rand = Math.random().toString(16).substr(2, 8);
-console.log("Acesse Code: ", rand);
+console.log("Access Code: ", rand);
+
+//Untoggle the following comment if you want to send the access code from an e-mail address to a desired e-mail address
+//Do not forget to fill the empty strings with your data
+
+/* var transporter = nodemailer.createTransport({
+    host: "",
+    port: 587,
+    secure: false, // upgrade later with STARTTLS
+    auth: {
+        user: "",
+        pass: "",
+    },
+});
+
+var mailOptions = {
+    from: '',
+    to: '',
+    subject: 'Server restart ',
+    text: 'The server has been restarted and the new access code is:\t' + rand
+};
+
+transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent: ' + info.response);
+    }
+});
 
 const returnNumer = (string) => {
     var number = [];
@@ -38,7 +67,7 @@ const returnNumer = (string) => {
         a += number[i];
     }
     return a;
-}
+} */
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
