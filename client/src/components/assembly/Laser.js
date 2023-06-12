@@ -1,3 +1,4 @@
+import PS_Background from './media/PS_outline.png';
 import LaserCtrl from '../UI/CtrlUnits/LaserCtrl';
 import Window from '../UI/experimentUI/Window';
 
@@ -12,6 +13,8 @@ const Laser = (props) => {
       left={props.left}
       height='240px'
       width='250px'
+      background={PS_Background}
+
     >
       <LaserCtrl
         component={props.controlId}

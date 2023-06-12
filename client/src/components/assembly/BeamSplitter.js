@@ -1,3 +1,4 @@
+import BS_Background from './media/BS_outline.png';
 import BeamSplitterCtrl from '../UI/CtrlUnits/BeamSplitterCtrl';
 import Window from '../UI/experimentUI/Window';
 
@@ -12,6 +13,7 @@ const BeamSplitter = (props) => {
             left={props.left}
             height='240px'
             width='250px'
+            background={BS_Background}
         >
             <BeamSplitterCtrl
                 component={props.controlId}
