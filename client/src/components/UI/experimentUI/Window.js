@@ -129,8 +129,12 @@ const Window = (props) => {
     setAlert(alert);
     setAlertType('info');
     popupCtx.toggleShowPopUp(alert, alertType);
-    
-    socketCtx.socket.emit("command", {controlId: props.id, identify: 3000})
+
+    socketCtx.socket.emit("command", {
+      controlId: props.componentList[0],
+      identify: 3000,
+      color: socketCtx.fontColor,
+    })
   }
 
   return (
