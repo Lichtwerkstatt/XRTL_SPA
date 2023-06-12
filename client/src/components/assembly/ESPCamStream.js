@@ -45,7 +45,7 @@ const ESPCamStream = (props) => {
         width={width}
         setting={props.setting}
         setSetting={props.setSetting}
-        mobile= {mobile}
+        mobile={mobile}
       />
     </Window>
   );

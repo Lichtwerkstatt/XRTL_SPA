@@ -15,8 +15,6 @@ const Laser = (props) => {
     >
       <LaserCtrl
         component={props.controlId}
-        top='0'
-        left='0'
       />
     </Window>
   )
