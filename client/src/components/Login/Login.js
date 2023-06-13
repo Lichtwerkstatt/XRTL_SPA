@@ -6,7 +6,7 @@ import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
 import { MdConstruction } from 'react-icons/md';
-import styles from './Login.module.css'
+import styles from './CSS/Login.module.css'
 import { isEqual } from 'lodash';
 
 const Login = (props) => {

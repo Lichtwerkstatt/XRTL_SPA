@@ -1,5 +1,5 @@
-import Window from "../UI/experimentUI/Window";
 import WelcomeWindowContent from "./Content/WelcomeWindowContent";
+import Window from "../UI/experimentUI/Window";
 
 const WelcomeWindow = (props) => {
     var width = window.innerWidth

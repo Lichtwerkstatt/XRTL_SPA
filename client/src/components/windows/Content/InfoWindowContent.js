@@ -1,9 +1,9 @@
-import styles from "../CSS/InfoWindowContent.module.css"
-import bgTeam from "../../media/images/xrtl_team.png"
+import styles from "../CSS/InfoWindowContent.module.css";
+import bgTeam from "../../media/images/xrtl_team.png";
 
 const InfoWindowContent = (props) => {
   return (
-    
+
     <div className={styles.mainWrapper}
       style={{ backgroundImage: "url(\"" + bgTeam + "\")" }}
     >

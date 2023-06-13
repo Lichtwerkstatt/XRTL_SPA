@@ -1,5 +1,5 @@
-import Window from "../UI/experimentUI/Window";
 import InfoWindowContent from "./Content/InfoWindowContent";
+import Window from "../UI/experimentUI/Window";
 
 const InfoWindow = (props) => {
     var width = window.innerWidth
@@ -9,14 +9,7 @@ const InfoWindow = (props) => {
         width = '350px'
         height = '650px'
     }
-    else if (576 < width && width < 768) {
-        width = '600px'
-        height = '517px'
-    }
-    else if (768 < width && width < 992) {
-        width = '600px'
-        height = '517px'
-    } else {
+    else {
         width = '600px'
         height = '517px'
     }

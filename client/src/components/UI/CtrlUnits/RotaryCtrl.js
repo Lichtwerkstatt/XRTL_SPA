@@ -1,5 +1,5 @@
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from 'react-icons/md';
-import { useSocketContext } from '../../../services/SocketContext'
+import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
 import styles from '../CSS/RotaryCtrl.module.css';
 import { useState, useEffect } from 'react';

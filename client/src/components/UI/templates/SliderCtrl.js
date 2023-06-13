@@ -40,8 +40,6 @@ const SliderCtrl = (props) => {
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
-            id="brightnessSlider"
-
             valueLabelDisplay="auto"
             step={1}
             min={props.min}
@@ -62,8 +60,6 @@ const SliderCtrl = (props) => {
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
-            id="brightnessSlider"
-
             valueLabelDisplay="auto"
             step={1}
             min={props.min}
