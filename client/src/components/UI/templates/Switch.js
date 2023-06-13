@@ -36,7 +36,7 @@ const SwiitchCtrl = (props) => {
     return (
         <Box >
             <FormGroup>
-                <Stack direction="row" spacing={1} alignItems="center">
+                <Stack direction="row" alignItems="center" sx={{ ml: 2 }}>
                     <Typography>{props.start}</Typography>
                     <Switch checked={props.switchStatus}
                         onChange={handleSettingChanges}
