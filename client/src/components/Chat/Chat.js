@@ -28,7 +28,7 @@ const Chat = () => {
     }
   }, [socketCtx, chat])
 
-  const sendMessage = (event) => {
+  const sendMessage = async (event) => {
     event.preventDefault();
     if (message.at(0) === '!') {
 
@@ -70,7 +70,39 @@ const Chat = () => {
         }
       }
       else if (message === '!showcase' || message === '!s') {
-        // socketCtx.socket.emit ('updateUser') 
+        const showCase = async () => {
+          //Turning on the laser
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'greenlaser_1',
+            switch: true,
+            color: '#00ffa8'
+          })
+
+          //Adjustment of the linear stage by 200 steps in clockwise direction 
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'linear_1',
+            move: 200,
+            color: '#00ffa8'
+          })
+          //Waits 8 s
+
+          //this line guarantees that the following code is executed only after 8 s
+          //please note that some commands may take longer or less time to complete  
+          await new Promise(resolve => setTimeout(resolve, 8000));
+
+          //Adjustment of the linear stage by 200 steps counterclockwise 
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'linear_1',
+            move: -200,
+            color: '#00ffa8'
+          })
+        }
+
+        showCase()
+
       }
       else if (message === '!cam') {
         socketCtx.socket.emit("command", {

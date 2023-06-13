@@ -58,12 +58,6 @@ const RotaryCtrl = (props) => {
         status: 'Used by: ' + socketCtx.username.substring(0, 17),
         controlId: props.component
       });
-
-      /*  if (rotation > 5000 || rotation > -5000) {
-         appCtx.toggleChangeRotary();
-       } else {
-         appCtx.toggleChangeRotary();
-       } */
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };
