@@ -3,9 +3,11 @@ import { OrbitControls, Environment } from '@react-three/drei';
 import { useAppContext } from '../../../services/AppContext';
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
+import { useSocketContext } from '../../../services/SocketContext';
 
 const VirtualLayer = () => {
   const appCtx = useAppContext();
+  const socketCtx = useSocketContext();
 
   if (appCtx.showVirtualLayer) {
     return (
@@ -28,6 +30,7 @@ const VirtualLayer = () => {
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
             showBeam={appCtx.showBeam}
+            socket={socketCtx.socket}
           />
         </Suspense>
       </Canvas>
