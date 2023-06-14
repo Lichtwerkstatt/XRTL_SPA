@@ -71,6 +71,28 @@ const Chat = () => {
       }
       else if (message === '!showcase' || message === '!s') {
         const showCase = async () => {
+          //Establish the ground state =========================
+          //Turning off the laser
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'greenlaser_1',
+            switch: false,
+            color: '#00ffa8'
+          })
+
+          //Removes the retractable mirror
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'beamSplitter',
+            binaryCtrl: false,
+            color: '#00ffa8'
+          })
+
+          //this line guarantees that the following code is executed only after 8 s
+          //please note that some commands may take longer or less time to complete  
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          //Do awesome things ==================================
           //Turning on the laser
           socketCtx.socket.emit("command", {
             userId: 'XRTL',
@@ -79,6 +101,21 @@ const Chat = () => {
             color: '#00ffa8'
           })
 
+          //this line guarantees that the following code is executed only after 8 s
+          //please note that some commands may take longer or less time to complete  
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          //Adds the retractable mirror
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'beamSplitter',
+            binaryCtrl: true,
+            color: '#00ffa8'
+          })
+          //needs approx 1s
+
+          await new Promise(resolve => setTimeout(resolve, 2000));
+
           //Adjustment of the linear stage by 200 steps in clockwise direction 
           socketCtx.socket.emit("command", {
             userId: 'XRTL',
@@ -86,11 +123,53 @@ const Chat = () => {
             move: 200,
             color: '#00ffa8'
           })
-          //Waits 8 s
+          //needs approx 6s
+ 
+          await new Promise(resolve => setTimeout(resolve, 7000));
 
-          //this line guarantees that the following code is executed only after 8 s
-          //please note that some commands may take longer or less time to complete  
-          await new Promise(resolve => setTimeout(resolve, 8000));
+          //Adjustment of the reference mirror by 200 steps vertical tilting 
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'KM100_top_1',
+            move: 200,
+            color: '#00ffa8'
+          })
+          //needs approx 6s
+
+          await new Promise(resolve => setTimeout(resolve, 7000));
+
+          ////Adjustment of the reference mirror by -200 steps horizontal tilting
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'KM100_bottom_1',
+            move: -200,
+            color: '#00ffa8'
+          })
+          //needs approx 6s
+
+          await new Promise(resolve => setTimeout(resolve, 7000));
+
+          //Adjustment of the reference mirror by -200 steps vertical tilting 
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'KM100_top_1',
+            move: -200,
+            color: '#00ffa8'
+          })
+          //needs approx 6s
+          
+          await new Promise(resolve => setTimeout(resolve, 7000));
+
+          ////Adjustment of the reference mirror by -200 steps horizontal tilting
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'KM100_bottom_1',
+            move: 200,
+            color: '#00ffa8'
+          })
+          //needs approx 6s
+
+          await new Promise(resolve => setTimeout(resolve, 7000));
 
           //Adjustment of the linear stage by 200 steps counterclockwise 
           socketCtx.socket.emit("command", {
@@ -99,6 +178,19 @@ const Chat = () => {
             move: -200,
             color: '#00ffa8'
           })
+          //needs approx 6s
+
+          await new Promise(resolve => setTimeout(resolve, 7000));
+
+          //Establish a ground state ==========================
+          //Removes the retractable mirror
+          socketCtx.socket.emit("command", {
+            userId: 'XRTL',
+            controlId: 'beamSplitter',
+            binaryCtrl: false,
+            color: '#00ffa8'
+          })
+
         }
 
         showCase()
