@@ -34,24 +34,12 @@ const NavBar = () => {
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
 
-    const [laserBeam, setLaserBeam] = useState(null);
-    const openLaserBeam = Boolean(laserBeam)
-
-
     const handleClick = (event) => {
         setMobileVersion(event.currentTarget);
     };
 
-    const handleLaserBeam = (event) => {
-        setLaserBeam(event.currentTarget);
-    };
-
     const closeMobileVersion = () => {
         setMobileVersion(null);
-    };
-
-    const closeLaserBeam = () => {
-        setLaserBeam(null);
     };
 
     return (
