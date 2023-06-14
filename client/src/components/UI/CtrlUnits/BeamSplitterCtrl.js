@@ -46,6 +46,7 @@ const BeamSplitterCtrl = (props) => {
             controlId: props.whiteLED,
             getStatus: true
         })
+
         socketCtx.socket.on('status', status);
 
         socketCtx.socket.emit('getFooter', props.component)
@@ -57,6 +58,7 @@ const BeamSplitterCtrl = (props) => {
         //Comment needed to prevent a warning
         // eslint-disable-next-line react-hooks/exhaustive-deps      
     }, [socketCtx.socket]);
+    
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>

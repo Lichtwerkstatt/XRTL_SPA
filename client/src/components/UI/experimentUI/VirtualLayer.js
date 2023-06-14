@@ -1,11 +1,14 @@
 import MI_230201 from "../../experiment/MichelsonInterferometer/MI_230201";
+import { useSocketContext } from '../../../services/SocketContext';
 import { OrbitControls, Environment } from "@react-three/drei";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 
 const VirtualLayer = () => {
+  const socketCtx = useSocketContext();
   const appCtx = useAppContext();
+
 
   if (appCtx.showVirtualLayer) {
     return (
@@ -29,6 +32,7 @@ const VirtualLayer = () => {
             showTags={appCtx.showTags}
             showBeam={appCtx.showBeam}
             showLED={appCtx.showLED}
+            socket={socketCtx.socket}
           />
         </Suspense>
       </Canvas>

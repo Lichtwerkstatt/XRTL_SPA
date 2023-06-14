@@ -1,13 +1,13 @@
 import { Button, Box } from '@mui/material';
-import styles from './Description.module.css';
-import { themeLogin } from '../templates/Theme'
+
+import { themeLogin } from '../../templates/Theme'
 import { ThemeProvider } from '@mui/material/styles';
 
 
 const DescriptionESPCam = (props) => {
     return (
         <div>
-            <div className={styles.mainWrapper} style={{ height: props.height }} >
+            <div style={{ height: props.height, padding: '0px 5px 5px 7px', overflowY: 'auto' }} >
                 <p>
                     The editorial responsibility for this application lies with the Executive Office of the Abbe Center of Photonics and it's representative/s.
                 </p>

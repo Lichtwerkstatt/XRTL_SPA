@@ -17,6 +17,7 @@ export function AppContextProvider({ children }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
+  const [showCam, setShowCam] = useState(false);
   const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);
 
@@ -57,6 +58,11 @@ export function AppContextProvider({ children }) {
     setShowLogin(!showLogin);
   }
 
+  const toggleCam = () => {
+    setShowCam(!showCam);
+    toggleSelectedComp('Overview')
+  }
+
   const toggleShowLED = (newVal) => {
     setShowLED(newVal);
   }
@@ -92,6 +98,8 @@ export function AppContextProvider({ children }) {
         showInfoWindow,
         toggleShowInfoWindow,
         toggleLogin,
+        toggleCam,
+        showCam,
         lastClosedComponent,
         toogleLastComp,
         showLED,

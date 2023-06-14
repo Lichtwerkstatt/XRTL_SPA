@@ -1,4 +1,4 @@
-import Impressum from './Description_Impressum'
+import Impressum from './Content/Description_Impressum'
 
 const DescriptionHandler = (props) => {
 

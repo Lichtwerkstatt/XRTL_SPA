@@ -90,7 +90,6 @@ export function SocketContextProvider({ children }) {
 
       var token = jwt.sign(payload, "keysecret");
       socket.auth = { token: token }
-      //secure: true, rejectUnauthorized: false}
       socket.connect();
 
       setConnected(true)
