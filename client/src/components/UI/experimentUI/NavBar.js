@@ -1,4 +1,4 @@
-import { MdOutlineScreenRotation, MdInfoOutline, MdOutlineHelp, MdOutlineMenuBook } from 'react-icons/md';
+import { MdOutlineScreenRotation, MdInfoOutline} from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
@@ -26,11 +26,6 @@ const NavBar = () => {
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
-    if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
-    let showHelpWindowColor = '';
-    if (appCtx.showHelpWindow) { showHelpWindowColor = 'white' }
-    let showManualWindowColor = '';
-    if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -163,15 +158,6 @@ const NavBar = () => {
                         <Tooltip title='Webcam'>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
-
-                        <Tooltip title='Manual'>
-                            <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
-                        </Tooltip>
-
-                        <Tooltip title='Help'>
-                            <li onClick={appCtx.toggleShowHelpWindow}><MdOutlineHelp size={26} color={showHelpWindowColor} /></li>
-                        </Tooltip>
-
                         <Tooltip title='Information'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
@@ -213,14 +199,6 @@ const NavBar = () => {
                         <MenuItem onClick={appCtx.toggleShowTags} disableRipple>
                             <FaTags size={25} />
                             Tags
-                        </MenuItem>
-                        <MenuItem onClick={appCtx.toggleCam} disableRipple>
-                            <MdOutlineMenuBook size={26} />
-                            Manual
-                        </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowManualWindow} disableRipple>
-                            <MdOutlineHelp size={26} />
-                            Help
                         </MenuItem>
                         <MenuItem onClick={appCtx.toggleShowHelpWindow} disableRipple>
                             <BsCamera size={26} />
