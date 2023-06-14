@@ -1,5 +1,5 @@
 import BeamSplitter from '../../assembly/BeamSplitter';
-import ESPCam from '../../assembly/ESPCamStream';
+import ESPCam from '../../assembly/ESPCam';
 import Heater from '../../assembly/Heater';
 import Rotary from '../../assembly/Rotary';
 import Laser from '../../assembly/Laser';

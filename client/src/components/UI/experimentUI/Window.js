@@ -1,33 +1,49 @@
-import { IoReloadOutline, IoInformationCircleOutline } from 'react-icons/io5'
+import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline, IoReloadOutline } from 'react-icons/io5' //IoReloadOutline
+import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
+import { ImSection } from 'react-icons/im';
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
 import styles from '../CSS/Window.module.css';
-import { CgCloseO } from 'react-icons/cg';
+//import { CgCloseO } from 'react-icons/cg';
 import { memo, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { isEqual } from 'lodash';
 import { useState } from 'react';
-
+import DescriptionHandler from '../ComponentDescription/DescriptionHandler';
 
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [alertType, setAlertType] = useState('info');
   const [footer, setFooter] = useState('Initializing... ');
   var [alert, setAlert] = useState(false);
+  const [info, setInfo] = useState(true);
 
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
+  const [topper, setTopper] = useState('')
+
+  const renderOption = {
+    para: <ImSection className={styles.icon} size={24} />,
+    info: <IoReloadOutline className={styles.iconClose} size={28} />,
+    info2: <IoInformationCircleOutline className={styles.iconClose} size={30} />,
+    setting: <IoSettingsOutline className={styles.iconClose} size={30} />,
+    none: <IoSettingsOutline className={styles.icon} size={25} color={'#01bd7d'} />,
+  }
 
   useEffect(() => {
-    if (props.footer) {
-      setFooter('empty');
+    if (props.topper === 'none') {
+      setTopper('none')
+    } else if (props.topper === 'para') {
+      setTopper('para')
+    } else if (props.topper === undefined) {
+      setTopper('info')
     }
 
     const Footer = (payload) => {
-      if (props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -35,7 +51,7 @@ const Window = (props) => {
     }
 
     const getFooter = (payload) => {
-      if (props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -57,7 +73,7 @@ const Window = (props) => {
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
 
-    if (props.id === "Cam_1") {
+    if (props.id === "overview") {
       appCtx.toggleCam();
     }
 
@@ -66,19 +82,30 @@ const Window = (props) => {
     }
   }
 
-  const handleReset = () => {
-    socketCtx.socket.emit('command', {
-      userId: socketCtx.username,
-      controlId: props.componentList[0],
-      reset: true
-    })
+  const handleInformation = () => {
 
-    if (props.componentList[1]) {
+    if (props.id === 'screen' && appCtx.smallSetting === true) {
+      appCtx.smallSettings()
+    }
+
+    if (props.id === 'info') {
+      setInfo(!info)
+      topper === 'para' ? setTopper('info2') : setTopper('para');
+    } else {
+
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
-        controlId: props.componentList[1],
+        controlId: props.componentList[0],
         reset: true
       })
+
+      if (props.componentList[1]) {
+        socketCtx.socket.emit('command', {
+          userId: socketCtx.username,
+          controlId: props.componentList[1],
+          reset: true
+        })
+      }
     }
   }
 
@@ -108,45 +135,73 @@ const Window = (props) => {
     setAlert(alert);
     setAlertType('info');
     popupCtx.toggleShowPopUp(alert, alertType);
+
+    socketCtx.socket.emit("command", {
+      controlId: props.componentList[0],
+      identify: 3000,
+      color: socketCtx.fontColor,
+    })
   }
 
   return (
     <Draggable handle='.draggableHandler'>
       <div
         className={styles.window}
-        style={{ top: props.top + 'px', left: props.left + 'px' }}
+        style={{ top: props.top + 'px', left: props.left + 'px', width: props.height + 'px', height: props.height + 'px' }}
       >
         <div className={styles.windowHeader}>
           <span
             className='draggableHandler' //FIXME draggable doesnt seem to work with inline JSX classes. 
             style={{
               display: 'block',
-              width: 'calc(100% - 50px)',
+              width: 'calc(100% - 70px)',
               cursor: 'move',
               float: 'left'
             }}
           >
             {props.header}
           </span>
-          <span onClick={handleReset} > <IoReloadOutline size={20} />        </span>
-          <span onClick={handleCloseWindow}><CgCloseO size={20} /></span>
+
+          <p>
+            <span onClick={handleInformation}>
+              {renderOption[topper]}
+            </span>
+            <span onClick={handleCloseWindow}><IoCloseCircleOutline className={styles.iconClose} size={30} /></span>
+          </p>
         </div>
-        <div
-          className={styles.windowContent}
-          style={{
-            height: props.height,
-            width: props.width,
-            background: 'url(' + props.background + ')',
-          }}
-        >
-          {props.children}
-        </div>
-        {footer !== 'empty' && (
+        {info ?
+          <div
+            className={styles.windowContent}
+            style={{
+              height: props.height,
+              width: props.width,
+              background: 'url(' + props.background + ')',
+            }}
+          >
+            {props.children}
+          </div>
+
+          :
+          <div
+            className={styles.windowContent}
+            style={{
+              height: props.height,
+              width: props.width,
+            }}
+          >
+            <DescriptionHandler height={props.height} component={props.id} />
+          </div>
+        }
+
+        {props.footer !== 'empty' ?
           <div className={styles.windowFooter}>
-            <span onClick={handleInfo}> <IoInformationCircleOutline size={25} /></span>
+            <span onClick={handleInfo}> <MdOutlineUpdate size={25} /></span>
             <label>{footer}</label>
           </div>
-        )}
+          :
+          <div />
+        }
+
         <div className={styles.windowInfo}>
         </div>
       </div>

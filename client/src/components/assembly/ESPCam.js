@@ -1,4 +1,4 @@
-import Settings from '../UI/CtrlUnits/Settings';
+import Settings from '../UI/CtrlUnits/ESPCamStream';
 import Window from '../UI/experimentUI/Window';
 import { useAppContext } from '../../services/AppContext';
 

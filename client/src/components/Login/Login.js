@@ -5,11 +5,11 @@ import { useSocketContext } from '../../services/SocketContext';
 import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
-import styles from './Login.module.css';
+import styles from './CSS/Login.module.css';
 import { isEqual } from 'lodash';
 
 const Login = (props) => {
-    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl-mi.uni-jena.de' }]
+    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl.uni-jena.de' }]
     const [connection, setConnection] = useState(null);
     const [accessCode, setAccessCode] = useState('');
     const [username, setUsername] = useState('');

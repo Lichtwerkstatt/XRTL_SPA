@@ -4,7 +4,7 @@ import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
 import { useEffect, useState, Fragment } from "react";
 import InfoWindow from "../../windows/InfoWindow";
-import CamWindow from "../../assembly/CamWindow";
+import CamWindow from "../../windows/OverviewCamWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react"
 
