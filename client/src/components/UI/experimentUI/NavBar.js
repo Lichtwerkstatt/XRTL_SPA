@@ -96,15 +96,15 @@ const NavBar = () => {
                     >
                         <MenuItem onClick={() => {
                             handleLED();
-                            appCtx.toggleShowBeam('none');
+                            appCtx.toggleShowLED('none');
                         }} disableRipple >None</MenuItem>
                         <MenuItem onClick={() => {
                             handleLED();
-                            appCtx.toggleShowBeam('white');
+                            appCtx.toggleShowLED('white');
                         }} disableRipple>White</MenuItem>
                         <MenuItem onClick={() => {
                             handleLED();
-                            appCtx.toggleShowBeam('red');
+                            appCtx.toggleShowLED('red');
                         }} disableRipple>Red</MenuItem>
                     </Menu>
 
