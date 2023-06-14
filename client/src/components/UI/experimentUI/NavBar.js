@@ -1,10 +1,10 @@
-import { MdOutlineScreenRotation, MdInfoOutline} from 'react-icons/md';
+import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext'
 import { useAppContext } from '../../../services/AppContext'
+import { ImEnter, ImExit } from 'react-icons/im'
 import { GiLaserWarning } from 'react-icons/gi'
-import { ImConnection } from 'react-icons/im'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
 import { BsCamera } from 'react-icons/bs'
@@ -49,9 +49,10 @@ const NavBar = () => {
         setLaserBeam(event.currentTarget);
     };
 
-    const handleMobileVersion = () => {
+    const closeMobileVersion = () => {
         setMobileVersion(null);
     };
+
     const handleLED = () => {
         setLED(null);
     };
@@ -143,8 +144,8 @@ const NavBar = () => {
                 </div>
                 <div className={styles.navMenu}>
                     <ul>
-                        <Tooltip title='Connnection'>
-                            <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
+                        <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
+                            <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
                         <Tooltip title='Rotation'>
@@ -186,28 +187,37 @@ const NavBar = () => {
                         }}
                         anchorEl={mobileVersion}
                         open={openMobileVersion}
-                        onClose={handleMobileVersion}
+                        onClose={closeMobileVersion}
                     >
-                        <MenuItem onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }} disableRipple>
-                            <ImConnection size={29} sx={{ width: '10px' }} />
-                            Connection
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
+                        }} disableRipple>
+                            {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
+                            {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleAutoRotate} disableRipple>
-                            <MdOutlineScreenRotation size={26} />
-                            Rotation
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowTags();
+                        }} disableRipple>
+                            <FaTags size={25} style={{ paddingRight: '20px' }} />
+                            Labels
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowTags} disableRipple>
-                            <FaTags size={25} />
-                            Tags
-                        </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowHelpWindow} disableRipple>
-                            <BsCamera size={26} />
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleCam();
+                        }} disableRipple>
+                            <BsCamera size={26} style={{ paddingRight: '20px' }} />
                             Cam
                         </MenuItem>
-                        <MenuItem onClick={appCtx.toggleShowInfoWindow} disableRipple>
-                            <MdInfoOutline size={26} />
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowInfoWindow();
+                        }} disableRipple>
+                            <MdInfoOutline size={26} style={{ paddingRight: '20px' }} />
                             Info
                         </MenuItem>
+
 
                     </Menu>
                 </div>
