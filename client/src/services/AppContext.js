@@ -14,11 +14,9 @@ export function AppContextProvider({ children }) {
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [smallSetting, setSmallSetting] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
-  const [showRotary, setShowRotary] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
-  const [showCam, setShowCam] = useState(false);
   const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);
 
@@ -59,21 +57,12 @@ export function AppContextProvider({ children }) {
     setShowLogin(!showLogin);
   }
 
-  const toggleCam = () => {
-    setShowCam(!showCam);
-    toggleSelectedComp('Cam_1')
-  }
-
   const toggleShowLED = (newVal) => {
     setShowLED(newVal);
   }
 
   const toggleShowBeam = (newVal) => {
     setShowBeam(newVal);
-  }
-
-  const toggleChangeRotary = () => {
-    setShowBeam(!showRotary);
   }
 
   const smallSettings = () => {
@@ -103,14 +92,10 @@ export function AppContextProvider({ children }) {
         showInfoWindow,
         toggleShowInfoWindow,
         toggleLogin,
-        toggleCam,
-        showCam,
         lastClosedComponent,
         toogleLastComp,
         showLED,
         toggleShowLED,
-        setShowRotary,
-        toggleChangeRotary,
         smallSettings,
         smallSetting,
         smallSettingsTemp,
