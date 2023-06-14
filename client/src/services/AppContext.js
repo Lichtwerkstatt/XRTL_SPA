@@ -15,7 +15,7 @@ export function AppContextProvider({ children }) {
   const [showWelcomeWindow, setShowWelcome] = useState(true);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
-  const [showBeam, setShowBeam] = useState('off');
+  const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
   const [logs, setLogs] = useState([]);
@@ -51,8 +51,8 @@ export function AppContextProvider({ children }) {
     setLogs(prev => [log, ...prev])
   };
 
-  const toggleShowBeam = (newVal) => {
-    setShowBeam(newVal);
+  const toggleShowBeam = () => {
+    setShowBeam(!showBeam)
   }
 
   const toggleShowInfoWindow = () => {

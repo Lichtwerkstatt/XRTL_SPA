@@ -28,6 +28,8 @@ const NavBar = () => {
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
     let showManualWindowColor = '';
     if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
+    let showBeamColor = '';
+    if (appCtx.showBeam) { showBeamColor = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -58,50 +60,7 @@ const NavBar = () => {
                 <h1>XR TwinLab</h1>
 
                 {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
-                <div className={styles.navMenuLaser}>
-                    <h3>Overlay:</h3>
-                    <Tooltip title='Beam Path'>
-                        <IconButton onClick={handleLaserBeam} variant="contained" sx={{
-                            borderRadius: 1,
-                            height: '33px',
-                            width: '30px',
-                            color: 'black',
-                            ':hover': {
-                                bgcolor: 'darkgreen',
-                                color: '#00ffa8',
-                            },
-                        }}>
 
-                            <GiLaserWarning />
-
-                        </IconButton>
-                    </Tooltip>
-
-                    <Menu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                        }}
-                        anchorEl={laserBeam}
-                        open={openLaserBeam}
-                        onClose={closeLaserBeam}
-                    >
-                        <MenuItem onClick={() => {
-                            closeLaserBeam();
-                            appCtx.toggleShowBeam('on');
-                        }} disableRipple >On</MenuItem>
-                        <MenuItem onClick={() => {
-                            closeLaserBeam();
-                            appCtx.toggleShowBeam('off');
-                        }} disableRipple>Off</MenuItem>
-                        <MenuItem onClick={() => {
-                            closeLaserBeam();
-                            appCtx.toggleShowBeam('split');
-                        }} disableRipple>On (with Beamsplitter)</MenuItem>
-                    </Menu>
-
-
-                </div>
                 <div className={styles.navMenu}>
                     <ul>
                         <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
@@ -114,6 +73,10 @@ const NavBar = () => {
 
                         <Tooltip title='Cam'>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Beam Path'>
+                            <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Manual'>

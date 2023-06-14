@@ -82,7 +82,7 @@ function Model({ ...props }) {
           </Cylinder>
         </group>
         {/* Beam Overlay */}
-        {props.showBeam === "off" && (
+        {props.showBeam === false && (
           <group
             name="BSslim"
             onPointerDown={(e) => {
@@ -97,7 +97,7 @@ function Model({ ...props }) {
                 description="Simple Plate Beam Splitter"
               />
             )}
-            {beamSplitterState === true && (
+            {beamSplitterState && (
               <group>
                 <mesh
                   name="Thorlabs_Servo_Mount_Loose_V1_Stand"
@@ -176,7 +176,7 @@ function Model({ ...props }) {
             )}
           </group>
         )}
-        {props.showBeam === "off" && (
+        {!props.showBeam && (
           <group
             name="BSslim"
             onPointerDown={(e) => {
@@ -191,7 +191,7 @@ function Model({ ...props }) {
                 description="Simple Plate Beam Splitter"
               />
             )}
-            {beamSplitterState === false && (
+            {!beamSplitterState && (
               <group>
                 <group>
                   <mesh
@@ -277,7 +277,7 @@ function Model({ ...props }) {
           </group>
         )}
         ;
-        {props.showBeam === "on" && beamSplitterState === false && (
+        {props.showBeam && !beamSplitterState && (
           <group>
             <mesh
               name="LaserBeam"
@@ -385,7 +385,7 @@ function Model({ ...props }) {
             </Box>
           </group>
         )}
-        {props.showBeam === "on" && beamSplitterState === true && (
+        {props.showBeam && beamSplitterState && (
           <group>
             <mesh
               name="LaserBeam"
