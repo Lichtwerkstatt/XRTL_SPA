@@ -2,6 +2,7 @@ import { ThemeProvider, Button, IconButton, Typography } from '@mui/material';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
 import HeaterSettings from '../templates/HeaterSettings'
 import styles from '../CSS/HeaterCtrl.module.css';
 import { theme } from '../templates/Theme.js';
@@ -11,6 +12,7 @@ import Switch from '../templates/Switch'
 
 const HeaterCtrl = (props) => {
     const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
 
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [powerSwitch, setPowerSwitch] = useState(false);
@@ -77,10 +79,7 @@ const HeaterCtrl = (props) => {
             getStatus: true
         })
 
-        socketCtx.socket.emit('join stream room', {
-            controlId: props.componentT,
-            userId: socketCtx.username
-        });
+        appCtx.toogleRoomComp(props.component, true);
 
         socketCtx.socket.emit('getFooter', props.component)
 

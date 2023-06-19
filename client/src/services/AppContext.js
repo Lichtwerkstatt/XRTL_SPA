@@ -7,7 +7,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
-  const [lastClosedComponent, setLastClosedComponent] = useState('');
+  const [roomComponent, setRoomComponent] = useState(new Set());
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -18,18 +18,35 @@ export function AppContextProvider({ children }) {
   const [showCam, setShowCam] = useState(false);
   const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);
+  const [socket, setSocket] = useState('');
+  const [username, setUsername] = useState('');
 
-  const toggleSelectedComp = compId => {
+
+  const toggleSelectedComp = (compId) => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
-      setLastClosedComponent(compId);
+      toogleRoomComp(compId);
     }
   };
 
-  const toogleLastComp = () => {
-    setLastClosedComponent('');
+  const toogleRoomComp = (compId, val = false) => {
+    if (!roomComponent.has(compId) && val !== false) {
+      setRoomComponent(prev => new Set(prev.add(compId)));
+
+      socket.emit('join stream room', {
+        controlId: compId,
+        userId: username
+      });
+    } else if (roomComponent.has(compId)) {
+      setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
+
+      socket.emit("leave stream room", {
+        controlId: compId,
+        userId: username
+      });
+    }
   }
 
   const toggleAutoRotate = () => {
@@ -91,10 +108,15 @@ export function AppContextProvider({ children }) {
         toggleLogin,
         toggleCam,
         showCam,
-        lastClosedComponent,
-        toogleLastComp,
+        roomComponent,
+        setRoomComponent,
+        toogleRoomComp,
         showLED,
         toggleShowLED,
+        socket,
+        setSocket,
+        username,
+        setUsername
       }}
     >
       {children}

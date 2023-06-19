@@ -22,6 +22,8 @@ export function SocketContextProvider({ children }) {
     const connect = (e) => {
       setConnected(true)
       appCtx.addLog("Server : Client connected to " + URL)
+      appCtx.setSocket(socket);
+      appCtx.setUsername(username);
     }
 
     const disconnect = (e) => {
@@ -33,10 +35,10 @@ export function SocketContextProvider({ children }) {
 
     socket.on('disconnect', disconnect)
 
-    if (appCtx.lastClosedComponent === 'screen' || appCtx.lastClosedComponent === 'heater') {
-      socket.emit("leave stream room", { controlId: appCtx.lastClosedComponent , userId: username });
-      appCtx.toogleLastComp();
-    }
+    /*  if (appCtx.lastClosedComponent === 'screen' || appCtx.lastClosedComponent === 'heater') {
+       socket.emit("leave stream room", { controlId: appCtx.lastClosedComponent , userId: username });
+       appCtx.toogleLastComp();
+     } */
 
     return (() => {
       socket.removeAllListeners('connect', connect)
