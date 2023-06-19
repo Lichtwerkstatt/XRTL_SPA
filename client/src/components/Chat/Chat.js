@@ -48,12 +48,11 @@ const Chat = () => {
         socketCtx.socket.emit('updateUser')
 
         socketCtx.socket.on('updateUser', (payload) => {
-          //console.log(payload)
           var user = ''
           for (var i = 2; i < payload.length; i += 3) {
-            user += payload[i] + ','
+            user += payload[i] + ', '
           }
-          user = user.slice(0, -1)
+          user = user.slice(0, -2)
           setChat([...chat, { userId: 'XRTL', message: 'List of all the active user/s: ' + user, color: '#FF7373' }]);
         })
       }

@@ -17,9 +17,11 @@ const ExperimentUILayer = () => {
   useEffect(() => {
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
+      socketCtx.socket.emit('userId', socketCtx.username)
       socketCtx.setNewFont(color);
       setConnection(true);
     }
+
     socketCtx.socket.on('AuthFailed', () => {
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
     })

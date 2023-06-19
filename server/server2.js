@@ -10,7 +10,7 @@ const io = require('socket.io')(server, {
     }
 })
 
-//var pw = fs.readFileSync("", 'utf8');
+var pw = fs.readFileSync("C:/Users/henkel/Desktop/pw.txt", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -50,7 +50,7 @@ transporter.sendMail(mailOptions, function (error, info) {
     } else {
         console.log('Email sent: ' + info.response);
     }
-});
+}); */
 
 const returnNumer = (string) => {
     var number = [];
@@ -67,7 +67,7 @@ const returnNumer = (string) => {
         a += number[i];
     }
     return a;
-} */
+} 
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {

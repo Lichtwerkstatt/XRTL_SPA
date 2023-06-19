@@ -8,11 +8,9 @@ export function useAppContext() {
 
 export function AppContextProvider({ children }) {
   const [lastClosedComponent, setLastClosedComponent] = useState('');
-  const [smallSettingTemp, setSmallSettingTemp] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
-  const [smallSetting, setSmallSetting] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
@@ -71,13 +69,6 @@ export function AppContextProvider({ children }) {
     setShowBeam(newVal);
   }
 
-  const smallSettings = () => {
-    setSmallSetting(!smallSetting)
-  }
-
-  const smallSettingsTemp = () => {
-    setSmallSettingTemp(!smallSettingTemp)
-  }
   return (
     <AppContext.Provider
       value={{
@@ -104,10 +95,6 @@ export function AppContextProvider({ children }) {
         toogleLastComp,
         showLED,
         toggleShowLED,
-        smallSettings,
-        smallSetting,
-        smallSettingsTemp,
-        smallSettingTemp
       }}
     >
       {children}
