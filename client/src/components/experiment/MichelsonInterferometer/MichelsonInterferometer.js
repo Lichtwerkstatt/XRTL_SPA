@@ -12,6 +12,7 @@ const MichelsonInterferometer = (props) => {
   let footer = 'Initializing...'
   var zero = '0'
   const [setting, setSetting] = useState(false)
+  const [settingHeater, setSettingHeater] = useState(false)
 
   var height = window.innerHeight;
   var width = window.innerWidth;
@@ -121,6 +122,8 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
+          setting={settingHeater}
+          setSetting= {setSettingHeater}
         />
       )}
 

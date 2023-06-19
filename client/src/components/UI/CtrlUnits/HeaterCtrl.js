@@ -2,17 +2,15 @@ import { ThemeProvider, Button, IconButton, Typography } from '@mui/material';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
+import HeaterSettings from '../templates/HeaterSettings'
 import styles from '../CSS/HeaterCtrl.module.css';
 import { theme } from '../templates/Theme.js';
 import Slider from '../templates/SliderCtrl';
 import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch'
-import HeaterSettings from '../templates/HeaterSettings'
-import { useAppContext } from '../../../services/AppContext';
 
 const HeaterCtrl = (props) => {
     const socketCtx = useSocketContext();
-    const appCtx = useAppContext();
 
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [powerSwitch, setPowerSwitch] = useState(false);
@@ -22,19 +20,19 @@ const HeaterCtrl = (props) => {
     const [temp, setTemp] = useState('-°C');
 
     const hiddenSetting = () => {
-        appCtx.smallSettingsTemp();
+        props.setSetting(!props.setting)
 
-        if (!appCtx.smallSettingTemp) {
-            document.getElementById('smallTemp').style.display = 'none'
-            document.getElementById('temp').style.display = 'block'
-        } else {
+        if (props.setting) {
             document.getElementById('smallTemp').style.display = 'block'
             document.getElementById('temp').style.display = 'none'
+        } else {
+            document.getElementById('smallTemp').style.display = 'none'
+            document.getElementById('temp').style.display = 'block'
         }
     }
 
     useEffect(() => {
-        if (appCtx.smallSettingTemp) {
+        if (props.setting) {
             document.getElementById('smallTemp').style.display = 'none'
             document.getElementById('temp').style.display = 'block'
         } else {
@@ -42,6 +40,7 @@ const HeaterCtrl = (props) => {
             document.getElementById('temp').style.display = 'none'
         }
 
+      
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
