@@ -7,7 +7,7 @@ import { ImEnter, ImExit } from 'react-icons/im'
 import { GiLaserWarning } from 'react-icons/gi'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
-import { BsCamera } from 'react-icons/bs'
+import { BsCamera, BsBox } from 'react-icons/bs'
 import { FaTags } from 'react-icons/fa';
 import { memo, useState } from 'react';
 import { isEqual } from 'lodash';
@@ -30,6 +30,8 @@ const NavBar = () => {
     if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
     let showBeamColor = '';
     if (appCtx.showBeam) { showBeamColor = 'white' }
+    let showVirtualLayerColor = '';
+    if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -61,6 +63,10 @@ const NavBar = () => {
 
                         <Tooltip title='Cam'>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Model'>
+                            <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Beam Path'>
