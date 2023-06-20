@@ -14,6 +14,7 @@ const ESPCamStream = (props) => {
     const [frameSize, setFrameSize] = useState(0);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
+    
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
