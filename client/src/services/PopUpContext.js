@@ -53,6 +53,4 @@ export function PopUpContextProvider({ children }) {
             {children}
         </PopUpContext.Provider>
     );
-}
-
-
+} 

@@ -3,15 +3,15 @@ import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
 import WelcomeWindow from "../../windows/WelcomeWindow";
-import ManualWindow from "../../windows/ManualWindow";
-import { useEffect, useState, Fragment } from "react";
-import InfoWindow from "../../windows/InfoWindow";
 import CamWindow from "../../windows/OverviewCamWindow";
+import { useEffect, useState, Fragment } from "react";
+import ManualWindow from "../../windows/ManualWindow";
+import InfoWindow from "../../windows/InfoWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react";
 
 const ExperimentUILayer = () => {
-  var [connection, setConnection] = useState(false);
+  const [connection, setConnection] = useState(false);
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
@@ -20,8 +20,9 @@ const ExperimentUILayer = () => {
 
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
-      socketCtx.setNewFont(color);
-      setConnection(true);
+      socketCtx.socket.emit('userId', socketCtx.username)
+      socketCtx.setFontColor(color);
+      setConnection(true)
     }
 
     const underConstruction = (payload) => {
@@ -44,7 +45,6 @@ const ExperimentUILayer = () => {
     return () => {
       socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
       socketCtx.socket.removeAllListeners('Auth', auth)
-
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps

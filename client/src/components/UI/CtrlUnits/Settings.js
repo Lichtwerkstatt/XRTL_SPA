@@ -1,5 +1,6 @@
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from  '../../../services/AppContext';
 import ESPCamSettings from '../templates/ESPCamSettings';
 import { ThemeProvider } from '@mui/material/styles';
 import styles from '../CSS/Settings.module.css'
@@ -13,7 +14,9 @@ const Settings = (props) => {
     const [frameSize, setFrameSize] = useState(0);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
+    
     const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
 
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
@@ -76,10 +79,7 @@ const Settings = (props) => {
             getStatus: true
         })
 
-        socketCtx.socket.emit('join stream room', {
-            controlId: props.component,
-            userId: socketCtx.username
-        });
+        appCtx.toogleRoomComp(props.component, true);
 
         socketCtx.socket.emit('getFooter', props.component)
 

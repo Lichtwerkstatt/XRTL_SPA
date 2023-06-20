@@ -1,8 +1,11 @@
 import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
 import { useEffect } from 'react';
 
 const Settings = (props) => {
     const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
+
 
     useEffect(() => {
         var x1, x2, y1, y2;
@@ -48,10 +51,7 @@ const Settings = (props) => {
             getStatus: true
         })
 
-        socketCtx.socket.emit('join stream room', {
-            controlId: props.component,
-            userId: socketCtx.username
-        });
+        appCtx.toogleRoomComp(props.component, true);
 
         socketCtx.socket.emit('getFooter', props.component)
 

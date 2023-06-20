@@ -8,6 +8,7 @@ import { Box } from '@mui/material';
 const LaserCtrl = (props) => {
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [switchIsOn, setSwitch] = useState(false);
+  
   const socketCtx = useSocketContext();
 
   useEffect(() => {

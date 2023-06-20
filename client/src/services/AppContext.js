@@ -7,32 +7,48 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
-  const [lastClosedComponent, setLastClosedComponent] = useState('');
+  const [underConstruction, setUnderConstruction] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
   const [showWelcomeWindow, setShowWelcome] = useState(true);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
+  const [manualPage, setManualPage] = useState(1);
   const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
+  const [username, setUsername] = useState('');
+  const [socket, setSocket] = useState('');
   const [logs, setLogs] = useState([]);
-  const [underConstruction, setUnderConstruction] = useState(false);
-  const [manualPage, setManualPage] = useState(1);
 
-  const toggleSelectedComp = compId => {
+  const toggleSelectedComp = (compId) => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
-      setLastClosedComponent(compId);
+      toogleRoomComp(compId);
     }
   };
 
-  const toogleLastComp = () => {
-    setLastClosedComponent('');
+  const toogleRoomComp = (compId, val = false) => {
+    if (!roomComponent.has(compId) && val !== false) {
+      setRoomComponent(prev => new Set(prev.add(compId)));
+
+      socket.emit('join stream room', {
+        controlId: compId,
+        userId: username
+      });
+    } else if (roomComponent.has(compId)) {
+      setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
+
+      socket.emit("leave stream room", {
+        controlId: compId,
+        userId: username
+      });
+    }
   }
 
   const toggleAutoRotate = () => {
@@ -100,22 +116,25 @@ export function AppContextProvider({ children }) {
         showBeam,
         toggleShowBeam,
         showLogin,
-        setShowLogin,
+        toggleLogin,
         showInfoWindow,
         toggleShowInfoWindow,
-        toggleLogin,
-        toggleCam,
         showCam,
-        lastClosedComponent,
-        toogleLastComp,
-        toggleShowManualWindow,
+        toggleCam,
+        setRoomComponent,
+        toogleRoomComp,
         showManualWindow,
-        toggleShowWelcomeWindow,
+        toggleShowManualWindow,
         showWelcomeWindow,
-        toggleunderConstruction,
+        toggleShowWelcomeWindow,
         underConstruction,
+        toggleunderConstruction,
+        manualPage,
         toggleSetManualPage,
-        manualPage
+        username,
+        setUsername,
+        socket,
+        setSocket
       }}
     >
       {children}
