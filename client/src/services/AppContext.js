@@ -7,6 +7,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
+  const [underConstruction, setUnderConstruction] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
@@ -15,14 +16,13 @@ export function AppContextProvider({ children }) {
   const [showWelcomeWindow, setShowWelcome] = useState(true);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
+  const [manualPage, setManualPage] = useState(1);
   const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
+  const [username, setUsername] = useState('');
+  const [socket, setSocket] = useState('');
   const [logs, setLogs] = useState([]);
-  const [underConstruction, setUnderConstruction] = useState(false);
-  const [manualPage, setManualPage] = useState(1);
-  const [socket, setSocket] = useState(1);
-  const [username, setUsername] = useState(1);
 
   const toggleSelectedComp = (compId) => {
     if (!selectedComps.has(compId)) {
@@ -116,23 +116,21 @@ export function AppContextProvider({ children }) {
         showBeam,
         toggleShowBeam,
         showLogin,
-        setShowLogin,
+        toggleLogin,
         showInfoWindow,
         toggleShowInfoWindow,
-        toggleLogin,
-        toggleCam,
         showCam,
-        roomComponent,
+        toggleCam,
         setRoomComponent,
         toogleRoomComp,
-        toggleShowManualWindow,
         showManualWindow,
-        toggleShowWelcomeWindow,
+        toggleShowManualWindow,
         showWelcomeWindow,
-        toggleunderConstruction,
+        toggleShowWelcomeWindow,
         underConstruction,
-        toggleSetManualPage,
+        toggleunderConstruction,
         manualPage,
+        toggleSetManualPage,
         username,
         setUsername,
         socket,

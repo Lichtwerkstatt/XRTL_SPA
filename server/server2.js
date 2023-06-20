@@ -127,7 +127,6 @@ io.on('connection', socket => {
         console.log('underConstruction is now set on: ', payload);
     });
 
-
     //Returns the status of a experiment component
     socket.on('status', payload => {
         var today = new Date();
@@ -174,36 +173,6 @@ io.on('connection', socket => {
         }
         online = componentList.includes(payload);
         io.emit('getFooter', { controlId: payload, status: footerStatus, online: online });
-    })
-
-    //WebRTC handshake for the overview stream of the experiment
-    socket.on('broadcaster join', (controlId) => {
-        if (broadcaster) {
-            broadcaster.push(socket.id, controlId,);
-        } else {
-            broadcaster = [socket.id, controlId];
-        }
-    })
-
-    socket.on('viewer', (controlId) => {
-        const id = broadcaster[broadcaster.indexOf(controlId) - 1]
-        io.to(id).emit('viewer', socket.id);
-    })
-
-    socket.on('offer', (payload) => {
-        io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
-    })
-
-    socket.on('answer', (payload) => {
-        socket.to(payload.id).emit('answer', { id: socket.id, data: payload.data })
-    })
-
-    socket.on('candidate', (payload) => {
-        io.to(payload.id).emit('candidate', { id: socket.id, data: payload.data });
-    })
-
-    socket.on('watcher disconnect', () => {
-        io.emit('disconnect peerConnection', socket.id);
     })
 
     //Handshakes for the experiment camera (ESPCam)
