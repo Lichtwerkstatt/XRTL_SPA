@@ -7,8 +7,8 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
-  const [lastClosedComponent, setLastClosedComponent] = useState('');
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
@@ -21,18 +21,34 @@ export function AppContextProvider({ children }) {
   const [logs, setLogs] = useState([]);
   const [underConstruction, setUnderConstruction] = useState(false);
   const [manualPage, setManualPage] = useState(1);
+  const [socket, setSocket] = useState(1);
+  const [username, setUsername] = useState(1);
 
-  const toggleSelectedComp = compId => {
+  const toggleSelectedComp = (compId) => {
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
-      setLastClosedComponent(compId);
+      toogleRoomComp(compId);
     }
   };
 
-  const toogleLastComp = () => {
-    setLastClosedComponent('');
+  const toogleRoomComp = (compId, val = false) => {
+    if (!roomComponent.has(compId) && val !== false) {
+      setRoomComponent(prev => new Set(prev.add(compId)));
+
+      socket.emit('join stream room', {
+        controlId: compId,
+        userId: username
+      });
+    } else if (roomComponent.has(compId)) {
+      setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
+
+      socket.emit("leave stream room", {
+        controlId: compId,
+        userId: username
+      });
+    }
   }
 
   const toggleAutoRotate = () => {
@@ -106,8 +122,9 @@ export function AppContextProvider({ children }) {
         toggleLogin,
         toggleCam,
         showCam,
-        lastClosedComponent,
-        toogleLastComp,
+        roomComponent,
+        setRoomComponent,
+        toogleRoomComp,
         toggleShowManualWindow,
         showManualWindow,
         toggleShowWelcomeWindow,
@@ -115,7 +132,11 @@ export function AppContextProvider({ children }) {
         toggleunderConstruction,
         underConstruction,
         toggleSetManualPage,
-        manualPage
+        manualPage,
+        username,
+        setUsername,
+        socket,
+        setSocket
       }}
     >
       {children}

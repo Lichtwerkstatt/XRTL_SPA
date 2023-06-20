@@ -19,14 +19,11 @@ export function SocketContextProvider({ children }) {
   const appCtx = useAppContext();
 
   useEffect(() => {
-    const Auth = (color) => {
-      setFontColor(color);
-      socket.emit('newUserInfo', username)
-    }
-
     const connect = (e) => {
       setConnected(true)
-      appCtx.addLog("Server : Client connected to " + URL)
+      appCtx.addLog("Server : Client connected to " + URL);
+      appCtx.setSocket(socket);
+      appCtx.setUsername(username);
     }
 
     const disconnect = (e) => {
@@ -38,22 +35,7 @@ export function SocketContextProvider({ children }) {
 
     socket.on('disconnect', disconnect)
 
-    socket.on('Auth', Auth);
-
-    if (appCtx.lastClosedComponent === 'screen') {
-      socket.emit("leave stream room", { controlId: 'screen', userId: username });
-      appCtx.toogleLastComp();
-    }
-
-    if (appCtx.lastClosedComponent === 'overview') {
-      socket.emit("leave stream room", { controlId: 'overview', userId: username });
-      appCtx.toogleLastComp();
-      /*  socket.emit('watcher disconnect');
-       appCtx.toogleLastComp(); */
-    }
-
     return (() => {
-      socket.removeAllListeners('Auth', Auth)
       socket.removeAllListeners('connect', connect)
       socket.removeAllListeners('disconnect', disconnect)
     })

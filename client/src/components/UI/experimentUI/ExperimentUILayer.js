@@ -20,8 +20,9 @@ const ExperimentUILayer = () => {
 
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
+      socketCtx.socket.emit('userId', socketCtx.username)
       socketCtx.setNewFont(color);
-      setConnection(true);
+      setConnection(true)
     }
 
     const underConstruction = (payload) => {
@@ -44,7 +45,6 @@ const ExperimentUILayer = () => {
     return () => {
       socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
       socketCtx.socket.removeAllListeners('Auth', auth)
-
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
