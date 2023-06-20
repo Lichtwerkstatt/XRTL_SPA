@@ -39,13 +39,17 @@ const returnNumber = (string) => {
     }
     return a;
 }
+io.use((socket, next) => {
+    socket.to(socket.id).emit('time', Date.now());
+    next();
+})
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            exp = decoded.iat + 300000;
+            exp = Date.now() + 300000;
             next();
         });
     }

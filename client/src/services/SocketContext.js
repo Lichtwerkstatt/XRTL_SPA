@@ -67,8 +67,6 @@ export function SocketContextProvider({ children }) {
       var payload = {
         sub: username,
         component: 'client',
-        iat: Date.now(),
-        exp: Date.now() + 1800000,
       }
 
       var token = jwt.sign(payload, "keysecret");
