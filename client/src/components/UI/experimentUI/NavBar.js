@@ -18,8 +18,6 @@ const NavBar = () => {
 
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
-    /*     let autoRotateColor = '';
-        if (appCtx.autoRotate) { autoRotateColor = 'white' } */
     let showTagsColor = '';
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
@@ -70,7 +68,6 @@ const NavBar = () => {
                         <Tooltip title='Manual'>
                             <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                         </Tooltip>
-
 
                         <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>

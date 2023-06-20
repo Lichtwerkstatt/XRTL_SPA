@@ -1,12 +1,13 @@
+import { ThemeProvider, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import { useSocketContext } from '../../services/SocketContext';
-import { useAppContext } from '../../services/AppContext';
 import { theme } from '../../components/UI/templates/Theme';
+import { useAppContext } from '../../services/AppContext';
 import { useEffect, useState, memo } from 'react'
 import styles from './CSS/Chat.module.css'
 import { ImBubble } from 'react-icons/im'
 import { MdSend } from 'react-icons/md'
 import { isEqual } from 'lodash';
-import { ThemeProvider, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput } from '@mui/material';
+
 const Chat = () => {
   const [showChat, setShowChat] = useState(false);
   const [animation, setAnimation] = useState('');
@@ -31,9 +32,6 @@ const Chat = () => {
   const sendMessage = async (event) => {
     event.preventDefault();
     if (message.at(0) === '!') {
-
-      // console.log('message', message)
-
       if (message === '!rotate' || message === '!r') {
         appCtx.toggleAutoRotate();
         setChat([...chat, { userId: 'XRTL', message: 'Rotation command was sent ... ', color: '#FF7373' }]);
@@ -47,7 +45,6 @@ const Chat = () => {
         socketCtx.socket.emit('updateUser')
 
         socketCtx.socket.on('updateUser', (payload) => {
-          //console.log(payload)
           var user = ''
           for (var i = 2; i < payload.length; i += 3) {
             user += payload[i] + ','
@@ -190,7 +187,6 @@ const Chat = () => {
             binaryCtrl: false,
             color: '#00ffa8'
           })
-
         }
 
         showCase()

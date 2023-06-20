@@ -1,22 +1,19 @@
 import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline } from 'react-icons/io5' //IoReloadOutline
-import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
-import { ImSection } from 'react-icons/im';
+import DescriptionHandler from '../ComponentDescription/DescriptionHandler'
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
+import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
 import styles from '../CSS/Window.module.css';
-//import { CgCloseO } from 'react-icons/cg';
-import { memo, useEffect } from 'react';
+import { ImSection } from 'react-icons/im';
 import Draggable from 'react-draggable';
+import { memo, useEffect } from 'react';
 import { isEqual } from 'lodash';
 import { useState } from 'react';
-import DescriptionHandler from '../ComponentDescription/DescriptionHandler'
 
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
-  const [alertType, setAlertType] = useState('info');
   const [footer, setFooter] = useState('Initializing... ');
-  var [alert, setAlert] = useState(false);
   const [info, setInfo] = useState(true);
 
   const socketCtx = useSocketContext();
@@ -106,7 +103,7 @@ const Window = (props) => {
   const handleInfo = () => {
     var timeNow = new Date();
     let difH, difMin, difSec = 0;
-    alert = '';
+    var alert = '';
 
     timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
     if (lastChange[0] === '') {
@@ -126,9 +123,7 @@ const Window = (props) => {
       alert = 'No last change detected!'
     }
 
-    setAlert(alert);
-    setAlertType('info');
-    popupCtx.toggleShowPopUp(alert, alertType);
+    popupCtx.toggleShowPopUp(alert, 'info');
 
     socketCtx.socket.emit("command", {
       controlId: props.componentList[0],
