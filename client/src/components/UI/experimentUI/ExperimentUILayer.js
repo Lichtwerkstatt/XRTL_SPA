@@ -4,14 +4,13 @@ import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
 import WelcomeWindow from "../../windows/WelcomeWindow";
 import CamWindow from "../../windows/OverviewCamWindow";
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import ManualWindow from "../../windows/ManualWindow";
 import InfoWindow from "../../windows/InfoWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react";
 
 const ExperimentUILayer = () => {
-  const [connection, setConnection] = useState(false);
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
@@ -22,29 +21,31 @@ const ExperimentUILayer = () => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
       socketCtx.socket.emit('userId', socketCtx.username)
       socketCtx.setFontColor(color);
-      setConnection(true)
     }
 
     const underConstruction = (payload) => {
       appCtx.toggleunderConstruction(payload);
     }
 
-    socketCtx.socket.on('AuthFailed', () => {
+    const authFailed = () => {
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
-    })
+    }
+
+    socketCtx.socket.on('AuthFailed', authFailed)
 
     socketCtx.socket.on('Auth', auth);
 
     socketCtx.socket.on('underConstruction', underConstruction)
 
-    if (!connection) {
+    if (!socketCtx.socket.connected) {
       popupCtx.toggleShowPopUp('No server connection!', 'error');
-      setConnection('');
     }
 
     return () => {
       socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
+      socketCtx.socket.removeAllListeners('AuthFailed', authFailed)
       socketCtx.socket.removeAllListeners('Auth', auth)
+
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
