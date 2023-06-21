@@ -1,6 +1,6 @@
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
 import React, { useRef, memo, useState, useEffect } from "react";
-import { Box, meshTransmissionMaterial } from "@react-three/drei";
+import { Box } from "@react-three/drei";
 import { isEqual } from "lodash";
 
 function Model2d({ ...props }) {
