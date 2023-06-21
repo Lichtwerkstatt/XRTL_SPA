@@ -3,7 +3,7 @@ import styles from '../CSS/Settings.module.css';
 import { theme } from '../templates/Theme.js';
 import Slider from '../templates/SliderCtrl';
 import Switch from '../templates/Switch';
-import Select from '../templates/Select';
+import Select from '../templates/SelectItem';
 import Box from '@mui/material/Box';
 
 const ESPCamSettings = (props) => {

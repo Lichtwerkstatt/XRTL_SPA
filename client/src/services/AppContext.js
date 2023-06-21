@@ -34,20 +34,24 @@ export function AppContextProvider({ children }) {
   };
 
   const toogleRoomComp = (compId, val = false) => {
-    if (!roomComponent.has(compId) && val !== false) {
-      setRoomComponent(prev => new Set(prev.add(compId)));
+    try {
+      if (!roomComponent.has(compId) && val !== false) {
+        setRoomComponent(prev => new Set(prev.add(compId)));
 
-      socket.emit('join stream room', {
-        controlId: compId,
-        userId: username
-      });
-    } else if (roomComponent.has(compId)) {
-      setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
+        socket.emit('join stream room', {
+          controlId: compId,
+          userId: username
+        });
+      } else if (roomComponent.has(compId)) {
+        setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
 
-      socket.emit("leave stream room", {
-        controlId: compId,
-        userId: username
-      });
+        socket.emit("leave stream room", {
+          controlId: compId,
+          userId: username
+        });
+      }
+    } catch (e) {
+
     }
   }
 

@@ -1,6 +1,6 @@
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
-import { MenuItem, Select } from '@mui/material';
+import { MenuItem, Select, FormControl,  Box, InputLabel} from '@mui/material';
 import { useState } from "react";
 
 const SelectItem = (props) => {
@@ -25,17 +25,22 @@ const SelectItem = (props) => {
     }
     if (props.title === 'Resolution') {
         return (
-            <Select
-                value={props.selectValue}
-                label={props.title}
-                onChange={handleSettingChanges}
-                disabled={(socketCtx.connected && props.online) ? false : true}
-            >
-                <MenuItem value={10}>XGA (1024x768)</MenuItem>
-                <MenuItem value={9}>SVGA (800x600)</MenuItem>
-                <MenuItem value={8}>VGA (640x480)</MenuItem>
-                <MenuItem value={5}>QVGA (320x240)</MenuItem>
-            </Select>
+            <Box sx={{ m: 2, width: 250 }}>
+                <FormControl fullWidth>
+                <InputLabel >{props.title}</InputLabel>
+                    <Select
+                        value={selectValue}
+                        label={props.title}
+                        onChange={handleSettingChanges}
+                        
+                    >
+                        <MenuItem value={10}>XGA (1024x768)</MenuItem>
+                        <MenuItem value={9}>SVGA (800x600)</MenuItem>
+                        <MenuItem value={8}>VGA (640x480)</MenuItem>
+                        <MenuItem value={5}>QVGA (320x240)</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
         )
     } else {
         return (<div></div>)
