@@ -3,10 +3,11 @@ import Model2d from "../../experiment/MichelsonInterferometer/MIS1_2D_control";
 import { OrbitControls, Environment, Billboard } from "@react-three/drei";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useSocketContext } from "../../../services/SocketContext";
+import Settings from "../CtrlUnits/Settings";
 
-const VirtualLayer = () => {
+const VirtualLayer = (...props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
@@ -38,6 +39,16 @@ const VirtualLayer = () => {
     );
   } else {
     // Hier kommt die Camera hin!
+    // socketCtx.socket.emit("command", {
+    //   userId: socketCtx.username,
+    //   controlId: props.component,
+    //   getStatus: true,
+    // });
+
+    // appCtx.toogleRoomComp(props.component, true);
+
+    // socketCtx.socket.on("data", Settings.data);
+
     return (
       <Canvas
         style={{
@@ -50,6 +61,13 @@ const VirtualLayer = () => {
         camera={{ position: [0, 0, 5], fov: 40 }}
       >
         <Suspense fallback={null}>
+          {/* <canvas
+            id="Canvas"
+            width={props.width}
+            height={props.height}
+            style={{ borderRadius: "5px", backgroundSize: "cover" }}
+          /> */}
+
           <Environment files="../hdri/autoshop.hdr" />
 
           {/* <pointLight /> */}
