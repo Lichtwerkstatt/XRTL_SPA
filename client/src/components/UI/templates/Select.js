@@ -1,37 +1,44 @@
-import { Select } from '@mui/material';
-import React from "react";
-import { MenuItem, Typography } from '@mui/material';
+import React, { useState } from "react";
+import { MenuItem, Select, FormControl,  Box, InputLabel} from '@mui/material';
 
-const renderMenuItem = (value, e) => {
-    console.log(value, e)
+{/* <MenuItem value={10}>XGA (1024x768)</MenuItem>
+<MenuItem value={9}>SVGA (800x600)</MenuItem>
+<MenuItem value={8}>VGA (640x480)</MenuItem>
+<MenuItem value={5}>QVGA (320x240)</MenuItem>
+ */}
+const myTypes = {
+    10: 'a',
+    9: 'b'
+};
+
+const TypeSelectMenuItem = (props) => {
+    console.log(props)
     return (
-        <MenuItem key={e} value={value}>
-            <Typography>{e}</Typography>
+        <MenuItem {...props}>
+            {props["children"]}
         </MenuItem>
     );
 };
 
-export default function App() {
-    const userIds = { title: ['a', 'b', 'c'], val: [1, 2, 3] }
-    const userI = ['a', 'b', 'c']
-    const user = ['1', '2', '3']
+export default function ControlledOpenSelect(props) {
+    const [state, setState] = useState(myTypes[0]);
+    const onChangeType = (e) => {
+        console.log(e.target)
+        setState(e.target.value);
+    };
 
-
-
-    const userId = [4, 5, 6];
-
-    const [value, setValue] = React.useState(1);
-    console.log("value", value);
     return (
-        <Select
-            id="user"
-            name="User"
-            value={value}
-            onChange={(event) => {
-                setValue(event.target.value);
-            }}
-        >
-            {userId.map( (event) => { renderMenuItem(userI, user) })}
-        </Select>
+        <Box sx={{ m: 2, width: 250 }}>
+        <FormControl fullWidth>
+        <InputLabel >{props.title}</InputLabel>
+                <Select label={props.title} value={state} onChange={onChangeType} sx={{ width: 150 }}>
+                    {Object.keys(myTypes).map((type) => (
+                        <TypeSelectMenuItem value={type}>
+                            {myTypes[type]}
+                        </TypeSelectMenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        </Box>
     );
 }
