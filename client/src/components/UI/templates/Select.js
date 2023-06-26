@@ -1,18 +1,9 @@
 import React, { useState } from "react";
-import { MenuItem, Select, FormControl,  Box, InputLabel} from '@mui/material';
-
-{/* <MenuItem value={10}>XGA (1024x768)</MenuItem>
-<MenuItem value={9}>SVGA (800x600)</MenuItem>
-<MenuItem value={8}>VGA (640x480)</MenuItem>
-<MenuItem value={5}>QVGA (320x240)</MenuItem>
- */}
-const myTypes = {
-    10: 'a',
-    9: 'b'
-};
+import { MenuItem, Select, FormControl, Box, InputLabel } from '@mui/material';
+import { useSocketContext } from "../../../services/SocketContext";
+import { useAppContext } from "../../../services/AppContext";
 
 const TypeSelectMenuItem = (props) => {
-    console.log(props)
     return (
         <MenuItem {...props}>
             {props["children"]}
@@ -21,20 +12,40 @@ const TypeSelectMenuItem = (props) => {
 };
 
 export default function ControlledOpenSelect(props) {
-    const [state, setState] = useState(myTypes[0]);
+    const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
+    const [selectValue, setSelectValue] = useState(props.selectValue);
+
     const onChangeType = (e) => {
-        console.log(e.target)
-        setState(e.target.value);
+
+        setSelectValue(e.target.value);
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.component,
+            [props.option]: Number(e.target.value)
+        })
+
+        socketCtx.socket.emit("footer", {
+            status: 'Used by: ' + socketCtx.username.substring(0, 17),
+            controlId: props.component
+        })
+
+        appCtx.addLog("User set selected " + props.component + " with " + selectValue)
     };
 
     return (
         <Box sx={{ m: 2, width: 250 }}>
-        <FormControl fullWidth>
-        <InputLabel >{props.title}</InputLabel>
-                <Select label={props.title} value={state} onChange={onChangeType} sx={{ width: 150 }}>
-                    {Object.keys(myTypes).map((type) => (
+            <FormControl fullWidth>
+                <InputLabel >{props.title}</InputLabel>
+                <Select
+                    label={props.title}
+                    value={selectValue}
+                    onChange={onChangeType}
+                    disabled={(socketCtx.connected && props.online) ? false : true} >
+                    {Object.keys(props.list).map((type) => (
                         <TypeSelectMenuItem value={type}>
-                            {myTypes[type]}
+                            {props.list[type]}
                         </TypeSelectMenuItem>
                     ))}
                 </Select>
