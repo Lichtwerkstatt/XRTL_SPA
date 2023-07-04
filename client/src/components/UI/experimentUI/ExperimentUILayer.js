@@ -1,4 +1,4 @@
-import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
+import AdaptiveOptics from "../../experiment/AdaptiveOptics/AdaptiveOptics";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
@@ -57,7 +57,7 @@ const ExperimentUILayer = () => {
       {appCtx.showWelcomeWindow && <WelcomeWindow />}
       {appCtx.showManualWindow && <ManualWindow />}
       {appCtx.showCam && <CamWindow />}
-      <MichelsonInterferometer
+      <AdaptiveOptics
         toggleSelect={appCtx.toggleSelectedComp}
         selected={appCtx.selectedComps}
       />
