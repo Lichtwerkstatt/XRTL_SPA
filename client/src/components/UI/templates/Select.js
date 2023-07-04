@@ -11,19 +11,18 @@ const TypeSelectMenuItem = (props) => {
     );
 };
 
-export default function ControlledOpenSelect(props) {
+export default function CustomSelect(props) {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
     const [selectValue, setSelectValue] = useState(props.selectValue);
 
-    const onChangeType = (e) => {
-
+    const handleChange = (e) => {
         setSelectValue(e.target.value);
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
-            [props.option]: Number(e.target.value)
+            [props.option]: props.number ? Number(e.target.value) : e.target.value
         })
 
         socketCtx.socket.emit("footer", {
@@ -41,8 +40,8 @@ export default function ControlledOpenSelect(props) {
                 <Select
                     label={props.title}
                     value={selectValue}
-                    onChange={onChangeType}
-                    disabled={(socketCtx.connected && props.online) ? false : true} >
+                    onChange={handleChange}
+                >
                     {Object.keys(props.list).map((type) => (
                         <TypeSelectMenuItem value={type}>
                             {props.list[type]}
