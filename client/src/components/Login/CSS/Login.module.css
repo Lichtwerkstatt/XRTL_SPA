@@ -1,0 +1,41 @@
+div.login {
+    display: block;
+}
+
+div.close {
+    position: absolute;
+    top: 1%;
+    left: 87%;
+}
+
+div.popupWindow {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    filter: blur(10px);
+}
+
+div.popupInner {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    height: 230px;
+    width: 360px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    border: 3px solid #01bd7d;
+    border-radius: 15px;
+}
+
+div.popupInner h3 {
+    color: white;
+    font-size: 22px;
+    margin-left: 15px;
+}
+
+div.popupInner button {
+    position: absolute;
+    top: 80%;
+    left: 77%;
+}

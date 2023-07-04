@@ -1,6 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../../services/SocketContext";
-import { GiLaserWarning } from "react-icons/gi";
 import { useState, useEffect } from "react";
 import { theme } from '../templates/Theme.js';
 import Switch from '../templates/Switch';
@@ -38,14 +37,22 @@ const LaserCtrl = (props) => {
 
 
   return (
-    <div className="switchOnOff">
-      <ThemeProvider theme={theme} >
-        <Box sx={{ m: 2, width: 250 }}>
-          <Switch component={props.component} icon={document.getElementById("icon")} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
-          <GiLaserWarning id="icon" size={100} vertical-align="middle" color="grey" />
+    <ThemeProvider theme={theme} >
+      <div style={{
+        position: 'absolute',
+        width: '120px',
+        height: '40px',
+        border: '2px solid #00ffa8',
+        borderRadius: '50px',
+        textAlign: 'center',
+        top: '40px',
+        left: '10px'
+      }}>
+        <Box sx={{ ml: '-4px' }} >
+          <Switch component={props.component} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
         </Box>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   )
 }
 export default LaserCtrl

@@ -1,15 +1,18 @@
 import BeamSplitter from '../../assembly/BeamSplitter';
-import ESPCam from '../../assembly/ESPCamStream';
+import ESPCam from '../../assembly/ESPCam';
 import Heater from '../../assembly/Heater';
 import Rotary from '../../assembly/Rotary';
 import Laser from '../../assembly/Laser';
 import KM100 from '../../assembly/KM100';
 import SM1ZP from '../../assembly/SM1ZP';
+import { useState } from 'react';
 
 
 const MichelsonInterferometer = (props) => {
   let footer = 'Initializing...'
   var zero = '0'
+  const [setting, setSetting] = useState(false)
+  const [settingHeater, setSettingHeater] = useState(false)
 
   var height = window.innerHeight;
   var width = window.innerWidth;
@@ -105,6 +108,8 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
+          setting={setting}
+          setSetting= {setSetting}
         />
       )}
       {/* Heater */}
@@ -117,6 +122,8 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
+          setting={settingHeater}
+          setSetting= {setSettingHeater}
         />
       )}
 

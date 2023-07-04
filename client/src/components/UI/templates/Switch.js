@@ -19,11 +19,10 @@ const SwiitchCtrl = (props) => {
             controlId: props.component,
             [props.option]: newValue,
             color: socketCtx.fontColor,
-
         })
 
         socketCtx.socket.emit("footer", {
-            status: "Last change by: " + socketCtx.username,
+            status: 'Used by: ' + socketCtx.username.substring(0, 17),
             controlId: props.component
         })
 
@@ -35,9 +34,9 @@ const SwiitchCtrl = (props) => {
     }
 
     return (
-        <Box sx={{ width: 250, m: 2 }}>
+        <Box >
             <FormGroup>
-                <Stack direction="row" spacing={1} alignItems="center">
+                <Stack direction="row" alignItems="center" sx={{ ml: 2 }}>
                     <Typography>{props.start}</Typography>
                     <Switch checked={props.switchStatus}
                         onChange={handleSettingChanges}

@@ -2,11 +2,11 @@ import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/Mi
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
+import CamWindow from "../../windows/OverviewCamWindow";
 import { useEffect, useState, Fragment } from "react";
 import InfoWindow from "../../windows/InfoWindow";
-import CamWindow from "../../assembly/CamWindow";
 import { isEqual } from 'lodash';
-import { memo } from "react"
+import { memo } from "react";
 
 const ExperimentUILayer = () => {
   var [connection, setConnection] = useState(false);
@@ -17,9 +17,11 @@ const ExperimentUILayer = () => {
   useEffect(() => {
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
+      socketCtx.socket.emit('userId', socketCtx.username)
       socketCtx.setNewFont(color);
       setConnection(true);
     }
+
     socketCtx.socket.on('AuthFailed', () => {
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
     })

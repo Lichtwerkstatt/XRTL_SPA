@@ -2,36 +2,54 @@ import { ThemeProvider, Button, IconButton, Typography } from '@mui/material';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
+import HeaterSettings from '../templates/HeaterSettings'
 import styles from '../CSS/HeaterCtrl.module.css';
 import { theme } from '../templates/Theme.js';
 import Slider from '../templates/SliderCtrl';
 import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch'
-import HeaterSettings from '../templates/HeaterSettings'
 
 const HeaterCtrl = (props) => {
+    const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
+
     const [onlineStatus, setOnlineStatus] = useState(false);
     const [powerSwitch, setPowerSwitch] = useState(false);
-    const [powerValue, setPowerValue] = useState(0);
-    const [setting, setSettings] = useState(false);
-    const [temp, setTemp] = useState('-°C');
     const [averageTime, setAverageTime] = useState(0);
     const [updateTime, setUpdateTime] = useState(0);
-
-    const socketCtx = useSocketContext();
+    const [powerValue, setPowerValue] = useState(0);
+    const [temp, setTemp] = useState('-°C');
 
     const hiddenSetting = () => {
-        setSettings(!setting);
+        props.setSetting(!props.setting)
+
+        if (props.setting) {
+            document.getElementById('smallTemp').style.display = 'block'
+            document.getElementById('temp').style.display = 'none'
+        } else {
+            document.getElementById('smallTemp').style.display = 'none'
+            document.getElementById('temp').style.display = 'block'
+        }
     }
 
     useEffect(() => {
+        if (props.setting) {
+            document.getElementById('smallTemp').style.display = 'none'
+            document.getElementById('temp').style.display = 'block'
+        } else {
+            document.getElementById('smallTemp').style.display = 'block'
+            document.getElementById('temp').style.display = 'none'
+        }
+
+      
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
                 setPowerSwitch(payload.status.isOn)
                 setPowerValue(payload.status.pwm)
 
-               // console.log("Status  ", payload)
+                // console.log("Status  ", payload)
             }
 
             if (payload.controlId === props.componentT) {
@@ -61,10 +79,7 @@ const HeaterCtrl = (props) => {
             getStatus: true
         })
 
-        socketCtx.socket.emit('join stream room', {
-            controlId: props.componentT,
-            userId: socketCtx.username
-        });
+        appCtx.toogleRoomComp(props.component, true);
 
         socketCtx.socket.emit('getFooter', props.component)
 
@@ -82,21 +97,45 @@ const HeaterCtrl = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={styles.Temp}>
-                <Typography id='temp' variant='h2'>{temp}</Typography>
-                <IconButton onClick={hiddenSetting}  >
-                    <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
-                </IconButton>
+
+            <div id={'temp'} style={{ display: 'none' }}>
+                <div className={styles.Temp}>
+                    <Typography id='temp' variant='h2'>{temp}</Typography>
+                    <IconButton onClick={hiddenSetting}  >
+                        <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                    </IconButton>
+                </div>
+                <div className={styles.Canvas1}>
+                    <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
+                    <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+
+                </div>
+                <div className={styles.Switch} >
+                    <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+                </div>
+                <HeaterSettings online={true} component={props.componentT} updateTime={updateTime} averageTime={averageTime} />
             </div>
-            <div className={styles.Canvas1}>
-                <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+
+
+            <div id={'smallTemp'} >
+                <div className={styles.TempSmall}>
+                    <Typography id='temp' variant='h2'>{temp}</Typography>
+                    <IconButton onClick={hiddenSetting}  >
+                        <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                    </IconButton>
+                </div>
+
+                <div className={styles.Canvas1}>
+                    <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
+                    <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+
+                </div>
+                <div className={styles.SwitchTemp} >
+                    <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+                </div>
 
             </div>
-            <div className={styles.Switch} >
-                <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
-            </div>
-            {setting && <HeaterSettings online={true} component={props.componentT} updateTime={updateTime} averageTime={averageTime} />}
+
         </ThemeProvider>
     )
 

@@ -55,21 +55,17 @@ const RotaryCtrl = (props) => {
       });
 
       socketCtx.socket.emit('footer', {
-        status: 'Last change by: ' + socketCtx.username,
+        status: 'Used by: ' + socketCtx.username.substring(0, 17),
         controlId: props.component
       });
-
-      /*  if (rotation > 5000 || rotation > -5000) {
-         appCtx.toggleChangeRotary();
-       } else {
-         appCtx.toggleChangeRotary();
-       } */
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };
 
   const changeRotationHandler = (event) => {
-    setEnteredRotation(event.target.value);
+    if (event.target.value > -1) {
+      setEnteredRotation(event.target.value);
+    }
   };
 
   return (

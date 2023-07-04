@@ -1,6 +1,6 @@
 
 import { FormControl, InputLabel, Box } from '@mui/material';
-import SelectItem from './SelectItem'
+import SelectItem from './SelectItem';
 
 const SelectCtrl = (props) => {
     return (

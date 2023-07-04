@@ -535,7 +535,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1, -0.1]} title="LED" description="Measurement of Coherent Length" />}
+              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount"/>}
               <mesh
                 name="Cylinder"
                 castShadow
