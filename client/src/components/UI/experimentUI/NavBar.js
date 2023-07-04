@@ -45,7 +45,7 @@ const NavBar = () => {
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
-                <h1>XR TwinLab</h1>
+                <h1>XR TwinLab - Adaptive Optics</h1>
 
                 {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
 
@@ -71,10 +71,10 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Manual'>
+{/*                         <Tooltip title='Manual'>
                             <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                         </Tooltip>
-
+ */}
                         <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
@@ -119,13 +119,13 @@ const NavBar = () => {
                             <FaTags size={25} style={{ paddingRight: '20px' }} />
                             Labels
                         </MenuItem>
-                        <MenuItem onClick={() => {
+                        {/* <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowManualWindow();
                         }} disableRipple>
                             <MdOutlineMenuBook size={26} style={{ paddingRight: '20px' }} />
                             Manual
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleCam();
