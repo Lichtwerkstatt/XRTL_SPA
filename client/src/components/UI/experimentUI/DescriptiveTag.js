@@ -6,13 +6,17 @@ const DescriptiveTag = (props) => {
   const wrapperStyle = {
     color: 'white',
     width: '200px',
-    height: '30px',
+    height: '50px',
+    position: 'absolute',
+    left: props.position.x + 'px',
+    top: props.position.y + 'px',
+    transform: 'translateY(-100px)',
   };
   return <Html position={props.position} style={wrapperStyle} zIndexRange={[0, 10]} >
 
     <div
       style={{
-        height: '150px',
+        height: '100px',
         width: '0px',
         borderLeft: '2px solid white',
         float: 'left',

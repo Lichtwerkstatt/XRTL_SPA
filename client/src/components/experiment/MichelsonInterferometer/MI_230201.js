@@ -103,7 +103,7 @@ export function Model(props) {
             props.toggleSelect("KM100_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[-0.5, 1.3, 0.9]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
+          {props.showTags && <DescriptiveTag position={[-0.5, 1, 1]} title="Reference Mirror" description="KM100 Double Rotary Control" />}
           <mesh
             name="SideMirrorMesh"
             castShadow
@@ -142,7 +142,7 @@ export function Model(props) {
             props.toggleSelect("screen");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.5, -1.3]} title="Screen" description="Screen with Interference Pattern" />}
+          {props.showTags && <DescriptiveTag position={[-0.4, 1, -1.3]} title="Screen" description="Screen with Interference Pattern" />}
           <mesh
             name="PlaneMesh"
             castShadow
@@ -167,7 +167,7 @@ export function Model(props) {
             props.toggleSelect("greenlaser_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[1.6, 1.3, 0]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
+          {props.showTags && <DescriptiveTag position={[1.6, 1, -0.15]} title="Laser Alignment" description="KM100 Double Rotary Control" />}
           <mesh
             name="LaserMesh"
             castShadow
@@ -201,7 +201,7 @@ export function Model(props) {
             props.toggleSelect("greenlaserPower_1")
           }}
         >
-          {props.showTags && <DescriptiveTag position={[1.4, 1.1, -0.8]} title="Power Supply" description="5V Laser Power Supply" />}
+          {props.showTags && <DescriptiveTag position={[1.8, 0.6, -0.9]} title="Power Supply" description="5V Laser Power Supply" />}
           {props.selected.has("greenlaserPower_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
@@ -219,7 +219,7 @@ export function Model(props) {
                   props.toggleSelect("experimentSelection");
                 }}
               >
-                {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
+                {props.showTags && <DescriptiveTag position={[0, 1, -0.15]} title="Multi Component Selection" description="Custom Revolving Mount" />}
                 <mesh
                   name="Cylinder"
                   castShadow
@@ -284,7 +284,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 17, 0]} title="LED" description="Measurement of Coherent Length" />}
+              {props.showTags && <DescriptiveTag position={[0, 11, 0]} title="LED" description="Measurement of Coherent Length" />}
               <mesh
                 name="Cylinder007"
                 castShadow
@@ -339,7 +339,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
+              {props.showTags && <DescriptiveTag position={[0, 1, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
               <mesh
                 name="Cylinder"
                 castShadow
@@ -390,7 +390,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 17, 0]} title="LED" description="Measurement of Coherent Length" />}
+              {props.showTags && <DescriptiveTag position={[0, 11, 0]} title="LED" description="Measurement of Coherent Length" />}
               <mesh
                 name="Cylinder007"
                 castShadow
@@ -439,7 +439,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
+              {props.showTags && <DescriptiveTag position={[0, 1, -0.1]} title="Multi Component Selection" description="Custom Revolving Mount" />}
               <mesh
                 name="Cylinder"
                 castShadow
@@ -471,7 +471,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 17, 0]} title="LED" description="Measurement of Coherent Length" />}
+              {props.showTags && <DescriptiveTag position={[0, 11, 0]} title="LED" description="Measurement of Coherent Length" />}
               <mesh
                 name="Cylinder007"
                 castShadow
@@ -535,7 +535,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 1.3, -0.1]} title="LED" description="Measurement of Coherent Length" />}
+              {props.showTags && <DescriptiveTag position={[0, 1, -0.1]} title="LED" description="Measurement of Coherent Length" />}
               <mesh
                 name="Cylinder"
                 castShadow
@@ -567,7 +567,7 @@ export function Model(props) {
                 props.toggleSelect("experimentSelection");
               }}
             >
-              {props.showTags && <DescriptiveTag position={[0, 17, 0]} title="LED" description="Measurement of Coherent Length" />}
+              {props.showTags && <DescriptiveTag position={[0, 11, 0]} title="LED" description="Measurement of Coherent Length" />}
               <mesh
                 name="Cylinder007"
                 castShadow
@@ -620,7 +620,7 @@ export function Model(props) {
             props.toggleSelect("linear_1");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 0.8, 0]} title="Linear Movable Mirror" description="SM1ZP/M Translation Mount" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.4, 0]} title="Linear Movable Mirror" description="SM1ZP/M Translation Mount" />}
           <mesh
             name="TranslateMirrorMesh005"
             castShadow
@@ -668,7 +668,7 @@ export function Model(props) {
             props.toggleSelect("heater");
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Heatable Mirror Stage" description="Mirror Mounted on an Aluminum Rod" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.2, 0]} title="Heatable Mirror Stage" description="Mirror Mounted on an Aluminum Rod" />}
           <mesh 
             name="Cylinder008"
             castShadow
@@ -739,7 +739,7 @@ export function Model(props) {
             props.toggleSelect('heater_rotation');
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Mirror Changing Stage" description="PR01/M Rotation Stage" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.2, 0]} title="Mirror Changing Stage" description="PR01/M Rotation Stage" />}
           <mesh
             name="TranslateMirrorMesh004"
             castShadow
@@ -771,7 +771,7 @@ export function Model(props) {
             props.toggleSelect('plate_rotation');
           }}
         >
-          {props.showTags && <DescriptiveTag position={[0, 1.3, 0]} title="Glass Plate Rotation Stage" description="PR01/M Rotation Stage" />}
+          {props.showTags && <DescriptiveTag position={[0, 0.5, 0]} title="Glass Plate Rotation Stage" description="PR01/M Rotation Stage" />}
           <mesh
             name="PR01_M-Step001"
             castShadow
