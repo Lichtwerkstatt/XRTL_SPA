@@ -3,9 +3,8 @@ import Model2d from "../../experiment/MichelsonInterferometer/MIS1_2D_control";
 import { OrbitControls, Environment, Billboard } from "@react-three/drei";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { useSocketContext } from "../../../services/SocketContext";
-import Settings from "../CtrlUnits/Settings";
 
 const VirtualLayer = (...props) => {
   const appCtx = useAppContext();
