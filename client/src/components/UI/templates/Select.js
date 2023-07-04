@@ -41,7 +41,7 @@ export default function CustomSelect(props) {
                     label={props.title}
                     value={selectValue}
                     onChange={handleChange}
-                >
+                    disabled={(socketCtx.connected && props.online) ? false : true} >
                     {Object.keys(props.list).map((type) => (
                         <TypeSelectMenuItem value={type}>
                             {props.list[type]}
