@@ -30,7 +30,7 @@ const Login = (props) => {
 
     const handleChange = (event) => {
         setUsername(event.target.value);
-        setConnection(connectionOption[0].title);
+        setConnection(connectionOption[1].title);
     };
 
     const handleAccessCode = (event) => {
