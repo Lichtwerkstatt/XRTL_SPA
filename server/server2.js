@@ -10,7 +10,7 @@ const io = require('socket.io')(server, {
     }
 })
 
-var pw = fs.readFileSync("", 'utf8');
+//var pw = fs.readFileSync("", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var userIDServerList = [];
@@ -88,7 +88,7 @@ io.on('connection', socket => {
         var master = returnNumer(socket.decoded.code);
         var date = new Date();
         date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-        var masterSocket = pw + returnNumer(date);
+       // var masterSocket = pw + returnNumer(date);
     }
 
     if (socket.decoded.component === 'client' && color.length != 0 && socket.decoded.code === rand) {
@@ -103,11 +103,11 @@ io.on('connection', socket => {
         io.to(socket.id).emit('AuthFailed');
         socket.disconnect();
         console.error('To many user are connected right now!');
-    } else if (master === masterSocket) {
+    /* } else if (master === masterSocket) {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
-        io.to(socket.id).emit('Auth', '#FFFFFF');
-    }
+        io.to(socket.id).emit('Auth', '#FFFFFF'); */
+    } 
     else if (socket.decoded.component === 'component') {
         io.to(socket.id).emit('Auth');
         console.log('Component connected successfully');
