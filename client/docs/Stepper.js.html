@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#Stepper">Stepper</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li></ul></div>
                 
             </nav>
         </div>
@@ -104,7 +104,6 @@ import propTypes from "prop-types";
  * @description This component returns a styled stepper. For this, the controlId, the length of the stepper and the beginning of the 
  * Id of the paragraphs must be specified. Optionally, the text on the right and left can be defined. 
  * 
- * @param {*} props 
  * @param {string} component - controlId 
  * @param {number} length - Specifies the length of the stepper
  * @param {string} left -  text at the left/beginning
@@ -119,7 +118,7 @@ import propTypes from "prop-types";
  * @example &lt;Stepper buttonValue={30} length={3} component={'manual2'} />
  */
 
-const Stepper = (props) => {
+const StepperCtrl = (props) => {
     const theme = useTheme();
     const appCtx = useAppContext();
     const [activeStep, setActiveStep] = useState(1 === appCtx.manualPage ? 1 : appCtx.manualPage)
@@ -191,7 +190,7 @@ const Stepper = (props) => {
     );
 }
 
-Stepper.propTypes = {
+StepperCtrl.propTypes = {
     component: propTypes.string.isRequired,
     length: propTypes.number.isRequired,
     left: propTypes.string,
@@ -199,7 +198,7 @@ Stepper.propTypes = {
     buttonValue: propTypes.number.isRequired,
 }
 
-export default Stepper;</code></pre>
+export default StepperCtrl;</code></pre>
         </article>
     </section>
 

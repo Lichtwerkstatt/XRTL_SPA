@@ -27,7 +27,7 @@ import propTypes from "prop-types";
  * @example <Stepper buttonValue={30} length={3} component={'manual2'} />
  */
 
-const Stepper = (props) => {
+const StepperCtrl = (props) => {
     const theme = useTheme();
     const appCtx = useAppContext();
     const [activeStep, setActiveStep] = useState(1 === appCtx.manualPage ? 1 : appCtx.manualPage)
@@ -99,7 +99,7 @@ const Stepper = (props) => {
     );
 }
 
-Stepper.propTypes = {
+StepperCtrl.propTypes = {
     component: propTypes.string.isRequired,
     length: propTypes.number.isRequired,
     left: propTypes.string,
@@ -107,4 +107,4 @@ Stepper.propTypes = {
     buttonValue: propTypes.number.isRequired,
 }
 
-export default Stepper;
+export default StepperCtrl;

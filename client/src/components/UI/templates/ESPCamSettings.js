@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@mui/material/styles';
 import styles from '../CSS/Settings.module.css';
 import { theme } from '../templates/Theme.js';
-import Slider from '../templates/SliderCtrl';
+import Slider from './Slider';
 import Switch from '../templates/Switch';
 import Select from '../templates/Select';
 import Box from '@mui/material/Box';
