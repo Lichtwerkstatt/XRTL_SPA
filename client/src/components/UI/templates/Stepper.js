@@ -30,9 +30,23 @@ import propTypes from "prop-types";
 const StepperCtrl = (props) => {
     const theme = useTheme();
     const appCtx = useAppContext();
+
+    /**
+     * @param {number} activeStep - Indicates the position where the stepper is located.
+     * @function setActiveStep - Assigning a new value
+     */
     const [activeStep, setActiveStep] = useState(1 === appCtx.manualPage ? 1 : appCtx.manualPage)
+
+    /**
+     * @param {number} buttonValue - Indicates the Id of the first paragraph of the first page of the stepper
+     * @function setButtonValue - Assigning a new value
+     */
     const [buttonValue, setButtonValue] = useState(1 === appCtx.manualPage ? props.buttonValue : appCtx.manualPage + props.buttonValue - 1)
 
+    /**
+     * If the manualPage is not equal to 1, which means that you are not on the first page (e.g. after reopening the window), 
+     * then this function handles this. By setting the paragraph defined by the buttonValue to not show and the appCtx.manualPage to show.
+     */
     useEffect(() => {
         if (1 !== appCtx.manualPage) {
             document.getElementById(String(props.buttonValue)).style.display = 'none'
@@ -42,7 +56,9 @@ const StepperCtrl = (props) => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
+/**
+ * Function handles the clicking on the next page and the associated re-rendering of the selected text.
+ */
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setButtonValue((buttonValue) => buttonValue + 1);
@@ -54,7 +70,10 @@ const StepperCtrl = (props) => {
             appCtx.toggleSetManualPage(activeStep + 1)
         }
     };
-
+    
+/**
+ * Function handles clicking back to the previous page and the associated re-rendering of the selected text.
+ */
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         setButtonValue((buttonValue) => buttonValue - 1);
