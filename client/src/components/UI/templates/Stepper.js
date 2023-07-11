@@ -1,19 +1,32 @@
-
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import { useAppContext } from '../../../services/AppContext';
 import MobileStepper from '@mui/material/MobileStepper';
 import { useTheme } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../../../services/AppContext';
+import Button from '@mui/material/Button';
+import propTypes from "prop-types";
 
-/* props:    
-length... Specifies the length of the slider
-left... Slider text left
-right... Slider text right
-buttonValue... indicates the beginning of the Ids of the paragraphs of the text 
-(these should be set once at 1, 10, 20, ... because otherwise, when opening several windows, all elements with the same ID will be changed).)
+/**
+ * Stepper component
+ * 
+ * @description This component returns a styled stepper. For this, the controlId, the length of the stepper and the beginning of the 
+ * Id of the paragraphs must be specified. Optionally, the text on the right and left can be defined. 
+ * 
+ * @param {string} component - controlId 
+ * @param {number} length - Specifies the length of the stepper
+ * @param {string} left -  text at the left/beginning
+ * @param {string} right -text at the right/end
+ * @param {number} buttonValue - indicates the beginning of the Ids of the paragraphs of the text (these should be set once at 1, 10, 20, ...,
+ *  because otherwise, when opening several windows, all elements with the same ID will be changed).)
+ * 
+ * @returns {React.ReactElement} styled stepper with the specified props 
+ * 
+ * @example <Stepper left={'Back'} right={'Next'} buttonValue={10} length={9} component={'manual'} />
+ * @example <Stepper left={'Back'} right={'Next'} buttonValue={20} length={6} component={'help'} />
+ * @example <Stepper buttonValue={30} length={3} component={'manual2'} />
  */
+
 const Stepper = (props) => {
     const theme = useTheme();
     const appCtx = useAppContext();
@@ -85,4 +98,13 @@ const Stepper = (props) => {
         />
     );
 }
+
+Stepper.propTypes = {
+    component: propTypes.string.isRequired,
+    length: propTypes.number.isRequired,
+    left: propTypes.string,
+    right: propTypes.string,
+    buttonValue: propTypes.number.isRequired,
+}
+
 export default Stepper;

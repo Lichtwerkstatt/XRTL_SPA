@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Switch.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#Stepper">Stepper</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>Switch.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
+import { useSocketContext } from "../../../services/SocketContext";
+import { useAppContext } from "../../../services/AppContext";
+import propTypes from "prop-types";
+import { useState } from "react";
+
+/**
+ * Switch Component
+ * 
+ * @description This component returns a styled switch. The left/beginning and right/end text of the switch can be set. In addition, the controlId, the status 
+ * (of the component and the online status), and the command for the server must be specified.
+ * 
+ * @param {*} props 
+ * @param {string} component - controlId 
+ * @param {string} left -  text at the left/beginning
+ * @param {string} right -text at the right/end
+ * @param {boolean} switchStatus - Status of the switch from the status request 
+ * @param {boolean} online - connection status to the component
+ * @param {string} option - command for the server
+ * 
+ * @returns {React.ReactElement} styled switch with the specified props 
+ * 
+ * @example &lt;Switch component={'TestSwitch'} online={true} switchStatus={false} option="switch" />
+ * @example &lt;Switch component={'TestSwitch2'} online={true} switchStatus={false} left='Off' right='On' option="switch" />
+ * @example &lt;Switch component={'TestSwitch3'} online={false} switchStatus={true} left='Front' right='Back' option="status" />
+ */
+
+const SwitchCtrl = (props) => {
+    const [switchValue, setSwitchValue] = useState(false);
+    const appCtx = useAppContext();
+    const socketCtx = useSocketContext();
+
+    /**
+     * Handles the onclick event on the switch
+     * 
+     * @description Clicking on the button overwrites it with the new value. This is then sent to the server with a "command" command. Emitting footer 
+     * then updates the footer of the window 
+     * 
+     * @param {*} event - Clicking event
+     * @param {*} newValue - Value with which switchValue is to be overwritten
+     */
+    const handleSettingChanges = (event, newValue) => {
+        setSwitchValue(newValue);
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.component,
+            [props.option]: newValue,
+            color: socketCtx.fontColor,
+        })
+
+        socketCtx.socket.emit("footer", {
+            status: 'Used by: ' + socketCtx.username.substring(0, 17),
+            controlId: props.component
+        })
+
+        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
+    }
+
+    return (
+        &lt;Box >
+            &lt;FormGroup>
+                &lt;Stack direction="row" alignItems="center" sx={{ ml: 2 }}>
+                    &lt;Typography>{props.left}&lt;/Typography>
+                    &lt;Switch checked={props.switchStatus}
+                        onChange={handleSettingChanges}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                        disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true} />
+                    &lt;Typography>{props.right}&lt;/Typography>
+                &lt;/Stack>
+            &lt;/FormGroup>
+        &lt;/Box>
+    )
+}
+
+SwitchCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+    left: propTypes.string,
+    right: propTypes.string,
+    switchStatus: propTypes.bool.isRequired,
+    online: propTypes.bool.isRequired,
+    option: propTypes.string.isRequired
+}
+
+export default SwitchCtrl;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

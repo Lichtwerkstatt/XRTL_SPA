@@ -1,5 +1,5 @@
 import PS_Background from './media/PS_outline.png';
-import LaserCtrl from '../UI/CtrlUnits/LaserCtrl';
+import LaserCtrl from '../UI/CtrlUnits/SwitchCtrl';
 import Window from '../UI/experimentUI/Window';
 
 const Laser = (props) => {

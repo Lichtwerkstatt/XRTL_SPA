@@ -1,5 +1,5 @@
 import BS_Background from './media/BS_outline.png';
-import PinholeCtrl from '../UI/CtrlUnits/LaserCtrl';
+import PinholeCtrl from '../UI/CtrlUnits/SwitchCtrl';
 import Window from '../UI/experimentUI/Window';
 
 const Pinhole = (props) => {
