@@ -23,23 +23,39 @@ import { useState } from "react";
  * @example <Slider title='Contrast' component={'cam'} online={true} sliderValue={0} min={-2} max={2} option='contrast' />
  * @example <Slider title='Exposure' component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
  * @example <Slider component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
- * 
  */
 
 const SliderCtrl = (props) => {
+  /**
+ * @param {number} sliderPos - Indicates the status of the slider
+ * @function setSliderPos - Assigning a new value
+ */
   const [sliderPos, setSliderPos] = useState(props.sliderValue);
 
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
+  /**
+   * Definition of the start, middle and end point
+   */
   const marks = [
     { value: parseInt(props.min), label: props.min, },
     { value: 0, label: '0', },
     { value: parseInt(props.max), label: props.max, },
   ]
 
+  /**
+   * Handles the onclick event on the slider
+   * 
+   * @description When one clicks on the slider, the sliderValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
+   * Emitting footer then updates the footer of the window 
+   * 
+   * @param {*} event - onClick event
+   * @param {number} newValue - Value with which selectValue is to be overwritten
+   */
   const handleSettingChanges = (event, newValue) => {
     setSliderPos(newValue)
+
     socketCtx.socket.emit("command", {
       userId: socketCtx.username,
       controlId: props.component,
@@ -101,8 +117,8 @@ const SliderCtrl = (props) => {
 SliderCtrl.propTypes = {
   component: propTypes.string.isRequired,
   title: propTypes.string,
-  min: propTypes.string.isRequired,
-  max: propTypes.string.isRequired,
+  min: propTypes.number.isRequired,
+  max: propTypes.number.isRequired,
   sliderValue: propTypes.bool.isRequired,
   online: propTypes.bool.isRequired,
   option: propTypes.string.isRequired

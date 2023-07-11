@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Switch.js</title>
+  <title> Select.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>Switch.js</h1>
+                    <h1>Select.js</h1>
                 </header>
                 
 
@@ -89,59 +89,70 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
+            <pre class="prettyprint source linenums"><code>import { MenuItem, Select, FormControl, Box, InputLabel } from '@mui/material';
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
 import propTypes from "prop-types";
 import { useState } from "react";
 
 /**
- * Switch Component
+ * Gets the objects that have the assigned properties. A MenuItem is then created for each object with the corresponding text and value.
  * 
- * @description This component returns a styled switch. The left/beginning and right/end text of the switch can be set. In addition, the controlId, the status 
- * (of the component and the online status), and the command for the server must be specified.
+ * @param {*} props - Select items to be created 
+ * @returns {React.ReactElement}  &lt;MenuItem value={value}> text &lt;MenuItem/> 
+ */
+const TypeSelectMenuItem = (props) => {
+    return (
+        &lt;MenuItem {...props}>
+            {props["children"]}
+        &lt;/MenuItem>
+    );
+};
+
+/**
+ * Select component
+ * 
+ * @description Select is used to choose from a list of options. For this, the controlId, the status (of the component and the online status), 
+ * the list of options and the command for the server must be specified. The title can, but does not have to be specified. 
  * 
  * @param {string} component - controlId 
- * @param {string} left -  text at the left/beginning
- * @param {string} right -text at the right/end
- * @param {boolean} switchStatus - Status of the switch from the status request 
+ * @param {string} title -  title
+ * @param {string} list - Dictionary with the keys and corresponding values as content for the select.
+ * @param {boolean} switchStatus - Status of the select from the status query 
  * @param {boolean} online - connection status to the component
  * @param {string} option - command for the server
  * 
- * @returns {React.ReactElement} styled switch with the specified props 
+ * @returns {React.ReactElement} styled select with the specified props
  * 
- * @example &lt;Switch component={'TestSwitch'} online={true} switchStatus={false} option="switch" />
- * @example &lt;Switch component={'TestSwitch2'} online={true} switchStatus={false} left='Off' right='On' option="switch" />
- * @example &lt;Switch component={'TestSwitch3'} online={false} switchStatus={true} left='Front' right='Back' option="status" />
+ * @example &lt;Select title='Resolution' component={'Select'} online={true} option='frameSize' selectValue={1} list={{1: 'a', 2: 'b', 3: 'c'}} />
+ * @example &lt;Select title='Resolution' component={'Select2'} online={true} option='frameSize' selectValue={'a'} list={{a: 1, b: 2, c: 4} />
+ * @example &lt;Select component={'Select3'} online={true} option='frameSize' selectValue={3} list={{1: 'a', 2: 'b', 3: 'c'}} />
  */
-
-const SwitchCtrl = (props) => {
-    /**
-     * @param {bool} switchValue - Indicates the status of the switch
-     * @function setSwitchValue - Assigning a new value
-     */
-    const [switchValue, setSwitchValue] = useState(false);
-
-    const appCtx = useAppContext();
+export default function CustomSelect(props) {
     const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
 
     /**
-     * Handles the onclick event on the switch
-     * 
-     * @description Clicking on the button overwrites it with the new value. This is then sent to the server with a "command" command. Emitting footer 
-     * then updates the footer of the window 
-     * 
-     * @param {*} event - Clicking event
-     * @param {boolean} newValue - Value with which switchValue is to be overwritten
+     * @param {string|number} selectValue - Indicates the status of the select
+     * @function setSelectValue - Assigning a new value
      */
-    const handleSettingChanges = (event, newValue) => {
-        setSwitchValue(newValue);
+    const [selectValue, setSelectValue] = useState(props.selectValue);
+
+    /**
+     * Handles the onclick event on a select option 
+     * 
+     * @description When a select element is clicked, SelectValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
+     * Emitting footer then updates the footer of the window. 
+     * 
+     * @param {*} event - clicking event (contains the new value)
+     */
+    const handleChange = (event) => {
+        setSelectValue(event.target.value);
 
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
-            [props.option]: newValue,
-            color: socketCtx.fontColor,
+            [props.option]: props.number ? Number(event.target.value) : event.target.value
         })
 
         socketCtx.socket.emit("footer", {
@@ -149,36 +160,38 @@ const SwitchCtrl = (props) => {
             controlId: props.component
         })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
-    }
+        appCtx.addLog("User set selected " + props.component + " with " + selectValue)
+    };
 
     return (
-        &lt;Box >
-            &lt;FormGroup>
-                &lt;Stack direction="row" alignItems="center" sx={{ ml: 2 }}>
-                    &lt;Typography>{props.left}&lt;/Typography>
-                    &lt;Switch checked={props.switchStatus}
-                        onChange={handleSettingChanges}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true} />
-                    &lt;Typography>{props.right}&lt;/Typography>
-                &lt;/Stack>
-            &lt;/FormGroup>
+        &lt;Box sx={{ m: 2, width: 250 }}>
+            &lt;FormControl fullWidth>
+                &lt;InputLabel >{props.title}&lt;/InputLabel>
+                &lt;Select
+                    label={props.title}
+                    value={selectValue}
+                    onChange={handleChange}
+                    disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true} >
+                    {Object.keys(props.list).map((type) => (
+                        &lt;TypeSelectMenuItem value={type}>
+                            {props.list[type]}
+                        &lt;/TypeSelectMenuItem>
+                    ))}
+                &lt;/Select>
+            &lt;/FormControl>
         &lt;/Box>
-    )
+    );
 }
 
-SwitchCtrl.propTypes = {
+CustomSelect.propTypes = {
     component: propTypes.string.isRequired,
-    left: propTypes.string,
-    right: propTypes.string,
-    switchStatus: propTypes.bool.isRequired,
+    title: propTypes.string,
+    list: propTypes.array.isRequired,
+    number: propTypes.bool,
+    selectValue: propTypes.oneOf([propTypes.string, propTypes.number]).isRequired,
     online: propTypes.bool.isRequired,
     option: propTypes.string.isRequired
-}
-
-export default SwitchCtrl;
-</code></pre>
+}</code></pre>
         </article>
     </section>
 

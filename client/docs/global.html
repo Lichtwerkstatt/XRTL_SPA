@@ -70,7 +70,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSelectValue-Assigninganewvalue">setSelectValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
                 
             </nav>
         </div>
@@ -153,6 +153,159 @@
 
     
 
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="theme">
+    <a class="href-link" href="#theme">#</a>
+    
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        theme
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>This theme is the default theme used.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Theme.js.html" class="button">View Source</a>
+            <span>
+                <a href="Theme.js.html">Theme.js</a>, <a href="Theme.js.html#line10">line 10</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="themeLogin">
+    <a class="href-link" href="#themeLogin">#</a>
+    
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        themeLogin
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>This theme is used in the login window. The special feature here is that the contrast text is white and spaceing is set to two.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Theme.js.html" class="button">View Source</a>
+            <span>
+                <a href="Theme.js.html">Theme.js</a>, <a href="Theme.js.html#line30">line 30</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
     
 
     
@@ -429,9 +582,9 @@ and the command for the server must be specified. The title can but does not hav
 
     
         <p class="tag-source">
-            <a href="SliderCtrl.js.html" class="button">View Source</a>
+            <a href="Slider.js.html" class="button">View Source</a>
             <span>
-                <a href="SliderCtrl.js.html">SliderCtrl.js</a>, <a href="SliderCtrl.js.html#line29">line 29</a>
+                <a href="Slider.js.html">Slider.js</a>, <a href="Slider.js.html#line28">line 28</a>
             </span>
         </p>
     
@@ -1099,6 +1252,902 @@ because otherwise, when opening several windows, all elements with the same ID w
     
         <pre class="prettyprint"><code>&lt;Switch component={'TestSwitch3'} online={false} switchStatus={true} left='Front' right='Back' option="status" /></code></pre>
     
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="TypeSelectMenuItem">
+        <a class="href-link" href="#TypeSelectMenuItem">#</a>
+        
+        <span class="code-name">
+            
+                TypeSelectMenuItem<span class="signature">(props)</span><span class="type-signature"> &rarr; {React.ReactElement}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Gets the objects that have the assigned properties. A MenuItem is then created for each object with the corresponding text and value.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>props</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">*</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Select items to be created</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Select.js.html" class="button">View Source</a>
+            <span>
+                <a href="Select.js.html">Select.js</a>, <a href="Select.js.html#line13">line 13</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><MenuItem value={value}> text <MenuItem/></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">React.ReactElement</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setActiveStep-Assigninganewvalue">
+        <a class="href-link" href="#setActiveStep-Assigninganewvalue">#</a>
+        
+        <span class="code-name">
+            
+                setActiveStep - Assigning a new value<span class="signature">(activeStep)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>activeStep</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Indicates the position where the stepper is located.</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Stepper.js.html" class="button">View Source</a>
+            <span>
+                <a href="Stepper.js.html">Stepper.js</a>, <a href="Stepper.js.html#line34">line 34</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setButtonValue-Assigninganewvalue">
+        <a class="href-link" href="#setButtonValue-Assigninganewvalue">#</a>
+        
+        <span class="code-name">
+            
+                setButtonValue - Assigning a new value<span class="signature">(buttonValue)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>buttonValue</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Indicates the Id of the first paragraph of the first page of the stepper</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Stepper.js.html" class="button">View Source</a>
+            <span>
+                <a href="Stepper.js.html">Stepper.js</a>, <a href="Stepper.js.html#line40">line 40</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setSelectValue-Assigninganewvalue">
+        <a class="href-link" href="#setSelectValue-Assigninganewvalue">#</a>
+        
+        <span class="code-name">
+            
+                setSelectValue - Assigning a new value<span class="signature">(selectValue)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>selectValue</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+|
+
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Indicates the status of the select</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Select.js.html" class="button">View Source</a>
+            <span>
+                <a href="Select.js.html">Select.js</a>, <a href="Select.js.html#line44">line 44</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setSliderPos-Assigninganewvalue">
+        <a class="href-link" href="#setSliderPos-Assigninganewvalue">#</a>
+        
+        <span class="code-name">
+            
+                setSliderPos - Assigning a new value<span class="signature">(sliderPos)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>sliderPos</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Indicates the status of the slider</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Slider.js.html" class="button">View Source</a>
+            <span>
+                <a href="Slider.js.html">Slider.js</a>, <a href="Slider.js.html#line29">line 29</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setSwitchValue-Assigninganewvalue">
+        <a class="href-link" href="#setSwitchValue-Assigninganewvalue">#</a>
+        
+        <span class="code-name">
+            
+                setSwitchValue - Assigning a new value<span class="signature">(switchValue)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>switchValue</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">bool</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Indicates the status of the switch</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Switch.js.html" class="button">View Source</a>
+            <span>
+                <a href="Switch.js.html">Switch.js</a>, <a href="Switch.js.html#line28">line 28</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </div>

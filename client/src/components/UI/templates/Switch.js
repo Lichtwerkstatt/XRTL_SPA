@@ -41,7 +41,7 @@ const SwitchCtrl = (props) => {
      * then updates the footer of the window 
      * 
      * @param {*} event - Clicking event
-     * @param {*} newValue - Value with which switchValue is to be overwritten
+     * @param {boolean} newValue - Value with which switchValue is to be overwritten
      */
     const handleSettingChanges = (event, newValue) => {
         setSwitchValue(newValue);

@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Switch.js</title>
+  <title> Slider.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>Switch.js</h1>
+                    <h1>Slider.js</h1>
                 </header>
                 
 
@@ -89,96 +89,133 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Switch, Box, Typography, FormGroup, Stack } from '@mui/material';
-import { useSocketContext } from "../../../services/SocketContext";
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext";
+import { Box, Stack, Typography, Slider } from "@mui/material";
 import { useAppContext } from "../../../services/AppContext";
 import propTypes from "prop-types";
 import { useState } from "react";
 
 /**
- * Switch Component
+ * Slider component
  * 
- * @description This component returns a styled switch. The left/beginning and right/end text of the switch can be set. In addition, the controlId, the status 
- * (of the component and the online status), and the command for the server must be specified.
+ * @description Used to create a slider with a specified start and end point. In addition, the controlId, the status (of the component and the online status) 
+ * and the command for the server must be specified. The title can but does not have to be given.
  * 
  * @param {string} component - controlId 
- * @param {string} left -  text at the left/beginning
- * @param {string} right -text at the right/end
- * @param {boolean} switchStatus - Status of the switch from the status request 
+ * @param {string} title - title 
+ * @param {number} min -  text at the left/beginning
+ * @param {number} max -text at the right/end
+ * @param {number} sliderValue - Status of the slider from the status request 
  * @param {boolean} online - connection status to the component
  * @param {string} option - command for the server
  * 
- * @returns {React.ReactElement} styled switch with the specified props 
+ * @returns {React.ReactElement} styled slider with the specified props
  * 
- * @example &lt;Switch component={'TestSwitch'} online={true} switchStatus={false} option="switch" />
- * @example &lt;Switch component={'TestSwitch2'} online={true} switchStatus={false} left='Off' right='On' option="switch" />
- * @example &lt;Switch component={'TestSwitch3'} online={false} switchStatus={true} left='Front' right='Back' option="status" />
+ * @example &lt;Slider title='Contrast' component={'cam'} online={true} sliderValue={0} min={-2} max={2} option='contrast' />
+ * @example &lt;Slider title='Exposure' component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
+ * @example &lt;Slider component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
  */
 
-const SwitchCtrl = (props) => {
-    /**
-     * @param {bool} switchValue - Indicates the status of the switch
-     * @function setSwitchValue - Assigning a new value
-     */
-    const [switchValue, setSwitchValue] = useState(false);
+const SliderCtrl = (props) => {
+  /**
+ * @param {number} sliderPos - Indicates the status of the slider
+ * @function setSliderPos - Assigning a new value
+ */
+  const [sliderPos, setSliderPos] = useState(props.sliderValue);
 
-    const appCtx = useAppContext();
-    const socketCtx = useSocketContext();
+  const appCtx = useAppContext();
+  const socketCtx = useSocketContext();
 
-    /**
-     * Handles the onclick event on the switch
-     * 
-     * @description Clicking on the button overwrites it with the new value. This is then sent to the server with a "command" command. Emitting footer 
-     * then updates the footer of the window 
-     * 
-     * @param {*} event - Clicking event
-     * @param {boolean} newValue - Value with which switchValue is to be overwritten
-     */
-    const handleSettingChanges = (event, newValue) => {
-        setSwitchValue(newValue);
+  /**
+   * Definition of the start, middle and end point
+   */
+  const marks = [
+    { value: parseInt(props.min), label: props.min, },
+    { value: 0, label: '0', },
+    { value: parseInt(props.max), label: props.max, },
+  ]
 
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            controlId: props.component,
-            [props.option]: newValue,
-            color: socketCtx.fontColor,
-        })
+  /**
+   * Handles the onclick event on the slider
+   * 
+   * @description When one clicks on the slider, the sliderValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
+   * Emitting footer then updates the footer of the window 
+   * 
+   * @param {*} event - onClick event
+   * @param {number} newValue - Value with which selectValue is to be overwritten
+   */
+  const handleSettingChanges = (event, newValue) => {
+    setSliderPos(newValue)
 
-        socketCtx.socket.emit("footer", {
-            status: 'Used by: ' + socketCtx.username.substring(0, 17),
-            controlId: props.component
-        })
+    socketCtx.socket.emit("command", {
+      userId: socketCtx.username,
+      controlId: props.component,
+      [props.option]: newValue,
+      color: socketCtx.fontColor,
+    })
 
-        appCtx.addLog("User set switch on " + props.component + " to " + switchValue)
-    }
+    socketCtx.socket.emit("footer", {
+      status: 'Used by: ' + socketCtx.username.substring(0, 17),
+      controlId: props.component
+    })
 
+    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
+  }
+
+  if (props.text) {
     return (
-        &lt;Box >
-            &lt;FormGroup>
-                &lt;Stack direction="row" alignItems="center" sx={{ ml: 2 }}>
-                    &lt;Typography>{props.left}&lt;/Typography>
-                    &lt;Switch checked={props.switchStatus}
-                        onChange={handleSettingChanges}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true} />
-                    &lt;Typography>{props.right}&lt;/Typography>
-                &lt;/Stack>
-            &lt;/FormGroup>
-        &lt;/Box>
+      &lt;Box sx={{ width: 250, m: 2 }}>
+        &lt;Typography id="input-slider" gutterBottom>
+          {props.title}
+        &lt;/Typography>
+        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          &lt;Slider aria-label="Temperature"
+            valueLabelDisplay="auto"
+            step={1}
+            min={props.min}
+            max={props.max}
+            value={props.sliderValue}
+            onChangeCommitted={handleSettingChanges}
+            marks={props.text}
+            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
+          />
+        &lt;/Stack>
+      &lt;/Box>
     )
+  } else {
+    return (
+      &lt;Box sx={{ width: 250, m: 2 }}>
+        &lt;Typography id="input-slider" gutterBottom>
+          {props.title}
+        &lt;/Typography>
+        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          &lt;Slider aria-label="Temperature"
+            valueLabelDisplay="auto"
+            step={1}
+            min={props.min}
+            max={props.max}
+            value={props.sliderValue}
+            onChangeCommitted={handleSettingChanges}
+            marks={marks}
+            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
+          />
+        &lt;/Stack>
+      &lt;/Box>
+    )
+  }
 }
 
-SwitchCtrl.propTypes = {
-    component: propTypes.string.isRequired,
-    left: propTypes.string,
-    right: propTypes.string,
-    switchStatus: propTypes.bool.isRequired,
-    online: propTypes.bool.isRequired,
-    option: propTypes.string.isRequired
+SliderCtrl.propTypes = {
+  component: propTypes.string.isRequired,
+  title: propTypes.string,
+  min: propTypes.number.isRequired,
+  max: propTypes.number.isRequired,
+  sliderValue: propTypes.bool.isRequired,
+  online: propTypes.bool.isRequired,
+  option: propTypes.string.isRequired
 }
 
-export default SwitchCtrl;
-</code></pre>
+export default SliderCtrl;</code></pre>
         </article>
     </section>
 
