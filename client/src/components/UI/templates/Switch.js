@@ -25,7 +25,12 @@ import { useState } from "react";
  */
 
 const SwitchCtrl = (props) => {
+    /**
+     * @param {bool} switchValue - Indicates the status of the switch
+     * @function setSwitchValue - Assigning a new value
+     */
     const [switchValue, setSwitchValue] = useState(false);
+
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 

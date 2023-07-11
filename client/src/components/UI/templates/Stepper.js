@@ -56,9 +56,9 @@ const StepperCtrl = (props) => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-/**
- * Function handles the clicking on the next page and the associated re-rendering of the selected text.
- */
+    /**
+     * Function handles the clicking on the next page and the associated re-rendering of the selected text.
+     */
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setButtonValue((buttonValue) => buttonValue + 1);
@@ -70,10 +70,10 @@ const StepperCtrl = (props) => {
             appCtx.toggleSetManualPage(activeStep + 1)
         }
     };
-    
-/**
- * Function handles clicking back to the previous page and the associated re-rendering of the selected text.
- */
+
+    /**
+     * Function handles clicking back to the previous page and the associated re-rendering of the selected text.
+     */
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         setButtonValue((buttonValue) => buttonValue - 1);
