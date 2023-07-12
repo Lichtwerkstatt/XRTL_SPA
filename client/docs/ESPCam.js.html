@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Select.js</title>
+  <title> ESPCam.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>Select.js</h1>
+                    <h1>ESPCam.js</h1>
                 </header>
                 
 
@@ -89,99 +89,85 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { MenuItem, Select, FormControl, Box, InputLabel } from '@mui/material';
-import { useSocketContext } from "../../../services/SocketContext";
-import { useAppContext } from "../../../services/AppContext";
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
+import styles from '../CSS/Settings.module.css'
 import propTypes from "prop-types";
+import { useEffect } from 'react';
 
 /**
- * Gets the objects that have the assigned properties. A MenuItem is then created for each object with the corresponding text and value.
+ * ESPCam canvas component
  * 
- * @param {*} props - Select items to be created 
- * @returns {React.ReactElement}  &lt;MenuItem value={value}> text &lt;MenuItem/> 
- */
-const TypeSelectMenuItem = (props) => {
-    return (
-        &lt;MenuItem {...props}>
-            {props["children"]}
-        &lt;/MenuItem>
-    );
-};
-
-/**
- * Select component
- * 
- * @description Select is used to choose from a list of options. For this, the controlId, the status (of the component and the online status), 
- * the list of options and the command for the server must be specified. The title can, but does not have to be specified. 
+ * @description This component returns a canvas with the camera stream of an ESPCam. For this, the height and width 
+ * must be specified. In addition, changes to the styling can be transferred.
  * 
  * @param {string} component - controlId 
- * @param {string} title -  title
- * @param {string} list - Dictionary with the keys and corresponding values as content for the select.
- * @param {boolean} switchStatus - Status of the select from the status query 
- * @param {boolean} online - connection status to the component
- * @param {string} option - command for the server
+ * @param {string} width - Sets the width of the canvas in pixels
+ * @param {string} height - Sets the height of the canvas in pixels
+ * @param {string} style - additional styling of the canvas
  * 
- * @returns {React.ReactElement} styled select with the specified props
- * 
- * @example &lt;Select title='Resolution' component={'Select'} online={true} option='frameSize' selectValue={1} list={{1: 'a', 2: 'b', 3: 'c'}} />
- * @example &lt;Select title='Resolution' component={'Select2'} online={true} option='frameSize' selectValue={'a'} list={{a: 1, b: 2, c: 4} />
- * @example &lt;Select component={'Select3'} online={true} option='frameSize' selectValue={3} list={{1: 'a', b: 2, 3: 'c'}} />
+ * @returns {React.ReactElement} styled canvas with ESPCam stream
  */
-export default function CustomSelect(props) {
+const ESPCam = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
-    /**
-     * Handles the onclick event on a select option 
-     * 
-     * @description When a select element is clicked, SelectValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
-     * Emitting footer then updates the footer of the window. 
-     * 
-     * @param {*} event - clicking event (contains the new value)
-    */
-    const handleChange = (event) => {
-        socketCtx.socket.emit("command", {
-            userId: socketCtx.username,
-            controlId: props.component,
-            [props.option]: isNaN(event.target.value) ? event.target.value : Number(event.target.value)
-        })
+    useEffect(() => {
+        var x1, x2, y1, y2;
+        var ctx;
+        const data = (payload) => {
+            if (payload.controlId === props.component) {
+                var uint8Arr = new Uint8Array(payload.data);
+                var binary = '';
+                for (var i = 0; i &lt; uint8Arr.length; i++) {
+                    binary += String.fromCharCode(uint8Arr[i]);
+                }
+                var base64String = window.btoa(binary);
 
-        socketCtx.socket.emit("footer", {
-            status: 'Used by: ' + socketCtx.username.substring(0, 17),
-            controlId: props.component
-        })
+                var img = new Image();
+                img.onload = function () {
+                    var canvas = document.getElementById(props.component);
 
-        appCtx.addLog("User set selected " + props.component + " with " + event.target.value)
-    };
+                    ctx = canvas.getContext('2d');
+                    x1 = 0;
+                    y1 = 0;
+                    x2 = 600;
+                    y2 = 400;
+                    ctx.drawImage(this, x1, y1, x2, y2);
+                };
+                img.src = 'data:image/jpg;base64,' + base64String;
+            }
+        }
+        // A room is created for the component, into which the clients are then added when they open the corresponding window. By creating the room, the traffic caused by sending the 
+        // stream should be reduced, as only the clients who really need the stream receive it.
+        appCtx.toogleRoomComp(props.component, true);
+
+        socketCtx.socket.on('data', data);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('data', data)
+        }
+        //Comment needed to prevent a warning
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socketCtx.socket]);
 
     return (
-        &lt;Box sx={{ m: 2, width: 250 }}>
-            &lt;FormControl fullWidth>
-                &lt;InputLabel >{props.title}&lt;/InputLabel>
-                &lt;Select
-                    label={props.title}
-                    value={props.selectValue}
-                    onChange={handleChange}
-                    disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true} >
-                    {Object.keys(props.list).map((type) => (
-                        &lt;TypeSelectMenuItem value={type}>
-                            {props.list[type]}
-                        &lt;/TypeSelectMenuItem>
-                    ))}
-                &lt;/Select>
-            &lt;/FormControl>
-        &lt;/Box>
-    );
+        &lt;div className={styles.Canvas}>
+            &lt;canvas id={props.component} width={props.width} height={props.height} style={props.style} />
+        &lt;/div>
+    )
 }
 
-CustomSelect.propTypes = {
+ESPCam.propTypes = {
     component: propTypes.string.isRequired,
-    title: propTypes.string,
-    list: propTypes.array.isRequired,
-    selectValue: propTypes.oneOf([propTypes.string, propTypes.number]).isRequired,
-    online: propTypes.bool.isRequired,
-    option: propTypes.string.isRequired
-}</code></pre>
+    width: propTypes.string.isRequired,
+    height: propTypes.string.isRequired,
+    style: propTypes.array
+}
+
+export default ESPCam;
+
+</code></pre>
         </article>
     </section>
 

@@ -20,7 +20,6 @@ const ESPCamPlusSettings = (props) => {
     const [exposure, setExposure] = useState(0);
 
     const socketCtx = useSocketContext();
-    const appCtx = useAppContext();
 
     const resolution = {
         5: 'QVGA (320x240)',
