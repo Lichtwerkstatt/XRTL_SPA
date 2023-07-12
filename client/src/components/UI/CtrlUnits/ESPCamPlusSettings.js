@@ -1,12 +1,11 @@
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
-import { useAppContext } from '../../../services/AppContext';
 import { ThemeProvider } from '@mui/material/styles';
-import ESPCam from '../templates/ESPCam';
 import styles from '../CSS/Settings.module.css'
 import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
+import ESPCam from '../templates/ESPCam';
 import Slider from '../templates/Slider';
 import Switch from '../templates/Switch';
 import Select from '../templates/Select';
@@ -20,7 +19,6 @@ const ESPCamPlusSettings = (props) => {
     const [exposure, setExposure] = useState(0);
 
     const socketCtx = useSocketContext();
-    const appCtx = useAppContext();
 
     const resolution = {
         5: 'QVGA (320x240)',

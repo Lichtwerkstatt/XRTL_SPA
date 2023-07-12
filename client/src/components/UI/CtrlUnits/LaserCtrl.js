@@ -16,7 +16,7 @@ const LaserCtrl = (props) => {
       if (payload.controlId === props.component) {
         setOnlineStatus(true)
         setSwitch(payload.status.isOn)
-        console.log(payload)
+        //console.log(payload)
       }
     }
 
