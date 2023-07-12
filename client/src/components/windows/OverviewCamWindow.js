@@ -1,4 +1,4 @@
-import Settings from '../UI/CtrlUnits/OverviewCam';
+import Settings from '../UI/CtrlUnits/ESPCamWithoutSettings';
 import Window from '../UI/experimentUI/Window';
 
 const CamWindow = (props) => {

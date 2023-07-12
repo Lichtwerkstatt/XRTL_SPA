@@ -1,12 +1,16 @@
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
-import { useAppContext } from  '../../../services/AppContext';
+import { useAppContext } from '../../../services/AppContext';
 import ESPCamSettings from '../templates/ESPCamSettings';
 import { ThemeProvider } from '@mui/material/styles';
 import styles from '../CSS/Settings.module.css'
 import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
+import Slider from '../templates/Slider';
+import Switch from '../templates/Switch';
+import Select from '../templates/Select';
+import Box from '@mui/material/Box';
 
 const Settings = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(false);
@@ -14,9 +18,16 @@ const Settings = (props) => {
     const [frameSize, setFrameSize] = useState(0);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
-    
+
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
+
+    const resolution = {
+        5: 'QVGA (320x240)',
+        8: 'VGA (640x480)',
+        9: 'SVGA (800x600)',
+        10: 'XGA (1024x768)',
+    }
 
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
@@ -104,7 +115,17 @@ const Settings = (props) => {
                 <div className={styles.Canvas}>
                     <canvas id='ScreenCanvas' width={'600px'} height={'400px'} />
                 </div>
-                {props.setting && <ESPCamSettings component={props.component} online={onlineStatus} contrast={contrast} exposure={exposure} switchIsOn={switchIsOn} frameSize={frameSize} />}
+                {props.setting &&
+
+                    <div className={styles.Settings}>
+                        <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
+                        <Select title='Resolution' component={props.component} online={props.online} option='frameSize' selectValue={props.frameSize} list={resolution} />
+                        <Switch component={props.component} switchStatus={props.switchIsOn} online={props.online} left='Color' right='Gray' option='gray' />
+                        <Slider title='Contrast' component={props.component} online={props.online} sliderValue={props.contrast} min={-2} max={2} option='contrast' />
+                        <Slider title='Exposure' component={props.component} online={props.online} sliderValue={props.exposure} min={0} max={1200} option='exposure' />
+                    </div>
+
+                }
             </div>
         </ThemeProvider>
     )
