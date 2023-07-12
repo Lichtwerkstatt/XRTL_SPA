@@ -16,6 +16,7 @@ const LaserCtrl = (props) => {
       if (payload.controlId === props.component) {
         setOnlineStatus(true)
         setSwitch(payload.status.isOn)
+        console.log(payload)
       }
     }
 
@@ -50,7 +51,7 @@ const LaserCtrl = (props) => {
         left: '10px'
       }}>
         <Box sx={{ ml: '-4px' }} >
-          <Switch component={props.component} online={onlineStatus} switchStatus={switchIsOn} start='Off' end='On' option="switch" />
+          <Switch component={props.component} online={onlineStatus} switchStatus={switchIsOn} left='Off' right='On' option="switch" />
         </Box>
       </div>
     </ThemeProvider>

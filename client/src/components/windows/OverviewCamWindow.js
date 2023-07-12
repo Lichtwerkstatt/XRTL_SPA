@@ -1,4 +1,4 @@
-import Settings from '../UI/CtrlUnits/OverviewCam';
+import ESPCam from '../UI/CtrlUnits/ESPCamWithoutSettings';
 import Window from '../UI/experimentUI/Window';
 
 const CamWindow = (props) => {
@@ -30,7 +30,7 @@ const CamWindow = (props) => {
             footer={'empty'}
             topper={'none'}
         >
-            <Settings
+            <ESPCam
                 component={'overview'}
                 width={width}
                 height={height}

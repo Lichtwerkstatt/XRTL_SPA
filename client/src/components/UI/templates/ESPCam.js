@@ -1,25 +1,15 @@
 import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
+import styles from '../CSS/Settings.module.css'
 import { useEffect } from 'react';
 
-const Settings = (props) => {
+const ESPCamSettings = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-
 
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
-        var height = Number(props.height.slice(0, -2))
-        var width = Number(props.width.slice(0, -2))
-
-        document.getElementById('Canvas').style.transform = 'rotate(180deg)'
-
-        const status = (payload) => {
-            if (payload.controlId === props.component) {
-                //console.log('Status of settings:   ', payload)
-            }
-        }
 
         const data = (payload) => {
             if (payload.controlId === props.component) {
@@ -32,35 +22,23 @@ const Settings = (props) => {
 
                 var img = new Image();
                 img.onload = function () {
-                    var canvas = document.getElementById('Canvas');
+                    var canvas = document.getElementById(props.component);
 
                     ctx = canvas.getContext('2d');
                     x1 = 0;
                     y1 = 0;
-                    x2 = width;
-                    y2 = height;
+                    x2 = 600;
+                    y2 = 400;
                     ctx.drawImage(this, x1, y1, x2, y2);
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
             }
         }
-
-        socketCtx.socket.emit('command', {
-            userId: socketCtx.username,
-            controlId: props.component,
-            getStatus: true
-        })
-
         appCtx.toogleRoomComp(props.component, true);
-
-        socketCtx.socket.emit('getFooter', props.component)
-
-        socketCtx.socket.on('status', status);
-
+        
         socketCtx.socket.on('data', data);
 
         return () => {
-            socketCtx.socket.removeAllListeners('status', status)
             socketCtx.socket.removeAllListeners('data', data)
         }
         //Comment needed to prevent a warning
@@ -68,7 +46,9 @@ const Settings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <canvas id='Canvas' width={props.width} height={props.height} style={{ borderRadius: '5px', backgroundSize: 'cover' }} />
+        <div className={styles.Canvas}>
+            <canvas id={props.component} width={props.width} height={props.height} style={props.style} />
+        </div>
     )
 }
-export default Settings;
+export default ESPCamSettings;

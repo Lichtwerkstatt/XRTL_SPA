@@ -1,25 +1,52 @@
-
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import { useAppContext } from '../../../services/AppContext';
 import MobileStepper from '@mui/material/MobileStepper';
 import { useTheme } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../../../services/AppContext';
+import Button from '@mui/material/Button';
+import propTypes from "prop-types";
 
-/* props:    
-length... Specifies the length of the slider
-left... Slider text left
-right... Slider text right
-buttonValue... indicates the beginning of the Ids of the paragraphs of the text 
-(these should be set once at 1, 10, 20, ... because otherwise, when opening several windows, all elements with the same ID will be changed).)
+/**
+ * Stepper component
+ * 
+ * @description This component returns a styled stepper. For this, the controlId, the length of the stepper and the beginning of the 
+ * Id of the paragraphs must be specified. Optionally, the text on the right and left can be defined. 
+ * 
+ * @param {string} component - controlId 
+ * @param {number} length - Specifies the length of the stepper
+ * @param {string} left -  text at the left/beginning
+ * @param {string} right -text at the right/end
+ * @param {number} buttonValue - indicates the beginning of the Ids of the paragraphs of the text (these should be set once at 1, 10, 20, ...,
+ *  because otherwise, when opening several windows, all elements with the same ID will be changed).)
+ * 
+ * @returns {React.ReactElement} styled stepper with the specified props 
+ * 
+ * @example <Stepper left={'Back'} right={'Next'} buttonValue={10} length={9} component={'manual'} />
+ * @example <Stepper left={'Back'} right={'Next'} buttonValue={20} length={6} component={'help'} />
+ * @example <Stepper buttonValue={30} length={3} component={'manual2'} />
  */
-const Stepper = (props) => {
+
+const StepperCtrl = (props) => {
     const theme = useTheme();
     const appCtx = useAppContext();
+
+    /**
+     * @param {number} activeStep - Indicates the position where the stepper is located.
+     * @function setActiveStep - Assigning a new value
+     */
     const [activeStep, setActiveStep] = useState(1 === appCtx.manualPage ? 1 : appCtx.manualPage)
+
+    /**
+     * @param {number} buttonValue - Indicates the Id of the first paragraph of the first page of the stepper
+     * @function setButtonValue - Assigning a new value
+     */
     const [buttonValue, setButtonValue] = useState(1 === appCtx.manualPage ? props.buttonValue : appCtx.manualPage + props.buttonValue - 1)
 
+    /**
+     * If the manualPage is not equal to 1, which means that you are not on the first page (e.g. after reopening the window), 
+     * then this function handles this. By setting the paragraph defined by the buttonValue to not show and the appCtx.manualPage to show.
+     */
     useEffect(() => {
         if (1 !== appCtx.manualPage) {
             document.getElementById(String(props.buttonValue)).style.display = 'none'
@@ -29,7 +56,9 @@ const Stepper = (props) => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
+    /**
+     * Function handles the clicking on the next page and the associated re-rendering of the selected text.
+     */
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setButtonValue((buttonValue) => buttonValue + 1);
@@ -42,6 +71,9 @@ const Stepper = (props) => {
         }
     };
 
+    /**
+     * Function handles clicking back to the previous page and the associated re-rendering of the selected text.
+     */
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         setButtonValue((buttonValue) => buttonValue - 1);
@@ -85,4 +117,13 @@ const Stepper = (props) => {
         />
     );
 }
-export default Stepper;
+
+StepperCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+    length: propTypes.number.isRequired,
+    left: propTypes.string,
+    right: propTypes.string,
+    buttonValue: propTypes.number.isRequired,
+}
+
+export default StepperCtrl;

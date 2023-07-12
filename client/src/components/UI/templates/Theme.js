@@ -1,5 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 
+/**
+ * Standard theme
+ * 
+ * @description This theme is the default theme used.
+ * 
+ * @returns theme
+ */
 export const theme = createTheme({
     palette: {
         mode: 'dark',
@@ -11,6 +18,14 @@ export const theme = createTheme({
         },
     }
 })
+
+/**
+ * Login theme
+ * 
+ * @description This theme is used in the login window. The special feature here is that the contrast text is white and spaceing is set to two.
+ * 
+ * @returns login theme
+ */
 
 export const themeLogin = createTheme({
     palette: {

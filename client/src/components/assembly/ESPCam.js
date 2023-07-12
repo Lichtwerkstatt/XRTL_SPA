@@ -1,4 +1,4 @@
-import Settings from '../UI/CtrlUnits/Settings';
+import ESPCam from '../UI/CtrlUnits/ESPCamPlusSettings';
 import Window from '../UI/experimentUI/Window';
 
 const ESPCamStream = (props) => {
@@ -40,7 +40,7 @@ const ESPCamStream = (props) => {
       width={width}
       height={height}
     >
-      <Settings
+      <ESPCam
         component={props.controlId}
         width={width}
         setting={props.setting}

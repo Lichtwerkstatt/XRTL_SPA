@@ -1,5 +1,5 @@
 import Beamsplitter from "../../assembly/BeamSplitter";
-import ESPCam from "../../assembly/ESPCamStream";
+import ESPCam from "../../assembly/ESPCam";
 import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
