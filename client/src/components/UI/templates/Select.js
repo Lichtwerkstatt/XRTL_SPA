@@ -35,7 +35,7 @@ const TypeSelectMenuItem = (props) => {
  * 
  * @example <Select title='Resolution' component={'Select'} online={true} option='frameSize' selectValue={1} list={{1: 'a', 2: 'b', 3: 'c'}} />
  * @example <Select title='Resolution' component={'Select2'} online={true} option='frameSize' selectValue={'a'} list={{a: 1, b: 2, c: 4} />
- * @example <Select component={'Select3'} online={true} option='frameSize' selectValue={3} list={{1: 'a', 2: 'b', 3: 'c'}} />
+ * @example <Select component={'Select3'} online={true} option='frameSize' selectValue={3} list={{1: 'a', b: 2, 3: 'c'}} />
  */
 export default function CustomSelect(props) {
     const socketCtx = useSocketContext();
@@ -61,7 +61,7 @@ export default function CustomSelect(props) {
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
-            [props.option]: props.number ? Number(event.target.value) : event.target.value
+            [props.option]: isNaN(event.target.value) ? event.target.value : Number(event.target.value)
         })
 
         socketCtx.socket.emit("footer", {
@@ -96,7 +96,6 @@ CustomSelect.propTypes = {
     component: propTypes.string.isRequired,
     title: propTypes.string,
     list: propTypes.array.isRequired,
-    number: propTypes.bool,
     selectValue: propTypes.oneOf([propTypes.string, propTypes.number]).isRequired,
     online: propTypes.bool.isRequired,
     option: propTypes.string.isRequired
