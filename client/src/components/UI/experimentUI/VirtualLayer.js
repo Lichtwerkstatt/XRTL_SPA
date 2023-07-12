@@ -1,4 +1,4 @@
-import MIS1_230504 from "../../experiment/AdaptiveOptics/MIS1_230504";
+import AO_230712 from "../../experiment/AdaptiveOptics/AO_230712";
 import Model2d from "../../experiment/AdaptiveOptics/MIS1_2D_control";
 import { OrbitControls, Environment, Billboard } from "@react-three/drei";
 import { useAppContext } from "../../../services/AppContext";
@@ -26,7 +26,7 @@ const VirtualLayer = (...props) => {
         <Suspense fallback={null}>
           <Environment files="../hdri/autoshop.hdr" />
           <OrbitControls autoRotate={appCtx.autoRotate} />
-          <MIS1_230504
+          <AO_230712
             toggleSelect={appCtx.toggleSelectedComp}
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
