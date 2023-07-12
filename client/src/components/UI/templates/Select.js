@@ -2,7 +2,6 @@ import { MenuItem, Select, FormControl, Box, InputLabel } from '@mui/material';
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
 import propTypes from "prop-types";
-import { useState } from "react";
 
 /**
  * Gets the objects that have the assigned properties. A MenuItem is then created for each object with the corresponding text and value.
@@ -42,22 +41,14 @@ export default function CustomSelect(props) {
     const appCtx = useAppContext();
 
     /**
-     * @param {string|number} selectValue - Indicates the status of the select
-     * @function setSelectValue - Assigning a new value
-     */
-    const [selectValue, setSelectValue] = useState(props.selectValue);
-
-    /**
      * Handles the onclick event on a select option 
      * 
      * @description When a select element is clicked, SelectValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
      * Emitting footer then updates the footer of the window. 
      * 
      * @param {*} event - clicking event (contains the new value)
-     */
+    */
     const handleChange = (event) => {
-        setSelectValue(event.target.value);
-
         socketCtx.socket.emit("command", {
             userId: socketCtx.username,
             controlId: props.component,
@@ -69,7 +60,7 @@ export default function CustomSelect(props) {
             controlId: props.component
         })
 
-        appCtx.addLog("User set selected " + props.component + " with " + selectValue)
+        appCtx.addLog("User set selected " + props.component + " with " + event.target.value)
     };
 
     return (
@@ -78,7 +69,7 @@ export default function CustomSelect(props) {
                 <InputLabel >{props.title}</InputLabel>
                 <Select
                     label={props.title}
-                    value={selectValue}
+                    value={props.selectValue}
                     onChange={handleChange}
                     disabled={(socketCtx.connected && props.online) ? false : true} >
                     {Object.keys(props.list).map((type) => (
