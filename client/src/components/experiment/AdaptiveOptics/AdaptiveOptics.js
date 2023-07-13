@@ -1,22 +1,22 @@
 import Pinhole from "../../assembly/Pinhole";
 import LaserCtrl from "../../assembly/Laser";
-import Rotary from '../../assembly/Rotary';
+import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 
 const AdaptiveOptics = (props) => {
-  let footer = "Initializing..."
-  var zero = "0"
+  let footer = "Initializing...";
+  var zero = "0";
 
   return (
     <div>
       {/* KM100 */}
-      {props.selected.has('KM100B_1') && (
+      {props.selected.has("KM100B_1") && (
         <KM100
-          title="Reference Mirror"
-          id={'KM100B_1'}
-          controlIdTop={'KM100B_top_1'}
-          controlIdBottom={'KM100B_bottom_1'}
+          title="Prism Mount"
+          id={"KM100B_1"}
+          controlIdTop={"KM100B_top_1"}
+          controlIdBottom={"KM100B_bottom_1"}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -26,10 +26,10 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Linear stage */}
-      {props.selected.has('linear_1') && (
+      {props.selected.has("linear_1") && (
         <SM1ZP
-          title="Linear Movable Mirror"
-          controlId={'linear_1'}
+          title="Delay Line"
+          controlId={"linear_1"}
           footer={footer}
           rotation={zero}
           top={600}
@@ -38,12 +38,12 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Laser ctrl */}
-      {props.selected.has('redlaser_1') && (
+      {props.selected.has("redlaser_1") && (
         <KM100
           title="Laser Alignment"
-          id={'redlaser_1'}
-          controlIdTop={'redlaser_top_1'}
-          controlIdBottom={'redlaser_bottom_1'}
+          id={"redlaser_1"}
+          controlIdTop={"redlaser_top_1"}
+          controlIdBottom={"redlaser_bottom_1"}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -53,11 +53,11 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Laser power */}
-      {props.selected.has('redlaserPower_1') && (
+      {props.selected.has("redlaserPower_1") && (
         <LaserCtrl
           title="Power Supply"
-          id={'redlaserPower_1'}
-          controlId={'redlaser_1'}
+          id={"redlaserPower_1"}
+          controlId={"redlaser_1"}
           footer={footer}
           top={50}
           left={1600}
@@ -65,20 +65,20 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Pinhole */}
-      {props.selected.has('pinhole') && (
+      {props.selected.has("pinhole") && (
         <Pinhole
           title="Pinhole"
-          controlId={'pinhole'}
+          controlId={"pinhole"}
           footer={footer}
           top={100}
           left={1100}
         />
       )}
       {/* Rotary stage Measurement Mirror*/}
-      {props.selected.has('rotaryStage_1') && (
+      {props.selected.has("rotaryStage_1") && (
         <Rotary
-          title='Rotary stage'
-          controlId={'rotaryStage_1'}
+          title="Rotary stage"
+          controlId={"rotaryStage_1"}
           footer={footer}
           rotation={zero}
           top={50}

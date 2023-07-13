@@ -8,7 +8,7 @@ export function useAppContext() {
 
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
-  const [showVirtualLayer, setShowVirtualLayer] = useState(false);
+  const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
