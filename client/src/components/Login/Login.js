@@ -29,7 +29,8 @@ const Login = (props) => {
 
     const handleChange = (event) => {
         setUsername(event.target.value);
-        setConnection(connectionOption[1].title)
+        setConnection('http://localhost:3000');
+        //setConnection(connectionOption[1].title)
     };
 
     if (appCtx.showLogin) {

@@ -1,4 +1,5 @@
 import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
+import OpenOTCUI from "../../experiment/openOTC/OpenOTCUI"
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
@@ -57,7 +58,7 @@ const ExperimentUILayer = () => {
       {appCtx.showWelcomeWindow && <WelcomeWindow />}
       {appCtx.showManualWindow && <ManualWindow />}
       {appCtx.showCam && <CamWindow />}
-      <MichelsonInterferometer
+      <OpenOTCUI
         toggleSelect={appCtx.toggleSelectedComp}
         selected={appCtx.selectedComps}
       />

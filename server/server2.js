@@ -9,7 +9,8 @@ const io = require('socket.io')(server, {
     }
 })
 
-var pw = fs.readFileSync("", 'utf8');
+//var pw = fs.readFileSync("", 'utf8');
+var pw = "";
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
 var underConstruction = false;
