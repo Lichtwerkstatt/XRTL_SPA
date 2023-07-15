@@ -4,6 +4,7 @@ import Window from '../UI/experimentUI/Window';
 const UC2_3ptMount = (props) => {
   return (
     <Window
+      topper='para'
       id={props.id}
       componentList={[props.controlIdVertical, props.controlIdHorizontal, props.controlIdCenter]}
       header={props.title}
