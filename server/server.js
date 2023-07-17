@@ -94,7 +94,7 @@ io.on('connection', socket => {
     } else */  if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
-        io.to(socket.id).emit('Auth', color[0], Date.now());
+        io.to(socket.id).emit('Auth', color[0]);
         socket.emit('underConstruction', underConstruction);
 
         colorList.push(socket.id, color[0]);
@@ -114,7 +114,7 @@ io.on('connection', socket => {
         console.log('To many user are connected right now!');
     }
     else if (socket.decoded.component === 'component') {
-        io.to(socket.id).emit('Auth',);
+        io.to(socket.id).emit('Auth', { time: Date.now() });
         console.log('Component connected successfully');
     }
     else {
