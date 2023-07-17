@@ -1,6 +1,6 @@
 import { Button, Box } from '@mui/material';
-import styles from './Description.module.css';
-import { themeLogin } from '../templates/Theme'
+import styles from '../CSS/Description.module.css';
+import { themeLogin } from '../../UI/templates/Theme'
 import { ThemeProvider } from '@mui/material/styles';
 
 

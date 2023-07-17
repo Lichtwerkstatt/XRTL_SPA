@@ -1,10 +1,10 @@
-import ESPCam from './Description_ESPCam'
-import KM100 from './Description_KM100'
-import Laser from './Description_Laser'
-import LaserCtrl from './Description_LaserCtrl'
-import SM1ZP from './Description_SM1ZP'
-import Impressum from './Description_Impressum'
-import BeamSplitter from './Description_BeamSplitter'
+import ESPCam from '../experiment/ComponentDescription/Content/Description_ESPCam'
+import KM100 from '../experiment/ComponentDescription/Content/Description_KM100'
+import Laser from '../experiment/ComponentDescription/Content/Description_Laser'
+import LaserCtrl from '../experiment/ComponentDescription/Content/Description_LaserCtrl'
+import SM1ZP from '../experiment/ComponentDescription/Content/Description_SM1ZP'
+import Impressum from './Content/Description_Impressum'
+import BeamSplitter from '../experiment/ComponentDescription/Content/Description_BeamSplitter'
 
 const DescriptionHandler = (props) => {
 

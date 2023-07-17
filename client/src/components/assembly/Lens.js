@@ -1,5 +1,5 @@
 import Window from '../UI/experimentUI/Window';
-import Lens from '../UI/ComponentDescription/Decription_Lens';
+import Lens from '../experiment/ComponentDescription/Content/Decription_Lens';
 
 const Laser = (props) => {
 

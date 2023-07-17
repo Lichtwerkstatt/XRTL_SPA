@@ -1,5 +1,5 @@
 import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+import Cube from '../experiment/ComponentDescription/Content/Decription_Cube';
 
 const BsCube = (props) => {
 
