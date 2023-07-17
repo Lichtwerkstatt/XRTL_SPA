@@ -8,7 +8,7 @@ const ManualWindowContent = (props) => {
   return (
     <div>
       <div className={styles.mainWrapper}      >
-        <p id={'10'}>
+        <div id={'10'}>
           <b>1. &nbsp; Introduction</b><br /><br />
           <ul>
             <li>Welcome to our remote-controlled <b>Michelson&nbsp;Interferometer</b>! Today, we'll explore various physical effects and phenomena. Remember, this manual serves as a guide, and users can follow their own exploration path based on their interests and objectives. Enjoy your journey through the fascinating world of Michelson interferometry!
@@ -18,9 +18,9 @@ const ManualWindowContent = (props) => {
             <li>Discover who is currently engaged in experimentation with you at the <b>XRTL&nbsp;Showcase</b>. You can simply communicate with them via the chat (pinned on the left edge).
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'11'} style={{ display: 'none' }}>
+        <div id={'11'} style={{ display: 'none' }}>
           <b>2. &nbsp; Overview</b><br /><br />
           <ul>
             <li>Initiate your experiment by gaining an overview. Begin by accessing the live camera feed through the menu located at the top right corner. From there, you can observe the current state of the experimental setup in our showcase at the <b>Abbe&nbsp;School&nbsp;of&nbsp;Photonics</b>. Take note of the visible components and compare them with those displayed in the 3D model.
@@ -29,9 +29,9 @@ const ManualWindowContent = (props) => {
             <li>Familiarize yourself with the user interface, including the power supply, mirror controls and beam splitter options. Simply tap on the individual components to display the respective control window.
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'12'} style={{ display: 'none' }}>
+        <div id={'12'} style={{ display: 'none' }}>
           <b>3.a &nbsp; Laser</b><br /><br />
           <ul>
             <li>Direct your attention to the <b>Screen</b> and tap on it to proceed. This action will open a window displaying a live camera stream of the screen. Initially, when the laser is inactive, you will observe a gray wall.
@@ -40,9 +40,9 @@ const ManualWindowContent = (props) => {
               <br />Can you perceive any changes now?
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'13'} style={{ display: 'none' }}>
+        <div id={'13'} style={{ display: 'none' }}>
           <b>3.b &nbsp; Laser</b><br /><br />
           <ul>
             <li>You should!
@@ -56,9 +56,9 @@ const ManualWindowContent = (props) => {
               </ul>
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'14'} style={{ display: 'none' }}>
+        <div id={'14'} style={{ display: 'none' }}>
           <b>4. &nbsp; Beam Path</b><br /><br />
           <ul>
             <li>Tap on the laser symbol located in the top center next to the Overview label to visualize the laser beam path within the interferometer.
@@ -72,9 +72,9 @@ const ManualWindowContent = (props) => {
               </ul>
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'15'} style={{ display: 'none' }}>
+        <div id={'15'} style={{ display: 'none' }}>
           <b>5. &nbsp; Basic Interference</b><br /><br />
           <ul>
             <li>Prior to commencing, ensure that the experiment is set to its initial state. To accomplish this, type <i>"!reset"</i> into the chat.
@@ -85,9 +85,9 @@ const ManualWindowContent = (props) => {
               <br />Do the rings grow or shrink?
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'16'} style={{ display: 'none' }}>
+        <div id={'16'} style={{ display: 'none' }}>
           <b>6. &nbsp; Tiltable Mirror</b><br /><br />
           <ul>
             <li>Next, experiment with the <b>Reference&nbsp;Mirror</b> to change the angle of this mirror.
@@ -96,9 +96,9 @@ const ManualWindowContent = (props) => {
               <br />How does the distance between the rings change from the center to the outside?
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'17'} style={{ display: 'none' }}>
+        <div id={'17'} style={{ display: 'none' }}>
           <b>7. &nbsp; Second Beam Splitter</b><br /><br />
           <ul>
             <li>Activate the <b>Retractable&nbsp;Beam&nbsp;Splitter</b> to observe the second output of the interferometer on the <b>Screen</b>.
@@ -107,9 +107,9 @@ const ManualWindowContent = (props) => {
               <br />What is the relationship that exists between these two patterns?
             </li>
           </ul>
-        </p>
+        </div>
 
-        <p id={'18'} style={{ display: 'none' }}>
+        <div id={'18'} style={{ display: 'none' }}>
           <b>8. &nbsp; Conclusion</b><br /><br />
           <ul>
             <li>Congratulations! You've explored a range of physical effects with our remote-controlled <b>Michelson&nbsp;Interferometer</b>.
@@ -117,7 +117,7 @@ const ManualWindowContent = (props) => {
             <li>Feel free to continue experimenting with the <b>XRTL&nbsp;Showcase</b> and exploring on your own.
             </li>
           </ul>
-        </p>
+        </div>
 
       </div>
 

@@ -12,9 +12,7 @@ div .buttons {
 }
 
 .WelcomegifContainer1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display:contents;
   /* Set the desired width and height for the container */
   /* optimized for the given text and Smartphone resolution */
   width: 210px;
@@ -22,18 +20,14 @@ div .buttons {
 }
 
 .WelcomegifContainer2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display:contents;
   /* Set the desired width and height for the container */
   /* optimized for the given text and Smartphone resolution */
   width: 325px;
   height: 150px;
 }
 .WelcomegifContainer3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: contents;
   /* Set the desired width and height for the container */
   /* optimized for the given text and Smartphone resolution */
   width: 325px;
