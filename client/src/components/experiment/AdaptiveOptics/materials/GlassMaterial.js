@@ -1,4 +1,3 @@
-import {meshTransmissionMaterial} from "@react-three/drei";
 
 const GlassMaterial = () => {
   return (
