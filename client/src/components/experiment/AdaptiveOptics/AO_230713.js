@@ -232,34 +232,61 @@ function Model(props) {
         geometry={nodes.KM100mesh002_2.geometry}
         material={materials.ShinyParts}
       />
-      <mesh
-        name="KM100mesh003_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh003_1.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="KM100mesh003_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh003_2.geometry}
-        material={materials.ShinyParts}
-      />
-      <mesh
-        name="KM100mesh004_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh004_1.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="KM100mesh004_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh004_2.geometry}
-        material={materials.ShinyParts}
-      />
+      <group
+        name="Telescope_1"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("telescope_1");
+        }}
+      >
+        {props.showTags && (
+          <DescriptiveTag
+            position={[-0.12, 0.1, -0.13]}
+            title="Telescope 1"
+            description="Telescope 1 Description"
+          />
+        )}
+        <mesh
+          name="KM100mesh003_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh003_1.geometry}
+          material={materials.BlackParts}
+        >
+          {props.selected.has("telescope_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="KM100mesh003_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh003_2.geometry}
+          material={materials.ShinyParts}
+        />
+        <mesh
+          name="KM100mesh004_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh004_1.geometry}
+          material={materials.BlackParts}
+        >
+          {props.selected.has("telescope_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="KM100mesh004_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh004_2.geometry}
+          material={materials.ShinyParts}
+        />
+      </group>
 
       <mesh
         name="BS"
@@ -276,34 +303,62 @@ function Model(props) {
         geometry={nodes.Cube004_1.geometry}
         material={materials.ShinyParts}
       />
-      <mesh
-        name="KM100mesh005_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh005_1.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="KM100mesh005_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh005_2.geometry}
-        material={materials.ShinyParts}
-      />
-      <mesh
-        name="KM100mesh006_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh006_1.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="KM100mesh006_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.KM100mesh006_2.geometry}
-        material={materials.ShinyParts}
-      />
+      <group
+        name="Telescope_2"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("telescope_2");
+        }}
+      >
+        {props.showTags && (
+          <DescriptiveTag
+            position={[0.02, 0.1, -0.25]}
+            title="Telescope 2"
+            description="Telescope 2 Description"
+          />
+        )}
+        <mesh
+          name="KM100mesh005_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh005_1.geometry}
+          material={materials.BlackParts}
+        >
+          {props.selected.has("telescope_2") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="KM100mesh005_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh005_2.geometry}
+          material={materials.ShinyParts}
+        />
+        <mesh
+          name="KM100mesh006_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh006_1.geometry}
+          material={materials.BlackParts}
+        >
+          {props.selected.has("telescope_2") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="KM100mesh006_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.KM100mesh006_2.geometry}
+          material={materials.ShinyParts}
+        />
+      </group>
+
       <mesh
         name="SHS"
         castShadow
