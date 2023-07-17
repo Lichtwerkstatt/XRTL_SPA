@@ -2,7 +2,6 @@ import Pinhole from "../../assembly/Pinhole";
 import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
-import SM1ZP from "../../assembly/SM1ZP";
 import XR50P from "../../assembly/XR50P";
 
 const AdaptiveOptics = (props) => {
