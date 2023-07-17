@@ -5,9 +5,10 @@
  * various parameters that apply to the server can be set. 
  * 
  * @param {number} PORT - Defines the port on which the server should run, which is usually 300.
+ * @param {string} passwordFile - If desired, a path can be entered here where the master password is located. Untoggle of code pieces is necessary for this!
  */
 const PORT = 3000;
-//const passwordFile = fs.readFileSync("", 'utf8');
+//const masterfile = '';
 //const tokenClient;
 //const tokenComponents;
 //const tokenAdmin;
@@ -15,6 +16,7 @@ const PORT = 3000;
 /**
  * Required Packages with some predefined properties
  */
+//const passwordFile = fs.readFileSync(masterfile, 'utf8');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const app = require('express')();
