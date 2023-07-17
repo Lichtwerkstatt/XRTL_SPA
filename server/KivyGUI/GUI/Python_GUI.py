@@ -101,8 +101,8 @@ class MainApp(MDApp):
                 self.root.ids.component_log.text = 'Server is offline'
 
             try:
-                socketGUI.connect('http://192.168.1.42:7000')
-                # socketGUI.connect('http://localhost:7000')
+                socketGUI.connect('http://192.168.1.42:3000')
+                # socketGUI.connect('http://localhost:3000')
                 socketGUI.emit("GUI", ())
             except:
                 self.root.ids.user_log.text = 'Server is offline'

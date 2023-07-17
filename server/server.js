@@ -1,3 +1,22 @@
+/**
+ * Sever documentation
+ * 
+ * @description This file contains the code for the server. The server can be started with "node server.js" after "npm install" has been executed. At the beginning of the code, 
+ * various parameters that apply to the server can be set. 
+ * 
+ * @param {number} PORT - Defines the port on which the server should run, which is usually 300.
+ * @param {string} passwordFile - If desired, a path can be entered here where the master password is located. Untoggle of code pieces is necessary for this!
+ */
+const PORT = 3000;
+//const masterfile = '';
+//const tokenClient;
+//const tokenComponents;
+//const tokenAdmin;
+
+/**
+ * Required Packages with some predefined properties
+ */
+//const passwordFile = fs.readFileSync(masterfile, 'utf8');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const app = require('express')();
@@ -9,20 +28,24 @@ const io = require('socket.io')(server, {
     }
 })
 
-var pw = fs.readFileSync("", 'utf8');
-var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
-var footerStatus = 'Initializing ...';
-var underConstruction = false;
-var userIDServerList = [];
-var componentList = [];
-var broadcaster = [];
-var footerList = [];
-var colorList = [];
-var online = false;
-var userIDs = [];
-var GUIId = '';
-var exp = ''
+/**
+ * Initialisation of variables required in the code
+ */
+var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00']; //List of colours that can be assigned to the clients and in which the LED rings light up in case of changes.
+var footerStatus = 'Initializing ...'; // Sets the default value for the footer of windows.
+var underConstruction = false; // Is used for the app as feedback to indicate whether the website is currently under construction.
+var userIDServerList = []; // List contains all socketIds, names and time of connection of all connected clients.
+var componentList = []; // List contains all connected components.
+var footerList = [];// List contains all footers of the component windows.
+var colorList = []; // List contains all colours assigned to connected clients. 
+var GUIId = ''; // Is later overwritten with the socket.id of the GUI, whereby specific commands can be sent to it.
+var exp = '' // Overwritten with the expired time of the respective client.
 
+/**
+ * 
+ * @param {*} string 
+ * @returns 
+ */
 const returnNumber = (string) => {
     var number = [];
     var a = '';
@@ -39,10 +62,6 @@ const returnNumber = (string) => {
     }
     return a;
 }
-io.use((socket, next) => {
-    socket.to(socket.id).emit('time', Date.now());
-    next();
-})
 
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
@@ -60,11 +79,11 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    if (socket.decoded.component === 'client') {
+   /*  if (socket.decoded.component === 'client') {
         var master = returnNumber(socket.decoded.sub);
         var date = new Date();
         date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-        var masterSocket = pw + returnNumber(date);
+        var masterSocket = passwordFile + returnNumber(date);
     }
 
     if (socket.decoded.component === 'client' && masterSocket === master) {
@@ -72,8 +91,7 @@ io.on('connection', socket => {
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', '#FFFFF');
         socket.emit('underConstruction', underConstruction);
-    }
-    else if (color.length != 0 && socket.decoded.component === 'client') {
+    } else */  if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);
@@ -96,7 +114,7 @@ io.on('connection', socket => {
         console.log('To many user are connected right now!');
     }
     else if (socket.decoded.component === 'component') {
-        io.to(socket.id).emit('Auth');
+        io.to(socket.id).emit('Auth', { time: Date.now() });
         console.log('Component connected successfully');
     }
     else {
@@ -105,13 +123,18 @@ io.on('connection', socket => {
 
     //General & important handshakes 
 
-    //Sends the new message to all users
+    // Sends a command if a new user has established a connection to the web application.
+    socket.on('newUserInfo', (payload) => {
+        socket.broadcast.emit('newUserInfo', payload)
+    })
+
+    //Sends the new chat message to all users
     socket.on('message', payload => {
         socket.to(GUIId).emit('newLog', 'Message received on server: ' + JSON.stringify(payload))
         console.log('Message received on server: ', payload)
         io.emit('message', payload)
     });
-    //Handshakes for command handeling
+
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
@@ -121,6 +144,7 @@ io.on('connection', socket => {
         exp = Date.now() + 300000;
     });
 
+    // A new value is assigned to the global variable and it is sent to all clients whether the female page is currently under construction or not.
     socket.on('underConstruction', payload => {
         underConstruction = payload;
         socket.broadcast.emit('underConstruction', underConstruction);
@@ -140,7 +164,7 @@ io.on('connection', socket => {
             componentList = [socket.id, time, payload.controlId, payload.status.busy];
         }
 
-        // GUI
+        // To the GUI
         socket.to(GUIId).emit('newLog', 'New Status' + JSON.stringify(payload));
         socket.to(GUIId).emit('newComponent', componentList);
 
@@ -149,6 +173,7 @@ io.on('connection', socket => {
         console.log('New status: ', payload);
     });
 
+    // Update of the footer within the associated list after a change has been made to a component
     socket.on('footer', payload => {
         if (footerList.includes(payload.controlId) === false) {
             footerList.push(payload.controlId, payload.status);
@@ -159,7 +184,8 @@ io.on('connection', socket => {
         io.emit('footer', payload)
     })
 
-    socket.on('getFooter', payload => { //reicht unteren zwei Fälle?
+    // When the component window is opened, this event sends the footer, which is then displayed in the window.
+    socket.on('getFooter', payload => {
         if (footerList.includes(payload) === true) {
             var footerPos = footerList.indexOf(payload);
             footerStatus = footerList[footerPos + 1];
@@ -171,13 +197,13 @@ io.on('connection', socket => {
         } else {
             footerStatus = 'Initializing... ';
         }
-        online = componentList.includes(payload);
+        componentList.includes(payload) ? componentList.includes(payload) : false;
         io.emit('getFooter', { controlId: payload, status: footerStatus, online: online });
     })
 
     //Handshakes for the experiment camera (ESPCam)
 
-    //Client how starts the stream is added to a room
+    // When the client opens a camera window, it is added to the room of the respective components.
     socket.on('join stream room', (payload) => {
         socket.to(GUIId).emit('newLog', 'User has joined the room ' + String(payload.controlId));
         socket.join(payload.controlId);
@@ -191,12 +217,12 @@ io.on('connection', socket => {
         }
     });
 
-    //Sends pictures of the stream to the clients
+    // Sends data from the components in the lab to the clients of the web application
     socket.on('data', (payload) => {//hier einfach payload senden?
         socket.to(payload.controlId).emit('data', (payload))
     });
 
-    //Clients leaves the room after ending the stream
+    //Clients leaves the room after closing the camera window
     socket.on('leave stream room', (payload) => {
         socket.to(GUIId).emit('newLog', 'User has left the room ' + String(payload.controlId));
         socket.emit('user left', socket.id);
@@ -216,19 +242,21 @@ io.on('connection', socket => {
         socket.leave(payload.controlId);
     });
 
-    //Error & diconnect handling
+    //Error handling
     socket.on('error', (er) => {
         io.emit('error', er);
         socket.emit('newLog', 'Error ' + String(er.number) + ': ' + String(er.message));
         console.log('Error ' + er.number + ': ' + er.message);
     })
 
+    // Forces the disconnect of a client
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
         socket.to(GUIId).emit('newLog', 'User kicked: ' + String(e));
         console.log('User kicked: ', e);
     });
 
+    // Handles the disconnection of a client
     socket.on('disconnect', (e) => {
         if (colorList.includes(socket.id)) {
             var indexColor = colorList.indexOf(socket.id) + 1;
@@ -238,10 +266,6 @@ io.on('connection', socket => {
 
         if (userIDServerList.includes(socket.id)) {
             userIDServerList.splice(userIDServerList.indexOf(socket.id), 3);
-        }
-
-        if (broadcaster.includes(socket.id)) {
-            broadcaster.splice(broadcaster.indexOf(socket.id), 2);
         }
 
         if (componentList.includes(socket.id)) {
@@ -259,18 +283,18 @@ io.on('connection', socket => {
     });
 
     //GUI commands
+
+    // To get the socketid of the GUI in order to send commands to it specifically
     socket.on('GUI', () => {
         GUIId = socket.id
     })
 
-    socket.on('newUserInfo', (payload) => {
-        socket.broadcast.emit('newUserInfo', payload)
-    })
-
+    // If there is a new log, it is forwarded to the GUI.
     socket.on('newLogGUI', (payload) => {
         io.to(GUIId).emit('newLog', payload)
     });
 
+    // Sends to all clients that a new user has connected to the web application.
     socket.on('userId', (newUser) => {
         var today = new Date();
         var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -279,30 +303,25 @@ io.on('connection', socket => {
         } else {
             userIDServerList = [socket.id, time, newUser]
         }
-        userIDs = [socket.id, time, newUser]
+        var userIDs = [socket.id, time, newUser]
         socket.broadcast.emit('newUser', (time, userIDs))
         socket.to(GUIId).emit('newLog', 'User connected successfully')
     })
 
+    //  When the GUI has been closed and reopened, this command ensures that the user list is up to date.
     socket.on('updateUser', () => {
         io.emit('updateUser', userIDServerList);
         socket.to(GUIId).emit('updateUser', userIDServerList)
     })
 
-    socket.on('updateUserList', (newList) => {
-        userIDServerList = newList
-    })
-
+    //// When the GUI is closed and reopened, this command ensures that the component list is up to date.
     socket.on('updateComponents', () => {
         socket.to(GUIId).emit('updateComponents', componentList)
     })
-
-    socket.on('npmStop', () => {
-        process.exit(0);
-    });
 })
 
-server.listen(3000, () => {
-    console.log('Server is listening at port: 3000!');
+// Starts a server under http://localhost:PORT/ 
+server.listen(PORT, () => {
+    console.log('Server is listening at port: ' + PORT + '!');
 
 })
