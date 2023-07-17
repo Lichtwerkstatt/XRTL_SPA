@@ -4,14 +4,13 @@ Command: npx gltfjsx@6.1.2 AO_230713.glb -k -s
 */
 
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
-import { useGLTF, Box, Cylinder } from "@react-three/drei";
-import React, { useRef, memo, useState, useEffect } from "react";
+import { useGLTF } from "@react-three/drei";
+import React, { memo } from "react";
 import { isEqual } from "lodash";
 import GlassMaterial from "./materials/GlassMaterial";
 import LaserMaterial from "./materials/LaserMaterial";
 
 function Model(props) {
-  const group = useRef();
   const { nodes, materials } = useGLTF("/model/AO_230713.glb");
 
   return (

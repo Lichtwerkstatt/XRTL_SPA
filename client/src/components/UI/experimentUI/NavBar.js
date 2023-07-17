@@ -1,7 +1,7 @@
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext';
-import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
+import { MdInfoOutline } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
 import { ImEnter, ImExit } from 'react-icons/im'
 import { GiLaserWarning } from 'react-icons/gi'
@@ -24,12 +24,10 @@ const NavBar = () => {
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
-    let showManualWindowColor = '';
-    if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
     let showBeamColor = '';
     if (appCtx.showBeam) { showBeamColor = 'white' }
     let showVirtualLayerColor = '';
-    if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -71,10 +69,6 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
                         </Tooltip>
 
-{/*                         <Tooltip title='Manual'>
-                            <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
-                        </Tooltip>
- */}
                         <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
@@ -119,13 +113,6 @@ const NavBar = () => {
                             <FaTags size={25} style={{ paddingRight: '20px' }} />
                             Labels
                         </MenuItem>
-                        {/* <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            appCtx.toggleShowManualWindow();
-                        }} disableRipple>
-                            <MdOutlineMenuBook size={26} style={{ paddingRight: '20px' }} />
-                            Manual
-                        </MenuItem> */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleCam();
