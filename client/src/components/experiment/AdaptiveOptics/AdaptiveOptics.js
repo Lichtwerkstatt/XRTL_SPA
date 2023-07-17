@@ -2,7 +2,7 @@ import Pinhole from "../../assembly/Pinhole";
 import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
-import SM1ZP from "../../assembly/SM1ZP";
+import XR50P from "../../assembly/XR50P";
 
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
@@ -27,7 +27,7 @@ const AdaptiveOptics = (props) => {
 
       {/* Linear stage */}
       {props.selected.has("linear_1") && (
-        <SM1ZP
+        <XR50P
           title="Delay Line"
           controlId={"linear_1"}
           footer={footer}
