@@ -1,5 +1,5 @@
 import ManualWindowContent from "./Content/ManualWindowContent";
-import Window from "../UI/experimentUI/Window";
+import Window from "../../UI/experimentUI/Window";
 
 const ManualWindow = (props) => {
     var width = window.innerWidth

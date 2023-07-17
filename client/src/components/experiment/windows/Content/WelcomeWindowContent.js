@@ -1,9 +1,9 @@
 import styles from "../CSS/WelcomeWindowContent.module.css";
-import Gif3 from "../../media/images/Component_Window.gif";
-import Gif2 from "../../media/images/MI_Beampath.gif";
-import { themeLogin } from '../../UI/templates/Theme';
-import Gif1 from "../../media/images/xrtl_team.png";
-import Stepper from "../../UI/templates/Stepper";
+import Gif3 from "../../../media/images/Component_Window.gif";
+import Gif2 from "../../../media/images/MI_Beampath.gif";
+import { themeLogin } from '../../../UI/templates/Theme';
+import Gif1 from "../../../media/images/xrtl_team.png";
+import Stepper from "../../../UI/templates/Stepper";
 import { ThemeProvider } from '@mui/material';
 
 const gifContainer = document.createElement("div");

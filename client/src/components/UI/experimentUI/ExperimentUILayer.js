@@ -1,14 +1,13 @@
 import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
+import WelcomeWindow from "../../experiment/windows/WelcomeWindow";
+import ManualWindow from "../../experiment/windows/ManualWindow";
 import { useAppContext } from "../../../services/AppContext";
-import WelcomeWindow from "../../windows/WelcomeWindow";
 import CamWindow from "../../windows/OverviewCamWindow";
-import { useEffect, Fragment } from "react";
-import ManualWindow from "../../windows/ManualWindow";
 import InfoWindow from "../../windows/InfoWindow";
+import { useEffect, Fragment, memo } from "react";
 import { isEqual } from 'lodash';
-import { memo } from "react";
 
 const ExperimentUILayer = () => {
   const socketCtx = useSocketContext();
