@@ -1,18 +1,16 @@
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md'
-import { useSocketContext } from '../../../services/SocketContext'
-import { useAppContext } from '../../../services/AppContext'
-import { GiLaserWarning } from 'react-icons/gi'
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
-import { ImConnection } from 'react-icons/im'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useSocketContext } from '../../../services/SocketContext';
+import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
+import { useAppContext } from '../../../services/AppContext';
+import { ImEnter, ImExit } from 'react-icons/im'
+import { GiLaserWarning } from 'react-icons/gi'
 import styles from '../CSS/NavBar.module.css'
-import { BsCamera } from 'react-icons/bs'
-import { FaTags } from 'react-icons/fa'
-//import { BsBox } from 'react-icons/bs'
-import { Icon } from '@iconify/react';
-import { memo, Fragment } from 'react'
-import { isEqual } from 'lodash';
 import { theme } from './../templates/Theme'
+import { BsCamera, BsBox } from 'react-icons/bs'
+import { FaTags } from 'react-icons/fa';
+import { memo, useState } from 'react';
+import { isEqual } from 'lodash';
 
 const NavBar = () => {
     const appCtx = useAppContext();
@@ -20,116 +18,133 @@ const NavBar = () => {
 
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
-    let autoRotateColor = '';
-    if (appCtx.autoRotate) { autoRotateColor = 'white' }
     let showTagsColor = '';
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
+    let showManualWindowColor = '';
+    if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
+    let showBeamColor = '';
+    if (appCtx.showBeam) { showBeamColor = 'white' }
+    let showVirtualLayerColor = '';
+    if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
 
-    return <div id='navbar' className={styles.navbar} >
-        <h1>XR TwinLab</h1>
-        <div className={styles.navMenuLaser}>
-            <h3>Overlay:</h3>
+    const [mobileVersion, setMobileVersion] = useState(null);
+    const openMobileVersion = Boolean(mobileVersion);
+
+    const handleClick = (event) => {
+        setMobileVersion(event.currentTarget);
+    };
+
+    const closeMobileVersion = () => {
+        setMobileVersion(null);
+    };
+
+    return (
+        <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
-                <PopupState variant="popover" popupId="demo-popup-menu">
-                    {(popupState) => (
-                        <Fragment>
-                            <IconButton variant="contained" {...bindTrigger(popupState)} sx={{
-                                borderRadius: 1,
-                                color: 'black',
-                                ':hover': {
-                                    bgcolor: 'darkgreen',
-                                    color: '#00ffa8',
-                                },
-                                marginTop: '-2%',
-                                paddingLeft: 20
+                <h1>XR TwinLab</h1>
 
-                            }}>
-                                <Icon icon="mdi:led-off" width="27" height="27" />
-                            </IconButton>
-                            <Menu {...bindMenu(popupState)}  >
-                                <MenuItem onClick={() => {
-                                    popupState.close();
-                                    appCtx.toggleShowLED('none');
-                                }} >None</MenuItem>
-                                <MenuItem onClick={() => {
-                                    popupState.close();
-                                    appCtx.toggleShowLED('white');
-                                }}>White</MenuItem>
-                                <MenuItem onClick={() => {
-                                    popupState.close();
-                                    appCtx.toggleShowLED('red');
-                                }}>Red</MenuItem>
-                            </Menu>
-                        </Fragment>
-                    )}
-                </PopupState>
-                <PopupState variant="popover" popupId="demo-popup-menu">
-                    {(popupState) => (
-                        <Fragment>
-                            <IconButton variant="contained" size='25' sx={{
-                                borderRadius: 1,
-                                color: 'black',
-                                ':hover': {
-                                    bgcolor: 'darkgreen',
-                                    color: '#00ffa8',
-                                },
-                                marginTop: '-1%',
-                                paddingLeft: 20,
-                                margin: 'auto'
-                            }}  {...bindTrigger(popupState)}>
-                                <GiLaserWarning />
-                            </IconButton>
-                            <Menu {...bindMenu(popupState)}>
-                                <MenuItem onClick={() => {
-                                    popupState.close();
-                                    appCtx.toggleShowBeam('on');
-                                }} >On</MenuItem>
-                                <MenuItem onClick={() => {
-                                    popupState.close();
-                                    appCtx.toggleShowBeam('off');
-                                }}>Off</MenuItem>
-                                <MenuItem onClick={() => {
-                                    popupState.close();
-                                    appCtx.toggleShowBeam('split');
-                                }}>Beamsplitter</MenuItem>
-                            </Menu>
-                        </Fragment>
-                    )}
-                </PopupState>
+                {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
+
+                <div className={styles.navMenu}>
+                    <ul>
+                        <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
+                            <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
+                        </Tooltip>
+
+                        <Tooltip title='Labels'>
+                            <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Cam'>
+                            <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Model'>
+                            <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Beam Path'>
+                            <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Manual'>
+                            <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Info'>
+                            <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
+                        </Tooltip>
+
+                    </ul>
+                </div>
+
+                <div className={styles.mobile}>
+                    <IconButton onClick={handleClick} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        <KeyboardArrowDownIcon color={'white'} />
+                    </IconButton>
+
+                    <Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                        }}
+                        anchorEl={mobileVersion}
+                        open={openMobileVersion}
+                        onClose={closeMobileVersion}
+                    >
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
+                        }} disableRipple>
+                            {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
+                            {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
+                        </MenuItem>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowTags();
+                        }} disableRipple>
+                            <FaTags size={25} style={{ paddingRight: '20px' }} />
+                            Labels
+                        </MenuItem>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowManualWindow();
+                        }} disableRipple>
+                            <MdOutlineMenuBook size={26} style={{ paddingRight: '20px' }} />
+                            Manual
+                        </MenuItem>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleCam();
+                        }} disableRipple>
+                            <BsCamera size={26} style={{ paddingRight: '20px' }} />
+                            Cam
+                        </MenuItem>
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowInfoWindow();
+                        }} disableRipple>
+                            <MdInfoOutline size={26} style={{ paddingRight: '20px' }} />
+                            Info
+                        </MenuItem>
+
+                    </Menu>
+                </div>
             </ThemeProvider>
         </div>
-        <div className={styles.navMenu}>
-            <ul>
-                <Tooltip title='Connnection'>
-                    <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}><ImConnection size={29} color={connectionStatusColor} /></li>
-                </Tooltip>
-
-                {/*                 <Tooltip title='2D model'>
-                    <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} /></li>
-                </Tooltip> */}
-
-                <Tooltip title='Rotation'>
-                    <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
-                </Tooltip>
-
-                <Tooltip title='Labels'>
-                    <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
-                </Tooltip>
-
-                <Tooltip title='Webcam'>
-                    <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
-                </Tooltip>
-
-                <Tooltip title='Information'>
-                    <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
-                </Tooltip>
-
-            </ul>
-        </div>
-    </div>
+    );
 }
 export default memo(NavBar, isEqual)

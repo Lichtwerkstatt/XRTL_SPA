@@ -1,3 +1,4 @@
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -8,8 +9,10 @@ const io = require('socket.io')(server, {
     }
 })
 
+var pw = fs.readFileSync("", 'utf8');
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
+var underConstruction = false;
 var userIDServerList = [];
 var componentList = [];
 var broadcaster = [];
@@ -20,12 +23,33 @@ var userIDs = [];
 var GUIId = '';
 var exp = ''
 
+const returnNumber = (string) => {
+    var number = [];
+    var a = '';
+    for (var i = 0; i < string.length; i += 2) {
+        if (string.charCodeAt(i + 1)) {
+            number.push(string.charCodeAt(i) + string.charCodeAt(i + 1))
+        } else {
+            number.push(string.charCodeAt(i))
+        }
+    }
+
+    for (var i = 0; i < number.length; i++) {
+        a += number[i];
+    }
+    return a;
+}
+io.use((socket, next) => {
+    socket.to(socket.id).emit('time', Date.now());
+    next();
+})
+
 io.use((socket, next) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
             if (err) return next(new Error('Authentication error'));
             socket.decoded = decoded;
-            //exp = decoded.iat + 1800000;
+            exp = Date.now() + 300000;
             next();
         });
     }
@@ -36,21 +60,35 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-    if (color.length != 0 && socket.decoded.component === 'client') {
+    if (socket.decoded.component === 'client') {
+        var master = returnNumber(socket.decoded.sub);
+        var date = new Date();
+        date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+        var masterSocket = pw + returnNumber(date);
+    }
+
+    if (socket.decoded.component === 'client' && masterSocket === master) {
+        console.log('Supervisor connected successfully');
+        socket.emit('newLog', 'Connection made successfully');
+        io.to(socket.id).emit('Auth', '#FFFFF');
+        socket.emit('underConstruction', underConstruction);
+    }
+    else if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);
+        socket.emit('underConstruction', underConstruction);
 
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
 
-        /*         var checkIfExpired = setInterval(() => {
-                    if (exp < Date.now()) {
-                        clearInterval(checkIfExpired);
-                        socket.disconnect();
-                        console.log('Client token expired');
-                    }
-                }, 300000);     //checks every 5 min */
+        var checkIfExpired = setInterval(() => {
+            if (exp < Date.now()) {
+                clearInterval(checkIfExpired);
+                socket.disconnect();
+                console.log('Client token expired');
+            }
+        }, 120000);     //checks every 2 min 
     }
     else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');
@@ -80,13 +118,14 @@ io.on('connection', socket => {
         socket.to(GUIId).emit('newLog', 'Command received: ' + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
         console.log('Command received: ', payload);
+        exp = Date.now() + 300000;
     });
 
-    socket.on('LED', payload => {
-        socket.broadcast.emit('LED', payload);
-        console.log('LED received: ', payload);
+    socket.on('underConstruction', payload => {
+        underConstruction = payload;
+        socket.broadcast.emit('underConstruction', underConstruction);
+        console.log('underConstruction is now set on: ', payload);
     });
-
 
     //Returns the status of a experiment component
     socket.on('status', payload => {
@@ -122,7 +161,6 @@ io.on('connection', socket => {
 
     socket.on('getFooter', payload => { //reicht unteren zwei Fälle?
         if (footerList.includes(payload) === true) {
-            console.log("Fall eins")
             var footerPos = footerList.indexOf(payload);
             footerStatus = footerList[footerPos + 1];
             if (footerStatus === 'Component went offline!') {
@@ -135,36 +173,6 @@ io.on('connection', socket => {
         }
         online = componentList.includes(payload);
         io.emit('getFooter', { controlId: payload, status: footerStatus, online: online });
-    })
-
-    //WebRTC handshake for the overview stream of the experiment
-    socket.on('broadcaster join', (controlId) => {
-        if (broadcaster) {
-            broadcaster.push(socket.id, controlId,);
-        } else {
-            broadcaster = [socket.id, controlId];
-        }
-    })
-
-    socket.on('viewer', (controlId) => {
-        const id = broadcaster[broadcaster.indexOf(controlId) - 1]
-        io.to(id).emit('viewer', socket.id);
-    })
-
-    socket.on('offer', (payload) => {
-        io.to(payload.id).emit('offer', ({ id: socket.id, data: payload.data }));
-    })
-
-    socket.on('answer', (payload) => {
-        socket.to(payload.id).emit('answer', { id: socket.id, data: payload.data })
-    })
-
-    socket.on('candidate', (payload) => {
-        io.to(payload.id).emit('candidate', { id: socket.id, data: payload.data });
-    })
-
-    socket.on('watcher disconnect', () => {
-        io.emit('disconnect peerConnection', socket.id);
     })
 
     //Handshakes for the experiment camera (ESPCam)
@@ -245,6 +253,7 @@ io.on('connection', socket => {
         socket.to(GUIId).emit('userLeft', (socket.id))
         socket.to(GUIId).emit('newLog', 'User disconnected: ' + String(e));
 
+        clearInterval(checkIfExpired);
         socket.disconnect();
         console.log('User disconnected: ', e);
     });
@@ -276,6 +285,7 @@ io.on('connection', socket => {
     })
 
     socket.on('updateUser', () => {
+        io.emit('updateUser', userIDServerList);
         socket.to(GUIId).emit('updateUser', userIDServerList)
     })
 

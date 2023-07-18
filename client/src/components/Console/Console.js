@@ -1,6 +1,6 @@
 import { useAppContext } from '../../services/AppContext'
 import { RiTerminalBoxFill } from 'react-icons/ri'
-import styles from './Console.module.css'
+import styles from './CSS/Console.module.css'
 import { useState, memo } from 'react'
 import { isEqual } from 'lodash';
 

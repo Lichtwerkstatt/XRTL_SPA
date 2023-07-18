@@ -16,6 +16,14 @@
     margin-left: 20px;
 }
 
+.navbar h2 {
+    display: inline-block;
+    color: #c33535;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 30px;
+}
 
 .navMenu {
     position: absolute;
@@ -48,7 +56,6 @@
 
 }
 
-
 .navMenu ul {
     margin: 0px;
     padding: 0px;
@@ -67,4 +74,54 @@
 .navMenu li:hover {
     background: darkgreen;
     color: #00ffa8
+}
+
+.navRow {
+    float: left;
+}
+
+.mobile {
+    visibility: hidden;
+}
+
+@media (min-width:0px) and (max-width:576px) {
+    .mobile {
+        visibility: visible;
+        position: absolute;
+        top: 0px;
+        right: 5px;
+        height: 10px;
+    }
+
+    .navMenu {
+        visibility: hidden;
+    }
+}
+
+@media (min-width:577px) and (max-width:768px) {
+    .mobile {
+        visibility: visible;
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 10px;
+    }
+
+    .navMenu {
+        visibility: hidden;
+    }
+}
+
+@media (min-width:769px) and (max-width:992px) {
+    .mobile {
+        visibility: visible;
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 10px;
+    }
+
+    .navMenu {
+        visibility: hidden;
+    }
 }

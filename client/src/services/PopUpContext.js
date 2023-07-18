@@ -1,7 +1,6 @@
 import { useState, useContext, createContext } from "react";
 import { useSocketContext } from "./SocketContext";
 import { Alert, Snackbar } from '@mui/material';
-import styles from "./PopUp.module.css";
 
 const PopUpContext = createContext();
 
@@ -47,13 +46,11 @@ export function PopUpContextProvider({ children }) {
             }}
         >
             <Snackbar open={showPopUp} autoHideDuration={2000} onClose={handleClose} >
-                <div className={styles.popUp}>
+                <div  style={{ position: 'fixed', top: '5.25%', right: '0.5%' }}>
                     <Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}</Alert>
                 </div>
             </Snackbar>
             {children}
         </PopUpContext.Provider>
     );
-}
-
-
+} 

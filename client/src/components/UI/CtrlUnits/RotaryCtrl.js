@@ -1,5 +1,5 @@
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from 'react-icons/md';
-import { useSocketContext } from '../../../services/SocketContext'
+import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
 import styles from '../CSS/RotaryCtrl.module.css';
 import { useState, useEffect } from 'react';
@@ -50,30 +50,22 @@ const RotaryCtrl = (props) => {
       socketCtx.socket.emit('command', {
         userId: socketCtx.username,
         controlId: props.component,
-        move: direction
-      });
-
-      socketCtx.socket.emit('command', {
-        controlId: props.led,
+        move: direction,
         color: socketCtx.fontColor,
       });
 
       socketCtx.socket.emit('footer', {
-        status: 'Last change by: ' + socketCtx.username,
+        status: 'Used by: ' + socketCtx.username.substring(0, 17),
         controlId: props.component
       });
-
-     /*  if (rotation > 5000 || rotation > -5000) {
-        appCtx.toggleChangeRotary();
-      } else {
-        appCtx.toggleChangeRotary();
-      } */
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };
 
   const changeRotationHandler = (event) => {
-    setEnteredRotation(event.target.value);
+    if (event.target.value > -1) {
+      setEnteredRotation(event.target.value);
+    }
   };
 
   return (

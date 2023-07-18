@@ -1,11 +1,16 @@
+import Beamsplitter from "../../assembly/BeamSplitter";
+import ESPCam from "../../assembly/ESPCam";
 import LaserCtrl from "../../assembly/Laser";
-import ESPCam from "../../assembly/ESPCamStream";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
+import Cube from "../../assembly/BsCube";
+import Lens from "../../assembly/Lens";
+import { useState } from "react";
 
 const MichelsonInterferometer = (props) => {
   let footer = "Initializing..."
   var zero = "0"
+  const [setting, setSetting] = useState(false)
 
   var height = window.innerHeight;
   var width = window.innerWidth;
@@ -27,7 +32,6 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
-          LED={'led_KM100'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -40,7 +44,6 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Linear Movable Mirror"
           controlId={'linear_1'}
-          LED={'led_linear'}
           footer={footer}
           rotation={zero}
           top={topMiddle}
@@ -54,7 +57,6 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
-          LED={'led_laser'}
           rotationTop={zero}
           rotationBottom={zero}
           footer={footer}
@@ -68,7 +70,6 @@ const MichelsonInterferometer = (props) => {
           title="Power Supply"
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
-          LED={'led_linear'}
           footer={footer}
           top={topHigh}
           left={leftRight}
@@ -79,10 +80,45 @@ const MichelsonInterferometer = (props) => {
         <ESPCam
           title="Screen"
           controlId={'screen'}
-          LED={'led_screen'}
           footer={footer}
           top={topHighMiddle}
-          left={leftLeft}
+          left={'500'}
+          setting={setting}
+          setSetting= {setSetting}
+        />
+      )}
+
+      {/* Beamsplitter */}
+      {props.selected.has('beamSplitter') && (
+        <Beamsplitter
+          title=" Retract. Beam Splitter"
+          controlId={'beamSplitter'}
+          footer={footer}
+          top={100}
+          left={1000}
+        />
+      )}
+
+      {/* Lens */}
+      {props.selected.has('lens') && (
+        <Lens
+          title="Lens"
+          controlId={'lens'}
+          footer={footer}
+          top={600}
+          left={1100}
+        />
+      )}
+
+
+      {/* BeamSplitter Cube */}
+      {props.selected.has('bscube') && (
+        <Cube
+          title="Beam Splitter"
+          controlId={'bscube'}
+          footer={footer}
+          top={100}
+          left={600}
         />
       )}
     </div>

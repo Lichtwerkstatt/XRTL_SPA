@@ -1,38 +1,50 @@
 import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
+import WelcomeWindow from "../../experiment/windows/WelcomeWindow";
+import ManualWindow from "../../experiment/windows/ManualWindow";
 import { useAppContext } from "../../../services/AppContext";
-import { useEffect, useState, Fragment } from "react";
+import CamWindow from "../../windows/OverviewCamWindow";
 import InfoWindow from "../../windows/InfoWindow";
-import CamWindow from "../../windows/CamWindow";
+import { useEffect, Fragment, memo } from "react";
 import { isEqual } from 'lodash';
-import { memo } from "react"
 
 const ExperimentUILayer = () => {
-  var [connection, setConnection] = useState(false);
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
   useEffect(() => {
+
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
-      socketCtx.setNewFont(color);
-      setConnection(true);
+      socketCtx.socket.emit('userId', socketCtx.username)
+      socketCtx.setFontColor(color);
     }
-    socketCtx.socket.on('AuthFailed', () => {
+
+    const underConstruction = (payload) => {
+      appCtx.toggleunderConstruction(payload);
+    }
+
+    const authFailed = () => {
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
-    })
+    }
+
+    socketCtx.socket.on('AuthFailed', authFailed)
 
     socketCtx.socket.on('Auth', auth);
 
-    if (!connection) {
+    socketCtx.socket.on('underConstruction', underConstruction)
+
+    if (!socketCtx.socket.connected) {
       popupCtx.toggleShowPopUp('No server connection!', 'error');
-      setConnection('');
     }
 
     return () => {
+      socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
+      socketCtx.socket.removeAllListeners('AuthFailed', authFailed)
       socketCtx.socket.removeAllListeners('Auth', auth)
+
     }
     //Comment needed to prevent a warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,6 +53,8 @@ const ExperimentUILayer = () => {
   return (
     <Fragment>
       {appCtx.showInfoWindow && <InfoWindow />}
+      {appCtx.showWelcomeWindow && <WelcomeWindow />}
+      {appCtx.showManualWindow && <ManualWindow />}
       {appCtx.showCam && <CamWindow />}
       <MichelsonInterferometer
         toggleSelect={appCtx.toggleSelectedComp}
