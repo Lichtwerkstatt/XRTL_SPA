@@ -1,20 +1,18 @@
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
-import React, { useRef, memo, useState, useEffect } from "react";
+import React, { useRef, memo, useEffect } from "react";
 import { Box } from "@react-three/drei";
 import { isEqual } from "lodash";
 
 function Model2d({ ...props }) {
   const group = useRef();
-  const [beamSplitterState, setBeamSplitterState] = useState(false);
+
   const socket = props.socket;
 
   useEffect(() => {
     const status = (payload) => {
       if (payload.controlId === "beamSplitter") {
-        //Here a special case of assignment is taken, since the status returns an integer and is converted to a boolean
-        payload.status.absolute === 90
-          ? setBeamSplitterState(true)
-          : setBeamSplitterState(false);
+
+
 
         // console.log("Status  ", payload)
       } else if (payload.controlId === "OtherComponent") {
