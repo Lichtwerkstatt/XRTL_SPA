@@ -2,11 +2,9 @@ import AdaptiveOptics from "../../experiment/AdaptiveOptics/AdaptiveOptics";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
-import WelcomeWindow from "../../windows/WelcomeWindow";
 import CamWindow from "../../windows/OverviewCamWindow";
-import { useEffect, Fragment } from "react";
-import ManualWindow from "../../windows/ManualWindow";
 import InfoWindow from "../../windows/InfoWindow";
+import { useEffect, Fragment } from "react";
 import { isEqual } from 'lodash';
 import { memo } from "react";
 
@@ -54,8 +52,6 @@ const ExperimentUILayer = () => {
   return (
     <Fragment>
       {appCtx.showInfoWindow && <InfoWindow />}
-      {appCtx.showWelcomeWindow && <WelcomeWindow />}
-      {appCtx.showManualWindow && <ManualWindow />}
       {appCtx.showCam && <CamWindow />}
       <AdaptiveOptics
         toggleSelect={appCtx.toggleSelectedComp}
