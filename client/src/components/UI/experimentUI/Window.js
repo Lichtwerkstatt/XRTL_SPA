@@ -1,5 +1,5 @@
 import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline } from 'react-icons/io5' //IoReloadOutline
-import DescriptionHandler from '../ComponentDescription/DescriptionHandler'
+import DescriptionHandler from '../../windows/DescriptionHandler'
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
