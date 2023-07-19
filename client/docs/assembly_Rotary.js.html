@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> assembly/Rotary.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,59 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>assembly/Rotary.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
+import Rotary_bg from './media/rotary_outline.png';
+import Window from '../UI/experimentUI/Window';
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ * Rotary component window
+ * 
+ * @description This react component returns a window with the content for the rotary component window.
+ *  
+ * @param {string} controlId - controlId
+ * @param {string} controlIdTop - controlId for the stepper motor 
+ * @param {number} rotation - Initialisation value for the control element
+ * @param {string} title - For setting the title within the window
+ * @param {number} top - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} Rotary component window
+ */
+const Rotary = (props) => {
+  return (
+    &lt;Window
+      id={props.controlId}
+      componentList={[props.controlId]}
+      header={props.title}
+      top={props.top}
+      left={props.left}
+      width='250px'
+      height='235px'
+      background={Rotary_bg}
+    >
+      &lt;RotaryCtrl
+        component={props.controlId}
+        rotation={props.rotation}
+        top='10'
+        left='160'
+      />
+    &lt;/Window>
+  );
+};
+export default Rotary;
+</code></pre>
+        </article>
+    </section>
 
 
 

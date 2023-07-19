@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> windows/OverviewCamWindow.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,66 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>windows/OverviewCamWindow.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import ESPCam from '../UI/CtrlUnits/ESPCamWithoutSettings';
+import Window from '../UI/experimentUI/Window';
+
+/**
+ * Overview camera window
+ * 
+ * @description This react component returns a window with the content for the Overview Camera window. 
+ *  
+ * @returns {React.ReactElement} Overview camera window
+ */
+const CamWindow = () => {
+    var width = window.innerWidth
+    var height = 0;
+
+    if (0 &lt; width &amp;&amp; width &lt; 576) {
+        width = '350px'
+        height = '260px'
+    }
+    else if (576 &lt; width &amp;&amp; width &lt; 768) {
+        width = '510px'
+        height = '340px'
+    } else {
+        width = '600px'
+        height = '400px'
+    }
 
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    return (
+        &lt;Window
+            header={'Top View of Experiment'}
+            top={'200'}
+            left={'650'}
+            id={'overview'}
+            componentList={['overview']}
+            width={width}
+            height={height}
+            footer={'empty'}
+            topper={'none'}
+        >
+            &lt;ESPCam
+                component={'overview'}
+                width={width}
+                height={height}
+            />
+        &lt;/Window>
+    );
+};
+export default CamWindow;</code></pre>
+        </article>
+    </section>
 
 
 

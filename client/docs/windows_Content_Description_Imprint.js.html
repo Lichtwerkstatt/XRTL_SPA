@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> windows/Content/Description_Imprint.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,63 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>windows/Content/Description_Imprint.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { themeLogin } from '../../UI/templates/Theme';
+import { ThemeProvider } from '@mui/material/styles';
+import styles from '../CSS/Description.module.css';
+import { Button, Box } from '@mui/material';
+import propTypes from "prop-types";
 
+/**
+ * Imprint text
+ * 
+ * @description Within this file is the text for the imprint, which can be found within the information window under the § symbol.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} Imprint text and buttons for redirection to websites.  
+ */
+const Imprint = (props) => {
+    return (
+        &lt;div>
+            &lt;div className={styles.mainWrapper} style={{ height: props.height }} >
+                &lt;p>
+                    The editorial responsibility for this application lies with the Executive Office of the Abbe Center of Photonics and it's representative/s.
+                &lt;/p>
+                &lt;p>
+                    For further information please follow the links:
+                &lt;/p>
+                &lt;ThemeProvider theme={themeLogin}>
 
-    <h3> </h3>
+                    &lt;Box sx={{ '&amp; button': { mr: 5, ml: 3 } }}>
 
+                        &lt;Button type='submit' variant='contained' onClick={() => { window.open("https://www.asp.uni-jena.de/legal-notice", 'resizable=yes') }}> Legal Notice &lt;/Button>
+                        &lt;Button type='submit' variant='contained' onClick={() => { window.open("https://www.uni-jena.de/en/privacy-statement", 'resizable=yes') }}> Privacy Statement &lt;/Button>
+                    &lt;/Box>
+                &lt;/ThemeProvider>
+            &lt;/div>
 
+        &lt;/div>
+    )
+}
 
+Imprint.propTypes = {
+    height: propTypes.string.isRequired,
+}
 
-
-
-
-
-
-
-    
-
-
-
-
-
+export default Imprint;
+</code></pre>
+        </article>
+    </section>
 
 
 
