@@ -2,6 +2,18 @@ import BS_Background from './media/BS_outline.png';
 import BeamSplitterCtrl from '../UI/CtrlUnits/BeamSplitterCtrl';
 import Window from '../UI/experimentUI/Window';
 
+/**
+ * Beamspliiter component window
+ * 
+ * @description This react component returns a window with the content for the beamspliiter component window.
+ *  
+ * @param {string} controlId - controlId
+ * @param {string} title - For setting the title within the window
+ * @param {number} top - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} Beamspliiter component window
+ */
 const BeamSplitter = (props) => {
 
     return (
