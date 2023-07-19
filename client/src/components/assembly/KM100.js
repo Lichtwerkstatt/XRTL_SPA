@@ -10,8 +10,8 @@ import Window from '../UI/experimentUI/Window';
  * @param {string} id - controlId of the entire component
  * @param {string} controlIdTop - controlId for the upper stepper motor 
  * @param {string} controlIdBottom - controlId for the lower stepper motor
- * @param {number} rotationTop - Initialisation value of upper control
- * @param {number} rotationBottom - Initialisation value of lower control
+ * @param {number} rotationTop - Initialisation value for upper control element
+ * @param {number} rotationBottom - Initialisation value for lower control element
  * @param {string} title - For setting the title within the window
  * @param {number} top - For the positioning of the window 
  * @param {number} left - For the positioning of the window 
