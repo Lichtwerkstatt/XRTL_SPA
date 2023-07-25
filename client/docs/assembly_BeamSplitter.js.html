@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> assembly/BeamSplitter.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,56 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>assembly/BeamSplitter.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import BS_Background from './media/BS_outline.png';
+import BeamSplitterCtrl from '../UI/CtrlUnits/BeamSplitterCtrl';
+import Window from '../UI/experimentUI/Window';
 
+/**
+ * Beamsplitter component window
+ * 
+ * @description This react component returns a window with the content for the beamsplitter component window.
+ *  
+ * @param {string} controlId - controlId
+ * @param {string} title - For setting the title within the window
+ * @param {number} top - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} Beamsplitter component window
+ */
+const BeamSplitter = (props) => {
 
-    <h3> </h3>
+    return (
+        &lt;Window
+            id={props.controlId}
+            componentList={[props.controlId]}
+            header={props.title}
+            top={props.top}
+            left={props.left}
+            height='240px'
+            width='250px'
+            background={BS_Background}
+        >
+            &lt;BeamSplitterCtrl
+                component={props.controlId}
+            />
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+        &lt;/Window>
+    )
+};
+export default BeamSplitter;
+</code></pre>
+        </article>
+    </section>
 
 
 

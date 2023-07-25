@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> assembly/Lens.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,53 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>assembly/Lens.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
+import Lens from '../UI/ComponentDescription/Decription_Lens';
 
+/**
+ * Lens description window
+ * 
+ * @description This React component returns a window with the description of the lens component.
+ * 
+ * @param {string} controlId - controlId
+ * @param {string} title - For setting the title within the window
+ * @param {number} top - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} Lens description window
+ */
+const Laser = (props) => {
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+  return (
+    &lt;Window
+      id={props.controlId}
+      header={props.title}
+      top={props.top}
+      left={props.left}
+      height='240px'
+      width='250px'
+      footer={'empty'}
+      topper={'none'}
+    >
+      &lt;Lens
+        height='220px'
+      />
+    &lt;/Window>
+  )
+}
+export default Laser;</code></pre>
+        </article>
+    </section>
 
 
 

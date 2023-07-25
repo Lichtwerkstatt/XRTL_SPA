@@ -1,7 +1,14 @@
-import Settings from '../UI/CtrlUnits/ESPCamWithoutSettings';
+import ESPCam from '../UI/CtrlUnits/ESPCamWithoutSettings';
 import Window from '../UI/experimentUI/Window';
 
-const CamWindow = (props) => {
+/**
+ * Overview camera window
+ * 
+ * @description This react component returns a window with the content for the Overview Camera window. 
+ *  
+ * @returns {React.ReactElement} Overview camera window
+ */
+const CamWindow = () => {
     var width = window.innerWidth
     var height = 0;
 
@@ -30,7 +37,7 @@ const CamWindow = (props) => {
             footer={'empty'}
             topper={'none'}
         >
-            <Settings
+            <ESPCam
                 component={'overview'}
                 width={width}
                 height={height}

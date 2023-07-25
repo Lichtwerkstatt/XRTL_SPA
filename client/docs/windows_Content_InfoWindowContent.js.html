@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> windows/Content/InfoWindowContent.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,44 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>windows/Content/InfoWindowContent.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import styles from "../CSS/InfoWindowContent.module.css";
+import bgTeam from "../../media/images/xrtl_team.png";
 
+/**
+ * Information text
+ * 
+ * @description This file contains the content and text for the information window.
+ *  
+ * @returns {React.ReactElement} Content and Text for the information window
+ */
+const InfoWindowContent = () => {
+  return (
 
-    <h3> </h3>
+    &lt;div className={styles.mainWrapper} style={{ backgroundImage: "url(\"" + bgTeam + "\")" }}
+    >
+      Remote labs represent a groundbreaking approach to science education and collaboration, facilitating communication and experimentation from afar. However, creating remote access capabilities can be prohibitively expensive or technically challenging, particularly for non-IT and non-engineering disciplines. To make remote labs accessible across all fields, we need a user-friendly platform that enables researchers, assistants, and technical staff to implement them independently. To that end, we are proud to present XR TwinLab (XRTL), an open-source toolbox designed specifically for the field of Photonics. With its modular structure XRTL offers a flexible, web-based application for controlling optical experimental setups. This exciting project is currently being developed by the esteemed Abbe School of Photonics and the Open Makerspace Lichtwerkstatt Jena.
 
+      Feel free to follow our &lt;a href="https://github.com/Lichtwerkstatt/XRTL_SPA">Git Repo&lt;/a> or &lt;a href="mailto:team@lichtwerkstatt-jena.de">Contact us.&lt;/a>
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+      &lt;p>
+        Best! Clara, Fabian, Falko, Jari and Johannes
+      &lt;/p>
+    &lt;/div>
+  )
+}
+export default InfoWindowContent;</code></pre>
+        </article>
+    </section>
 
 
 

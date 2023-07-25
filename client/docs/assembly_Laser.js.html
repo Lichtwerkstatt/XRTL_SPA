@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> assembly/Laser.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,56 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>assembly/Laser.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import PS_Background from './media/PS_outline.png';
+import LaserCtrl from '../UI/CtrlUnits/SwitchCtrl';
+import Window from '../UI/experimentUI/Window';
 
+/**
+ * Laser power supply component window
+ * 
+ * @description  This React component returns a window with the content for the Laser power supply component window.
+ *  
+ * @param {string} id - controlId of the entire component (same as for the laser alignment)
+ * @param {string} controlId - controlId for the relais
+ * @param {string} title - For setting the title within the window
+ * @param {number} top - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} Laser power supply component window
+ */
+const Laser = (props) => {
 
-    <h3> </h3>
+  return (
+    &lt;Window
+      id={props.id}
+      componentList={[props.controlId]}
+      header={props.title}
+      top={props.top}
+      left={props.left}
+      height='240px'
+      width='250px'
+      background={PS_Background}
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    >
+      &lt;LaserCtrl
+        component={props.controlId}
+      />
+    &lt;/Window>
+  )
+}
+export default Laser;</code></pre>
+        </article>
+    </section>
 
 
 

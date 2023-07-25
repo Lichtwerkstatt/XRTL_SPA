@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> UI/templates/Stepper.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#BeamSplitter">BeamSplitter</a></li><li><a href="global.html#BsCube">BsCube</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#DescriptionHandler">DescriptionHandler</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#Imprint">Imprint</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Pinhole">Pinhole</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#XR50P">XR50P</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>UI/templates/Stepper.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import { useAppContext } from '../../../services/AppContext';
+import MobileStepper from '@mui/material/MobileStepper';
+import { useTheme } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import propTypes from "prop-types";
+
+/**
+ * Stepper component
+ * 
+ * @description This component returns a styled stepper. For this, the controlId, the length of the stepper and the beginning of the 
+ * Id of the paragraphs must be specified. Optionally, the text on the right and left can be defined. 
+ * 
+ * @param {string} component - controlId 
+ * @param {number} length - Specifies the length of the stepper
+ * @param {string} left -  text at the left/beginning
+ * @param {string} right -text at the right/end
+ * @param {number} buttonValue - indicates the beginning of the Ids of the paragraphs of the text (these should be set once at 1, 10, 20, ...,
+ *  because otherwise, when opening several windows, all elements with the same ID will be changed).)
+ * 
+ * @returns {React.ReactElement} styled stepper with the specified props 
+ * 
+ * @example &lt;Stepper left={'Back'} right={'Next'} buttonValue={10} length={9} component={'manual'} />
+ * @example &lt;Stepper left={'Back'} right={'Next'} buttonValue={20} length={6} component={'help'} />
+ * @example &lt;Stepper buttonValue={30} length={3} component={'manual2'} />
+ */
+
+const StepperCtrl = (props) => {
+    const theme = useTheme();
+    const appCtx = useAppContext();
+
+    /**
+     * @param {number} activeStep - Indicates the position where the stepper is located.
+     * @function setActiveStep - Assigning a new value
+     */
+    const [activeStep, setActiveStep] = useState(1 === appCtx.manualPage ? 1 : appCtx.manualPage)
+
+    /**
+     * @param {number} buttonValue - Indicates the Id of the first paragraph of the first page of the stepper
+     * @function setButtonValue - Assigning a new value
+     */
+    const [buttonValue, setButtonValue] = useState(1 === appCtx.manualPage ? props.buttonValue : appCtx.manualPage + props.buttonValue - 1)
+
+    /**
+     * If the manualPage is not equal to 1, which means that you are not on the first page (e.g. after reopening the window), 
+     * then this function handles this. By setting the paragraph defined by the buttonValue to not show and the appCtx.manualPage to show.
+     */
+    useEffect(() => {
+        if (1 !== appCtx.manualPage) {
+            document.getElementById(String(props.buttonValue)).style.display = 'none'
+            document.getElementById(String(appCtx.manualPage + props.buttonValue - 1)).style.display = 'block'
+        }
+        //Comment needed to prevent a warning
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    /**
+     * Function handles the clicking on the next page and the associated re-rendering of the selected text.
+     */
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setButtonValue((buttonValue) => buttonValue + 1);
+
+        document.getElementById(String(buttonValue)).style.display = 'none'
+        document.getElementById(String(buttonValue + 1)).style.display = 'block'
+
+        if (props.component) {
+            appCtx.toggleSetManualPage(activeStep + 1)
+        }
+    };
+
+    /**
+     * Function handles clicking back to the previous page and the associated re-rendering of the selected text.
+     */
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        setButtonValue((buttonValue) => buttonValue - 1);
+
+        document.getElementById(String(buttonValue)).style.display = 'none'
+        document.getElementById(String(buttonValue - 1)).style.display = 'block'
+
+        if (props.component) {
+            appCtx.toggleSetManualPage(activeStep - 1)
+        }
+    };
+
+    return (
+        &lt;MobileStepper
+            variant="progress"
+            steps={props.length + 1}
+            position="static"
+            activeStep={activeStep}
+            sx={{ width: '97%', flexGrow: 1, top: '90%', position: 'absolute', background: 'transparent' }}
+            nextButton={
+                &lt;Button size="small" onClick={handleNext} disabled={activeStep === props.length}>
+                    {props.right}
+                    {theme.direction === 'rtl' ? (
+                        &lt;KeyboardArrowLeft />
+                    ) : (
+                        &lt;KeyboardArrowRight />
+                    )}
+                &lt;/Button>
+            }
+
+            backButton={
+                &lt;Button size="small" onClick={handleBack} disabled={activeStep === 1}>
+                    {theme.direction === 'rtl' ? (
+                        &lt;KeyboardArrowRight />
+                    ) : (
+                        &lt;KeyboardArrowLeft />
+                    )}
+                    {props.left}
+                &lt;/Button>
+            }
+        />
+    );
+}
+
+StepperCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+    length: propTypes.number.isRequired,
+    left: propTypes.string,
+    right: propTypes.string,
+    buttonValue: propTypes.number.isRequired,
+}
+
+export default StepperCtrl;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

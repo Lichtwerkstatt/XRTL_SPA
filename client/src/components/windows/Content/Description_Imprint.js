@@ -1,10 +1,19 @@
-import { Button, Box } from '@mui/material';
-import styles from './Description.module.css';
-import { themeLogin } from '../templates/Theme'
+import { themeLogin } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/styles';
+import styles from '../CSS/Description.module.css';
+import { Button, Box } from '@mui/material';
+import propTypes from "prop-types";
 
-
-const DescriptionESPCam = (props) => {
+/**
+ * Imprint text
+ * 
+ * @description Within this file is the text for the imprint, which can be found within the information window under the § symbol.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} Imprint text and buttons for redirection to websites.  
+ */
+const Imprint = (props) => {
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
@@ -27,4 +36,9 @@ const DescriptionESPCam = (props) => {
         </div>
     )
 }
-export default DescriptionESPCam;
+
+Imprint.propTypes = {
+    height: propTypes.string.isRequired,
+}
+
+export default Imprint;

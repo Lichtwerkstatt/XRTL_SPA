@@ -70,6 +70,7 @@ const AdaptiveOptics = (props) => {
           title="Pinhole"
           controlId={"pinhole"}
           footer={footer}
+          rotation={zero}
           top={100}
           left={1100}
         />
