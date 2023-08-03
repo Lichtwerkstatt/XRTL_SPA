@@ -1,4 +1,4 @@
-import Model3d from "../../experiment/AdaptiveOptics/AO_230713";
+import Model3d from "../../experiment/AdaptiveOptics/AO_230803";
 import Model2d from "../../experiment/AdaptiveOptics/MIS1_2D_control";
 import { OrbitControls, Environment, Billboard } from "@react-three/drei";
 import { useAppContext } from "../../../services/AppContext";
