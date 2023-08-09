@@ -1,9 +1,10 @@
+import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import Pinhole from "../../assembly/Pinhole";
 import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
-import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
+import Eye from '../../assembly/Eye'
 
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
@@ -76,14 +77,25 @@ const AdaptiveOptics = (props) => {
           left={1100}
         />
       )}
-      {/* Rotary stage Measurement Mirror*/}
+      {/* Phantom eye*/}
+      {props.selected.has("rotaryStage_1") && (
+        <Eye
+          title="Eye"
+          controlId={"rotaryStage_1"}
+          footer={footer}
+          rotation={zero}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Rotary stage of the eye*/}
       {props.selected.has("rotaryStage_1") && (
         <Rotary
           title="Rotary stage"
           controlId={"rotaryStage_1"}
           footer={footer}
           rotation={zero}
-          top={50}
+          top={550}
           left={150}
         />
       )}
