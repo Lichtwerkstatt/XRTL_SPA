@@ -1,4 +1,6 @@
-import Impressum from './Content/Description_Imprint'
+import Imprint from './Imprint';
+import Telescope1 from './Telescope_1';
+import Telescope2 from './Telescope_2';
 import propTypes from "prop-types";
 
 /**
@@ -20,7 +22,10 @@ import propTypes from "prop-types";
 const DescriptionHandler = (props) => {
 
     const renderOption = {
-        info: <Impressum height={props.height} />
+        info: <Imprint height={props.height} />,
+        telescope_1: <Telescope1 height={props.height} />,
+        telescope_2: <Telescope2 height={props.height} />,
+
     }
 
     return (

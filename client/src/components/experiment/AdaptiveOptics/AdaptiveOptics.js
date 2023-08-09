@@ -3,6 +3,7 @@ import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
+import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
@@ -82,6 +83,26 @@ const AdaptiveOptics = (props) => {
           controlId={"rotaryStage_1"}
           footer={footer}
           rotation={zero}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Telescope in front of the Adaptive Mirror */}
+      {props.selected.has("telescope_1") && (
+        <DescriptionOnlyComponent
+          title="Telescope 1"
+          controlId={"telescope_1"}
+          footer={footer}
+          top={550}
+          left={900}
+        />
+      )}
+      {/* Telescope in front of the Wavefront Sensor*/}
+      {props.selected.has("telescope_2") && (
+        <DescriptionOnlyComponent
+          title="Telescope 2"
+          controlId={"telescope_2"}
+          footer={footer}
           top={50}
           left={150}
         />

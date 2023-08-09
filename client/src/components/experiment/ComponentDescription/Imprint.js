@@ -1,6 +1,6 @@
 import { themeLogin } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/styles';
-import styles from '../CSS/Description.module.css';
+import styles from './CSS/Description.module.css';
 import { Button, Box } from '@mui/material';
 import propTypes from "prop-types";
 

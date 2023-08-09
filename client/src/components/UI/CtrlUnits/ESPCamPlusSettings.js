@@ -1,6 +1,5 @@
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
-import { useAppContext } from '../../../services/AppContext';
 import { ThemeProvider } from '@mui/material/styles';
 import ESPCam from '../templates/ESPCam';
 import styles from '../CSS/Settings.module.css'

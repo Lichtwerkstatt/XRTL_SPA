@@ -1,5 +1,5 @@
 import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline } from 'react-icons/io5' //IoReloadOutline
-import DescriptionHandler from '../../windows/DescriptionHandler'
+import DescriptionHandler from '../../experiment/ComponentDescription/DescriptionHandler'
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
@@ -14,7 +14,7 @@ import { useState } from 'react';
 const Window = (props) => {
   const [lastChange, setLastChange] = useState(props.lastChange);
   const [footer, setFooter] = useState('Initializing... ');
-  const [info, setInfo] = useState(true);
+  const [info, setInfo] = useState(props.info === false ? false : true);
 
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
@@ -171,6 +171,7 @@ const Window = (props) => {
           </div>
 
           :
+
           <div
             className={styles.windowContent}
             style={{
