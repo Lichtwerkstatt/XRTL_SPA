@@ -30,7 +30,7 @@ const Pinhole = (props) => {
     >
       <RotaryCtrl
         rotation={props.rotation}
-        component={props.controlIdTop}
+        component={props.controlId}
         top="20"
         left="160"
       />
