@@ -197,8 +197,7 @@ io.on('connection', socket => {
         } else {
             footerStatus = 'Initializing... ';
         }
-        componentList.includes(payload) ? componentList.includes(payload) : false;
-        io.emit('getFooter', { controlId: payload, status: footerStatus, online: online });
+        io.emit('getFooter', { controlId: payload, status: footerStatus, online: componentList.includes(payload) });
     })
 
     //Handshakes for the experiment camera (ESPCam)
