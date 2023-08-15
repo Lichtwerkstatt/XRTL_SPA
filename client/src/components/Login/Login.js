@@ -1,4 +1,4 @@
-import { TextField, ThemeProvider, Button, IconButton } from '@mui/material';
+import { TextField, ThemeProvider, Button, IconButton, Grid } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import { themeLogin } from '../../components/UI/templates/Theme';
 import { useSocketContext } from '../../services/SocketContext';
@@ -11,6 +11,7 @@ import { isEqual } from 'lodash';
 const Login = (props) => {
     const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl-ao.uni-jena.de' }]
     const [connection, setConnection] = useState('');
+    const [accessCode, setAccessCode] = useState('');
     const [username, setUsername] = useState('');
 
     const socketCtx = useSocketContext();
@@ -20,7 +21,7 @@ const Login = (props) => {
         if (username !== '') {
             try {
                 socketCtx.setNewURL(String(connection), String(username));
-                socketCtx.toggleConnection(String(username));
+                socketCtx.toggleConnection(String(username), String(accessCode));
                 appCtx.toggleLogin();
             }
             catch (error) { }
@@ -32,12 +33,16 @@ const Login = (props) => {
         setConnection(connectionOption[1].title)
     };
 
+    const handleAccessCode = (event) => {
+        setAccessCode(event.target.value);
+    };
+
+
     if (appCtx.showLogin) {
         return (
             <ThemeProvider theme={themeLogin}>
                 <div className={styles.popupWindow}>
                 </div>
-
                 <div className={styles.popupInner} >
                     <h3 title='settings'>Login</h3>
                     <div className={styles.close}>
@@ -47,26 +52,44 @@ const Login = (props) => {
                             <HighlightOffOutlinedIcon fontSize='large' />
                         </IconButton>
                     </div>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <TextField
+                            autoFocus
+                            variant='outlined'
+                            label='Username '
+                            value={username}
+                            onChange={handleChange}
+                            onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                            style={{ marginLeft: '0%', width: '200px', paddingRight: '25%' }}
+                            error={username === ''}
+                            helperText={username === '' ? 'Enter your username!' : ' '}
+                        />
 
-                    <TextField
-                        autoFocus
-                        variant='outlined'
-                        label='Username '
-                        value={username}
-                        onChange={handleChange}
-                        onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
-                        style={{ width: '70%', marginLeft: '5%' }}
-                        error={username === ''}
-                        helperText={username === '' ? 'Enter your username!' : ' '}
-                    />
-
+                        <TextField
+                            variant='outlined'
+                            label='Access code '
+                            value={accessCode}
+                            onChange={handleAccessCode}
+                            onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
+                            style={{ marginLeft: '0%', width: '200px', paddingRight: '25%' }}
+                            error={accessCode === ''}
+                            helperText={accessCode === '' ? 'Enter the access code!' : ' '}
+                        />
+                    </Grid>
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
                         endIcon={<SendIcon />}
-                        style={{ width: '22%', height: '17%', marginBottom: '10%' }}
+                        style={{ width: '20%', height: '15%' }}
                     >Login</Button>
+
                 </div>
             </ThemeProvider>
+
         );
     } else {
         return (<div></div>)

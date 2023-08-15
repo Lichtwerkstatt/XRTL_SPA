@@ -20,8 +20,8 @@ div.popupInner {
     position: absolute;
     top: 45%;
     left: 50%;
-    width: 370px;
-    height: 200px;
+    height: 230px;
+    width: 360px;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.6);
     border: 3px solid #01bd7d;
@@ -37,74 +37,5 @@ div.popupInner h3 {
 div.popupInner button {
     position: absolute;
     top: 80%;
-    left: 74%;
-}
-
-div.Construction{
-    position: relative;
-    width: 100%;
-    top: -300px;
-    color:rgb(238, 255, 0) ;
-}
-
-/* Width */
-@media (min-width:0px) and  (max-width:576px) {
-    div.close {
-        position: absolute;
-        top: 1%;
-        left: 82%;
-    }
-
-    div.popupInner {
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        width: 300px;
-        height: 175px;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.6);
-        border: 3px solid #01bd7d;
-        border-radius: 15px;
-    }
-}
-
-@media (min-width:577px) and  (max-width:768px){
-    div.close {
-        position: absolute;
-        top: 1%;
-        left: 85%;
-    }
-
-    div.popupInner {
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        width: 330px;
-        height: 200px;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.6);
-        border: 3px solid #01bd7d;
-        border-radius: 15px;
-    }
-}
-
-/* Height*/
-@media (min-height:0px) and  (max-height:576px) {
-    div.close {
-        position: absolute;
-        top: 1%;
-        left: 82%;
-    }
-
-    div.popupInner {
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        width: 300px;
-        height: 200px;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.6);
-        border: 3px solid #01bd7d;
-        border-radius: 15px;
-    }
+    left: 77%;
 }
