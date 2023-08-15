@@ -61,14 +61,15 @@ export function SocketContextProvider({ children }) {
     }
   }
 
-  const toggleConnection = (username) => {
+  const toggleConnection = (username, key) => {
     if (!connected) {
       var payload = {
         sub: username,
         component: 'client',
       }
 
-      var token = jwt.sign(payload, "keysecret");
+      var token = jwt.sign(payload, key, { header: { kid: 'client' } });
+      console.log(token)
       socket.auth = { token: token }
       socket.connect();
       socket.emit('userId', username)

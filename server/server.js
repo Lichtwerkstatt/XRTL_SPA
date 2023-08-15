@@ -1,36 +1,29 @@
 /**
  * Sever documentation
  * 
- * @description This file contains the code for the server. The server can be started with "node server.js" after "npm install" has been executed. At the beginning of the code, 
- * various parameters that apply to the server can be set. 
+ * @description This file contains the code for the server. The server can be started with "node server.js" after "npm install" has been executed. 
+ * Within the .env file created in src all important parameters should be specified, such as port if different, the parmeter for the mail communication.
  * 
  * @param {number} PORT - Defines the port on which the server should run, which is usually 300.
- * @param {string} passwordFile - If desired, a path can be entered here where the master password is located. Untoggle of code pieces is necessary for this!
- */
-const PORT = 3000;
-//const masterfile = '';
-//const tokenClient;
-//const tokenComponents;
-//const tokenAdmin;
+*/
+const PORT = 3000 | process.env.PORT;
 
 /**
  * Required Packages with some predefined properties
- */
-//const passwordFile = fs.readFileSync(masterfile, 'utf8');
+*/
+require('dotenv').config()
+const os = require("os");
+const path = require("path");
 const fs = require('fs');
+var nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
-    }
-})
+const io = require('socket.io')(server, { cors: { origin: '*', methods: ['GET', 'POST'] } })
 
 /**
  * Initialisation of variables required in the code
- */
+*/
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00']; //List of colours that can be assigned to the clients and in which the LED rings light up in case of changes.
 var footerStatus = 'Initializing ...'; // Sets the default value for the footer of windows.
 var underConstruction = false; // Is used for the app as feedback to indicate whether the website is currently under construction.
@@ -41,34 +34,96 @@ var colorList = []; // List contains all colours assigned to connected clients.
 var GUIId = ''; // Is later overwritten with the socket.id of the GUI, whereby specific commands can be sent to it.
 var exp = '' // Overwritten with the expired time of the respective client.
 
+// read .env file & convert to array
+const envFilePath = path.resolve(__dirname, ".env");
+const readEnvVars = () => fs.readFileSync(envFilePath, "utf-8").split(os.EOL);
+
 /**
+ * Updates value of a key or creates new one 
  * 
- * @param {*} string 
- * @returns 
+ * @description Updates value for existing key or creates a new line containing key=value in the given .env file
+ *
+ * @param {string} key key to update/insert
+ * @param {string} value value to update/insert
  */
-const returnNumber = (string) => {
-    var number = [];
-    var a = '';
-    for (var i = 0; i < string.length; i += 2) {
-        if (string.charCodeAt(i + 1)) {
-            number.push(string.charCodeAt(i) + string.charCodeAt(i + 1))
-        } else {
-            number.push(string.charCodeAt(i))
-        }
+const setEnvValue = (key, value) => {
+    const envVars = readEnvVars();
+    const targetLine = envVars.find((line) => line.split("=")[0] === key);
+    if (targetLine !== undefined) {
+        // update existing line
+        const targetLineIndex = envVars.indexOf(targetLine);
+        // replace the key/value with the new value
+        envVars.splice(targetLineIndex, 1, `${key}="${value}"`);
+    } else {
+        // create new key value
+        envVars.push(`${key}="${value}"`);
     }
+    // write everything back to the file system
+    fs.writeFileSync(envFilePath, envVars.join(os.EOL));
+};
 
-    for (var i = 0; i < number.length; i++) {
-        a += number[i];
+//Creation and saving of the client and admin access code 
+setEnvValue('KEY_2', Math.random().toString(16).substr(4, 16));
+setEnvValue('KEY_3', Math.random().toString(16).substr(4, 16));
+
+// Creation of a mail transporter specifying host, user and password 
+var transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.USER,
+        pass: process.env.PASSWORD,
+    },
+});
+
+// Composition of the mail text from strings and the keys.
+var mailContent = process.env.TEXT_1 + " " + process.env.KEY_2 + " " + process.env.TEXT_2 + " " + process.env.KEY_3
+console.log(mailContent)
+
+// Creation of the mail specifying the sender, the recipient(s), the subject and the previously composed mail text.
+var mailOptions = {
+    from: process.env.EMITTER,
+    to: process.env.RECIEVER,
+    subject: process.env.SUBJECT,
+    text: mailContent
+};
+
+// Sending the mail with the help of the previously defined transporter and feedback whether this was successful or not.
+transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent: ' + info.response);
     }
-    return a;
-}
+});
 
+// Authetification process using middleware
 io.use((socket, next) => {
+    //Incoming socket request must have these dictionary entries, otherwise request is rejected and authentication fails.
     if (socket.handshake.auth && socket.handshake.auth.token) {
-        jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
-            if (err) return next(new Error('Authentication error'));
+        //Preprocessing to extract the key from the dictionary
+        var key = socket.handshake.auth.token.split('.');
+        key = Buffer.from(key[0], 'base64');
+        key = key.toString('ascii');
+
+        // Assignment of the key based on the content of the middleware
+        if (key.includes('client')) {
+            key = process.env.KEY_2
+        } else if (key.includes('component')) {
+            key = process.env.KEY_1
+        } else {
+            key = process.env.KEY_3
+        }
+
+        //Authefication with the previously assigned key, if this fails, an error is thrown, otherwise the connection is established.
+        jwt.verify(socket.handshake.auth.token, key, (err, decoded) => {
+            if (err) {
+                console.log('Authentication failed!')
+                return next(new Error('Authentication error'));
+            }
+            // Decrypted data are saved
             socket.decoded = decoded;
-            exp = Date.now() + 300000;
             next();
         });
     }
@@ -79,19 +134,15 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-   /*  if (socket.decoded.component === 'client') {
-        var master = returnNumber(socket.decoded.sub);
-        var date = new Date();
-        date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-        var masterSocket = passwordFile + returnNumber(date);
-    }
 
-    if (socket.decoded.component === 'client' && masterSocket === master) {
+    //Connecting process for admin, client and components
+    if (socket.decoded.component === 'admin') {
         console.log('Supervisor connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', '#FFFFF');
         socket.emit('underConstruction', underConstruction);
-    } else */  if (color.length != 0 && socket.decoded.component === 'client') {
+    }
+    else if (color.length != 0 && socket.decoded.component === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);
@@ -99,14 +150,6 @@ io.on('connection', socket => {
 
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
-
-        var checkIfExpired = setInterval(() => {
-            if (exp < Date.now()) {
-                clearInterval(checkIfExpired);
-                socket.disconnect();
-                console.log('Client token expired');
-            }
-        }, 120000);     //checks every 2 min 
     }
     else if (color.length === 0 && socket.decoded.component === 'client') {
         io.to(socket.id).emit('AuthFailed');

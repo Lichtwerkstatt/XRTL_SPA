@@ -10,9 +10,11 @@
   "license": "MIT",
   "dependencies": {
     "better-docs": "^2.7.2",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsdoc": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.9.4",
     "nodemon": "^2.0.7",
     "socket.io": "^4.4.1",
     "taffydb": "^2.7.3"
