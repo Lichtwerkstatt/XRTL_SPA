@@ -226,7 +226,7 @@ const Chat = () => {
         setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
       }
 
-    } else if (message != '' && message != ' ') {
+    } else if (message !== '' && message !== ' ') {
       socketCtx.socket.emit('message', { userId: socketCtx.username, message: message, color: socketCtx.fontColor });
     }
     setMessage('');
