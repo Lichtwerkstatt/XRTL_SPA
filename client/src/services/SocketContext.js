@@ -54,22 +54,19 @@ export function SocketContextProvider({ children }) {
     SocketContext = createContext();
     setURL(newURL);
 
-    if (username && username.includes('digiPHOTON') && username.includes('digiPHOTON')) {
+    if (username && username === 'admin') {
       setUsername('Supervisor')
     } else {
       setUsername(username);
     }
+
   }
 
   const toggleConnection = (username, key) => {
     if (!connected) {
-      var payload = {
-        sub: username,
-        component: 'client',
-      }
+      var payload = { sub: username, component: username === 'admin' ? 'admin' : 'client' }
 
-      var token = jwt.sign(payload, key, { header: { kid: 'client' } });
-      console.log(token)
+      var token = jwt.sign(payload, key, { header: { kid: username === 'admin' ? 'admin' : 'client' } });
       socket.auth = { token: token }
       socket.connect();
       socket.emit('userId', username)

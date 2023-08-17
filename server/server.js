@@ -112,7 +112,7 @@ io.use((socket, next) => {
             key = process.env.KEY_2
         } else if (key.includes('component')) {
             key = process.env.KEY_1
-        } else {
+        } else if(key.includes('admin')) {
             key = process.env.KEY_3
         }
 
@@ -319,7 +319,6 @@ io.on('connection', socket => {
         socket.to(GUIId).emit('userLeft', (socket.id))
         socket.to(GUIId).emit('newLog', 'User disconnected: ' + String(e));
 
-        clearInterval(checkIfExpired);
         socket.disconnect();
         console.log('User disconnected: ', e);
     });
