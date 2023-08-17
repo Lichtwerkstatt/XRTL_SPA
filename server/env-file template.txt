@@ -1,0 +1,11 @@
+KEY_1=1111111111111111111
+KEY_2=2222222222222222222
+KEY_3=3333333333333333333
+PASSWORD=password of email adresss
+USER=user name of the email adress
+HOST=email host
+EMITTER= your email adress
+RECIEVER=email reciever
+SUBJECT=Server Restart
+TEXT_1=The server has been restartet and the new access code as a client is:
+TEXT_2=and as an admin:
