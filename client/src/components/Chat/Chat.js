@@ -121,7 +121,7 @@ const Chat = () => {
             color: '#00ffa8'
           })
           //needs approx 6s
- 
+
           await new Promise(resolve => setTimeout(resolve, 7000));
 
           //Adjustment of the reference mirror by 200 steps vertical tilting 
@@ -154,7 +154,7 @@ const Chat = () => {
             color: '#00ffa8'
           })
           //needs approx 6s
-          
+
           await new Promise(resolve => setTimeout(resolve, 7000));
 
           ////Adjustment of the reference mirror by -200 steps horizontal tilting
@@ -226,7 +226,7 @@ const Chat = () => {
         setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
       }
 
-    } else {
+    } else if (message != '' && message != ' ') {
       socketCtx.socket.emit('message', { userId: socketCtx.username, message: message, color: socketCtx.fontColor });
     }
     setMessage('');
