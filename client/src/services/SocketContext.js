@@ -65,11 +65,10 @@ export function SocketContextProvider({ children }) {
     if (!connected) {
       var payload = { sub: username }
       var token = jwt.sign(payload, key, { header: { kid: username === 'admin' ? 'admin' : 'client' } });
-      
+
       socket.auth = { token: token }
       socket.connect();
       socket.emit('userId', username)
-      setConnected(true)
       appCtx.addLog("Client connected by choice.")
     } else {
       setConnected(false)
@@ -81,7 +80,7 @@ export function SocketContextProvider({ children }) {
   }
 
   return (
-    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setFontColor, username, fontColor, helperEmit }}>
+    <SocketContext.Provider value={{ socket, connected, setConnected, toggleConnection, setNewURL, setFontColor, username, fontColor, helperEmit }}>
       {children}
     </SocketContext.Provider>
   );

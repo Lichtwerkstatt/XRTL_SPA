@@ -17,7 +17,8 @@ const ExperimentUILayer = () => {
 
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
-      socketCtx.socket.emit('userId', socketCtx.username)
+      socketCtx.socket.emit('userId', socketCtx.username);
+      socketCtx.setConnected(true);
       socketCtx.setFontColor(color);
     }
 
@@ -26,6 +27,7 @@ const ExperimentUILayer = () => {
     }
 
     const authFailed = () => {
+      socketCtx.setConnected(false);
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
     }
 
