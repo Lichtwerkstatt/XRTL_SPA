@@ -11,15 +11,15 @@ const PORT = 3000 | process.env.PORT;
 /**
  * Required Packages with some predefined properties
 */
-require('dotenv').config()
-const os = require("os");
-const path = require("path");
-const fs = require('fs');
-var nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer'); 
 const jwt = require('jsonwebtoken');
+const path = require("path");
+require('dotenv').config();
+const os = require("os");
+const fs = require('fs');
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, { cors: { origin: '*', methods: ['GET', 'POST'] } })
+const io = require('socket.io')(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 
 /**
  * Initialisation of variables required in the code
@@ -32,7 +32,8 @@ var componentList = []; // List contains all connected components.
 var footerList = [];// List contains all footers of the component windows.
 var colorList = []; // List contains all colours assigned to connected clients. 
 var GUIId = ''; // Is later overwritten with the socket.id of the GUI, whereby specific commands can be sent to it.
-var exp = '' // Overwritten with the expired time of the respective client.
+var kid = '';
+var key = '';
 
 // read .env file & convert to array
 const envFilePath = path.resolve(__dirname, ".env");
@@ -103,16 +104,16 @@ io.use((socket, next) => {
     //Incoming socket request must have these dictionary entries, otherwise request is rejected and authentication fails.
     if (socket.handshake.auth && socket.handshake.auth.token) {
         //Preprocessing to extract the key from the dictionary
-        var key = socket.handshake.auth.token.split('.');
-        key = Buffer.from(key[0], 'base64');
-        key = key.toString('ascii');
+
+        kid = jwt.decode(socket.handshake.auth.token, { complete: true });
+        kid = kid.header.kid;
 
         // Assignment of the key based on the content of the middleware
-        if (key.includes('client')) {
+        if (kid === 'client') {
             key = process.env.KEY_2
-        } else if (key.includes('component')) {
+        } else if (kid === 'component') {
             key = process.env.KEY_1
-        } else if(key.includes('admin')) {
+        } else if (kid === 'admin') {
             key = process.env.KEY_3
         }
 
@@ -136,13 +137,13 @@ io.use((socket, next) => {
 io.on('connection', socket => {
 
     //Connecting process for admin, client and components
-    if (socket.decoded.component === 'admin') {
+    if (kid === 'admin') {
         console.log('Supervisor connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', '#FFFFF');
         socket.emit('underConstruction', underConstruction);
     }
-    else if (color.length != 0 && socket.decoded.component === 'client') {
+    else if (color.length != 0 && kid === 'client') {
         console.log('Client connected successfully');
         socket.emit('newLog', 'Connection made successfully');
         io.to(socket.id).emit('Auth', color[0]);
@@ -151,12 +152,12 @@ io.on('connection', socket => {
         colorList.push(socket.id, color[0]);
         color.splice(0, 1);
     }
-    else if (color.length === 0 && socket.decoded.component === 'client') {
+    else if (color.length === 0 && kid === 'client') {
         io.to(socket.id).emit('AuthFailed');
         socket.disconnect();
         console.log('To many user are connected right now!');
     }
-    else if (socket.decoded.component === 'component') {
+    else if (kid === 'component') {
         io.to(socket.id).emit('Auth', { time: Date.now() });
         console.log('Component connected successfully');
     }
