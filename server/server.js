@@ -2,16 +2,16 @@
  * Sever documentation
  * 
  * @description This file contains the code for the server. The server can be started with "node server.js" after "npm install" has been executed. 
- * Within the .env file created in src all important parameters should be specified, such as port if different, the parmeter for the mail communication.
+ * In the .env file created in src, all important parameters should be specified, such as the port, if different, the parameter for mail communication.
  * 
- * @param {number} PORT - Defines the port on which the server should run, which is usually 300.
+ * @param {number} PORT - Defines the port on which the server should run, which is usually 3000. If this differs, then it is defined in the env file and used from.
 */
 const PORT = 3000 | process.env.PORT;
 
 /**
  * Required Packages with some predefined properties
 */
-var nodemailer = require('nodemailer'); 
+var nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const path = require("path");
 require('dotenv').config();
@@ -32,8 +32,8 @@ var componentList = []; // List contains all connected components.
 var footerList = [];// List contains all footers of the component windows.
 var colorList = []; // List contains all colours assigned to connected clients. 
 var GUIId = ''; // Is later overwritten with the socket.id of the GUI, whereby specific commands can be sent to it.
-var kid = '';
-var key = '';
+var kid = ''; // Information from JSON Web Token Headers about the origins of the token.
+var key = ''; //Key used for verification of the JSON Web Token
 
 // read .env file & convert to array
 const envFilePath = path.resolve(__dirname, ".env");
@@ -129,13 +129,12 @@ io.use((socket, next) => {
         });
     }
     else {
-        console.log('Authentication failed!')
+        console.log('Authentication failed!');
         next(new Error('Authentication error'));
     }
 })
 
 io.on('connection', socket => {
-
     //Connecting process for admin, client and components
     if (kid === 'admin') {
         console.log('Supervisor connected successfully');
@@ -365,5 +364,4 @@ io.on('connection', socket => {
 // Starts a server under http://localhost:PORT/ 
 server.listen(PORT, () => {
     console.log('Server is listening at port: ' + PORT + '!');
-
 })
