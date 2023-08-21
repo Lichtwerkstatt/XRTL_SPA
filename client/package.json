@@ -31,6 +31,7 @@
     "three": "^0.135.0"
   },
   "scripts": {
+    "_comment": "Use the regular npm start command if using node.js version 16.x, for versions 18.x use npm run start_18",
     "start": "set PORT=3005 && react-scripts start",
     "start_18": "SET NODE_OPTIONS=--openssl-legacy-provider && set PORT=3005 &&  react-scripts start",
     "server": "node app_server.js",
