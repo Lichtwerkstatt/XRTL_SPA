@@ -78,10 +78,10 @@ const AdaptiveOptics = (props) => {
         />
       )}
       {/* Phantom eye*/}
-      {props.selected.has("rotaryStage_1") && (
+      {props.selected.has("eye_1") && (
         <Eye
           title="Eye"
-          controlId={"rotaryStage_1"}
+          controlId={"eye_1"}
           footer={footer}
           rotation={zero}
           top={50}

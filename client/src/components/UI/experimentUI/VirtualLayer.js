@@ -21,7 +21,7 @@ const VirtualLayer = (...props) => {
         }}
         colorManagement
         softShadows
-        camera={{ position: [0, 3, 5], fov: 40 }}
+        camera={{ position: [5, 4, 5], fov: 30 }}
       >
         <Suspense fallback={null}>
           <Environment files="../hdri/autoshop.hdr" />

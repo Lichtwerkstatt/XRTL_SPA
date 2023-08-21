@@ -96,7 +96,7 @@ function Model(props) {
         name="Eye"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("rotaryStage_1");
+          props.toggleSelect("eye_1");
         }}
       >
         {props.showTags && (
@@ -113,7 +113,7 @@ function Model(props) {
           geometry={nodes.Cylinder069.geometry}
           material={materials["BlackParts.001"]}
         >
-          {props.selected.has("rotaryStage_1") ? (
+          {props.selected.has("eye_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -135,7 +135,7 @@ function Model(props) {
           geometry={nodes.Cylinder069_2.geometry}
           material={materials.BlackParts}
         >
-          {props.selected.has("rotaryStage_1") ? (
+          {props.selected.has("eye_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -149,30 +149,31 @@ function Model(props) {
           material={materials.ShinyParts}
         />
       </group>
-
-      <mesh
-        name="Cylinder002"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder002.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="Cylinder002_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder002_1.geometry}
-        material={materials.Glass}
-      >
-        <GlassMaterial />
-      </mesh>
-      <mesh
-        name="Cylinder002_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder002_2.geometry}
-        material={materials.ShinyParts}
-      />
+      <group name="Beamsplitter">
+        <mesh
+          name="Cylinder002"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder002.geometry}
+          material={materials.BlackParts}
+        />
+        <mesh
+          name="Cylinder002_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder002_1.geometry}
+          material={materials.Glass}
+        >
+          <GlassMaterial />
+        </mesh>
+        <mesh
+          name="Cylinder002_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder002_2.geometry}
+          material={materials.ShinyParts}
+        />
+      </group>
 
       <mesh
         name="KM100mesh_1"
@@ -371,9 +372,7 @@ function Model(props) {
         </mesh>
       </group>
 
-      <group
-      name="SHS"
-      >
+      <group name="SHS">
         <mesh
           name="Cube005"
           castShadow
@@ -608,20 +607,33 @@ function Model(props) {
         geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_2.geometry}
         material={materials.WhiteParts}
       />
-      <mesh
-        name="PR01_M-Step_1"
-        castShadow
-        receiveShadow
-        geometry={nodes["PR01_M-Step_1"].geometry}
-        material={materials["BlackParts.003"]}
-      />
-      <mesh
-        name="PR01_M-Step_2"
-        castShadow
-        receiveShadow
-        geometry={nodes["PR01_M-Step_2"].geometry}
-        material={materials["ShinyParts.002"]}
-      />
+      <group name="RotaryStage"
+       onPointerDown={(e) => {
+        e.stopPropagation();
+        props.toggleSelect("rotaryStage_1");
+      }}>
+        <mesh
+          name="PR01_M-Step_1"
+          castShadow
+          receiveShadow
+          geometry={nodes["PR01_M-Step_1"].geometry}
+          material={materials["BlackParts.003"]}
+          >
+          {props.selected.has("rotaryStage_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="PR01_M-Step_2"
+          castShadow
+          receiveShadow
+          geometry={nodes["PR01_M-Step_2"].geometry}
+          material={materials["ShinyParts.002"]}
+        />
+      </group>
+
       <mesh
         name="Plane004"
         castShadow
