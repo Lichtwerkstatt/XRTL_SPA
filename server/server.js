@@ -73,7 +73,7 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: process.env.USER,
+        user: process.env.EMAILUSER,
         pass: process.env.PASSWORD,
     },
 });
@@ -85,7 +85,7 @@ console.log(mailContent)
 // Creation of the mail specifying the sender, the recipient(s), the subject and the previously composed mail text.
 var mailOptions = {
     from: process.env.EMITTER,
-    to: process.env.RECIEVER,
+    to: process.env.RECEIVER,
     subject: process.env.SUBJECT,
     text: mailContent
 };
