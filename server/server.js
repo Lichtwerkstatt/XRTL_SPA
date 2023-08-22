@@ -9,7 +9,7 @@
  * be specified within the env file.
 */
 const PORT = 3000 | process.env.PORT;
-const sendAMaiL = false;
+const sendAMaiL = true;
 
 /**
  * Required Packages with some predefined properties
