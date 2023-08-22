@@ -5,8 +5,11 @@
  * In the .env file created in src, all important parameters should be specified, such as the port, if different, the parameter for mail communication.
  * 
  * @param {number} PORT - Defines the port on which the server should run, which is usually 3000. If this differs, then it is defined in the env file and used from.
+ * @param {boolean} sendAMaiL - Determines whether the server should send an email with the access codes. If true, the corresponding login information etc. must 
+ * be specified within the env file.
 */
 const PORT = 3000 | process.env.PORT;
+const sendAMaiL = false;
 
 /**
  * Required Packages with some predefined properties
@@ -67,37 +70,41 @@ const setEnvValue = (key, value) => {
 setEnvValue('KEY_2', Math.random().toString(16).substr(4, 16));
 setEnvValue('KEY_3', Math.random().toString(16).substr(4, 16));
 
-// Creation of a mail transporter specifying host, user and password 
-var transporter = nodemailer.createTransport({
-    host: process.env.HOST,
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.EMAILUSER,
-        pass: process.env.PASSWORD,
-    },
-});
+if (sendAMaiL) {
+    // Creation of a mail transporter specifying host, user and password 
+    var transporter = nodemailer.createTransport({
+        host: process.env.HOST,
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.EMAILUSER,
+            pass: process.env.PASSWORD,
+        },
+    });
 
-// Composition of the mail text from strings and the keys.
-var mailContent = process.env.TEXT_1 + " " + process.env.KEY_2 + " " + process.env.TEXT_2 + " " + process.env.KEY_3
-console.log(mailContent)
+    // Composition of the mail text from strings and the keys.
+    var mailContent = process.env.TEXT_1 + " " + process.env.KEY_2 + " " + process.env.TEXT_2 + " " + process.env.KEY_3
+    console.log(mailContent)
 
-// Creation of the mail specifying the sender, the recipient(s), the subject and the previously composed mail text.
-var mailOptions = {
-    from: process.env.EMITTER,
-    to: process.env.RECEIVER,
-    subject: process.env.SUBJECT,
-    text: mailContent
-};
+    // Creation of the mail specifying the sender, the recipient(s), the subject and the previously composed mail text.
+    var mailOptions = {
+        from: process.env.EMITTER,
+        to: process.env.RECEIVER,
+        subject: process.env.SUBJECT,
+        text: mailContent
+    };
 
-// Sending the mail with the help of the previously defined transporter and feedback whether this was successful or not.
-transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log('Email sent: ' + info.response);
-    }
-});
+    // Sending the mail with the help of the previously defined transporter and feedback whether this was successful or not.
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+} else {
+    console.log(process.env.TEXT_1 + " " + process.env.KEY_2 + " " + process.env.TEXT_2 + " " + process.env.KEY_3)
+}
 
 // Authetification process using middleware
 io.use((socket, next) => {
