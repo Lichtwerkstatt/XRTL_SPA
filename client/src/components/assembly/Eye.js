@@ -1,4 +1,4 @@
-//import KM100_Background from './media/km100_outline.png'
+import Eye_Background from './media/Eye_outline.png'
 import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import Window from '../UI/experimentUI/Window';
 
@@ -28,19 +28,19 @@ const KM100 = (props) => {
       left={props.left}
       height='240px'
       width='250px'
-      background={''}
+      background={Eye_Background}
     >
       <RotaryCtrl
         rotation={props.rotationTop}
         component={props.controlIdTop}
-        top='20'
-        left='160'
+        top='15'
+        left='170'
       />
       <RotaryCtrl
         rotation={props.rotationBottom}
         component={props.controlIdBottom}
-        top='50'
-        left='160'
+        top='35'
+        left='170'
       />
     </Window>
   );
