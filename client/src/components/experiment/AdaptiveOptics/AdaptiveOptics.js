@@ -81,7 +81,9 @@ const AdaptiveOptics = (props) => {
       {props.selected.has("eye_1") && (
         <Eye
           title="Eye"
-          controlId={"eye_1"}
+          id={"eye_1"}
+          controlIdTop={"eye_top_1"}
+          controlIdBottom={"eye_bottom_1"}
           footer={footer}
           rotation={zero}
           top={50}
