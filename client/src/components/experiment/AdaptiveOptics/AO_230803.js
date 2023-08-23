@@ -478,13 +478,7 @@ function Model(props) {
           <GlassMaterial />
         </mesh>
       </group>
-      <group
-        name="Prism"
-        onPointerDown={(e) => {
-          e.stopPropagation();
-          props.toggleSelect("KM100B_1");
-        }}
-      >
+      <group>
         {props.showTags && (
           <DescriptiveTag
             position={[-0.12, 0.1, 0.15]}
@@ -507,13 +501,7 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cube008_1.geometry}
           material={materials.BlackParts}
-        >
-          {props.selected.has("KM100B_1") ? (
-            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
-          ) : (
-            <meshStandardMaterial color="#222222" opacity={1.0} />
-          )}
-        </mesh>
+        ></mesh>
         <mesh
           name="Cube008_2"
           castShadow
@@ -523,13 +511,7 @@ function Model(props) {
         />
       </group>
 
-      <group
-        name="Laser"
-        onPointerDown={(e) => {
-          e.stopPropagation();
-          props.toggleSelect("redlaser_1");
-        }}
-      >
+      <group>
         {props.showTags && (
           <DescriptiveTag
             position={[0.12, 0.1, 0.3]}
@@ -550,13 +532,7 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cylinder_1.geometry}
           material={materials.BlackParts}
-        >
-          {props.selected.has("redlaser_1") ? (
-            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
-          ) : (
-            <meshStandardMaterial color="#222222" opacity={1.0} />
-          )}
-        </mesh>
+        ></mesh>
       </group>
       <mesh
         name="Thorlabs_Servo_Mount_Loose_V1_Stand_1"
@@ -607,18 +583,20 @@ function Model(props) {
         geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_2.geometry}
         material={materials.WhiteParts}
       />
-      <group name="RotaryStage"
-       onPointerDown={(e) => {
-        e.stopPropagation();
-        props.toggleSelect("rotaryStage_1");
-      }}>
+      <group
+        name="RotaryStage"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("rotaryStage_1");
+        }}
+      >
         <mesh
           name="PR01_M-Step_1"
           castShadow
           receiveShadow
           geometry={nodes["PR01_M-Step_1"].geometry}
           material={materials["BlackParts.003"]}
-          >
+        >
           {props.selected.has("rotaryStage_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
