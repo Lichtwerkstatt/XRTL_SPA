@@ -4,8 +4,18 @@ import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
-import Eye from '../../assembly/Eye'
+import Eye from '../../assembly/Eye';
 
+/**
+ * Experiment setup component 
+ * 
+ * @description Within this React component, all experiment components are intialised and the renderings of their windows, if selected, are handled. 
+ * In addition, important variables are passed to the individual components. 
+ * 
+ * @param {Set} selected - Set contains the controlIds of the component windows that are currently opened/rendered
+ * 
+ * @returns {React.ReactElement} Experiment setup component  
+ */
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
   var zero = "0";
@@ -77,6 +87,7 @@ const AdaptiveOptics = (props) => {
           left={1100}
         />
       )}
+
       {/* Phantom eye*/}
       {props.selected.has("eye_1") && (
         <Eye
@@ -90,6 +101,7 @@ const AdaptiveOptics = (props) => {
           left={150}
         />
       )}
+
       {/* Rotary stage of the eye*/}
       {props.selected.has("rotaryStage_1") && (
         <Rotary
@@ -101,6 +113,7 @@ const AdaptiveOptics = (props) => {
           left={150}
         />
       )}
+
       {/* Telescope in front of the Adaptive Mirror */}
       {props.selected.has("telescope_1") && (
         <DescriptionOnlyComponent
@@ -111,6 +124,7 @@ const AdaptiveOptics = (props) => {
           left={900}
         />
       )}
+
       {/* Telescope in front of the Wavefront Sensor*/}
       {props.selected.has("telescope_2") && (
         <DescriptionOnlyComponent

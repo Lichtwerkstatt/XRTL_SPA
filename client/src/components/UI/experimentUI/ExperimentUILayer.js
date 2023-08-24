@@ -68,7 +68,6 @@ const ExperimentUILayer = () => {
       {appCtx.showInfoWindow && <InfoWindow />}
       {appCtx.showCam && <CamWindow />}
       <AdaptiveOptics
-        toggleSelect={appCtx.toggleSelectedComp}
         selected={appCtx.selectedComps}
       />
     </Fragment>
