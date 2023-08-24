@@ -6,6 +6,15 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { useSocketContext } from "../../../services/SocketContext";
 
+/**
+ * 3D Experiment Visualization and Overview Camera Stream
+ * 
+ * @description Within this recat component, the visualisation of the 3D model or the overview camera stream of the experiment is handled as the background of the React app.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
+ */
 const VirtualLayer = (...props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
