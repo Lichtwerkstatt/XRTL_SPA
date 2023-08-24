@@ -1,7 +1,10 @@
 import Imprint from './Imprint';
 import Telescope1 from './Telescope_1';
 import Telescope2 from './Telescope_2';
+import AdaptiveMirror from './AdaptiveMirror';
+import SHS from './SHS';
 import propTypes from "prop-types";
+
 
 /**
  * Description handler
@@ -25,6 +28,8 @@ const DescriptionHandler = (props) => {
         info: <Imprint height={props.height} />,
         telescope_1: <Telescope1 height={props.height} />,
         telescope_2: <Telescope2 height={props.height} />,
+        mirror_1: <AdaptiveMirror height={props.height}/>,
+        sensor_1: <SHS height={props.height}/>,
 
     }
 

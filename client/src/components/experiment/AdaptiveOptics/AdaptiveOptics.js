@@ -6,17 +6,16 @@ import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
 import Eye from "../../assembly/Eye";
 import Screen from "../../assembly/Screen";
-import DescriptionAdaptiveMirror from "../ComponentDescription/AdaptiveMirror";
 
 /**
- * Experiment setup component 
- * 
- * @description Within this React component, all experiment components are intialised and the renderings of their windows, if selected, are handled. 
- * In addition, important variables are passed to the individual components. 
- * 
+ * Experiment setup component
+ *
+ * @description Within this React component, all experiment components are intialised and the renderings of their windows, if selected, are handled.
+ * In addition, important variables are passed to the individual components.
+ *
  * @param {Set} selected - Set contains the controlIds of the component windows that are currently opened/rendered
- * 
- * @returns {React.ReactElement} Experiment setup component  
+ *
+ * @returns {React.ReactElement} Experiment setup component
  */
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
@@ -153,6 +152,17 @@ const AdaptiveOptics = (props) => {
         <DescriptionOnlyComponent
           title="Adaptive Mirror"
           controlId={"mirror_1"}
+          footer={footer}
+          rotation={zero}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Shack-Hartmann-Sensor*/}
+      {props.selected.has("sensor_1") && (
+        <DescriptionOnlyComponent
+          title="SHS"
+          controlId={"sensor_1"}
           footer={footer}
           rotation={zero}
           top={50}

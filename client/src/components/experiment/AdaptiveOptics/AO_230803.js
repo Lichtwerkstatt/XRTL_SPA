@@ -87,7 +87,7 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cube.geometry}
           material={materials.BlackParts}
-          >
+        >
           {props.selected.has("mirror_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
@@ -392,14 +392,34 @@ function Model(props) {
         </mesh>
       </group>
 
-      <group name="SHS">
+      <group
+        name="SHS"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("sensor_1");
+        }}
+      >
+        {props.showTags && (
+          <DescriptiveTag
+            position={[0.05, 0.1, -0.11]}
+            title="SHS"
+            description="SHS Description"
+          />
+        )}
+
         <mesh
           name="Cube005"
           castShadow
           receiveShadow
           geometry={nodes.Cube005.geometry}
           material={materials.BlackParts}
-        />
+          >
+          {props.selected.has("sensor_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
         <mesh
           name="Cube005_1"
           castShadow
