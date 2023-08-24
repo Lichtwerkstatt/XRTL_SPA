@@ -38,11 +38,11 @@ const AdaptiveOptics = (props) => {
         />
       )}
 
-      {/* Linear stage */}
+      {/* Delay line */}
       {props.selected.has("linear_1") && (
         <XR50P
           title="Delay Line"
-          controlId={"linear_1"}
+          controlId={"stepper_linear1"}
           footer={footer}
           rotation={zero}
           top={600}
@@ -94,8 +94,8 @@ const AdaptiveOptics = (props) => {
         <Eye
           title="Eye"
           id={"eye_1"}
-          controlIdTop={"eye_top_1"}
-          controlIdBottom={"eye_bottom_1"}
+          controlIdTop={"stepper_eye_diop"}
+          controlIdBottom={"stepper_eye_pupil"}
           footer={footer}
           rotation={zero}
           top={50}
