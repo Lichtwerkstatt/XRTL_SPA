@@ -1,21 +1,29 @@
-import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext';
-import { MdInfoOutline } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
-import { ImEnter, ImExit } from 'react-icons/im'
-import { GiLaserWarning } from 'react-icons/gi'
-import styles from '../CSS/NavBar.module.css'
-import { theme } from './../templates/Theme'
-import { BsCamera, BsBox } from 'react-icons/bs'
+import { ThemeProvider, Tooltip } from '@mui/material';
+import { BsCamera, BsBox } from 'react-icons/bs';
+import { ImEnter, ImExit } from 'react-icons/im';
+import { GiLaserWarning } from 'react-icons/gi';
+import { MdInfoOutline } from 'react-icons/md';
+import styles from '../CSS/NavBar.module.css';
+import { theme } from './../templates/Theme';
 import { FaTags } from 'react-icons/fa';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { isEqual } from 'lodash';
 
+/**
+ * Navigation bar component 
+ * 
+ * @description React components returns the styling and functionality of the navigation bar. Within this file all onclick events 
+ * on the buttons in the bar and their color changes are also handled.
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
+ */
 const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
+    // Icon colors intialization and change of these, if condition is fulfilled
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
     let showTagsColor = '';
@@ -29,24 +37,14 @@ const NavBar = () => {
     let showVirtualLayerColor = '';
     if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
 
-    const [mobileVersion, setMobileVersion] = useState(null);
-    const openMobileVersion = Boolean(mobileVersion);
-
-    const handleClick = (event) => {
-        setMobileVersion(event.currentTarget);
-    };
-
-    const closeMobileVersion = () => {
-        setMobileVersion(null);
-    };
-
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab - Adaptive Optics</h1>
-
+                {/* If underConstruction, then the following is displayed */}
                 {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
 
+                {/* Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}
                 <div className={styles.navMenu}>
                     <ul>
                         <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
@@ -72,63 +70,7 @@ const NavBar = () => {
                         <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
-
                     </ul>
-                </div>
-
-                <div className={styles.mobile}>
-                    <IconButton onClick={handleClick} variant="contained" sx={{
-                        borderRadius: 1,
-                        height: '33px',
-                        width: '30px',
-                        color: 'black',
-                        ':hover': {
-                            bgcolor: 'darkgreen',
-                            color: '#00ffa8',
-                        },
-                    }}>
-                        <KeyboardArrowDownIcon color={'white'} />
-                    </IconButton>
-
-                    <Menu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                        }}
-                        anchorEl={mobileVersion}
-                        open={openMobileVersion}
-                        onClose={closeMobileVersion}
-                    >
-                        <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
-                        }} disableRipple>
-                            {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
-                            {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
-                        </MenuItem>
-                        <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            appCtx.toggleShowTags();
-                        }} disableRipple>
-                            <FaTags size={25} style={{ paddingRight: '20px' }} />
-                            Labels
-                        </MenuItem>
-                        <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            appCtx.toggleCam();
-                        }} disableRipple>
-                            <BsCamera size={26} style={{ paddingRight: '20px' }} />
-                            Cam
-                        </MenuItem>
-                        <MenuItem onClick={() => {
-                            closeMobileVersion();
-                            appCtx.toggleShowInfoWindow();
-                        }} disableRipple>
-                            <MdInfoOutline size={26} style={{ paddingRight: '20px' }} />
-                            Info
-                        </MenuItem>
-
-                    </Menu>
                 </div>
             </ThemeProvider>
         </div>
