@@ -20,10 +20,10 @@ const DescriptionTelescope1 = (props) => {
             </div>
 
         </div>
-    )
-}
+    );
+};
 
 DescriptionTelescope1.propTypes = {
     height: propTypes.string.isRequired,
-}
+};
 export default DescriptionTelescope1;

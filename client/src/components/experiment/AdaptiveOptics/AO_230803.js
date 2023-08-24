@@ -67,30 +67,50 @@ function Model(props) {
           )}
         </mesh>
       </group>
-
-      <mesh
-        name="Cube"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="Cube_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube_1.geometry}
-        material={materials.Glass}
+      <group
+        name="AM"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("mirror_1");
+        }}
       >
-        <GlassMaterial />
-      </mesh>
-      <mesh
-        name="Cube_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube_2.geometry}
-        material={materials.ShinyParts}
-      />
+        {props.showTags && (
+          <DescriptiveTag
+            position={[-0.12, 0.1, -0.42]}
+            title="Adaptive Mirror"
+            description="Adaptive Mirror description"
+          />
+        )}
+        <mesh
+          name="Cube"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube.geometry}
+          material={materials.BlackParts}
+          >
+          {props.selected.has("mirror_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="Cube_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube_1.geometry}
+          material={materials.Glass}
+        >
+          <GlassMaterial />
+        </mesh>
+        <mesh
+          name="Cube_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube_2.geometry}
+          material={materials.ShinyParts}
+        />
+      </group>
 
       <group
         name="Eye"
@@ -534,55 +554,90 @@ function Model(props) {
           material={materials.BlackParts}
         ></mesh>
       </group>
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Stand_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_1.geometry}
-        material={materials["BlackParts.002"]}
-      />
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Stand_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_2.geometry}
-        material={materials.ShinyParts}
-      />
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Stand_3"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_3.geometry}
-        material={materials["ShinyParts.001"]}
-      />
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Stand_4"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_4.geometry}
-        material={materials.Servo}
-      />
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Stand_5"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_5.geometry}
-        material={materials.BlackParts}
-      />
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Adapter_1"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_1.geometry}
-        material={materials["BlackParts.002"]}
-      />
-      <mesh
-        name="Thorlabs_Servo_Mount_Loose_V1_Adapter_2"
-        castShadow
-        receiveShadow
-        geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_2.geometry}
-        material={materials.WhiteParts}
-      />
+
+      <group
+        name="SelectableScreen"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("screen_1");
+        }}
+      >
+        {props.showTags && (
+          <DescriptiveTag
+            position={[-0.12, 0.1, -0.02]}
+            title="Selectable Screen"
+            description="Selectable Screen Description"
+          />
+        )}
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Stand_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_1.geometry}
+          material={materials["BlackParts.002"]}
+        >
+          {props.selected.has("screen_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Stand_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_2.geometry}
+          material={materials.ShinyParts}
+        />
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Stand_3"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_3.geometry}
+          material={materials["ShinyParts.001"]}
+        />
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Stand_4"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_4.geometry}
+          material={materials.Servo}
+        />
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Stand_5"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_5.geometry}
+          material={materials.BlackParts}
+        >
+          {props.selected.has("screen_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Adapter_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_1.geometry}
+          material={materials["BlackParts.002"]}
+        >
+          {props.selected.has("screen_1") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
+        <mesh
+          name="Thorlabs_Servo_Mount_Loose_V1_Adapter_2"
+          castShadow
+          receiveShadow
+          geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_2.geometry}
+          material={materials.WhiteParts}
+        />
+      </group>
+
       <group
         name="RotaryStage"
         onPointerDown={(e) => {

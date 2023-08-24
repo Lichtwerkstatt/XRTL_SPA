@@ -4,7 +4,9 @@ import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
-import Eye from '../../assembly/Eye'
+import Eye from "../../assembly/Eye";
+import Screen from "../../assembly/Screen";
+import DescriptionAdaptiveMirror from "../ComponentDescription/AdaptiveMirror";
 
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
@@ -115,6 +117,28 @@ const AdaptiveOptics = (props) => {
           title="Telescope 2"
           controlId={"telescope_2"}
           footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Screen*/}
+      {props.selected.has("screen_1") && (
+        <Screen
+          title="Selectable Screen"
+          controlId={"screen_1"}
+          footer={footer}
+          rotation={zero}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Adaptive Mirror*/}
+      {props.selected.has("mirror_1") && (
+        <DescriptionOnlyComponent
+          title="Adaptive Mirror"
+          controlId={"mirror_1"}
+          footer={footer}
+          rotation={zero}
           top={50}
           left={150}
         />
