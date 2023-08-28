@@ -124,7 +124,7 @@ const Chat = () => {
 
     }
     // Case 2: Sending a chat message to all web clients
-    else if (message !== '' && message !== ' ') {
+    else if (message.length > 0 && message.replace(/\s/g, '').length !== 0) {
       socketCtx.socket.emit('message', { userId: socketCtx.username, message: message, color: socketCtx.fontColor });
     }
     setMessage('');
