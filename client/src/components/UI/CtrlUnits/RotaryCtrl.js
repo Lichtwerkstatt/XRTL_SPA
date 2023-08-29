@@ -1,6 +1,7 @@
 import { MdOutlineRotateRight, MdOutlineRotateLeft } from 'react-icons/md';
 import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
+import { usePopUpContext } from "../../../services/PopUpContext";
 import styles from '../CSS/RotaryCtrl.module.css';
 import { useState, useEffect } from 'react';
 
@@ -11,6 +12,7 @@ const RotaryCtrl = (props) => {
   var direction;
 
   const appCtx = useAppContext();
+  const popupCtx = usePopUpContext();
   const socketCtx = useSocketContext();
 
   useEffect(() => {
@@ -58,6 +60,8 @@ const RotaryCtrl = (props) => {
         status: 'Used by: ' + socketCtx.username.substring(0, 17),
         controlId: props.component
       });
+    } else {
+      popupCtx.toggleShowPopUp('Only values greater than 0 can be entered!', 'warning');
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };
@@ -80,7 +84,7 @@ const RotaryCtrl = (props) => {
           onChange={changeRotationHandler}
         />
       </div>
-      <button onClick={rotCW_Handler('left')} className={styles.CtrlLeft} disabled={(socketCtx.connected && onlineStatus) ? false : true}  >
+      <button onClick={rotCW_Handler('left')} className={styles.CtrlLeft} disabled={(socketCtx.connected && onlineStatus) ? false : true}>
         <MdOutlineRotateLeft size={28} />
       </button>
       <button onClick={rotCW_Handler('right')} className={styles.CtrlRight} disabled={(socketCtx.connected && onlineStatus) ? false : true}>
