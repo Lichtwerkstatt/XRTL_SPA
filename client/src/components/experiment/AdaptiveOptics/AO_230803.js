@@ -478,7 +478,7 @@ function Model(props) {
         name="DelayLine"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("linear_1");
+          props.toggleSelect("stepper_linear1");
         }}
       >
         {props.showTags && (
@@ -495,7 +495,7 @@ function Model(props) {
           geometry={nodes["XR50P_M-Stepbr_(LeftHanded)001"].geometry}
           material={materials.BlackParts}
         >
-          {props.selected.has("linear_1") ? (
+          {props.selected.has("stepper_linear1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />

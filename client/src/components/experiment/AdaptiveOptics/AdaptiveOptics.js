@@ -39,7 +39,7 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Delay line */}
-      {props.selected.has("linear_1") && (
+      {props.selected.has("stepper_linear1") && (
         <XR50P
           title="Delay Line"
           controlId={"stepper_linear1"}
