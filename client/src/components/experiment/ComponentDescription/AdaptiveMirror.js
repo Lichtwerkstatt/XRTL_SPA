@@ -1,5 +1,6 @@
 import styles from "./CSS/Description.module.css";
 import propTypes from "prop-types";
+import DM from "../../assembly/media/DM_outline_center.png"
 
 /**
  * Adaptive mirror window content
@@ -13,7 +14,7 @@ import propTypes from "prop-types";
 const DescriptionAdaptiveMirror = (props) => {
     return (
         <div>
-            <div className={styles.mainWrapper} style={{ height: props.height }}>
+            <div className={styles.mainWrapper} style={{ height: props.height, background: 'url(' + DM + ')' }} >
                 <p>
                     Adaptive mirror Description
                 </p>
@@ -23,6 +24,6 @@ const DescriptionAdaptiveMirror = (props) => {
     );
 };
 DescriptionAdaptiveMirror.propTypes = {
-  height: propTypes.string.isRequired,
+    height: propTypes.string.isRequired,
 };
 export default DescriptionAdaptiveMirror;
