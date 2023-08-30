@@ -4,7 +4,7 @@ import { ThemeProvider, Tooltip } from '@mui/material';
 import { BsCamera, BsBox } from 'react-icons/bs';
 import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi';
-import { MdInfoOutline } from 'react-icons/md';
+import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import styles from '../CSS/NavBar.module.css';
 import { theme } from './../templates/Theme';
 import { FaTags } from 'react-icons/fa';
@@ -36,6 +36,8 @@ const NavBar = () => {
     if (appCtx.showBeam) { showBeamColor = 'white' }
     let showVirtualLayerColor = '';
     if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    let showManualWindowColor = '';
+    if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
 
     return (
         <div id='navbar' className={styles.navbar} >
@@ -65,6 +67,10 @@ const NavBar = () => {
 
                         <Tooltip title='Beam Path'>
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Manual'>
+                            <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Info'>
