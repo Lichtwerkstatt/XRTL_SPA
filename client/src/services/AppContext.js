@@ -7,6 +7,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
+  const [underConstruction, setUnderConstruction] = useState(false);
   const [roomComponent, setRoomComponent] = useState(new Set());
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
   const [selectedComps, setSelectedComps] = useState(new Set());
@@ -88,6 +89,11 @@ export function AppContextProvider({ children }) {
     setShowBeam(newVal);
   }
 
+  const toggleunderConstruction = (newVal) => {
+    setUnderConstruction(newVal)
+  }
+
+
   return (
     <AppContext.Provider
       value={{
@@ -118,7 +124,9 @@ export function AppContextProvider({ children }) {
         socket,
         setSocket,
         username,
-        setUsername
+        setUsername,
+        underConstruction,
+        toggleunderConstruction,
       }}
     >
       {children}
