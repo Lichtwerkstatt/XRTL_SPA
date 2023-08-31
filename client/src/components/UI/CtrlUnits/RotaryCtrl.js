@@ -9,7 +9,7 @@ import propTypes from "prop-types";
 /**
  * RotaryCtrl component
  * 
- * @description TThis React component returns the control RotaryCtrl, which consists of two buttons. The class must be given the controlId of the component, 
+ * @description This React component returns the control RotaryCtrl, which consists of two buttons. The class must be given the controlId of the component, 
  * as well as top and left for the positioning of the entire element.
  * 
  * @param {string} component - controlId 
