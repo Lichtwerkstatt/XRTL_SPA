@@ -9,7 +9,7 @@ import propTypes from "prop-types";
 /**
  * SwitchCtrl component
  * 
- * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId..
+ * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId.
  * 
  * @param {string} component - controlId 
  * 

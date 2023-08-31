@@ -4,7 +4,17 @@ import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch';
 import Box from '@mui/material/Box';
+import propTypes from "prop-types";
 
+/**
+ * BeamSplitterCtrl component
+ * 
+ * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId.
+ * 
+ * @param {string} component - controlId 
+ * 
+ * @returns {React.ReactElement} BeamSplitterCtrl control element
+ */
 const BeamSplitterCtrl = (props) => {
     const [switchStatus, setSwitchStatus] = useState(false);
     const [onlineStatus, setOnlineStatus] = useState(true);
@@ -15,8 +25,8 @@ const BeamSplitterCtrl = (props) => {
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
+                // Convert the number coming from the server (0 or 90) and convert it to boolean value.
                 payload.status.absolute === 90 ? setSwitchStatus(true) : setSwitchStatus(false)
-
                 // console.log("Status  ", payload)
             }
         }
@@ -57,4 +67,9 @@ const BeamSplitterCtrl = (props) => {
         </ThemeProvider>
     )
 }
+
+BeamSplitterCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+}
+
 export default BeamSplitterCtrl
