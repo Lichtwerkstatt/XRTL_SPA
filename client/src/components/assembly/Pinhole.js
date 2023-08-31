@@ -29,7 +29,6 @@ const Pinhole = (props) => {
       background={PH_Background}
     >
       <RotaryCtrl
-        rotation={props.rotation}
         component={props.controlId}
         top="20"
         left="160"

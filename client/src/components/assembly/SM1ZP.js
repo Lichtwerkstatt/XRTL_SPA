@@ -30,7 +30,6 @@ const SM1ZP = (props) => {
     >
       <RotaryCtrl
         component={props.controlId}
-        rotation={props.rotation}
         top='35'
         left='160'
       />

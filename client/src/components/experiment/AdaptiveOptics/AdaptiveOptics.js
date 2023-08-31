@@ -19,7 +19,6 @@ import Screen from "../../assembly/Screen";
  */
 const AdaptiveOptics = (props) => {
   let footer = "Initializing...";
-  var zero = "0";
 
   return (
     <div>
@@ -30,8 +29,6 @@ const AdaptiveOptics = (props) => {
           id={"KM100B_1"}
           controlIdTop={"KM100B_top_1"}
           controlIdBottom={"KM100B_bottom_1"}
-          rotationTop={zero}
-          rotationBottom={zero}
           footer={footer}
           top={600}
           left={920}
@@ -44,7 +41,6 @@ const AdaptiveOptics = (props) => {
           title="Delay Line"
           controlId={"stepper_linear1"}
           footer={footer}
-          rotation={zero}
           top={600}
           left={100}
         />
@@ -57,8 +53,6 @@ const AdaptiveOptics = (props) => {
           id={"redlaser_1"}
           controlIdTop={"redlaser_top_1"}
           controlIdBottom={"redlaser_bottom_1"}
-          rotationTop={zero}
-          rotationBottom={zero}
           footer={footer}
           top={450}
           left={1600}
@@ -83,7 +77,6 @@ const AdaptiveOptics = (props) => {
           title="Pinhole"
           controlId={"pinhole"}
           footer={footer}
-          rotation={zero}
           top={100}
           left={1100}
         />
@@ -97,7 +90,6 @@ const AdaptiveOptics = (props) => {
           controlIdTop={"stepper_eye_diop"}
           controlIdBottom={"stepper_eye_pupil"}
           footer={footer}
-          rotation={zero}
           top={50}
           left={150}
         />
@@ -109,7 +101,6 @@ const AdaptiveOptics = (props) => {
           title="Rotary stage"
           controlId={"rotaryStage_1"}
           footer={footer}
-          rotation={zero}
           top={550}
           left={150}
         />
@@ -142,7 +133,6 @@ const AdaptiveOptics = (props) => {
           title="Selectable Screen"
           controlId={"screen_1"}
           footer={footer}
-          rotation={zero}
           top={50}
           left={150}
         />
@@ -153,7 +143,6 @@ const AdaptiveOptics = (props) => {
           title="Adaptive Mirror"
           controlId={"mirror_1"}
           footer={footer}
-          rotation={zero}
           top={50}
           left={150}
         />
@@ -164,7 +153,6 @@ const AdaptiveOptics = (props) => {
           title="SHS"
           controlId={"sensor_1"}
           footer={footer}
-          rotation={zero}
           top={50}
           left={150}
         />

@@ -31,13 +31,11 @@ const KM100 = (props) => {
       background={KM100_Background}
     >
       <RotaryCtrl
-        rotation={props.rotationTop}
         component={props.controlIdTop}
         top='20'
         left='160'
       />
       <RotaryCtrl
-        rotation={props.rotationBottom}
         component={props.controlIdBottom}
         top='50'
         left='160'

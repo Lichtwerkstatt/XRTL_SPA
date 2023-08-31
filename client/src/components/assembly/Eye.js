@@ -31,13 +31,11 @@ const Eye = (props) => {
       background={Eye_Background}
     >
       <RotaryCtrl
-        rotation={props.rotationTop}
         component={props.controlIdTop}
         top="15"
         left="170"
       />
       <RotaryCtrl
-        rotation={props.rotationBottom}
         component={props.controlIdBottom}
         top="35"
         left="170"

@@ -30,7 +30,6 @@ const Rotary = (props) => {
     >
       <RotaryCtrl
         component={props.controlId}
-        rotation={props.rotation}
         top='10'
         left='160'
       />
