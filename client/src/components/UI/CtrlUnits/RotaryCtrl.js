@@ -19,7 +19,6 @@ import propTypes from "prop-types";
  * @returns {React.ReactElement} RotaryCtrl control element
  */
 const RotaryCtrl = (props) => {
-  console.log(props)
   const [enteredRotation, setEnteredRotation] = useState(0);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [rotation, setRotation] = useState(0);
