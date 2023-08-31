@@ -71,7 +71,7 @@ ESPCam.propTypes = {
     component: propTypes.string.isRequired,
     width: propTypes.string.isRequired,
     height: propTypes.string.isRequired,
-    style: propTypes.array
+    style: propTypes.object
 }
 
 export default ESPCam;
