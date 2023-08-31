@@ -41,7 +41,7 @@ const Login = () => {
     // Handling the entry of the user name
     const handleChange = (event) => {
         setUsername(event.target.value);
-        setConnection(connectionOption[1].title)
+        setConnection(connectionOption[0].title)
     };
 
     // Handling of the access code entry

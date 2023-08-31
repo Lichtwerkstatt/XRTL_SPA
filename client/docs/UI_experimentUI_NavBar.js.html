@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> UI/experimentUI/NavBar.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>UI/experimentUI/NavBar.js</h1>
                 </header>
                 
 
@@ -89,41 +89,92 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
+import { ThemeProvider, Tooltip } from '@mui/material';
+import { BsCamera, BsBox } from 'react-icons/bs';
+import { ImEnter, ImExit } from 'react-icons/im';
+import { GiLaserWarning } from 'react-icons/gi';
+import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
+import styles from '../CSS/NavBar.module.css';
+import { theme } from './../templates/Theme';
+import { FaTags } from 'react-icons/fa';
+import { memo } from 'react';
+import { isEqual } from 'lodash';
 
 /**
- * Beamspliiter cube window
+ * Navigation bar component 
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
+ * @description React components returns the styling and functionality of the navigation bar. Within this file all onclick events 
+ * on the buttons in the bar and their color changes are also handled.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @returns {React.ReactElement} Navigation bar component  
  */
-const BsCube = (props) => {
+const NavBar = () => {
+    const appCtx = useAppContext();
+    const socketCtx = useSocketContext();
 
-  return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
-  )
+    // Icon colors intialization and change of these, if condition is fulfilled
+    let connectionStatusColor = '';
+    if (socketCtx.connected) { connectionStatusColor = 'white' }
+    let showTagsColor = '';
+    if (appCtx.showTags) { showTagsColor = 'white' }
+    let cameraStatusColor = '';
+    if (appCtx.showCam) { cameraStatusColor = 'white' }
+    let showInfoWindowColor = '';
+    if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
+    let showBeamColor = '';
+    if (appCtx.showBeam) { showBeamColor = 'white' }
+    let showVirtualLayerColor = '';
+    if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    let showManualWindowColor = '';
+    if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
+
+    return (
+        &lt;div id='navbar' className={styles.navbar} >
+            &lt;ThemeProvider theme={theme} >
+                &lt;h1>XR TwinLab - Adaptive Optics&lt;/h1>
+                {/* If underConstruction, then the following is displayed */}
+                {appCtx.underConstruction &amp;&amp; &lt;h2>Experiment under construction! Some functions may not work!&lt;/h2>}
+
+                {/* Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}
+                &lt;div className={styles.navMenu}>
+                    &lt;ul>
+                        &lt;Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
+                            &lt;li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? &lt;ImExit size={25} color={connectionStatusColor} /> : &lt;ImEnter size={25} color={connectionStatusColor} />} &lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Labels'>
+                            &lt;li onClick={appCtx.toggleShowTags}>&lt;FaTags size={25} color={showTagsColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Cam'>
+                            &lt;li onClick={appCtx.toggleCam}>&lt;BsCamera size={26} color={cameraStatusColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Model'>
+                            &lt;li onClick={appCtx.toggleShowVirtualLayer}>&lt;BsBox size={26} color={showVirtualLayerColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Beam Path'>
+                            &lt;li onClick={appCtx.toggleShowBeam}>&lt;GiLaserWarning size={25} color={showBeamColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Manual'>
+                            &lt;li onClick={appCtx.toggleShowManualWindow}>&lt;MdOutlineMenuBook size={26} color={showManualWindowColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Info'>
+                            &lt;li onClick={appCtx.toggleShowInfoWindow}>&lt;MdInfoOutline size={26} color={showInfoWindowColor} />&lt;/li>
+                        &lt;/Tooltip>
+                    &lt;/ul>
+                &lt;/div>
+            &lt;/ThemeProvider>
+        &lt;/div>
+    );
 }
-export default BsCube;</code></pre>
+export default memo(NavBar, isEqual)
+</code></pre>
         </article>
     </section>
 

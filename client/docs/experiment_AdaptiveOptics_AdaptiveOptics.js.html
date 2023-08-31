@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> experiment/AdaptiveOptics/AdaptiveOptics.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>experiment/AdaptiveOptics/AdaptiveOptics.js</h1>
                 </header>
                 
 
@@ -89,41 +89,170 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
+import Pinhole from "../../assembly/Pinhole";
+import LaserCtrl from "../../assembly/Laser";
+import Rotary from "../../assembly/Rotary";
+import KM100 from "../../assembly/KM100";
+import XR50P from "../../assembly/XR50P";
+import Eye from "../../assembly/Eye";
+import Screen from "../../assembly/Screen";
 
 /**
- * Beamspliiter cube window
- * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
- * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * Experiment setup component
+ *
+ * @description Within this React component, all experiment components are intialised and the renderings of their windows, if selected, are handled.
+ * In addition, important variables are passed to the individual components.
+ *
+ * @param {Set} selected - Set contains the controlIds of the component windows that are currently opened/rendered
+ *
+ * @returns {React.ReactElement} Experiment setup component
  */
-const BsCube = (props) => {
+const AdaptiveOptics = (props) => {
+  let footer = "Initializing...";
 
   return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
-  )
-}
-export default BsCube;</code></pre>
+    &lt;div>
+      {/* KM100 */}
+      {props.selected.has("KM100B_1") &amp;&amp; (
+        &lt;KM100
+          title="Prism Mount"
+          id={"KM100B_1"}
+          controlIdTop={"KM100B_top_1"}
+          controlIdBottom={"KM100B_bottom_1"}
+          footer={footer}
+          top={600}
+          left={920}
+        />
+      )}
+
+      {/* Delay line */}
+      {props.selected.has("stepper_linear1") &amp;&amp; (
+        &lt;XR50P
+          title="Delay Line"
+          controlId={"stepper_linear1"}
+          footer={footer}
+          top={600}
+          left={100}
+        />
+      )}
+
+      {/* Laser ctrl */}
+      {props.selected.has("redlaser_1") &amp;&amp; (
+        &lt;KM100
+          title="Laser Alignment"
+          id={"redlaser_1"}
+          controlIdTop={"redlaser_top_1"}
+          controlIdBottom={"redlaser_bottom_1"}
+          footer={footer}
+          top={450}
+          left={1600}
+        />
+      )}
+
+      {/* Laser power */}
+      {props.selected.has("redlaserPower_1") &amp;&amp; (
+        &lt;LaserCtrl
+          title="Power Supply"
+          id={"redlaserPower_1"}
+          controlId={"redlaser_1"}
+          footer={footer}
+          top={50}
+          left={1600}
+        />
+      )}
+
+      {/* Pinhole */}
+      {props.selected.has("pinhole") &amp;&amp; (
+        &lt;Pinhole
+          title="Pinhole"
+          controlId={"pinhole"}
+          footer={footer}
+          top={100}
+          left={1100}
+        />
+      )}
+
+      {/* Phantom eye*/}
+      {props.selected.has("eye_1") &amp;&amp; (
+        &lt;Eye
+          title="Eye"
+          id={"eye_1"}
+          controlIdTop={"stepper_eye_diop"}
+          controlIdBottom={"stepper_eye_pupil"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+
+      {/* Rotary stage of the eye*/}
+      {props.selected.has("rotaryStage_1") &amp;&amp; (
+        &lt;Rotary
+          title="Rotary stage"
+          controlId={"rotaryStage_1"}
+          footer={footer}
+          top={550}
+          left={150}
+        />
+      )}
+
+      {/* Telescope in front of the Adaptive Mirror */}
+      {props.selected.has("telescope_1") &amp;&amp; (
+        &lt;DescriptionOnlyComponent
+          title="Telescope 1"
+          controlId={"telescope_1"}
+          footer={footer}
+          top={550}
+          left={900}
+        />
+      )}
+
+      {/* Telescope in front of the Wavefront Sensor*/}
+      {props.selected.has("telescope_2") &amp;&amp; (
+        &lt;DescriptionOnlyComponent
+          title="Telescope 2"
+          controlId={"telescope_2"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Screen*/}
+      {props.selected.has("screen_1") &amp;&amp; (
+        &lt;Screen
+          title="Selectable Screen"
+          controlId={"screen_1"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Adaptive Mirror*/}
+      {props.selected.has("mirror_1") &amp;&amp; (
+        &lt;DescriptionOnlyComponent
+          title="Adaptive Mirror"
+          controlId={"mirror_1"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Shack-Hartmann-Sensor*/}
+      {props.selected.has("sensor_1") &amp;&amp; (
+        &lt;DescriptionOnlyComponent
+          title="SHS"
+          controlId={"sensor_1"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+    &lt;/div>
+  );
+};
+export default AdaptiveOptics;
+</code></pre>
         </article>
     </section>
 

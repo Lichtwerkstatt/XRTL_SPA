@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> UI/CtrlUnits/ESPCamWithoutSettings.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>UI/CtrlUnits/ESPCamWithoutSettings.js</h1>
                 </header>
                 
 
@@ -89,41 +89,64 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from '../../../services/SocketContext';
+import ESPCam from '../templates/ESPCam';
+import propTypes from "prop-types";
+import { useEffect } from 'react';
 
 /**
- * Beamspliiter cube window
+ * ESPCam component without settings
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
+ * @description This component returns a canvas with the camera stream of an ESPCam. For this, the height and width of the window must be transferred 
+ * and the controlId with which the ESP is to be addressed.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @param {string} component - controlId 
+ * @param {string} width - Transfers the width to ESPCam class 
+ * @param {string} height - Transfer the height to ESPCam class 
+ * 
+ * @returns {React.ReactElement} styled canvas with ESPCam stream
  */
-const BsCube = (props) => {
+const ESPCamWithoutSettings = (props) => {
+    const socketCtx = useSocketContext();
 
-  return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
-  )
+    useEffect(() => {
+        document.getElementById(props.component).style.transform = 'rotate(180deg)'
+
+        const status = (payload) => {
+            if (payload.controlId === props.component) {
+                //console.log('Status of settings:   ', payload)
+            }
+        }
+
+        socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: props.component,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on('status', status);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+        }
+        //Comment needed to prevent a warning
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socketCtx.socket]);
+
+    return (
+        &lt;ESPCam component={props.component} width={props.width} height={props.height} style={{ borderRadius: '5px', backgroundSize: 'cover', top: 30 }} />
+    )
 }
-export default BsCube;</code></pre>
+
+ESPCamWithoutSettings.propTypes = {
+    component: propTypes.string.isRequired,
+    width: propTypes.string.isRequired,
+    height: propTypes.string.isRequired,
+}
+
+export default ESPCamWithoutSettings;</code></pre>
         </article>
     </section>
 

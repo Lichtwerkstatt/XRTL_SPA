@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> assembly/DescriptionOnly.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>assembly/DescriptionOnly.js</h1>
                 </header>
                 
 
@@ -90,21 +90,28 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
 
 /**
- * Beamspliiter cube window
+ * Description Component window 
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
+ * @description This React component returns a window with the description of a component. 
+ * Inside the DescriptionHandler.js file, the controlId and the class containing the description must 
+ * be added to the dictionary.  
+ * 
+ * @param {string} id - controlId
+ * @param {string} header - For setting the title within the window
  * @param {number} top - For the positioning of the window 
  * @param {number} left - For the positioning of the window 
+ * @param {string} height - Defines the height of the window
+ * @param {string} width - Defines the width of the window
+ * @param {string} footer - If set to 'empty', then the window has no footer.
+ * @param {string} topper - If set to 'none', then no other button will be displayed in the tooper.
+ * @param {boolean} info - If set to 'false', then the window does not need any content defined below 
+ * &lt;Winow/> based on the controlId, but gets it from the DescriptionHandler.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @returns {React.ReactElement} Telescope description window
  */
-const BsCube = (props) => {
+const Description = (props) => {
 
   return (
     &lt;Window
@@ -116,14 +123,11 @@ const BsCube = (props) => {
       width='250px'
       footer={'empty'}
       topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
+      info={false}
+    />
   )
 }
-export default BsCube;</code></pre>
+export default Description;</code></pre>
         </article>
     </section>
 

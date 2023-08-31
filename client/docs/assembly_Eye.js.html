@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> assembly/Eye.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>assembly/Eye.js</h1>
                 </header>
                 
 
@@ -89,41 +89,53 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import Eye_Background from "./media/Eye_outline.png";
+import RotaryCtrl from "../UI/CtrlUnits/RotaryCtrl";
+import Window from "../UI/experimentUI/Window";
 
 /**
- * Beamspliiter cube window
- * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
+ * Eye component window
+ *
+ * @description  This React component returns a window with the content for the eye component window.
+ *
+ * @param {string} id - controlId of the entire component
+ * @param {string} controlIdTop - controlId for the upper stepper motor
+ * @param {string} controlIdBottom - controlId for the lower stepper motor
+ * @param {number} rotationTop - Initialisation value for upper control element
+ * @param {number} rotationBottom - Initialisation value for lower control element
  * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
- * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @param {number} top - For the positioning of the window
+ * @param {number} left - For the positioning of the window
+ *
+ * @returns {React.ReactElement} Eye component window
  */
-const BsCube = (props) => {
-
+const Eye = (props) => {
   return (
     &lt;Window
-      id={props.controlId}
+      id={props.id}
+      componentList={[props.controlIdBottom, props.controlIdTop]}
       header={props.title}
       top={props.top}
       left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
+      height="240px"
+      width="250px"
+      background={Eye_Background}
     >
-      &lt;Cube
-        height='220px'
+      &lt;RotaryCtrl
+        component={props.controlIdTop}
+        top="15"
+        left="170"
+      />
+      &lt;RotaryCtrl
+        component={props.controlIdBottom}
+        top="35"
+        left="170"
       />
     &lt;/Window>
-  )
-}
-export default BsCube;</code></pre>
+  );
+};
+export default Eye;
+</code></pre>
         </article>
     </section>
 

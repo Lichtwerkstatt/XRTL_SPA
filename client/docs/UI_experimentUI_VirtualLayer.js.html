@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> UI/experimentUI/VirtualLayer.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>UI/experimentUI/VirtualLayer.js</h1>
                 </header>
                 
 
@@ -89,41 +89,103 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import Model3d from "../../experiment/AdaptiveOptics/AO_230803";
+import Model2d from "../../experiment/AdaptiveOptics/MIS1_2D_control";
+import { OrbitControls, Environment, Billboard } from "@react-three/drei";
+import { useAppContext } from "../../../services/AppContext";
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import { useSocketContext } from "../../../services/SocketContext";
 
 /**
- * Beamspliiter cube window
+ * 3D Experiment Visualization and Overview Camera Stream
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
+ * @description Within this recat component, the visualisation of the 3D model or the overview camera stream of the experiment is handled as the background of the React app.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
  */
-const BsCube = (props) => {
+const VirtualLayer = (...props) => {
+  const appCtx = useAppContext();
+  const socketCtx = useSocketContext();
 
-  return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
-  )
-}
-export default BsCube;</code></pre>
+  if (appCtx.showVirtualLayer) {
+    return (
+      &lt;Canvas
+        style={{
+          position: "absolute",
+          background: "linear-gradient(Teal, Black)",
+          width: "100%",
+          height: "100%",
+        }}
+        colorManagement
+        softShadows
+        camera={{ position: [5, 4, 5], fov: 30 }}
+      >
+        &lt;Suspense fallback={null}>
+          &lt;Environment files="../hdri/autoshop.hdr" />
+          &lt;OrbitControls autoRotate={appCtx.autoRotate} />
+          &lt;Model3d
+            toggleSelect={appCtx.toggleSelectedComp}
+            selected={appCtx.selectedComps}
+            showTags={appCtx.showTags}
+            showBeam={appCtx.showBeam}
+            socket={socketCtx.socket}
+          />
+        &lt;/Suspense>
+      &lt;/Canvas>
+    );
+  } else {
+    // Hier kommt die Camera hin!
+    // socketCtx.socket.emit("command", {
+    //   userId: socketCtx.username,
+    //   controlId: props.component,
+    //   getStatus: true,
+    // });
+
+    // appCtx.toogleRoomComp(props.component, true);
+
+    // socketCtx.socket.on("data", Settings.data);
+
+    return (
+      &lt;Canvas
+        style={{
+          position: "absolute",
+          background: "linear-gradient(Teal, Black)",
+          width: "100%",
+          height: "100%",
+        }}
+        colorManagement
+        camera={{ position: [0, 0, 5], fov: 40 }}
+      >
+        &lt;Suspense fallback={null}>
+          {/* &lt;canvas
+            id="Canvas"
+            width={props.width}
+            height={props.height}
+            style={{ borderRadius: "5px", backgroundSize: "cover" }}
+          /> */}
+
+          &lt;Environment files="../hdri/autoshop.hdr" />
+
+          {/* &lt;pointLight /> */}
+          &lt;Billboard>
+            &lt;Model2d
+              toggleSelect={appCtx.toggleSelectedComp}
+              selected={appCtx.selectedComps}
+              showTags={appCtx.showTags}
+              socket={socketCtx.socket}
+            />
+          &lt;/Billboard>
+        &lt;/Suspense>
+      &lt;/Canvas>
+    );
+  }
+};
+
+export default VirtualLayer;
+</code></pre>
         </article>
     </section>
 

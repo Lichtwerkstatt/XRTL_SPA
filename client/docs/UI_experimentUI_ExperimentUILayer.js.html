@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> UI/experimentUI/ExperimentUILayer.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>UI/experimentUI/ExperimentUILayer.js</h1>
                 </header>
                 
 
@@ -89,41 +89,84 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import AdaptiveOptics from "../../experiment/AdaptiveOptics/AdaptiveOptics";
+import { useSocketContext } from "../../../services/SocketContext";
+import { usePopUpContext } from "../../../services/PopUpContext";
+import { useAppContext } from "../../../services/AppContext";
+import CamWindow from "../../windows/OverviewCamWindow";
+import InfoWindow from "../../windows/InfoWindow";
+import ManualWindow from "../../windows/ManualWindow";
+import { useEffect, Fragment } from "react";
+import { isEqual } from 'lodash';
+import { memo } from "react";
 
 /**
- * Beamspliiter cube window
+ *  Fragment component 
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
+ * @description This React component returns several components, on one hand the information window, the overview camera window and on the other hand the 
+ * experiment class that handles the rendering of the component windows. Furthermore, within this component, the auth/authfail command is handled and the 
+ * associated pop-up windows. The underConstruction command is processed within this React component.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @returns {React.Fragment} Information window, the overview camera and experiment component  
  */
-const BsCube = (props) => {
+const ExperimentUILayer = () => {
+  const socketCtx = useSocketContext();
+  const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
+
+  useEffect(() => {
+    // If authentication was successful on the server side, then auth command is received with the colour assigned by the server.
+    const auth = (color) => {
+      popupCtx.toggleShowPopUp('Connection successful!', 'success');
+      socketCtx.socket.emit('userId', socketCtx.username);
+      socketCtx.setConnected(true);
+      socketCtx.setFontColor(color);
+    }
+
+    // When underConstruction command is received
+    const underConstruction = (payload) => {
+      appCtx.toggleunderConstruction(payload);
+    }
+
+    // If authentication fails on the server side because too many users are connected to the server, the authfailed command is sent to the client.
+    const authFailed = () => {
+      socketCtx.setConnected(false);
+      popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
+    }
+
+    socketCtx.socket.on('AuthFailed', authFailed)
+
+    socketCtx.socket.on('Auth', auth);
+
+    socketCtx.socket.on('underConstruction', underConstruction)
+
+    // Prevents the rendering of the pop-up message when the web page is opened.
+    if (!socketCtx.socket.connected) {
+      popupCtx.toggleShowPopUp('No server connection!', 'error');
+    }
+
+    return () => {
+      socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
+      socketCtx.socket.removeAllListeners('AuthFailed', authFailed)
+      socketCtx.socket.removeAllListeners('Auth', auth)
+
+    }
+    //Comment needed to prevent a warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketCtx.socket]);
 
   return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
+    &lt;Fragment>
+      {appCtx.showInfoWindow &amp;&amp; &lt;InfoWindow />}
+      {appCtx.showCam &amp;&amp; &lt;CamWindow />}
+      {appCtx.showManualWindow &amp;&amp; &lt;ManualWindow />}
+      &lt;AdaptiveOptics
+        selected={appCtx.selectedComps}
       />
-    &lt;/Window>
-  )
-}
-export default BsCube;</code></pre>
+    &lt;/Fragment>
+  );
+};
+export default memo(ExperimentUILayer, isEqual);</code></pre>
         </article>
     </section>
 

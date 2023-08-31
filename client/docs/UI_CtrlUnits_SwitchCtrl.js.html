@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> UI/CtrlUnits/SwitchCtrl.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>UI/CtrlUnits/SwitchCtrl.js</h1>
                 </header>
                 
 
@@ -89,41 +89,81 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext";
+import { ThemeProvider } from '@mui/material/styles';
+import { useState, useEffect } from "react";
+import { theme } from '../templates/Theme.js';
+import Switch from '../templates/Switch';
+import { Box } from '@mui/material';
+import propTypes from "prop-types";
 
 /**
- * Beamspliiter cube window
+ * SwitchCtrl component
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
+ * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @param {string} component - controlId 
+ * 
+ * @returns {React.ReactElement} SwitchCtrl control element
  */
-const BsCube = (props) => {
+const SwitchCtrl = (props) => {
+  const [onlineStatus, setOnlineStatus] = useState(false);
+  const [switchIsOn, setSwitch] = useState(false);
+  
+  const socketCtx = useSocketContext();
+
+  useEffect(() => {
+    const status = (payload) => {
+      if (payload.controlId === props.component) {
+        setOnlineStatus(true)
+        setSwitch(payload.status.isOn)
+      }
+    }
+
+    socketCtx.socket.emit("command", {
+      userId: socketCtx.username,
+      controlId: props.component,
+      getStatus: true
+    })
+
+    socketCtx.socket.emit('getFooter', props.component)
+
+    socketCtx.socket.on("status", status);
+
+    return () => {
+      socketCtx.socket.removeAllListeners('status', status)
+    }
+    //Comment needed to prevent a warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketCtx.socket])
+
 
   return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
+    &lt;ThemeProvider theme={theme} >
+      &lt;div style={{
+        position: 'absolute',
+        width: '120px',
+        height: '40px',
+        border: '2px solid #00ffa8',
+        borderRadius: '50px',
+        textAlign: 'center',
+        top: '40px',
+        left: '10px'
+      }}>
+        &lt;Box sx={{ ml: '-4px' }} >
+          &lt;Switch component={props.component} online={onlineStatus} switchStatus={switchIsOn} left='Off' right='On' option="switch" />
+        &lt;/Box>
+      &lt;/div>
+    &lt;/ThemeProvider>
   )
 }
-export default BsCube;</code></pre>
+
+SwitchCtrl.propTypes = {
+  component: propTypes.string.isRequired,
+}
+
+export default SwitchCtrl
+</code></pre>
         </article>
     </section>
 

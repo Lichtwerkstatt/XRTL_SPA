@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> UI/CtrlUnits/RotaryCtrl.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>UI/CtrlUnits/RotaryCtrl.js</h1>
                 </header>
                 
 
@@ -89,41 +89,126 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import { MdOutlineRotateRight, MdOutlineRotateLeft } from 'react-icons/md';
+import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
+import { usePopUpContext } from "../../../services/PopUpContext";
+import styles from '../CSS/RotaryCtrl.module.css';
+import { useState, useEffect } from 'react';
+import propTypes from "prop-types";
 
 /**
- * Beamspliiter cube window
+ * RotaryCtrl component
  * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
+ * @description This React component returns the control RotaryCtrl, which consists of two buttons. The class must be given the controlId of the component, 
+ * as well as top and left for the positioning of the entire element.
  * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * @param {string} component - controlId 
+ * @param {string} top - Height positioning of the component inside the window 
+ * @param {string} left - Positioning from the left edge of the component
+ * 
+ * @returns {React.ReactElement} RotaryCtrl control element
  */
-const BsCube = (props) => {
+const RotaryCtrl = (props) => {
+  const [enteredRotation, setEnteredRotation] = useState(0);
+  const [onlineStatus, setOnlineStatus] = useState(false);
+  const [rotation, setRotation] = useState(0);
+  var direction;
+
+  const appCtx = useAppContext();
+  const popupCtx = usePopUpContext();
+  const socketCtx = useSocketContext();
+
+  useEffect(() => {
+    const status = (payload) => {
+      if (payload.controlId === props.component) {
+        setOnlineStatus(true)
+        setRotation(payload.status.absolute);
+        (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
+      }
+    }
+
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      controlId: props.component,
+      getStatus: true
+    });
+
+    socketCtx.socket.emit('getFooter', props.component);
+
+    socketCtx.socket.on('status', status);
+
+    return () => {
+      socketCtx.socket.removeAllListeners('status', status)
+
+    }
+    //Comment needed to prevent a warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketCtx.socket]);
+
+  const rotCW_Handler = name => (event) => {
+    event.preventDefault();
+    direction = 0;
+
+    // Differentiation whether left or right button was clicked and therefore a negative or positive number must be sent to the server
+    (name === 'left') ? direction = -1 * Number(enteredRotation) : direction = Number(enteredRotation);
+
+    // Prevents sending 0 to the server and displays a popup message instead
+    if (direction !== 0) {
+      socketCtx.socket.emit('command', {
+        userId: socketCtx.username,
+        controlId: props.component,
+        move: direction,
+        color: socketCtx.fontColor,
+      });
+
+      socketCtx.socket.emit('footer', {
+        status: 'Used by: ' + socketCtx.username.substring(0, 17),
+        controlId: props.component
+      });
+    } else {
+      popupCtx.toggleShowPopUp('Only values greater than 0 can be entered!', 'warning');
+    }
+    appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
+  };
+
+  // Handles the entered number
+  const changeRotationHandler = (event) => {
+    // Prevents the input of negative numbers
+    if (event.target.value > -1) {
+      setEnteredRotation(event.target.value);
+    }
+  };
 
   return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
-  )
+    &lt;form className={styles.rotaryCtrl} style={{ top: props.top + 'px', left: props.left + 'px' }}>
+      &lt;div className={styles.rotaryCtrl}>
+        &lt;span>{Number(rotation)}&lt;/span>
+        &lt;input
+          type='number'
+          min='0'
+          max='100'
+          value={enteredRotation}
+          onChange={changeRotationHandler}
+        />
+      &lt;/div>
+      &lt;button onClick={rotCW_Handler('left')} className={styles.CtrlLeft} disabled={(socketCtx.connected &amp;&amp; onlineStatus) ? false : true}>
+        &lt;MdOutlineRotateLeft size={28} />
+      &lt;/button>
+      &lt;button onClick={rotCW_Handler('right')} className={styles.CtrlRight} disabled={(socketCtx.connected &amp;&amp; onlineStatus) ? false : true}>
+        &lt;MdOutlineRotateRight size={28} />
+      &lt;/button>
+    &lt;/form>
+  );
+};
+
+RotaryCtrl.propTypes = {
+  component: propTypes.string.isRequired,
+  top: propTypes.string.isRequired,
+  left: propTypes.string.isRequired,
 }
-export default BsCube;</code></pre>
+
+export default RotaryCtrl;</code></pre>
         </article>
     </section>
 

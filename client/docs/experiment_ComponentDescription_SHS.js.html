@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> assembly/BsCube.js</title>
+  <title> experiment/ComponentDescription/SHS.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>assembly/BsCube.js</h1>
+                    <h1>experiment/ComponentDescription/SHS.js</h1>
                 </header>
                 
 
@@ -89,41 +89,35 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Window from '../UI/experimentUI/Window';
-import Cube from '../UI/ComponentDescription/Decription_Cube';
+            <pre class="prettyprint source linenums"><code>import styles from "./CSS/Description.module.css";
+import propTypes from "prop-types";
 
 /**
- * Beamspliiter cube window
- * 
- * @description This react component returns a window with the description of the beamsplitter cube window.
- *  
- * @param {string} controlId - controlId
- * @param {string} title - For setting the title within the window
- * @param {number} top - For the positioning of the window 
- * @param {number} left - For the positioning of the window 
- * 
- * @returns {React.ReactElement} Beamsplitter cube decription window
+ * Shack-Hartmann-Sensor window content
+ *
+ * @description This file contains the text for the window of the Shack-Hartmann-Sensor, which can be seen within the component window when clicking on Shack-Hartmann-Sensor.
+ *
+ * @param {string} height - For scaling the content (is specified in pixels)
+ *
+ * @returns {React.ReactElement} Content for the Shack-Hartmann-Sensor component window .
  */
-const BsCube = (props) => {
+const DescriptionSHS = (props) => {
+    return (
+        &lt;div>
+            &lt;div className={styles.mainWrapper} style={{ height: props.height }}>
+                &lt;p>
+                    Shack-Hartmann-Sensor Description
+                &lt;/p>
+            &lt;/div>
 
-  return (
-    &lt;Window
-      id={props.controlId}
-      header={props.title}
-      top={props.top}
-      left={props.left}
-      height='240px'
-      width='250px'
-      footer={'empty'}
-      topper={'none'}
-    >
-      &lt;Cube
-        height='220px'
-      />
-    &lt;/Window>
-  )
-}
-export default BsCube;</code></pre>
+        &lt;/div>
+    );
+};
+DescriptionSHS.propTypes = {
+  height: propTypes.string.isRequired,
+};
+export default DescriptionSHS;
+</code></pre>
         </article>
     </section>
 
