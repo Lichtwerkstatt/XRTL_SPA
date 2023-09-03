@@ -29,7 +29,7 @@ const InfoWindow = () => {
             left="200"
             width={width}
             height={height}
-            footer={'empty'}
+            footer={'none'}
             topper={'para'}
         >
             <InfoWindowContent />

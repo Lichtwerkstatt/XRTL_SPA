@@ -34,7 +34,7 @@ const CamWindow = () => {
             componentList={['overview']}
             width={width}
             height={height}
-            footer={'empty'}
+            footer={'none'}
             topper={'none'}
         >
             <ESPCam

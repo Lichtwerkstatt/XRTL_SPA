@@ -39,7 +39,7 @@ const Window = (props) => {
     }
 
     const Footer = (payload) => {
-      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'none' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -47,7 +47,7 @@ const Window = (props) => {
     }
 
     const getFooter = (payload) => {
-      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'none' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -183,7 +183,7 @@ const Window = (props) => {
           </div>
         }
 
-        {props.footer !== 'empty' ?
+        {props.footer !== 'none' ?
           <div className={styles.windowFooter}>
             <span onClick={handleInfo}> <MdOutlineUpdate size={25} /></span>
             <label>{footer}</label>

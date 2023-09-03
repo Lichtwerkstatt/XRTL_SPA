@@ -23,7 +23,7 @@ const BsCube = (props) => {
       left={props.left}
       height='240px'
       width='250px'
-      footer={'empty'}
+      footer={'none'}
       topper={'none'}
     >
       <Cube

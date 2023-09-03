@@ -13,7 +13,7 @@ import Window from '../UI/experimentUI/Window';
  * @param {number} left - For the positioning of the window 
  * @param {string} height - Defines the height of the window
  * @param {string} width - Defines the width of the window
- * @param {string} footer - If set to 'empty', then the window has no footer.
+ * @param {string} footer - If set to 'none', then the window has no footer.
  * @param {string} topper - If set to 'none', then no other button will be displayed in the tooper.
  * @param {boolean} info - If set to 'false', then the window does not need any content defined below 
  * <Winow/> based on the controlId, but gets it from the DescriptionHandler.
@@ -30,7 +30,7 @@ const Description = (props) => {
       left={props.left}
       height='240px'
       width='250px'
-      footer={'empty'}
+      footer={'none'}
       topper={'none'}
       info={false}
     />
