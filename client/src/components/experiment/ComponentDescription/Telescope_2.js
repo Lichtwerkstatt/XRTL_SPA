@@ -15,7 +15,7 @@ const DescriptionTelescope2 = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    Telescope 2 Description
+                    This telescope with its image size-changing effect is used to fully utilize the area of the wavefront sensor.
                 </p>
             </div>
 

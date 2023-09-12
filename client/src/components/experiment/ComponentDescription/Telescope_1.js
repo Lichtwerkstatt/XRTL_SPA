@@ -9,13 +9,13 @@ import propTypes from "prop-types";
  * @param {string} height - For scaling the content (is specified in pixels)
  * 
  * @returns {React.ReactElement} Content for the telescope 1 component window .  
- */ 
+ */
 const DescriptionTelescope1 = (props) => {
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    Telescope 1 Description
+                    This telescope with its image size-changing effect is used to fully utilize the area of the adaptive mirror.
                 </p>
             </div>
 

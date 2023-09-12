@@ -43,14 +43,14 @@ function Model(props) {
         name="LaserPower"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("redlaserPower_1");
+          props.toggleSelect("relay_laser");
         }}
       >
         {props.showTags && (
           <DescriptiveTag
             position={[0.15, 0.05, 0.45]}
             title="Power Supply"
-            description="Power Supply description"
+            description="5V Laser Power Supply"
           />
         )}
         <mesh
@@ -60,7 +60,7 @@ function Model(props) {
           geometry={nodes.Netzteil.geometry}
           material={materials.BlackParts}
         >
-          {props.selected.has("redlaserPower_1") ? (
+          {props.selected.has("relay_laser") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -78,7 +78,7 @@ function Model(props) {
           <DescriptiveTag
             position={[-0.12, 0.1, -0.42]}
             title="Adaptive Mirror"
-            description="Adaptive Mirror description"
+            description="DMH40-P01 Piezoelectric Deformable Mirror"
           />
         )}
         <mesh
@@ -122,8 +122,8 @@ function Model(props) {
         {props.showTags && (
           <DescriptiveTag
             position={[-0.12, 0.1, 0.43]}
-            title="The Eye"
-            description="His gaze pierces cloud, shadow, earth and flesh."
+            title="Artificial Eye"
+            description="Adjustable Diopter and Pupil Size"
           />
         )}
         <mesh
@@ -254,7 +254,7 @@ function Model(props) {
           <DescriptiveTag
             position={[-0.12, 0.1, -0.13]}
             title="Telescope 1"
-            description="Telescope 1 Description"
+            description="Composition of two Lenses"
           />
         )}
         <mesh
@@ -329,7 +329,7 @@ function Model(props) {
           <DescriptiveTag
             position={[-0.02, 0.1, -0.24]}
             title="Telescope 2"
-            description="Telescope 2 Description"
+            description="Composition of two Lenses"
           />
         )}
         <mesh
@@ -393,17 +393,17 @@ function Model(props) {
       </group>
 
       <group
-        name="SHS"
+        name="Wavefront Sensor"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("sensor_1");
+          props.toggleSelect("wavesensor_1");
         }}
       >
         {props.showTags && (
           <DescriptiveTag
             position={[0.05, 0.1, -0.11]}
-            title="SHS"
-            description="SHS Description"
+            title="Wavefront Sensor"
+            description="WFS20-5C/M Shack-Hartmann Sensor"
           />
         )}
 
@@ -413,8 +413,8 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cube005.geometry}
           material={materials.BlackParts}
-          >
-          {props.selected.has("sensor_1") ? (
+        >
+          {props.selected.has("wavesensor_1") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -442,14 +442,14 @@ function Model(props) {
         name="Pinhole"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("pinhole");
+          props.toggleSelect("stepper_pinhole");
         }}
       >
         {props.showTags && (
           <DescriptiveTag
             position={[-0.01, 0.1, 0.3]}
             title="Pinhole"
-            description="Pinhole Description"
+            description="ID12/M Post-Mounted Iris Diaphragm"
           />
         )}
         <mesh
@@ -459,7 +459,7 @@ function Model(props) {
           geometry={nodes.Cylinder036.geometry}
           material={materials.BlackParts}
         >
-          {props.selected.has("pinhole") ? (
+          {props.selected.has("stepper_pinhole") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -475,7 +475,7 @@ function Model(props) {
       </group>
 
       <group
-        name="DelayLine"
+        name="LinearStage"
         onPointerDown={(e) => {
           e.stopPropagation();
           props.toggleSelect("stepper_linear1");
@@ -484,8 +484,8 @@ function Model(props) {
         {props.showTags && (
           <DescriptiveTag
             position={[0.1, 0.1, 0.15]}
-            title="Delay Line"
-            description="Delay Line Description"
+            title="Linear Stage"
+            description="XR50P/M Linear Translation Platform"
           />
         )}
         <mesh
@@ -523,7 +523,7 @@ function Model(props) {
           <DescriptiveTag
             position={[-0.12, 0.1, 0.15]}
             title="Prism"
-            description="Prism Description"
+            description="Right-Angle Prism Mirror"
           />
         )}
         <mesh
@@ -555,8 +555,8 @@ function Model(props) {
         {props.showTags && (
           <DescriptiveTag
             position={[0.12, 0.1, 0.3]}
-            title="Laser"
-            description="Laser Description"
+            title="Light Source"
+            description="635 nm Laser Diode Module"
           />
         )}
         <mesh
@@ -579,14 +579,14 @@ function Model(props) {
         name="SelectableScreen"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("screen_1");
+          props.toggleSelect("servo_screen");
         }}
       >
         {props.showTags && (
           <DescriptiveTag
             position={[-0.12, 0.1, -0.02]}
-            title="Selectable Screen"
-            description="Selectable Screen Description"
+            title="Retractable Screen"
+            description="Simple Retractable Plate"
           />
         )}
         <mesh
@@ -596,7 +596,7 @@ function Model(props) {
           geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_1.geometry}
           material={materials["BlackParts.002"]}
         >
-          {props.selected.has("screen_1") ? (
+          {props.selected.has("servo_screen") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -662,7 +662,7 @@ function Model(props) {
         name="RotaryStage"
         onPointerDown={(e) => {
           e.stopPropagation();
-          props.toggleSelect("rotaryStage_1");
+          props.toggleSelect("stepper_rotation");
         }}
       >
         <mesh
@@ -672,7 +672,7 @@ function Model(props) {
           geometry={nodes["PR01_M-Step_1"].geometry}
           material={materials["BlackParts.003"]}
         >
-          {props.selected.has("rotaryStage_1") ? (
+          {props.selected.has("stepper_rotation") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />

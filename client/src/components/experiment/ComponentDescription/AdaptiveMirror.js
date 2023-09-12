@@ -16,7 +16,7 @@ const DescriptionAdaptiveMirror = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height, background: 'url(' + DM + ')' }} >
                 <p>
-                    Adaptive mirror Description
+                    
                 </p>
             </div>
 

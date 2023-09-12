@@ -38,7 +38,7 @@ const AdaptiveOptics = (props) => {
       {/* Delay line */}
       {props.selected.has("stepper_linear1") && (
         <XR50P
-          title="Delay Line"
+          title="Linear Stage"
           controlId={"stepper_linear1"}
           footer={footer}
           top={600}
@@ -60,11 +60,11 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Laser power */}
-      {props.selected.has("redlaserPower_1") && (
+      {props.selected.has("relay_laser") && (
         <LaserCtrl
           title="Power Supply"
-          id={"redlaserPower_1"}
-          controlId={"redlaser_1"}
+          id={"relay_laser"}
+          controlId={"relay_laser"}
           footer={footer}
           top={50}
           left={1600}
@@ -72,10 +72,10 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Pinhole */}
-      {props.selected.has("pinhole") && (
+      {props.selected.has("stepper_pinhole") && (
         <Pinhole
           title="Pinhole"
-          controlId={"pinhole"}
+          controlId={"stepper_pinhole"}
           footer={footer}
           top={100}
           left={1100}
@@ -85,7 +85,7 @@ const AdaptiveOptics = (props) => {
       {/* Phantom eye*/}
       {props.selected.has("eye_1") && (
         <Eye
-          title="Eye"
+          title="Artificial Eye"
           id={"eye_1"}
           controlIdTop={"stepper_eye_diop"}
           controlIdBottom={"stepper_eye_pupil"}
@@ -96,10 +96,10 @@ const AdaptiveOptics = (props) => {
       )}
 
       {/* Rotary stage of the eye*/}
-      {props.selected.has("rotaryStage_1") && (
+      {props.selected.has("stepper_rotation") && (
         <Rotary
-          title="Rotary stage"
-          controlId={"rotaryStage_1"}
+          title="Target Changing Stage"
+          controlId={"stepper_rotation "}
           footer={footer}
           top={550}
           left={150}
@@ -119,19 +119,21 @@ const AdaptiveOptics = (props) => {
 
       {/* Telescope in front of the Wavefront Sensor*/}
       {props.selected.has("telescope_2") && (
-        <DescriptionOnlyComponent
+        <KM100
           title="Telescope 2"
-          controlId={"telescope_2"}
+          id={"telescope_2"}
+          controlIdTop={"stepper_tele_x"}
+          controlIdBottom={"stepper_tele_y"}
           footer={footer}
           top={50}
           left={150}
         />
       )}
       {/* Screen*/}
-      {props.selected.has("screen_1") && (
+      {props.selected.has("servo_screen") && (
         <Screen
-          title="Selectable Screen"
-          controlId={"screen_1"}
+          title="Retractable Screen"
+          controlId={"servo_screen"}
           footer={footer}
           top={50}
           left={150}
@@ -148,10 +150,12 @@ const AdaptiveOptics = (props) => {
         />
       )}
       {/* Shack-Hartmann-Sensor*/}
-      {props.selected.has("sensor_1") && (
-        <DescriptionOnlyComponent
-          title="SHS"
-          controlId={"sensor_1"}
+      {props.selected.has("wavesensor_1") && (
+        <KM100
+          title="Wavefront Sensor"
+          id={"wavesensor_1"}
+          controlIdTop={"stepper_sensor_a"}
+          controlIdBottom={"stepper_sensor_b"}
           footer={footer}
           top={50}
           left={150}
