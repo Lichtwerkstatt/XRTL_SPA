@@ -35,7 +35,7 @@ const AdaptiveOptics = (props) => {
         />
       )}
 
-      {/* Delay line */}
+      {/* Linear stage */}
       {props.selected.has("stepper_linear1") && (
         <XR50P
           title="Linear Stage"
@@ -99,13 +99,32 @@ const AdaptiveOptics = (props) => {
       {props.selected.has("stepper_rotation") && (
         <Rotary
           title="Target Changing Stage"
-          controlId={"stepper_rotation "}
+          controlId={"stepper_rotation"}
           footer={footer}
           top={550}
           left={150}
         />
       )}
-
+      {/* Beam Splitter*/}
+      {props.selected.has("beamSplitter") && (
+        <DescriptionOnlyComponent
+          title="Beam Splitter"
+          controlId={"beamSplitter"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+      {/* Prism*/}
+      {props.selected.has("prism") && (
+        <DescriptionOnlyComponent
+          title="Prism"
+          controlId={"prism"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
       {/* Telescope in front of the Adaptive Mirror */}
       {props.selected.has("telescope_1") && (
         <DescriptionOnlyComponent

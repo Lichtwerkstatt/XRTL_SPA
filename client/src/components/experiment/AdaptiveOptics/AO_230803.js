@@ -169,7 +169,13 @@ function Model(props) {
           material={materials.ShinyParts}
         />
       </group>
-      <group name="Beamsplitter">
+      <group
+        name="Beamsplitter"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("beamSplitter");
+        }}
+      >
         <mesh
           name="Cylinder002"
           castShadow
@@ -177,6 +183,13 @@ function Model(props) {
           geometry={nodes.Cylinder002.geometry}
           material={materials.BlackParts}
         />
+        {props.showTags && (
+          <DescriptiveTag
+            position={[-0.12, 0.1, 0.305]}
+            title="Beam Splitter"
+            description="10:90 Plate Beam Splitter"
+          />
+        )}
         <mesh
           name="Cylinder002_1"
           castShadow
@@ -518,7 +531,13 @@ function Model(props) {
           <GlassMaterial />
         </mesh>
       </group>
-      <group>
+      <group
+        name="LinearStage"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("prism");
+        }}
+      >
         {props.showTags && (
           <DescriptiveTag
             position={[-0.12, 0.1, 0.15]}
@@ -665,6 +684,13 @@ function Model(props) {
           props.toggleSelect("stepper_rotation");
         }}
       >
+          {props.showTags && (
+          <DescriptiveTag
+            position={[-0.12, 0.025, 0.46]}
+            title="Target Changing Stage"
+            description="PR01/M Rotation Stage"
+          />
+        )}
         <mesh
           name="PR01_M-Step_1"
           castShadow
