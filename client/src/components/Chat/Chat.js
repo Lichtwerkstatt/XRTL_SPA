@@ -13,6 +13,9 @@ const Chat = () => {
   const [animation, setAnimation] = useState('');
   var [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
+  const [beamSplitter1, setBeamSplitter1] = useState(false);
+  const [beamSplitter2, setBeamSplitter2] = useState(false);
+
 
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
@@ -22,10 +25,41 @@ const Chat = () => {
       setChat([...chat, payload]);
     }
 
+    // All this has to be deleted
+    //DELETE from ...
+    const status = (payload) => {
+      if (payload.controlId === 'servo_bblock_1') {
+
+        payload.status.absolute === 45 ? setBeamSplitter1(true) : setBeamSplitter1(false)
+
+        //console.log("Status  ", payload)
+      } else if (payload.controlId === 'servo_bblock_2') {
+
+        payload.status.absolute === 45 ? setBeamSplitter2(true) : setBeamSplitter2(false)
+
+        // console.log("Status  ", payload)
+      }
+    }
+
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      controlId: 'servo_bblock_1',
+      getStatus: true
+    })
+
+    socketCtx.socket.emit('command', {
+      userId: socketCtx.username,
+      controlId: 'servo_bblock_2',
+      getStatus: true
+    })
+
+    socketCtx.socket.on('status', status);
+    //... DELETE until here
     socketCtx.socket.on('message', message);
 
     return () => {
       socketCtx.socket.removeAllListeners('message', message);
+      socketCtx.socket.removeAllListeners('status', status); //DELETE
     }
   }, [socketCtx, chat])
 
@@ -121,7 +155,7 @@ const Chat = () => {
             color: '#00ffa8'
           })
           //needs approx 6s
- 
+
           await new Promise(resolve => setTimeout(resolve, 7000));
 
           //Adjustment of the reference mirror by 200 steps vertical tilting 
@@ -154,7 +188,7 @@ const Chat = () => {
             color: '#00ffa8'
           })
           //needs approx 6s
-          
+
           await new Promise(resolve => setTimeout(resolve, 7000));
 
           ////Adjustment of the reference mirror by -200 steps horizontal tilting
@@ -222,6 +256,33 @@ const Chat = () => {
 
         setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
       }
+      //DELETE from here ...
+      else if (message === '!bs1') {
+
+        socketCtx.socket.emit("command", {
+          userId: socketCtx.username,
+          controlId: 'servo_bblock_1',
+          binaryCtrl: !beamSplitter1,
+          color: socketCtx.fontColor,
+        })
+
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam splitter 1 has been set to ' + String(!beamSplitter1), color: '#FF7373' });
+
+      }
+
+      else if (message === '!bs2') {
+
+        socketCtx.socket.emit("command", {
+          userId: socketCtx.username,
+          controlId: 'servo_bblock_2',
+          binaryCtrl: !beamSplitter2,
+          color: socketCtx.fontColor,
+        })
+
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam splitter 1 has been set to ' + String(!beamSplitter2), color: '#FF7373' });
+
+      }
+      //... DELETE until here
       else {
         setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
       }
