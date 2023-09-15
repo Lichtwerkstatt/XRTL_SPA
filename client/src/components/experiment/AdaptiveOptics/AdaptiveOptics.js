@@ -5,7 +5,7 @@ import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
 import Eye from "../../assembly/Eye";
-import Screen from "../../assembly/Screen";
+import Screen from "../../assembly/RetracatableScreen";
 
 /**
  * Experiment setup component
