@@ -1,4 +1,4 @@
-import ManualWindowContent from "../experiment/ComponentDescription/Manual";
+import ManualWindowContent from "../experiment/ComponentDescription/Tasks";
 import Window from "../UI/experimentUI/Window";
 
 const ManualWindow = (props) => {

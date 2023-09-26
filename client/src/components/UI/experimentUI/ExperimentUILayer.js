@@ -50,7 +50,7 @@ const ExperimentUILayer = () => {
     socketCtx.socket.on('underConstruction', underConstruction)
 
     // Prevents the rendering of the pop-up message when the web page is opened.
-    if (!socketCtx.socket.connected) {
+    if (socketCtx.username !== '') {
       popupCtx.toggleShowPopUp('No server connection!', 'error');
     }
 

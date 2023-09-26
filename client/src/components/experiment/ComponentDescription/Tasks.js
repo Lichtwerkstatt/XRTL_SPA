@@ -1,10 +1,17 @@
 import styles from "./CSS/ManualWindowContent.module.css";
-import Stepper from "../../UI//templates/Stepper";
-import { theme } from '../../UI//templates/Theme';
+import Stepper from "../../UI/templates/Stepper";
+import { theme } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/';
 
-
-const ManualWindowContent = (props) => {
+/**
+ * Task description content 
+ * 
+ * @description This window contains an abbreviated version of the tasks in the form of bullet points for the experiment.
+ *  
+ * 
+ * @returns {React.ReactElement} Abbreviated version of the task description
+ */
+const ManualWindowContent = () => {
     return (
         <div>
             <div className={styles.mainWrapper}      >

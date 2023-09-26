@@ -1,4 +1,4 @@
-import Imprint from './LegalNotice';
+import LegalNotice from './LegalNotice';
 import Telescope1 from './Telescope_1';
 import Telescope2 from './Telescope_2';
 import AdaptiveMirror from './AdaptiveMirror';
@@ -10,11 +10,10 @@ import BeamSplitter from './BeamSplitter';
 import Prism from './Prism';
 import propTypes from "prop-types";
 
-
 /**
  * Description handler
  * 
- * @description This component handles the display and rendering of the descriptions of the components and the imprint. For this, the descriptions must be imported and defined within the 
+ * @description This component handles the display and rendering of the descriptions of the components and the LegalNotice. For this, the descriptions must be imported and defined within the 
  * variable renderOption as a component with the controlId as the key. This component must then be given the height of the window. The corresponding description is then returned within return. 
  * 
  * @param {string} component - controlId 
@@ -30,7 +29,7 @@ import propTypes from "prop-types";
 const DescriptionHandler = (props) => {
 
     const renderOption = {
-        info: <Imprint height={props.height} />,
+        info: <LegalNotice height={props.height} />,
         telescope_1: <Telescope1 height={props.height} />,
         telescope_2: <Telescope2 height={props.height} />,
         mirror_1: <AdaptiveMirror height={props.height} />,
