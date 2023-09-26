@@ -7,14 +7,14 @@ import { ThemeProvider } from '@mui/material/';
  * Task description content 
  * 
  * @description This window contains an abbreviated version of the tasks in the form of bullet points for the experiment.
- *  
  * 
  * @returns {React.ReactElement} Abbreviated version of the task description
  */
 const ManualWindowContent = () => {
     return (
         <div>
-            <div className={styles.mainWrapper}      >
+            <div className={styles.mainWrapper}>
+                {/* First Page */}
                 <div id={'10'}>
                     <b>1. &nbsp; Introduction</b><br /><br />
                     <ul>
@@ -27,6 +27,7 @@ const ManualWindowContent = () => {
                     </ul>
                 </div>
 
+                {/* Second Page */}
                 <div id={'11'} style={{ display: 'none' }}>
                     <b>2. &nbsp; Overview</b><br /><br />
                     <ul>
@@ -38,6 +39,7 @@ const ManualWindowContent = () => {
                     </ul>
                 </div>
 
+                {/* Third Page */}
                 <div id={'12'} style={{ display: 'none' }}>
                     <b>3.a &nbsp; Laser</b><br /><br />
                     <ul>
@@ -47,6 +49,7 @@ const ManualWindowContent = () => {
 
             </div>
 
+            {/* Stepper at the bottom of the window */}
             <ThemeProvider theme={theme}>
                 <Stepper left={'Back'} right={'Next'} buttonValue={10} length={3} component={'manual'} />
             </ThemeProvider>
