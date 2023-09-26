@@ -1,7 +1,14 @@
-import ManualWindowContent from "../experiment/ComponentDescription/Tasks";
+import TaskWindowContent from "../experiment/ComponentDescription/Tasks";
 import Window from "../UI/experimentUI/Window";
 
-const ManualWindow = (props) => {
+/**
+ * Task window
+ * 
+ * @description This react component returns a window with the content for the task window. 
+ *  
+ * @returns {React.ReactElement} Task window
+ */
+const TaskWindow = () => {
     var width = window.innerWidth
     var height = 0;
 
@@ -24,8 +31,8 @@ const ManualWindow = (props) => {
             footer={'none'}
             topper={'none'}
         >
-            <ManualWindowContent />
+            <TaskWindowContent />
         </Window>
     );
 };
-export default ManualWindow;
+export default TaskWindow;
