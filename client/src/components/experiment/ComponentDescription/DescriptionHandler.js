@@ -1,4 +1,4 @@
-import Imprint from './Imprint';
+import Imprint from './LegalNotice';
 import Telescope1 from './Telescope_1';
 import Telescope2 from './Telescope_2';
 import AdaptiveMirror from './AdaptiveMirror';

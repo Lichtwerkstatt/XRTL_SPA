@@ -12,7 +12,6 @@ import { memo } from 'react'
  * @param {string} description - Short description of the components
  * @param {string} position  - Positioning of the tag
  * 
- * 
  * @returns {React.ReactElement} styled tag
  */
 const DescriptiveTag = (props) => {
