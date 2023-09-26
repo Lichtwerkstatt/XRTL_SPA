@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> components/experiment/ComponentDescription/DescriptionHandler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,73 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>components/experiment/ComponentDescription/DescriptionHandler.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import LegalNotice from './LegalNotice';
+import Telescope1 from './Telescope_1';
+import Telescope2 from './Telescope_2';
+import AdaptiveMirror from './AdaptiveMirror';
+import SHS from './SHS';
+import PowerSupply from './PowerSupply';
+import LinearStage from './LinearStage';
+import RetractableScreen from './RetractableScreen';
+import BeamSplitter from './BeamSplitter';
+import Prism from './Prism';
+import propTypes from "prop-types";
 
+/**
+ * Description handler
+ * 
+ * @description This component handles the display and rendering of the descriptions of the components and the LegalNotice. For this, the descriptions must be imported and defined within the 
+ * variable renderOption as a component with the controlId as the key. This component must then be given the height of the window. The corresponding description is then returned within return. 
+ * 
+ * @param {string} component - controlId 
+ * @param {string} height - Passes the size of the window to scale the content (is specified in pixels).
+ * 
+ * @returns {React.ReactElement} Component description to be displayed in the window
+ * 
+ * Examples are for the variable renderOption within return nothing is changed!
+ * @example   linear_1: &lt;SM1ZP height={props.height} />
+ * @example   KM100_1: &lt;KM100 height={props.height} />
+ * @example   screen: &lt;ESPCam height={props.height} />
+ */
+const DescriptionHandler = (props) => {
 
-    <h3> </h3>
+    const renderOption = {
+        info: &lt;LegalNotice height={props.height} />,
+        telescope_1: &lt;Telescope1 height={props.height} />,
+        telescope_2: &lt;Telescope2 height={props.height} />,
+        mirror_1: &lt;AdaptiveMirror height={props.height} />,
+        sensor_1: &lt;SHS height={props.height} />,
+        relay_laser: &lt;PowerSupply height={props.height} />,
+        stepper_linear1: &lt;LinearStage height={props.height} />,
+        servo_screen: &lt;RetractableScreen height={props.height} />,
+        beamSplitter: &lt;BeamSplitter height={props.height} />,
+        prism: &lt;Prism height={props.height} />,
+    }
 
+    return (
+        &lt;div>{renderOption[props.component]}&lt;/div>
+    )
+}
 
+DescriptionHandler.propTypes = {
+    component: propTypes.string.isRequired,
+    height: propTypes.string.isRequired,
+}
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default DescriptionHandler;
+</code></pre>
+        </article>
+    </section>
 
 
 

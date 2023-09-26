@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> components/UI/templates/Theme.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,59 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>components/UI/templates/Theme.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { createTheme } from '@mui/material/styles';
 
+/**
+ * Standard theme
+ * 
+ * @description This theme is the default theme used.
+ * 
+ * @returns theme
+ */
+export const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            light: '#01bd7d',
+            main: '#01bd7d',
+            dark: '#01bd7d',
+            contrastText: '#01bd7d',
+        },
+    }
+})
 
-    <h3> </h3>
+/**
+ * Login theme
+ * 
+ * @description This theme is used in the login window. The special feature here is that the contrast text is white and spaceing is set to two.
+ * 
+ * @returns login theme
+ */
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export const themeLogin = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            light: '#01bd7d',
+            main: '#01bd7d',
+            dark: '#01bd7d',
+            contrastText: '#fff',
+        },
+    },
+    spacing: 2,
+})</code></pre>
+        </article>
+    </section>
 
 
 

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> components/experiment/ComponentDescription/Tasks.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,77 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>components/experiment/ComponentDescription/Tasks.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import styles from "./CSS/ManualWindowContent.module.css";
+import Stepper from "../../UI/templates/Stepper";
+import { theme } from '../../UI/templates/Theme';
+import { ThemeProvider } from '@mui/material/';
 
+/**
+ * Task description content 
+ * 
+ * @description This window contains an abbreviated version of the tasks in the form of bullet points for the experiment.
+ * 
+ * @returns {React.ReactElement} Abbreviated version of the task description
+ */
+const ManualWindowContent = () => {
+    return (
+        &lt;div>
+            &lt;div className={styles.mainWrapper}>
+                {/* First Page */}
+                &lt;div id={'10'}>
+                    &lt;b>1. &amp;nbsp; Introduction&lt;/b>&lt;br />&lt;br />
+                    &lt;ul>
+                        &lt;li>Welcome to our remote-controlled &lt;b>Michelson&amp;nbsp;Interferometer&lt;/b>! Today, we'll explore various physical effects and phenomena. Remember, this manual serves as a guide, and users can follow their own exploration path based on their interests and objectives. Enjoy your journey through the fascinating world of Michelson interferometry!
+                        &lt;/li>&lt;br />
+                        &lt;li>Discover who is currently engaged in experimentation with you at the &lt;b>XRTL&amp;nbsp;Showcase&lt;/b>. Simply type &lt;i>"!users"&lt;/i> in the chat (pinned on the left edge) to unveil the answer. You can communicate with them via the chat.
+                        &lt;/li>&lt;br />
+                        &lt;li>Discover who is currently engaged in experimentation with you at the &lt;b>XRTL&amp;nbsp;Showcase&lt;/b>. You can simply communicate with them via the chat (pinned on the left edge).
+                        &lt;/li>
+                    &lt;/ul>
+                &lt;/div>
 
-    <h3> </h3>
+                {/* Second Page */}
+                &lt;div id={'11'} style={{ display: 'none' }}>
+                    &lt;b>2. &amp;nbsp; Overview&lt;/b>&lt;br />&lt;br />
+                    &lt;ul>
+                        &lt;li>Initiate your experiment by gaining an overview. Begin by accessing the live camera feed through the menu located at the top right corner. From there, you can observe the current state of the experimental setup in our showcase at the &lt;b>Abbe&amp;nbsp;School&amp;nbsp;of&amp;nbsp;Photonics&lt;/b>. Take note of the visible components and compare them with those displayed in the 3D model.
+                            &lt;br /> Can you identify all of them?
+                        &lt;/li>&lt;br />
+                        &lt;li>Familiarize yourself with the user interface, including the power supply, mirror controls and beam splitter options. Simply tap on the individual components to display the respective control window.
+                        &lt;/li>
+                    &lt;/ul>
+                &lt;/div>
 
+                {/* Third Page */}
+                &lt;div id={'12'} style={{ display: 'none' }}>
+                    &lt;b>3.a &amp;nbsp; Laser&lt;/b>&lt;br />&lt;br />
+                    &lt;ul>
 
+                    &lt;/ul>
+                &lt;/div>
 
+            &lt;/div>
 
-
-
-
-
-
-
-    
-
-
-
-
-
+            {/* Stepper at the bottom of the window */}
+            &lt;ThemeProvider theme={theme}>
+                &lt;Stepper left={'Back'} right={'Next'} buttonValue={10} length={3} component={'manual'} />
+            &lt;/ThemeProvider>
+        &lt;/div>
+    )
+}
+export default ManualWindowContent;</code></pre>
+        </article>
+    </section>
 
 
 

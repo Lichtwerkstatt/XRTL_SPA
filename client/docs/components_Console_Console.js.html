@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> components/Console/Console.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,61 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>components/Console/Console.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useAppContext } from '../../services/AppContext';
+import { RiTerminalBoxFill } from 'react-icons/ri';
+import styles from './CSS/Console.module.css';
+import { useState, memo } from 'react';
+import { isEqual } from 'lodash';
 
+/**
+ * Console component 
+ * 
+ * @description This React component contains the console, the handling of collapsing/expanding it and the display of the log, i.e. the content of this component.
+ * 
+ * @returns {React.ReactElement} Console component  
+ */
+const Console = () => {
+  const [showConsole, setShowConsole] = useState(false);
+  const [animation, setAnimation] = useState('');
 
-    <h3> </h3>
+  const appCtx = useAppContext();
 
+  //Function handles the folding/unfolding of the console
+  const showConsoleHandler = () => {
+    setAnimation(showConsole ? styles.closeConsole : styles.openConsole)
+    setShowConsole(!showConsole)
+  }
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+  return (
+    &lt;div className={styles.consoleContainer + ' ' + animation}>
+      &lt;div className={styles.consoleMain}>
+        {/* Log representation */}
+        {appCtx.logs.map((payload, index) => {
+          return (&lt;span key={index}>{payload}&lt;br />&lt;/span>)
+        })}
+      &lt;/div>
+      &lt;div className={styles.consoleHandler}>
+        &lt;span>
+          &lt;RiTerminalBoxFill size={35} onClick={showConsoleHandler} />
+        &lt;/span>
+      &lt;/div>
+    &lt;/div>
+  )
+}
+export default memo(Console, isEqual);
+</code></pre>
+        </article>
+    </section>
 
 
 

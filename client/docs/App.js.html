@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> App.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,55 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>App.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import ExperimentUILayer from "./components/UI/experimentUI/ExperimentUILayer";
+import VirtualLayer from "./components/UI/experimentUI/VirtualLayer";
+import { SocketContextProvider } from "./services/SocketContext";
+import {PopUpContextProvider} from "./services/PopUpContext";
+import { AppContextProvider } from "./services/AppContext";
+import NavBar from "./components/UI/experimentUI/NavBar";
+import Console from "./components/Console/Console";
+import Login from "./components/Login/Login";
+import Chat from "./components/Chat/Chat";
 
+/**
+ * Assembly of the React components 
+ * 
+ * @description Within this class, all React components are imported and merged into one component. The resulting React component is then 
+ * imported into index.js, where the rendering of the web application is handled.
+ * 
+ * @returns {React.ReactElement} App, including all the created React components
+ */
+const App = () => {
+  process.title = 'XRTLApp';
+  return (
+    &lt;AppContextProvider>
+      &lt;SocketContextProvider>
+          &lt;VirtualLayer />
+        &lt;PopUpContextProvider>
+          &lt;ExperimentUILayer />
+          &lt;Console />
+          &lt;Chat />
+          &lt;NavBar />
+          &lt;Login />
+        &lt;/PopUpContextProvider>
+      &lt;/SocketContextProvider>
+    &lt;/AppContextProvider>
+  );
+};
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default App;</code></pre>
+        </article>
+    </section>
 
 
 

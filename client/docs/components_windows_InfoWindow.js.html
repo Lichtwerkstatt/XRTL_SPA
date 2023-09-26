@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> components/windows/InfoWindow.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,57 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>components/windows/InfoWindow.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import InfoWindowContent from "./Content/InfoWindowContent";
+import Window from "../UI/experimentUI/Window";
 
+/**
+ * Information window
+ * 
+ * @description This react component returns a window with the content for the information window.
+ *  
+ * @returns {React.ReactElement} Information window
+ */
+const InfoWindow = () => {
+    var width = window.innerWidth
+    var height = 0;
 
-    <h3> </h3>
+    if (0 &lt; width &amp;&amp; width &lt; 576) {
+        width = '350px'
+        height = '650px'
+    }
+    else {
+        width = '600px'
+        height = '517px'
+    }
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    return (
+        &lt;Window
+            header="About XR TwinLab"
+            id='info'
+            top="200"
+            left="200"
+            width={width}
+            height={height}
+            footer={'none'}
+            topper={'para'}
+        >
+            &lt;InfoWindowContent />
+        &lt;/Window>
+    );
+};
+export default InfoWindow;</code></pre>
+        </article>
+    </section>
 
 
 

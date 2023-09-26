@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> components/experiment/ComponentDescription/Telescope_2.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,33 +79,46 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>components/experiment/ComponentDescription/Telescope_2.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import styles from './CSS/Description.module.css'
+import propTypes from "prop-types";
 
+/**
+ * Telescope 2 window content 
+ * 
+ * @description This file contains the text for the window of the second telescope, which can be seen within the component window when clicking on telescope 2.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} Content for the telescope 2 component window .  
+ */
+const DescriptionTelescope2 = (props) => {
+    return (
+        &lt;div>
+            &lt;div className={styles.mainWrapper} style={{ height: props.height }} >
+                &lt;p>
+                    This telescope with its image size-changing effect is used to fully utilize the area of the wavefront sensor.
+                &lt;/p>
+            &lt;/div>
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+        &lt;/div>
+    )
+}
+DescriptionTelescope2.propTypes = {
+    height: propTypes.string.isRequired,
+}
+export default DescriptionTelescope2;</code></pre>
+        </article>
+    </section>
 
 
 
