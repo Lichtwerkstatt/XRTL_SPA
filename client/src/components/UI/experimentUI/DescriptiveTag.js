@@ -6,7 +6,7 @@ import { memo } from 'react'
 /**
  * Descriptive tag component
  * 
- * @description The Recat component returns the tag of a component for the 3D model. For this, the title, the description and the position within the 3D space must be specified.
+ * @description The React component returns the tag of a component for the 3D model. For this, the title, the description and the position within the 3D space must be specified.
  * 
  * @param {string} title - title of a component
  * @param {string} description - Short description of the components
