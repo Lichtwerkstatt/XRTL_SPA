@@ -117,7 +117,7 @@ io.use((socket, next) => {
 
         // Assignment of the key based on the content of the middleware
         if (kid === 'client') {
-            key = process.env.KEY_2
+            key = 'keysecret'
         } else if (kid === 'component') {
             key = process.env.KEY_1
         } else if (kid === 'admin') {
