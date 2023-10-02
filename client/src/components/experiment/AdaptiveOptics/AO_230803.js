@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.1.2 AO_230803.glb -k -s
 */
 
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Box } from "@react-three/drei";
 import React, { memo } from "react";
 import { isEqual } from "lodash";
 import GlassMaterial from "./materials/GlassMaterial";
@@ -684,7 +684,7 @@ function Model(props) {
           props.toggleSelect("stepper_rotation");
         }}
       >
-          {props.showTags && (
+        {props.showTags && (
           <DescriptiveTag
             position={[-0.12, 0.025, 0.46]}
             title="Target Changing Stage"
@@ -727,6 +727,40 @@ function Model(props) {
         geometry={nodes.Plane004_1.geometry}
         material={materials.ShinyParts}
       />
+
+      <group name="ESP Cam"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("cam_screen");
+        }}
+      >
+        {/* ESP Cam Box*/}
+        <Box
+          position={[-0.01, 0.025, 0.05]}
+          args={[1, 1, 1]}
+          scale={[0.05, 0.08, 0.05]}
+        >
+          {props.showTags && (
+            <DescriptiveTag
+              position={[-0.12, 0.4, 0.05]}
+              title="Screen Cam"
+              description="ESP Cam"
+            />
+          )}
+          <meshPhysicalMaterial
+            thickness={1}
+            roughness={0.1}
+            transmission={1}
+            clearcoat={0.5}
+            clearcoatRoughness={0}
+            ior={1.1}
+            envMapIntensity={25}
+            color={"#ffffff"}
+            attenuationColor={"#00ffff"}
+            attenuationDistance={5}
+          />
+        </Box>
+      </group>
     </group>
   );
 }

@@ -38,10 +38,8 @@ const ESPCamPlusSettings = (props) => {
     }
 
     useEffect(() => {
-        if (!props.setting && !props.mobile) {
+        if (!props.setting) {
             document.getElementById(props.component).style.left = '-325px'
-        } else if (!props.mobile) {
-            document.getElementById(props.component).style.left = '-655px'
         }
 
         const status = (payload) => {

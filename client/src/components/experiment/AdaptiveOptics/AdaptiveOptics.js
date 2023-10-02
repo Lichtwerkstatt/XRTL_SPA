@@ -1,5 +1,6 @@
 import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import Screen from "../../assembly/RetracatableScreen";
+import ESPCam from "../../assembly/ESPCamStream";
 import Pinhole from "../../assembly/Pinhole";
 import LaserCtrl from "../../assembly/Laser";
 import Rotary from "../../assembly/Rotary";
@@ -193,6 +194,18 @@ const AdaptiveOptics = (props) => {
           left={150}
         />
       )}
+      {/* Shack-Hartmann-Sensor*/}
+      {props.selected.has("cam_screen") && (
+        <ESPCam
+          title="ESP Cam"
+          id={"cam_screen"}
+          footer={footer}
+          top={50}
+          left={150}
+        />
+      )}
+
+
     </div>
   );
 };
