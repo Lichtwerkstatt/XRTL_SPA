@@ -5,7 +5,14 @@ const AppContext = React.createContext()
 export function useAppContext() {
   return useContext(AppContext);
 }
-
+/**
+ * AppContext
+ * 
+ * @description This React component is the highest according to the hiearchie. It can be imported within every React component 
+ * and contains the globally most important variables. For example for the display of the component windows,
+ * all the function are andles of the navigation bar etc. 
+ * 
+ */
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
   const [showVirtualLayer, setShowVirtualLayer] = useState(true);
@@ -24,17 +31,31 @@ export function AppContextProvider({ children }) {
   const [socket, setSocket] = useState('');
   const [logs, setLogs] = useState([]);
 
+  // Contains all the controlIds of the component windows, which are currently open
   const toggleSelectedComp = (compId) => {
+    //Adds controlId to set, when a component window iis opened
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
+    // Removes controlId of a window, whenever it is closed
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
       toogleRoomComp(compId);
     }
   };
 
+  /**
+   * Data recieving controlIds set
+   * 
+   * @description This function adds or removes the controlIds of a data recieving window, if it is openns or closed.
+   * controlId is added, when this function is called within a React component after the import of this ContextProvider
+   * and is removed, wheather the toggleSelectedComp function is called.
+   * 
+   * @param {string} compId - controlId  
+   * @param {boolean} val - prevents the mutiple calling of this function
+   */
   const toogleRoomComp = (compId, val = false) => {
     try {
+      // Adds a new controlId to the set and sends join stream room events
       if (!roomComponent.has(compId) && val !== false) {
         setRoomComponent(prev => new Set(prev.add(compId)));
 
@@ -42,6 +63,8 @@ export function AppContextProvider({ children }) {
           controlId: compId,
           userId: username
         });
+        
+        // Removes controlId from the set and sends leave stream room events
       } else if (roomComponent.has(compId)) {
         setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
 
@@ -55,55 +78,63 @@ export function AppContextProvider({ children }) {
     }
   }
 
+  // Controls the 3D experiment ambient rotation
   const toggleAutoRotate = () => {
     setAutoRotate(!autoRotate);
   };
 
+  // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
   };
 
+  // Operated the display of the labels and descriptions of the experiment components
   const toggleShowTags = () => {
     setShowTags(!showTags)
   }
 
+  // Adds a new log entry to the existing log
   const addLog = (log) => {
     setLogs(prev => [log, ...prev])
   };
 
+  // For displaying the beam path within the 3D visualisation
   const toggleShowBeam = () => {
     setShowBeam(!showBeam)
   }
 
+  // Handles the display of the Information window
   const toggleShowInfoWindow = () => {
     setShowInfoWindow(!showInfoWindow);
   }
 
+  // Handles the display of the Task window
   const toggleShowManualWindow = () => {
     setShowManual(!showManualWindow);
   }
 
-  const toggleShowWelcomeWindow = () => {
-    setShowWelcome(!showWelcomeWindow);
-  }
-
+  // Handles the display of the Login window
   const toggleLogin = () => {
     setShowLogin(!showLogin);
   }
 
+  // Handles the display of the OverviewCam window
   const toggleCam = () => {
     setShowCam(!showCam);
     toggleSelectedComp('overview')
   }
 
+  // Displays the underConstruction information in the navigation bar
   const toggleunderConstruction = (newVal) => {
     setUnderConstruction(newVal)
   }
 
+  // Contains the page of the Task window which was open, when the window was closed
   const toggleSetManualPage = (newVal) => {
     setManualPage(newVal)
   }
 
+  // Contains all variables, which can be accessed within a Recat component, if this ContextProvider is imported
   return (
     <AppContext.Provider
       value={{
