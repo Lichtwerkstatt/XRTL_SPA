@@ -2,16 +2,27 @@ import { useState, useContext, useEffect, createContext } from "react";
 import { useAppContext } from "./AppContext";
 import { Manager } from "socket.io-client";
 
-//Manager is used because due to its ability to reconnect 
-var manager = new Manager("", { autoConnect: false });
-var SocketContext = createContext();
+// To create the JSON Web Token
 var jwt = require('jsonwebtoken');
+//Manager is used because due to its ability to reconnect if the connection to the sever was disrupted
+var manager = new Manager("", { autoConnect: false });
 var socket = manager.socket("/");
+
+var SocketContext = createContext();
 
 export function useSocketContext() {
   return useContext(SocketContext);
 }
 
+/**
+ * SocketContext
+ * 
+ * @description This ContextProvider holds the connection to the server in the variable socket. After 
+ * successfull establishing a connection to the server, the socket variable can be used to recieve events from the server 
+ * or send events to it, if imported, within a React component.  
+ * 
+ * @returns {React.Context} Socket context
+ */
 export function SocketContextProvider({ children }) {
   // Color in used within the chat and in which the LED rings flashes, when adjusted
   const [fontColor, setFontColor] = useState('white');

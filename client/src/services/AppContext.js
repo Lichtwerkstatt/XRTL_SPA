@@ -12,6 +12,7 @@ export function useAppContext() {
  * and contains the globally most important variables. For example for the display of the component windows,
  * all the function are andles of the navigation bar etc. 
  * 
+ * @returns {React.Context} App context
  */
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
@@ -33,7 +34,7 @@ export function AppContextProvider({ children }) {
 
   // Contains all the controlIds of the component windows, which are currently open
   const toggleSelectedComp = (compId) => {
-    //Adds controlId to set, when a component window iis opened
+    //Adds controlId to set, when a component window is opened
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
     // Removes controlId of a window, whenever it is closed
@@ -88,7 +89,7 @@ export function AppContextProvider({ children }) {
     setShowVirtualLayer(!showVirtualLayer);
   };
 
-  // Operated the display of the labels and descriptions of the experiment components
+  // Operats the display of the labels and descriptions of the experiment components
   const toggleShowTags = () => {
     setShowTags(!showTags)
   }
@@ -129,12 +130,12 @@ export function AppContextProvider({ children }) {
     setUnderConstruction(newVal)
   }
 
-  // Contains the page of the Task window which was open, when the window was closed
+  // Contains the page of the Task window which was displayed, when the window was closed
   const toggleSetManualPage = (newVal) => {
     setManualPage(newVal)
   }
 
-  // Contains all variables, which can be accessed within a Recat component, if this ContextProvider is imported
+  // Contains all variables, which can be accessed within a React component, if this ContextProvider is imported
   return (
     <AppContext.Provider
       value={{
