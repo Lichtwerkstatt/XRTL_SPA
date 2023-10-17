@@ -21,7 +21,6 @@ export function AppContextProvider({ children }) {
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
-  const [showWelcomeWindow, setShowWelcome] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [manualPage, setManualPage] = useState(1);
@@ -161,8 +160,6 @@ export function AppContextProvider({ children }) {
         toogleRoomComp,
         showManualWindow,
         toggleShowManualWindow,
-        showWelcomeWindow,
-        toggleShowWelcomeWindow,
         underConstruction,
         toggleunderConstruction,
         manualPage,
