@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/UI/templates/Slider.js</title>
+  <title> services/AppContext.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/UI/templates/Slider.js</h1>
+                    <h1>services/AppContext.js</h1>
                 </header>
                 
 
@@ -89,136 +89,183 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext";
-import { Box, Stack, Typography, Slider } from "@mui/material";
-import { useAppContext } from "../../../services/AppContext";
-import propTypes from "prop-types";
-import { useState } from "react";
+            <pre class="prettyprint source linenums"><code>import React, { useState, useContext } from "react";
 
+const AppContext = React.createContext()
+
+export function useAppContext() {
+  return useContext(AppContext);
+}
 /**
- * Slider component
+ * AppContext
  * 
- * @description Used to create a slider with a specified start and end point. In addition, the controlId, the status (of the component and the online status) 
- * and the command for the server must be specified. The title can but does not have to be given. To display text under the slider instead of numbers, this 
- * can be passed to the slider within the tag text in the form of an array. 
+ * @description This React component is the highest according to the hiearchie. It can be imported within every React component 
+ * and contains the globally most important variables. For example for the display of the component windows,
+ * all the function are andles of the navigation bar etc. 
  * 
- * @param {string} component - controlId 
- * @param {string} title - title 
- * @param {number} min -  text at the left/beginning
- * @param {number} max - text at the right/end
- * @param {array} text - contains an array with numbers as keys and strings as values (for displaying text under the slider instead of numbers)
- * @param {number} sliderValue - Status of the slider from the status request 
- * @param {boolean} online - connection status to the component
- * @param {string} option - command for the server
- * 
- * @returns {React.ReactElement} styled slider with the specified props
- * 
- * @example &lt;Slider title='Contrast' component={'cam'} online={true} sliderValue={0} min={-2} max={2} option='contrast' />
- * @example &lt;Slider title='Exposure' component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
- * @example &lt;Slider component={'cam'} online={false} sliderValue={-2} min={0} max={10} text={[{ value: 0, label: 'a' }, { value: 5, label: 'b' }, { value: 10, label: 'c' }]} option='exposure' />
+ * @returns {React.Context} App context
  */
+export function AppContextProvider({ children }) {
+  const [underConstruction, setUnderConstruction] = useState(false);
+  const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [roomComponent, setRoomComponent] = useState(new Set());
+  const [selectedComps, setSelectedComps] = useState(new Set());
+  const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [showManualWindow, setShowManual] = useState(false);
+  const [autoRotate, setAutoRotate] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
+  const [manualPage, setManualPage] = useState(1);
+  const [showBeam, setShowBeam] = useState(false);
+  const [showTags, setShowTags] = useState(true);
+  const [showCam, setShowCam] = useState(false);
+  const [username, setUsername] = useState('');
+  const [socket, setSocket] = useState('');
+  const [logs, setLogs] = useState([]);
 
-const SliderCtrl = (props) => {
+  // Contains all the controlIds of the component windows, which are currently open
+  const toggleSelectedComp = (compId) => {
+    //Adds controlId to set, when a component window is opened
+    if (!selectedComps.has(compId)) {
+      setSelectedComps(prev => new Set(prev.add(compId)));
+    // Removes controlId of a window, whenever it is closed
+    } else {
+      setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
+      toogleRoomComp(compId);
+    }
+  };
+
   /**
- * @param {number} sliderPos - Indicates the status of the slider
- * @function setSliderPos - Assigning a new value
- */
-  const [sliderPos, setSliderPos] = useState(props.sliderValue);
-
-  const appCtx = useAppContext();
-  const socketCtx = useSocketContext();
-
-  /**
-   * Definition of the start, middle and end point
-   */
-  const marks = [
-    { value: parseInt(props.min), label: props.min, },
-    { value: 0, label: '0', },
-    { value: parseInt(props.max), label: props.max, },
-  ]
-
-  /**
-   * Handles the onclick event on the slider
+   * Data recieving controlIds set
    * 
-   * @description When one clicks on the slider, the sliderValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
-   * Emitting footer then updates the footer of the window 
+   * @description This function adds or removes the controlIds of a data recieving window, if it is openns or closed.
+   * controlId is added, when this function is called within a React component after the import of this ContextProvider
+   * and is removed, wheather the toggleSelectedComp function is called.
    * 
-   * @param {*} event - onClick event
-   * @param {number} newValue - Value with which selectValue is to be overwritten
+   * @param {string} compId - controlId  
+   * @param {boolean} val - prevents the mutiple calling of this function
    */
-  const handleSettingChanges = (event, newValue) => {
-    setSliderPos(newValue)
+  const toogleRoomComp = (compId, val = false) => {
+    try {
+      // Adds a new controlId to the set and sends join stream room events
+      if (!roomComponent.has(compId) &amp;&amp; val !== false) {
+        setRoomComponent(prev => new Set(prev.add(compId)));
 
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      controlId: props.component,
-      [props.option]: newValue,
-      color: socketCtx.fontColor,
-    })
+        socket.emit('join stream room', {
+          controlId: compId,
+          userId: username
+        });
+        
+        // Removes controlId from the set and sends leave stream room events
+      } else if (roomComponent.has(compId)) {
+        setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
 
-    socketCtx.socket.emit("footer", {
-      status: 'Used by: ' + socketCtx.username.substring(0, 17),
-      controlId: props.component
-    })
+        socket.emit("leave stream room", {
+          controlId: compId,
+          userId: username
+        });
+      }
+    } catch (e) {
 
-    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
+    }
   }
 
-  if (props.text) {
-    return (
-      &lt;Box sx={{ width: 250, m: 2 }}>
-        &lt;Typography id="input-slider" gutterBottom>
-          {props.title}
-        &lt;/Typography>
-        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          &lt;Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={props.text}
-            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
-          />
-        &lt;/Stack>
-      &lt;/Box>
-    )
-  } else {
-    return (
-      &lt;Box sx={{ width: 250, m: 2 }}>
-        &lt;Typography id="input-slider" gutterBottom>
-          {props.title}
-        &lt;/Typography>
-        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          &lt;Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={marks}
-            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
-          />
-        &lt;/Stack>
-      &lt;/Box>
-    )
+  // Controls the 3D experiment ambient rotation
+  const toggleAutoRotate = () => {
+    setAutoRotate(!autoRotate);
+  };
+
+  // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
+  const toggleShowVirtualLayer = () => {
+    setShowVirtualLayer(!showVirtualLayer);
+  };
+
+  // Operats the display of the labels and descriptions of the experiment components
+  const toggleShowTags = () => {
+    setShowTags(!showTags)
   }
-}
 
-SliderCtrl.propTypes = {
-  component: propTypes.string.isRequired,
-  title: propTypes.string,
-  min: propTypes.number.isRequired,
-  max: propTypes.number.isRequired,
-  text: propTypes.array,
-  sliderValue: propTypes.bool.isRequired,
-  online: propTypes.bool.isRequired,
-  option: propTypes.string.isRequired
-}
+  // Adds a new log entry to the existing log
+  const addLog = (log) => {
+    setLogs(prev => [log, ...prev])
+  };
 
-export default SliderCtrl;</code></pre>
+  // For displaying the beam path within the 3D visualisation
+  const toggleShowBeam = () => {
+    setShowBeam(!showBeam)
+  }
+
+  // Handles the display of the Information window
+  const toggleShowInfoWindow = () => {
+    setShowInfoWindow(!showInfoWindow);
+  }
+
+  // Handles the display of the Task window
+  const toggleShowManualWindow = () => {
+    setShowManual(!showManualWindow);
+  }
+
+  // Handles the display of the Login window
+  const toggleLogin = () => {
+    setShowLogin(!showLogin);
+  }
+
+  // Handles the display of the OverviewCam window
+  const toggleCam = () => {
+    setShowCam(!showCam);
+    toggleSelectedComp('overview')
+  }
+
+  // Displays the underConstruction information in the navigation bar
+  const toggleunderConstruction = (newVal) => {
+    setUnderConstruction(newVal)
+  }
+
+  // Contains the page of the Task window which was displayed, when the window was closed
+  const toggleSetManualPage = (newVal) => {
+    setManualPage(newVal)
+  }
+
+  // Contains all variables, which can be accessed within a React component, if this ContextProvider is imported
+  return (
+    &lt;AppContext.Provider
+      value={{
+        autoRotate,
+        toggleAutoRotate,
+        showVirtualLayer,
+        toggleShowVirtualLayer,
+        selectedComps,
+        toggleSelectedComp,
+        logs,
+        addLog,
+        showTags,
+        toggleShowTags,
+        showBeam,
+        toggleShowBeam,
+        showLogin,
+        toggleLogin,
+        showInfoWindow,
+        toggleShowInfoWindow,
+        showCam,
+        toggleCam,
+        setRoomComponent,
+        toogleRoomComp,
+        showManualWindow,
+        toggleShowManualWindow,
+        underConstruction,
+        toggleunderConstruction,
+        manualPage,
+        toggleSetManualPage,
+        username,
+        setUsername,
+        socket,
+        setSocket
+      }}
+    >
+      {children}
+    &lt;/AppContext.Provider>
+  );
+}
+</code></pre>
         </article>
     </section>
 

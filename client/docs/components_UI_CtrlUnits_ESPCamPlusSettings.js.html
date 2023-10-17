@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/UI/templates/Slider.js</title>
+  <title> components/UI/CtrlUnits/ESPCamPlusSettings.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/UI/templates/Slider.js</h1>
+                    <h1>components/UI/CtrlUnits/ESPCamPlusSettings.js</h1>
                 </header>
                 
 
@@ -89,136 +89,126 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext";
-import { Box, Stack, Typography, Slider } from "@mui/material";
-import { useAppContext } from "../../../services/AppContext";
+            <pre class="prettyprint source linenums"><code>import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { useSocketContext } from '../../../services/SocketContext';
+import { ThemeProvider } from '@mui/material/styles';
+import ESPCam from '../templates/ESPCam';
+import styles from '../CSS/Settings.module.css'
+import { theme } from '../templates/Theme.js';
+import { useState, useEffect } from 'react';
+import { IconButton } from '@mui/material';
+import Slider from '../templates/Slider';
+import Switch from '../templates/Switch';
+import Select from '../templates/Select';
+import Box from '@mui/material/Box';
 import propTypes from "prop-types";
-import { useState } from "react";
 
 /**
- * Slider component
+ * ESPCam component with settings
  * 
- * @description Used to create a slider with a specified start and end point. In addition, the controlId, the status (of the component and the online status) 
- * and the command for the server must be specified. The title can but does not have to be given. To display text under the slider instead of numbers, this 
- * can be passed to the slider within the tag text in the form of an array. 
+ * @description This component returns a canvas with the camera stream of an ESPCam and the corresponding setting options. For this, the height and width of the window must be transferred 
+ * and the controlId with which the ESP is to be addressed. In addition, the variables setting and setSetting must be passed. These handle the change of the window size when folding 
+ * and unfolding the settings.
  * 
  * @param {string} component - controlId 
- * @param {string} title - title 
- * @param {number} min -  text at the left/beginning
- * @param {number} max - text at the right/end
- * @param {array} text - contains an array with numbers as keys and strings as values (for displaying text under the slider instead of numbers)
- * @param {number} sliderValue - Status of the slider from the status request 
- * @param {boolean} online - connection status to the component
- * @param {string} option - command for the server
+ * @param {string} width - Transfers the width to ESPCam class 
+ * @param {string} height - Transfer the height to ESPCam class 
+ * @param {boolean} setting - If true, then setting options are hidden, if false then they are displayed and the component window is larger.
+ * @param {func} setSetting - To change the setting variable value 
  * 
- * @returns {React.ReactElement} styled slider with the specified props
- * 
- * @example &lt;Slider title='Contrast' component={'cam'} online={true} sliderValue={0} min={-2} max={2} option='contrast' />
- * @example &lt;Slider title='Exposure' component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
- * @example &lt;Slider component={'cam'} online={false} sliderValue={-2} min={0} max={10} text={[{ value: 0, label: 'a' }, { value: 5, label: 'b' }, { value: 10, label: 'c' }]} option='exposure' />
+ * @returns {React.ReactElement} styled canvas with ESPCam stream and setting options
  */
+const ESPCamPlusSettings = (props) => {
+    const [switchIsOn, setSwitchStatus] = useState(false);
+    const [online, setOnlineStatus] = useState(false);
+    const [frameSize, setFrameSize] = useState(0);
+    const [contrast, setContrast] = useState(0);
+    const [exposure, setExposure] = useState(0);
 
-const SliderCtrl = (props) => {
-  /**
- * @param {number} sliderPos - Indicates the status of the slider
- * @function setSliderPos - Assigning a new value
- */
-  const [sliderPos, setSliderPos] = useState(props.sliderValue);
+    const socketCtx = useSocketContext();
 
-  const appCtx = useAppContext();
-  const socketCtx = useSocketContext();
+    const resolution = {
+        5: 'QVGA (320x240)',
+        8: 'VGA (640x480)',
+        9: 'SVGA (800x600)',
+        10: 'XGA (1024x768)',
+    }
 
-  /**
-   * Definition of the start, middle and end point
-   */
-  const marks = [
-    { value: parseInt(props.min), label: props.min, },
-    { value: 0, label: '0', },
-    { value: parseInt(props.max), label: props.max, },
-  ]
+    const hiddenSetting = () => {
+        props.setSetting(!props.setting)
 
-  /**
-   * Handles the onclick event on the slider
-   * 
-   * @description When one clicks on the slider, the sliderValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
-   * Emitting footer then updates the footer of the window 
-   * 
-   * @param {*} event - onClick event
-   * @param {number} newValue - Value with which selectValue is to be overwritten
-   */
-  const handleSettingChanges = (event, newValue) => {
-    setSliderPos(newValue)
+        if (props.setting) {
+            document.getElementById(props.component).style.left = '-325px'
+        } else {
+            document.getElementById(props.component).style.left = '-655px'
+        }
+    }
 
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      controlId: props.component,
-      [props.option]: newValue,
-      color: socketCtx.fontColor,
-    })
+    useEffect(() => {
+        if (!props.setting) {
+            document.getElementById(props.component).style.left = '-325px'
+        }
 
-    socketCtx.socket.emit("footer", {
-      status: 'Used by: ' + socketCtx.username.substring(0, 17),
-      controlId: props.component
-    })
+        const status = (payload) => {
+            if (payload.controlId === props.component) {
+                setOnlineStatus(true)
+                setSwitchStatus(payload.status.gray)
+                setExposure(payload.status.exposure)
+                setContrast(payload.status.contrast)
+                setFrameSize(payload.status.frameSize)
+                //console.log('Status of settings:   ', payload)
+            }
+        }
 
-    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
-  }
+        socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: props.component,
+            getStatus: true
+        })
 
-  if (props.text) {
+        socketCtx.socket.emit('getFooter', props.component)
+
+        socketCtx.socket.on('status', status);
+
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+        }
+        //Comment needed to prevent a warning
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socketCtx.socket]);
+
     return (
-      &lt;Box sx={{ width: 250, m: 2 }}>
-        &lt;Typography id="input-slider" gutterBottom>
-          {props.title}
-        &lt;/Typography>
-        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          &lt;Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={props.text}
-            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
-          />
-        &lt;/Stack>
-      &lt;/Box>
+        &lt;ThemeProvider theme={theme}>
+            &lt;div className={styles.Settings}>
+                &lt;IconButton onClick={hiddenSetting}  >
+                    &lt;SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                &lt;/IconButton>
+                &lt;ESPCam component={props.component} width={'600px'} height={'400px'} />
+                {props.setting &amp;&amp;
+
+                    &lt;div className={styles.Settings}>
+                        &lt;Box sx={{ m: 2, width: 250 }} > &lt;h1>Settings&lt;/h1> &lt;/Box>
+                        &lt;Select title='Resolution' component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} />
+                        &lt;Switch component={props.component} switchStatus={switchIsOn} online={online} left='Color' right='Gray' option='gray' />
+                        &lt;Slider title='Contrast' component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
+                        &lt;Slider title='Exposure' component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
+                    &lt;/div>
+
+                }
+            &lt;/div>
+        &lt;/ThemeProvider>
     )
-  } else {
-    return (
-      &lt;Box sx={{ width: 250, m: 2 }}>
-        &lt;Typography id="input-slider" gutterBottom>
-          {props.title}
-        &lt;/Typography>
-        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          &lt;Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={marks}
-            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
-          />
-        &lt;/Stack>
-      &lt;/Box>
-    )
-  }
 }
 
-SliderCtrl.propTypes = {
-  component: propTypes.string.isRequired,
-  title: propTypes.string,
-  min: propTypes.number.isRequired,
-  max: propTypes.number.isRequired,
-  text: propTypes.array,
-  sliderValue: propTypes.bool.isRequired,
-  online: propTypes.bool.isRequired,
-  option: propTypes.string.isRequired
+ESPCamPlusSettings.propTypes = {
+    component: propTypes.string.isRequired,
+    width: propTypes.string.isRequired,
+    height: propTypes.string.isRequired,
+    setting:propTypes.bool.isRequired,
+    setSetting: propTypes.func.isRequired
 }
 
-export default SliderCtrl;</code></pre>
+export default ESPCamPlusSettings;</code></pre>
         </article>
     </section>
 

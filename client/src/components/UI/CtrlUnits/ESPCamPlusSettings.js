@@ -10,7 +10,23 @@ import Slider from '../templates/Slider';
 import Switch from '../templates/Switch';
 import Select from '../templates/Select';
 import Box from '@mui/material/Box';
+import propTypes from "prop-types";
 
+/**
+ * ESPCam component with settings
+ * 
+ * @description This component returns a canvas with the camera stream of an ESPCam and the corresponding setting options. For this, the height and width of the window must be transferred 
+ * and the controlId with which the ESP is to be addressed. In addition, the variables setting and setSetting must be passed. These handle the change of the window size when folding 
+ * and unfolding the settings.
+ * 
+ * @param {string} component - controlId 
+ * @param {string} width - Transfers the width to ESPCam class 
+ * @param {string} height - Transfer the height to ESPCam class 
+ * @param {boolean} setting - If true, then setting options are hidden, if false then they are displayed and the component window is larger.
+ * @param {func} setSetting - To change the setting variable value 
+ * 
+ * @returns {React.ReactElement} styled canvas with ESPCam stream and setting options
+ */
 const ESPCamPlusSettings = (props) => {
     const [switchIsOn, setSwitchStatus] = useState(false);
     const [online, setOnlineStatus] = useState(false);
@@ -92,4 +108,13 @@ const ESPCamPlusSettings = (props) => {
         </ThemeProvider>
     )
 }
+
+ESPCamPlusSettings.propTypes = {
+    component: propTypes.string.isRequired,
+    width: propTypes.string.isRequired,
+    height: propTypes.string.isRequired,
+    setting:propTypes.bool.isRequired,
+    setSetting: propTypes.func.isRequired
+}
+
 export default ESPCamPlusSettings;

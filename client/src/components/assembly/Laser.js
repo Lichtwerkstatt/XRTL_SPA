@@ -1,5 +1,5 @@
 import PS_Background from './media/PS_outline.png';
-import LaserCtrl from '../UI/CtrlUnits/SwitchCtrl';
+import LaserCtrl from '../UI/CtrlUnits/LaserCtrl';
 import Window from '../UI/experimentUI/Window';
 
 /**

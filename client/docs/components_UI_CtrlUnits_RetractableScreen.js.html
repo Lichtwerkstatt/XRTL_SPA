@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/UI/templates/Slider.js</title>
+  <title> components/UI/CtrlUnits/RetractableScreen.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/UI/templates/Slider.js</h1>
+                    <h1>components/UI/CtrlUnits/RetractableScreen.js</h1>
                 </header>
                 
 
@@ -89,136 +89,81 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext";
-import { Box, Stack, Typography, Slider } from "@mui/material";
-import { useAppContext } from "../../../services/AppContext";
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from '../../../services/SocketContext';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../templates/Theme.js';
+import { useState, useEffect } from 'react';
+import Switch from '../templates/Switch';
+import Box from '@mui/material/Box';
 import propTypes from "prop-types";
-import { useState } from "react";
 
 /**
- * Slider component
+ * BeamSplitterCtrl component
  * 
- * @description Used to create a slider with a specified start and end point. In addition, the controlId, the status (of the component and the online status) 
- * and the command for the server must be specified. The title can but does not have to be given. To display text under the slider instead of numbers, this 
- * can be passed to the slider within the tag text in the form of an array. 
+ * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId.
  * 
  * @param {string} component - controlId 
- * @param {string} title - title 
- * @param {number} min -  text at the left/beginning
- * @param {number} max - text at the right/end
- * @param {array} text - contains an array with numbers as keys and strings as values (for displaying text under the slider instead of numbers)
- * @param {number} sliderValue - Status of the slider from the status request 
- * @param {boolean} online - connection status to the component
- * @param {string} option - command for the server
  * 
- * @returns {React.ReactElement} styled slider with the specified props
- * 
- * @example &lt;Slider title='Contrast' component={'cam'} online={true} sliderValue={0} min={-2} max={2} option='contrast' />
- * @example &lt;Slider title='Exposure' component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
- * @example &lt;Slider component={'cam'} online={false} sliderValue={-2} min={0} max={10} text={[{ value: 0, label: 'a' }, { value: 5, label: 'b' }, { value: 10, label: 'c' }]} option='exposure' />
+ * @returns {React.ReactElement} BeamSplitterCtrl control element
  */
+const BeamSplitterCtrl = (props) => {
+    const [switchStatus, setSwitchStatus] = useState(false);
+    const [onlineStatus, setOnlineStatus] = useState(true);
 
-const SliderCtrl = (props) => {
-  /**
- * @param {number} sliderPos - Indicates the status of the slider
- * @function setSliderPos - Assigning a new value
- */
-  const [sliderPos, setSliderPos] = useState(props.sliderValue);
+    const socketCtx = useSocketContext();
 
-  const appCtx = useAppContext();
-  const socketCtx = useSocketContext();
+    useEffect(() => {
+        const status = (payload) => {
+            if (payload.controlId === props.component) {
+                setOnlineStatus(true)
+                // Convert the number coming from the server (0 or 90) and convert it to boolean value.
+                payload.status.absolute === 90 ? setSwitchStatus(true) : setSwitchStatus(false)
+                // console.log("Status  ", payload)
+            }
+        }
 
-  /**
-   * Definition of the start, middle and end point
-   */
-  const marks = [
-    { value: parseInt(props.min), label: props.min, },
-    { value: 0, label: '0', },
-    { value: parseInt(props.max), label: props.max, },
-  ]
+        socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: props.component,
+            getStatus: true
+        })
 
-  /**
-   * Handles the onclick event on the slider
-   * 
-   * @description When one clicks on the slider, the sliderValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
-   * Emitting footer then updates the footer of the window 
-   * 
-   * @param {*} event - onClick event
-   * @param {number} newValue - Value with which selectValue is to be overwritten
-   */
-  const handleSettingChanges = (event, newValue) => {
-    setSliderPos(newValue)
+        socketCtx.socket.emit('getFooter', props.component)
 
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      controlId: props.component,
-      [props.option]: newValue,
-      color: socketCtx.fontColor,
-    })
+        socketCtx.socket.on('status', status);
 
-    socketCtx.socket.emit("footer", {
-      status: 'Used by: ' + socketCtx.username.substring(0, 17),
-      controlId: props.component
-    })
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socketCtx.socket]);
 
-    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
-  }
-
-  if (props.text) {
     return (
-      &lt;Box sx={{ width: 250, m: 2 }}>
-        &lt;Typography id="input-slider" gutterBottom>
-          {props.title}
-        &lt;/Typography>
-        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          &lt;Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={props.text}
-            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
-          />
-        &lt;/Stack>
-      &lt;/Box>
+        &lt;ThemeProvider theme={theme}>
+            &lt;div style={{
+                position: 'absolute',
+                width: '120px',
+                height: '40px',
+                border: '2px solid #00ffa8',
+                borderRadius: '50px',
+                textAlign: 'center',
+                top: '200px',
+                left: '10px'
+            }}>
+                &lt;Box sx={{ ml: '-4px' }} >
+                    &lt;Switch component={props.component} switchStatus={switchStatus} online={onlineStatus} left='Off' right='On' option='binaryCtrl' />
+                &lt;/Box>
+            &lt;/div>
+        &lt;/ThemeProvider>
     )
-  } else {
-    return (
-      &lt;Box sx={{ width: 250, m: 2 }}>
-        &lt;Typography id="input-slider" gutterBottom>
-          {props.title}
-        &lt;/Typography>
-        &lt;Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          &lt;Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={marks}
-            disabled={(socketCtx.connected &amp;&amp; props.online) ? false : true}
-          />
-        &lt;/Stack>
-      &lt;/Box>
-    )
-  }
 }
 
-SliderCtrl.propTypes = {
-  component: propTypes.string.isRequired,
-  title: propTypes.string,
-  min: propTypes.number.isRequired,
-  max: propTypes.number.isRequired,
-  text: propTypes.array,
-  sliderValue: propTypes.bool.isRequired,
-  online: propTypes.bool.isRequired,
-  option: propTypes.string.isRequired
+BeamSplitterCtrl.propTypes = {
+    component: propTypes.string.isRequired,
 }
 
-export default SliderCtrl;</code></pre>
+export default BeamSplitterCtrl</code></pre>
         </article>
     </section>
 

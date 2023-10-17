@@ -1,5 +1,5 @@
 import Screen_Background from './media/BS_outline.png';
-import BeamSplitterCtrl from '../UI/CtrlUnits/BeamSplitterCtrl';
+import RetractableScreen from '../UI/CtrlUnits/RetractableScreen';
 import Window from '../UI/experimentUI/Window';
 
 /**
@@ -27,7 +27,7 @@ const Screen = (props) => {
             width='250px'
             background={Screen_Background}
         >
-            <BeamSplitterCtrl
+            <RetractableScreen
                 component={props.controlId}
             />
 
