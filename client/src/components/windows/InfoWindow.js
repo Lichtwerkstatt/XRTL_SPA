@@ -25,8 +25,8 @@ const InfoWindow = () => {
         <Window
             header="About XR TwinLab"
             id='info'
-            top="200"
-            left="200"
+            top={200}
+            left={200}
             width={width}
             height={height}
             footer={'none'}

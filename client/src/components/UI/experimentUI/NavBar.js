@@ -12,6 +12,14 @@ import { FaTags } from 'react-icons/fa';
 import { memo, useState } from 'react';
 import { isEqual } from 'lodash';
 
+/**
+ * Navigation bar component 
+ * 
+ * @description React components returns the styling and functionality of the navigation bar. Within this file all onclick events 
+ * on the buttons in the bar and their color changes are also handled.
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
+ */
 const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();

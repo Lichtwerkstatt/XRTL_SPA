@@ -1,5 +1,15 @@
 import styles from './CSS/Description.module.css';
+import propTypes from "prop-types";
 
+/**
+ * Beamsplitter window content 
+ * 
+ * @description This file contains the descriptive text for the window of the Beamsplitter, which can be seen within the component window on the information icon.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} descriptive text of the Beamsplitter
+ */
 const DescriptionBeamSplitter = (props) => {
     return (
         <div>
@@ -12,4 +22,7 @@ const DescriptionBeamSplitter = (props) => {
         </div>
     )
 }
+DescriptionBeamSplitter.propTypes = {
+    height: propTypes.string.isRequired,
+};
 export default DescriptionBeamSplitter;

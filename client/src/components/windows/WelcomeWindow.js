@@ -32,8 +32,9 @@ const WelcomeWindow = (props) => {
         <Window
             header="XR TwinLab Welcome"
             id='welcome'
-            top="100"
-            left="200"
+            componentList={['welcome']}
+            top={100}
+            left={200}
             width={width}
             height={height}
             footer={'none'}

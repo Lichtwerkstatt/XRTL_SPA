@@ -3,11 +3,18 @@ import Stepper from "../../UI/templates/Stepper";
 import { theme } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/';
 
-
+/**
+ * Manual description content 
+ * 
+ * @description This window contains instructions for carrying out the experiment.
+ * 
+ * @returns {React.ReactElement} Instruction text for the experiment 
+ */
 const ManualWindowContent = (props) => {
   return (
     <div>
       <div className={styles.mainWrapper}      >
+        {/* First Page */}
         <div id={'10'}>
           <b>1. &nbsp; Introduction</b><br /><br />
           <ul>
@@ -20,6 +27,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Second Page */}
         <div id={'11'} style={{ display: 'none' }}>
           <b>2. &nbsp; Overview</b><br /><br />
           <ul>
@@ -31,6 +39,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Third Page */}
         <div id={'12'} style={{ display: 'none' }}>
           <b>3.a &nbsp; Laser</b><br /><br />
           <ul>
@@ -42,6 +51,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Fourth Page */}
         <div id={'13'} style={{ display: 'none' }}>
           <b>3.b &nbsp; Laser</b><br /><br />
           <ul>
@@ -58,6 +68,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Fifth Page */}
         <div id={'14'} style={{ display: 'none' }}>
           <b>4. &nbsp; Beam Path</b><br /><br />
           <ul>
@@ -74,6 +85,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Fifth Page */}
         <div id={'15'} style={{ display: 'none' }}>
           <b>5. &nbsp; Basic Interference</b><br /><br />
           <ul>
@@ -87,6 +99,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Sixth Page */}
         <div id={'16'} style={{ display: 'none' }}>
           <b>6. &nbsp; Tiltable Mirror</b><br /><br />
           <ul>
@@ -98,6 +111,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Seventh Page */}
         <div id={'17'} style={{ display: 'none' }}>
           <b>7. &nbsp; Second Beam Splitter</b><br /><br />
           <ul>
@@ -109,6 +123,7 @@ const ManualWindowContent = (props) => {
           </ul>
         </div>
 
+        {/* Eighth Page */}
         <div id={'18'} style={{ display: 'none' }}>
           <b>8. &nbsp; Conclusion</b><br /><br />
           <ul>
@@ -121,6 +136,7 @@ const ManualWindowContent = (props) => {
 
       </div>
 
+      {/* Stepper at the bottom of the window */}
       <ThemeProvider theme={theme}>
         <Stepper left={'Back'} right={'Next'} buttonValue={10} length={9} component={'manual'} />
       </ThemeProvider>

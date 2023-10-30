@@ -24,8 +24,8 @@ const ManualWindow = (props) => {
         <Window
             header="XR TwinLab Manual"
             id='manual'
-            top="100"
-            left="1000"
+            top={100}
+            left={1000}
             width={width}
             height={height}
             footer={'none'}

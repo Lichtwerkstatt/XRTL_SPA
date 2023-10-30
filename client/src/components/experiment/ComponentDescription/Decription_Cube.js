@@ -1,5 +1,15 @@
 import styles from './CSS/Description.module.css';
+import propTypes from "prop-types";
 
+/**
+ * Cube window content 
+ * 
+ * @description This file contains the descriptive text for the window of the cube, which can be seen within the component window on the information icon.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} descriptive text of the cube
+ */
 const DescriptionCube = (props) => {
     return (
         <div>
@@ -13,4 +23,7 @@ const DescriptionCube = (props) => {
         </div>
     )
 }
+DescriptionCube.propTypes = {
+    height: propTypes.string.isRequired,
+};
 export default DescriptionCube;

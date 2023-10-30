@@ -4,7 +4,17 @@ import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch';
 import Box from '@mui/material/Box';
+import propTypes from "prop-types";
 
+/**
+ * Beam splitter component
+ * 
+ * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId.
+ * 
+ * @param {string} component - controlId 
+ * 
+ * @returns {React.ReactElement} Beam splitter control element
+ */
 const BeamSplitterCtrl = (props) => {
     const [switchStatus, setSwitchStatus] = useState(false);
     const [onlineStatus, setOnlineStatus] = useState(true);
@@ -57,4 +67,9 @@ const BeamSplitterCtrl = (props) => {
         </ThemeProvider>
     )
 }
+
+BeamSplitterCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+}
+
 export default BeamSplitterCtrl

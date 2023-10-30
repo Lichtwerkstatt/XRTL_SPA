@@ -1,5 +1,15 @@
 import styles from './CSS/Description.module.css';
+import propTypes from "prop-types";
 
+/**
+ * Laser window content 
+ * 
+ * @description This file contains the descriptive text for the window of the laser, which can be seen within the component window on the information icon.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} descriptive text of the laser
+ */
 const DescriptionLaser = (props) => {
     return (
         <div>
@@ -13,4 +23,8 @@ const DescriptionLaser = (props) => {
         </div>
     )
 }
+
+DescriptionLaser.propTypes = {
+    height: propTypes.string.isRequired,
+};
 export default DescriptionLaser;

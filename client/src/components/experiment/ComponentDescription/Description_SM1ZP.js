@@ -1,5 +1,15 @@
 import styles from './CSS/Description.module.css';
+import propTypes from "prop-types";
 
+/**
+ * SM1ZP window content 
+ * 
+ * @description This file contains the descriptive text for the window of the SM1ZP, which can be seen within the component window on the information icon.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} descriptive text of the SM1ZP
+ */
 const DescriptionSM1ZP = (props) => {
     return (
         <div>
@@ -14,4 +24,7 @@ const DescriptionSM1ZP = (props) => {
         </div>
     )
 }
+DescriptionSM1ZP.propTypes = {
+    height: propTypes.string.isRequired,
+};
 export default DescriptionSM1ZP;

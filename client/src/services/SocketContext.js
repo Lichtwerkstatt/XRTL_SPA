@@ -104,7 +104,7 @@ export function SocketContextProvider({ children }) {
   }
 
   return (
-    <SocketContext.Provider value={{ socket, connected, toggleConnection, setNewURL, setFontColor, username, fontColor }}>
+    <SocketContext.Provider value={{ socket, connected, setConnected, toggleConnection, setNewURL, setFontColor, username, fontColor }}>
       {children}
     </SocketContext.Provider>
   );

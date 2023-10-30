@@ -15,11 +15,20 @@ gifImage.alt = "cycling";
 
 gifContainer.appendChild(gifImage);
 
+
+/**
+ * Welcome description content 
+ * 
+ * @description This component contains the content for the Welcome window, which is displayed when the website is opened.
+ * 
+ * @returns {React.ReactElement} Welcome text description
+ */
 const WelcomeWindowContent = (props) => {
   return (
     <ThemeProvider theme={themeLogin}>
       <div>
         <div className={styles.mainWrapper} >
+          {/* First Page */}
           <div id={'0'} align="left">
             <b>Getting Started</b><br /><br />
             Welcome to XRTL website, where you can remotely control a simple Michelson interferometer and observe the interference pattern. Whether you're a student, researcher, or enthusiast, our
@@ -31,6 +40,8 @@ const WelcomeWindowContent = (props) => {
             </div>
 
           </div>
+
+          {/* Second Page */}
           <div id={'1'} style={{ display: 'none' }}>
             <b>Michelson Interferometer in a Nutshell</b><br /><br />
             The main function of a Michelson interferometer is to measure small differences in the length of two light paths, which can provide information about the properties of a sample placed in one
@@ -42,6 +53,8 @@ const WelcomeWindowContent = (props) => {
             </div>
 
           </div>
+
+          {/* Third Page */}
           <div id={'2'} style={{ display: 'none' }}>
             <b>Basic Handling</b><br /><br />
             You can control the components of the Michelson interferometer by simply tapping on their virtual twin.
@@ -56,6 +69,8 @@ const WelcomeWindowContent = (props) => {
 
           </div>
         </div>
+
+        {/* Stepper at the bottom of the window */}
         <Stepper component={'welcomeWindow'} left={'Back'} right={'Next'} buttonValue={0} length={3} />
 
       </div>
