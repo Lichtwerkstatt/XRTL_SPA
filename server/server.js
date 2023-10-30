@@ -1,3 +1,7 @@
+
+/**
+ * Required Packages with some predefined properties
+*/
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const app = require('express')();
@@ -9,6 +13,9 @@ const io = require('socket.io')(server, {
     }
 })
 
+/**
+ * Initialisation of variables required in the code
+*/
 var pw = process.env.KEY_4;
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00'];
 var footerStatus = 'Initializing ...';
@@ -44,12 +51,18 @@ io.use((socket, next) => {
     next();
 })
 
+// Authetification process using middleware
 io.use((socket, next) => {
+    //Incoming socket request must have these dictionary entries, otherwise request is rejected and authentication fails.
     if (socket.handshake.auth && socket.handshake.auth.token) {
+        //Authefication with the previously assigned key, if this fails, an error is thrown, otherwise the connection is established.
         jwt.verify(socket.handshake.auth.token, 'keysecret', (err, decoded) => {
-            if (err) return next(new Error('Authentication error'));
+            if (err) {
+                console.log('Authentication failed!')
+                return next(new Error('Authentication error'));
+            }
+            // Decrypted data are saved
             socket.decoded = decoded;
-            exp = Date.now() + 300000;
             next();
         });
     }
@@ -60,6 +73,7 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
+    //Connecting process for admin, client and components
     if (socket.decoded.component === 'client') {
         var master = returnNumber(socket.decoded.sub);
         var date = new Date();
@@ -111,7 +125,6 @@ io.on('connection', socket => {
         console.log('Message received on server: ', payload)
         io.emit('message', payload)
     });
-    //Handshakes for command handeling
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
@@ -121,6 +134,7 @@ io.on('connection', socket => {
         exp = Date.now() + 300000;
     });
 
+    // A new value is assigned to the global variable and it is sent to all clients whether the female page is currently under construction or not.
     socket.on('underConstruction', payload => {
         underConstruction = payload;
         socket.broadcast.emit('underConstruction', underConstruction);
@@ -149,6 +163,7 @@ io.on('connection', socket => {
         console.log('New status: ', payload);
     });
 
+    // Update of the footer within the associated list after a change has been made to a component
     socket.on('footer', payload => {
         if (footerList.includes(payload.controlId) === false) {
             footerList.push(payload.controlId, payload.status);
@@ -159,6 +174,7 @@ io.on('connection', socket => {
         io.emit('footer', payload)
     })
 
+    // When the component window is opened, this event sends the footer, which is then displayed in the window.
     socket.on('getFooter', payload => { //reicht unteren zwei Fälle?
         if (footerList.includes(payload) === true) {
             var footerPos = footerList.indexOf(payload);
@@ -191,12 +207,12 @@ io.on('connection', socket => {
         }
     });
 
-    //Sends pictures of the stream to the clients
-    socket.on('data', (payload) => {//hier einfach payload senden?
+    // Sends data from the components in the lab to the clients of the web application
+    socket.on('data', (payload) => {
         socket.to(payload.controlId).emit('data', (payload))
     });
 
-    //Clients leaves the room after ending the stream
+    //Clients leaves the room after closing the camera window
     socket.on('leave stream room', (payload) => {
         socket.to(GUIId).emit('newLog', 'User has left the room ' + String(payload.controlId));
         socket.emit('user left', socket.id);
@@ -216,19 +232,21 @@ io.on('connection', socket => {
         socket.leave(payload.controlId);
     });
 
-    //Error & diconnect handling
+    //Error handling
     socket.on('error', (er) => {
         io.emit('error', er);
         socket.emit('newLog', 'Error ' + String(er.number) + ': ' + String(er.message));
         console.log('Error ' + er.number + ': ' + er.message);
     })
 
+    // Forces the disconnect of a client
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
         socket.to(GUIId).emit('newLog', 'User kicked: ' + String(e));
         console.log('User kicked: ', e);
     });
 
+    // Handles the disconnection of a client
     socket.on('disconnect', (e) => {
         if (colorList.includes(socket.id)) {
             var indexColor = colorList.indexOf(socket.id) + 1;
@@ -259,10 +277,13 @@ io.on('connection', socket => {
     });
 
     //GUI commands
+
+    // To get the socketid of the GUI in order to send commands to it specifically
     socket.on('GUI', () => {
         GUIId = socket.id
     })
 
+    // If there is a new log, it is forwarded to the GUI.
     socket.on('newUserInfo', (payload) => {
         socket.broadcast.emit('newUserInfo', payload)
     })
@@ -271,6 +292,7 @@ io.on('connection', socket => {
         io.to(GUIId).emit('newLog', payload)
     });
 
+    // Sends to all clients that a new user has connected to the web application.
     socket.on('userId', (newUser) => {
         var today = new Date();
         var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -284,6 +306,7 @@ io.on('connection', socket => {
         socket.to(GUIId).emit('newLog', 'User connected successfully')
     })
 
+    //  When the GUI has been closed and reopened, this command ensures that the user list is up to date.
     socket.on('updateUser', () => {
         io.emit('updateUser', userIDServerList);
         socket.to(GUIId).emit('updateUser', userIDServerList)
@@ -293,6 +316,7 @@ io.on('connection', socket => {
         userIDServerList = newList
     })
 
+    // When the GUI is closed and reopened, this command ensures that the component list is up to date.
     socket.on('updateComponents', () => {
         socket.to(GUIId).emit('updateComponents', componentList)
     })
