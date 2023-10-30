@@ -93,7 +93,7 @@ export function SocketContextProvider({ children }) {
       socket.emit('userId', username)
       appCtx.addLog("Client connected by choice.")
     } else {
-      //Diconnects from the server
+      //Disconnects from the server
       setConnected(false)
       setUsername("");
       setNewURL("");
