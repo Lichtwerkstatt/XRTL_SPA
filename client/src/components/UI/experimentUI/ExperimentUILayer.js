@@ -1,8 +1,8 @@
 import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
-import WelcomeWindow from "../../experiment/windows/WelcomeWindow";
-import ManualWindow from "../../experiment/windows/ManualWindow";
+import WelcomeWindow from "../../windows/WelcomeWindow";
+import ManualWindow from "../../windows/ManualWindow";
 import { useAppContext } from "../../../services/AppContext";
 import CamWindow from "../../windows/OverviewCamWindow";
 import InfoWindow from "../../windows/InfoWindow";

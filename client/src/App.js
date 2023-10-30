@@ -8,6 +8,14 @@ import Console from "./components/Console/Console";
 import Login from "./components/Login/Login";
 import Chat from "./components/Chat/Chat";
 
+/**
+ * Assembly of the React components 
+ * 
+ * @description Within this class, all React components are imported and merged into one component. The resulting React component is then 
+ * imported into index.js, where the rendering of the web application is handled.
+ * 
+ * @returns {React.ReactElement} App, including all the created React components
+ */
 const App = () => {
   process.title = 'XRTLApp';
   return (

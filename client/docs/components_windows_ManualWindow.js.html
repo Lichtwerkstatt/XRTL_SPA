@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/windows/ManualWindow.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Imprint">Imprint</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#ManualWindow">ManualWindow</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#WelcomeWindow">WelcomeWindow</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/windows/ManualWindow.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import ManualWindowContent from "../experiment/ComponentDescription/ManualWindowContent";
+import Window from "../UI/experimentUI/Window";
+
+/**
+ * Manual window
+ * 
+ * @description This react component returns a window with the content for the manual window. 
+ *  
+ * @returns {React.ReactElement} Manual window
+ */
+const ManualWindow = (props) => {
+    var width = window.innerWidth
+    var height = 0;
+
+    if (0 &lt; width &amp;&amp; width &lt; 576) {
+        width = '350px'
+        height = '480px'
+    } else {
+        width = '510px'
+        height = '440px'
+    }
+
+    return (
+        &lt;Window
+            header="XR TwinLab Manual"
+            id='manual'
+            top="100"
+            left="1000"
+            width={width}
+            height={height}
+            footer={'none'}
+            topper={'none'}
+        >
+            &lt;ManualWindowContent />
+        &lt;/Window>
+    );
+};
+export default ManualWindow;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

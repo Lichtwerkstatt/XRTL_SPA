@@ -1,6 +1,13 @@
-import WelcomeWindowContent from "./Content/WelcomeWindowContent";
-import Window from "../../UI/experimentUI/Window";
+import WelcomeWindowContent from "../experiment/ComponentDescription/WelcomeWindowContent";
+import Window from "../UI/experimentUI/Window";
 
+/**
+ * Welcome window
+ * 
+ * @description This react component returns a window with the content for the welcome window.
+ *  
+ * @returns {React.ReactElement} Welcome window
+ */
 const WelcomeWindow = (props) => {
     var width = window.innerWidth
     var height = 0;
@@ -29,7 +36,7 @@ const WelcomeWindow = (props) => {
             left="200"
             width={width}
             height={height}
-            footer={'empty'}
+            footer={'none'}
             topper={'none'}
         >
             <WelcomeWindowContent width={width} />

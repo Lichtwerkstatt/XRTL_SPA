@@ -1,6 +1,13 @@
-import ManualWindowContent from "./Content/ManualWindowContent";
-import Window from "../../UI/experimentUI/Window";
+import ManualWindowContent from "../experiment/ComponentDescription/ManualWindowContent";
+import Window from "../UI/experimentUI/Window";
 
+/**
+ * Manual window
+ * 
+ * @description This react component returns a window with the content for the manual window. 
+ *  
+ * @returns {React.ReactElement} Manual window
+ */
 const ManualWindow = (props) => {
     var width = window.innerWidth
     var height = 0;
@@ -21,7 +28,7 @@ const ManualWindow = (props) => {
             left="1000"
             width={width}
             height={height}
-            footer={'empty'}
+            footer={'none'}
             topper={'none'}
         >
             <ManualWindowContent />

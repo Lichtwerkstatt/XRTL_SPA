@@ -1,4 +1,4 @@
-import styles from '../../../windows/CSS/Description.module.css'
+import styles from './CSS/Description.module.css';
 
 const DescriptionLaser = (props) => {
     return (
