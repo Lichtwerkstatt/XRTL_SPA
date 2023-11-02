@@ -34,7 +34,7 @@ const Chat = () => {
       setChat([...chat, payload]);
     }
 
-    // All this has to be deleted
+    // All this has to be deleted after the implementation of the beam blockers
     //DELETE from ...
     const status = (payload) => {
       if (payload.controlId === 'servo_bblock_1') {
