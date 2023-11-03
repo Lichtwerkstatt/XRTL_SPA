@@ -28,7 +28,6 @@ var userIDServerList = []; // List contains all socketIds, names and time of con
 var componentList = []; // List contains all connected components.
 var footerList = []; // List contains all footers of the component windows.
 var colorList = []; // List contains all colours assigned to connected clients. 
-var GUIId = ''; // Is later overwritten with the socket.id of the GUI, whereby specific commands can be sent to it.
 var exp = ''; // Time until connection to the server is terminated due to inactivity.
 
 const returnNumber = (string) => {
@@ -121,16 +120,32 @@ io.on('connection', socket => {
         socket.broadcast.emit('newUserInfo', payload)
     })
 
+    // Sends to all clients that a new user has connected to the web application.
+    socket.on('userId', (newUser) => {
+        var today = new Date();
+        var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        if (userIDServerList) {
+            userIDServerList.push(socket.id, time, newUser)
+        } else {
+            userIDServerList = [socket.id, time, newUser]
+        }
+        var userIDs = [socket.id, time, newUser]
+        socket.broadcast.emit('newUser', (time, userIDs))
+    })
+
+    //  If the !user command is sent within the chat, this command is sent
+    socket.on('updateUser', () => {
+        io.emit('updateUser', userIDServerList);
+    })
+
     //Sends the new chat message to all users
     socket.on('message', payload => {
-        socket.to(GUIId).emit('newLog', 'Message received on server: ' + JSON.stringify(payload))
         console.log('Message received on server: ', payload)
         io.emit('message', payload)
     });
 
     //Transfers the command from the client to the experiment components
     socket.on('command', payload => {
-        socket.to(GUIId).emit('newLog', 'Command received: ' + JSON.stringify(payload));
         socket.broadcast.emit('command', payload);
         console.log('Command received: ', payload);
         exp = Date.now() + 300000; // Increases the expire time of the token so that the client is connected to the server for another 5 minutes.
@@ -158,11 +173,6 @@ io.on('connection', socket => {
             componentList = [socket.id, time, payload.controlId, payload.status.busy];
         }
 
-        // GUI
-        socket.to(GUIId).emit('newLog', 'New Status' + JSON.stringify(payload));
-        socket.to(GUIId).emit('newComponent', componentList);
-
-        //For the clients
         socket.broadcast.emit('status', payload);
         console.log('New status: ', payload);
     });
@@ -198,7 +208,6 @@ io.on('connection', socket => {
 
     //Client how starts the stream is added to a room
     socket.on('join stream room', (payload) => {
-        socket.to(GUIId).emit('newLog', 'User has joined the room ' + String(payload.controlId));
         socket.join(payload.controlId); // Client is added to room based on the controlId of the component
         let roomSize = io.sockets.adapter.rooms.get(payload.controlId).size;
 
@@ -219,7 +228,6 @@ io.on('connection', socket => {
 
     //Clients leaves the room after closing the camera window
     socket.on('leave stream room', (payload) => {
-        socket.to(GUIId).emit('newLog', 'User has left the room ' + String(payload.controlId));
         socket.emit('user left', socket.id);
         try {
             var roomSize = io.sockets.adapter.rooms.get(payload.controlId).size - 1;
@@ -248,7 +256,6 @@ io.on('connection', socket => {
     // Forces the disconnect of a client
     socket.on('forceDisconnect', (e) => {
         socket.disconnect();
-        socket.to(GUIId).emit('newLog', 'User kicked: ' + String(e));
         console.log('User kicked: ', e);
     });
 
@@ -271,50 +278,11 @@ io.on('connection', socket => {
             componentList.splice(componentList.indexOf(socket.id), 4);
         }
 
-        socket.to(GUIId).emit('userLeft', (socket.id))
-        socket.to(GUIId).emit('newLog', 'User disconnected: ' + String(e));
-
         clearInterval(checkIfExpired);
         socket.disconnect();
         console.log('User disconnected: ', e);
     });
 
-    //GUI commands
-
-    // To get the socketid of the GUI in order to send commands to it specifically
-    socket.on('GUI', () => {
-        GUIId = socket.id
-    })
-
-    // If there is a new log, it is forwarded to the GUI.
-    socket.on('newLogGUI', (payload) => {
-        io.to(GUIId).emit('newLog', payload)
-    });
-
-    // Sends to all clients that a new user has connected to the web application.
-    socket.on('userId', (newUser) => {
-        var today = new Date();
-        var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        if (userIDServerList) {
-            userIDServerList.push(socket.id, time, newUser)
-        } else {
-            userIDServerList = [socket.id, time, newUser]
-        }
-        var userIDs = [socket.id, time, newUser]
-        socket.broadcast.emit('newUser', (time, userIDs))
-        socket.to(GUIId).emit('newLog', 'User connected successfully')
-    })
-
-    //  When the GUI has been closed and reopened, this command ensures that the user list is up to date.
-    socket.on('updateUser', () => {
-        io.emit('updateUser', userIDServerList);
-        socket.to(GUIId).emit('updateUser', userIDServerList)
-    })
-
-    // When the GUI is closed and reopened, this command ensures that the component list is up to date.
-    socket.on('updateComponents', () => {
-        socket.to(GUIId).emit('updateComponents', componentList)
-    })
 })
 
 server.listen(PORT, () => {
