@@ -90,7 +90,7 @@ export function SocketContextProvider({ children }) {
       // Trying th establish a connection to the serveradress 
       socket.connect();
       // To inform the other users of the web application, that a new client connected to the server
-      socket.emit('userId', username)
+      socket.emit('newUser', username)
       appCtx.addLog("Client connected by choice.")
     } else {
       //Diconnects from the server
