@@ -99,11 +99,12 @@ const Chat = () => {
         //Response from the server and formatting of the message, which then finally appears as a chat message within the chat.
         socketCtx.socket.on('updateUser', (payload) => {
           var user = ''
-          for (var i = 2; i < payload.length; i += 3) {
-            user += payload[i] + ','
+          console.log(payload)
+          for (var i = 1; i < payload.length; i += 2) {
+            user += payload[i] + ', '
           }
-          user = user.slice(0, -1)
-          setChat([...chat, { userId: 'XRTL', message: 'List of all the active user/s: ' + user, color: '#FF7373' }]);
+          user = user.slice(0, -2)
+          setChat([...chat, { userId: 'XRTL', message: 'List of all connected user/s: ' + user, color: '#FF7373' }]);
         })
       }
       // Resetting selected components to their "factory settings"
@@ -278,6 +279,27 @@ const Chat = () => {
         })
 
         setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
+      }
+
+      else if (message === '!component' || message === '!components') {
+        socketCtx.socket.emit("updateComponents");
+
+        socketCtx.socket.on('updateComponents', (payload) => {
+
+          if (payload.length === 0) {
+            setChat([...chat, { userId: 'XRTL', message: 'No components are connected to the server! ', color: '#FF7373' }])
+          }
+          else {
+            var component = ''
+
+            for (var i = 1; i < payload.length; i += 2) {
+              component += payload[i] + ', '
+            }
+            component = component.slice(0, -2)
+
+            setChat([...chat, { userId: 'XRTL', message: 'List of all connected components: ' + component, color: '#FF7373' }]);
+          }
+        })
       }
       //DELETE from here ...
       else if (message === '!bs1') {

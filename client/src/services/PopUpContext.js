@@ -34,7 +34,8 @@ export function PopUpContextProvider({ children }) {
     })
 
     // Display of popUp widnow, if new web application client has connected to the server
-    socketCtx.socket.on('newUserInfo', (payload) => {
+    socketCtx.socket.on('newUser', (payload) => {
+        console.log(payload)
         toggleShowPopUp(payload + ' has joined the experiment!', 'info')
     })
 
@@ -42,7 +43,7 @@ export function PopUpContextProvider({ children }) {
     const toggleShowPopUp = (newText, newType) => {
         setText(newText);
         setType(newType);
-        setShowPopUp(!showPopUp);
+        setShowPopUp(true);
     }
 
     // Handles the closing of the popUp window, if the the close icon is clicked
