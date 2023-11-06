@@ -22,10 +22,10 @@ const io = require('socket.io')(server, { cors: { origin: '*', methods: ['GET', 
 */
 var color = ['#FF7F00', '#00FFFF', '#FF00FF', '#FFFF00']; //List of colours that can be assigned to the clients and in which the LED rings light up in case of changes.
 var footerStatus = 'Initializing ...'; // Sets the default value for the footer of windows.
+var connectedWebClientsList = []; // List contains all socketIds, names and time of connection of all connected clients.
+var connectedComponentsList = []; // List contains all connected components.
 var underConstruction = false; // Is used for the app as feedback to indicate whether the website is currently under construction.
 var pw = process.env.KEY_4; // Key for JSON Web Token 
-var userIDServerList = []; // List contains all socketIds, names and time of connection of all connected clients.
-var componentList = []; // List contains all connected components.
 var footerList = []; // List contains all footers of the component windows.
 var colorList = []; // List contains all colours assigned to connected clients. 
 var exp = ''; // Time until connection to the server is terminated due to inactivity.
@@ -115,27 +115,26 @@ io.on('connection', socket => {
 
     //General & important handshakes 
 
-    // Sends a command if a new user has established a connection to the web application.
-    socket.on('newUserInfo', (payload) => {
-        socket.broadcast.emit('newUserInfo', payload)
-    })
-
     // Sends to all clients that a new user has connected to the web application.
-    socket.on('userId', (newUser) => {
-        var today = new Date();
-        var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        if (userIDServerList) {
-            userIDServerList.push(socket.id, time, newUser)
+    socket.on('newUser', (newUser) => {
+        if (connectedWebClientsList) {
+            connectedWebClientsList.push(socket.id, newUser)
         } else {
-            userIDServerList = [socket.id, time, newUser]
+            connectedWebClientsList = [socket.id, newUser]
         }
-        var userIDs = [socket.id, time, newUser]
-        socket.broadcast.emit('newUser', (time, userIDs))
+
+        socket.broadcast.emit('newUser', (newUser))
     })
 
     //  If the !user command is sent within the chat, this command is sent
     socket.on('updateUser', () => {
-        io.emit('updateUser', userIDServerList);
+        console.log("Update user", connectedWebClientsList)
+        io.emit('updateUser', connectedWebClientsList);
+    })
+
+    // If the !component command is sent within the chat, this command is sent
+    socket.on('updateComponents', () => {
+        socket.emit('updateComponents', connectedComponentsList)
     })
 
     //Sends the new chat message to all users
@@ -160,17 +159,15 @@ io.on('connection', socket => {
 
     //Returns the status of a experiment component
     socket.on('status', payload => {
-        var today = new Date();
-        var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
-        if (componentList) {
-            // If conrolId of the component is not yet in the componentList, this is added with other information.
-            if (componentList.includes(payload.controlId) === false) {
-                componentList.push(socket.id, time, payload.controlId, payload.status.busy);
+        if (connectedComponentsList) {
+            // If conrolId of the component is not yet in the connectedComponentsList, this is added with other information.
+            if (connectedComponentsList.includes(payload.controlId) === false) {
+                connectedComponentsList.push(socket.id, payload.controlId, payload.status.busy);
             }
         } else {
             // If componentListe is still empty, then the first entry is added in this way.
-            componentList = [socket.id, time, payload.controlId, payload.status.busy];
+            connectedComponentsList = [socket.id, payload.controlId, payload.status.busy];
         }
 
         socket.broadcast.emit('status', payload);
@@ -196,12 +193,12 @@ io.on('connection', socket => {
             if (footerStatus === 'Component went offline!') {
                 footerStatus = 'Component connected!';
             }
-        } else if (componentList.includes(payload)) {
+        } else if (connectedComponentsList.includes(payload)) {
             footerStatus = 'Component connected!';
         } else {
             footerStatus = 'Initializing... ';
         }
-        io.emit('getFooter', { controlId: payload, status: footerStatus, online: componentList.includes(payload) });
+        io.emit('getFooter', { controlId: payload, status: footerStatus, online: connectedComponentsList.includes(payload) });
     })
 
     //Handshakes for the experiment camera (ESPCam)
@@ -267,22 +264,21 @@ io.on('connection', socket => {
             colorList.splice(colorList.indexOf(socket.id), 2);
         }
 
-        if (userIDServerList.includes(socket.id)) {
-            userIDServerList.splice(userIDServerList.indexOf(socket.id), 3);
+        if (connectedWebClientsList.includes(socket.id)) {
+            connectedWebClientsList.splice(connectedWebClientsList.indexOf(socket.id), 2);
         }
 
 
-        if (componentList.includes(socket.id)) {
-            let com = componentList.indexOf(socket.id);
-            io.emit('getFooter', { controlId: componentList[com + 2], status: 'Component went offline!', online: false });
-            componentList.splice(componentList.indexOf(socket.id), 4);
+        if (connectedComponentsList.includes(socket.id)) {
+            let com = connectedComponentsList.indexOf(socket.id);
+            io.emit('getFooter', { controlId: connectedComponentsList[com + 1], status: 'Component went offline!', online: false });
+            connectedComponentsList.splice(connectedComponentsList.indexOf(socket.id), 3);
         }
 
         clearInterval(checkIfExpired);
         socket.disconnect();
         console.log('User disconnected: ', e);
     });
-
 })
 
 server.listen(PORT, () => {
