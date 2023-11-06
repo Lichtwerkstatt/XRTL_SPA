@@ -1,34 +1,10 @@
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
-import React, { useRef, memo, useEffect } from "react";
+import React, { useRef, memo } from "react";
 import { Box } from "@react-three/drei";
 import { isEqual } from "lodash";
 
 function Model2d({ ...props }) {
   const group = useRef();
-
-  const socket = props.socket;
-
-  useEffect(() => {
-    const status = (payload) => {
-      if (payload.controlId === "beamSplitter") {
-
-
-
-        // console.log("Status  ", payload)
-      } else if (payload.controlId === "OtherComponent") {
-        //Normal case of assignment
-        //setRotation(payload.status.absolute);
-      }
-    };
-
-    socket.on("status", status);
-
-    return () => {
-      socket.removeAllListeners("status", status);
-    };
-    //Comment needed to prevent a warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket]);
 
   return (
     <group ref={group} {...props} dispose={null}>

@@ -4,7 +4,8 @@ import { useSocketContext } from "../../../services/SocketContext";
 import Model3d from "../../experiment/MichelsonInterferometer/MIS1_230504";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+import ESPCam from "../templates/ESPCam";
 
 /**
  * 3D Experiment Visualization and Overview Camera Stream
@@ -16,13 +17,16 @@ import { Suspense } from "react";
  *  
  * @returns {React.ReactElement} Background of the web application  
  */
-const VirtualLayer = (...props) => {
+const VirtualLayer = (props) => {
+
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
   if (appCtx.showVirtualLayer) {
+
     // 3D model of the experiment
     return (
+
       /* Handles the colour gradient of the background */
       <Canvas
         style={{
@@ -54,18 +58,11 @@ const VirtualLayer = (...props) => {
       </Canvas>
     );
   } else {
-    // Hier kommt die Camera hin!
-    // socketCtx.socket.emit("command", {
-    //   userId: socketCtx.username,
-    //   controlId: props.component,
-    //   getStatus: true,
-    // });
-
-    // appCtx.toogleRoomComp(props.component, true);
-
-    // socketCtx.socket.on("data", Settings.data);
 
     return (
+      <ESPCam component={props.component} width={window.innerWidth} height={window.innerHeight} style={{ transform: 'rotate(180deg)', borderRadius: '0px !important' }} />
+
+      /*    
       <Canvas
         style={{
           position: "absolute",
@@ -76,30 +73,24 @@ const VirtualLayer = (...props) => {
         colorManagement
         camera={{ position: [0, 0, 5], fov: 40 }}
       >
-        <Suspense fallback={null}>
-          {/* <canvas
-            id="Canvas"
-            width={props.width}
-            height={props.height}
-            style={{ borderRadius: "5px", backgroundSize: "cover" }}
-          /> */}
+
+     <Suspense fallback={null}>
 
           <Environment files="../hdri/autoshop.hdr" />
 
-          {/* <pointLight /> */}
+      
           <Billboard>
-            {/* Intialisation of the 2D model with the hitboxes and transfer of the most important parameters required within this class. */}
+
             <Model2d
               toggleSelect={appCtx.toggleSelectedComp}
               selected={appCtx.selectedComps}
               showTags={appCtx.showTags}
-              socket={socketCtx.socket}
             />
           </Billboard>
-        </Suspense>
+        </Suspense> 
       </Canvas>
+      */
     );
   }
 };
-
 export default VirtualLayer;

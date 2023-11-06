@@ -16,7 +16,6 @@ import Window from '../UI/experimentUI/Window';
  * @returns {React.ReactElement} Laser power supply component window
  */
 const Laser = (props) => {
-
   return (
     <Window
       id={props.controlId}

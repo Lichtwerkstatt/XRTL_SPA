@@ -1,7 +1,7 @@
 import ExperimentUILayer from "./components/UI/experimentUI/ExperimentUILayer";
 import VirtualLayer from "./components/UI/experimentUI/VirtualLayer";
 import { SocketContextProvider } from "./services/SocketContext";
-import {PopUpContextProvider} from "./services/PopUpContext";
+import { PopUpContextProvider } from "./services/PopUpContext";
 import { AppContextProvider } from "./services/AppContext";
 import NavBar from "./components/UI/experimentUI/NavBar";
 import Console from "./components/Console/Console";
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <AppContextProvider>
       <SocketContextProvider>
-          <VirtualLayer />
+        <VirtualLayer component='overview' />
         <PopUpContextProvider>
           <ExperimentUILayer />
           <Console />

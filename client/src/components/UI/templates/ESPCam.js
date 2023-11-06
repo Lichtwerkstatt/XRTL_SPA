@@ -21,6 +21,7 @@ const ESPCam = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
+    console.log(props)
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;
@@ -40,8 +41,8 @@ const ESPCam = (props) => {
                     ctx = canvas.getContext('2d');
                     x1 = 0;
                     y1 = 0;
-                    x2 = 600;
-                    y2 = 400;
+                    x2 = props.width;
+                    y2 = props.height;
                     ctx.drawImage(this, x1, y1, x2, y2);
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
@@ -62,7 +63,7 @@ const ESPCam = (props) => {
 
     return (
         <div className={styles.Canvas}>
-            <canvas id={props.component} width={props.width} height={props.height} style={props.style} />
+            <canvas id={props.component} width={props.width+'px'} height={props.height+'px'} style={props.style} />
         </div>
     )
 }
