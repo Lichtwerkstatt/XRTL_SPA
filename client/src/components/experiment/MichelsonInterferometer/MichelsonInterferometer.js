@@ -86,7 +86,7 @@ const MichelsonInterferometer = (props) => {
       {/* Beamsplitter */}
       {props.selected.has('beamSplitter') && (
         <Beamsplitter
-          title=" Retract. Beam Splitter"
+          title="Retract. Beam Splitter"
           controlId={'beamSplitter'}
           footer={footer}
           top={100}

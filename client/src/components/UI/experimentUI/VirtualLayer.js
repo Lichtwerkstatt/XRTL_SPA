@@ -1,11 +1,11 @@
-import { OrbitControls, Environment, Billboard } from "@react-three/drei";
-import Model2d from "../../experiment/MichelsonInterferometer/MIS1_2D_control";
+import { OrbitControls, Environment, } from "@react-three/drei";
+import Model2d from "../../experiment/2D Model/2D_MI_Overlay"
 import { useSocketContext } from "../../../services/SocketContext";
 import Model3d from "../../experiment/MichelsonInterferometer/MIS1_230504";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
-import ESPCam from "../templates/ESPCam";
+import { Suspense } from "react";
+//import ESPCam from "../templates/ESPCam";
 
 /**
  * 3D Experiment Visualization and Overview Camera Stream
@@ -60,36 +60,14 @@ const VirtualLayer = (props) => {
   } else {
 
     return (
-      <ESPCam component={props.component} width={window.innerWidth} height={window.innerHeight} style={{ transform: 'rotate(180deg)', borderRadius: '0px !important' }} />
 
-      /*    
-      <Canvas
-        style={{
-          position: "absolute",
-          background: "linear-gradient(Teal, Black)",
-          width: "100%",
-          height: "100%",
-        }}
-        colorManagement
-        camera={{ position: [0, 0, 5], fov: 40 }}
-      >
+      <Model2d
+        toggleSelect={appCtx.toggleSelectedComp}
+        selected={appCtx.selectedComps}
+      />
 
-     <Suspense fallback={null}>
+      /*  <ESPCam component={props.component} width={window.innerWidth} height={window.innerHeight} style={{ transform: 'rotate(180deg)', borderRadius: '0px !important' }} />*/
 
-          <Environment files="../hdri/autoshop.hdr" />
-
-      
-          <Billboard>
-
-            <Model2d
-              toggleSelect={appCtx.toggleSelectedComp}
-              selected={appCtx.selectedComps}
-              showTags={appCtx.showTags}
-            />
-          </Billboard>
-        </Suspense> 
-      </Canvas>
-      */
     );
   }
 };

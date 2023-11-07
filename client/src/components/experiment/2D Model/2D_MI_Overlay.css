@@ -1,0 +1,17 @@
+
+.presenter{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+}
+
+.tooltip {
+    position:absolute;
+    color: #fff;
+    padding: 10px;
+    background: rgba(1, 189, 125,0.8);
+    border-radius:5px;
+    pointer-events: none;
+    z-index: 9999;
+}
