@@ -20,8 +20,7 @@ import { useEffect } from 'react';
 const ESPCam = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-
-    console.log(props)
+    
     useEffect(() => {
         var x1, x2, y1, y2;
         var ctx;

@@ -38,6 +38,7 @@ export function AppContextProvider({ children }) {
     //Adds controlId to set, when a component window is opened
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
+
       // Removes controlId of a window, whenever it is closed
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));

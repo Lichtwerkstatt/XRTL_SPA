@@ -35,7 +35,6 @@ export function PopUpContextProvider({ children }) {
 
     // Display of popUp widnow, if new web application client has connected to the server
     socketCtx.socket.on('newUser', (payload) => {
-        console.log(payload)
         toggleShowPopUp(payload + ' has joined the experiment!', 'info')
     })
 

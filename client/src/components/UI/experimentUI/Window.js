@@ -233,8 +233,8 @@ Window.propTypes = {
   id: propTypes.string.isRequired,
   componentList: propTypes.array.isRequired,
   header: propTypes.string.isRequired,
-  top: propTypes.number.isRequired,
-  left: propTypes.number.isRequired,
+  top: propTypes.oneOfType([propTypes.string, propTypes.number,]).isRequired,
+  left: propTypes.oneOfType([propTypes.string, propTypes.number,]).isRequired,
   width: propTypes.string.isRequired,
   height: propTypes.string.isRequired,
   background: propTypes.string
