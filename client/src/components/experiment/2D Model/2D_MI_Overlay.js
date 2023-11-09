@@ -1,11 +1,15 @@
 import ImageMapper from "react-img-mapper";
-import Model from "./Transparent.png"
+import Model from "./media/Transparent.png";
+import OfflineModel from "./media/MI_2D.jpg";
 import { useState } from "react";
 import "./2D_MI_Overlay.css";
 import ESPCam from "../../UI/templates/ESPCam";
+import { useSocketContext } from "../../../services/SocketContext";
 
 const Overlay = (props) => {
     const [hoveredArea, setHoveredArea] = useState(null);
+
+    const socketCtx = useSocketContext();
 
     let MAP = {
         name: "MI_Simple_imagemap",
@@ -40,15 +44,20 @@ const Overlay = (props) => {
         setHoveredArea(null);
         //console.log("Going out...");
     }
-    
+
     return (
         <div className="grid">
             <div className="presenter">
                 <div style={{ position: 'relative', zIndex: 0 }}>
 
-                    <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)} style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                    {socketCtx.connected ?
+                        <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
+                            style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                        :
+                        <div />}
+                        
                     <ImageMapper
-                        src={Model}
+                        src={socketCtx.connected ? Model : OfflineModel}
                         map={MAP}
                         onClick={(area) => clicked(area)}
                         onMouseEnter={(area) => enterArea(area)}
