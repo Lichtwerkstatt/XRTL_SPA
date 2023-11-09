@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/experiment/ComponentDescription/Description_LegalNotice.js</title>
+  <title> components/experiment/2D Model/2D_MI_Overlay.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/experiment/ComponentDescription/Description_LegalNotice.js</h1>
+                    <h1>components/experiment/2D Model/2D_MI_Overlay.js</h1>
                 </header>
                 
 
@@ -89,50 +89,109 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { themeLogin } from '../../UI/templates/Theme';
-import { ThemeProvider } from '@mui/material/styles';
-import styles from './CSS/Description.module.css';
-import { Button, Box } from '@mui/material';
-import propTypes from "prop-types";
+            <pre class="prettyprint source linenums"><code>import ESPCam from "../../UI/templates/ESPCam";
+import OfflineModel from "./media/MI_2D.jpg";
+import Model from "./media/Transparent.png";
+import ImageMapper from "react-img-mapper";
+import React, { useState } from "react";
+import "./2D_MI_Overlay.css";
 
 /**
- * Imprint text
+ * OverviewCam Stream as a 2D-VirtualLayer
  * 
- * @description Within this file is the text for the imprint, which can be found within the information window under the § symbol.
+ * @description Within this React component, the OverviewCam stream is set as the background of the React app, and hitboxes are placed where the optical components are. 
+ * Clicking on these boxes will open the corresponding component window. If there is no connection to the server, an image is used instead of the stream.
  * 
- * @param {string} height - For scaling the content (is specified in pixels)
+ * @param {Function} toggleSelect - Adds the clicked component to the set in AppContext
+ * @param {Set} selected - Contains the components whose component windows are currently open.
+ * @param {Socket} socket - Holds the connection to the server
  * 
- * @returns {React.ReactElement} Imprint text and buttons for redirection to websites.  
+ * @returns {React.ReactElement} 2D VirtualLayer
  */
-const DescriptionCubeLegalNotice = (props) => {
+
+const Overlay = (props) => {
+    const [hoveredArea, setHoveredArea] = useState(null);
+
+    // Definition of all hitboxes by specifying the controlId, the shape, the coordinates (x_start, y_start, x_end, y_end) 
+    // and the text to be displayed when hovering over the box.
+    let MAP = {
+        name: "MI_Simple_imagemap",
+        areas: [
+            { controlId: "screen", shape: "rect", coords: [380, 0, 1100, 100], desc: 'Screen' },
+            { controlId: "linear_1", shape: "rect", coords: [5, 480, 180, 740], desc: 'Linear Movable Mirror' },
+            { controlId: "beamblocker1", shape: "rect", coords: [200, 560, 300, 730], desc: 'Beam Blocker' },
+            { controlId: "KM100_1", shape: "rect", coords: [450, 800, 740, 1000], desc: 'Reference Mirror' },
+            { controlId: "beamSplitter", shape: "rect", coords: [730, 400, 940, 600], desc: 'Retract. Beam Splitter' },
+            { controlId: "beamblocker2", shape: "rect", coords: [680, 700, 900, 800], desc: 'Beam Blocker' },
+            { controlId: "greenlaserPower_1", shape: "rect", coords: [1350, 200, 1600, 450], desc: 'Power Supply' },
+            { controlId: "greenlaser_1", shape: "rect", coords: [1450, 450, 1700, 650], desc: 'Laser Alignment' },
+
+        ]
+    };
+
+    // Returns the position where the text to be displayed is to be placed
+    const getTipPosition = (area) => {
+        return { top: `${area.center[1]}px`, left: `${area.center[0] - 20}px` };
+    }
+
+    // Adds the clicked component to the set within the AppContext, whereupon the corresponding component window is rendered.
+    const clicked = (area) => {
+        props.toggleSelect(area.controlId);
+        // console.log('You clicked on ' + area.controlId + ' !');
+    }
+
+    // Displays the hitbox and the description when hovering over the box with the mouse
+    const enterArea = (area) => {
+        setHoveredArea(area);
+        //console.log("Going in...");
+    }
+
+    // Ensures that the hitbox and the description are no longer displayed when you leave the box area with the mouse
+    const leaveArea = (area) => {
+        setHoveredArea(null);
+        //console.log("Going out...");
+    }
+
     return (
-        &lt;div>
-            &lt;div className={styles.mainWrapper} style={{ height: props.height }} >
-                &lt;p>
-                    The editorial responsibility for this application lies with the Executive Office of the Abbe Center of Photonics and it's representative/s.
-                &lt;/p>
-                &lt;p>
-                    For further information please follow the links:
-                &lt;/p>
-                &lt;ThemeProvider theme={themeLogin}>
+        &lt;div className="grid">
+            &lt;div className="presenter">
+                &lt;div style={{ position: 'relative', zIndex: 0 }}>
 
-                    &lt;Box sx={{ '&amp; button': { mr: 5, ml: 3 } }}>
+                    {/* ESPCam Stream can only be displayed if there is a connection to the server. Otherwise, the OfflineModel image is used as the basis for the hitboxes (see src of the ImageMapper) */}
+                    {props.socket.connected ?
+                        &lt;ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
+                            style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                        :
+                        &lt;div />
+                    }
 
-                        &lt;Button type='submit' variant='contained' onClick={() => { window.open("https://www.asp.uni-jena.de/legal-notice", 'resizable=yes') }}> Legal Notice &lt;/Button>
-                        &lt;Button type='submit' variant='contained' onClick={() => { window.open("https://www.uni-jena.de/en/privacy-statement", 'resizable=yes') }}> Privacy Statement &lt;/Button>
-                    &lt;/Box>
-                &lt;/ThemeProvider>
+                    {/* To render the hitboxes, the ImageMapper requires an image as a source (in this case a transparent image if there is a server connection 
+                        and a replacement image if not) and the already defined boxes, which are then projected onto the image. */}
+                    &lt;ImageMapper
+                        src={props.socket.connected ? Model : OfflineModel}
+                        map={MAP}
+                        onClick={(area) => clicked(area)}
+                        onMouseEnter={(area) => enterArea(area)}
+                        onMouseLeave={(area) => leaveArea(area)}
+                        lineWidth={2}
+                        strokeColor={"white"}
+
+                        width={window.innerWidth}
+                        height={window.innerHeight}
+                    />
+                    {/* Handles displaying the description when hovering over the box with the mouse */}
+                    {hoveredArea &amp;&amp; (
+                        &lt;span className="tooltip"
+                            style={{ ...getTipPosition(hoveredArea) }}>
+                            {hoveredArea &amp;&amp; hoveredArea.desc}
+                        &lt;/span>
+                    )}
+                &lt;/div>
             &lt;/div>
-
         &lt;/div>
     )
 }
-
-DescriptionCubeLegalNotice.propTypes = {
-    height: propTypes.string.isRequired,
-}
-
-export default DescriptionCubeLegalNotice;</code></pre>
+export default Overlay;</code></pre>
         </article>
     </section>
 

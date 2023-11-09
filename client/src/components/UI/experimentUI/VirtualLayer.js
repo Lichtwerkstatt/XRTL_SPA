@@ -1,11 +1,10 @@
-import { OrbitControls, Environment, } from "@react-three/drei";
-import Model2d from "../../experiment/2D Model/2D_MI_Overlay"
-import { useSocketContext } from "../../../services/SocketContext";
 import Model3d from "../../experiment/MichelsonInterferometer/MIS1_230504";
+import { useSocketContext } from "../../../services/SocketContext";
+import { OrbitControls, Environment, } from "@react-three/drei";
+import Model2d from "../../experiment/2D Model/2D_MI_Overlay";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-//import ESPCam from "../templates/ESPCam";
 
 /**
  * 3D Experiment Visualization and Overview Camera Stream
@@ -26,7 +25,6 @@ const VirtualLayer = (props) => {
 
     // 3D model of the experiment
     return (
-
       /* Handles the colour gradient of the background */
       <Canvas
         style={{
@@ -58,16 +56,13 @@ const VirtualLayer = (props) => {
       </Canvas>
     );
   } else {
-
+    // To display the OverviewCam as a VirtualLayer
     return (
-
       <Model2d
         toggleSelect={appCtx.toggleSelectedComp}
         selected={appCtx.selectedComps}
+        socket={socketCtx.socket}
       />
-
-      /*  <ESPCam component={props.component} width={window.innerWidth} height={window.innerHeight} style={{ transform: 'rotate(180deg)', borderRadius: '0px !important' }} />*/
-
     );
   }
 };
