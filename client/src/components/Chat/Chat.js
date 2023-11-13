@@ -292,12 +292,12 @@ const Chat = () => {
           else {
             var component = ''
 
-            for (var i = 1; i < payload.length; i += 2) {
+            for (var i = 1; i < payload.length; i += 3) {
               component += payload[i] + ', '
             }
             component = component.slice(0, -2)
 
-            setChat([...chat, { userId: 'XRTL', message: 'List of all connected components: ' + component, color: '#FF7373' }]);
+            setChat([...chat, { userId: 'XRTL', message: 'List of all connected components: \n ' + component, color: '#FF7373' }]);
           }
         })
       }
