@@ -3,7 +3,7 @@ import OfflineModel from "./media/MI_2D.jpg";
 import Model from "./media/Transparent.png";
 import ImageMapper from "react-img-mapper";
 import React, { useState } from "react";
-import "./2D_MI_Overlay.css";
+import "./CSS/2D_MI_Overlay.css";
 
 /**
  * OverviewCam Stream as a 2D-VirtualLayer
