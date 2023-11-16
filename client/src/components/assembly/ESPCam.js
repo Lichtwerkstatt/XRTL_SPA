@@ -1,4 +1,4 @@
-import ESPCamStream from '../UI/CtrlUnits/ESPCamStream';
+import ESPCamStream from '../UI/CtrlUnits/ESPCamPlusSettings';
 import Window from '../UI/experimentUI/Window';
 
 const ESPCam = (props) => {

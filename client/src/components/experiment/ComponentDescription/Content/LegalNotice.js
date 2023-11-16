@@ -1,10 +1,10 @@
 import { Button, Box } from '@mui/material';
 
-import { themeLogin } from '../../templates/Theme'
+import { themeLogin } from '../../../UI/templates/Theme'
 import { ThemeProvider } from '@mui/material/styles';
 
 
-const DescriptionESPCam = (props) => {
+const DescriptionImpressum = (props) => {
     return (
         <div>
             <div style={{ height: props.height, padding: '0px 5px 5px 7px', overflowY: 'auto' }} >
@@ -27,4 +27,4 @@ const DescriptionESPCam = (props) => {
         </div>
     )
 }
-export default DescriptionESPCam;
+export default DescriptionImpressum;

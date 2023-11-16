@@ -6,7 +6,7 @@ import { useAppContext } from '../../../services/AppContext';
 import HeaterSettings from '../templates/HeaterSettings'
 import styles from '../CSS/HeaterCtrl.module.css';
 import { theme } from '../templates/Theme.js';
-import Slider from '../templates/SliderCtrl';
+import Slider from '../templates/Slider';
 import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch'
 
