@@ -1,5 +1,5 @@
-import BeamSplitter from '../../assembly/BeamSplitter';
-import ESPCam from '../../assembly/ESPCam';
+import BeamSplitter from '../../assembly/MultiCtrl';
+import ESPCam from '../../assembly/ESPCamStream';
 import Heater from '../../assembly/Heater';
 import Rotary from '../../assembly/Rotary';
 import Laser from '../../assembly/Laser';
@@ -10,7 +10,6 @@ import { useState } from 'react';
 
 const MichelsonInterferometer = (props) => {
   let footer = 'Initializing...'
-  var zero = '0'
   const [setting, setSetting] = useState(false)
   const [settingHeater, setSettingHeater] = useState(false)
 
@@ -35,8 +34,8 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
-          rotationTop={zero}
-          rotationBottom={zero}
+          rotationTop={0}
+          rotationBottom={0}
           footer={footer}
           top={topHigh}
           left={leftLeft}
@@ -48,7 +47,7 @@ const MichelsonInterferometer = (props) => {
           title='Linear Movable Mirror'
           controlId={'linear_1'}
           footer={footer}
-          rotation={zero}
+          rotation={0}
           top={topMiddle}
           left={leftMiddle}
         />
@@ -59,7 +58,7 @@ const MichelsonInterferometer = (props) => {
           title='Glass Plate Rotation Stage'
           controlId={'plate_rotation'}
           footer={footer}
-          rotation={zero}
+          rotation={0}
           top={topMiddle}
           left={leftRight}
         />
@@ -70,7 +69,7 @@ const MichelsonInterferometer = (props) => {
           title='Mirror Changing Stage'
           controlId={'heater_rotation'}
           footer={footer}
-          rotation={zero}
+          rotation={0}
           top={topHighMiddle}
           left={leftMiddle}
         />
@@ -82,8 +81,6 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
-          rotationTop={zero}
-          rotationBottom={zero}
           footer={footer}
           top={topMiddle}
           left={leftMiddleRight}

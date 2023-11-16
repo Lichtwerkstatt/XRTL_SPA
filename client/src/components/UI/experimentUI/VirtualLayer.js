@@ -54,17 +54,6 @@ const VirtualLayer = (...props) => {
       </Canvas>
     );
   } else {
-    // Hier kommt die Camera hin!
-    // socketCtx.socket.emit("command", {
-    //   userId: socketCtx.username,
-    //   controlId: props.component,
-    //   getStatus: true,
-    // });
-
-    // appCtx.toogleRoomComp(props.component, true);
-
-    // socketCtx.socket.on("data", Settings.data);
-
     return (
       <Canvas
         style={{

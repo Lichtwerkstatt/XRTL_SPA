@@ -102,7 +102,7 @@ const Chat = () => {
       else if (message === '!reset') {
         socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Attention the reset command was emited!', color: '#FF7373' });
 
-        const controlIds = ['']
+        const controlIds = []
 
         for (var i = 0; i < controlIds.length; i++) {
           socketCtx.socket.emit('command', {

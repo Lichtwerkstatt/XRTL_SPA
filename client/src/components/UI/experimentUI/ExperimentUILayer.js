@@ -8,6 +8,15 @@ import InfoWindow from "../../windows/InfoWindow";
 import { isEqual } from 'lodash';
 import { memo } from "react";
 
+/**
+ *  Fragment component 
+ * 
+ * @description This React component returns several components, on one hand the information window, the overview camera window and on the other hand the 
+ * experiment class that handles the rendering of the component windows. Furthermore, within this component, the auth/authfail command is handled and the 
+ * associated pop-up windows. The underConstruction command is processed within this React component.
+ * 
+ * @returns {React.Fragment} Information window, the overview camera and experiment component  
+ */
 const ExperimentUILayer = () => {
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
