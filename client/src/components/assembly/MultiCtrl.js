@@ -1,7 +1,23 @@
 import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
 import Window from "../UI/experimentUI/Window";
 
-const BeamSplitter = (props) => {
+/**
+ * MultiCtrl window
+ * 
+ * @description  This React component returns a window with the content for the MultiCtrl component window.
+ *  
+ * @param {string} id - controlId of the entire component
+ * @param {string} controlId - controlId for the React app to know, which window should be open/closed
+ * @param {string} controlId2 - controlId to control the pinhole
+ * @param {string} controlIdLED - controlId to control the red lED
+ * @param {string} controlIdLED2 - controlId to control the white lED
+ * @param {string} title - For setting the title within the window
+ * @param {number} height - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} MultiCtrl component window
+ */
+const MultiCtrl = (props) => {
 
   return (
     <Window
@@ -20,11 +36,9 @@ const BeamSplitter = (props) => {
         pinhole={props.controlId2}
         redLED={props.controlLED}
         whiteLED={props.controlLED2}
-        top="20"
-        left="160"
       />
     </Window>
   );
 };
 
-export default BeamSplitter;
+export default MultiCtrl;

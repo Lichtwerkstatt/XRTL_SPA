@@ -1,130 +1,93 @@
+import { MenuItem, Select, FormControl, Box, InputLabel } from '@mui/material';
 import { useSocketContext } from "../../../services/SocketContext";
-import { Box, Stack, Typography, Slider } from "@mui/material";
 import { useAppContext } from "../../../services/AppContext";
 import propTypes from "prop-types";
-import { useState } from "react";
 
 /**
- * Slider component
+ * Gets the objects that have the assigned properties. A MenuItem is then created for each object with the corresponding text and value.
  * 
- * @description Used to create a slider with a specified start and end point. In addition, the controlId, the status (of the component and the online status) 
- * and the command for the server must be specified. The title can but does not have to be given. To display text under the slider instead of numbers, this 
- * can be passed to the slider within the tag text in the form of an array. 
+ * @param {*} props - Select items to be created 
+ * @returns {React.ReactElement}  <MenuItem value={value}> text <MenuItem/> 
+ */
+const TypeSelectMenuItem = (props) => {
+    return (
+        <MenuItem {...props}>
+            {props["children"]}
+        </MenuItem>
+    );
+};
+
+/**
+ * Select component
+ * 
+ * @description Select is used to choose from a list of options. For this, the controlId, the status (of the component and the online status), 
+ * the list of options and the command for the server must be specified. The title can, but does not have to be specified. 
  * 
  * @param {string} component - controlId 
- * @param {string} title - title 
- * @param {number} min -  text at the left/beginning
- * @param {number} max - text at the right/end
- * @param {array} text - contains an array with numbers as keys and strings as values (for displaying text under the slider instead of numbers)
- * @param {number} sliderValue - Status of the slider from the status request 
+ * @param {string} title -  title
+ * @param {string} list - Dictionary with the keys and corresponding values as content for the select.
+ * @param {boolean} switchStatus - Status of the select from the status query 
  * @param {boolean} online - connection status to the component
  * @param {string} option - command for the server
  * 
- * @returns {React.ReactElement} styled slider with the specified props
+ * @returns {React.ReactElement} styled select with the specified props
  * 
- * @example <Slider title='Contrast' component={'cam'} online={true} sliderValue={0} min={-2} max={2} option='contrast' />
- * @example <Slider title='Exposure' component={'cam'} online={false} sliderValue={-2} min={0} max={1200} option='exposure' />
- * @example <Slider component={'cam'} online={false} sliderValue={-2} min={0} max={10} text={[{ value: 0, label: 'a' }, { value: 5, label: 'b' }, { value: 10, label: 'c' }]} option='exposure' />
+ * @example <Select title='Resolution' component={'Select'} online={true} option='frameSize' selectValue={1} list={{1: 'a', 2: 'b', 3: 'c'}} />
+ * @example <Select title='Resolution' component={'Select2'} online={true} option='frameSize' selectValue={'a'} list={{a: 1, b: 2, c: 4} />
+ * @example <Select component={'Select3'} online={true} option='frameSize' selectValue={3} list={{1: 'a', b: 2, 3: 'c'}} />
  */
+export default function CustomSelect(props) {
+    const socketCtx = useSocketContext();
+    const appCtx = useAppContext();
 
-const SliderCtrl = (props) => {
-  /**
- * @param {number} sliderPos - Indicates the status of the slider
- * @function setSliderPos - Assigning a new value
- */
-  const [sliderPos, setSliderPos] = useState(props.sliderValue);
+    /**
+     * Handles the onclick event on a select option 
+     * 
+     * @description When a select element is clicked, SelectValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
+     * Emitting footer then updates the footer of the window. 
+     * 
+     * @param {*} event - clicking event (contains the new value)
+    */
+    const handleChange = (event) => {
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.component,
+            [props.option]: isNaN(event.target.value) ? event.target.value : Number(event.target.value)
+        })
 
-  const appCtx = useAppContext();
-  const socketCtx = useSocketContext();
+        socketCtx.socket.emit("footer", {
+            status: 'Used by: ' + socketCtx.username.substring(0, 17),
+            controlId: props.component
+        })
 
-  /**
-   * Definition of the start, middle and end point
-   */
-  const marks = [
-    { value: parseInt(props.min), label: props.min, },
-    { value: 0, label: '0', },
-    { value: parseInt(props.max), label: props.max, },
-  ]
+        appCtx.addLog("User set selected " + props.component + " with " + event.target.value)
+    };
 
-  /**
-   * Handles the onclick event on the slider
-   * 
-   * @description When one clicks on the slider, the sliderValue is overwritten with the new value. This change is then sent to the server with a "command" command. 
-   * Emitting footer then updates the footer of the window 
-   * 
-   * @param {*} event - onClick event
-   * @param {number} newValue - Value with which selectValue is to be overwritten
-   */
-  const handleSettingChanges = (event, newValue) => {
-    setSliderPos(newValue)
-
-    socketCtx.socket.emit("command", {
-      userId: socketCtx.username,
-      controlId: props.component,
-      [props.option]: newValue,
-      color: socketCtx.fontColor,
-    })
-
-    socketCtx.socket.emit("footer", {
-      status: 'Used by: ' + socketCtx.username.substring(0, 17),
-      controlId: props.component
-    })
-
-    appCtx.addLog("User set position on " + props.component + " to " + sliderPos)
-  }
-
-  if (props.text) {
     return (
-      <Box sx={{ width: 250, m: 2 }}>
-        <Typography id="input-slider" gutterBottom>
-          {props.title}
-        </Typography>
-        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={props.text}
-            disabled={(socketCtx.connected && props.online) ? false : true}
-          />
-        </Stack>
-      </Box>
-    )
-  } else {
-    return (
-      <Box sx={{ width: 250, m: 2 }}>
-        <Typography id="input-slider" gutterBottom>
-          {props.title}
-        </Typography>
-        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
-            step={1}
-            min={props.min}
-            max={props.max}
-            value={props.sliderValue}
-            onChangeCommitted={handleSettingChanges}
-            marks={marks}
-            disabled={(socketCtx.connected && props.online) ? false : true}
-          />
-        </Stack>
-      </Box>
-    )
-  }
+        <Box sx={{ m: 2, width: 250 }}>
+            <FormControl fullWidth>
+                <InputLabel >{props.title}</InputLabel>
+                <Select
+                    label={props.title}
+                    value={props.selectValue}
+                    onChange={handleChange}
+                    disabled={(socketCtx.connected && props.online) ? false : true} >
+                    {Object.keys(props.list).map((type) => (
+                        <TypeSelectMenuItem value={type}>
+                            {props.list[type]}
+                        </TypeSelectMenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        </Box>
+    );
 }
 
-SliderCtrl.propTypes = {
-  component: propTypes.string.isRequired,
-  title: propTypes.string,
-  min: propTypes.number.isRequired,
-  max: propTypes.number.isRequired,
-  text: propTypes.array,
-  sliderValue: propTypes.bool.isRequired,
-  online: propTypes.bool.isRequired,
-  option: propTypes.string.isRequired
+CustomSelect.propTypes = {
+    component: propTypes.string.isRequired,
+    title: propTypes.string,
+    list: propTypes.array.isRequired,
+    selectValue: propTypes.oneOf([propTypes.string, propTypes.number]).isRequired,
+    online: propTypes.bool.isRequired,
+    option: propTypes.string.isRequired
 }
-
-export default SliderCtrl;
