@@ -18,7 +18,7 @@ import Window from '../UI/experimentUI/Window';
 const Laser = (props) => {
   return (
     <Window
-      id={props.controlId}
+      id={props.id}
       componentList={[props.controlId]}
       header={props.title}
       top={props.top}
