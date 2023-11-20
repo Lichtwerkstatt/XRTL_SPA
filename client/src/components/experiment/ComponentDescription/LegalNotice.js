@@ -1,13 +1,22 @@
-import { Button, Box } from '@mui/material';
-
-import { themeLogin } from '../../../UI/templates/Theme'
+import { themeLogin } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/styles';
+import styles from './CSS/Description.module.css';
+import { Button, Box } from '@mui/material';
+import propTypes from "prop-types";
 
-
-const DescriptionImpressum = (props) => {
+/**
+ * Imprint text
+ * 
+ * @description Within this file is the text for the imprint, which can be found within the information window under the § symbol.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} Imprint text and buttons for redirection to websites.  
+ */
+const Imprint = (props) => {
     return (
         <div>
-            <div style={{ height: props.height, padding: '0px 5px 5px 7px', overflowY: 'auto' }} >
+            <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
                     The editorial responsibility for this application lies with the Executive Office of the Abbe Center of Photonics and it's representative/s.
                 </p>
@@ -27,4 +36,9 @@ const DescriptionImpressum = (props) => {
         </div>
     )
 }
-export default DescriptionImpressum;
+
+Imprint.propTypes = {
+    height: propTypes.string.isRequired,
+}
+
+export default Imprint;

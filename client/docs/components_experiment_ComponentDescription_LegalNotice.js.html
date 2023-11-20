@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/UI/templates/HeaterSettings.js</title>
+  <title> components/experiment/ComponentDescription/LegalNotice.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/UI/templates/HeaterSettings.js</h1>
+                    <h1>components/experiment/ComponentDescription/LegalNotice.js</h1>
                 </header>
                 
 
@@ -89,60 +89,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
-import styles from '../CSS/HeaterCtrl.module.css';
-import { Button } from '@mui/material';
+            <pre class="prettyprint source linenums"><code>import { themeLogin } from '../../UI/templates/Theme';
+import { ThemeProvider } from '@mui/material/styles';
+import styles from './CSS/Description.module.css';
+import { Button, Box } from '@mui/material';
 import propTypes from "prop-types";
-import Select from './Select';
 
 /**
- * Heater settings
+ * Imprint text
  * 
- * @description This Recat component returns the setting options of the thermistor. To do this, the selection options for the drop-down menus 
- * must be transferred in the form of lists.
+ * @description Within this file is the text for the imprint, which can be found within the information window under the § symbol.
  * 
- * @param {string} component - controlId of the thermistor
- * @param {number} updateTime -  Set update time
- * @param {number} averageTime - Set average time
+ * @param {string} height - For scaling the content (is specified in pixels)
  * 
- * @returns {React.ReactElement} styled thermistor settings with the specified props
+ * @returns {React.ReactElement} Imprint text and buttons for redirection to websites.  
  */
-const HeaterSettings = (props) => {
-    // List contains all possible selection options for the drop-down menu for setting the average time 
-    const averageTimeList = {
-        100: 100,
-        500: 500,
-        1000: 1000,
-        2000: 2000
-    }
-
-    // List contains all possible selection options for the drop-down menu for setting the update time 
-    const updateTimeList = {
-        1000: 1,
-        5000: 5,
-        10000: 10
-    }
-
+const Imprint = (props) => {
     return (
-        &lt;div className={styles.Temp}>
-            &lt;div className={styles.Canvas2}>
-                &lt;Button sx={{ fontSize: 17, marginLeft: -34, marginTop: -4, marginBottom: 10 }} startIcon={&lt;DeviceThermostatOutlinedIcon />}>Gauge settings &lt;/Button>
-                &lt;div className={styles.Select}>
-                    &lt;Select sx={{ zIndex: 1500, marginBottom: -10 }} title='Average time (ms)' component={props.component} online={props.online} option='averageTime' selectValue={props.averageTime} list={averageTimeList} />
-                    &lt;Select title='Update time (s)' component={props.component} online={props.online} option='updateTime' selectValue={props.updateTime} list={updateTimeList} />
-                &lt;/div>
+        &lt;div>
+            &lt;div className={styles.mainWrapper} style={{ height: props.height }} >
+                &lt;p>
+                    The editorial responsibility for this application lies with the Executive Office of the Abbe Center of Photonics and it's representative/s.
+                &lt;/p>
+                &lt;p>
+                    For further information please follow the links:
+                &lt;/p>
+                &lt;ThemeProvider theme={themeLogin}>
+
+                    &lt;Box sx={{ '&amp; button': { mr: 5, ml: 3 } }}>
+
+                        &lt;Button type='submit' variant='contained' onClick={() => { window.open("https://www.asp.uni-jena.de/legal-notice", 'resizable=yes') }}> Legal Notice &lt;/Button>
+                        &lt;Button type='submit' variant='contained' onClick={() => { window.open("https://www.uni-jena.de/en/privacy-statement", 'resizable=yes') }}> Privacy Statement &lt;/Button>
+                    &lt;/Box>
+                &lt;/ThemeProvider>
             &lt;/div>
+
         &lt;/div>
     )
 }
 
-HeaterSettings.propTypes = {
-    component: propTypes.string.isRequired,
-    updateTime: propTypes.number.isRequired,
-    averageTime: propTypes.number.isRequired,
-    online: propTypes.bool.isRequired
+Imprint.propTypes = {
+    height: propTypes.string.isRequired,
 }
-export default HeaterSettings;</code></pre>
+
+export default Imprint;</code></pre>
         </article>
     </section>
 
