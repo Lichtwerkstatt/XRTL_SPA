@@ -30,7 +30,7 @@ import propTypes from "prop-types";
 const ESPCamPlusSettings = (props) => {
     const [switchIsOn, setSwitchStatus] = useState(false);
     const [online, setOnlineStatus] = useState(false);
-    const [frameSize, setFrameSize] = useState(0);
+    const [frameSize, setFrameSize] = useState(10);
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
 
@@ -43,6 +43,7 @@ const ESPCamPlusSettings = (props) => {
         10: 'XGA (1024x768)',
     }
 
+    // Handles the change of the window size when clicking on the setting icon
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
 
@@ -54,6 +55,7 @@ const ESPCamPlusSettings = (props) => {
     }
 
     useEffect(() => {
+        // Handles the window size when opening the component window.
         if (!props.setting) {
             document.getElementById(props.component).style.left = '-325px'
         }
@@ -112,8 +114,7 @@ const ESPCamPlusSettings = (props) => {
 ESPCamPlusSettings.propTypes = {
     component: propTypes.string.isRequired,
     width: propTypes.string.isRequired,
-    height: propTypes.string.isRequired,
-    setting:propTypes.bool.isRequired,
+    setting: propTypes.bool.isRequired,
     setSetting: propTypes.func.isRequired
 }
 

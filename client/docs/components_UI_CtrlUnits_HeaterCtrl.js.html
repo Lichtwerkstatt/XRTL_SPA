@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/UI/CtrlUnits/ESPCamPlusSettings.js</title>
+  <title> components/UI/CtrlUnits/HeaterCtrl.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/UI/CtrlUnits/ESPCamPlusSettings.js</h1>
+                    <h1>components/UI/CtrlUnits/HeaterCtrl.js</h1>
                 </header>
                 
 
@@ -89,127 +89,175 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+            <pre class="prettyprint source linenums"><code>import { ThemeProvider, Button, IconButton, Typography } from '@mui/material';
+import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
-import { ThemeProvider } from '@mui/material/styles';
-import ESPCam from '../templates/ESPCam';
-import styles from '../CSS/Settings.module.css'
+import { useAppContext } from '../../../services/AppContext';
+import HeaterSettings from '../templates/HeaterSettings';
+import styles from '../CSS/HeaterCtrl.module.css';
 import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
-import { IconButton } from '@mui/material';
 import Slider from '../templates/Slider';
 import Switch from '../templates/Switch';
-import Select from '../templates/Select';
-import Box from '@mui/material/Box';
 import propTypes from "prop-types";
 
 /**
- * ESPCam component with settings
+ * HeaterCtrl component
  * 
- * @description This component returns a canvas with the camera stream of an ESPCam and the corresponding setting options. For this, the height and width of the window must be transferred 
- * and the controlId with which the ESP is to be addressed. In addition, the variables setting and setSetting must be passed. These handle the change of the window size when folding 
- * and unfolding the settings.
+ * @description The React component contains the currently transmitted temperature of the heater as well as various setting options, both for the heater and for the thermistor.
  * 
- * @param {string} component - controlId 
- * @param {string} width - Transfers the width to ESPCam class 
- * @param {string} height - Transfer the height to ESPCam class 
+ * @param {string} component - controlId of the heater
+ * @param {string} componentT - controlId of the thermistor
  * @param {boolean} setting - If true, then setting options are hidden, if false then they are displayed and the component window is larger.
  * @param {func} setSetting - To change the setting variable value 
  * 
- * @returns {React.ReactElement} styled canvas with ESPCam stream and setting options
+ * @returns {React.ReactElement} HeaterCtrl control element
  */
-const ESPCamPlusSettings = (props) => {
-    const [switchIsOn, setSwitchStatus] = useState(false);
-    const [online, setOnlineStatus] = useState(false);
-    const [frameSize, setFrameSize] = useState(10);
-    const [contrast, setContrast] = useState(0);
-    const [exposure, setExposure] = useState(0);
+const HeaterCtrl = (props) => {
+    const [onlineStatus, setOnlineStatus] = useState(false);
+    const [powerSwitch, setPowerSwitch] = useState(false);
+    const [averageTime, setAverageTime] = useState(100);
+    const [updateTime, setUpdateTime] = useState(1000);
+    const [powerValue, setPowerValue] = useState(0);
+    const [temp, setTemp] = useState('-°C');
 
     const socketCtx = useSocketContext();
-
-    const resolution = {
-        5: 'QVGA (320x240)',
-        8: 'VGA (640x480)',
-        9: 'SVGA (800x600)',
-        10: 'XGA (1024x768)',
-    }
+    const appCtx = useAppContext();
 
     // Handles the change of the window size when clicking on the setting icon
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
 
         if (props.setting) {
-            document.getElementById(props.component).style.left = '-325px'
+            document.getElementById('smallTemp').style.display = 'block'
+            document.getElementById('temp').style.display = 'none'
         } else {
-            document.getElementById(props.component).style.left = '-655px'
+            document.getElementById('smallTemp').style.display = 'none'
+            document.getElementById('temp').style.display = 'block'
         }
     }
 
     useEffect(() => {
         // Handles the window size when opening the component window.
-        if (!props.setting) {
-            document.getElementById(props.component).style.left = '-325px'
+        if (props.setting) {
+            document.getElementById('smallTemp').style.display = 'none'
+            document.getElementById('temp').style.display = 'block'
+        } else {
+            document.getElementById('smallTemp').style.display = 'block'
+            document.getElementById('temp').style.display = 'none'
         }
 
         const status = (payload) => {
+            // Setting the status depending on the different controlIds.
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
-                setSwitchStatus(payload.status.gray)
-                setExposure(payload.status.exposure)
-                setContrast(payload.status.contrast)
-                setFrameSize(payload.status.frameSize)
-                //console.log('Status of settings:   ', payload)
+                setPowerSwitch(payload.status.isOn)
+                setPowerValue(payload.status.pwm)
+                // console.log("Status  ", payload)
+            }
+
+            if (payload.controlId === props.componentT) {
+                setAverageTime(payload.status.averageTime);
+                setUpdateTime(payload.status.updateTime);
+                // console.log("Status  Thermistor", payload)
             }
         }
 
+        // When the temperature is received in the form of the data event, it is shortened by decimal places and displayed in the component window.
+        const data = (payload) => {
+            if (payload.controlId === props.componentT) {
+                var string = payload.data.data;
+                try { string = string.toFixed(1) + " °C" } catch (e) { string = '-°C' }
+                setTemp(string);
+            }
+        }
+
+        // Sending server commands to request the status of all components
         socketCtx.socket.emit('command', {
             userId: socketCtx.username,
             controlId: props.component,
             getStatus: true
         })
 
+        socketCtx.socket.emit('command', {
+            userId: socketCtx.username,
+            controlId: props.componentT,
+            getStatus: true
+        })
+
+        // A room is created for the component, into which the clients are then added when they open the corresponding window. By creating the room, the traffic caused by sending the 
+        // stream should be reduced, as only the clients who really need the stream receive it.
+        appCtx.toogleRoomComp(props.component, true);
+
         socketCtx.socket.emit('getFooter', props.component)
 
         socketCtx.socket.on('status', status);
 
+        socketCtx.socket.on('data', data);
+
         return () => {
             socketCtx.socket.removeAllListeners('status', status)
+            socketCtx.socket.removeAllListeners('data', data)
         }
         //Comment needed to prevent a warning
-        //eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketCtx.socket]);
 
     return (
         &lt;ThemeProvider theme={theme}>
-            &lt;div className={styles.Settings}>
-                &lt;IconButton onClick={hiddenSetting}  >
-                    &lt;SettingsOutlinedIcon sx={{ fontSize: 35 }} />
-                &lt;/IconButton>
-                &lt;ESPCam component={props.component} width={'600px'} height={'400px'} />
-                {props.setting &amp;&amp;
+            {/* Full size window */}
+            &lt;div id={'temp'} style={{ display: 'none' }}>
+                &lt;div className={styles.Temp}>
+                    &lt;Typography id='temp' variant='h2'>{temp}&lt;/Typography>
+                    &lt;IconButton onClick={hiddenSetting}  >
+                        &lt;SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                    &lt;/IconButton>
+                &lt;/div>
+                &lt;div className={styles.Canvas1}>
+                    &lt;Button sx={{ fontSize: 17 }} startIcon={&lt;MicrowaveOutlinedIcon />}>Heater settings &lt;/Button>
+                    &lt;Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+                &lt;/div>
 
-                    &lt;div className={styles.Settings}>
-                        &lt;Box sx={{ m: 2, width: 250 }} > &lt;h1>Settings&lt;/h1> &lt;/Box>
-                        &lt;Select title='Resolution' component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} />
-                        &lt;Switch component={props.component} switchStatus={switchIsOn} online={online} left='Color' right='Gray' option='gray' />
-                        &lt;Slider title='Contrast' component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
-                        &lt;Slider title='Exposure' component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
-                    &lt;/div>
-
-                }
+                &lt;div className={styles.Switch} >
+                    &lt;Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+                &lt;/div>
+                &lt;HeaterSettings online={true} component={props.componentT} updateTime={updateTime} averageTime={averageTime} />
             &lt;/div>
+
+            {/* Small format window */}
+            &lt;div id={'smallTemp'} >
+                &lt;div className={styles.TempSmall}>
+                    &lt;Typography id='temp' variant='h2'>{temp}&lt;/Typography>
+                    &lt;IconButton onClick={hiddenSetting}  >
+                        &lt;SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                    &lt;/IconButton>
+                &lt;/div>
+
+                &lt;div className={styles.Canvas1}>
+                    &lt;Button sx={{ fontSize: 17 }} startIcon={&lt;MicrowaveOutlinedIcon />}>Heater settings &lt;/Button>
+                    &lt;Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+                &lt;/div>
+
+                &lt;div className={styles.SwitchTemp} >
+                    &lt;Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+                &lt;/div>
+
+            &lt;/div>
+
         &lt;/ThemeProvider>
     )
 }
 
-ESPCamPlusSettings.propTypes = {
+HeaterCtrl.propTypes = {
     component: propTypes.string.isRequired,
-    width: propTypes.string.isRequired,
+    componentT: propTypes.string.isRequired,
     setting: propTypes.bool.isRequired,
     setSetting: propTypes.func.isRequired
 }
 
-export default ESPCamPlusSettings;</code></pre>
+export default HeaterCtrl;
+</code></pre>
         </article>
     </section>
 

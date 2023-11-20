@@ -1,10 +1,10 @@
-import BeamSplitterCtrl from "../UI/CtrlUnits/BeamSplitterCtrl";
+import MultiCtrl from "../UI/CtrlUnits/MultiCtrl";
 import Window from "../UI/experimentUI/Window";
 
 /**
- * MultiCtrl window
+ * MultiComponentSelection window
  * 
- * @description  This React component returns a window with the content for the MultiCtrl component window.
+ * @description  This React component returns a window with the content for the MultiComponentSelection component window.
  *  
  * @param {string} id - controlId of the entire component
  * @param {string} controlId - controlId for the React app to know, which window should be open/closed
@@ -15,9 +15,9 @@ import Window from "../UI/experimentUI/Window";
  * @param {number} height - For the positioning of the window 
  * @param {number} left - For the positioning of the window 
  * 
- * @returns {React.ReactElement} MultiCtrl component window
+ * @returns {React.ReactElement} MultiComponentSelection component window
  */
-const MultiCtrl = (props) => {
+const MultiComponentSelection = (props) => {
 
   return (
     <Window
@@ -30,8 +30,7 @@ const MultiCtrl = (props) => {
       width="360px"
 
     >
-      <BeamSplitterCtrl
-        rotation={props.rotationTop}
+      <MultiCtrl
         component={props.controlId}
         pinhole={props.controlId2}
         redLED={props.controlLED}
@@ -41,4 +40,4 @@ const MultiCtrl = (props) => {
   );
 };
 
-export default MultiCtrl;
+export default MultiComponentSelection;

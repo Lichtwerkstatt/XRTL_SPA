@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/windows/Content/InfoWindowContent.js</title>
+  <title> components/assembly/MultiComponentSelection.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/windows/Content/InfoWindowContent.js</h1>
+                    <h1>components/assembly/MultiComponentSelection.js</h1>
                 </header>
                 
 
@@ -89,32 +89,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import styles from "../CSS/InfoWindowContent.module.css";
-import bgTeam from "../../media/images/xrtl_team.png";
+            <pre class="prettyprint source linenums"><code>import MultiCtrl from "../UI/CtrlUnits/MultiCtrl";
+import Window from "../UI/experimentUI/Window";
 
 /**
- * Information text
+ * MultiComponentSelection window
  * 
- * @description This file contains the content and text for the information window.
+ * @description  This React component returns a window with the content for the MultiComponentSelection component window.
  *  
- * @returns {React.ReactElement} Content and Text for the information window
+ * @param {string} id - controlId of the entire component
+ * @param {string} controlId - controlId for the React app to know, which window should be open/closed
+ * @param {string} controlId2 - controlId to control the pinhole
+ * @param {string} controlIdLED - controlId to control the red lED
+ * @param {string} controlIdLED2 - controlId to control the white lED
+ * @param {string} title - For setting the title within the window
+ * @param {number} height - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} MultiComponentSelection component window
  */
-const InfoWindowContent = () => {
+const MultiComponentSelection = (props) => {
+
   return (
+    &lt;Window
+      id={props.controlId}
+      componentList={[props.controlId, props.controlId2, props.controlLED, props.controlLED2]}
+      header={props.title}
+      top={props.top}
+      left={props.left}
+      height="190px"
+      width="360px"
 
-    &lt;div className={styles.mainWrapper} style={{ backgroundImage: "url(\"" + bgTeam + "\")" }}
     >
-      Remote labs represent a groundbreaking approach to science education and collaboration, facilitating communication and experimentation from afar. However, creating remote access capabilities can be prohibitively expensive or technically challenging, particularly for non-IT and non-engineering disciplines. To make remote labs accessible across all fields, we need a user-friendly platform that enables researchers, assistants, and technical staff to implement them independently. To that end, we are proud to present XR TwinLab (XRTL), an open-source toolbox designed specifically for the field of Photonics. With its modular structure XRTL offers a flexible, web-based application for controlling optical experimental setups. This exciting project is currently being developed by the esteemed Abbe School of Photonics and the Open Makerspace Lichtwerkstatt Jena.
+      &lt;MultiCtrl
+        component={props.controlId}
+        pinhole={props.controlId2}
+        redLED={props.controlLED}
+        whiteLED={props.controlLED2}
+      />
+    &lt;/Window>
+  );
+};
 
-      Feel free to follow our &lt;a href="https://github.com/Lichtwerkstatt/XRTL_SPA">Git Repo&lt;/a> or &lt;a href="mailto:team@lichtwerkstatt-jena.de">Contact us.&lt;/a>
-
-      &lt;p>
-        Best! Clara, Fabian, Falko, Jari and Johannes
-      &lt;/p>
-    &lt;/div>
-  )
-}
-export default InfoWindowContent;</code></pre>
+export default MultiComponentSelection;
+</code></pre>
         </article>
     </section>
 

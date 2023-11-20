@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/windows/Content/InfoWindowContent.js</title>
+  <title> components/UI/CtrlUnits/MultiCtrl.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/windows/Content/InfoWindowContent.js</h1>
+                    <h1>components/UI/CtrlUnits/MultiCtrl.js</h1>
                 </header>
                 
 
@@ -89,32 +89,103 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import styles from "../CSS/InfoWindowContent.module.css";
-import bgTeam from "../../media/images/xrtl_team.png";
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext.js";
+import { ThemeProvider } from '@mui/material/styles';
+import RadioButton from '../templates/RadioButton.js';
+import { theme } from '../templates/Theme.js';
+import { useState, useEffect } from "react";
+import Switch from '../templates/Switch.js';
+import Box from '@mui/material/Box';
+import propTypes from "prop-types";
 
 /**
- * Information text
+ * Control of the pinhole, the beam splitter, the white and red LED
  * 
- * @description This file contains the content and text for the information window.
- *  
- * @returns {React.ReactElement} Content and Text for the information window
+ * @description This React component returns the content for the Muiltctrl window. Four controlIds are required for this, firstly to control the pinhole 
+ * aperture, the beam splitter and secondly the controlId for the red and white LEDs. The LEDs can be switched on and off separately from each other. 
+ * Depending on which radio button is clicked within the window, it is then moved into the beam path or, in the case of the pinhole, inserted into the beam path. 
+ * 
+ * @param {string} component - To control 
+ * @param {string} pinhole - To control the pinhole
+ * @param {string} redLED - To control the red lED
+ * @param {string} whiteLED - To control the white lED
+ * 
+ * @returns {React.ReactElement} Multi control in form of radiobuttons
  */
-const InfoWindowContent = () => {
-  return (
+const MultiCtrl = (props) => {
+    const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
+    const [switchRedIsOn, setSwitchRedStatus] = useState(false);
+    const [selectionStatus, setSelectionStatus] = useState(80);
+    const [onlineStatus, setOnlineStatus] = useState(false);
 
-    &lt;div className={styles.mainWrapper} style={{ backgroundImage: "url(\"" + bgTeam + "\")" }}
-    >
-      Remote labs represent a groundbreaking approach to science education and collaboration, facilitating communication and experimentation from afar. However, creating remote access capabilities can be prohibitively expensive or technically challenging, particularly for non-IT and non-engineering disciplines. To make remote labs accessible across all fields, we need a user-friendly platform that enables researchers, assistants, and technical staff to implement them independently. To that end, we are proud to present XR TwinLab (XRTL), an open-source toolbox designed specifically for the field of Photonics. With its modular structure XRTL offers a flexible, web-based application for controlling optical experimental setups. This exciting project is currently being developed by the esteemed Abbe School of Photonics and the Open Makerspace Lichtwerkstatt Jena.
+    const socketCtx = useSocketContext();
 
-      Feel free to follow our &lt;a href="https://github.com/Lichtwerkstatt/XRTL_SPA">Git Repo&lt;/a> or &lt;a href="mailto:team@lichtwerkstatt-jena.de">Contact us.&lt;/a>
+    useEffect(() => {
+        const status = (payload) => {
+            // To set the correct status of the individual components
+            if (payload.controlId === props.redLED) {
+                setSwitchRedStatus(payload.status.isOn);
+            }
+            else if (payload.controlId === props.whiteLED) {
+                setSwitchWhiteStatus(payload.status.isOn);
+            }
+            else if (payload.controlId === props.component) {
+                setOnlineStatus(true);
+                (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
+                setSelectionStatus(payload.status.state)
+            }
+            //console.log("Status of settings:   ", payload)
+        }
 
-      &lt;p>
-        Best! Clara, Fabian, Falko, Jari and Johannes
-      &lt;/p>
-    &lt;/div>
-  )
+        // Sending server commands to request the status of all components
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.component,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.redLED,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.whiteLED,
+            getStatus: true
+        })
+
+        socketCtx.socket.on('status', status);
+
+        socketCtx.socket.emit('getFooter', props.component)
+
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps      
+    }, [socketCtx.socket]);
+
+    return (
+        &lt;ThemeProvider theme={theme}>
+            &lt;Box sx={{ mx: 1 }}>
+                &lt;RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} val={selectionStatus} option="state" />
+                &lt;Switch component={props.whiteLED} switchStatus={switchWhiteIsOn} online={onlineStatus} left='LED white Off' right='On' option='switch' />
+                &lt;Switch component={props.redLED} switchStatus={switchRedIsOn} online={onlineStatus} left='LED red Off' right='On' option='switch' />
+            &lt;/Box>
+        &lt;/ThemeProvider>
+    )
 }
-export default InfoWindowContent;</code></pre>
+MultiCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+    pinhole: propTypes.string.isRequired,
+    redLED: propTypes.string.isRequired,
+    whiteLED: propTypes.string.isRequired,
+}
+
+export default MultiCtrl;
+</code></pre>
         </article>
     </section>
 

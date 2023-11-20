@@ -1,4 +1,4 @@
-import BeamSplitter from '../../assembly/MultiCtrl';
+import MultiComponentSelection from '../../assembly/MultiComponentSelection';
 import ESPCam from '../../assembly/ESPCamStream';
 import Heater from '../../assembly/Heater';
 import Rotary from '../../assembly/Rotary';
@@ -101,7 +101,7 @@ const MichelsonInterferometer = (props) => {
       {props.selected.has('screen') && (
         <ESPCam
           title='Screen'
-          controlId={'screen'}
+          id={'screen'}
           footer={footer}
           top={topHighMiddle}
           left={leftCam}
@@ -126,7 +126,7 @@ const MichelsonInterferometer = (props) => {
 
       {/* Beam splitter */}
       {props.selected.has('experimentSelection') && (
-        <BeamSplitter
+        <MultiComponentSelection
           title='Multi Component Selection'
           controlId={'experimentSelection'}
           controlId2={'pinhole'}
