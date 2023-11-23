@@ -21,12 +21,21 @@ import "./CSS/2D_MI_Overlay.css";
 const Overlay = (props) => {
     const [hoveredArea, setHoveredArea] = useState(null);
 
+    let screen_width = window.innerWidth;
+    let screen_height = window.innerHeight;
+
+
+    let hitbox_scaling = [screen_width / 1920, screen_height / 1200, screen_width / 1920, screen_height / 1200];
+    var screen = [50, 0, 1000, 100];
+    screen = screen.map((value, index) => value * hitbox_scaling[index]);
+    console.log(screen)
+
     // Definition of all hitboxes by specifying the controlId, the shape, the coordinates (x_start, y_start, x_end, y_end) 
     // and the text to be displayed when hovering over the box.
     let MAP = {
         name: "MI_Simple_imagemap",
         areas: [
-            { controlId: "screen", shape: "rect", coords: [380, 0, 1100, 100], desc: 'Screen' },
+            { controlId: "screen", shape: "rect", coords: screen, desc: 'Screen' },
             { controlId: "linear_1", shape: "rect", coords: [5, 480, 180, 740], desc: 'Linear Movable Mirror' },
             { controlId: "beamblocker1", shape: "rect", coords: [200, 560, 300, 730], desc: 'Beam Blocker' },
             { controlId: "KM100_1", shape: "rect", coords: [450, 800, 740, 1000], desc: 'Reference Mirror' },
@@ -34,7 +43,6 @@ const Overlay = (props) => {
             { controlId: "beamblocker2", shape: "rect", coords: [680, 700, 900, 800], desc: 'Beam Blocker' },
             { controlId: "greenlaserPower_1", shape: "rect", coords: [1350, 200, 1600, 450], desc: 'Power Supply' },
             { controlId: "greenlaser_1", shape: "rect", coords: [1450, 450, 1700, 650], desc: 'Laser Alignment' },
-
         ]
     };
 
