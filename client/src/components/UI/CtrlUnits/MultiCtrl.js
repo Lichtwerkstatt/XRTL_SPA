@@ -24,10 +24,18 @@ import propTypes from "prop-types";
 const MultiCtrl = (props) => {
     const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
     const [switchRedIsOn, setSwitchRedStatus] = useState(false);
-    const [selectionStatus, setSelectionStatus] = useState(80);
+    const [selectionStatus, setSelectionStatus] = useState('none');
     const [onlineStatus, setOnlineStatus] = useState(false);
 
     const socketCtx = useSocketContext();
+
+    let radioButtonDictionary ={
+        none: 'None',
+        splitter: 'Beam splitter',
+        pinhole: 'Pinhole',
+        rled: 'Red LED',
+        wled: 'White LED'
+    }
 
     useEffect(() => {
         const status = (payload) => {
@@ -79,7 +87,7 @@ const MultiCtrl = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ mx: 1 }}>
-                <RadioButton component={props.component} component2={props.pinhole} online={onlineStatus} val={selectionStatus} option="state" />
+                <RadioButton component={props.component} online={onlineStatus} dictionary={radioButtonDictionary} val={selectionStatus} option="state" />
                 <Switch component={props.whiteLED} switchStatus={switchWhiteIsOn} online={onlineStatus} left='LED white Off' right='On' option='switch' />
                 <Switch component={props.redLED} switchStatus={switchRedIsOn} online={onlineStatus} left='LED red Off' right='On' option='switch' />
             </Box>

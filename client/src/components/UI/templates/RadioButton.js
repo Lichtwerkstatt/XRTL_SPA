@@ -1,21 +1,24 @@
 import { FormControl, RadioGroup, FormControlLabel, Radio, FormLabel } from "@mui/material";
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
+import propTypes from "prop-types";
 import { useState } from "react";
 
 /**
- * Radiobutton component
+ * Radio button component
  * 
- * @description Select is used to choose from a list of options. For this, the controlId, the status (of the component and the online status), 
- * the list of options and the command for the server must be specified. The title can, but does not have to be specified. 
+ * @description Radio buttons are used to make a specific selection from several options. This requires a dictionary with the text to be specified as the value and the key to be sent to the server. 
+ * Furthermore, of course, the controlId, the server command.
  * 
  * @param {string} component - general controlId of the component
- * @param {string} component - controlId of the pinhole
  * @param {number} val -  value of the set radio button 
+ * @param {dictionary} dictionary - Dictionary with the keys and corresponding values as content for the radio button/s
  * @param {boolean} online - connection status to the component
  * @param {string} option - command for the server
  * 
  * @returns {React.ReactElement} styled radiobutton with the specified props
+ * 
+ * @example 
  */
 const RadioButton = (props) => {
     const [radioButton, setRadioButton] = useState(props.val);
@@ -52,14 +55,25 @@ const RadioButton = (props) => {
                 value={props.val}
                 onChange={handleChange}
             >
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'none'} control={<Radio />} label="None" />
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'splitter'} control={<Radio />} label="Beam splitter" />
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'pinhole'} control={<Radio />} label="Pinhole" />
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'rled'} control={<Radio />} label="Red LED" />
-                <FormControlLabel disabled={(socketCtx.connected && props.online) ? false : true} value={'wled'} control={<Radio />} label="White LED" />
-
+                {Object.keys(props.dictionary).map(val =>
+                    <FormControlLabel
+                        disabled={(socketCtx.connected && props.online) ? false : true}
+                        label={props.dictionary[val]}
+                        value={val}
+                        control={<Radio />}
+                    />
+                )}
             </RadioGroup>
         </FormControl>
     )
 }
+
+RadioButton.propTypes = {
+    component: propTypes.string.isRequired,
+    dictionary: propTypes.array.isRequired,
+    online: propTypes.bool.isRequired,
+    option: propTypes.string.isRequired,
+    val: propTypes.oneOf([propTypes.string, propTypes.number]).isRequired
+}
+
 export default RadioButton;
