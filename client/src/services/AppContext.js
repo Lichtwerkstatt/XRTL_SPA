@@ -22,6 +22,7 @@ export function AppContextProvider({ children }) {
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
+  const [lightSource, setLightSource] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [manualPage, setManualPage] = useState(1);
   const [showBeam, setShowBeam] = useState(false);
@@ -36,7 +37,7 @@ export function AppContextProvider({ children }) {
     //Adds controlId to set, when a component window is opened
     if (!selectedComps.has(compId)) {
       setSelectedComps(prev => new Set(prev.add(compId)));
-    // Removes controlId of a window, whenever it is closed
+      // Removes controlId of a window, whenever it is closed
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
       toogleRoomComp(compId);
@@ -63,7 +64,7 @@ export function AppContextProvider({ children }) {
           controlId: compId,
           userId: username
         });
-        
+
         // Removes controlId from the set and sends leave stream room events
       } else if (roomComponent.has(compId)) {
         setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
@@ -134,6 +135,18 @@ export function AppContextProvider({ children }) {
     setManualPage(newVal)
   }
 
+  // To trun the light source next to the experiment on or off
+  const toggleHandleLightSource = () => {
+    setLightSource(!lightSource)
+
+    socket.emit("command", {
+      controlId: 'lightSource',
+      userId: username,
+      switch: lightSource
+    });
+
+  }
+
   // Contains all variables, which can be accessed within a React component, if this ContextProvider is imported
   return (
     <AppContext.Provider
@@ -164,6 +177,8 @@ export function AppContextProvider({ children }) {
         toggleunderConstruction,
         manualPage,
         toggleSetManualPage,
+        lightSource,
+        toggleHandleLightSource,
         username,
         setUsername,
         socket,

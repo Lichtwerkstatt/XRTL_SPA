@@ -1,13 +1,13 @@
 import { useSocketContext } from '../../../services/SocketContext';
+import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
 import { ThemeProvider, Tooltip } from '@mui/material';
 import { BsCamera, BsBox } from 'react-icons/bs';
 import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi';
-import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import styles from '../CSS/NavBar.module.css';
 import { theme } from './../templates/Theme';
-import { FaTags } from 'react-icons/fa';
+import { FaTags, FaLightbulb } from 'react-icons/fa';
 import { memo } from 'react';
 import { isEqual } from 'lodash';
 
@@ -34,6 +34,8 @@ const NavBar = () => {
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
     let showBeamColor = '';
     if (appCtx.showBeam) { showBeamColor = 'white' }
+    let lightSource = '';
+    if (appCtx.lightSource) { lightSource = 'white' }
     let showVirtualLayerColor = '';
     if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
     let showManualWindowColor = '';
@@ -67,6 +69,10 @@ const NavBar = () => {
 
                         <Tooltip title='Beam Path'>
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Light Source'>
+                            <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 
                         <Tooltip title='Manual'>
