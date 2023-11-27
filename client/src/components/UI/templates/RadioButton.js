@@ -18,7 +18,10 @@ import { useState } from "react";
  * 
  * @returns {React.ReactElement} styled radiobutton with the specified props
  * 
- * @example 
+ * @example <RadioButton component={'RadioButton'} online={true} dictionary={{1: 'a', 2: 'b', 3: 'c'}} val={1} option="state" />
+ * @example <RadioButton component={'RadioButton2'} online={true} dictionary={{a: 1, b: 2, c: 3} val={2} option="state" />
+ * @example <RadioButton component={'RadioButton3'} online={false} dictionary={{a: '1', 2: 2, 3: 'c'}} val={1} option="state" />
+ * 
  */
 const RadioButton = (props) => {
     const [radioButton, setRadioButton] = useState(props.val);
