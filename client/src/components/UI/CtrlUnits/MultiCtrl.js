@@ -29,7 +29,7 @@ const MultiCtrl = (props) => {
 
     const socketCtx = useSocketContext();
 
-    let radioButtonDictionary ={
+    let radioButtonDictionary = {
         none: 'None',
         splitter: 'Beam splitter',
         pinhole: 'Pinhole',
