@@ -1,4 +1,5 @@
 import MultiComponentSelection from '../../assembly/MultiComponentSelection';
+import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import ESPCam from '../../assembly/ESPCamStream';
 import Heater from '../../assembly/Heater';
 import Rotary from '../../assembly/Rotary';
@@ -106,7 +107,7 @@ const MichelsonInterferometer = (props) => {
           top={topHighMiddle}
           left={leftCam}
           setting={setting}
-          setSetting= {setSetting}
+          setSetting={setSetting}
         />
       )}
       {/* Heater */}
@@ -120,7 +121,7 @@ const MichelsonInterferometer = (props) => {
           top={topHighMiddle}
           left={leftCam}
           setting={settingHeater}
-          setSetting= {setSettingHeater}
+          setSetting={setSettingHeater}
         />
       )}
 
@@ -135,6 +136,29 @@ const MichelsonInterferometer = (props) => {
           footer={footer}
           top={topMiddle}
           left={halfWidth}
+        />
+      )}
+
+      {/* Lens */}
+      {props.selected.has('lens') && (
+        <DescriptionOnlyComponent
+          title="Lens"
+          controlId={'lens'}
+          footer={footer}
+          top={600}
+          left={1100}
+        />
+      )}
+
+
+      {/* BeamSplitter Cube */}
+      {props.selected.has('bscube') && (
+        <DescriptionOnlyComponent
+          title="Beam Splitter"
+          controlId={'bscube'}
+          footer={footer}
+          top={100}
+          left={600}
         />
       )}
 
