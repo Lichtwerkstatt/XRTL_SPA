@@ -1,5 +1,6 @@
 import HeaterCtrl from '../UI/CtrlUnits/HeaterCtrl';
 import Window from '../UI/experimentUI/Window';
+import { useState } from 'react';
 
 /**
  * Heater component window
@@ -18,11 +19,12 @@ import Window from '../UI/experimentUI/Window';
  * @returns {React.ReactElement} Heater component window
  */
 const Heater = (props) => {
+    const [setting, setSetting] = useState(false)
     var width = window.innerWidth
 
-    if (props.setting) {
+    if (setting) {
         width = '673px'
-    } else if (!props.setting) {
+    } else if (!setting) {
         width = '350px'
     }
 
@@ -39,8 +41,8 @@ const Heater = (props) => {
             <HeaterCtrl
                 component={props.controlIdHeater}
                 componentT={props.controlIdThermistor}
-                setting={props.setting}
-                setSetting={props.setSetting}
+                setting={setting}
+                setSetting={setSetting}
             />
         </Window>
     )

@@ -29,7 +29,6 @@ const KM100 = (props) => {
       height='240px'
       width='250px'
       background={KM100_Background}
-
     >
       <RotaryCtrl
         component={props.controlIdTop}

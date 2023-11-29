@@ -48,6 +48,7 @@ const VirtualLayer = (...props) => {
             selected={appCtx.selectedComps}
             showTags={appCtx.showTags}
             showBeam={appCtx.showBeam}
+            showLED={appCtx.showLED}
             socket={socketCtx.socket}
           />
         </Suspense>
