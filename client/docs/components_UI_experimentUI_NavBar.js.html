@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/UI/experimentUI/NavBar.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPowerSupply">DescriptionPowerSupply</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#Imprint">Imprint</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/UI/experimentUI/NavBar.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md';
+import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useSocketContext } from '../../../services/SocketContext'
+import { useAppContext } from '../../../services/AppContext'
+import { ImEnter, ImExit } from 'react-icons/im'
+import { GiLaserWarning } from 'react-icons/gi'
+import styles from '../CSS/NavBar.module.css'
+import { theme } from './../templates/Theme'
+import { BsCamera } from 'react-icons/bs'
+import { FaTags } from 'react-icons/fa';
+import { memo, useState } from 'react';
+import { Icon } from '@iconify/react';
+import { isEqual } from 'lodash';
+
+/**
+ * Navigation bar component 
+ * 
+ * @description React components returns the styling and functionality of the navigation bar. Within this file all onclick events 
+ * on the buttons in the bar and their color changes are also handled.
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
+ */
+const NavBar = () => {
+    const appCtx = useAppContext();
+    const socketCtx = useSocketContext();
+
+    // Icon colors intialization and change of these, if condition is fulfilled
+    let connectionStatusColor = '';
+    if (socketCtx.connected) { connectionStatusColor = 'white' }
+    let autoRotateColor = '';
+    if (appCtx.autoRotate) { autoRotateColor = 'white' }
+    let showTagsColor = '';
+    if (appCtx.showTags) { showTagsColor = 'white' }
+    let cameraStatusColor = '';
+    if (appCtx.showCam) { cameraStatusColor = 'white' }
+    let showInfoWindowColor = '';
+
+    const [mobileVersion, setMobileVersion] = useState(null);
+    const openMobileVersion = Boolean(mobileVersion);
+
+    const [led, setLED] = useState(null);
+    const openLED = Boolean(led)
+
+    const [laserBeam, setLaserBeam] = useState(null);
+    const openLaserBeam = Boolean(laserBeam)
+
+
+    const handleClick = (event) => {
+        setMobileVersion(event.currentTarget);
+    };
+
+    const handleClick2 = (event) => {
+        setLED(event.currentTarget);
+    };
+
+    const handleLaserBeam = (event) => {
+        setLaserBeam(event.currentTarget);
+    };
+
+    const closeMobileVersion = () => {
+        setMobileVersion(null);
+    };
+
+    const handleLED = () => {
+        setLED(null);
+    };
+
+    const closeLaserBeam = () => {
+        setLaserBeam(null);
+    };
+
+    return (
+        &lt;div id='navbar' className={styles.navbar} >
+            &lt;ThemeProvider theme={theme} >
+                &lt;h1>XR TwinLab&lt;/h1>
+                
+                &lt;div className={styles.navMenuLaser}>
+                    &lt;h3>Overlay:&lt;/h3>
+
+                    {/* Drop-down menu to display the beam path of the white or red LED  */}
+                    &lt;IconButton onClick={handleClick2} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        &lt;Icon icon="mdi:led-off" width="70" height="70" />
+                    &lt;/IconButton>
+
+                    &lt;Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                        }}
+                        anchorEl={led}
+                        open={openLED}
+                        onClose={handleLED}
+                    >
+                        {/* Do not display the red or white LED */}
+                        &lt;MenuItem onClick={() => {
+                            handleLED();
+                            appCtx.toggleShowLED('none');
+                        }} disableRipple >None&lt;/MenuItem>
+
+                        {/* Display the white LED */}
+                        &lt;MenuItem onClick={() => {
+                            handleLED();
+                            appCtx.toggleShowLED('white');
+                        }} disableRipple>White&lt;/MenuItem>
+
+                        {/* Display the red LED */}
+                        &lt;MenuItem onClick={() => {
+                            handleLED();
+                            appCtx.toggleShowLED('red');
+                        }} disableRipple>Red&lt;/MenuItem>
+                    &lt;/Menu>
+
+                    {/* Drop down menu to manage the display option of the beam path */}
+                    &lt;IconButton onClick={handleLaserBeam} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        &lt;GiLaserWarning />
+                    &lt;/IconButton>
+
+                    {/* To switch the beam path on or off, as well as the option when the beam splitter is in the beam path, which in turn changes the beam path. */}
+                    &lt;Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{ 'aria-labelledby': 'demo-customized-button', }}
+                        anchorEl={laserBeam}
+                        open={openLaserBeam}
+                        onClose={closeLaserBeam}
+                    >
+                        &lt;MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('on');
+                        }} disableRipple >On&lt;/MenuItem>
+                        &lt;MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('off');
+                        }} disableRipple>Off&lt;/MenuItem>
+                        &lt;MenuItem onClick={() => {
+                            closeLaserBeam();
+                            appCtx.toggleShowBeam('split');
+                        }} disableRipple>Beamsplitter&lt;/MenuItem>
+                    &lt;/Menu>
+                &lt;/div>
+
+                {/* Navigation bar if screen widther than 992 pixels
+                Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}
+                &lt;div className={styles.navMenu}>
+                    &lt;ul>
+                        &lt;Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
+                            &lt;li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? &lt;ImExit size={25} color={connectionStatusColor} /> : &lt;ImEnter size={25} color={connectionStatusColor} />} &lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Rotation'>
+                            &lt;li onClick={appCtx.toggleAutoRotate}>&lt;MdOutlineScreenRotation size={26} color={autoRotateColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Labels'>
+                            &lt;li onClick={appCtx.toggleShowTags}>&lt;FaTags size={25} color={showTagsColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Webcam'>
+                            &lt;li onClick={appCtx.toggleCam}>&lt;BsCamera size={26} color={cameraStatusColor} />&lt;/li>
+                        &lt;/Tooltip>
+
+                        &lt;Tooltip title='Information'>
+                            &lt;li onClick={appCtx.toggleShowInfoWindow}>&lt;MdInfoOutline size={26} color={showInfoWindowColor} />&lt;/li>
+                        &lt;/Tooltip>
+                    &lt;/ul>
+                &lt;/div>
+
+                {/* Navigation bar if screen width is smaller than 992 pixels. 
+                Icons in the navigation bar are summarised in a drop-down menu.  */}
+                &lt;div className={styles.mobile}>
+                    &lt;IconButton onClick={handleClick} variant="contained" sx={{
+                        borderRadius: 1,
+                        height: '33px',
+                        width: '30px',
+                        color: 'black',
+                        ':hover': {
+                            bgcolor: 'darkgreen',
+                            color: '#00ffa8',
+                        },
+                    }}>
+                        &lt;KeyboardArrowDownIcon color={'white'} />
+                    &lt;/IconButton>
+
+                    {/* Drop down menu  */}
+                    &lt;Menu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                        }}
+                        anchorEl={mobileVersion}
+                        open={openMobileVersion}
+                        onClose={closeMobileVersion}
+                    >
+                        {/* Button to open the login window */}
+                        &lt;MenuItem onClick={() => {
+                            closeMobileVersion();
+                            (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
+                        }} disableRipple>
+                            {(socketCtx.connected) ? &lt;ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : &lt;ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
+                            {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
+                        &lt;/MenuItem>
+
+                        {/* Show/hide labels and decriptions of the experiment components */}
+                        &lt;MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowTags();
+                        }} disableRipple>
+                            &lt;FaTags size={25} style={{ paddingRight: '20px' }} />
+                            Labels
+                        &lt;/MenuItem>
+
+                        {/* Open the window with OverviewCam */}
+                        &lt;MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleCam();
+                        }} disableRipple>
+                            &lt;BsCamera size={26} style={{ paddingRight: '20px' }} />
+                            Cam
+                        &lt;/MenuItem>
+
+                        {/* Show/hide Information window */}
+                        &lt;MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowInfoWindow();
+                        }} disableRipple>
+                            &lt;MdInfoOutline size={26} style={{ paddingRight: '20px' }} />
+                            Info
+                        &lt;/MenuItem>
+
+
+                    &lt;/Menu>
+                &lt;/div>
+            &lt;/ThemeProvider>
+        &lt;/div>
+    );
+}
+export default memo(NavBar, isEqual)
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

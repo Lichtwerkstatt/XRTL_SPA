@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/windows/InfoWindow.js</title>
+  <title> components/experiment/ComponentDescription/ESPCam.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/windows/InfoWindow.js</h1>
+                    <h1>components/experiment/ComponentDescription/ESPCam.js</h1>
                 </header>
                 
 
@@ -89,45 +89,34 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import InfoWindowContent from "./Content/InfoWindowContent";
-import Window from "../UI/experimentUI/Window";
+            <pre class="prettyprint source linenums"><code>import styles from './CSS/Description.module.css';
+import propTypes from "prop-types";
 
 /**
- * Information window
+ * ESPCam window content 
  * 
- * @description This react component returns a window with the content for the information window.
- *  
- * @returns {React.ReactElement} Information window
+ * @description This file contains the descriptive text for the window of the ESPCam, which can be seen within the component window on the information icon.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} descriptive text of the ESPCam
  */
-const InfoWindow = () => {
-    var width = window.innerWidth
-    var height = 0;
-
-    if (0 &lt; width &amp;&amp; width &lt; 576) {
-        width = '350px'
-        height = '650px'
-    }
-    else {
-        width = '600px'
-        height = '517px'
-    }
-
+const DescriptionESPCam = (props) => {
     return (
-        &lt;Window
-            header="About XR TwinLab"
-            id='info'
-            top="200"
-            left="200"
-            width={width}
-            height={height}
-            footer={'none'}
-            topper={'para'}
-        >
-            &lt;InfoWindowContent />
-        &lt;/Window>
-    );
+        &lt;div>
+            &lt;div className={styles.mainWrapper} style={{ height: props.height }} >
+                &lt;p>The screen in a Michelson interferometer setup displays an interference pattern consisting of bright and dark fringes. The location and spacing of these fringes provide information
+                    about the relative phase difference between the two light paths, which can be used to measure small changes in the optical path length of the sample beam.
+                &lt;/p>
+            &lt;/div>
+
+        &lt;/div>
+    )
+}
+DescriptionESPCam.propTypes = {
+    height: propTypes.string.isRequired,
 };
-export default InfoWindow;</code></pre>
+export default DescriptionESPCam;</code></pre>
         </article>
     </section>
 

@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/windows/InfoWindow.js</title>
+  <title> components/experiment/ComponentDescription/Laser.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/windows/InfoWindow.js</h1>
+                    <h1>components/experiment/ComponentDescription/Laser.js</h1>
                 </header>
                 
 
@@ -89,45 +89,36 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import InfoWindowContent from "./Content/InfoWindowContent";
-import Window from "../UI/experimentUI/Window";
+            <pre class="prettyprint source linenums"><code>import styles from './CSS/Description.module.css';
+import propTypes from "prop-types";
 
 /**
- * Information window
+ * Laser window content 
  * 
- * @description This react component returns a window with the content for the information window.
- *  
- * @returns {React.ReactElement} Information window
+ * @description This file contains the descriptive text for the window of the laser, which can be seen within the component window on the information icon.
+ * 
+ * @param {string} height - For scaling the content (is specified in pixels)
+ * 
+ * @returns {React.ReactElement} descriptive text of the laser
  */
-const InfoWindow = () => {
-    var width = window.innerWidth
-    var height = 0;
-
-    if (0 &lt; width &amp;&amp; width &lt; 576) {
-        width = '350px'
-        height = '650px'
-    }
-    else {
-        width = '600px'
-        height = '517px'
-    }
-
+const DescriptionLaser = (props) => {
     return (
-        &lt;Window
-            header="About XR TwinLab"
-            id='info'
-            top="200"
-            left="200"
-            width={width}
-            height={height}
-            footer={'none'}
-            topper={'para'}
-        >
-            &lt;InfoWindowContent />
-        &lt;/Window>
-    );
+        &lt;div>
+            &lt;div className={styles.mainWrapper} style={{ height: props.height }} >
+                &lt;p>
+                    The laser power supply provides the electrical energy necessary to excite the laser medium and generate the coherent beam of light. The laser module here is a class 2 laser,
+                    which does not require any protective eyewear. However, to avoid injury, do not look directly into the laser beam.
+                &lt;/p>
+            &lt;/div>
+
+        &lt;/div>
+    )
+}
+
+DescriptionLaser.propTypes = {
+    height: propTypes.string.isRequired,
 };
-export default InfoWindow;</code></pre>
+export default DescriptionLaser;</code></pre>
         </article>
     </section>
 
