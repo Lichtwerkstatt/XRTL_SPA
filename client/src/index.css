@@ -3,12 +3,12 @@
  */
 
  @font-face {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   src: local('Roboto'), url('./components/media/fonts/RobotoCondensed-Regular.ttf') format('truetype');
 }
 
 html, body {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
 }
