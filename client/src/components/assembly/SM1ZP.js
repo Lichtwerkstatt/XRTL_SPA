@@ -24,8 +24,8 @@ const SM1ZP = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
+      height='240px'
       width='250px'
-      height='235px'
       background={SM1ZP_bg}
     >
       <RotaryCtrl

@@ -24,8 +24,8 @@ const Rotary = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
+      height='240px'
       width='250px'
-      height='235px'
       background={Rotary_bg}
     >
       <RotaryCtrl

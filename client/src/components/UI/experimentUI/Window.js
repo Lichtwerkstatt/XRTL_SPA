@@ -49,6 +49,28 @@ const Window = (props) => {
     none: <IoSettingsOutline className={styles.icon} size={25} color={'#01bd7d'} />, // None
   }
 
+  // Set the scaling factor for better window placement on smaller screens
+  var height = window.innerHeight / 955;
+  var width = window.innerWidth / 1920;
+
+  // Scaling of the setting height of the windows depending on the reference value
+  const scaleComponenteWindowHeight = (value) => {
+    return parseInt(height * value)
+  }
+
+  // Scaling of the setting left of the windows depending on the reference value
+  const scaleComponenteWindowWidth = (value) => {
+    value = parseInt(width * value)
+
+    console.log(Number(props.width))
+    // prevents windows from being created outside or over the calculated screen width
+    if ((value + 250) > window.innerWidth) {
+      let dif = value + 275 - window.innerWidth;
+      value = value - dif;
+    }
+    return value
+  }
+
   useEffect(() => {
     // Processing of the transferred topper variable
     if (props.topper === 'none') {
@@ -163,7 +185,7 @@ const Window = (props) => {
     <Draggable handle='.draggableHandler'>
       <div
         className={styles.window}
-        style={{ top: props.top + 'px', left: props.left + 'px', width: props.height + 'px', height: props.height + 'px' }}
+        style={{ top: scaleComponenteWindowHeight(props.top) + 'px', left: scaleComponenteWindowWidth(props.left) + 'px', width: props.width + 'px', height: props.height + 'px' }}
       >
         {/* Styling of the topper of the component window */}
         <div className={styles.windowHeader}>

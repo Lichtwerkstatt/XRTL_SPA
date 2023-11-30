@@ -23,7 +23,6 @@ import Eye from "../../assembly/Eye";
           id={// general controlId of the component}
           controlIdTop={// controlId for the upper stepper motor}
           controlIdBottom={// controlId for the lower stepper motor}
-          footer={// Intialisation text of the footer}
           top={// Positioning at the height of the window}
           left={// Positioning at the width of the window}
         />
@@ -32,7 +31,6 @@ import Eye from "../../assembly/Eye";
  * @returns {React.ReactElement} Experiment setup component
  */
 const AdaptiveOptics = (props) => {
-  let footer = "Initializing...";
 
   return (
     <div>
@@ -43,7 +41,6 @@ const AdaptiveOptics = (props) => {
           id={"KM100B_1"}
           controlIdTop={"KM100B_top_1"}
           controlIdBottom={"KM100B_bottom_1"}
-          footer={footer}
           top={600}
           left={920}
         />
@@ -54,9 +51,8 @@ const AdaptiveOptics = (props) => {
         <XR50P
           title="Linear Stage"
           controlId={"stepper_linear1"}
-          footer={footer}
-          top={600}
-          left={100}
+          top={650}
+          left={1000}
         />
       )}
 
@@ -67,7 +63,6 @@ const AdaptiveOptics = (props) => {
           id={"redlaser_1"}
           controlIdTop={"redlaser_top_1"}
           controlIdBottom={"redlaser_bottom_1"}
-          footer={footer}
           top={450}
           left={1600}
         />
@@ -79,9 +74,8 @@ const AdaptiveOptics = (props) => {
           title="Power Supply"
           id={"relay_laser"}
           controlId={"relay_laser"}
-          footer={footer}
-          top={50}
-          left={1600}
+          top={570}
+          left={50}
         />
       )}
 
@@ -90,9 +84,8 @@ const AdaptiveOptics = (props) => {
         <Pinhole
           title="Pinhole"
           controlId={"stepper_pinhole"}
-          footer={footer}
-          top={100}
-          left={1100}
+          top={600}
+          left={400}
         />
       )}
 
@@ -103,9 +96,8 @@ const AdaptiveOptics = (props) => {
           id={"eye_1"}
           controlIdTop={"stepper_eye_diop"}
           controlIdBottom={"stepper_eye_pupil"}
-          footer={footer}
-          top={50}
-          left={150}
+          top={40}
+          left={400}
         />
       )}
 
@@ -114,9 +106,8 @@ const AdaptiveOptics = (props) => {
         <Rotary
           title="Target Changing Stage"
           controlId={"stepper_rotation"}
-          footer={footer}
-          top={550}
-          left={150}
+          top={100}
+          left={80}
         />
       )}
       {/* Beam Splitter*/}
@@ -124,9 +115,8 @@ const AdaptiveOptics = (props) => {
         <DescriptionOnlyComponent
           title="Beam Splitter"
           controlId={"beamSplitter"}
-          footer={footer}
-          top={50}
-          left={150}
+          top={350}
+          left={1250}
         />
       )}
       {/* Prism*/}
@@ -134,9 +124,8 @@ const AdaptiveOptics = (props) => {
         <DescriptionOnlyComponent
           title="Prism"
           controlId={"prism"}
-          footer={footer}
           top={50}
-          left={150}
+          left={1250}
         />
       )}
       {/* Telescope in front of the Adaptive Mirror */}
@@ -144,9 +133,8 @@ const AdaptiveOptics = (props) => {
         <DescriptionOnlyComponent
           title="Telescope 1"
           controlId={"telescope_1"}
-          footer={footer}
-          top={550}
-          left={900}
+          top={50}
+          left={1600}
         />
       )}
 
@@ -157,9 +145,8 @@ const AdaptiveOptics = (props) => {
           id={"telescope_2"}
           controlIdTop={"stepper_tele_x"}
           controlIdBottom={"stepper_tele_y"}
-          footer={footer}
-          top={50}
-          left={150}
+          top={500}
+          left={1550}
         />
       )}
       {/* Screen*/}
@@ -167,9 +154,8 @@ const AdaptiveOptics = (props) => {
         <Screen
           title="Retractable Screen"
           controlId={"servo_screen"}
-          footer={footer}
-          top={50}
-          left={150}
+          top={550}
+          left={700}
         />
       )}
       {/* Adaptive Mirror*/}
@@ -177,9 +163,8 @@ const AdaptiveOptics = (props) => {
         <DescriptionOnlyComponent
           title="Adaptive Mirror"
           controlId={"mirror_1"}
-          footer={footer}
-          top={50}
-          left={150}
+          top={650}
+          left={1280}
         />
       )}
       {/* Shack-Hartmann-Sensor*/}
@@ -189,9 +174,8 @@ const AdaptiveOptics = (props) => {
           id={"wavesensor_1"}
           controlIdTop={"stepper_sensor_a"}
           controlIdBottom={"stepper_sensor_b"}
-          footer={footer}
           top={50}
-          left={150}
+          left={750}
         />
       )}
       {/* Shack-Hartmann-Sensor*/}
@@ -199,13 +183,10 @@ const AdaptiveOptics = (props) => {
         <ESPCam
           title="ESP Cam"
           id={"cam_screen"}
-          footer={footer}
           top={50}
-          left={150}
+          left={550}
         />
       )}
-
-
     </div>
   );
 };

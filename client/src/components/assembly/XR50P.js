@@ -23,8 +23,8 @@ const XR50P = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
+      height='240px'
       width='250px'
-      height='235px'
       background={XR50P_bg}
 
     >
