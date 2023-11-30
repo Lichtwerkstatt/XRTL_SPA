@@ -30,17 +30,26 @@ import Lens from "../../assembly/Lens";
  */
 
 const MichelsonInterferometer = (props) => {
+  // Set the scaling factor for better window placement on smaller screens
+  var height = window.innerHeight / 955;
+  var width = window.innerWidth / 1920;
 
-  var height = window.innerHeight;
-  var width = window.innerWidth;
-  var halfWidth = width / 2;
-  var topHigh = String(height - (height / 3 * 2.7))
-  var topHighMiddle = String(height - (height / 1.4))
-  var topMiddle = String(height - (height / 2.15))
-  var leftLeft = String(width - (halfWidth * 1.9))
-  var leftMiddle = String(width - (halfWidth * 1.8))
-  var leftRight = String(width - (halfWidth * 0.47))
-  var leftMiddleRight = String(width - (halfWidth * 0.4))
+  // Scaling of the setting height of the windows depending on the reference value
+  const scaleComponenteWindowHeight = (value) => {
+    return parseInt(height * value)
+  }
+
+  // Scaling of the setting left of the windows depending on the reference value
+  const scaleComponenteWindowWidth = (value) => {
+    value = parseInt(width * value)
+
+    // prevents windows from being created outside or over the calculated screen width
+    if ((value + 250) > window.innerWidth) {
+      let dif = value + 275 - window.innerWidth;
+      value = value - dif;
+    }
+    return value
+  }
 
   return (
     <div>
@@ -51,8 +60,8 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
-          top={topHigh}
-          left={leftLeft}
+          top={scaleComponenteWindowHeight(570)}
+          left={scaleComponenteWindowWidth(500)}
         />
       )}
       {/* Linear stage */}
@@ -60,8 +69,8 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Linear Movable Mirror"
           controlId={'linear_1'}
-          top={topMiddle}
-          left={leftMiddle}
+          top={scaleComponenteWindowHeight(50)}
+          left={scaleComponenteWindowWidth(100)}
         />
       )}
       {/* Laser ctrl */}
@@ -71,8 +80,8 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
-          top={topMiddle}
-          left={leftMiddleRight}
+          top={scaleComponenteWindowHeight(550)}
+          left={scaleComponenteWindowWidth(1550)}
         />
       )}
       {/* Laser power */}
@@ -81,8 +90,9 @@ const MichelsonInterferometer = (props) => {
           title="Power Supply"
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
-          top={topHigh}
-          left={leftRight}
+          top={scaleComponenteWindowHeight(100)}
+          left={scaleComponenteWindowWidth(1500)}
+
         />
       )}
       {/* Cam1 */}
@@ -90,8 +100,8 @@ const MichelsonInterferometer = (props) => {
         <ESPCam
           title="Screen"
           controlId={'screen'}
-          top={topHighMiddle}
-          left={'500'}
+          top={scaleComponenteWindowHeight(50)}
+          left={scaleComponenteWindowWidth(600)}
         />
       )}
 
@@ -100,8 +110,8 @@ const MichelsonInterferometer = (props) => {
         <Beamsplitter
           title="Retract. Beam Splitter"
           controlId={'beamSplitter'}
-          top={100}
-          left={1000}
+          top={scaleComponenteWindowHeight(600)}
+          left={scaleComponenteWindowWidth(850)}
         />
       )}
 
@@ -110,19 +120,18 @@ const MichelsonInterferometer = (props) => {
         <Lens
           title="Lens"
           controlId={'lens'}
-          top={600}
-          left={1100}
+          top={scaleComponenteWindowHeight(550)}
+          left={scaleComponenteWindowWidth(1200)}
         />
       )}
-
 
       {/* BeamSplitter Cube */}
       {props.selected.has('bscube') && (
         <Cube
           title="Beam Splitter"
           controlId={'bscube'}
-          top={100}
-          left={600}
+          top={scaleComponenteWindowHeight(450)}
+          left={scaleComponenteWindowWidth(100)}
         />
       )}
     </div>
