@@ -7,7 +7,6 @@ import Laser from '../../assembly/Laser';
 import KM100 from '../../assembly/KM100';
 import SM1ZP from '../../assembly/SM1ZP';
 
-
 /**
  * Experiment Setup Component
  *
