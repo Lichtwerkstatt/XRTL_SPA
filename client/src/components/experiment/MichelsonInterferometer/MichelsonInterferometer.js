@@ -30,26 +30,6 @@ import Lens from "../../assembly/Lens";
  */
 
 const MichelsonInterferometer = (props) => {
-  // Set the scaling factor for better window placement on smaller screens
-  var height = window.innerHeight / 955;
-  var width = window.innerWidth / 1920;
-
-  // Scaling of the setting height of the windows depending on the reference value
-  const scaleComponenteWindowHeight = (value) => {
-    return parseInt(height * value)
-  }
-
-  // Scaling of the setting left of the windows depending on the reference value
-  const scaleComponenteWindowWidth = (value) => {
-    value = parseInt(width * value)
-
-    // prevents windows from being created outside or over the calculated screen width
-    if ((value + 250) > window.innerWidth) {
-      let dif = value + 275 - window.innerWidth;
-      value = value - dif;
-    }
-    return value
-  }
 
   return (
     <div>
@@ -60,19 +40,21 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
-          top={scaleComponenteWindowHeight(570)}
-          left={scaleComponenteWindowWidth(500)}
+          top={570}
+          left={500}
         />
       )}
+
       {/* Linear stage */}
       {props.selected.has('linear_1') && (
         <SM1ZP
           title="Linear Movable Mirror"
           controlId={'linear_1'}
-          top={scaleComponenteWindowHeight(50)}
-          left={scaleComponenteWindowWidth(100)}
+          top={50}
+          left={100}
         />
       )}
+
       {/* Laser ctrl */}
       {props.selected.has('greenlaser_1') && (
         <KM100
@@ -80,28 +62,30 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
-          top={scaleComponenteWindowHeight(550)}
-          left={scaleComponenteWindowWidth(1550)}
+          top={550}
+          left={1550}
         />
       )}
+
       {/* Laser power */}
       {props.selected.has('greenlaserPower_1') && (
         <LaserCtrl
           title="Power Supply"
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
-          top={scaleComponenteWindowHeight(100)}
-          left={scaleComponenteWindowWidth(1500)}
+          top={100}
+          left={1500}
 
         />
       )}
+      
       {/* Cam1 */}
       {props.selected.has('screen') && (
         <ESPCam
           title="Screen"
           controlId={'screen'}
-          top={scaleComponenteWindowHeight(50)}
-          left={scaleComponenteWindowWidth(600)}
+          top={50}
+          left={600}
         />
       )}
 
@@ -110,8 +94,8 @@ const MichelsonInterferometer = (props) => {
         <Beamsplitter
           title="Retract. Beam Splitter"
           controlId={'beamSplitter'}
-          top={scaleComponenteWindowHeight(600)}
-          left={scaleComponenteWindowWidth(850)}
+          top={600}
+          left={850}
         />
       )}
 
@@ -120,8 +104,8 @@ const MichelsonInterferometer = (props) => {
         <Lens
           title="Lens"
           controlId={'lens'}
-          top={scaleComponenteWindowHeight(550)}
-          left={scaleComponenteWindowWidth(1200)}
+          top={550}
+          left={1200}
         />
       )}
 
@@ -130,8 +114,8 @@ const MichelsonInterferometer = (props) => {
         <Cube
           title="Beam Splitter"
           controlId={'bscube'}
-          top={scaleComponenteWindowHeight(450)}
-          left={scaleComponenteWindowWidth(100)}
+          top={450}
+          left={100}
         />
       )}
     </div>

@@ -2,19 +2,30 @@
  * Basic style rules that apply to the entire React app
  */
 
- @font-face {
-  font-family: 'Roboto';
+@font-face {
+  font-family: 'Roboto', sans-serif;
   src: local('Roboto'), url('./components/media/fonts/RobotoCondensed-Regular.ttf') format('truetype');
 }
 
-html, body {
+html,
+body {
   font-family: 'Roboto';
   padding: 0;
   margin: 0;
 }
 
-body {background-color:black;}
+body {
+  background-color: black;
+}
 
-a {color:aquamarine}
-a:hover {color:white}
-a:visited {color:aqua}
+a {
+  color: aquamarine
+}
+
+a:hover {
+  color: white
+}
+
+a:visited {
+  color: aqua
+}
