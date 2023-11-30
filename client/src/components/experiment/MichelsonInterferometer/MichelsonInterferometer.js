@@ -6,9 +6,30 @@ import SM1ZP from "../../assembly/SM1ZP";
 import Cube from "../../assembly/BsCube";
 import Lens from "../../assembly/Lens";
 
+/**
+ * Experiment Setup Component
+ *
+ * @description Within this React component, all experiment components are intialised and the renderings of their windows, if selected, are handled.
+ * In addition, important variables are passed to the individual components.
+ *
+ * @param {Set} selected - Set contains the controlIds of the component windows that are currently opened/rendered
+ * 
+ * @example 
+          {props.selected.has(// general controlId) && ( // handles the renderings of the window, if the variable selected includes the controlId 
+          <COMPONENT  
+          title= // Title within the topper of the component window
+          id={// general controlId of the component}
+          controlIdTop={// controlId for the upper stepper motor}
+          controlIdBottom={// controlId for the lower stepper motor}
+          top={// Positioning at the height of the window}
+          left={// Positioning at the width of the window}
+        />
+        )}
+ *
+ * @returns {React.ReactElement} Experiment setup component
+ */
+
 const MichelsonInterferometer = (props) => {
-  let footer = "Initializing..."
-  var zero = "0"
 
   var height = window.innerHeight;
   var width = window.innerWidth;
@@ -30,9 +51,6 @@ const MichelsonInterferometer = (props) => {
           id={'KM100_1'}
           controlIdTop={'KM100_top_1'}
           controlIdBottom={'KM100_bottom_1'}
-          rotationTop={zero}
-          rotationBottom={zero}
-          footer={footer}
           top={topHigh}
           left={leftLeft}
         />
@@ -42,8 +60,6 @@ const MichelsonInterferometer = (props) => {
         <SM1ZP
           title="Linear Movable Mirror"
           controlId={'linear_1'}
-          footer={footer}
-          rotation={zero}
           top={topMiddle}
           left={leftMiddle}
         />
@@ -55,9 +71,6 @@ const MichelsonInterferometer = (props) => {
           id={'greenlaser_1'}
           controlIdTop={'greenlaser_top_1'}
           controlIdBottom={'greenlaser_bottom_1'}
-          rotationTop={zero}
-          rotationBottom={zero}
-          footer={footer}
           top={topMiddle}
           left={leftMiddleRight}
         />
@@ -68,7 +81,6 @@ const MichelsonInterferometer = (props) => {
           title="Power Supply"
           id={'greenlaserPower_1'}
           controlId={'greenlaser_1'}
-          footer={footer}
           top={topHigh}
           left={leftRight}
         />
@@ -78,7 +90,6 @@ const MichelsonInterferometer = (props) => {
         <ESPCam
           title="Screen"
           controlId={'screen'}
-          footer={footer}
           top={topHighMiddle}
           left={'500'}
         />
@@ -89,7 +100,6 @@ const MichelsonInterferometer = (props) => {
         <Beamsplitter
           title="Retract. Beam Splitter"
           controlId={'beamSplitter'}
-          footer={footer}
           top={100}
           left={1000}
         />
@@ -100,7 +110,6 @@ const MichelsonInterferometer = (props) => {
         <Lens
           title="Lens"
           controlId={'lens'}
-          footer={footer}
           top={600}
           left={1100}
         />
@@ -112,7 +121,6 @@ const MichelsonInterferometer = (props) => {
         <Cube
           title="Beam Splitter"
           controlId={'bscube'}
-          footer={footer}
           top={100}
           left={600}
         />
