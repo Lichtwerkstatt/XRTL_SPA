@@ -1,7 +1,7 @@
-import { OrbitControls, Environment, Billboard } from "@react-three/drei";
-//import Model2d from "../../experiment/AdaptiveOptics/MIS1_2D_control";
-import { useSocketContext } from "../../../services/SocketContext";
+import { OrbitControls, Environment } from "@react-three/drei";
 import Model3d from "../../experiment/MichelsonInterferometer/MI_230201";
+import { useSocketContext } from "../../../services/SocketContext";
+import Model2d from "../../experiment/2D Model/2D_MI_Overlay";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
@@ -20,7 +20,7 @@ const VirtualLayer = (...props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
-  if (appCtx.showVirtualLayer) {
+  if (!appCtx.showVirtualLayer) {
     // 3D model of the experiment
     return (
       /* Handles the colour gradient of the background */
@@ -55,33 +55,13 @@ const VirtualLayer = (...props) => {
       </Canvas>
     );
   } else {
+    // To display the OverviewCam as a VirtualLayer
     return (
-      <Canvas
-        style={{
-          position: "absolute",
-          background: "linear-gradient(Teal, Black)",
-          width: "100%",
-          height: "100%",
-        }}
-        colorManagement
-        camera={{ position: [0, 0, 5], fov: 40 }}
-      >
-        <Suspense fallback={null}>
-    
-          <Environment files="../hdri/autoshop.hdr" />
-
-          {/* <pointLight /> */}
-          <Billboard>
-            {/* Intialisation of the 2D model with the hitboxes and transfer of the most important parameters required within this class. */}
-           {/*  <Model2d
-              toggleSelect={appCtx.toggleSelectedComp}
-              selected={appCtx.selectedComps}
-              showTags={appCtx.showTags}
-              socket={socketCtx.socket}
-            /> */}
-          </Billboard>
-        </Suspense>
-      </Canvas>
+      <Model2d
+        toggleSelect={appCtx.toggleSelectedComp}
+        selected={appCtx.selectedComps}
+        socket={socketCtx.socket}
+      />
     );
   }
 };

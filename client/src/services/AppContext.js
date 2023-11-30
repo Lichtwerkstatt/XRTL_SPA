@@ -18,10 +18,9 @@ export function useAppContext() {
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
   const [roomComponent, setRoomComponent] = useState(new Set());
-  const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [showVirtualLayer, setShowVirtualLayer] = useState(false);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
-  const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
@@ -76,11 +75,6 @@ export function AppContextProvider({ children }) {
     } catch (e) { }
   }
 
-  // Controls the 3D experiment ambient rotation
-  const toggleAutoRotate = () => {
-    setAutoRotate(!autoRotate);
-  };
-
   // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
@@ -131,8 +125,6 @@ export function AppContextProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
-        autoRotate,
-        toggleAutoRotate,
         showVirtualLayer,
         toggleShowVirtualLayer,
         selectedComps,

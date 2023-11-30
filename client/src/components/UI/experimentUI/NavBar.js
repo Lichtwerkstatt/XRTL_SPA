@@ -1,13 +1,13 @@
-import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useSocketContext } from '../../../services/SocketContext'
-import { useAppContext } from '../../../services/AppContext'
-import { ImEnter, ImExit } from 'react-icons/im'
-import { GiLaserWarning } from 'react-icons/gi'
-import styles from '../CSS/NavBar.module.css'
-import { theme } from './../templates/Theme'
-import { BsCamera } from 'react-icons/bs'
+import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
+import { BsCamera , BsBox } from 'react-icons/bs';
+import { ImEnter, ImExit } from 'react-icons/im';
+import { GiLaserWarning } from 'react-icons/gi';
+import { MdInfoOutline } from 'react-icons/md';
+import styles from '../CSS/NavBar.module.css';
+import { theme } from './../templates/Theme';
 import { FaTags } from 'react-icons/fa';
 import { memo, useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -28,13 +28,14 @@ const NavBar = () => {
     // Icon colors intialization and change of these, if condition is fulfilled
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
-    let autoRotateColor = '';
-    if (appCtx.autoRotate) { autoRotateColor = 'white' }
+   
     let showTagsColor = '';
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
+    let showVirtualLayerColor = '';
+    if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -165,8 +166,8 @@ const NavBar = () => {
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
-                        <Tooltip title='Rotation'>
-                            <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
+                        <Tooltip title='Model'>
+                            <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Labels'>

@@ -22,7 +22,6 @@ import SM1ZP from '../../assembly/SM1ZP';
           id={// general controlId of the component}
           controlIdTop={// controlId for the upper stepper motor}
           controlIdBottom={// controlId for the lower stepper motor}
-          footer={// Intialisation text of the footer}
           top={// Positioning at the height of the window}
           left={// Positioning at the width of the window}
         />
