@@ -1,12 +1,13 @@
+import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
 import { ThemeProvider, Button, IconButton, Typography } from '@mui/material';
 import MicrowaveOutlinedIcon from '@mui/icons-material/MicrowaveOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
-import HeaterSettings from '../templates/HeaterSettings';
 import styles from '../CSS/HeaterCtrl.module.css';
 import { theme } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
+import Select from '../templates/Select';
 import Slider from '../templates/Slider';
 import Switch from '../templates/Switch';
 import propTypes from "prop-types";
@@ -34,27 +35,42 @@ const HeaterCtrl = (props) => {
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
+    // List contains all possible selection options for the drop-down menu for setting the average time 
+    const averageTimeList = {
+        100: 100,
+        500: 500,
+        1000: 1000,
+        2000: 2000
+    }
+
+    // List contains all possible selection options for the drop-down menu for setting the update time 
+    const updateTimeList = {
+        1000: 1,
+        5000: 5,
+        10000: 10
+    }
+
     // Handles the change of the window size when clicking on the setting icon
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
 
         if (props.setting) {
-            document.getElementById('smallTemp').style.display = 'block'
-            document.getElementById('temp').style.display = 'none'
+            document.getElementById('heaterSetting').style.left = '300px'
+            document.getElementById('temp').style.left = '65px';
         } else {
-            document.getElementById('smallTemp').style.display = 'none'
-            document.getElementById('temp').style.display = 'block'
+            document.getElementById('heaterSetting').style.left = '620px';
+            document.getElementById('temp').style.left = '225px';
         }
     }
 
     useEffect(() => {
         // Handles the window size when opening the component window.
-        if (props.setting) {
-            document.getElementById('smallTemp').style.display = 'none'
-            document.getElementById('temp').style.display = 'block'
+        if (!props.setting) {
+            document.getElementById('heaterSetting').style.left = '300px'
+            document.getElementById('temp').style.left = '65px'
         } else {
-            document.getElementById('smallTemp').style.display = 'block'
-            document.getElementById('temp').style.display = 'none'
+            document.getElementById('heaterSetting').style.left = '620px';
+            document.getElementById('temp').style.left = '225px';
         }
 
         const status = (payload) => {
@@ -115,45 +131,37 @@ const HeaterCtrl = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            {/* Full size window */}
-            <div id={'temp'} style={{ display: 'none' }}>
+            {/* Temperature display and the button for unfolding the settings */}
+            <div className={styles.Temp}>
+                <Typography id='temp' variant='h2'>{temp}</Typography>
+                <IconButton id={'heaterSetting'} onClick={hiddenSetting}  >
+                    <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                </IconButton>
+            </div>
+
+            {/* Left-hand setting section for the termistor */}
+            <div className={styles.Canvas1}>
+                <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
+                <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+            </div>
+
+            {/* Switch for switching on the thermistor */}
+            <div className={styles.Switch} >
+                <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+            </div>
+
+            {/* Right side of the settings, which is only displayed if setting is true, making the component window larger */}
+            {props.setting &&
                 <div className={styles.Temp}>
-                    <Typography id='temp' variant='h2'>{temp}</Typography>
-                    <IconButton onClick={hiddenSetting}  >
-                        <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
-                    </IconButton>
+                    <div className={styles.Canvas2}>
+                        <Button sx={{ fontSize: 17, marginLeft: -34, marginTop: -4, marginBottom: 10 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
+                        <div className={styles.Select}>
+                            <Select sx={{ zIndex: 1500, marginBottom: -10 }} title='Average time (ms)' component={props.component} online={onlineStatus} option='averageTime' selectValue={averageTime} list={averageTimeList} />
+                            <Select title='Update time (s)' component={props.component} online={onlineStatus} option='updateTime' selectValue={updateTime} list={updateTimeList} />
+                        </div>
+                    </div>
                 </div>
-                <div className={styles.Canvas1}>
-                    <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                    <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
-                </div>
-
-                <div className={styles.Switch} >
-                    <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
-                </div>
-                <HeaterSettings online={true} component={props.componentT} updateTime={updateTime} averageTime={averageTime} />
-            </div>
-
-            {/* Small format window */}
-            <div id={'smallTemp'} >
-                <div className={styles.TempSmall}>
-                    <Typography id='temp' variant='h2'>{temp}</Typography>
-                    <IconButton onClick={hiddenSetting}  >
-                        <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
-                    </IconButton>
-                </div>
-
-                <div className={styles.Canvas1}>
-                    <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                    <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
-                </div>
-
-                <div className={styles.SwitchTemp} >
-                    <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
-                </div>
-
-            </div>
-
+            }
         </ThemeProvider>
     )
 }
