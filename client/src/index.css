@@ -3,7 +3,7 @@
  */
 
 @font-face {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto';
   src: local('Roboto'), url('./components/media/fonts/RobotoCondensed-Regular.ttf') format('truetype');
 }
 
