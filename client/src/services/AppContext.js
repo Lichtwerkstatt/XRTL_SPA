@@ -135,12 +135,12 @@ export function AppContextProvider({ children }) {
     setManualPage(newVal)
   }
 
-  // To trun the light source next to the experiment on or off
+  // To turn the light source next to the experiment on or off
   const toggleHandleLightSource = () => {
     setLightSource(!lightSource)
 
     socket.emit("command", {
-      controlId: 'lightSource',
+      controlId: 'relay_light',
       userId: username,
       switch: lightSource
     });
