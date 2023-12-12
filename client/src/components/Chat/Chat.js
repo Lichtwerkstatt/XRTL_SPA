@@ -268,27 +268,32 @@ const Chat = () => {
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
+          gray: false
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
           frameSize: 10
         })
 
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
-          exposure: 800,
+          brightness: 0 // (-2,2)
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          contrast: -1, // (-2,2)
           color: socketCtx.fontColor,
         })
 
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
-          contrast: 1,
-          color: socketCtx.fontColor,
-        })
-
-        socketCtx.socket.emit("command", {
-          userId: 'XRTL',
-          controlId: 'overview',
-          exposure: 1200,
+          exposure: 1000, // (0,1200)
           color: socketCtx.fontColor,
         })
 
