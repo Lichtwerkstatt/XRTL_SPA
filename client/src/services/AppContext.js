@@ -139,11 +139,14 @@ export function AppContextProvider({ children }) {
   const toggleHandleLightSource = () => {
     setLightSource(!lightSource)
 
-    socket.emit("command", {
-      controlId: 'relay_light',
-      userId: username,
-      switch: lightSource
-    });
+    try {
+      socket.emit("command", {
+        controlId: 'relay_light',
+        userId: username,
+        switch: lightSource
+      });
+    }
+    catch (e) { }
 
   }
 
