@@ -121,6 +121,20 @@ const Chat = () => {
           })
         }
       }
+      // Resetting selected components to their "factory settings"
+      else if (message === '!cam_reset') {
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Attention the reset for overview cam was emited!', color: '#FF7373' });
+
+
+        socketCtx.socket.emit('command', {
+          userId: socketCtx.username,
+          controlId: 'overview',
+          reset: true
+        })
+
+      }
+
+
 
       // Runs through a showcase scenario 
       else if (message === '!showcase' || message === '!s') {
