@@ -21,6 +21,7 @@ export function AppContextProvider({ children }) {
   const [showVirtualLayer, setShowVirtualLayer] = useState(false);
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [lightSource, setLightSource] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
   const [showTags, setShowTags] = useState(true);
@@ -121,6 +122,18 @@ export function AppContextProvider({ children }) {
     setUnderConstruction(newVal)
   }
 
+    // To turn the light source next to the experiment on or off
+    const toggleHandleLightSource = () => {
+      setLightSource(!lightSource)
+  
+      socket.emit("command", {
+        controlId: 'relay_light',
+        userId: username,
+        switch: lightSource
+      });
+  
+    }
+
   // Contains all variables, which can be accessed within a React component, if this ContextProvider is imported
   return (
     <AppContext.Provider
@@ -153,6 +166,8 @@ export function AppContextProvider({ children }) {
         setUsername,
         underConstruction,
         toggleunderConstruction,
+        lightSource,
+        toggleHandleLightSource,
       }}
     >
       {children}

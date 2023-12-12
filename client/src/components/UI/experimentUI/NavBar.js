@@ -2,13 +2,13 @@ import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/materia
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
-import { BsCamera , BsBox } from 'react-icons/bs';
+import { FaTags, FaLightbulb } from 'react-icons/fa';
+import { BsCamera, BsBox } from 'react-icons/bs';
 import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi';
 import { MdInfoOutline } from 'react-icons/md';
 import styles from '../CSS/NavBar.module.css';
 import { theme } from './../templates/Theme';
-import { FaTags } from 'react-icons/fa';
 import { memo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { isEqual } from 'lodash';
@@ -28,7 +28,7 @@ const NavBar = () => {
     // Icon colors intialization and change of these, if condition is fulfilled
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
-   
+
     let showTagsColor = '';
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
@@ -36,6 +36,8 @@ const NavBar = () => {
     let showInfoWindowColor = '';
     let showVirtualLayerColor = '';
     if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    let lightSource = '';
+    if (appCtx.lightSource) { lightSource = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -75,7 +77,7 @@ const NavBar = () => {
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab</h1>
-                
+
                 <div className={styles.navMenuLaser}>
                     <h3>Overlay:</h3>
 
@@ -172,6 +174,10 @@ const NavBar = () => {
 
                         <Tooltip title='Labels'>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Light Source'>
+                            <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 
                         <Tooltip title='Webcam'>
