@@ -122,17 +122,18 @@ export function AppContextProvider({ children }) {
     setUnderConstruction(newVal)
   }
 
-    // To turn the light source next to the experiment on or off
-    const toggleHandleLightSource = () => {
-      setLightSource(!lightSource)
-  
+  // To turn the light source next to the experiment on or off
+  const toggleHandleLightSource = () => {
+    setLightSource(!lightSource)
+
+    try {
       socket.emit("command", {
         controlId: 'relay_light',
         userId: username,
         switch: lightSource
       });
-  
-    }
+    } catch (e) { }
+  }
 
   // Contains all variables, which can be accessed within a React component, if this ContextProvider is imported
   return (
