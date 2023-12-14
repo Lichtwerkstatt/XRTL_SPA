@@ -17,7 +17,7 @@ export function useAppContext() {
  */
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
-  const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  const [showVirtualLayer, setShowVirtualLayer] = useState(false);
   const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -26,6 +26,7 @@ export function AppContextProvider({ children }) {
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [manualPage, setManualPage] = useState(1);
+  const [welcomePage, setWelcomePage] = useState(1);
   const [showBeam, setShowBeam] = useState(false);
   const [showTags, setShowTags] = useState(true);
   const [showCam, setShowCam] = useState(false);
@@ -136,6 +137,11 @@ export function AppContextProvider({ children }) {
     setUnderConstruction(newVal)
   }
 
+  // Contains the page of the Task window which was displayed, when the window was closed
+  const toggleSetWelcomePage = (newVal) => {
+    setWelcomePage(newVal)
+  }
+
 
   // Contains the page of the Task window which was displayed, when the window was closed
   const toggleSetManualPage = (newVal) => {
@@ -174,6 +180,8 @@ export function AppContextProvider({ children }) {
         toggleunderConstruction,
         manualPage,
         toggleSetManualPage,
+        welcomePage,
+        toggleSetWelcomePage,
         username,
         setUsername,
         socket,

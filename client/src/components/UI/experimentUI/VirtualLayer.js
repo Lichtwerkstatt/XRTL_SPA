@@ -21,7 +21,7 @@ const VirtualLayer = (props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
-  if (appCtx.showVirtualLayer) {
+  if (!appCtx.showVirtualLayer) {
 
     // 3D model of the experiment
     return (

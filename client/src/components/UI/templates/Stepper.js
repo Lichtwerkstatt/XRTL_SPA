@@ -66,8 +66,10 @@ const StepperCtrl = (props) => {
         document.getElementById(String(buttonValue)).style.display = 'none'
         document.getElementById(String(buttonValue + 1)).style.display = 'block'
 
-        if (props.component) {
+        if (props.component === "manual") {
             appCtx.toggleSetManualPage(activeStep + 1)
+        } else if (props.component === "welcome") {
+            appCtx.toggleSetWelcomePage(activeStep + 1)
         }
     };
 
@@ -83,6 +85,9 @@ const StepperCtrl = (props) => {
 
         if (props.component) {
             appCtx.toggleSetManualPage(activeStep - 1)
+        } else if (props.component === "welcome") {
+            appCtx.toggleSetWelcomePage(activeStep + 1)
+
         }
     };
 
