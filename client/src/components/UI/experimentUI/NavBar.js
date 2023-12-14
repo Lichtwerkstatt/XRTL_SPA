@@ -85,7 +85,6 @@ const NavBar = () => {
     // Handles changing the VirtualLayer and, if necessary, closes the OverviewCam window if it is open.
     const handleOverviewCam = () => {
         if (!appCtx.showVirtualLayer && appCtx.showCam) {
-            console.log(appCtx.showCam)
             appCtx.toggleCam();
         }
         appCtx.toggleShowVirtualLayer()
