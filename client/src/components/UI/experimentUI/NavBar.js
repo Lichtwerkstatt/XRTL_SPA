@@ -50,6 +50,21 @@ const NavBar = () => {
         setMobileVersion(null);
     };
 
+    // Prevents the OverviewCam window from being opened when the OverviewCam stream is displayed as a VirtualLayer
+    const handleOverviewCam = () => {
+        if (!appCtx.showVirtualLayer) {
+            appCtx.toggleCam();
+        }
+    };
+
+    // Handles changing the VirtualLayer and, if necessary, closes the OverviewCam window if it is open.
+    const handleVirtualLayer = () => {
+        if (!appCtx.showVirtualLayer && appCtx.showCam) {
+            appCtx.toggleCam();
+        }
+        appCtx.toggleShowVirtualLayer()
+    }
+
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
@@ -68,11 +83,11 @@ const NavBar = () => {
                         </Tooltip>
 
                         <Tooltip title='Cam'>
-                            <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                            <li onClick={handleOverviewCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Model'>
-                            <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
+                            <li onClick={handleVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Beam Path'>
