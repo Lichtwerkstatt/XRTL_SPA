@@ -122,7 +122,7 @@ const NavBar = () => {
                         open={openLED}
                         onClose={handleLED}
                     >
-                        {/* Do not display the red or white LED */}
+                        {/* To display the red or white LED */}
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('none');
@@ -132,12 +132,14 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('white');
+                            appCtx.toggleShowBeam('off');
                         }} disableRipple>White</MenuItem>
 
                         {/* Display the red LED */}
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('red');
+                            appCtx.toggleShowBeam('off');
                         }} disableRipple>Red</MenuItem>
                     </Menu>
 
@@ -166,6 +168,7 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             closeLaserBeam();
                             appCtx.toggleShowBeam('on');
+                            appCtx.toggleShowLED('none');
                         }} disableRipple >On</MenuItem>
                         <MenuItem onClick={() => {
                             closeLaserBeam();
@@ -174,6 +177,7 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             closeLaserBeam();
                             appCtx.toggleShowBeam('split');
+                            appCtx.toggleShowLED('none');
                         }} disableRipple>Beamsplitter</MenuItem>
                     </Menu>
                 </div>
