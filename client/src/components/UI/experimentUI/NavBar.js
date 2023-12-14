@@ -34,6 +34,7 @@ const NavBar = () => {
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
+    if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
     let showVirtualLayerColor = '';
     if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
     let lightSource = '';
@@ -73,6 +74,23 @@ const NavBar = () => {
         setLaserBeam(null);
     };
 
+    // Prevents the OverviewCam window from being opened when the OverviewCam stream is displayed as a VirtualLayer
+    const handleVirtualLayer = () => {
+        if (!appCtx.showVirtualLayer) {
+            appCtx.toggleCam();
+            cameraStatusColor = 'gray'
+        }
+    };
+
+    // Handles changing the VirtualLayer and, if necessary, closes the OverviewCam window if it is open.
+    const handleOverviewCam = () => {
+        if (!appCtx.showVirtualLayer && appCtx.showCam) {
+            console.log(appCtx.showCam)
+            appCtx.toggleCam();
+        }
+        appCtx.toggleShowVirtualLayer()
+    }
+
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
@@ -108,7 +126,7 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('none');
-                        }} disableRipple >None</MenuItem>
+                        }} disableRipple>None</MenuItem>
 
                         {/* Display the white LED */}
                         <MenuItem onClick={() => {
@@ -169,7 +187,7 @@ const NavBar = () => {
                         </Tooltip>
 
                         <Tooltip title='Model'>
-                            <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
+                            <li onClick={handleOverviewCam}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Labels'>
@@ -181,7 +199,8 @@ const NavBar = () => {
                         </Tooltip>
 
                         <Tooltip title='Webcam'>
-                            <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                            <li onClick={handleVirtualLayer}
+                            ><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Information'>
@@ -255,8 +274,8 @@ const NavBar = () => {
 
                     </Menu>
                 </div>
-            </ThemeProvider>
-        </div>
+            </ThemeProvider >
+        </div >
     );
 }
 export default memo(NavBar, isEqual)
