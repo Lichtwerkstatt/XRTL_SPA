@@ -99,7 +99,7 @@ const Chat = () => {
         //Response from the server and formatting of the message, which then finally appears as a chat message within the chat.
         socketCtx.socket.on('updateUser', (payload) => {
           var user = ''
-          console.log(payload)
+
           for (var i = 1; i < payload.length; i += 2) {
             user += payload[i] + ', '
           }
@@ -133,8 +133,6 @@ const Chat = () => {
         })
 
       }
-
-
 
       // Runs through a showcase scenario 
       else if (message === '!showcase' || message === '!s') {

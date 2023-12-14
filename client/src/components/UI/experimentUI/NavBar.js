@@ -3,12 +3,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext';
 import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
-import { ImEnter, ImExit } from 'react-icons/im'
+import { FaTags, FaLightbulb } from 'react-icons/fa';
+import { BsCamera, BsBox } from 'react-icons/bs';
+import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
-import { BsCamera, BsBox } from 'react-icons/bs'
-import { FaTags } from 'react-icons/fa';
 import { memo, useState } from 'react';
 import { isEqual } from 'lodash';
 
@@ -38,6 +38,8 @@ const NavBar = () => {
     if (appCtx.showBeam) { showBeamColor = 'white' }
     let showVirtualLayerColor = '';
     if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    let lightSource = '';
+    if (appCtx.lightSource) { lightSource = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -80,6 +82,10 @@ const NavBar = () => {
 
                         <Tooltip title='Labels'>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
+                        </Tooltip>
+
+                        <Tooltip title='Light Source'>
+                            <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 
                         <Tooltip title='Cam'>
@@ -135,6 +141,7 @@ const NavBar = () => {
                             {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
                             {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowTags();
@@ -142,6 +149,15 @@ const NavBar = () => {
                             <FaTags size={25} style={{ paddingRight: '20px' }} />
                             Labels
                         </MenuItem>
+
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleHandleLightSource();
+                        }} disableRipple>
+                            <FaLightbulb size={25} style={{ paddingRight: '20px' }} />
+                            Light Source
+                        </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowManualWindow();
@@ -149,6 +165,7 @@ const NavBar = () => {
                             <MdOutlineMenuBook size={26} style={{ paddingRight: '20px' }} />
                             Manual
                         </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleCam();
@@ -156,6 +173,7 @@ const NavBar = () => {
                             <BsCamera size={26} style={{ paddingRight: '20px' }} />
                             Cam
                         </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowInfoWindow();

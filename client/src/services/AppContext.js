@@ -23,6 +23,7 @@ export function AppContextProvider({ children }) {
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
   const [showWelcomeWindow, setShowWelcome] = useState(true);
+  const [lightSource, setLightSource] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [manualPage, setManualPage] = useState(1);
@@ -148,6 +149,18 @@ export function AppContextProvider({ children }) {
     setManualPage(newVal)
   }
 
+  const toggleHandleLightSource = () => {
+    setLightSource(!lightSource)
+
+    try {
+      socket.emit("command", {
+        controlId: 'relay_light',
+        userId: username,
+        switch: lightSource
+      });
+    } catch (e) { }
+  }
+
   // Contains all variables, which can be accessed within a React component, if this ContextProvider is imported
   return (
     <AppContext.Provider
@@ -185,7 +198,9 @@ export function AppContextProvider({ children }) {
         username,
         setUsername,
         socket,
-        setSocket
+        setSocket,
+        lightSource,
+        toggleHandleLightSource,
       }}
     >
       {children}
