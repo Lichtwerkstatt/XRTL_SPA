@@ -62,7 +62,6 @@ const Window = (props) => {
   const scaleComponenteWindowWidth = (value) => {
     value = parseInt(width * value)
 
-    console.log(Number(props.width))
     // prevents windows from being created outside or over the calculated screen width
     if ((value + 250) > window.innerWidth) {
       let dif = value + 275 - window.innerWidth;
