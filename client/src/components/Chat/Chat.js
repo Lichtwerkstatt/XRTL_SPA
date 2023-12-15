@@ -266,6 +266,12 @@ const Chat = () => {
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
+          frameSize: 5
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
           gray: false
         })
 
@@ -297,6 +303,20 @@ const Chat = () => {
 
         setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
       }
+
+      else if (message === '!cam5') {
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          frameSize: 5
+        })}
+
+      else if (message === '!cam10') {
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          frameSize: 10
+        })} 
 
       else if (message === '!component' || message === '!components') {
         socketCtx.socket.emit("updateComponents");
