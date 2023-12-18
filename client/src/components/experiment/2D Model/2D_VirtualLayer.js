@@ -99,8 +99,7 @@ const Overlay = (props) => {
                         onMouseEnter={(area) => enterArea(area)}
                         onMouseLeave={(area) => leaveArea(area)}
                         lineWidth={2}
-                        strokeColor={"white"}
-
+                        strokeColor={"#01bd7d"}
                         width={window.innerWidth}
                         height={window.innerHeight}
                     />
