@@ -13,27 +13,27 @@ const CamWindow = () => {
     var height = 0;
 
     if (0 < width && width < 576) {
-        width = '350px'
-        height = '260px'
+        width = '350'
+        height = '260'
     }
     else if (576 < width && width < 768) {
-        width = '510px'
-        height = '340px'
+        width = '510'
+        height = '340'
     } else {
-        width = '600px'
-        height = '400px'
+        width = '600'
+        height = '400'
     }
 
 
     return (
         <Window
             header={'Top View of Experiment'}
-            top={'200'}
-            left={'650'}
+            top={200}
+            left={650}
             id={'overview'}
             componentList={['overview']}
-            width={width}
-            height={height}
+            width={width+'px'}
+            height={height+'px'}
             footer={'none'}
             topper={'none'}
         >

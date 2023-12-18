@@ -75,7 +75,7 @@ const NavBar = () => {
     };
 
     // Prevents the OverviewCam window from being opened when the OverviewCam stream is displayed as a VirtualLayer
-    const handleVirtualLayer = () => {
+    const handleOverviewCam  = () => {
         if (!appCtx.showVirtualLayer) {
             appCtx.toggleCam();
             cameraStatusColor = 'gray'
@@ -83,7 +83,7 @@ const NavBar = () => {
     };
 
     // Handles changing the VirtualLayer and, if necessary, closes the OverviewCam window if it is open.
-    const handleOverviewCam = () => {
+    const handleVirtualLayer = () => {
         if (!appCtx.showVirtualLayer && appCtx.showCam) {
             appCtx.toggleCam();
         }
@@ -190,7 +190,7 @@ const NavBar = () => {
                         </Tooltip>
 
                         <Tooltip title='Model'>
-                            <li onClick={handleOverviewCam}><BsBox size={26} color={showVirtualLayerColor} /></li>
+                            <li onClick={handleVirtualLayer }><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Labels'>
@@ -202,7 +202,7 @@ const NavBar = () => {
                         </Tooltip>
 
                         <Tooltip title='Webcam'>
-                            <li onClick={handleVirtualLayer}
+                            <li onClick={handleOverviewCam}
                             ><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
