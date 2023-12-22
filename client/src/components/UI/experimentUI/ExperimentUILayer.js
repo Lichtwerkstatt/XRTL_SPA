@@ -1,4 +1,4 @@
-import AdaptiveOptics from "../../experiment/AdaptiveOptics/AdaptiveOptics";
+import Fundamentals from "../../experiment/Fundamentals/Fundamental";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
@@ -69,7 +69,7 @@ const ExperimentUILayer = () => {
       {appCtx.showInfoWindow && <InfoWindow />}
       {appCtx.showCam && <CamWindow />}
       {appCtx.showManualWindow && <ManualWindow />}
-      <AdaptiveOptics
+      <Fundamentals
         selected={appCtx.selectedComps}
       />
     </Fragment>

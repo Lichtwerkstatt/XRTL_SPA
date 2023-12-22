@@ -3,7 +3,7 @@ import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
 import { ThemeProvider, Tooltip } from '@mui/material';
 import { FaTags, FaLightbulb } from 'react-icons/fa';
-import { BsCamera, BsBox } from 'react-icons/bs';
+import { BsCamera, /* BsBox */ } from 'react-icons/bs';
 import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi';
 import styles from '../CSS/NavBar.module.css';
@@ -34,8 +34,8 @@ const NavBar = () => {
     if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
     let showBeamColor = '';
     if (appCtx.showBeam) { showBeamColor = 'white' }
-    let showVirtualLayerColor = '';
-    if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    /*     let showVirtualLayerColor = '';
+        if (!appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' } */
     let showManualWindowColor = '';
     if (appCtx.showManualWindow) { showManualWindowColor = 'white' }
     let lightSource = '';
@@ -44,7 +44,7 @@ const NavBar = () => {
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
-                <h1>XR TwinLab - Adaptive Optics</h1>
+                <h1>XR TwinLab - Fundamentals</h1>
                 {/* If underConstruction, then the following is displayed */}
                 {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
 
@@ -63,9 +63,9 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Model'>
+                        {/*                         <Tooltip title='Model'>
                             <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         <Tooltip title='Beam Path'>
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>

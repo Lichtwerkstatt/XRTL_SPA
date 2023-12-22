@@ -16,7 +16,7 @@ export function useAppContext() {
  */
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
-  const [showVirtualLayer, setShowVirtualLayer] = useState(true);
+  /*   const [showVirtualLayer, setShowVirtualLayer] = useState(true); */
   const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -84,10 +84,10 @@ export function AppContextProvider({ children }) {
     setAutoRotate(!autoRotate);
   };
 
-  // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
-  const toggleShowVirtualLayer = () => {
-    setShowVirtualLayer(!showVirtualLayer);
-  };
+  /*   // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
+    const toggleShowVirtualLayer = () => {
+      setShowVirtualLayer(!showVirtualLayer);
+    }; */
 
   // Operats the display of the labels and descriptions of the experiment components
   const toggleShowTags = () => {
@@ -141,7 +141,7 @@ export function AppContextProvider({ children }) {
 
     try {
       socket.emit("command", {
-        controlId: 'lightSource',
+        controlId: 'relay_light',
         userId: username,
         switch: lightSource
       });
@@ -158,8 +158,8 @@ export function AppContextProvider({ children }) {
       value={{
         autoRotate,
         toggleAutoRotate,
-        showVirtualLayer,
-        toggleShowVirtualLayer,
+        /*         showVirtualLayer,
+                toggleShowVirtualLayer, */
         selectedComps,
         toggleSelectedComp,
         logs,

@@ -1,7 +1,6 @@
-import { OrbitControls, Environment, Billboard } from "@react-three/drei";
-import Model2d from "../../experiment/AdaptiveOptics/MIS1_2D_control";
+import { Environment, Billboard } from "@react-three/drei";
+import Model2d from "../../experiment/Fundamentals/2D_control";
 import { useSocketContext } from "../../../services/SocketContext";
-import Model3d from "../../experiment/AdaptiveOptics/AO_230803";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
@@ -20,86 +19,42 @@ const VirtualLayer = (...props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
-  if (appCtx.showVirtualLayer) {
-    // 3D model of the experiment
-    return (
-      /* Handles the colour gradient of the background */
-      <Canvas
-        style={{
-          position: "absolute",
-          background: "linear-gradient(Teal, Black)",
-          width: "100%",
-          height: "100%",
-        }}
-        /* Enable the automatic conversion of colors according to the renderer's configured color space */
-        colorManagement
-        softShadows
-        /* Positioning of the viewpoint */
-        camera={{ position: [5, 4, 5], fov: 30 }}
-      >
-        {/* Display a fallback until its children have finished loading */}
-        <Suspense fallback={null}>
-          <Environment files="../hdri/autoshop.hdr" />
-          {/* Handles the ambient rotation of the experiment */}
-          <OrbitControls autoRotate={appCtx.autoRotate} />
-          {/* Intialisation of the 3D model and transfer of the most important parameters required within this class. */}
-          <Model3d
-            toggleSelect={appCtx.toggleSelectedComp}
-            selected={appCtx.selectedComps}
-            showTags={appCtx.showTags}
-            showBeam={appCtx.showBeam}
-            socket={socketCtx.socket}
-          />
-        </Suspense>
-      </Canvas>
-    );
-  } else {
-    // Hier kommt die Camera hin!
-    // socketCtx.socket.emit("command", {
-    //   userId: socketCtx.username,
-    //   controlId: props.component,
-    //   getStatus: true,
-    // });
 
-    // appCtx.toogleRoomComp(props.component, true);
-
-    // socketCtx.socket.on("data", Settings.data);
-
-    return (
-      <Canvas
-        style={{
-          position: "absolute",
-          background: "linear-gradient(Teal, Black)",
-          width: "100%",
-          height: "100%",
-        }}
-        colorManagement
-        camera={{ position: [0, 0, 5], fov: 40 }}
-      >
-        <Suspense fallback={null}>
-          {/* <canvas
+  return (
+    <Canvas
+      style={{
+        position: "absolute",
+        background: "linear-gradient(Teal, Black)",
+        width: "100%",
+        height: "100%",
+      }}
+      colorManagement
+      camera={{ position: [0, 0, 5], fov: 40 }}
+    >
+      <Suspense fallback={null}>
+        {/* <canvas
             id="Canvas"
             width={props.width}
             height={props.height}
             style={{ borderRadius: "5px", backgroundSize: "cover" }}
           /> */}
 
-          <Environment files="../hdri/autoshop.hdr" />
+        <Environment files="../hdri/autoshop.hdr" />
 
-          {/* <pointLight /> */}
-          <Billboard>
-            {/* Intialisation of the 2D model with the hitboxes and transfer of the most important parameters required within this class. */}
-            <Model2d
-              toggleSelect={appCtx.toggleSelectedComp}
-              selected={appCtx.selectedComps}
-              showTags={appCtx.showTags}
-              socket={socketCtx.socket}
-            />
-          </Billboard>
-        </Suspense>
-      </Canvas>
-    );
-  }
-};
+        {/* <pointLight /> */}
+        <Billboard>
+          {/* Intialisation of the 2D model with the hitboxes and transfer of the most important parameters required within this class. */}
+          <Model2d
+            toggleSelect={appCtx.toggleSelectedComp}
+            selected={appCtx.selectedComps}
+            showTags={appCtx.showTags}
+            socket={socketCtx.socket}
+          />
+        </Billboard>
+      </Suspense>
+    </Canvas>
+  );
+}
+
 
 export default VirtualLayer;

@@ -1,13 +1,7 @@
 import LegalNotice from './LegalNotice';
-import Telescope1 from './Telescope_1';
-import Telescope2 from './Telescope_2';
-import AdaptiveMirror from './AdaptiveMirror';
-import SHS from './SHS';
 import PowerSupply from './PowerSupply';
 import LinearStage from './LinearStage';
-import RetractableScreen from './RetractableScreen';
 import BeamSplitter from './BeamSplitter';
-import Prism from './Prism';
 import propTypes from "prop-types";
 
 /**
@@ -30,15 +24,9 @@ const DescriptionHandler = (props) => {
 
     const renderOption = {
         info: <LegalNotice height={props.height} />,
-        telescope_1: <Telescope1 height={props.height} />,
-        telescope_2: <Telescope2 height={props.height} />,
-        mirror_1: <AdaptiveMirror height={props.height} />,
-        sensor_1: <SHS height={props.height} />,
         relay_laser: <PowerSupply height={props.height} />,
         stepper_linear1: <LinearStage height={props.height} />,
-        servo_screen: <RetractableScreen height={props.height} />,
         beamSplitter: <BeamSplitter height={props.height} />,
-        prism: <Prism height={props.height} />,
     }
 
     return (

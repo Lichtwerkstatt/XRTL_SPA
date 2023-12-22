@@ -1,12 +1,8 @@
 import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import Screen from "../../assembly/RetracatableScreen";
-import ESPCam from "../../assembly/ESPCamStream";
-import Pinhole from "../../assembly/Pinhole";
 import LaserCtrl from "../../assembly/Laser";
-import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
-import Eye from "../../assembly/Eye";
 
 /**
  * Experiment Setup Component
@@ -31,7 +27,7 @@ import Eye from "../../assembly/Eye";
  *
  * @returns {React.ReactElement} Experiment setup component
  */
-const AdaptiveOptics = (props) => {
+const Fundamentals = (props) => {
   let footer = "Initializing...";
 
   return (
@@ -85,40 +81,6 @@ const AdaptiveOptics = (props) => {
         />
       )}
 
-      {/* Pinhole */}
-      {props.selected.has("stepper_pinhole") && (
-        <Pinhole
-          title="Pinhole"
-          controlId={"stepper_pinhole"}
-          footer={footer}
-          top={100}
-          left={1100}
-        />
-      )}
-
-      {/* Phantom eye*/}
-      {props.selected.has("eye_1") && (
-        <Eye
-          title="Artificial Eye"
-          id={"eye_1"}
-          controlIdTop={"stepper_eye_diop"}
-          controlIdBottom={"stepper_eye_pupil"}
-          footer={footer}
-          top={50}
-          left={150}
-        />
-      )}
-
-      {/* Rotary stage of the eye*/}
-      {props.selected.has("stepper_rotation") && (
-        <Rotary
-          title="Target Changing Stage"
-          controlId={"stepper_rotation"}
-          footer={footer}
-          top={550}
-          left={150}
-        />
-      )}
       {/* Beam Splitter*/}
       {props.selected.has("beamSplitter") && (
         <DescriptionOnlyComponent
@@ -129,39 +91,7 @@ const AdaptiveOptics = (props) => {
           left={150}
         />
       )}
-      {/* Prism*/}
-      {props.selected.has("prism") && (
-        <DescriptionOnlyComponent
-          title="Prism"
-          controlId={"prism"}
-          footer={footer}
-          top={50}
-          left={150}
-        />
-      )}
-      {/* Telescope in front of the Adaptive Mirror */}
-      {props.selected.has("telescope_1") && (
-        <DescriptionOnlyComponent
-          title="Telescope 1"
-          controlId={"telescope_1"}
-          footer={footer}
-          top={550}
-          left={900}
-        />
-      )}
 
-      {/* Telescope in front of the Wavefront Sensor*/}
-      {props.selected.has("telescope_2") && (
-        <KM100
-          title="Telescope 2"
-          id={"telescope_2"}
-          controlIdTop={"stepper_tele_x"}
-          controlIdBottom={"stepper_tele_y"}
-          footer={footer}
-          top={50}
-          left={150}
-        />
-      )}
       {/* Screen*/}
       {props.selected.has("servo_screen") && (
         <Screen
@@ -172,41 +102,10 @@ const AdaptiveOptics = (props) => {
           left={150}
         />
       )}
-      {/* Adaptive Mirror*/}
-      {props.selected.has("mirror_1") && (
-        <DescriptionOnlyComponent
-          title="Adaptive Mirror"
-          controlId={"mirror_1"}
-          footer={footer}
-          top={50}
-          left={150}
-        />
-      )}
-      {/* Shack-Hartmann-Sensor*/}
-      {props.selected.has("wavesensor_1") && (
-        <KM100
-          title="Wavefront Sensor"
-          id={"wavesensor_1"}
-          controlIdTop={"stepper_sensor_a"}
-          controlIdBottom={"stepper_sensor_b"}
-          footer={footer}
-          top={50}
-          left={150}
-        />
-      )}
-      {/* Shack-Hartmann-Sensor*/}
-      {props.selected.has("cam_screen") && (
-        <ESPCam
-          title="ESP Cam"
-          id={"cam_screen"}
-          footer={footer}
-          top={50}
-          left={150}
-        />
-      )}
+
 
 
     </div>
   );
 };
-export default AdaptiveOptics;
+export default Fundamentals;
