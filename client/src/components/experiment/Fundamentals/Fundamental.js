@@ -2,7 +2,6 @@ import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import Screen from "../../assembly/RetracatableScreen";
 import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
-import XR50P from "../../assembly/XR50P";
 
 /**
  * Experiment Setup Component
@@ -42,17 +41,6 @@ const Fundamentals = (props) => {
           footer={footer}
           top={600}
           left={920}
-        />
-      )}
-
-      {/* Linear stage */}
-      {props.selected.has("stepper_linear1") && (
-        <XR50P
-          title="Linear Stage"
-          controlId={"stepper_linear1"}
-          footer={footer}
-          top={600}
-          left={100}
         />
       )}
 
