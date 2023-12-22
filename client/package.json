@@ -29,14 +29,16 @@
   },
   "scripts": {
     "start": "set PORT=3005 && react-scripts start",
-    "start_18": "SET NODE_OPTIONS=--openssl-legacy-provider && set PORT=3005 &&  react-scripts start",
+    "start_18": "SET NODE_OPTIONS=--openssl-legacy-provider && set PORT=3005 && react-scripts start",
     "server": "node app_server.js",
     "build": "react-scripts build",
+    "build_18": "SET NODE_OPTIONS=--openssl-legacy-provider && set PORT=3005 && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "stop": "pkill --signal SIGINT XRTLApp"
+    "stop": "pkill --signal SIGINT XRTLApp",
+    "docs": "jsdoc -c ./jsdoc.json"
   },
   "eslintConfig": {
     "extends": [

@@ -3,15 +3,23 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSocketContext } from '../../../services/SocketContext';
 import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
-import { ImEnter, ImExit } from 'react-icons/im'
+import { FaTags, FaLightbulb } from 'react-icons/fa';
+import { BsCamera, BsBox } from 'react-icons/bs';
+import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi'
 import styles from '../CSS/NavBar.module.css'
 import { theme } from './../templates/Theme'
-import { BsCamera, BsBox } from 'react-icons/bs'
-import { FaTags } from 'react-icons/fa';
 import { memo, useState } from 'react';
 import { isEqual } from 'lodash';
 
+/**
+ * Navigation bar component 
+ * 
+ * @description React components returns the styling and functionality of the navigation bar. Within this file all onclick events 
+ * on the buttons in the bar and their color changes are also handled.
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
+ */
 const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
@@ -30,6 +38,8 @@ const NavBar = () => {
     if (appCtx.showBeam) { showBeamColor = 'white' }
     let showVirtualLayerColor = '';
     if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    let lightSource = '';
+    if (appCtx.lightSource) { lightSource = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -41,6 +51,21 @@ const NavBar = () => {
     const closeMobileVersion = () => {
         setMobileVersion(null);
     };
+
+    // Prevents the OverviewCam window from being opened when the OverviewCam stream is displayed as a VirtualLayer
+    const handleOverviewCam = () => {
+        if (!appCtx.showVirtualLayer) {
+            appCtx.toggleCam();
+        }
+    };
+
+    // Handles changing the VirtualLayer and, if necessary, closes the OverviewCam window if it is open.
+    const handleVirtualLayer = () => {
+        if (!appCtx.showVirtualLayer && appCtx.showCam) {
+            appCtx.toggleCam();
+        }
+        appCtx.toggleShowVirtualLayer()
+    }
 
     return (
         <div id='navbar' className={styles.navbar} >
@@ -59,12 +84,16 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
 
+                        <Tooltip title='Light Source'>
+                            <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
+                        </Tooltip>
+
                         <Tooltip title='Cam'>
-                            <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                            <li onClick={handleOverviewCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Model'>
-                            <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
+                            <li onClick={handleVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Beam Path'>
@@ -112,6 +141,7 @@ const NavBar = () => {
                             {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
                             {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowTags();
@@ -119,6 +149,15 @@ const NavBar = () => {
                             <FaTags size={25} style={{ paddingRight: '20px' }} />
                             Labels
                         </MenuItem>
+
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleHandleLightSource();
+                        }} disableRipple>
+                            <FaLightbulb size={25} style={{ paddingRight: '20px' }} />
+                            Light Source
+                        </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowManualWindow();
@@ -126,6 +165,7 @@ const NavBar = () => {
                             <MdOutlineMenuBook size={26} style={{ paddingRight: '20px' }} />
                             Manual
                         </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleCam();
@@ -133,6 +173,7 @@ const NavBar = () => {
                             <BsCamera size={26} style={{ paddingRight: '20px' }} />
                             Cam
                         </MenuItem>
+
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowInfoWindow();

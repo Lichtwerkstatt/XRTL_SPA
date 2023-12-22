@@ -4,33 +4,48 @@ import { Alert, Snackbar } from '@mui/material';
 
 const PopUpContext = createContext();
 
+// Creates the PopUpContext, so that it can be accessed/imported from other React components
 export function usePopUpContext() {
     return useContext(PopUpContext);
 }
-
+/**
+ * PopUp Window 
+ *
+ * @description  This React component is a ContextProvider, which means that every function within this class can be executed whenever 
+ * this class is imported. It can only be imported in React components, which are in the hierachie below the PopUpcontext. This class 
+ * included a function for the cration of a new PopUp window with the transmitted text and typ. The type can be for example warning, success
+ * or info.
+ * 
+ *
+ * @returns {React.Context} PopUp context
+ */
 export function PopUpContextProvider({ children }) {
-    const [showPopUp, setShowPopUp] = useState(false);
-    const [text, setText] = useState('');
-    const [type, setType] = useState('info');
+    const [showPopUp, setShowPopUp] = useState(false); // displays popUp window, if true
+    const [text, setText] = useState(''); // represents the text displayed in the popUp window
+    const [type, setType] = useState('info'); // sets the type of the popUp window, e.g. warning, info, success
 
     const socketCtx = useSocketContext();
 
+    // Display of popUp window, if microcontroller sends a error message to the server
     socketCtx.socket.on('error', error => {
         setShowPopUp(true);
         setText(error.errmsg);
         setType('error');
     })
 
-    socketCtx.socket.on('newUserInfo', (payload) => {
+    // Display of popUp widnow, if new web application client has connected to the server
+    socketCtx.socket.on('newUser', (payload) => {
         toggleShowPopUp(payload + ' has joined the experiment!', 'info')
     })
 
+    // Creates a new popUp Window with transmitted text and type
     const toggleShowPopUp = (newText, newType) => {
         setText(newText);
         setType(newType);
-        setShowPopUp(!showPopUp);
+        setShowPopUp(true);
     }
 
+    // Handles the closing of the popUp window, if the the close icon is clicked
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -38,6 +53,7 @@ export function PopUpContextProvider({ children }) {
         setShowPopUp(false);
     };
 
+    //Styling of the popUp window 
     return (
         <PopUpContext.Provider
             value={{
@@ -53,4 +69,4 @@ export function PopUpContextProvider({ children }) {
             {children}
         </PopUpContext.Provider>
     );
-} 
+}

@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/experiment/2D Model/2D_MI_Overlay.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#BeamSplitter">BeamSplitter</a></li><li><a href="global.html#BeamSplitterCtrl">BeamSplitterCtrl</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionAdaptiveMirror">DescriptionAdaptiveMirror</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionCubeLegalNotice">DescriptionCubeLegalNotice</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionLinearStage">DescriptionLinearStage</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPrism">DescriptionPrism</a></li><li><a href="global.html#DescriptionRetractableScreen">DescriptionRetractableScreen</a></li><li><a href="global.html#DescriptionSHS">DescriptionSHS</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptionTelescope1">DescriptionTelescope1</a></li><li><a href="global.html#DescriptionTelescope2">DescriptionTelescope2</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Eye">Eye</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ManualWindow">ManualWindow</a></li><li><a href="global.html#ManualWindowContent">ManualWindowContent</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#Overlay">Overlay</a></li><li><a href="global.html#Pinhole">Pinhole</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#Screen">Screen</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#WelcomeWindow">WelcomeWindow</a></li><li><a href="global.html#WelcomeWindowContent">WelcomeWindowContent</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#XR50P">XR50P</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/experiment/2D Model/2D_MI_Overlay.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import ESPCam from "../../UI/templates/ESPCam";
+import OfflineModel from "./media/MI_2D.png";
+import Model from "./media/Transparent.png";
+import ImageMapper from "react-img-mapper";
+import React, { useState } from "react";
+import "./CSS/2D_MI_Overlay.css";
+
+/**
+ * OverviewCam Stream as a 2D-VirtualLayer
+ * 
+ * @description Within this React component, the OverviewCam stream is set as the background of the React app, and hitboxes are placed where the optical components are. 
+ * Clicking on these boxes will open the corresponding component window. If there is no connection to the server, an image is used instead of the stream.
+ * 
+ * @param {Function} toggleSelect - Adds the clicked component to the set in AppContext
+ * @param {Set} selected - Contains the components whose component windows are currently open.
+ * @param {Socket} socket - Holds the connection to the server
+ * 
+ * @returns {React.ReactElement} 2D VirtualLayer
+ */
+
+const Overlay = (props) => {
+    const [hoveredArea, setHoveredArea] = useState(null);
+
+    // Determines the width and height of the browser window
+    let screen_width = window.innerWidth;
+    let screen_height = window.innerHeight;
+
+    // Function scales the rectangular hitboxes according to the height and width of the browser window 
+    // Requires as input the coordinates of the box in the form of (x_start, y_end, x_end, y_end)
+    // Output: scaled array in the form (x_start, y_end, x_end, y_end)
+    const boxScaling = (arrayToScale) => {
+        let hitbox_scaling = [screen_width / 1920, screen_height / 955, screen_width / 1920, screen_height / 955];
+        arrayToScale = arrayToScale.map((value, index) => parseInt(value * hitbox_scaling[index]));
+
+        return arrayToScale;
+    }
+
+    // Definition of all hitboxes by specifying the controlId, the shape, the coordinates (x_start, y_start, x_end, y_end) 
+    // and the text to be displayed when hovering over the box.
+    let MAP = {
+        name: "MI_Simple_imagemap",
+        areas: [
+            { controlId: "screen", shape: "rect", coords: boxScaling([350, 0, 1050, 100]), desc: 'Screen' },
+            { controlId: "linear_1", shape: "rect", coords: boxScaling([5, 480, 180, 740]), desc: 'Linear Movable Mirror' },
+            { controlId: "beamblocker1", shape: "rect", coords: boxScaling([200, 500, 300, 680]), desc: 'Beam Blocker' },
+            { controlId: "KM100_1", shape: "rect", coords: boxScaling([450, 800, 740, 1000]), desc: 'Reference Mirror' },
+            { controlId: "beamSplitter", shape: "rect", coords: boxScaling([730, 400, 940, 600]), desc: 'Retract. Beam Splitter' },
+            { controlId: "beamblocker2", shape: "rect", coords: boxScaling([680, 700, 900, 800]), desc: 'Beam Blocker' },
+            { controlId: "greenlaserPower_1", shape: "rect", coords: boxScaling([1350, 200, 1600, 450]), desc: 'Power Supply' },
+            { controlId: "greenlaser_1", shape: "rect", coords: boxScaling([1450, 400, 1700, 600]), desc: 'Laser Alignment' },
+        ]
+    };
+
+    // Returns the position where the text to be displayed is to be placed
+    const getTipPosition = (area) => {
+        return { top: `${area.center[1]}px`, left: `${area.center[0] - 20}px` };
+    }
+
+    // Adds the clicked component to the set within the AppContext, whereupon the corresponding component window is rendered.
+    const clicked = (area) => {
+        props.toggleSelect(area.controlId);
+        // console.log('You clicked on ' + area.controlId + ' !');
+    }
+
+    // Displays the hitbox and the description when hovering over the box with the mouse
+    const enterArea = (area) => {
+        setHoveredArea(area);
+        //console.log("Going in...");
+    }
+
+    // Ensures that the hitbox and the description are no longer displayed when you leave the box area with the mouse
+    const leaveArea = (area) => {
+        setHoveredArea(null);
+        //console.log("Going out...");
+    }
+
+    return (
+        &lt;div className="grid">
+            &lt;div className="presenter">
+                &lt;div style={{ position: 'relative', zIndex: 0 }}>
+
+                    {/* ESPCam Stream can only be displayed if there is a connection to the server. Otherwise, the OfflineModel image is used as the basis for the hitboxes (see src of the ImageMapper) */}
+                    {props.socket.connected ?
+                        &lt;ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
+                            style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                        :
+                        &lt;div />
+                    }
+
+                    {/* To render the hitboxes, the ImageMapper requires an image as a source (in this case a transparent image if there is a server connection 
+                        and a replacement image if not) and the already defined boxes, which are then projected onto the image. */}
+                    &lt;ImageMapper
+                        src={props.socket.connected ? Model : OfflineModel}
+                        map={MAP}
+                        onClick={(area) => clicked(area)}
+                        onMouseEnter={(area) => enterArea(area)}
+                        onMouseLeave={(area) => leaveArea(area)}
+                        lineWidth={2}
+                        strokeColor={"white"}
+
+                        width={window.innerWidth}
+                        height={window.innerHeight}
+                    />
+                    {/* Handles displaying the description when hovering over the box with the mouse */}
+                    {hoveredArea &amp;&amp; (
+                        &lt;span className="tooltip"
+                            style={{ ...getTipPosition(hoveredArea) }}>
+                            {hoveredArea &amp;&amp; hoveredArea.desc}
+                        &lt;/span>
+                    )}
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    )
+}
+export default Overlay;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

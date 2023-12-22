@@ -1,11 +1,21 @@
-import { ThemeProvider } from '@mui/material/styles';
 import { useSocketContext } from "../../../services/SocketContext";
+import { ThemeProvider } from '@mui/material/styles';
 import { useState, useEffect } from "react";
 import { theme } from '../templates/Theme.js';
 import Switch from '../templates/Switch';
 import { Box } from '@mui/material';
+import propTypes from "prop-types";
 
-const LaserCtrl = (props) => {
+/**
+ * LaserCtrl component
+ * 
+ * @description This React component returns a switch with Off on the left and On on the right. This component only needs the contorlId.
+ * 
+ * @param {string} component - controlId 
+ * 
+ * @returns {React.ReactElement} LaserCtrl control element
+ */
+const SwitchCtrl = (props) => {
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [switchIsOn, setSwitch] = useState(false);
   
@@ -16,7 +26,6 @@ const LaserCtrl = (props) => {
       if (payload.controlId === props.component) {
         setOnlineStatus(true)
         setSwitch(payload.status.isOn)
-        //console.log(payload)
       }
     }
 
@@ -57,4 +66,9 @@ const LaserCtrl = (props) => {
     </ThemeProvider>
   )
 }
-export default LaserCtrl
+
+SwitchCtrl.propTypes = {
+  component: propTypes.string.isRequired,
+}
+
+export default SwitchCtrl;

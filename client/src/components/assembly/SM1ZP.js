@@ -2,6 +2,20 @@ import RotaryCtrl from '../UI/CtrlUnits/RotaryCtrl';
 import SM1ZP_bg from './media/linear_outline.png';
 import Window from '../UI/experimentUI/Window';
 
+/**
+ * SM1ZP component window
+ * 
+ * @description This react component returns a window with the content for the SM1ZP component window.
+ *  
+ * @param {string} controlId - controlId
+ * @param {string} controlIdTop - controlId for the stepper motor 
+ * @param {number} rotation - Initialisation value for the control element
+ * @param {string} title - For setting the title within the window
+ * @param {number} top - For the positioning of the window 
+ * @param {number} left - For the positioning of the window 
+ * 
+ * @returns {React.ReactElement} SM1ZP component window
+ */
 const SM1ZP = (props) => {
   return (
     <Window
@@ -10,13 +24,11 @@ const SM1ZP = (props) => {
       header={props.title}
       top={props.top}
       left={props.left}
+      height='240px'
       width='250px'
-      height='235px'
       background={SM1ZP_bg}
-
     >
       <RotaryCtrl
-        rotation={props.rotation}
         component={props.controlId}
         top='35'
         left='160'

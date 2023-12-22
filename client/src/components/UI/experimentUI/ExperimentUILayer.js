@@ -1,32 +1,46 @@
 import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
-import WelcomeWindow from "../../experiment/windows/WelcomeWindow";
-import ManualWindow from "../../experiment/windows/ManualWindow";
 import { useAppContext } from "../../../services/AppContext";
 import CamWindow from "../../windows/OverviewCamWindow";
 import InfoWindow from "../../windows/InfoWindow";
-import { useEffect, Fragment, memo } from "react";
+import ManualWindow from "../../windows/ManualWindow";
+import WelcomeWindow from "../../windows/WelcomeWindow";
+import { useEffect, Fragment } from "react";
 import { isEqual } from 'lodash';
+import { memo } from "react";
 
+/**
+ *  Fragment component 
+ * 
+ * @description This React component returns several components, on one hand the information window, the overview camera window and on the other hand the 
+ * experiment class that handles the rendering of the component windows. Furthermore, within this component, the auth/authfail command is handled and the 
+ * associated pop-up windows. The underConstruction command is processed within this React component.
+ * 
+ * @returns {React.Fragment} Information window, the overview camera and experiment component  
+ */
 const ExperimentUILayer = () => {
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
   useEffect(() => {
-
+    // If authentication was successful on the server side, then auth command is received with the colour assigned by the server.
     const auth = (color) => {
       popupCtx.toggleShowPopUp('Connection successful!', 'success');
-      socketCtx.socket.emit('userId', socketCtx.username)
+      socketCtx.socket.emit('userId', socketCtx.username);
+      socketCtx.setConnected(true);
       socketCtx.setFontColor(color);
     }
 
+    // When underConstruction command is received
     const underConstruction = (payload) => {
       appCtx.toggleunderConstruction(payload);
     }
 
+    // If authentication fails on the server side because too many users are connected to the server, the authfailed command is sent to the client.
     const authFailed = () => {
+      socketCtx.setConnected(false);
       popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
     }
 
@@ -36,7 +50,8 @@ const ExperimentUILayer = () => {
 
     socketCtx.socket.on('underConstruction', underConstruction)
 
-    if (!socketCtx.socket.connected) {
+    // Prevents the rendering of the pop-up message when the web page is opened.
+    if (socketCtx.username !== '') {
       popupCtx.toggleShowPopUp('No server connection!', 'error');
     }
 
@@ -52,12 +67,11 @@ const ExperimentUILayer = () => {
 
   return (
     <Fragment>
-      {appCtx.showInfoWindow && <InfoWindow />}
       {appCtx.showWelcomeWindow && <WelcomeWindow />}
-      {appCtx.showManualWindow && <ManualWindow />}
+      {appCtx.showInfoWindow && <InfoWindow />}
       {appCtx.showCam && <CamWindow />}
+      {appCtx.showManualWindow && <ManualWindow />}
       <MichelsonInterferometer
-        toggleSelect={appCtx.toggleSelectedComp}
         selected={appCtx.selectedComps}
       />
     </Fragment>

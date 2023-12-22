@@ -1,7 +1,19 @@
 import { Html } from '@react-three/drei';
+import propTypes from "prop-types";
 import { isEqual } from 'lodash';
 import { memo } from 'react'
 
+/**
+ * Descriptive tag component
+ * 
+ * @description The React component returns the tag of a component for the 3D model. For this, the title, the description and the position within the 3D space must be specified.
+ * 
+ * @param {string} title - title of a component
+ * @param {string} description - Short description of the components
+ * @param {string} position  - Positioning of the tag
+ * 
+ * @returns {React.ReactElement} styled tag
+ */
 const DescriptiveTag = (props) => {
   const wrapperStyle = {
     color: 'white',
@@ -35,5 +47,11 @@ const DescriptiveTag = (props) => {
   </Html>
 
 };
+
+DescriptiveTag.propTypes = {
+  title: propTypes.string.isRequired,
+  description: propTypes.string.isRequired,
+  position: propTypes.array.isRequired
+}
 
 export default memo(DescriptiveTag, isEqual);

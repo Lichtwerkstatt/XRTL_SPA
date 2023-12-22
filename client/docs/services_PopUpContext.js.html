@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> services/PopUpContext.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#BeamSplitter">BeamSplitter</a></li><li><a href="global.html#BeamSplitterCtrl">BeamSplitterCtrl</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionAdaptiveMirror">DescriptionAdaptiveMirror</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionCubeLegalNotice">DescriptionCubeLegalNotice</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionLinearStage">DescriptionLinearStage</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPrism">DescriptionPrism</a></li><li><a href="global.html#DescriptionRetractableScreen">DescriptionRetractableScreen</a></li><li><a href="global.html#DescriptionSHS">DescriptionSHS</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptionTelescope1">DescriptionTelescope1</a></li><li><a href="global.html#DescriptionTelescope2">DescriptionTelescope2</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Eye">Eye</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ManualWindow">ManualWindow</a></li><li><a href="global.html#ManualWindowContent">ManualWindowContent</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#Overlay">Overlay</a></li><li><a href="global.html#Pinhole">Pinhole</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#Screen">Screen</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#WelcomeWindow">WelcomeWindow</a></li><li><a href="global.html#WelcomeWindowContent">WelcomeWindowContent</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#XR50P">XR50P</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>services/PopUpContext.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useContext, createContext } from "react";
+import { useSocketContext } from "./SocketContext";
+import { Alert, Snackbar } from '@mui/material';
+
+const PopUpContext = createContext();
+
+// Creates the PopUpContext, so that it can be accessed/imported from other React components
+export function usePopUpContext() {
+    return useContext(PopUpContext);
+}
+/**
+ * PopUp Window 
+ *
+ * @description  This React component is a ContextProvider, which means that every function within this class can be executed whenever 
+ * this class is imported. It can only be imported in React components, which are in the hierachie below the PopUpcontext. This class 
+ * included a function for the cration of a new PopUp window with the transmitted text and typ. The type can be for example warning, success
+ * or info.
+ * 
+ *
+ * @returns {React.Context} PopUp context
+ */
+export function PopUpContextProvider({ children }) {
+    const [showPopUp, setShowPopUp] = useState(false); // displays popUp window, if true
+    const [text, setText] = useState(''); // represents the text displayed in the popUp window
+    const [type, setType] = useState('info'); // sets the type of the popUp window, e.g. warning, info, success
+
+    const socketCtx = useSocketContext();
+
+    // Display of popUp window, if microcontroller sends a error message to the server
+    socketCtx.socket.on('error', error => {
+        setShowPopUp(true);
+        setText(error.errmsg);
+        setType('error');
+    })
+
+    // Display of popUp widnow, if new web application client has connected to the server
+    socketCtx.socket.on('newUser', (payload) => {
+        toggleShowPopUp(payload + ' has joined the experiment!', 'info')
+    })
+
+    // Creates a new popUp Window with transmitted text and type
+    const toggleShowPopUp = (newText, newType) => {
+        setText(newText);
+        setType(newType);
+        setShowPopUp(true);
+    }
+
+    // Handles the closing of the popUp window, if the the close icon is clicked
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setShowPopUp(false);
+    };
+
+    //Styling of the popUp window 
+    return (
+        &lt;PopUpContext.Provider
+            value={{
+                showPopUp,
+                toggleShowPopUp
+            }}
+        >
+            &lt;Snackbar open={showPopUp} autoHideDuration={2000} onClose={handleClose} >
+                &lt;div  style={{ position: 'fixed', top: '5.25%', right: '0.5%' }}>
+                    &lt;Alert variant="filled" severity={type} onClose={() => { setShowPopUp(false) }}>{text}&lt;/Alert>
+                &lt;/div>
+            &lt;/Snackbar>
+            {children}
+        &lt;/PopUpContext.Provider>
+    );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

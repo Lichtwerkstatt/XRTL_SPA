@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/experiment/ComponentDescription/ManualWindowContent.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#BeamSplitter">BeamSplitter</a></li><li><a href="global.html#BeamSplitterCtrl">BeamSplitterCtrl</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionAdaptiveMirror">DescriptionAdaptiveMirror</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionCubeLegalNotice">DescriptionCubeLegalNotice</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionLinearStage">DescriptionLinearStage</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPrism">DescriptionPrism</a></li><li><a href="global.html#DescriptionRetractableScreen">DescriptionRetractableScreen</a></li><li><a href="global.html#DescriptionSHS">DescriptionSHS</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptionTelescope1">DescriptionTelescope1</a></li><li><a href="global.html#DescriptionTelescope2">DescriptionTelescope2</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Eye">Eye</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ManualWindow">ManualWindow</a></li><li><a href="global.html#ManualWindowContent">ManualWindowContent</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#Overlay">Overlay</a></li><li><a href="global.html#Pinhole">Pinhole</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#Screen">Screen</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#WelcomeWindow">WelcomeWindow</a></li><li><a href="global.html#WelcomeWindowContent">WelcomeWindowContent</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#XR50P">XR50P</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/experiment/ComponentDescription/ManualWindowContent.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import styles from "./CSS/ManualWindowContent.module.css";
+import Stepper from "../../UI/templates/Stepper";
+import { theme } from '../../UI/templates/Theme';
+import { ThemeProvider } from '@mui/material/';
+
+/**
+ * Manual description content 
+ * 
+ * @description This window contains instructions for carrying out the experiment.
+ * 
+ * @returns {React.ReactElement} Instruction text for the experiment 
+ */
+const ManualWindowContent = (props) => {
+  return (
+    &lt;div>
+      &lt;div className={styles.mainWrapper}      >
+        {/* First Page */}
+        &lt;div id={'10'}>
+          &lt;b>1. &amp;nbsp; Introduction&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Welcome to our remote-controlled &lt;b>Michelson&amp;nbsp;Interferometer&lt;/b>! Today, we'll explore various physical effects and phenomena. Remember, this manual serves as a guide, and users can follow their own exploration path based on their interests and objectives. Enjoy your journey through the fascinating world of Michelson interferometry!
+            &lt;/li>&lt;br />
+            &lt;li>Discover who is currently engaged in experimentation with you at the &lt;b>XRTL&amp;nbsp;Showcase&lt;/b>. Simply type &lt;i>"!users"&lt;/i> in the chat (pinned on the left edge) to unveil the answer. You can communicate with them via the chat.
+            &lt;/li>&lt;br />
+            &lt;li>Discover who is currently engaged in experimentation with you at the &lt;b>XRTL&amp;nbsp;Showcase&lt;/b>. You can simply communicate with them via the chat (pinned on the left edge).
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Second Page */}
+        &lt;div id={'11'} style={{ display: 'none' }}>
+          &lt;b>2. &amp;nbsp; Overview&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Initiate your experiment by gaining an overview. Begin by accessing the live camera feed through the menu located at the top right corner. From there, you can observe the current state of the experimental setup in our showcase at the &lt;b>Abbe&amp;nbsp;School&amp;nbsp;of&amp;nbsp;Photonics&lt;/b>. Take note of the visible components and compare them with those displayed in the 3D model.
+              &lt;br /> Can you identify all of them?
+            &lt;/li>&lt;br />
+            &lt;li>Familiarize yourself with the user interface, including the power supply, mirror controls and beam splitter options. Simply tap on the individual components to display the respective control window.
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Third Page */}
+        &lt;div id={'12'} style={{ display: 'none' }}>
+          &lt;b>3.a &amp;nbsp; Laser&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Direct your attention to the &lt;b>Screen&lt;/b> and tap on it to proceed. This action will open a window displaying a live camera stream of the screen. Initially, when the laser is inactive, you will observe a gray wall.
+            &lt;/li>&lt;br />
+            &lt;li>Now, let's activate the laser. To accomplish this, tap on the &lt;b>Power&amp;nbsp;Supply&lt;/b> to reveal its control window and switch on the laser. Take a moment to observe the screen once again.
+              &lt;br />Can you perceive any changes now?
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Fourth Page */}
+        &lt;div id={'13'} style={{ display: 'none' }}>
+          &lt;b>3.b &amp;nbsp; Laser&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>You should!
+              &lt;ul>
+                &lt;br />&lt;li>If you see green concentric rings, then the &lt;b>Michelson&amp;nbsp;Interferometer&lt;/b> is well adjusted.
+                &lt;/li>&lt;br />
+                &lt;li>If you see stripes, then the reference mirror is tilted.
+                &lt;/li>&lt;br />
+                &lt;li>If you only see a green spot, then the experiment is misaligned.
+                &lt;/li>
+              &lt;/ul>
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Fifth Page */}
+        &lt;div id={'14'} style={{ display: 'none' }}>
+          &lt;b>4. &amp;nbsp; Beam Path&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Tap on the laser symbol located in the top center next to the Overview label to visualize the laser beam path within the interferometer.
+              &lt;ul>
+                &lt;br />&lt;li>The &lt;b>Lens&lt;/b> widens the beam so that a larger area on the screen can be illuminated instead of just one spot.
+                &lt;/li>&lt;br />
+                &lt;li>The &lt;b>Beam&amp;nbsp;Splitter&lt;/b> divides the beam into two partial beams. These partial beams then proceed along separate paths before ultimately reuniting at the Beam Splitter on their way towards the Screen.
+                &lt;/li>&lt;br />
+                &lt;li>The &lt;b>Linear&amp;nbsp;Movable&amp;nbsp;Mirror&lt;/b> can be used to change the path length of one partial beam.
+                &lt;/li>
+              &lt;/ul>
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Fifth Page */}
+        &lt;div id={'15'} style={{ display: 'none' }}>
+          &lt;b>5. &amp;nbsp; Basic Interference&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Prior to commencing, ensure that the experiment is set to its initial state. To accomplish this, type &lt;i>"!reset"&lt;/i> into the chat.
+            &lt;/li>&lt;br />
+            &lt;li>Start by adjusting the path length difference between the two arms of the interferometer using the &lt;b>Linear&amp;nbsp;Movable&amp;nbsp;Mirror&lt;/b>.
+            &lt;/li>&lt;br />
+            &lt;li>Observe the resulting interference pattern on the &lt;b>Screen&lt;/b>. Note the changes as you vary the path length difference.
+              &lt;br />Do the rings grow or shrink?
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Sixth Page */}
+        &lt;div id={'16'} style={{ display: 'none' }}>
+          &lt;b>6. &amp;nbsp; Tiltable Mirror&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Next, experiment with the &lt;b>Reference&amp;nbsp;Mirror&lt;/b> to change the angle of this mirror.
+            &lt;/li>&lt;br />
+            &lt;li>Observe how the tilt affects the interference pattern. You should notice a shift of the diffraction pattern center.
+              &lt;br />How does the distance between the rings change from the center to the outside?
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Seventh Page */}
+        &lt;div id={'17'} style={{ display: 'none' }}>
+          &lt;b>7. &amp;nbsp; Second Beam Splitter&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Activate the &lt;b>Retractable&amp;nbsp;Beam&amp;nbsp;Splitter&lt;/b> to observe the second output of the interferometer on the &lt;b>Screen&lt;/b>.
+            &lt;/li>&lt;br />
+            &lt;li>Engage in a comparison between the two interference patterns, while also utilizing the setup's capability to modify the patterns.
+              &lt;br />What is the relationship that exists between these two patterns?
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+        {/* Eighth Page */}
+        &lt;div id={'18'} style={{ display: 'none' }}>
+          &lt;b>8. &amp;nbsp; Conclusion&lt;/b>&lt;br />&lt;br />
+          &lt;ul>
+            &lt;li>Congratulations! You've explored a range of physical effects with our remote-controlled &lt;b>Michelson&amp;nbsp;Interferometer&lt;/b>.
+            &lt;/li>&lt;br />
+            &lt;li>Feel free to continue experimenting with the &lt;b>XRTL&amp;nbsp;Showcase&lt;/b> and exploring on your own.
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+
+      &lt;/div>
+
+      {/* Stepper at the bottom of the window */}
+      &lt;ThemeProvider theme={theme}>
+        &lt;Stepper left={'Back'} right={'Next'} buttonValue={10} length={9} component={'manual'} />
+      &lt;/ThemeProvider>
+    &lt;/div>
+  )
+}
+export default ManualWindowContent;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>
