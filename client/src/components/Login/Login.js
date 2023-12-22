@@ -5,7 +5,7 @@ import { useSocketContext } from '../../services/SocketContext';
 import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
-import styles from './CSS/Login.module.css'
+import styles from './CSS/LoginWithAccessCode.module.css'
 import { isEqual } from 'lodash';
 
 /**

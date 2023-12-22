@@ -5,7 +5,7 @@ import { useSocketContext } from '../../services/SocketContext';
 import { useAppContext } from '../../services/AppContext';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
-import styles from './CSS/Login.module.css';
+import styles from './CSS/LoginWithAccessCode.module.css';
 import { isEqual } from 'lodash';
 
 /**
@@ -18,7 +18,7 @@ import { isEqual } from 'lodash';
  */
 const Login = () => {
     // List of addresses to which a connection can be established, for quick change if work is to be done locally.
-    const connectionOption = [{ title: 'http://localhost:3000' }]
+    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl-qc.uni-jena.de/' }]
     const [connection, setConnection] = useState('');
     const [accessCode, setAccessCode] = useState('');
     const [username, setUsername] = useState('');
@@ -41,7 +41,7 @@ const Login = () => {
     // Handling the entry of the user name
     const handleChange = (event) => {
         setUsername(event.target.value);
-        setConnection(connectionOption[0].title)
+        setConnection(connectionOption[1].title)
     };
 
     // Handling of the access code entry

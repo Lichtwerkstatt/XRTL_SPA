@@ -1,11 +1,10 @@
-import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
+import MichelsonInterferometer from "../../experiment/QuantumCryptography/QuantumCryptography";
 import { useSocketContext } from "../../../services/SocketContext";
 import { usePopUpContext } from "../../../services/PopUpContext";
 import { useAppContext } from "../../../services/AppContext";
 import CamWindow from "../../windows/OverviewCamWindow";
 import InfoWindow from "../../windows/InfoWindow";
 import ManualWindow from "../../windows/ManualWindow";
-import WelcomeWindow from "../../windows/WelcomeWindow";
 import { useEffect, Fragment } from "react";
 import { isEqual } from 'lodash';
 import { memo } from "react";
@@ -67,7 +66,6 @@ const ExperimentUILayer = () => {
 
   return (
     <Fragment>
-      {appCtx.showWelcomeWindow && <WelcomeWindow />}
       {appCtx.showInfoWindow && <InfoWindow />}
       {appCtx.showCam && <CamWindow />}
       {appCtx.showManualWindow && <ManualWindow />}

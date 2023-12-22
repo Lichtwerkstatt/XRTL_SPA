@@ -5,7 +5,7 @@ import {PopUpContextProvider} from "./services/PopUpContext";
 import { AppContextProvider } from "./services/AppContext";
 import NavBar from "./components/UI/experimentUI/NavBar";
 import Console from "./components/Console/Console";
-import Login from "./components/Login/Login";
+import Login from "./components/Login/LoginWithAccessCode";
 import Chat from "./components/Chat/Chat";
 
 const App = () => {

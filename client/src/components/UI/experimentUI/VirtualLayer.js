@@ -1,4 +1,4 @@
-import Model3d from "../../experiment/MichelsonInterferometer/MIS1_230504";
+import Model3d from "../../experiment/QuantumCryptography/QC";
 import { useSocketContext } from "../../../services/SocketContext";
 import { OrbitControls, Environment, } from "@react-three/drei";
 import Model2d from "../../experiment/2D Model/2D_MI_Overlay";
