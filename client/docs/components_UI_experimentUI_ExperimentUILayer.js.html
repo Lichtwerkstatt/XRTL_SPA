@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/UI/experimentUI/ExperimentUILayer.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPowerSupply">DescriptionPowerSupply</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#Imprint">Imprint</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/UI/experimentUI/ExperimentUILayer.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import MichelsonInterferometer from "../../experiment/MichelsonInterferometer/MichelsonInterferometer";
+import { useSocketContext } from "../../../services/SocketContext";
+import { usePopUpContext } from "../../../services/PopUpContext";
+import { useAppContext } from "../../../services/AppContext";
+import CamWindow from "../../windows/OverviewCamWindow";
+import { useEffect, Fragment } from "react";
+import InfoWindow from "../../windows/InfoWindow";
+import { isEqual } from 'lodash';
+import { memo } from "react";
+
+/**
+ *  Fragment component 
+ * 
+ * @description This React component returns several components, on one hand the information window, the overview camera window and on the other hand the 
+ * experiment class that handles the rendering of the component windows. Furthermore, within this component, the auth/authfail command is handled and the 
+ * associated pop-up windows. The underConstruction command is processed within this React component.
+ * 
+ * @returns {React.Fragment} Information window, the overview camera and experiment component  
+ */
+const ExperimentUILayer = () => {
+  const socketCtx = useSocketContext();
+  const popupCtx = usePopUpContext();
+  const appCtx = useAppContext();
+
+  useEffect(() => {
+    // If authentication was successful on the server side, then auth command is received with the colour assigned by the server.
+    const auth = (color) => {
+      popupCtx.toggleShowPopUp('Connection successful!', 'success');
+      socketCtx.socket.emit('userId', socketCtx.username);
+      socketCtx.setConnected(true);
+      socketCtx.setFontColor(color);
+    }
+
+    // When underConstruction command is received
+    const underConstruction = (payload) => {
+      appCtx.toggleunderConstruction(payload);
+    }
+
+    // If authentication fails on the server side because too many users are connected to the server, the authfailed command is sent to the client.
+    const authFailed = () => {
+      socketCtx.setConnected(false);
+      popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
+    }
+
+    socketCtx.socket.on('AuthFailed', authFailed)
+
+    socketCtx.socket.on('Auth', auth);
+
+    socketCtx.socket.on('underConstruction', underConstruction)
+
+    // Prevents the rendering of the pop-up message when the web page is opened.
+    if (!socketCtx.socket.connected) {
+      popupCtx.toggleShowPopUp('No server connection!', 'error');
+    }
+
+    return () => {
+      socketCtx.socket.removeAllListeners('underConstruction', underConstruction)
+      socketCtx.socket.removeAllListeners('AuthFailed', authFailed)
+      socketCtx.socket.removeAllListeners('Auth', auth)
+
+    }
+    //Comment needed to prevent a warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketCtx.socket]);
+
+  return (
+    &lt;Fragment>
+      {appCtx.showInfoWindow &amp;&amp; &lt;InfoWindow />}
+      {appCtx.showCam &amp;&amp; &lt;CamWindow />}
+      &lt;MichelsonInterferometer
+        toggleSelect={appCtx.toggleSelectedComp}
+        selected={appCtx.selectedComps}
+      />
+    &lt;/Fragment>
+  );
+};
+export default memo(ExperimentUILayer, isEqual);</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

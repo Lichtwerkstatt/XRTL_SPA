@@ -1,31 +1,44 @@
-import { MdOutlineScreenRotation, MdInfoOutline } from 'react-icons/md';
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useSocketContext } from '../../../services/SocketContext'
-import { useAppContext } from '../../../services/AppContext'
-import { ImEnter, ImExit } from 'react-icons/im'
-import { GiLaserWarning } from 'react-icons/gi'
-import styles from '../CSS/NavBar.module.css'
-import { theme } from './../templates/Theme'
-import { BsCamera } from 'react-icons/bs'
-import { FaTags } from 'react-icons/fa';
+import { useSocketContext } from '../../../services/SocketContext';
+import { useAppContext } from '../../../services/AppContext';
+import { FaTags, FaLightbulb } from 'react-icons/fa';
+import { BsCamera, BsBox } from 'react-icons/bs';
+import { ImEnter, ImExit } from 'react-icons/im';
+import { GiLaserWarning } from 'react-icons/gi';
+import { MdInfoOutline } from 'react-icons/md';
+import styles from '../CSS/NavBar.module.css';
+import { theme } from './../templates/Theme';
 import { memo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { isEqual } from 'lodash';
 
+/**
+ * Navigation bar component 
+ * 
+ * @description React components returns the styling and functionality of the navigation bar. Within this file all onclick events 
+ * on the buttons in the bar and their color changes are also handled.
+ * 
+ * @returns {React.ReactElement} Navigation bar component  
+ */
 const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
 
+    // Icon colors intialization and change of these, if condition is fulfilled
     let connectionStatusColor = '';
     if (socketCtx.connected) { connectionStatusColor = 'white' }
-    let autoRotateColor = '';
-    if (appCtx.autoRotate) { autoRotateColor = 'white' }
+
     let showTagsColor = '';
     if (appCtx.showTags) { showTagsColor = 'white' }
     let cameraStatusColor = '';
     if (appCtx.showCam) { cameraStatusColor = 'white' }
     let showInfoWindowColor = '';
+    if (appCtx.showInfoWindow) { showInfoWindowColor = 'white' }
+    let showVirtualLayerColor = '';
+    if (appCtx.showVirtualLayer) { showVirtualLayerColor = 'white' }
+    let lightSource = '';
+    if (appCtx.lightSource) { lightSource = 'white' }
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
@@ -61,13 +74,31 @@ const NavBar = () => {
         setLaserBeam(null);
     };
 
+    // Prevents the OverviewCam window from being opened when the OverviewCam stream is displayed as a VirtualLayer
+    const handleOverviewCam  = () => {
+        if (!appCtx.showVirtualLayer) {
+            appCtx.toggleCam();
+            cameraStatusColor = 'gray'
+        }
+    };
+
+    // Handles changing the VirtualLayer and, if necessary, closes the OverviewCam window if it is open.
+    const handleVirtualLayer = () => {
+        if (!appCtx.showVirtualLayer && appCtx.showCam) {
+            appCtx.toggleCam();
+        }
+        appCtx.toggleShowVirtualLayer()
+    }
+
     return (
         <div id='navbar' className={styles.navbar} >
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab</h1>
+
                 <div className={styles.navMenuLaser}>
                     <h3>Overlay:</h3>
 
+                    {/* Drop-down menu to display the beam path of the white or red LED  */}
                     <IconButton onClick={handleClick2} variant="contained" sx={{
                         borderRadius: 1,
                         height: '33px',
@@ -90,20 +121,28 @@ const NavBar = () => {
                         open={openLED}
                         onClose={handleLED}
                     >
+                        {/* To display the red or white LED */}
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('none');
-                        }} disableRipple >None</MenuItem>
+                        }} disableRipple>None</MenuItem>
+
+                        {/* Display the white LED */}
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('white');
+                            appCtx.toggleShowBeam('off');
                         }} disableRipple>White</MenuItem>
+
+                        {/* Display the red LED */}
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('red');
+                            appCtx.toggleShowBeam('off');
                         }} disableRipple>Red</MenuItem>
                     </Menu>
 
+                    {/* Drop down menu to manage the display option of the beam path */}
                     <IconButton onClick={handleLaserBeam} variant="contained" sx={{
                         borderRadius: 1,
                         height: '33px',
@@ -117,11 +156,10 @@ const NavBar = () => {
                         <GiLaserWarning />
                     </IconButton>
 
+                    {/* To switch the beam path on or off, as well as the option when the beam splitter is in the beam path, which in turn changes the beam path. */}
                     <Menu
                         id="demo-customized-menu"
-                        MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                        }}
+                        MenuListProps={{ 'aria-labelledby': 'demo-customized-button', }}
                         anchorEl={laserBeam}
                         open={openLaserBeam}
                         onClose={closeLaserBeam}
@@ -129,6 +167,7 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             closeLaserBeam();
                             appCtx.toggleShowBeam('on');
+                            appCtx.toggleShowLED('none');
                         }} disableRipple >On</MenuItem>
                         <MenuItem onClick={() => {
                             closeLaserBeam();
@@ -137,35 +176,44 @@ const NavBar = () => {
                         <MenuItem onClick={() => {
                             closeLaserBeam();
                             appCtx.toggleShowBeam('split');
+                            appCtx.toggleShowLED('none');
                         }} disableRipple>Beamsplitter</MenuItem>
                     </Menu>
-
-
                 </div>
+
+                {/* Navigation bar if screen widther than 992 pixels
+                Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}
                 <div className={styles.navMenu}>
                     <ul>
                         <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
-                        <Tooltip title='Rotation'>
-                            <li onClick={appCtx.toggleAutoRotate}><MdOutlineScreenRotation size={26} color={autoRotateColor} /></li>
+                        <Tooltip title='Model'>
+                            <li onClick={handleVirtualLayer }><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Labels'>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Webcam'>
-                            <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                        <Tooltip title='Light Source'>
+                            <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
+
+                        <Tooltip title='Webcam'>
+                            <li onClick={handleOverviewCam}
+                            ><BsCamera size={26} color={cameraStatusColor} /></li>
+                        </Tooltip>
+
                         <Tooltip title='Information'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
-
                     </ul>
                 </div>
 
+                {/* Navigation bar if screen width is smaller than 992 pixels. 
+                Icons in the navigation bar are summarised in a drop-down menu.  */}
                 <div className={styles.mobile}>
                     <IconButton onClick={handleClick} variant="contained" sx={{
                         borderRadius: 1,
@@ -180,6 +228,7 @@ const NavBar = () => {
                         <KeyboardArrowDownIcon color={'white'} />
                     </IconButton>
 
+                    {/* Drop down menu  */}
                     <Menu
                         id="demo-customized-menu"
                         MenuListProps={{
@@ -189,6 +238,7 @@ const NavBar = () => {
                         open={openMobileVersion}
                         onClose={closeMobileVersion}
                     >
+                        {/* Button to open the login window */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin();
@@ -196,6 +246,8 @@ const NavBar = () => {
                             {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} /> : <ImEnter size={25} color={connectionStatusColor} style={{ paddingRight: '20px' }} />}
                             {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
+
+                        {/* Show/hide labels and decriptions of the experiment components */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowTags();
@@ -203,6 +255,8 @@ const NavBar = () => {
                             <FaTags size={25} style={{ paddingRight: '20px' }} />
                             Labels
                         </MenuItem>
+
+                        {/* Open the window with OverviewCam */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleCam();
@@ -210,6 +264,8 @@ const NavBar = () => {
                             <BsCamera size={26} style={{ paddingRight: '20px' }} />
                             Cam
                         </MenuItem>
+
+                        {/* Show/hide Information window */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
                             appCtx.toggleShowInfoWindow();
@@ -221,8 +277,8 @@ const NavBar = () => {
 
                     </Menu>
                 </div>
-            </ThemeProvider>
-        </div>
+            </ThemeProvider >
+        </div >
     );
 }
 export default memo(NavBar, isEqual)

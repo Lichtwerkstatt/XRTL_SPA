@@ -1,13 +1,14 @@
-@font-face {
+/* 
+ * Basic style rules that apply to the entire React app
+ */
+
+ @font-face {
   font-family: 'Roboto';
   src: local('Roboto'), url('./components/media/fonts/RobotoCondensed-Regular.ttf') format('truetype');
 }
 
-*{
-  font-family: 'Roboto';
-}
-
 html, body {
+  font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
 }

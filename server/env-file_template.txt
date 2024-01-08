@@ -1,0 +1,20 @@
+// This is an example of the content of the env file with all the variables needed by the server with mail sending function.
+
+// Keys for authentication
+KEY_1=1111111111111111111
+KEY_2=2222222222222222222
+KEY_3=3333333333333333333
+
+// Login data for mail address
+PASSWORD=password of email adresss
+EMAILUSER=user name of the email adress
+HOST=email host (SMTP server)
+
+// Emitter, reciever and content of the email  
+EMITTER= your email adress
+RECEIVER=email receiver
+SUBJECT=AO Server Restart
+TEXT_1="The adaptive optics server has been restartet. The new access codes are:
+client -"
+TEXT_2="
+admin  -"

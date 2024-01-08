@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/experiment/MichelsonInterferometer/MichelsonInterferometer.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPowerSupply">DescriptionPowerSupply</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#Imprint">Imprint</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/experiment/MichelsonInterferometer/MichelsonInterferometer.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import MultiComponentSelection from '../../assembly/MultiComponentSelection';
+import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
+import ESPCam from '../../assembly/ESPCamStream';
+import Heater from '../../assembly/Heater';
+import Rotary from '../../assembly/Rotary';
+import Laser from '../../assembly/Laser';
+import KM100 from '../../assembly/KM100';
+import SM1ZP from '../../assembly/SM1ZP';
+
+
+/**
+ * Experiment Setup Component
+ *
+ * @description Within this React component, all experiment components are intialised and the renderings of their windows, if selected, are handled.
+ * In addition, important variables are passed to the individual components.
+ *
+ * @param {Set} selected - Set contains the controlIds of the component windows that are currently opened/rendered
+ * 
+ * @example 
+          {props.selected.has(// general controlId) &amp;&amp; ( // handles the renderings of the window, if the variable selected includes the controlId 
+          &lt;COMPONENT  
+          title= // Title within the topper of the component window
+          id={// general controlId of the component}
+          controlIdTop={// controlId for the upper stepper motor}
+          controlIdBottom={// controlId for the lower stepper motor}
+          footer={// Intialisation text of the footer}
+          top={// Positioning at the height of the window}
+          left={// Positioning at the width of the window}
+        />
+        )}
+ *
+ * @returns {React.ReactElement} Experiment setup component
+ */
+const MichelsonInterferometer = (props) => {
+
+  return (
+    &lt;div>
+      {/* KM100 */}
+      {props.selected.has('KM100_1') &amp;&amp; (
+        &lt;KM100
+          title='Reference Mirror'
+          id={'KM100_1'}
+          controlIdTop={'KM100_top_1'}
+          controlIdBottom={'KM100_bottom_1'}
+          top={600}
+          left={400}
+        />
+      )}
+
+      {/* Linear stage */}
+      {props.selected.has('linear_1') &amp;&amp; (
+        &lt;SM1ZP
+          title='Linear Movable Mirror'
+          controlId={'linear_1'}
+          top={550}
+          left={50}
+        />
+      )}
+
+      {/* Rotary stage plate*/}
+      {props.selected.has('plate_rotation') &amp;&amp; (
+        &lt;Rotary
+          title='Glass Plate Rotation Stage'
+          controlId={'plate_rotation'}
+          top={650}
+          left={800}
+        />
+      )}
+
+      {/* Rotary stage Measurement Mirror*/}
+      {props.selected.has('heater_rotation') &amp;&amp; (
+        &lt;Rotary
+          title='Mirror Changing Stage'
+          controlId={'heater_rotation'}
+          top={100}
+          left={100}
+        />
+      )}
+
+      {/* Laser ctrl */}
+      {props.selected.has('greenlaser_1') &amp;&amp; (
+        &lt;KM100
+          title='Laser Alignment'
+          id={'greenlaser_1'}
+          controlIdTop={'greenlaser_top_1'}
+          controlIdBottom={'greenlaser_bottom_1'}
+          top={550}
+          left={1550}
+        />
+      )}
+
+      {/* Laser power */}
+      {props.selected.has('greenlaserPower_1') &amp;&amp; (
+        &lt;Laser
+          title='Power Supply'
+          id={'greenlaserPower_1'}
+          controlId={'greenlaser_1'}
+          top={100}
+          left={1500}
+        />
+      )}
+
+      {/* Cam1 */}
+      {props.selected.has('screen') &amp;&amp; (
+        &lt;ESPCam
+          title='Screen'
+          id={'screen'}
+          top={50}
+          left={800}
+        />
+      )}
+
+      {/* Heater */}
+      {props.selected.has('heater') &amp;&amp; (
+        &lt;Heater
+          title='Heatable Mirror Stage'
+          id={'heater'}
+          controlIdHeater={'heater'}
+          controlIdThermistor={'thermistor'}
+          top={50}
+          left={400}
+        />
+      )}
+
+      {/* Multi component slection (pinhole, beam splitter, red &amp; white LED) */}
+      {props.selected.has('experimentSelection') &amp;&amp; (
+        &lt;MultiComponentSelection
+          title='Multi Component Selection'
+          controlId={'experimentSelection'}
+          controlId2={'pinhole'}
+          controlLED={'redLED'}
+          controlLED2={'whiteLED'}
+          top={600}
+          left={1100}
+        />
+      )}
+
+      {/* Lens */}
+      {props.selected.has('lens') &amp;&amp; (
+        &lt;DescriptionOnlyComponent
+          title="Lens"
+          controlId={'lens'}
+          top={600}
+          left={1100}
+        />
+      )}
+
+
+      {/* BeamSplitter Cube */}
+      {props.selected.has('bscube') &amp;&amp; (
+        &lt;DescriptionOnlyComponent
+          title="Beam Splitter"
+          controlId={'bscube'}
+          top={100}
+          left={600}
+        />
+      )}
+
+    &lt;/div>
+  );
+};
+export default MichelsonInterferometer;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/UI/CtrlUnits/MultiCtrl.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AppContextProvider">AppContextProvider</a></li><li><a href="global.html#CamWindow">CamWindow</a></li><li><a href="global.html#Chat">Chat</a></li><li><a href="global.html#Console">Console</a></li><li><a href="global.html#Description">Description</a></li><li><a href="global.html#DescriptionBeamSplitter">DescriptionBeamSplitter</a></li><li><a href="global.html#DescriptionCube">DescriptionCube</a></li><li><a href="global.html#DescriptionESPCam">DescriptionESPCam</a></li><li><a href="global.html#DescriptionGlasPlateRotation">DescriptionGlasPlateRotation</a></li><li><a href="global.html#DescriptionHeatableMirrorStage">DescriptionHeatableMirrorStage</a></li><li><a href="global.html#DescriptionKM100">DescriptionKM100</a></li><li><a href="global.html#DescriptionLaser">DescriptionLaser</a></li><li><a href="global.html#DescriptionLaserCtrl">DescriptionLaserCtrl</a></li><li><a href="global.html#DescriptionLens">DescriptionLens</a></li><li><a href="global.html#DescriptionMirrorRotationStage">DescriptionMirrorRotationStage</a></li><li><a href="global.html#DescriptionPowerSupply">DescriptionPowerSupply</a></li><li><a href="global.html#DescriptionSM1ZP">DescriptionSM1ZP</a></li><li><a href="global.html#DescriptiveTag">DescriptiveTag</a></li><li><a href="global.html#ESPCam">ESPCam</a></li><li><a href="global.html#ESPCamPlusSettings">ESPCamPlusSettings</a></li><li><a href="global.html#ESPCamStream">ESPCamStream</a></li><li><a href="global.html#ESPCamWithoutSettings">ESPCamWithoutSettings</a></li><li><a href="global.html#ExperimentUILayer">ExperimentUILayer</a></li><li><a href="global.html#Heater">Heater</a></li><li><a href="global.html#HeaterCtrl">HeaterCtrl</a></li><li><a href="global.html#Imprint">Imprint</a></li><li><a href="global.html#InfoWindow">InfoWindow</a></li><li><a href="global.html#InfoWindowContent">InfoWindowContent</a></li><li><a href="global.html#KM100">KM100</a></li><li><a href="global.html#Laser">Laser</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#MichelsonInterferometer">MichelsonInterferometer</a></li><li><a href="global.html#MultiComponentSelection">MultiComponentSelection</a></li><li><a href="global.html#MultiCtrl">MultiCtrl</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#PopUpContextProvider">PopUpContextProvider</a></li><li><a href="global.html#RadioButton">RadioButton</a></li><li><a href="global.html#Rotary">Rotary</a></li><li><a href="global.html#RotaryCtrl">RotaryCtrl</a></li><li><a href="global.html#SM1ZP">SM1ZP</a></li><li><a href="global.html#SliderCtrl">SliderCtrl</a></li><li><a href="global.html#SocketContextProvider">SocketContextProvider</a></li><li><a href="global.html#StepperCtrl">StepperCtrl</a></li><li><a href="global.html#SwitchCtrl">SwitchCtrl</a></li><li><a href="global.html#TypeSelectMenuItem">TypeSelectMenuItem</a></li><li><a href="global.html#VirtualLayer">VirtualLayer</a></li><li><a href="global.html#Window">Window</a></li><li><a href="global.html#setActiveStep-Assigninganewvalue">setActiveStep - Assigning a new value</a></li><li><a href="global.html#setButtonValue-Assigninganewvalue">setButtonValue - Assigning a new value</a></li><li><a href="global.html#setSliderPos-Assigninganewvalue">setSliderPos - Assigning a new value</a></li><li><a href="global.html#setSwitchValue-Assigninganewvalue">setSwitchValue - Assigning a new value</a></li><li><a href="global.html#theme">theme</a></li><li><a href="global.html#themeLogin">themeLogin</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/UI/CtrlUnits/MultiCtrl.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useSocketContext } from "../../../services/SocketContext.js";
+import { ThemeProvider } from '@mui/material/styles';
+import RadioButton from '../templates/RadioButton.js';
+import { theme } from '../templates/Theme.js';
+import { useState, useEffect } from "react";
+import Switch from '../templates/Switch.js';
+import Box from '@mui/material/Box';
+import propTypes from "prop-types";
+
+/**
+ * Control of the pinhole, the beam splitter, the white and red LED
+ * 
+ * @description This React component returns the content for the Muiltctrl window. Four controlIds are required for this, firstly to control the pinhole 
+ * aperture, the beam splitter and secondly the controlId for the red and white LEDs. The LEDs can be switched on and off separately from each other. 
+ * Depending on which radio button is clicked within the window, it is then moved into the beam path or, in the case of the pinhole, inserted into the beam path. 
+ * 
+ * @param {string} component - To control 
+ * @param {string} pinhole - To control the pinhole
+ * @param {string} redLED - To control the red lED
+ * @param {string} whiteLED - To control the white lED
+ * 
+ * @returns {React.ReactElement} Multi control in form of radiobuttons
+ */
+const MultiCtrl = (props) => {
+    const [switchWhiteIsOn, setSwitchWhiteStatus] = useState(false);
+    const [switchRedIsOn, setSwitchRedStatus] = useState(false);
+    const [selectionStatus, setSelectionStatus] = useState('none');
+    const [onlineStatus, setOnlineStatus] = useState(false);
+
+    const socketCtx = useSocketContext();
+
+    let radioButtonDictionary = {
+        none: 'None',
+        splitter: 'Beam splitter',
+        pinhole: 'Pinhole',
+        rled: 'Red LED',
+        wled: 'White LED'
+    }
+
+    useEffect(() => {
+        const status = (payload) => {
+            // To set the correct status of the individual components
+            if (payload.controlId === props.redLED) {
+                setSwitchRedStatus(payload.status.isOn);
+            }
+            else if (payload.controlId === props.whiteLED) {
+                setSwitchWhiteStatus(payload.status.isOn);
+            }
+            else if (payload.controlId === props.component) {
+                setOnlineStatus(true);
+                (payload.status.busy) ? setOnlineStatus(false) : setOnlineStatus(true);
+                setSelectionStatus(payload.status.state)
+            }
+            //console.log("Status of settings:   ", payload)
+        }
+
+        // Sending server commands to request the status of all components
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.component,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.redLED,
+            getStatus: true
+        })
+
+        socketCtx.socket.emit("command", {
+            userId: socketCtx.username,
+            controlId: props.whiteLED,
+            getStatus: true
+        })
+
+        socketCtx.socket.on('status', status);
+
+        socketCtx.socket.emit('getFooter', props.component)
+
+        return () => {
+            socketCtx.socket.removeAllListeners('status', status)
+        }
+        //Comment needed to prevent a warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps      
+    }, [socketCtx.socket]);
+
+    return (
+        &lt;ThemeProvider theme={theme}>
+            &lt;Box sx={{ mx: 1 }}>
+                &lt;RadioButton component={props.component} online={onlineStatus} dictionary={radioButtonDictionary} val={selectionStatus} option="state" />
+                &lt;Switch component={props.whiteLED} switchStatus={switchWhiteIsOn} online={onlineStatus} left='LED white Off' right='On' option='switch' />
+                &lt;Switch component={props.redLED} switchStatus={switchRedIsOn} online={onlineStatus} left='LED red Off' right='On' option='switch' />
+            &lt;/Box>
+        &lt;/ThemeProvider>
+    )
+}
+MultiCtrl.propTypes = {
+    component: propTypes.string.isRequired,
+    pinhole: propTypes.string.isRequired,
+    redLED: propTypes.string.isRequired,
+    whiteLED: propTypes.string.isRequired,
+}
+
+export default MultiCtrl;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

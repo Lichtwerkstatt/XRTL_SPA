@@ -1,7 +1,14 @@
 import InfoWindowContent from "./Content/InfoWindowContent";
 import Window from "../UI/experimentUI/Window";
 
-const InfoWindow = (props) => {
+/**
+ * Information window
+ * 
+ * @description This react component returns a window with the content for the information window.
+ *  
+ * @returns {React.ReactElement} Information window
+ */
+const InfoWindow = () => {
     var width = window.innerWidth
     var height = 0;
 
@@ -22,7 +29,7 @@ const InfoWindow = (props) => {
             left="200"
             width={width}
             height={height}
-            footer={'empty'}
+            footer={'none'}
             topper={'para'}
         >
             <InfoWindowContent />

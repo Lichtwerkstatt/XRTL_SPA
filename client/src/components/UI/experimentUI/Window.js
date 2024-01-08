@@ -1,39 +1,76 @@
-import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline, IoReloadOutline } from 'react-icons/io5' //IoReloadOutline
-import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
-import { ImSection } from 'react-icons/im';
+import { IoInformationCircleOutline, IoCloseCircleOutline, IoSettingsOutline } from 'react-icons/io5' //IoReloadOutline
+import DescriptionHandler from '../../experiment/ComponentDescription/DescriptionHandler'
 import { useSocketContext } from '../../../services/SocketContext';
 import { usePopUpContext } from '../../../services/PopUpContext';
 import { useAppContext } from '../../../services/AppContext';
+import { MdOutlineUpdate } from 'react-icons/md'; //MdOutlineCircle
 import styles from '../CSS/Window.module.css';
-//import { CgCloseO } from 'react-icons/cg';
-import { memo, useEffect } from 'react';
+import { ImSection } from 'react-icons/im';
 import Draggable from 'react-draggable';
+import { memo, useEffect } from 'react';
 import { isEqual } from 'lodash';
 import { useState } from 'react';
-import DescriptionHandler from '../ComponentDescription/DescriptionHandler';
+import propTypes from "prop-types";
 
+/**
+ * Window component
+ * 
+ * @description This Recat component takes parameters for the design of the component window and then returns it as a React component to be rendered. 
+ * The top and left parameters are used for positioning, and the width and height variables 
+ * are used to define the size of the component window. The id and the componentenList contain important controlIds of the component, which is 
+ * important for the communication with the microcontroller. Outline images can be optionally displayed by passing the file path.
+ * 
+ * @param {string} id - controlId 
+ * @param {array} componentList - List containing the general controlId or all controlIds of the stepper motors
+ * @param {string} header - Text within the topper
+ * @param {number} top - Positioning at height
+ * @param {number} left - Positioning at width
+ * @param {string} width - Width of the window
+ * @param {string} height - Height of the window
+ * @param {string} background - File path of the image that is displayed within the window
+ *  
+ * @returns {React.ReactElement} Component window 
+ */
 const Window = (props) => {
+  const [info, setInfo] = useState(props.info === false ? false : true);
   const [lastChange, setLastChange] = useState(props.lastChange);
-  const [alertType, setAlertType] = useState('info');
   const [footer, setFooter] = useState('Initializing... ');
-  var [alert, setAlert] = useState(false);
-  const [info, setInfo] = useState(true);
+  const [topper, setTopper] = useState('')
+
+  // Set the scaling factor for better window placement on smaller screens
+  var height = window.innerHeight / 955;
+  var width = window.innerWidth / 1920;
 
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
 
-  const [topper, setTopper] = useState('')
-
+  // Additional icon to be rendered next to the close icon
   const renderOption = {
-    para: <ImSection className={styles.icon} size={24} />,
-    info: <IoReloadOutline className={styles.iconClose} size={28} />,
-    info2: <IoInformationCircleOutline className={styles.iconClose} size={30} />,
-    setting: <IoSettingsOutline className={styles.iconClose} size={30} />,
-    none: <IoSettingsOutline className={styles.icon} size={25} color={'#01bd7d'} />,
+    para: <ImSection className={styles.icon} size={24} />, // Legal Notice 
+    info: <IoInformationCircleOutline className={styles.iconClose} size={30} />, // Information
+    setting: <IoSettingsOutline className={styles.iconClose} size={30} />, // Setting
+    none: <IoSettingsOutline className={styles.icon} size={25} color={'#01bd7d'} />, // None
+  }
+  // Scaling of the setting height of the windows depending on the reference value
+  const scaleComponenteWindowHeight = (value) => {
+    return parseInt(height * value)
+  }
+
+  // Scaling of the setting left of the windows depending on the reference value
+  const scaleComponenteWindowWidth = (value) => {
+    value = parseInt(width * value)
+
+    // prevents windows from being created outside or over the calculated screen width
+    if ((value + 250) > window.innerWidth) {
+      let dif = value + 275 - window.innerWidth;
+      value = value - dif;
+    }
+    return value
   }
 
   useEffect(() => {
+    // Processing of the transferred topper variable
     if (props.topper === 'none') {
       setTopper('none')
     } else if (props.topper === 'para') {
@@ -42,16 +79,18 @@ const Window = (props) => {
       setTopper('info')
     }
 
+    // Handles the updating of the footer after the component has been adjusted
     const Footer = (payload) => {
-      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'none' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
       }
     }
 
+    // Handles the setting of the footer after the component window has been opened
     const getFooter = (payload) => {
-      if (props.footer !== 'empty' && props.componentList.includes(payload.controlId)) {
+      if (props.footer !== 'none' && props.componentList.includes(payload.controlId)) {
         setFooter(String(payload.status))
         var time = new Date();
         setLastChange([time.getHours(), time.getMinutes(), time.getSeconds(), time.getDay(), time.getMonth()])
@@ -70,6 +109,7 @@ const Window = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketCtx.socket])
 
+  // Handles the closing of the component window  
   const handleCloseWindow = () => {
     appCtx.toggleSelectedComp(props.id)
 
@@ -80,39 +120,36 @@ const Window = (props) => {
     if (props.id === "info") {
       appCtx.toggleShowInfoWindow();
     }
+
+    if (props.id === "welcome") {
+      appCtx.toggleShowWelcomeWindow();
+    }
+
+    if (props.id === "manual") {
+      appCtx.toggleShowManualWindow();
+    }
   }
 
+  // Handles the change of the icon next to the Close icon when it is clicked.
   const handleInformation = () => {
+    setInfo(!info)
 
     if (props.id === 'screen' && appCtx.smallSetting === true) {
       appCtx.smallSettings()
     }
 
     if (props.id === 'info') {
-      setInfo(!info)
-      topper === 'para' ? setTopper('info2') : setTopper('para');
+      topper === 'para' ? setTopper('info') : setTopper('para');
     } else {
-
-      socketCtx.socket.emit('command', {
-        userId: socketCtx.username,
-        controlId: props.componentList[0],
-        reset: true
-      })
-
-      if (props.componentList[1]) {
-        socketCtx.socket.emit('command', {
-          userId: socketCtx.username,
-          controlId: props.componentList[1],
-          reset: true
-        })
-      }
+      topper === 'info' ? setTopper('setting') : setTopper('info')
     }
   }
 
+  // Handles the display of the information when the component was last adjusted & and to identify the component via the Overview Cam
   const handleInfo = () => {
     var timeNow = new Date();
     let difH, difMin, difSec = 0;
-    alert = '';
+    var alert = '';
 
     timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
     if (lastChange[0] === '') {
@@ -132,9 +169,7 @@ const Window = (props) => {
       alert = 'No last change detected!'
     }
 
-    setAlert(alert);
-    setAlertType('info');
-    popupCtx.toggleShowPopUp(alert, alertType);
+    popupCtx.toggleShowPopUp(alert, 'info');
 
     socketCtx.socket.emit("command", {
       controlId: props.componentList[0],
@@ -144,11 +179,13 @@ const Window = (props) => {
   }
 
   return (
+    /* Ensures the free movement of the component windows */
     <Draggable handle='.draggableHandler'>
       <div
         className={styles.window}
-        style={{ top: props.top + 'px', left: props.left + 'px', width: props.height + 'px', height: props.height + 'px' }}
+        style={{ top: scaleComponenteWindowHeight(props.top) + 'px', left: scaleComponenteWindowWidth(props.left) + 'px', width: props.height + 'px', height: props.height + 'px' }}
       >
+        {/* Styling of the topper of the component window */}
         <div className={styles.windowHeader}>
           <span
             className='draggableHandler' //FIXME draggable doesnt seem to work with inline JSX classes. 
@@ -163,12 +200,16 @@ const Window = (props) => {
           </span>
 
           <p>
+            {/* No Icon or icon next to the close icon */}
             <span onClick={handleInformation}>
               {renderOption[topper]}
             </span>
+            {/* Close icon and the onclick-event handling */}
             <span onClick={handleCloseWindow}><IoCloseCircleOutline className={styles.iconClose} size={30} /></span>
           </p>
         </div>
+
+        {/* Display of the control elements or the descriptive text */}
         {info ?
           <div
             className={styles.windowContent}
@@ -182,6 +223,7 @@ const Window = (props) => {
           </div>
 
           :
+
           <div
             className={styles.windowContent}
             style={{
@@ -193,7 +235,8 @@ const Window = (props) => {
           </div>
         }
 
-        {props.footer !== 'empty' ?
+        {/* Display of the footer depending on the parameter footers */}
+        {props.footer !== 'none' ?
           <div className={styles.windowFooter}>
             <span onClick={handleInfo}> <MdOutlineUpdate size={25} /></span>
             <label>{footer}</label>
@@ -201,11 +244,20 @@ const Window = (props) => {
           :
           <div />
         }
-
-        <div className={styles.windowInfo}>
-        </div>
       </div>
     </Draggable>
   )
 }
+
+Window.propTypes = {
+  id: propTypes.string.isRequired,
+  componentList: propTypes.array.isRequired,
+  header: propTypes.string.isRequired,
+  top: propTypes.oneOfType([propTypes.string, propTypes.number,]).isRequired,
+  left: propTypes.oneOfType([propTypes.string, propTypes.number,]).isRequired,
+  width: propTypes.string.isRequired,
+  height: propTypes.string.isRequired,
+  background: propTypes.string
+}
+
 export default memo(Window, isEqual);
