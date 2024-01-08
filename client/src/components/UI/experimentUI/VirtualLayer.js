@@ -1,8 +1,6 @@
-import MI_240105 from "../../experiment/MichelsonInterferometer/MI_240105";
 import { useSocketContext } from "../../../services/SocketContext";
 import { OrbitControls, Environment } from "@react-three/drei";
-import Model3d from "../../experiment/MichelsonInterferometer/MI_230201";
-import { useSocketContext } from "../../../services/SocketContext";
+import Model3d from "../../experiment/MichelsonInterferometer/MI_240105";
 import Model2d from "../../experiment/2D Model/2D_MI_Overlay";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
