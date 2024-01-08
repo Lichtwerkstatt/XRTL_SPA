@@ -978,34 +978,76 @@ export function Model(props) {
           geometry={nodes.BaseMesh_5.geometry}
           material={materials["ShinyParts.002"]}
         />
-        <mesh
-          name="BS_cubeMesh"
-          castShadow
-          receiveShadow
-          geometry={nodes.BS_cubeMesh.geometry}
-          material={materials.BlackParts}
-        />
-        <mesh
-          name="BS_cubeMesh_1"
-          castShadow
-          receiveShadow
-          geometry={nodes.BS_cubeMesh_1.geometry}
-          material={materials.ShinyParts}
-        />
-        <mesh
-          name="LensMesh"
-          castShadow
-          receiveShadow
-          geometry={nodes.LensMesh.geometry}
-          material={materials.BlackParts}
-        />
-        <mesh
-          name="LensMesh_1"
-          castShadow
-          receiveShadow
-          geometry={nodes.LensMesh_1.geometry}
-          material={materials.ShinyParts}
-        />
+        <group
+          name="BSCube"
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            props.toggleSelect("bscube");
+          }}
+        >
+          {props.showTags && (
+            <DescriptiveTag
+              position={[-0.5, 1, -0.11]}
+              title="Beam Splitter Cube"
+              description="50:50 Non-Polarizing Beamsplitte"
+            />
+          )}
+          <mesh
+            name="BS_cubeMesh"
+            castShadow
+            receiveShadow
+            geometry={nodes.BS_cubeMesh.geometry}
+            material={materials.BlackParts}
+          >
+            {props.selected.has("bscube") ? (
+              <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+            ) : (
+              <meshStandardMaterial color="#222222" opacity={1.0} />
+            )}
+          </mesh>
+          <mesh
+            name="BS_cubeMesh_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.BS_cubeMesh_1.geometry}
+            material={materials.ShinyParts}
+          />
+        </group>
+        <group
+          name="Lens"
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            props.toggleSelect("lens");
+          }}
+        >
+                    {props.showTags && (
+            <DescriptiveTag
+              position={[0.7, 1, -0.11]}
+              title="Lens"
+              description="Bi-Convex 50mm Focal Length"
+            />
+          )}
+          <mesh
+            name="LensMesh"
+            castShadow
+            receiveShadow
+            geometry={nodes.LensMesh.geometry}
+            material={materials.BlackParts}
+          >
+            {props.selected.has("lens") ? (
+              <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+            ) : (
+              <meshStandardMaterial color="#222222" opacity={1.0} />
+            )}
+          </mesh>
+          <mesh
+            name="LensMesh_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.LensMesh_1.geometry}
+            material={materials.ShinyParts}
+          />
+        </group>
       </group>
     </group>
   );

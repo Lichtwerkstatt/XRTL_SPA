@@ -10,6 +10,7 @@ import SM1ZP from './SM1ZP';
 import Lens from './Lens';
 import Cube from './Cube';
 import Heater from './Heater';
+import ExperimentSelection from './ExperimentSelection'
 
 
 const DescriptionHandler = (props) => {
@@ -27,7 +28,7 @@ const DescriptionHandler = (props) => {
         heater: <Heater height={props.height} />,
         plate_rotation: <GlassRotary height={props.height} />,
         heater_rotation: <MirrorRotary height={props.height} />,
-
+        experimentSelection: <ExperimentSelection height={props.height}/>,
 
     }
 
