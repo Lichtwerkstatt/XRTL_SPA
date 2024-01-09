@@ -39,7 +39,7 @@ const VirtualLayer = (...props) => {
       >
         {/* Display a fallback until its children have finished loading */}
         <Suspense fallback={null}>
-          <Environment files="../hdri/autoshop.hdr" />
+          <Environment files="..\hdri\vaporCoater.hdr" />
           {/* Handles the ambient rotation of the experiment */}
           <OrbitControls autoRotate={appCtx.autoRotate} />
           {/* Intialisation of the 3D model and transfer of the most important parameters required within this class. */}
