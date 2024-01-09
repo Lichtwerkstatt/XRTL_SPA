@@ -62,7 +62,7 @@ const MichelsonInterferometer = (props) => {
       {/* Rotary stage plate*/}
       {props.selected.has("plate_rotation") && (
         <Rotary
-          title="Glass Plate Rotation Stage"
+          title="Plate Rotation Stage"
           controlId={"plate_rotation"}
           top={150}
           left={1300}
@@ -140,7 +140,7 @@ const MichelsonInterferometer = (props) => {
       {/* BeamSplitter Cube */}
       {props.selected.has("bscube") && (
         <DescriptionOnlyComponent
-          title="Beam Splitter"
+          title="Beam Splitter Cube"
           controlId={"bscube"}
           top={450}
           left={1000}

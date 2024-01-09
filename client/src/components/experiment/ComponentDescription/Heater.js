@@ -15,8 +15,7 @@ const DescriptionHeatableMirrorStage = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                Glas plate rotation description  :)
-
+                    This mirror is mounted on an aluminum rod of 90mm length that is equiped with a heater and a thermal sensor. By changing the heater power and thus the temperature of the aluminum rod, the thermal expansion coefficient can be derived by observing the change in the interference pattern. 
                 </p>
             </div>
 

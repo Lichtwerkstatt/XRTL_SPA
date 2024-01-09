@@ -15,8 +15,7 @@ const DescriptionGlasPlateRotation = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                Glas plate rotation description  :)
-
+                This rotational mount allows for two acrylic glass plates to be moved in and out of the Laser beam and to precisely tune the angle of incidence. By measuring the change in the optical way for different angles with the interferometer and comparing it to the change in the geometric way, the refracive index of the used material can be derived.
                 </p>
             </div>
 

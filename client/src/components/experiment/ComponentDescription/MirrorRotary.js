@@ -15,8 +15,7 @@ const DescriptionMirrorRotationStage = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    Mirror changing stage description  :)
-
+                    This rotation stage allows to exchange the Linear Movable Mirror and the Heatable Mirror for the respective experiments.
                 </p>
             </div>
 

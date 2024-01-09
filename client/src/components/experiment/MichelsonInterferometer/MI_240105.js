@@ -150,7 +150,7 @@ export function Model(props) {
         >
           {props.showTags && (
             <DescriptiveTag
-              position={[-0.4, 1, -1.3]}
+              position={[-0.4, 1.5, -1.3]}
               title="Screen"
               description="Screen with Interference Pattern"
             />
@@ -779,7 +779,7 @@ export function Model(props) {
         >
           {props.showTags && (
             <DescriptiveTag
-              position={[0, 0.3, -0.5]}
+              position={[0, 0.6, -0.5]}
               title="Mirror Changing Stage"
               description="PR01/M Rotation Stage"
             />
@@ -894,8 +894,8 @@ export function Model(props) {
         >
           {props.showTags && (
             <DescriptiveTag
-              position={[0, 0.5, 0.5]}
-              title="Glass Plate Rotation Stage"
+              position={[-0.13, 0.7, 0.3]}
+              title="Plate Rotation Stage"
               description="PR01/M Rotation Stage"
             />
           )}
