@@ -603,9 +603,9 @@ function Model(props) {
       >
         {props.showTags && (
           <DescriptiveTag
-            position={[-0.12, 0.1, -0.02]}
-            title="Retractable Screen"
-            description="Simple Retractable Plate"
+            position={[-0.12, 0.1, -0.04]}
+            title="Screen Retraction"
+            description="Moves screen in and out of the beam"
           />
         )}
         <mesh
@@ -649,12 +649,27 @@ function Model(props) {
           geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Stand_5.geometry}
           material={materials.BlackParts}
         >
-          {props.selected.has("screen_1") ? (
+          {props.selected.has("servo_screen") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
           )}
         </mesh>
+      </group>
+      <group
+        name="SelectableScreen"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("cam_screen");
+        }}
+      >
+        {props.showTags && (
+          <DescriptiveTag
+            position={[-0.12, 0.12, -0.01]}
+            title="Screen"
+            description="Simple Retractable Plate"
+          />
+        )}
         <mesh
           name="Thorlabs_Servo_Mount_Loose_V1_Adapter_1"
           castShadow
@@ -662,7 +677,7 @@ function Model(props) {
           geometry={nodes.Thorlabs_Servo_Mount_Loose_V1_Adapter_1.geometry}
           material={materials["BlackParts.002"]}
         >
-          {props.selected.has("screen_1") ? (
+          {props.selected.has("cam_screen") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
             <meshStandardMaterial color="#222222" opacity={1.0} />
@@ -727,40 +742,6 @@ function Model(props) {
         geometry={nodes.Plane004_1.geometry}
         material={materials.ShinyParts}
       />
-
-      <group name="ESP Cam"
-        onPointerDown={(e) => {
-          e.stopPropagation();
-          props.toggleSelect("cam_screen");
-        }}
-      >
-        {/* ESP Cam Box*/}
-        <Box
-          position={[-0.01, 0.025, 0.05]}
-          args={[1, 1, 1]}
-          scale={[0.05, 0.08, 0.05]}
-        >
-          {props.showTags && (
-            <DescriptiveTag
-              position={[-0.12, 0.4, 0.05]}
-              title="Screen Cam"
-              description="ESP Cam"
-            />
-          )}
-          <meshPhysicalMaterial
-            thickness={1}
-            roughness={0.1}
-            transmission={1}
-            clearcoat={0.5}
-            clearcoatRoughness={0}
-            ior={1.1}
-            envMapIntensity={25}
-            color={"#ffffff"}
-            attenuationColor={"#00ffff"}
-            attenuationDistance={5}
-          />
-        </Box>
-      </group>
     </group>
   );
 }
