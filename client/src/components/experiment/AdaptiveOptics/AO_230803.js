@@ -182,7 +182,13 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cylinder002.geometry}
           material={materials.BlackParts}
-        />
+          >
+          {props.selected.has("beamSplitter") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
         {props.showTags && (
           <DescriptiveTag
             position={[-0.12, 0.1, 0.305]}
@@ -560,7 +566,13 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cube008_1.geometry}
           material={materials.BlackParts}
-        ></mesh>
+        >
+          {props.selected.has("prism") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </mesh>
         <mesh
           name="Cube008_2"
           castShadow
