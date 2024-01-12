@@ -56,6 +56,8 @@ const ESPCamPlusSettings = (props) => {
   useEffect(() => {
     if (!props.setting) {
       document.getElementById(props.component).style.left = "-325px";
+    } else {
+      document.getElementById(props.component).style.left = "-655px";
     }
 
     const status = (payload) => {
