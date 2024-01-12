@@ -5,10 +5,11 @@ import AdaptiveMirror from './AdaptiveMirror';
 import SHS from './SHS';
 import PowerSupply from './PowerSupply';
 import LinearStage from './LinearStage';
-import RetractableScreen from './RetractableScreen';
+import ScreenRetraction from './ScreenRetraction';
 import BeamSplitter from './BeamSplitter';
 import Prism from './Prism';
 import propTypes from "prop-types";
+import Screen from './Screen';
 
 /**
  * Description handler
@@ -33,12 +34,13 @@ const DescriptionHandler = (props) => {
         telescope_1: <Telescope1 height={props.height} />,
         telescope_2: <Telescope2 height={props.height} />,
         mirror_1: <AdaptiveMirror height={props.height} />,
-        sensor_1: <SHS height={props.height} />,
+        wavesensor_1: <SHS height={props.height} />,
         relay_laser: <PowerSupply height={props.height} />,
         stepper_linear1: <LinearStage height={props.height} />,
-        servo_screen: <RetractableScreen height={props.height} />,
+        servo_screen: <ScreenRetraction height={props.height} />,
         beamSplitter: <BeamSplitter height={props.height} />,
         prism: <Prism height={props.height} />,
+        cam_screen: <Screen height={props.height} />,
     }
 
     return (

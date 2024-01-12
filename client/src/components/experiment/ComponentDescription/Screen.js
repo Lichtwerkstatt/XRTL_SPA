@@ -10,7 +10,7 @@ import propTypes from "prop-types";
  * 
  * @returns {React.ReactElement} descriptive text of the retractable screen 
  */
-const DescriptionRetractableScreen = (props) => {
+const DescriptionScreen = (props) => {
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
@@ -23,7 +23,7 @@ const DescriptionRetractableScreen = (props) => {
     );
 };
 
-DescriptionRetractableScreen.propTypes = {
+DescriptionScreen.propTypes = {
     height: propTypes.string.isRequired,
 };
-export default DescriptionRetractableScreen;
+export default DescriptionScreen;

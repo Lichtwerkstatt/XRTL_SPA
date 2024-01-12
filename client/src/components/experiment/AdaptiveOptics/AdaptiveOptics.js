@@ -149,7 +149,7 @@ const AdaptiveOptics = (props) => {
           left={1550}
         />
       )}
-      {/* Screen*/}
+      {/* Screen Retraction*/}
       {props.selected.has("servo_screen") && (
         <Screen
           title="Screen Retraction"
@@ -178,7 +178,7 @@ const AdaptiveOptics = (props) => {
           left={750}
         />
       )}
-      {/* Shack-Hartmann-Sensor*/}
+      {/* Screen*/}
       {props.selected.has("cam_screen") && (
         <ESPCam
           title="Screen"

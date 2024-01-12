@@ -15,7 +15,7 @@ const DescriptionSHS = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }}>
                 <p>
-                    Shack-Hartmann-Sensor Description
+                The Shack-Hartmann wavefront sensor is a device used to measure the wavefront distortions of an optical system. It does so by dividing the incoming wavefront into small segments using an array of lenslets. The deviations in the local tilt of these segments are then analyzed to provide information about aberrations in the optical system.
                 </p>
             </div>
 

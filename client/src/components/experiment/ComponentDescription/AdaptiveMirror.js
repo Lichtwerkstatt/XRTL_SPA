@@ -15,7 +15,7 @@ const DescriptionAdaptiveMirror = (props) => {
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    
+                A piezoelectric adaptive mirror is a mirror with a surface that can be dynamically altered using piezoelectric actuators. These actuators respond to electrical signals, causing the mirror's shape to adjust and compensate for optical distortions measured by the Shack-Hartmann-Sensor in real-time.
                 </p>
             </div>
 
