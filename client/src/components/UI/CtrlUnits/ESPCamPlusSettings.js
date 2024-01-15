@@ -15,13 +15,11 @@ import propTypes from "prop-types";
 /**
  * ESPCam component with settings
  * 
- * @description This component returns a canvas with the camera stream of an ESPCam and the corresponding setting options. For this, the height and width of the window must be transferred 
- * and the controlId with which the ESP is to be addressed. In addition, the variables setting and setSetting must be passed. These handle the change of the window size when folding 
+ * @description This component returns a canvas with the camera stream of an ESPCam and the corresponding setting options. For this, the controlId with which the ESP is to be addressed must be transferred. 
+ * In addition, the variables setting and setSetting must be passed. These handle the change of the window size when folding 
  * and unfolding the settings.
  * 
  * @param {string} component - controlId 
- * @param {string} width - Transfers the width to ESPCam class 
- * @param {string} height - Transfer the height to ESPCam class 
  * @param {boolean} setting - If true, then setting options are hidden, if false then they are displayed and the component window is larger.
  * @param {func} setSetting - To change the setting variable value 
  * 
@@ -96,7 +94,7 @@ const ESPCamPlusSettings = (props) => {
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
-                <ESPCam component={props.component} width={'600px'} height={'400px'} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px' }} />
+                <ESPCam component={props.component} width={600} height={400} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px' }} />
                 {props.setting &&
 
                     <div className={styles.Settings}>
@@ -115,7 +113,6 @@ const ESPCamPlusSettings = (props) => {
 
 ESPCamPlusSettings.propTypes = {
     component: propTypes.string.isRequired,
-    width: propTypes.string.isRequired,
     setting: propTypes.bool.isRequired,
     setSetting: propTypes.func.isRequired
 }

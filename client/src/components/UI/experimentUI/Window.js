@@ -251,7 +251,7 @@ const Window = (props) => {
 
 Window.propTypes = {
   id: propTypes.string.isRequired,
-  componentList: propTypes.array.isRequired,
+  componentList: propTypes.array,
   header: propTypes.string.isRequired,
   top: propTypes.oneOfType([propTypes.string, propTypes.number,]).isRequired,
   left: propTypes.oneOfType([propTypes.string, propTypes.number,]).isRequired,

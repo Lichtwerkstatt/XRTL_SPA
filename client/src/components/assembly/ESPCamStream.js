@@ -22,9 +22,9 @@ const ESPCamStream = (props) => {
   var width = window.innerWidth
 
   if (setting) {
-    width = '1000px';
+    width = 1000;
   } else if (!setting) {
-    width = '670px';
+    width = 670;
   }
 
   return (

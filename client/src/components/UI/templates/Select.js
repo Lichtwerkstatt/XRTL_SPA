@@ -86,7 +86,7 @@ export default function CustomSelect(props) {
 CustomSelect.propTypes = {
     component: propTypes.string.isRequired,
     title: propTypes.string,
-    list: propTypes.array.isRequired,
+    list: propTypes.object.isRequired,
     selectValue: propTypes.oneOf([propTypes.string, propTypes.number]).isRequired,
     online: propTypes.bool.isRequired,
     option: propTypes.string.isRequired
