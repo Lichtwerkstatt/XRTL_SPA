@@ -117,32 +117,57 @@ const Chat = () => {
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
+          frameSize: 5
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          gray: false
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
           frameSize: 10
         })
 
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
-          exposure: 800,
+          brightness: 0 // (-2,2)
+        })
+
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          contrast: -1, // (-2,2)
           color: socketCtx.fontColor,
         })
 
         socketCtx.socket.emit("command", {
           userId: 'XRTL',
           controlId: 'overview',
-          contrast: 1,
-          color: socketCtx.fontColor,
-        })
-
-        socketCtx.socket.emit("command", {
-          userId: 'XRTL',
-          controlId: 'overview',
-          exposure: 1200,
+          exposure: 1000, // (0,1200)
           color: socketCtx.fontColor,
         })
 
         setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
       }
+
+      else if (message === '!cam5') {
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          frameSize: 5
+        })}
+
+      else if (message === '!cam10') {
+        socketCtx.socket.emit("command", {
+          userId: 'XRTL',
+          controlId: 'overview',
+          frameSize: 10
+        })}
       // Output of an error message if command does not exist or is written incorrectly 
       else {
         setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
