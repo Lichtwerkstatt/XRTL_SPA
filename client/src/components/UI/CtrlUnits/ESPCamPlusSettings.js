@@ -96,8 +96,8 @@ const ESPCamPlusSettings = (props) => {
         </IconButton>
         <ESPCam
           component={props.component}
-          width={"600px"}
-          height={"400px"}
+          width={600}
+          height={400}
           style={{
             border: "2px solid #01bd7d",
             borderRadius: "15px",

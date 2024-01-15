@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.1.2 AO_230803.glb -k -s
 */
 
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
-import { useGLTF, Box } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import React, { memo } from "react";
 import { isEqual } from "lodash";
 import GlassMaterial from "./materials/GlassMaterial";

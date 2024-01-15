@@ -122,7 +122,7 @@ SliderCtrl.propTypes = {
   min: propTypes.number.isRequired,
   max: propTypes.number.isRequired,
   text: propTypes.array,
-  sliderValue: propTypes.bool.isRequired,
+  sliderValue: propTypes.number.isRequired,
   online: propTypes.bool.isRequired,
   option: propTypes.string.isRequired
 }
