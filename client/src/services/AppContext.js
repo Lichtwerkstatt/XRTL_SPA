@@ -114,7 +114,7 @@ export function AppContextProvider({ children }) {
   // Handles the display of the OverviewCam window
   const toggleCam = () => {
     setShowCam(!showCam);
-    toggleSelectedComp('Overview')
+    toggleSelectedComp('overview')
   }
 
   // Displays the underConstruction information in the navigation bar
