@@ -78,7 +78,7 @@ const NavBar = () => {
     const handleOverviewCam  = () => {
         if (!appCtx.showVirtualLayer) {
             appCtx.toggleCam();
-            cameraStatusColor = 'gray'
+            //cameraStatusColor = 'gray'
         }
     };
 

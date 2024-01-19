@@ -35,7 +35,7 @@ export function AppContextProvider({ children }) {
   const toggleSelectedComp = (compId) => {
     //Adds controlId to set, when a component window is opened
     if (!selectedComps.has(compId)) {
-      setSelectedComps(prev => new Set(prev.add(compId)));
+      setSelectedComps(prev => new Set(prev).add(compId));
       // Removes controlId of a window, whenever it is closed
     } else {
       setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
@@ -57,7 +57,7 @@ export function AppContextProvider({ children }) {
     try {
       // Adds a new controlId to the set and sends join stream room events
       if (!roomComponent.has(compId) && val !== false) {
-        setRoomComponent(prev => new Set(prev.add(compId)));
+        setRoomComponent(prev => new Set(prev).add(compId));
 
         socket.emit('join stream room', {
           controlId: compId,
