@@ -79,9 +79,9 @@ const NavBar = () => {
                             <li onClick={handleOverviewCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Model'>
+                        {/* <Tooltip title='Model'>
                             <li onClick={handleVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         <Tooltip title='Beam Path'>
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
