@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0188ab5d.chunk.css",
+    "main.js": "/static/js/main.ffcc9323.chunk.js",
+    "main.js.map": "/static/js/main.ffcc9323.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.9cd0c069.js",
+    "runtime-main.js.map": "/static/js/runtime-main.9cd0c069.js.map",
+    "static/js/2.3bffe768.chunk.js": "/static/js/2.3bffe768.chunk.js",
+    "static/js/2.3bffe768.chunk.js.map": "/static/js/2.3bffe768.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.0188ab5d.chunk.css.map": "/static/css/main.0188ab5d.chunk.css.map",
+    "static/js/2.3bffe768.chunk.js.LICENSE.txt": "/static/js/2.3bffe768.chunk.js.LICENSE.txt",
+    "static/media/MI_2D.24bfbd1c.png": "/static/media/MI_2D.24bfbd1c.png",
+    "static/media/PS_outline.8e83270a.png": "/static/media/PS_outline.8e83270a.png",
+    "static/media/index.css": "/static/media/RobotoCondensed-Regular.db6d9169.ttf",
+    "static/media/km100_outline.5cffd463.png": "/static/media/km100_outline.5cffd463.png",
+    "static/media/linear_outline.7ac97702.png": "/static/media/linear_outline.7ac97702.png",
+    "static/media/rotary_outline.c6f9b7e7.png": "/static/media/rotary_outline.c6f9b7e7.png",
+    "static/media/xrtl_team.9c8d8d7c.png": "/static/media/xrtl_team.9c8d8d7c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9cd0c069.js",
+    "static/js/2.3bffe768.chunk.js",
+    "static/css/main.0188ab5d.chunk.css",
+    "static/js/main.ffcc9323.chunk.js"
+  ]
+}
