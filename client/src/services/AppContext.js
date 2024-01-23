@@ -33,14 +33,22 @@ export function AppContextProvider({ children }) {
 
   // Contains all the controlIds of the component windows, which are currently open
   const toggleSelectedComp = (compId) => {
-    //Adds controlId to set, when a component window is opened
-    if (!selectedComps.has(compId)) {
-      setSelectedComps(prev => new Set(prev).add(compId));
-      // Removes controlId of a window, whenever it is closed
-    } else {
-      setSelectedComps(prev => new Set([...prev].filter(x => x !== compId)));
-      toogleRoomComp(compId);
-    }
+    setSelectedComps((prev) => {
+      const newSelectedComps = new Set(prev);
+  
+      //Adds controlId to set, when a component window is opened
+      if (!newSelectedComps.has(compId)) {
+        newSelectedComps.add(compId);
+      } 
+      else // Removes controlId of a window, whenever it is closed
+      {
+        newSelectedComps.delete(compId);
+        toogleRoomComp(compId);
+      }
+  
+      // returns the new set
+      return newSelectedComps;
+    });
   };
 
   /**
@@ -55,24 +63,31 @@ export function AppContextProvider({ children }) {
    */
   const toogleRoomComp = (compId, val = false) => {
     try {
-      // Adds a new controlId to the set and sends join stream room events
-      if (!roomComponent.has(compId) && val !== false) {
-        setRoomComponent(prev => new Set(prev).add(compId));
+      setRoomComponent((prev) => {
+        const newRoomComponent = new Set(prev);
+        
+        // Adds a new controlId to the set and sends join stream room events
+        if(!newRoomComponent.has(compId) && val !== false){
+          newRoomComponent.add(compId);
 
-        socket.emit('join stream room', {
-          controlId: compId,
-          userId: username
-        });
+          socket.emit('join stream room', {
+            controlId: compId,
+            userId: username
+          });
+        }
 
         // Removes controlId from the set and sends leave stream room events
-      } else if (roomComponent.has(compId)) {
-        setRoomComponent(prev => new Set([...prev].filter(x => x !== compId)));
+        else if (newRoomComponent.has(compId)) {
+          newRoomComponent.delete(compId);
 
-        socket.emit("leave stream room", {
-          controlId: compId,
-          userId: username
-        });
-      }
+          socket.emit("leave stream room", {
+            controlId: compId,
+            userId: username
+          });
+        }
+
+        return newRoomComponent;
+      });
     } catch (e) { }
   }
 
