@@ -16,7 +16,7 @@ export function useAppContext() {
  */
 export function AppContextProvider({ children }) {
   const [underConstruction, setUnderConstruction] = useState(false);
-  /*   const [showVirtualLayer, setShowVirtualLayer] = useState(true); */
+  const [showVirtualLayer, setShowVirtualLayer] = useState(false);
   const [roomComponent, setRoomComponent] = useState(new Set());
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -98,10 +98,10 @@ export function AppContextProvider({ children }) {
     setAutoRotate(!autoRotate);
   };
 
-  /*   // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
-    const toggleShowVirtualLayer = () => {
-      setShowVirtualLayer(!showVirtualLayer);
-    }; */
+  // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
+  const toggleShowVirtualLayer = () => {
+    setShowVirtualLayer(!showVirtualLayer);
+  }
 
   // Operats the display of the labels and descriptions of the experiment components
   const toggleShowTags = () => {
@@ -111,11 +111,12 @@ export function AppContextProvider({ children }) {
   // Adds a new log entry to the existing log
   const addLog = (log) => {
     setLogs(prev => [log, ...prev])
-  };
+  }
 
   // For displaying the beam path within the 3D visualisation
   const toggleShowBeam = () => {
     setShowBeam(!showBeam)
+    setShowVirtualLayer(!showVirtualLayer);
   }
 
   // Handles the display of the Information window
@@ -172,8 +173,8 @@ export function AppContextProvider({ children }) {
       value={{
         autoRotate,
         toggleAutoRotate,
-        /*         showVirtualLayer,
-                toggleShowVirtualLayer, */
+        showVirtualLayer,
+        toggleShowVirtualLayer,
         selectedComps,
         toggleSelectedComp,
         logs,
