@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "better-docs": "^2.7.3",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "jsdoc": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
