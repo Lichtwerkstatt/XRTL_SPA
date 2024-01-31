@@ -113,7 +113,7 @@ const HeaterCtrl = (props) => {
 
         // A room is created for the component, into which the clients are then added when they open the corresponding window. By creating the room, the traffic caused by sending the 
         // stream should be reduced, as only the clients who really need the stream receive it.
-        appCtx.toogleRoomComp(props.component, true);
+        appCtx.toogleRoomComp(props.componentT, true);
 
         socketCtx.socket.emit('getFooter', props.component)
 
@@ -156,8 +156,8 @@ const HeaterCtrl = (props) => {
                     <div className={styles.Canvas2}>
                         <Button sx={{ fontSize: 17, marginLeft: -34, marginTop: -4, marginBottom: 10 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
                         <div className={styles.Select}>
-                            <Select sx={{ zIndex: 1500, marginBottom: -10 }} title='Average time (ms)' component={props.component} online={onlineStatus} option='averageTime' selectValue={averageTime} list={averageTimeList} />
-                            <Select title='Update time (s)' component={props.component} online={onlineStatus} option='updateTime' selectValue={updateTime} list={updateTimeList} />
+                            <Select sx={{ zIndex: 1500, marginBottom: -10 }} title='Average time (ms)' component={props.componentT} online={onlineStatus} option='averageTime' selectValue={averageTime} list={averageTimeList} />
+                            <Select title='Update time (s)' component={props.componentT} online={onlineStatus} option='updateTime' selectValue={updateTime} list={updateTimeList} />
                         </div>
                     </div>
                 </div>
