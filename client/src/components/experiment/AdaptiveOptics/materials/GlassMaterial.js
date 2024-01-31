@@ -5,9 +5,9 @@ const GlassMaterial = () => {
       thickness={1}
       roughness={0.1}
       transmission={1}
-      clearcoat={0.5}
+      clearcoat={0.1}
       clearcoatRoughness={0}
-      ior={1.1}
+      ior={1.4}
       envMapIntensity={25}
       color={"#ffffff"}
       attenuationColor={"#00ffff"}

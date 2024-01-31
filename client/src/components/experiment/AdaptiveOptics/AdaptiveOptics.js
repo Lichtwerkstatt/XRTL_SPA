@@ -7,6 +7,7 @@ import Rotary from "../../assembly/Rotary";
 import KM100 from "../../assembly/KM100";
 import XR50P from "../../assembly/XR50P";
 import Eye from "../../assembly/Eye";
+import LM1XY from "../../assembly/LM1XY";
 
 /**
  * Experiment Setup Component
@@ -31,7 +32,6 @@ import Eye from "../../assembly/Eye";
  * @returns {React.ReactElement} Experiment setup component
  */
 const AdaptiveOptics = (props) => {
-
   return (
     <div>
       {/* KM100 */}
@@ -140,7 +140,7 @@ const AdaptiveOptics = (props) => {
 
       {/* Telescope in front of the Wavefront Sensor*/}
       {props.selected.has("telescope_2") && (
-        <KM100
+        <LM1XY
           title="Telescope 2"
           id={"telescope_2"}
           controlIdTop={"stepper_tele_x"}
@@ -178,14 +178,14 @@ const AdaptiveOptics = (props) => {
           left={750}
         />
       )}
-      {/* Screen*/}
+      {/* Screen */}
       {props.selected.has("cam_screen") && (
-        <ESPCam
-          title="Screen"
-          id={"cam_screen"}
-          top={50}
-          left={550}
-        />
+        <ESPCam title="Screen" id={"cam_screen"} top={50} left={550} />
+      )}
+
+      {/* Detail Cam*/}
+      {props.selected.has("cam_eye") && (
+        <ESPCam title="Detail Cam" id={"cam_eye"} top={50} left={250} />
       )}
     </div>
   );

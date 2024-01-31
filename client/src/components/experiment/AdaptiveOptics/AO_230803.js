@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.1.2 AO_230803.glb -k -s
 */
 
 import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
-import { useGLTF } from "@react-three/drei";
+import { Cylinder, useGLTF } from "@react-three/drei";
 import React, { memo } from "react";
 import { isEqual } from "lodash";
 import GlassMaterial from "./materials/GlassMaterial";
@@ -38,6 +38,8 @@ function Model(props) {
           </mesh>
         </group>
       )}
+
+      {/* Interactive Components */}
 
       <group
         name="LaserPower"
@@ -182,7 +184,7 @@ function Model(props) {
           receiveShadow
           geometry={nodes.Cylinder002.geometry}
           material={materials.BlackParts}
-          >
+        >
           {props.selected.has("beamSplitter") ? (
             <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
           ) : (
@@ -739,6 +741,47 @@ function Model(props) {
           material={materials["ShinyParts.002"]}
         />
       </group>
+
+      {/* Detail Cam */}
+
+      <group
+        name="Detail Cam"
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          props.toggleSelect("cam_eye");
+        }}
+      >
+        <Cylinder
+          position={[0, 0.15, 0.38]}
+          args={[1, 1, 1, 26]}
+          rotation={[0, 0.3, 2]}
+          scale={[0.014, 0.05, 0.014]}
+          castShadow
+          receiveShadow
+        >
+          <meshStandardMaterial
+            roughness={0.9}
+            opacity={1.0}
+            envMapIntensity={1}
+            color={"#222222"}
+          />
+          {props.showTags && (
+            <DescriptiveTag
+              position={[-0.12, 0.025, 0.46]}
+              title="Detail Cam"
+              description="Shows Diopter and Iris state"
+            />
+          )}
+
+          {props.selected.has("cam_eye") ? (
+            <meshStandardMaterial color="#00ff00" transparent opacity={0.7} />
+          ) : (
+            <meshStandardMaterial color="#222222" opacity={1.0} />
+          )}
+        </Cylinder>
+      </group>
+
+      {/* Base */}
 
       <mesh
         name="Plane004"
