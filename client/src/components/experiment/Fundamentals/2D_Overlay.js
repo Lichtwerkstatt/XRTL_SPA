@@ -25,6 +25,10 @@ const Overlay = (props) => {
     let screen_width = window.innerWidth;
     let screen_height = window.innerHeight;
 
+    // The scaling and offset factors
+    let scaling = [1, 1]; // [x-scale, y-scale]
+    let offset = [0, 0]; // [x-offset, y-offset]
+
     // Function scales the rectangular hitboxes according to the height and width of the browser window
     // Requires as input the coordinates of the box in the form of (x_start, y_end, x_end, y_end)
     // Output: scaled array in the form (x_start, y_end, x_end, y_end)
@@ -35,14 +39,24 @@ const Overlay = (props) => {
         return arrayToScale;
     }
 
+    // Function transforms the rectangular hitbox coordinates according to scaling and offset factors
+    // Requires an array in the format [x1, y1, x2, y2, ...]
+    // Transforms the vector using the scaling and offset variables
+    const boxTransform = (arrayToTransform) => {
+        arrayToTransform = arrayToTransform.map((value, index) => parseInt(value * (scaling[index % scaling.length])));
+        arrayToTransform = arrayToTransform.map((value, index) => parseInt(value + (offset[index % offset.length])));
+
+        return arrayToTransform;
+    }
+
     // Definition of all hitboxes by specifying the controlId, the shape, the coordinates (x_start, y_start, x_end, y_end)
     // and the text to be displayed when hovering over the box.
     let MAP = {
         name: "Fundamental_2D_Map",
         areas: [
-            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling([450, 800, 740, 1000]), desc: 'Power Supply G' },
-            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling([5, 480, 180, 740]), desc: 'Power Supply R' },
-            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling([200, 500, 300, 680]), desc: 'Rotation Laser' },
+            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: 'Power Supply G' },
+            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: 'Power Supply R' },
+            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: 'Rotation Laser' },
         ]
     };
 

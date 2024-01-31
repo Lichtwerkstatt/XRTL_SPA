@@ -26,8 +26,8 @@ const Overlay = (props) => {
     let screen_height = window.innerHeight;
 
     // The scaling and offset factors
-    let scaling = [1, 1]; // [x-scale, y-scale]
-    let offset = [0, 0]; // [x-offset, y-offset]
+    let scaling = [1.5, 1.5]; // [x-scale, y-scale]
+    let offset = [0, -200]; // [x-offset, y-offset]
 
     // Function scales the rectangular hitboxes according to the height and width of the browser window
     // Requires as input the coordinates of the box in the form of (x_start, y_end, x_end, y_end)
@@ -54,9 +54,9 @@ const Overlay = (props) => {
     let MAP = {
         name: "Fundamental_2D_Map",
         areas: [
-            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling([450, 800, 740, 1000]), desc: 'Power Supply G' },
-            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling([5, 480, 180, 740]), desc: 'Power Supply R' },
-            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling([200, 500, 300, 680]), desc: 'Rotation Laser' },
+            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: 'Power Supply G' },
+            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: 'Power Supply R' },
+            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: 'Rotation Laser' },
         ]
     };
 
