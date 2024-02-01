@@ -25,14 +25,31 @@ const Overlay = (props) => {
     let screen_width = window.innerWidth;
     let screen_height = window.innerHeight;
 
-    // Function scales the rectangular hitboxes according to the height and width of the browser window 
-    // Requires as input the coordinates of the box in the form of (x_start, y_end, x_end, y_end)
-    // Output: scaled array in the form (x_start, y_end, x_end, y_end)
-    const boxScaling = (arrayToScale) => {
-        let hitbox_scaling = [screen_width / 1920, screen_height / 955, screen_width / 1920, screen_height / 955];
-        arrayToScale = arrayToScale.map((value, index) => parseInt(value * hitbox_scaling[index]));
+    // The scaling and offset factors
+    let scaling = [1.0, 0.97]; // [x-scale, y-scale]
+    let offset = [0, 30]; // [x-offset, y-offset]
 
-        return arrayToScale;
+    // The Colors for the Hitboxes
+    let preFill_Color = "rgba(200, 200, 250, 0.2)";
+    let fill_Color = "rgba(200, 255, 200, 0.3)";
+    // Function scales the polygonal hitbox according to the height and width of the browser window 
+    // Requires an array in the format [x1, y1, x2, y2, ...]
+    // Output: scaled array in the form [x1, y1, x2, y2, ...]
+    const Strech_to_Screen = (arrayToTransform) => {
+        let hitbox_scaling = [screen_width / 1920, screen_height / 955];
+        arrayToTransform = arrayToTransform.map((value, index) => parseInt(value * (hitbox_scaling[index % hitbox_scaling.length])));
+
+        return arrayToTransform;
+    }
+
+    // Function transforms the polygonal hitbox coordinates according to scaling and offset factors
+    // Requires an array in the format [x1, y1, x2, y2, ...]
+    // Transforms the vector using the scaling and offset variables
+    const boxTransform = (arrayToTransform) => {
+        arrayToTransform = arrayToTransform.map((value, index) => parseInt(value * (scaling[index % scaling.length])));
+        arrayToTransform = arrayToTransform.map((value, index) => parseInt(value + (offset[index % offset.length])));
+
+        return arrayToTransform;
     }
 
     // Definition of all hitboxes by specifying the controlId, the shape, the coordinates (x_start, y_start, x_end, y_end) 
@@ -40,20 +57,20 @@ const Overlay = (props) => {
     let MAP = {
         name: "MI_Simple_imagemap",
         areas: [
-            { controlId: "screen", shape: "rect", coords: boxScaling([350, 0, 1050, 100]), desc: 'Screen' },
-            { controlId: "linear_1", shape: "rect", coords: boxScaling([5, 480, 180, 740]), desc: 'Linear Movable Mirror' },
-            { controlId: "beamblocker1", shape: "rect", coords: boxScaling([200, 500, 300, 680]), desc: 'Beam Blocker' },
-            { controlId: "KM100_1", shape: "rect", coords: boxScaling([450, 800, 740, 1000]), desc: 'Reference Mirror' },
-            { controlId: "beamSplitter", shape: "rect", coords: boxScaling([730, 400, 940, 600]), desc: 'Retract. Beam Splitter' },
-            { controlId: "beamblocker2", shape: "rect", coords: boxScaling([680, 700, 900, 800]), desc: 'Beam Blocker' },
-            { controlId: "greenlaserPower_1", shape: "rect", coords: boxScaling([1350, 200, 1600, 450]), desc: 'Power Supply' },
-            { controlId: "greenlaser_1", shape: "rect", coords: boxScaling([1450, 400, 1700, 600]), desc: 'Laser Alignment' },
+            { controlId: "screen", shape: "poly", coords: Strech_to_Screen(boxTransform([350,0, 350,100, 1050,100, 1050,0])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
+            { controlId: "linear_1", shape: "rect", coords: Strech_to_Screen(boxTransform([5, 480, 180, 740])), desc: 'Linear Movable Mirror' },
+            { controlId: "beamblocker1", shape: "rect", coords: Strech_to_Screen(boxTransform([200, 500, 300, 680])), desc: 'Beam Blocker' },
+            { controlId: "KM100_1", shape: "rect", coords: Strech_to_Screen(boxTransform([450, 800, 740, 1000])), desc: 'Reference Mirror' },
+            { controlId: "beamSplitter", shape: "rect", coords: Strech_to_Screen(boxTransform([730, 400, 940, 600])), desc: 'Retract. Beam Splitter' },
+            { controlId: "beamblocker2", shape: "rect", coords: Strech_to_Screen(boxTransform([680, 700, 900, 800])), desc: 'Beam Blocker' },
+            { controlId: "greenlaserPower_1", shape: "rect", coords: Strech_to_Screen(boxTransform([1350, 200, 1600, 450])), desc: 'Power Supply' },
+            { controlId: "greenlaser_1", shape: "rect", coords: Strech_to_Screen(boxTransform([1450, 400, 1700, 600])), desc: 'Laser Alignment' },
         ]
     };
 
     // Returns the position where the text to be displayed is to be placed
     const getTipPosition = (area) => {
-        return { top: `${area.center[1]}px`, left: `${area.center[0] - 20}px` };
+        return { top: `${area.center[1]-50}px`, left: `${area.center[0] - 50}px` };
     }
 
     // Adds the clicked component to the set within the AppContext, whereupon the corresponding component window is rendered.
@@ -95,8 +112,8 @@ const Overlay = (props) => {
                         onClick={(area) => clicked(area)}
                         onMouseEnter={(area) => enterArea(area)}
                         onMouseLeave={(area) => leaveArea(area)}
-                        lineWidth={2}
-                        strokeColor={"white"}
+                        lineWidth={0}
+                        strokeColor={"rgba(200, 200, 200, 0.0)"}
 
                         width={window.innerWidth}
                         height={window.innerHeight}
