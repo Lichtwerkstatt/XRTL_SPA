@@ -21,8 +21,8 @@ const Chat = () => {
   const [animation, setAnimation] = useState('');
   var [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
-  const [beamSplitter1, setBeamSplitter1] = useState(false);
-  const [beamSplitter2, setBeamSplitter2] = useState(false);
+  const [beamBlocker1, setbeamBlocker1] = useState(false);
+  const [beamBlocker2, setbeamBlocker2] = useState(false);
 
 
   const socketCtx = useSocketContext();
@@ -39,12 +39,12 @@ const Chat = () => {
     const status = (payload) => {
       if (payload.controlId === 'servo_bblock_1') {
 
-        payload.status.absolute === 45 ? setBeamSplitter1(true) : setBeamSplitter1(false)
+        payload.status.absolute === 45 ? setbeamBlocker1(true) : setbeamBlocker1(false)
 
         //console.log("Status  ", payload)
       } else if (payload.controlId === 'servo_bblock_2') {
 
-        payload.status.absolute === 45 ? setBeamSplitter2(true) : setBeamSplitter2(false)
+        payload.status.absolute === 45 ? setbeamBlocker2(true) : setbeamBlocker2(false)
 
         // console.log("Status  ", payload)
       }
@@ -339,29 +339,29 @@ const Chat = () => {
         })
       }
       //DELETE from here ...
-      else if (message === '!bs1') {
+      else if (message === '!bb1') {
 
         socketCtx.socket.emit("command", {
           userId: socketCtx.username,
           controlId: 'servo_bblock_1',
-          binaryCtrl: !beamSplitter1,
+          binaryCtrl: !beamBlocker1,
           color: socketCtx.fontColor,
         })
 
-        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam splitter 1 has been set to ' + String(!beamSplitter1), color: '#FF7373' });
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam blocker 1 has been set to ' + String(!beamBlocker1), color: '#FF7373' });
 
       }
 
-      else if (message === '!bs2') {
+      else if (message === '!bb2') {
 
         socketCtx.socket.emit("command", {
           userId: socketCtx.username,
           controlId: 'servo_bblock_2',
-          binaryCtrl: !beamSplitter2,
+          binaryCtrl: !beamBlocker2,
           color: socketCtx.fontColor,
         })
 
-        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam splitter 1 has been set to ' + String(!beamSplitter2), color: '#FF7373' });
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam blocker 1 has been set to ' + String(!beamBlocker2), color: '#FF7373' });
 
       }
       //... DELETE until here

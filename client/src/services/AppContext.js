@@ -37,6 +37,7 @@ export function AppContextProvider({ children }) {
 
   // Contains all the controlIds of the component windows, which are currently open
   const toggleSelectedComp = (compId) => {
+    // console.log(compId);
     setSelectedComps((prev) => {
       const newSelectedComps = new Set(prev);
 

@@ -5,6 +5,7 @@ import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
 import Cube from "../../assembly/BsCube";
 import Lens from "../../assembly/Lens";
+import BeamBlocker from "../../assembly/BeamBlocker";
 
 /**
  * Experiment Setup Component
@@ -30,93 +31,99 @@ import Lens from "../../assembly/Lens";
  */
 
 const MichelsonInterferometer = (props) => {
-
   return (
     <div>
       {/* KM100 */}
-      {props.selected.has('KM100_1') && (
+      {props.selected.has("KM100_1") && (
         <KM100
           title="Reference Mirror"
-          id={'KM100_1'}
-          controlIdTop={'KM100_top_1'}
-          controlIdBottom={'KM100_bottom_1'}
+          id={"KM100_1"}
+          controlIdTop={"KM100_top_1"}
+          controlIdBottom={"KM100_bottom_1"}
           top={570}
           left={500}
         />
       )}
 
       {/* Linear stage */}
-      {props.selected.has('linear_1') && (
+      {props.selected.has("linear_1") && (
         <SM1ZP
           title="Linear Movable Mirror"
-          controlId={'linear_1'}
+          controlId={"linear_1"}
           top={50}
           left={100}
         />
       )}
 
       {/* Laser ctrl */}
-      {props.selected.has('greenlaser_1') && (
+      {props.selected.has("greenlaser_1") && (
         <KM100
           title="Laser Alignment"
-          id={'greenlaser_1'}
-          controlIdTop={'greenlaser_top_1'}
-          controlIdBottom={'greenlaser_bottom_1'}
+          id={"greenlaser_1"}
+          controlIdTop={"greenlaser_top_1"}
+          controlIdBottom={"greenlaser_bottom_1"}
           top={550}
           left={1550}
         />
       )}
 
       {/* Laser power */}
-      {props.selected.has('greenlaserPower_1') && (
+      {props.selected.has("greenlaserPower_1") && (
         <LaserCtrl
           title="Power Supply"
-          id={'greenlaserPower_1'}
-          controlId={'greenlaser_1'}
+          id={"greenlaserPower_1"}
+          controlId={"greenlaser_1"}
           top={100}
           left={1500}
-
         />
       )}
-      
+
       {/* Cam1 */}
-      {props.selected.has('screen') && (
-        <ESPCam
-          title="Screen"
-          controlId={'screen'}
-          top={50}
-          left={600}
-        />
+      {props.selected.has("screen") && (
+        <ESPCam title="Screen" controlId={"screen"} top={50} left={600} />
       )}
 
       {/* Beamsplitter */}
-      {props.selected.has('beamSplitter') && (
+      {props.selected.has("beamSplitter") && (
         <Beamsplitter
           title="Retract. Beam Splitter"
-          controlId={'beamSplitter'}
+          id={"beamSplitter"}
+          controlId={"beamSplitter"}
           top={600}
           left={850}
         />
       )}
 
-      {/* Lens */}
-      {props.selected.has('lens') && (
-        <Lens
-          title="Lens"
-          controlId={'lens'}
-          top={550}
-          left={1200}
+      {/* Beamblocker 1 */}
+      {props.selected.has("beamblocker1") && (
+        <BeamBlocker
+          title="Retract. Beam Blocker 1"
+          id={"beamblocker1"}
+          controlId={"servo_bblock_1"}
+          top={600}
+          left={250}
         />
       )}
 
-      {/* BeamSplitter Cube */}
-      {props.selected.has('bscube') && (
-        <Cube
-          title="Beam Splitter"
-          controlId={'bscube'}
-          top={450}
-          left={100}
+      {/* Beamblocker 2 */}
+      {props.selected.has("beamblocker2") && (
+        <BeamBlocker
+          title="Retract. Beam Blocker 2"
+          id={"beamblocker2"}
+          controlId={"servo_bblock_2"}
+          top={600}
+          left={550}
         />
+      )}
+
+      {/* Lens */}
+      {props.selected.has("lens") && (
+        <Lens title="Lens" controlId={"lens"} top={550} left={1200} />
+      )}
+
+      {/* BeamSplitter Cube */}
+      {props.selected.has("bscube") && (
+        <Cube title="Beam Splitter" controlId={"bscube"} top={450} left={100} />
       )}
     </div>
   );

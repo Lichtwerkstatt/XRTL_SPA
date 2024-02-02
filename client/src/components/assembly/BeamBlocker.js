@@ -3,9 +3,9 @@ import RetractableCtrl from "../UI/CtrlUnits/RetractableCtrl";
 import Window from "../UI/experimentUI/Window";
 
 /**
- * Beamsplitter component window
+ * BeamBlocker component window
  *
- * @description  This React component returns a window with the content for the LBeamsplitter component window.
+ * @description  This React component returns a window with the content for the LBeamBlocker component window.
  *
  * @param {string} id - controlId of the entire component (same as for the laser alignment)
  * @param {string} controlId - controlId for the relais
@@ -13,9 +13,9 @@ import Window from "../UI/experimentUI/Window";
  * @param {number} top - For the positioning of the window
  * @param {number} left - For the positioning of the window
  *
- * @returns {React.ReactElement} Beamsplitter component window
+ * @returns {React.ReactElement} BeamBlocker component window
  */
-const BeamSplitter = (props) => {
+const BeamBlocker = (props) => {
   return (
     <Window
       id={props.id}
@@ -31,4 +31,4 @@ const BeamSplitter = (props) => {
     </Window>
   );
 };
-export default BeamSplitter;
+export default BeamBlocker;
