@@ -807,8 +807,8 @@ export function Model(props) {
         </group>
         <group
           name="ThermalMirror"
-          position={[-1.9, 0, 0]}
-          // rotation={[0, -Math.PI / 2, 0]}
+          position={[-1.9, 0, -0.2]}
+          rotation={[0, -Math.PI / 1, 0]}
           onPointerDown={(e) => {
             e.stopPropagation();
             props.toggleSelect("heater");
@@ -1020,7 +1020,7 @@ export function Model(props) {
             props.toggleSelect("lens");
           }}
         >
-                    {props.showTags && (
+          {props.showTags && (
             <DescriptiveTag
               position={[0.7, 1, -0.11]}
               title="Lens"
