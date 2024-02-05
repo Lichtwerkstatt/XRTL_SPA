@@ -7,6 +7,8 @@ import DescriptiveTag from "../../UI/experimentUI/DescriptiveTag";
 import { useGLTF, Box, Cylinder } from "@react-three/drei";
 import React, { useRef, memo, useState, useEffect } from "react";
 import { isEqual } from "lodash";
+import GlassMaterial from "./materials/GlassMaterial";
+import LaserMaterial from "./materials/LaserMaterial";
 
 function Model({ ...props }) {
   const group = useRef();
@@ -48,18 +50,7 @@ function Model({ ...props }) {
             args={[1, 1, 1]}
             scale={[0.25, 0.25, 0.25]}
           >
-            <meshPhysicalMaterial
-              thickness={1}
-              roughness={0.1}
-              transmission={1}
-              clearcoat={0.5}
-              clearcoatRoughness={0}
-              ior={1.1}
-              envMapIntensity={25}
-              color={"#ffffff"}
-              attenuationColor={"#00ffff"}
-              attenuationDistance={5}
-            />
+            <GlassMaterial />
           </Box>
           <Cylinder
             position={[0.7, 0.68, -0.13]}
@@ -67,18 +58,7 @@ function Model({ ...props }) {
             rotation={[0, 0, Math.PI / 2]}
             scale={[0.14, 0.05, 0.14]}
           >
-            <meshPhysicalMaterial
-              thickness={1}
-              roughness={0.1}
-              transmission={1}
-              clearcoat={0.5}
-              clearcoatRoughness={0}
-              ior={1.1}
-              envMapIntensity={25}
-              color={"#ffffff"}
-              attenuationColor={"#00ffff"}
-              attenuationDistance={5}
-            />
+            <GlassMaterial />
           </Cylinder>
         </group>
         {/* Beam Overlay */}
@@ -140,18 +120,7 @@ function Model({ ...props }) {
                   rotation={[0, Math.PI / -4, Math.PI / 2]}
                   scale={[0.15, 0.02, 0.15]}
                 >
-                  <meshPhysicalMaterial
-                    thickness={1}
-                    roughness={0.1}
-                    transmission={1}
-                    clearcoat={0.5}
-                    clearcoatRoughness={0}
-                    ior={1.1}
-                    envMapIntensity={25}
-                    color={"#ffffff"}
-                    attenuationColor={"#00ffff"}
-                    attenuationDistance={5}
-                  />
+                  <GlassMaterial />
                 </Cylinder>
                 <Box
                   position={[-0.15, 0.35, -0.15]}
@@ -159,18 +128,7 @@ function Model({ ...props }) {
                   scale={[0.019, 0.4, 0.13]}
                   rotation={[0, Math.PI / -4, Math.PI]}
                 >
-                  <meshPhysicalMaterial
-                    thickness={1}
-                    roughness={0.1}
-                    transmission={1}
-                    clearcoat={0.5}
-                    clearcoatRoughness={0}
-                    ior={1.1}
-                    envMapIntensity={25}
-                    color={"#ffffff"}
-                    attenuationColor={"#00ffff"}
-                    attenuationDistance={5}
-                  />
+                  <GlassMaterial />
                 </Box>
               </group>
             )}
@@ -240,18 +198,7 @@ function Model({ ...props }) {
                   rotation={[0, Math.PI / -4, Math.PI / 2]}
                   scale={[0.15, 0.02, 0.15]}
                 >
-                  <meshPhysicalMaterial
-                    thickness={1}
-                    roughness={0.1}
-                    transmission={1}
-                    clearcoat={0.5}
-                    clearcoatRoughness={0}
-                    ior={1.1}
-                    envMapIntensity={25}
-                    color={"#ffffff"}
-                    attenuationColor={"#00ffff"}
-                    attenuationDistance={5}
-                  />
+                  <GlassMaterial />
                 </Cylinder>
                 <Box
                   position={[-0.05, 0.22, -0.25]}
@@ -259,18 +206,7 @@ function Model({ ...props }) {
                   scale={[0.019, 0.4, 0.13]}
                   rotation={[Math.PI / 2, 0, Math.PI / 4]}
                 >
-                  <meshPhysicalMaterial
-                    thickness={1}
-                    roughness={0.1}
-                    transmission={1}
-                    clearcoat={0.5}
-                    clearcoatRoughness={0}
-                    ior={1.1}
-                    envMapIntensity={25}
-                    color={"#ffffff"}
-                    attenuationColor={"#00ffff"}
-                    attenuationDistance={5}
-                  />
+                  <GlassMaterial />
                 </Box>
               </group>
             )}
@@ -284,13 +220,7 @@ function Model({ ...props }) {
               geometry={nodes.LaserBeam.geometry}
               material={materials.Laser}
             >
-              <meshStandardMaterial
-                color="#65ff00"
-                transparent
-                opacity={0.8}
-                emissive
-                emissiveIntensity={1}
-              />
+              <LaserMaterial />
             </mesh>
             <group
               name="BSslim"
@@ -351,18 +281,7 @@ function Model({ ...props }) {
               rotation={[0, Math.PI / -4, Math.PI / 2]}
               scale={[0.15, 0.02, 0.15]}
             >
-              <meshPhysicalMaterial
-                thickness={1}
-                roughness={0.1}
-                transmission={1}
-                clearcoat={0.5}
-                clearcoatRoughness={0}
-                ior={1.1}
-                envMapIntensity={25}
-                color={"#ffffff"}
-                attenuationColor={"#00ffff"}
-                attenuationDistance={5}
-              />
+              <GlassMaterial />
             </Cylinder>
             <Box
               position={[-0.05, 0.22, -0.25]}
@@ -392,13 +311,7 @@ function Model({ ...props }) {
               geometry={nodes.LaserBeam.geometry}
               material={materials.Laser}
             >
-              <meshStandardMaterial
-                color="#65ff00"
-                transparent
-                opacity={0.8}
-                emissive
-                emissiveIntensity={1}
-              />
+              <LaserMaterial />
             </mesh>
             <mesh
               name="LaserBeamBS"
@@ -408,13 +321,7 @@ function Model({ ...props }) {
               rotation={[0, 0, -Math.PI / 2]}
               scale={0.17}
             >
-              <meshStandardMaterial
-                color="#65ff00"
-                transparent
-                opacity={0.8}
-                emissive
-                emissiveIntensity={1}
-              />
+              <LaserMaterial />
             </mesh>
 
             <group
@@ -479,18 +386,7 @@ function Model({ ...props }) {
                 rotation={[0, Math.PI / -4, Math.PI / 2]}
                 scale={[0.15, 0.02, 0.15]}
               >
-                <meshPhysicalMaterial
-                  thickness={1}
-                  roughness={0.1}
-                  transmission={1}
-                  clearcoat={0.5}
-                  clearcoatRoughness={0}
-                  ior={1.1}
-                  envMapIntensity={25}
-                  color={"#ffffff"}
-                  attenuationColor={"#00ffff"}
-                  attenuationDistance={5}
-                />
+                <GlassMaterial />
               </Cylinder>
               <Box
                 position={[-0.15, 0.35, -0.15]}
@@ -498,18 +394,7 @@ function Model({ ...props }) {
                 scale={[0.019, 0.4, 0.13]}
                 rotation={[0, Math.PI / -4, Math.PI]}
               >
-                <meshPhysicalMaterial
-                  thickness={1}
-                  roughness={0.1}
-                  transmission={1}
-                  clearcoat={0.5}
-                  clearcoatRoughness={0}
-                  ior={1.1}
-                  envMapIntensity={25}
-                  color={"#ffffff"}
-                  attenuationColor={"#00ffff"}
-                  attenuationDistance={5}
-                />
+                <GlassMaterial />
               </Box>
             </group>
           </group>
