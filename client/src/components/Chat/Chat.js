@@ -364,6 +364,12 @@ const Chat = () => {
         socketCtx.socket.emit('message', { userId: 'XRTL', message: 'The beam blocker 1 has been set to ' + String(!beamBlocker2), color: '#FF7373' });
 
       }
+
+      else if (message === '!welcome' || message === '!w') {
+
+        appCtx.toggleShowWelcomeWindow(!appCtx.showWelcomeWindow);
+
+      }
       //... DELETE until here
 
       // Output of an error message if command does not exist or is written incorrectly 
