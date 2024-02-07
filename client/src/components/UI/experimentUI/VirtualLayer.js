@@ -1,6 +1,6 @@
-import Model3d from "../../experiment/MichelsonInterferometer/MIS1_230504";
+import Model3d from "../../experiment/MichelsonInterferometer/MIS1_240205";
 import { useSocketContext } from "../../../services/SocketContext";
-import { OrbitControls, Environment, } from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
 import Model2d from "../../experiment/2D Model/2D_MI_Overlay";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
@@ -8,21 +8,19 @@ import { Suspense } from "react";
 
 /**
  * 3D Experiment Visualization and Overview Camera Stream
- * 
+ *
  * @description Within this recat component, the visualisation of the 3D model or the overview camera stream of the experiment is handled as the background of the React app.
- * 
+ *
  * @param {string} height - For scaling the content (is specified in pixels)
  * @param {string} width - For scaling the content (is specified in pixels)
- *  
- * @returns {React.ReactElement} Background of the web application  
+ *
+ * @returns {React.ReactElement} Background of the web application
  */
 const VirtualLayer = (props) => {
-
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
   if (!appCtx.showVirtualLayer) {
-
     // 3D model of the experiment
     return (
       /* Handles the colour gradient of the background */

@@ -1,4 +1,3 @@
-
 const GlassMaterial = () => {
   return (
     <meshPhysicalMaterial
@@ -7,8 +6,8 @@ const GlassMaterial = () => {
       transmission={1}
       clearcoat={0.1}
       clearcoatRoughness={0}
-      ior={1.4}
-      envMapIntensity={25}
+      ior={1.2}
+      envMapIntensity={5}
       color={"#ffffff"}
       attenuationColor={"#00ffff"}
       attenuationDistance={5}
