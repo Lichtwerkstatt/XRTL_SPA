@@ -101,9 +101,11 @@ function Model({ ...props }) {
         {!beamSplitterState && (
           <group
             name="BSslim"
-            position={[0, 0.3, 0]}
+            position={[-0.16, 0.15, 0.16]}
             // rotation={[0, 0, -Math.PI / 2]}
-            rotation={[-Math.PI / 2, 0, -Math.PI / 4]}
+            // rotation={[-Math.PI / 2, 0, -Math.PI / 4]}
+            rotation={[-Math.PI / 4.1, Math.PI / 8.7, -Math.PI / 4.0]}
+            
             onPointerDown={(e) => {
               e.stopPropagation();
               props.toggleSelect("beamSplitter");
