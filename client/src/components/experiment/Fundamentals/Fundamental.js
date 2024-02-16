@@ -2,6 +2,7 @@ import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import Screen from "../../assembly/RetracatableScreen";
 import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
+import {RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER} from "../../../services/constants/components";
 
 /**
  * Experiment Setup Component
@@ -27,16 +28,18 @@ import KM100 from "../../assembly/KM100";
  * @returns {React.ReactElement} Experiment setup component
  */
 const Fundamentals = (props) => {
+    const { compTitle } = props
+
     let footer = "Initializing...";
 
     return (
         <div>
             {/* Power Supply G */}
-            {props.selected.has("relay_g_laser") && (
+            {props.selected.has(RELAY_G_LASER) && (
                 <LaserCtrl
-                    title="Power Supply G"
-                    id={"relay_g_laser"}
-                    controlId={"relay_g_laser"}
+                    title={compTitle(RELAY_G_LASER)}
+                    id={RELAY_G_LASER}
+                    controlId={RELAY_G_LASER}
                     footer={footer}
                     top={200}
                     left={400}
@@ -44,11 +47,11 @@ const Fundamentals = (props) => {
             )}
 
             {/* Power Supply R */}
-            {props.selected.has("relay_r_laser") && (
+            {props.selected.has(RELAY_R_LASER) && (
                 <LaserCtrl
-                    title="Power Supply R"
-                    id={"relay_r_laser"}
-                    controlId={"relay_r_laser"}
+                    title={compTitle(RELAY_R_LASER)}
+                    id={RELAY_R_LASER}
+                    controlId={RELAY_R_LASER}
                     footer={footer}
                     top={100}
                     left={200}
@@ -56,11 +59,11 @@ const Fundamentals = (props) => {
             )}
 
             {/* Rotation Laser */}
-            {props.selected.has("stepper_rot_laser") && (
+            {props.selected.has(STEPPER_ROT_LASER) && (
                 <LaserCtrl
-                    title="Rotation Laser"
-                    id={"stepper_rot_laser"}
-                    controlId={"stepper_rot_laser"}
+                    title={compTitle(STEPPER_ROT_LASER)}
+                    id={STEPPER_ROT_LASER}
+                    controlId={STEPPER_ROT_LASER}
                     footer={footer}
                     top={100}
                     left={800}

@@ -8,6 +8,7 @@ import ManualWindow from "../../windows/TaskWindow";
 import { useEffect, Fragment } from "react";
 import { isEqual } from 'lodash';
 import { memo } from "react";
+import {useLocaleContext} from "../../../services/LocaleContext";
 
 /**
  *  Fragment component 
@@ -22,6 +23,7 @@ const ExperimentUILayer = () => {
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
+  const localeCtx = useLocaleContext();
 
   useEffect(() => {
     // If authentication was successful on the server side, then auth command is received with the colour assigned by the server.
@@ -71,6 +73,7 @@ const ExperimentUILayer = () => {
       {appCtx.showManualWindow && <ManualWindow />}
       <Fundamentals
         selected={appCtx.selectedComps}
+        compTitle={localeCtx.compTitle}
       />
     </Fragment>
   );

@@ -1,9 +1,11 @@
+import React, { useState } from "react";
+import ImageMapper from "react-img-mapper";
 import ESPCam from "../../UI/templates/ESPCam";
 import OfflineModel from "./media/2D_Overlay.png";
 import Model from "./media/Transparent.png";
-import ImageMapper from "react-img-mapper";
-import React, { useState } from "react";
 import "./CSS/2D_Overlay.css";
+import { RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER } from "../../../services/constants/components.js";
+import { MAPS } from "../../../services/constants";
 
 /**
  * OverviewCam Stream as a 2D-VirtualLayer
@@ -19,6 +21,8 @@ import "./CSS/2D_Overlay.css";
  */
 
 const Overlay = (props) => {
+    const { compTitle } = props;
+
     const [hoveredArea, setHoveredArea] = useState(null);
 
     // Determines the width and height of the browser window
@@ -52,11 +56,11 @@ const Overlay = (props) => {
     // Definition of all hitboxes by specifying the controlId, the shape, the coordinates (x_start, y_start, x_end, y_end)
     // and the text to be displayed when hovering over the box.
     let MAP = {
-        name: "Fundamental_2D_Map",
+        name: MAPS.FUNDAMENTAL_2D,
         areas: [
-            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: 'Power Supply G' },
-            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: 'Power Supply R' },
-            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: 'Rotation Laser' },
+            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: compTitle(RELAY_G_LASER) },
+            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: compTitle(RELAY_R_LASER) },
+            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: compTitle(STEPPER_ROT_LASER) }
         ]
     };
 
