@@ -185,7 +185,7 @@ const ManualWindowContent = (props) => {
 
         {/* Stepper at the bottom of the window */}
         <ThemeProvider theme={theme}>
-          <Stepper left={'Back'} right={'Next'} buttonValue={12} length={11} component={'manual'} />
+          <Stepper left={'Back'} right={'Next'} buttonValue={10} length={11} component={'manual'} />
         </ThemeProvider>
       </div>
     </ThemeProvider>
