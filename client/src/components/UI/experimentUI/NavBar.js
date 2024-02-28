@@ -84,7 +84,7 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Light Source'>
+                        <Tooltip title='Light'>
                             <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 

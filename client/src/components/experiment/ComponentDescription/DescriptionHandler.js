@@ -5,6 +5,7 @@ import LaserCtrl from './Description_LaserCtrl'
 import SM1ZP from './Description_SM1ZP'
 import LegalNotice from './Description_LegalNotice'
 import BeamSplitter from './Description_BeamSplitter'
+import BeamBlocker from './Description_BeamBlocker'
 
 const DescriptionHandler = (props) => {
 
@@ -15,6 +16,8 @@ const DescriptionHandler = (props) => {
         greenlaser_1: <LaserCtrl height={props.height} />,
         greenlaserPower_1: <Laser height={props.height} />,
         beamSplitter: <BeamSplitter height={props.height} />,
+        beamblocker1: <BeamBlocker height={props.height} />,
+        beamblocker2: <BeamBlocker height={props.height} />,
         info: <LegalNotice height={props.height} />
     }
 

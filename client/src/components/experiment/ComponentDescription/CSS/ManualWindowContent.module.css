@@ -3,3 +3,33 @@ div .mainWrapper {
     column-count: 1;
     padding: 15px 15px 10px 15px;
   }
+
+.ManualgifContainer1 {
+  display:contents;
+  /* Set the desired width and height for the container */
+  /* optimized for the given text and Smartphone resolution */
+  width: 325px;
+  height: 150px;
+}
+
+.ManualgifContainer2 {
+  display: contents;
+  /* Set the desired width and height for the container */
+  /* optimized for the given text and Smartphone resolution */
+  width: 325px;
+  height: 100px;
+}
+
+.ManualImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.gifImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
+}

@@ -31,7 +31,7 @@ const ManualWindow = (props) => {
             footer={'none'}
             topper={'none'}
         >
-            <ManualWindowContent />
+            <ManualWindowContent width={width} />
         </Window>
     );
 };

@@ -674,7 +674,15 @@ function Model({ ...props }) {
             receiveShadow
             geometry={nodes.BB1HolderMesh_1.geometry}
             material={materials.ShinyParts}
-          />
+          >
+            {props.showTags && (
+              <DescriptiveTag
+                position={[-0.97, 0.65, 0.12]}
+                title="Retract. Beam Blocker 1"
+                description="Simple Plate Beam Blocker"
+              />
+            )}
+          </mesh>
           <mesh
             name="BB1HolderMesh_2"
             castShadow
@@ -713,7 +721,15 @@ function Model({ ...props }) {
             receiveShadow
             geometry={nodes.BB2HolderMesh_1.geometry}
             material={materials.ShinyParts}
-          />
+          >
+            {props.showTags && (
+              <DescriptiveTag
+                position={[-0.37, 0.65, 0.575]}
+                title="Retract. Beam Blocker 2"
+                description="Simple Plate Beam Blocker"
+              />
+            )}
+          </mesh>
           <mesh
             name="BB2HolderMesh_2"
             castShadow

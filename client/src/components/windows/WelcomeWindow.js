@@ -16,14 +16,7 @@ const WelcomeWindow = (props) => {
         width = '350px'
         height = '480px'
     }
-    else if (576 < width && width < 768) {
-        width = '510px'
-        height = '440px'
-    }
-    else if (768 < width && width < 1000) {
-        width = '510px'
-        height = '440px'
-    } else {
+    else {
         width = '510px'
         height = '460px'
     }
