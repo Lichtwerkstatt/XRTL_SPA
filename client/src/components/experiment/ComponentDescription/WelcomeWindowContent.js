@@ -36,7 +36,7 @@ const WelcomeWindowContent = (props) => {
             observe the resulting interference pattern, learning about interference effects and the wave-like nature of light. Login and discover the possibilities of remote interferometry!
 
             <div className={styles.WelcomegifContainer1} >
-              <img src={Gif1} alt="cycling" className={styles.gifImage} />
+              <img src={Gif1} alt="cycling" className={styles.gifImageCenter} />
             </div>
 
           </div>
@@ -62,6 +62,7 @@ const WelcomeWindowContent = (props) => {
             Additionally, you can view the entire setup by clicking on the camera icon in the header.
             You can freely experiment by manipulating components or follow the detailed manual for a structured approach.
             We encourage you to discover the fascinating world of optics and interferometry.
+            <br /><br />
 
             <div className={styles.WelcomegifContainer3}>
               <img src={Gif3} alt="cycling" className={styles.gifImage} />
