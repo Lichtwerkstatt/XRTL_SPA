@@ -112,22 +112,20 @@ const Window = (props) => {
 
   // Handles the closing of the component window  
   const handleCloseWindow = () => {
-    appCtx.toggleSelectedComp(props.id)
-
     if (props.id === "overview") {
       appCtx.toggleCam();
     }
-
-    if (props.id === "info") {
+    else if (props.id === "info") {
       appCtx.toggleShowInfoWindow();
     }
-
-    if (props.id === "welcome") {
+    else if (props.id === "welcome") {
       appCtx.toggleShowWelcomeWindow();
     }
-
-    if (props.id === "manual") {
+    else if (props.id === "manual") {
       appCtx.toggleShowManualWindow();
+    }
+    else {
+      appCtx.toggleSelectedComp(props.id)
     }
   }
 
