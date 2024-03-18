@@ -8,7 +8,7 @@
  * @param {boolean} sendAMaiL - Determines whether the server should send an email with the access codes. If true, the corresponding login information etc. must 
  * be specified within the env file.
 */
-const PORT = 3000 | process.env.PORT;
+const PORT = 3000 || process.env.PORT;
 const sendAMaiL = true;
 
 /**
