@@ -18,7 +18,7 @@ import { isEqual } from 'lodash';
  */
 const Login = () => {
     // List of addresses to which a connection can be established, for quick change if work is to be done locally.
-    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'http://xrtl-fu.uni-jena.de' }]
+    const connectionOption = [{ title: 'http://localhost:3000' }, { title: 'https://xrtl-fu.uni-jena.de' }]
     const [connection, setConnection] = useState('');
     const [accessCode, setAccessCode] = useState('');
     const [username, setUsername] = useState('');
