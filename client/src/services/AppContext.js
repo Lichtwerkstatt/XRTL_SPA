@@ -94,6 +94,7 @@ export function AppContextProvider({ children }) {
   // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
+    toogleRoomComp("overview");
   };
 
   // Operats the display of the labels and descriptions of the experiment components
@@ -129,7 +130,7 @@ export function AppContextProvider({ children }) {
   // Handles the display of the OverviewCam window
   const toggleCam = () => {
     setShowCam(!showCam);
-    toggleSelectedComp('overview')
+    toogleRoomComp('overview')
   }
 
   // Displays the underConstruction information in the navigation bar
