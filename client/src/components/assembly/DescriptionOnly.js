@@ -1,5 +1,4 @@
 import Window from '../UI/experimentUI/Window';
-import LensDescription from '../experiment/ComponentDescription/Decription_Lens';
 
 const Lens = (props) => {
 
@@ -26,11 +25,8 @@ const Lens = (props) => {
       width='250px'
       footer={'none'}
       topper={'none'}
-    >
-      <LensDescription
-        height='220px'
-      />
-    </Window>
-  )
+      info={false}
+    />
+    )
 }
 export default Lens;

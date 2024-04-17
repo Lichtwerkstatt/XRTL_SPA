@@ -6,6 +6,8 @@ import SM1ZP from './Description_SM1ZP'
 import LegalNotice from './Description_LegalNotice'
 import BeamSplitter from './Description_BeamSplitter'
 import BeamBlocker from './Description_BeamBlocker'
+import Lens from './Description_Lens'
+import Cube from './Description_Cube'
 
 const DescriptionHandler = (props) => {
 
@@ -18,7 +20,9 @@ const DescriptionHandler = (props) => {
         beamSplitter: <BeamSplitter height={props.height} />,
         beamblocker1: <BeamBlocker height={props.height} />,
         beamblocker2: <BeamBlocker height={props.height} />,
-        info: <LegalNotice height={props.height} />
+        info: <LegalNotice height={props.height} />,
+        lens: <Lens height={props.height} />,
+        bscube: <Cube height={props.height} />,
     }
 
     return (

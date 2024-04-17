@@ -1,10 +1,8 @@
-import Beamsplitter from "../../assembly/BeamSplitter";
 import ESPCam from "../../assembly/ESPCam";
 import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
 import SM1ZP from "../../assembly/SM1ZP";
-import Cube from "../../assembly/BsCube";
-import Lens from "../../assembly/Lens";
+import DescriptionOnly from "../../assembly/DescriptionOnly";
 import BeamBlocker from "../../assembly/BeamBlocker";
 
 /**
@@ -85,7 +83,7 @@ const MichelsonInterferometer = (props) => {
 
       {/* Beamsplitter */}
       {props.selected.has("beamSplitter") && (
-        <Beamsplitter
+        <BeamBlocker
           title="Retract. Beam Splitter"
           id={"beamSplitter"}
           controlId={"beamSplitter"}
@@ -118,12 +116,24 @@ const MichelsonInterferometer = (props) => {
 
       {/* Lens */}
       {props.selected.has("lens") && (
-        <Lens title="Lens" controlId={"lens"} top={550} left={1200} />
+        <DescriptionOnly 
+          title="Lens" 
+          id={"lens"}
+          controlId={"lens"} 
+          top={550} 
+          left={1200} 
+        />
       )}
 
       {/* BeamSplitter Cube */}
       {props.selected.has("bscube") && (
-        <Cube title="Beam Splitter" controlId={"bscube"} top={450} left={100} />
+        <DescriptionOnly 
+          title="Beam Splitter"
+          id={"bscube"} 
+          controlId={"bscube"} 
+          top={450} 
+          left={100} 
+        />
       )}
     </div>
   );
