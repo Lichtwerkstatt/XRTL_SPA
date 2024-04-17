@@ -146,10 +146,7 @@ const HeaterCtrl = (props) => {
             </div>
 
             {/* Switch for switching on the thermistor */}
-            <div className={styles.Switch} style={{
-                position: 'absolute',
-                top: '177px',
-                left: '190px'}}>
+            <div className={styles.Switch} >
                 <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} left='Off' right='On' option='switch' />
             </div>
 

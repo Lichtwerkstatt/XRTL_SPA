@@ -22,9 +22,11 @@ div.windowHeader {
 }
 
 div.windowHeader p {
+  /* margin-right: 15px; */
   padding-right: 7px;
   margin-top: -4px;
-  padding-bottom: -190px;
+  /* padding-bottom: 190px; */
+  text-align: right;
 }
 
 div.windowFooter {
@@ -55,12 +57,20 @@ div.windowFooter label {
 .icon {
   position: relative;
   top: -5px;
+  right: 2px;
+  font-size: 24px;
 }
 
 .iconClose {
   position: relative;
   top: -3px;
+  font-size: 30px;
+}
 
+.iconInfo {
+  position: relative;
+  top: -3px;
+  font-size: 30px;
 }
 
 @media (min-width:0px) and (max-width:576px) {

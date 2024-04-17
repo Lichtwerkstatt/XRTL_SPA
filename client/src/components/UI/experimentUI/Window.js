@@ -47,10 +47,10 @@ const Window = (props) => {
 
   // Additional icon to be rendered next to the close icon
   const renderOption = {
-    para: <ImSection className={styles.icon} size={24} />, // Legal Notice 
-    info: <IoInformationCircleOutline className={styles.iconClose} size={30} />, // Information
-    setting: <IoSettingsOutline className={styles.iconClose} size={30} />, // Setting
-    none: <IoSettingsOutline className={styles.icon} size={25} color={'#01bd7d'} />, // None
+    para: <ImSection className={styles.icon} />, // Legal Notice 
+    info: <IoInformationCircleOutline className={styles.iconInfo} />, // Information
+    setting: <IoSettingsOutline className={styles.iconClose} />, // Setting
+    none: <IoSettingsOutline className={styles.icon} color={'#01bd7d'} />, // None
   }
   // Scaling of the setting height of the windows depending on the reference value
   const scaleComponenteWindowHeight = (value) => {
@@ -203,7 +203,7 @@ const Window = (props) => {
               {renderOption[topper]}
             </span>
             {/* Close icon and the onclick-event handling */}
-            <span onClick={handleCloseWindow}><IoCloseCircleOutline className={styles.iconClose} size={30} /></span>
+            <span onClick={handleCloseWindow}><IoCloseCircleOutline className={styles.iconClose} /></span>
           </p>
         </div>
 
