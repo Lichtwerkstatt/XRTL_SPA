@@ -49,7 +49,7 @@ const ESPCam = (props) => {
         }
         // A room is created for the component, into which the clients are then added when they open the corresponding window. By creating the room, the traffic caused by sending the 
         // stream should be reduced, as only the clients who really need the stream receive it.
-        appCtx.toogleRoomComp(props.component, true);
+        appCtx.toggleRoomComp(props.component, true);
 
         socketCtx.socket.on('data', data);
 

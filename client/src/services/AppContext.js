@@ -43,7 +43,7 @@ export function AppContextProvider({ children }) {
       else // Removes controlId of a window, whenever it is closed
       {
         newSelectedComps.delete(compId);
-        toogleRoomComp(compId);
+        toggleRoomComp(compId);
       }
   
       // returns the new set
@@ -61,7 +61,7 @@ export function AppContextProvider({ children }) {
    * @param {string} compId - controlId  
    * @param {boolean} val - prevents the mutiple calling of this function
    */
-  const toogleRoomComp = (compId, val = false) => {
+  const toggleRoomComp = (compId, val = false) => {
     try {
       setRoomComponent((prev) => {
         const newRoomComponent = new Set(prev);
@@ -94,6 +94,7 @@ export function AppContextProvider({ children }) {
   // Switches between the 2D (OverviewCam) and 3D (experiment visualisation) VirtualLayer
   const toggleShowVirtualLayer = () => {
     setShowVirtualLayer(!showVirtualLayer);
+    toggleRoomComp("overview");
   };
 
   // Operats the display of the labels and descriptions of the experiment components
@@ -129,7 +130,7 @@ export function AppContextProvider({ children }) {
   // Handles the display of the OverviewCam window
   const toggleCam = () => {
     setShowCam(!showCam);
-    toggleSelectedComp('overview')
+    toggleRoomComp('overview')
   }
 
   // Displays the underConstruction information in the navigation bar
@@ -177,7 +178,7 @@ export function AppContextProvider({ children }) {
         showCam,
         roomComponent,
         setRoomComponent,
-        toogleRoomComp,
+        toggleRoomComp,
         showLED,
         toggleShowLED,
         socket,
