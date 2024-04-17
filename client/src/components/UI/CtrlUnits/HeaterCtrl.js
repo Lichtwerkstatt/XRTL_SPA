@@ -142,12 +142,15 @@ const HeaterCtrl = (props) => {
             {/* Left-hand setting section for the termistor */}
             <div className={styles.Canvas1}>
                 <Button sx={{ fontSize: 17 }} startIcon={<MicrowaveOutlinedIcon />}>Heater settings </Button>
-                <Slider title='PowerSwitch' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
+                <Slider title='Power Value' component={props.component} online={onlineStatus} sliderValue={powerValue} min={0} max={255} option='pwm' />
             </div>
 
             {/* Switch for switching on the thermistor */}
-            <div className={styles.Switch} >
-                <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} start='Off' end='On' option='switch' />
+            <div className={styles.Switch} style={{
+                position: 'absolute',
+                top: '177px',
+                left: '190px'}}>
+                <Switch component={props.component} online={onlineStatus} switchStatus={powerSwitch} left='Off' right='On' option='switch' />
             </div>
 
             {/* Right side of the settings, which is only displayed if setting is true, making the component window larger */}

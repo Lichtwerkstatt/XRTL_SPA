@@ -64,7 +64,7 @@ export default function CustomSelect(props) {
     };
 
     return (
-        <Box sx={{ m: 2, width: 250 }}>
+        <Box sx={{ m: 2, width: 290 }}>
             <FormControl fullWidth>
                 <InputLabel >{props.title}</InputLabel>
                 <Select
