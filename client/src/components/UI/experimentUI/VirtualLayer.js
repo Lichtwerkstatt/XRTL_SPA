@@ -1,6 +1,6 @@
 import { useSocketContext } from "../../../services/SocketContext";
 import { OrbitControls, Environment } from "@react-three/drei";
-import Model3d from "../../experiment/MichelsonInterferometer/MI_240105";
+import Model3d from "../../experiment/3D Model/ModelFile"; //Replace ModelFile with your 3D Model Name
 import Model2d from "../../experiment/2D Model/2D_MI_Overlay";
 import { useAppContext } from "../../../services/AppContext";
 import { Canvas } from "@react-three/fiber";
