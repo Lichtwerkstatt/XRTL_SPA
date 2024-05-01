@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
 import styles from './CSS/Login.module.css';
 import { isEqual } from 'lodash';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 /**
  * Login component 
@@ -26,7 +26,7 @@ const Login = () => {
 
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     //Forwarding the entered user name and access code to the SocketContext
     const handleLogin = () => {

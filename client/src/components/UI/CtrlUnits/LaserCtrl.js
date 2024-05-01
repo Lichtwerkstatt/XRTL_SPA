@@ -5,7 +5,7 @@ import { theme } from '../templates/Theme.js';
 import Switch from '../templates/Switch';
 import { Box } from '@mui/material';
 import propTypes from "prop-types";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 /**
  * SwitchCtrl component
@@ -21,7 +21,7 @@ const SwitchCtrl = (props) => {
   const [switchIsOn, setSwitch] = useState(false);
   
   const socketCtx = useSocketContext();
-  const { t, i18n } = useTranslation();
+  const { t} = useTranslation();
 
   useEffect(() => {
     const status = (payload) => {

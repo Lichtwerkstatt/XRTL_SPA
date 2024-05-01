@@ -11,6 +11,7 @@ import { memo, useEffect } from 'react';
 import { isEqual } from 'lodash';
 import { useState } from 'react';
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Window component
@@ -40,6 +41,7 @@ const Window = (props) => {
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
+  const { t } = useTranslation();
 
   // Additional icon to be rendered next to the close icon
   const renderOption = {
@@ -133,20 +135,20 @@ const Window = (props) => {
 
     timeNow = [timeNow.getHours(), timeNow.getMinutes(), timeNow.getSeconds(), timeNow.getDay(), timeNow.getMonth()]
     if (lastChange[0] === '') {
-      alert = 'No last change detected!'
+      alert = t('last_change.none')
     } else if (timeNow[0] > lastChange[0]) {
       difH = timeNow[0] - lastChange[0];
-      alert = 'Last change is more than ' + difH + ' h ago!'
+      alert = t('last_change.hour', {difVal: difH})
     } else if (timeNow[0] === lastChange[0] && timeNow[1] === lastChange[1] && timeNow[2] > lastChange[2]) {
       difSec = timeNow[2] - lastChange[2]
-      alert = 'Last change is ' + difSec + ' s ago!'
+      alert = t('last_change.sec', {difVal: difSec})
     } else if (timeNow[0] === lastChange[0] && timeNow[1] > lastChange[1]) {
       difMin = timeNow[1] - lastChange[1]
-      alert = 'Last change is more than ' + difMin + ' min ago!'
+      alert = t('last_change.min', {difVal: difMin})
     } else if (timeNow[3] > lastChange[3] || timeNow[4] > lastChange[4]) {
-      alert = 'Last change is more than 24 h ago!'
+      alert = t('last_change.day')
     } else {
-      alert = 'No last change detected!'
+      alert = t('last_change.none')
     }
 
     popupCtx.toggleShowPopUp(alert, 'info');

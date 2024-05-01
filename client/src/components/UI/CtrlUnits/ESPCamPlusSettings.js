@@ -11,6 +11,7 @@ import Switch from '../templates/Switch';
 import Select from '../templates/Select';
 import Box from '@mui/material/Box';
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * ESPCam component with settings
@@ -35,6 +36,7 @@ const ESPCamPlusSettings = (props) => {
     const [exposure, setExposure] = useState(0);
 
     const socketCtx = useSocketContext();
+    const { t } = useTranslation();
 
     const resolution = {
         5: 'QVGA (320x240)',
@@ -96,11 +98,11 @@ const ESPCamPlusSettings = (props) => {
                 {props.setting &&
 
                     <div className={styles.Settings}>
-                        <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-                        <Select title='Resolution' component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} />
-                        <Switch component={props.component} switchStatus={switchIsOn} online={online} left='Color' right='Gray' option='gray' />
-                        <Slider title='Contrast' component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
-                        <Slider title='Exposure' component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
+                        <Box sx={{ m: 2, width: 250 }} > <h1>{t('settings')}</h1> </Box>
+                        <Select title={t('resolution')} component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} />
+                        <Switch component={props.component} switchStatus={switchIsOn} online={online} left={t('color')} right={t('gray')} option='gray' />
+                        <Slider title={t('contrast')} component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
+                        <Slider title={t('exposure')} component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
                     </div>
 
                 }

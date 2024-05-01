@@ -1,5 +1,6 @@
 import styles from './CSS/Description.module.css'
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Power Supply window content 
@@ -11,12 +12,13 @@ import propTypes from "prop-types";
  * @returns {React.ReactElement} descriptive text of the power supply 
  */
 const DescriptionPowerSupply = (props) => {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    The laser power supply provides the electrical energy necessary to excite the laser medium and generate the coherent beam of light.
-                    The laser module here is a class 3 laser, which requires a protective eyewear.
+                    {t('descriptions.power_supply')}
                 </p>
             </div>
 

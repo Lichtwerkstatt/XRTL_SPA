@@ -1,6 +1,6 @@
 import LaserCtrl from "../../assembly/Laser";
-import {RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER} from "../../../services/constants/components";
-import {useTranslation} from "react-i18next";
+import { RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER } from "../../../services/constants/components";
+import { useTranslation } from "react-i18next";
 
 /**
  * Experiment Setup Component
@@ -26,7 +26,7 @@ import {useTranslation} from "react-i18next";
  * @returns {React.ReactElement} Experiment setup component
  */
 const Fundamentals = (props) => {
-    const { t, i18n } = useTranslation();
+    const { t} = useTranslation();
 
     let footer = t('initializing');
 
@@ -35,7 +35,7 @@ const Fundamentals = (props) => {
             {/* Power Supply G */}
             {props.selected.has(RELAY_G_LASER) && (
                 <LaserCtrl
-                    title={t('components.titles.' + RELAY_G_LASER)}
+                    title={t('components.' + RELAY_G_LASER)}
                     id={RELAY_G_LASER}
                     controlId={RELAY_G_LASER}
                     footer={footer}
@@ -47,7 +47,7 @@ const Fundamentals = (props) => {
             {/* Power Supply R */}
             {props.selected.has(RELAY_R_LASER) && (
                 <LaserCtrl
-                    title={t('components.titles.' + RELAY_R_LASER)}
+                    title={t('components.' + RELAY_R_LASER)}
                     id={RELAY_R_LASER}
                     controlId={RELAY_R_LASER}
                     footer={footer}
@@ -59,7 +59,7 @@ const Fundamentals = (props) => {
             {/* Rotation Laser */}
             {props.selected.has(STEPPER_ROT_LASER) && (
                 <LaserCtrl
-                    title={t('components.titles.' + STEPPER_ROT_LASER)}
+                    title={t('components.' + STEPPER_ROT_LASER)}
                     id={STEPPER_ROT_LASER}
                     controlId={STEPPER_ROT_LASER}
                     footer={footer}

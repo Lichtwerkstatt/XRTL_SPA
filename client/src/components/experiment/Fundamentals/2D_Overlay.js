@@ -4,8 +4,8 @@ import Model from "./media/Transparent.png";
 import ImageMapper from "react-img-mapper";
 import React, { useState } from "react";
 import "./CSS/2D_Overlay.css";
-import {RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER} from "../../../services/constants/components";
-import {MAPS} from "../../../services/constants";
+import { RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER } from "../../../services/constants/components";
+import { MAPS } from "../../../services/constants";
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
  */
 
 const Overlay = (props) => {
-    const { t, i18n } = useTranslation();
+    const { t} = useTranslation();
     const [hoveredArea, setHoveredArea] = useState(null);
 
     // Determines the width and height of the browser window
@@ -58,9 +58,9 @@ const Overlay = (props) => {
     let MAP = {
         name: MAPS.FUNDAMENTAL_2D,
         areas: [
-            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: t('components.titles.' + RELAY_G_LASER) },
-            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: t('components.titles.' + RELAY_R_LASER) },
-            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: t('components.titles.' + STEPPER_ROT_LASER) },
+            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: t('components.' + RELAY_G_LASER) },
+            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: t('components.' + RELAY_R_LASER) },
+            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: t('components.' + STEPPER_ROT_LASER) },
         ]
     };
 

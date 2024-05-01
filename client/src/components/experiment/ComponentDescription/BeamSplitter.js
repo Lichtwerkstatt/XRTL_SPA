@@ -1,5 +1,6 @@
 import styles from './CSS/Description.module.css'
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Beam Splitter window content 
@@ -11,13 +12,12 @@ import propTypes from "prop-types";
  * @returns {React.ReactElement} descriptive text of the beam splitter
  */
 const DescriptionBeamSplitter = (props) => {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
-                <p>
-                    The beam splitter is a partially reflective surface that splits the incoming beam of light into two separate beams.
-                    This plate beam splitter transmits about 90 percent of the incident laser light and reflects the other 10 percent.
-                </p>
+                <p>{t('descriptions.beam_splitter')}</p>
             </div>
 
         </div>

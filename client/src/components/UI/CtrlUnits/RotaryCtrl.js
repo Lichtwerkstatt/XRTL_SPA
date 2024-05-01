@@ -5,6 +5,7 @@ import { usePopUpContext } from "../../../services/PopUpContext";
 import styles from '../CSS/RotaryCtrl.module.css';
 import { useState, useEffect } from 'react';
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * RotaryCtrl component
@@ -27,6 +28,7 @@ const RotaryCtrl = (props) => {
   const appCtx = useAppContext();
   const popupCtx = usePopUpContext();
   const socketCtx = useSocketContext();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const status = (payload) => {
@@ -76,7 +78,7 @@ const RotaryCtrl = (props) => {
         controlId: props.component
       });
     } else {
-      popupCtx.toggleShowPopUp('Only values greater than 0 can be entered!', 'warning');
+      popupCtx.toggleShowPopUp(t('messages.values_greater_than_zero'), 'warning');
     }
     appCtx.addLog('User initiated CW rotation on ' + props.component + ' by ' + enteredRotation + ' steps.');
   };

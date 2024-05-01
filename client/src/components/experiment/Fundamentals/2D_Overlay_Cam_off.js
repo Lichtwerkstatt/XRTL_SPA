@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
  */
 
 const Overlay = (props) => {
-    const { t, i18n } = useTranslation();
+    const { t} = useTranslation();
 
     const [hoveredArea, setHoveredArea] = useState(null);
 
@@ -58,9 +58,9 @@ const Overlay = (props) => {
     let MAP = {
         name: MAPS.FUNDAMENTAL_2D,
         areas: [
-            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: t('components.titles.' + RELAY_G_LASER) },
-            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: t('components.titles.' + RELAY_R_LASER) },
-            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: t('components.titles.' + STEPPER_ROT_LASER) }
+            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: t('components.' + RELAY_G_LASER) },
+            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: t('components.' + RELAY_R_LASER) },
+            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: t('components.' + STEPPER_ROT_LASER) }
         ]
     };
 

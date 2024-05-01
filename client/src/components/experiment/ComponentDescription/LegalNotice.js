@@ -3,6 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import styles from './CSS/Description.module.css';
 import { Button, Box } from '@mui/material';
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Imprint text
@@ -14,21 +15,23 @@ import propTypes from "prop-types";
  * @returns {React.ReactElement} Imprint text and buttons for redirection to websites.  
  */
 const Imprint = (props) => {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    The editorial responsibility for this application lies with the Executive Office of the Abbe Center of Photonics and it's representative/s.
+                    {t('imprint.main')}
                 </p>
                 <p>
-                    For further information please follow the links:
+                    {t('imprint.further')}
                 </p>
                 <ThemeProvider theme={themeLogin}>
 
                     <Box sx={{ '& button': { mr: 5, ml: 3 } }}>
 
-                        <Button type='submit' variant='contained' onClick={() => { window.open("https://www.asp.uni-jena.de/legal-notice", 'resizable=yes') }}> Legal Notice </Button>
-                        <Button type='submit' variant='contained' onClick={() => { window.open("https://www.uni-jena.de/en/privacy-statement", 'resizable=yes') }}> Privacy Statement </Button>
+                        <Button type='submit' variant='contained' onClick={() => { window.open("https://www.asp.uni-jena.de/legal-notice", 'resizable=yes') }}> {t('imprint.legal_link')} </Button>
+                        <Button type='submit' variant='contained' onClick={() => { window.open("https://www.uni-jena.de/en/privacy-statement", 'resizable=yes') }}> {t('imprint.privacy_link')} </Button>
                     </Box>
                 </ThemeProvider>
             </div>

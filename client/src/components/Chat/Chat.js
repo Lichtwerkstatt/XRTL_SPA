@@ -7,7 +7,7 @@ import styles from './CSS/Chat.module.css';
 import { ImBubble } from 'react-icons/im';
 import { MdSend } from 'react-icons/md';
 import { isEqual } from 'lodash';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 /**
  * Chat component 
@@ -25,7 +25,7 @@ const Chat = () => {
 
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
-  const { t, i18n } = useTranslation();
+  const { t} = useTranslation();
 
   useEffect(() => {
     //When new messages are received, the chat is simply extended to include them.

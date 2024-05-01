@@ -1,5 +1,6 @@
 import styles from './CSS/Description.module.css'
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Linear Stage window content 
@@ -11,11 +12,13 @@ import propTypes from "prop-types";
  * @returns {React.ReactElement} descriptive text of the linear stage
  */
 const DescriptionLinearStage = (props) => {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className={styles.mainWrapper} style={{ height: props.height }} >
                 <p>
-                    This retroreflector mounted on the linear translation stage together with the prism forms an optical delay line.
+                    {t('descriptions.linear_stage')}
                 </p>
             </div>
 

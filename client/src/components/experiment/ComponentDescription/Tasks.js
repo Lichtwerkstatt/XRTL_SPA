@@ -2,7 +2,7 @@ import styles from "./CSS/ManualWindowContent.module.css";
 import Stepper from "../../UI/templates/Stepper";
 import { theme } from '../../UI/templates/Theme';
 import { ThemeProvider } from '@mui/material/';
-import {Trans, useTranslation} from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import React from "react";
 
 /**
@@ -13,7 +13,7 @@ import React from "react";
  * @returns {React.ReactElement} Abbreviated version of the task description
  */
 const ManualWindowContent = () => {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <div>

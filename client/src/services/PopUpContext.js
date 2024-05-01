@@ -37,7 +37,7 @@ export function PopUpContextProvider({ children }) {
 
     // Display of popUp widnow, if new web application client has connected to the server
     socketCtx.socket.on('newUserInfo', (payload) => {
-        toggleShowPopUp(t('new_user', {user: payload}), 'info')
+        toggleShowPopUp(t('new_user', {payload}), 'info')
     })
 
     // Creates a new popUp Window with transmitted text and type

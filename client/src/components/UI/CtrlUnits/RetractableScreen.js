@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Switch from '../templates/Switch';
 import Box from '@mui/material/Box';
 import propTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * BeamSplitterCtrl component
@@ -20,6 +21,7 @@ const BeamSplitterCtrl = (props) => {
     const [onlineStatus, setOnlineStatus] = useState(true);
 
     const socketCtx = useSocketContext();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const status = (payload) => {
@@ -61,7 +63,7 @@ const BeamSplitterCtrl = (props) => {
                 left: '10px'
             }}>
                 <Box sx={{ ml: '-4px' }} >
-                    <Switch component={props.component} switchStatus={switchStatus} online={onlineStatus} left='Off' right='On' option='binaryCtrl' />
+                    <Switch component={props.component} switchStatus={switchStatus} online={onlineStatus} left={t('off')} right={t('on')} option='binaryCtrl' />
                 </Box>
             </div>
         </ThemeProvider>
