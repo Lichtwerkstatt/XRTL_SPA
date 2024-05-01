@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import App from "./App";
 import "./index.css"
+import "./i18n/config.js"
 
 /**
  * Recat app rendering in browser
@@ -12,8 +13,8 @@ import "./index.css"
  */
 
 ReactDOM.render(
-  <>
-    <App />
-  </>,
-  document.getElementById("root")
+    <React.Suspense fallback={<div>Loading...</div>}>
+        <App />
+    </React.Suspense>,
+    document.getElementById("root")
 );

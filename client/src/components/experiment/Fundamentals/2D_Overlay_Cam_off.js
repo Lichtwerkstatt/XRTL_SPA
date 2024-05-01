@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import ImageMapper from "react-img-mapper";
-import ESPCam from "../../UI/templates/ESPCam";
 import OfflineModel from "./media/2D_Overlay.png";
 import Model from "./media/Transparent.png";
 import "./CSS/2D_Overlay.css";
 import { RELAY_G_LASER, RELAY_R_LASER, STEPPER_ROT_LASER } from "../../../services/constants/components.js";
 import { MAPS } from "../../../services/constants";
+import { useTranslation } from 'react-i18next';
 
 /**
  * OverviewCam Stream as a 2D-VirtualLayer
@@ -21,7 +21,7 @@ import { MAPS } from "../../../services/constants";
  */
 
 const Overlay = (props) => {
-    const { compTitle } = props;
+    const { t, i18n } = useTranslation();
 
     const [hoveredArea, setHoveredArea] = useState(null);
 
@@ -58,9 +58,9 @@ const Overlay = (props) => {
     let MAP = {
         name: MAPS.FUNDAMENTAL_2D,
         areas: [
-            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: compTitle(RELAY_G_LASER) },
-            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: compTitle(RELAY_R_LASER) },
-            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: compTitle(STEPPER_ROT_LASER) }
+            { controlId: RELAY_G_LASER, shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: t('components.titles.' + RELAY_G_LASER) },
+            { controlId: RELAY_R_LASER, shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: t('components.titles.' + RELAY_R_LASER) },
+            { controlId: STEPPER_ROT_LASER, shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: t('components.titles.' + STEPPER_ROT_LASER) }
         ]
     };
 

@@ -7,6 +7,7 @@ import styles from './CSS/Chat.module.css';
 import { ImBubble } from 'react-icons/im';
 import { MdSend } from 'react-icons/md';
 import { isEqual } from 'lodash';
+import {useTranslation} from "react-i18next";
 
 /**
  * Chat component 
@@ -24,6 +25,7 @@ const Chat = () => {
 
   const socketCtx = useSocketContext();
   const appCtx = useAppContext();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     //When new messages are received, the chat is simply extended to include them.
@@ -48,14 +50,14 @@ const Chat = () => {
       // De-/activate the ambient rotation of the experiment 
       if (message === '!rotate' || message === '!r') {
         appCtx.toggleAutoRotate();
-        setChat([...chat, { userId: 'XRTL', message: 'Rotation command was sent ... ', color: '#FF7373' }]);
+        setChat([...chat, { userId: 'XRTL', message: t('chat.rotate'), color: '#FF7373' }]);
       }
       // De-/activation of the "under construction" message
       else if (message === '!construction' || message === '!c') {
         appCtx.toggleunderConstruction(!appCtx.underConstruction);
         // Forward the change to the server, which sends it to the other web clients.
         socketCtx.socket.emit('underConstruction', !appCtx.underConstruction)
-        setChat([...chat, { userId: 'XRTL', message: 'Under construction is now set to ' + !appCtx.underConstruction, color: '#FF7373' }]);
+        setChat([...chat, { userId: 'XRTL', message: t('chat.under_construction') + !appCtx.underConstruction, color: '#FF7373' }]);
       }
       //Display all user names that are connected to the server via the web application
       else if (message === '!user' || message === '!users') {
@@ -70,7 +72,7 @@ const Chat = () => {
             user += payload[i] + ', '
           }
           user = user.slice(0, -2)
-          setChat([...chat, { userId: 'XRTL', message: 'List of all connected user/s: ' + user, color: '#FF7373' }]);
+          setChat([...chat, { userId: 'XRTL', message: t('chat.list_users') + user, color: '#FF7373' }]);
         })
       }
       //Display all controlIds of the components that are connected to the server
@@ -83,7 +85,7 @@ const Chat = () => {
 
           // Case 1: no component is connected to the server
           if (payload.length === 0) {
-            setChat([...chat, { userId: 'XRTL', message: 'No components are connected to the server! ', color: '#FF7373' }])
+            setChat([...chat, { userId: 'XRTL', message: t('chat.no_components'), color: '#FF7373' }])
           }
           // Case 2: At least one component is connected to the server.
           else {
@@ -94,13 +96,13 @@ const Chat = () => {
             }
             component = component.slice(0, -2)
 
-            setChat([...chat, { userId: 'XRTL', message: 'List of all connected components: ' + component, color: '#FF7373' }]);
+            setChat([...chat, { userId: 'XRTL', message: t('chat.list_components') + component, color: '#FF7373' }]);
           }
         })
       }
       // Resetting selected components to their "factory settings"
       else if (message === '!reset') {
-        socketCtx.socket.emit('message', { userId: 'XRTL', message: 'Attention the reset command was emited!', color: '#FF7373' });
+        socketCtx.socket.emit('message', { userId: 'XRTL', message: t('chat.reset'), color: '#FF7373' });
 
         const controlIds = ['KM100_top_1', 'KM100_bottom_1', 'linear_1', 'greenlaser_top_1', 'greenlaser_bottom_1', 'beamSplitter']
 
@@ -141,11 +143,11 @@ const Chat = () => {
           color: socketCtx.fontColor,
         })
 
-        setChat([...chat, { userId: 'XRTL', message: 'The highest camera settings have been made!', color: '#FF7373' }]);
+        setChat([...chat, { userId: 'XRTL', message: t('chat.highest_cam'), color: '#FF7373' }]);
       }
       // Output of an error message if command does not exist or is written incorrectly 
       else {
-        setChat([...chat, { userId: 'XRTL', message: "Command doesn't exists", color: '#FF7373' }]);
+        setChat([...chat, { userId: 'XRTL', message: t('chat.not_found'), color: '#FF7373' }]);
       }
 
     }
@@ -184,7 +186,7 @@ const Chat = () => {
       <form className={styles.msgForm}>
         <ThemeProvider theme={theme}>
           <FormControl sx={{ marginLeft: -4, width: 3 / 3, paddingTop: 1 }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">Message  </InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password">{t('message')}  </InputLabel>
             <OutlinedInput
               onKeyPress={(e) => { if (e.key === 'Enter') { sendMessage(e); } }}
               onChange={handleChange}
@@ -194,7 +196,7 @@ const Chat = () => {
                   <IconButton onClick={sendMessage} edge="end" > <MdSend /> </IconButton>
                 </InputAdornment>
               }
-              label="Message"
+              label={t('message')}
             />
           </FormControl>
         </ThemeProvider>

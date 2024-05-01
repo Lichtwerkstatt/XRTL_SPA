@@ -1,5 +1,6 @@
 import InfoWindowContent from "./Content/InfoWindowContent";
 import Window from "../UI/experimentUI/Window";
+import {useTranslation} from "react-i18next";
 
 /**
  * Information window
@@ -9,6 +10,8 @@ import Window from "../UI/experimentUI/Window";
  * @returns {React.ReactElement} Information window
  */
 const InfoWindow = () => {
+    const { t, i18n } = useTranslation();
+
     var width = window.innerWidth
     var height = 0;
 
@@ -23,7 +26,7 @@ const InfoWindow = () => {
 
     return (
         <Window
-            header="About XR TwinLab"
+            header={t('info.header')}
             id='info'
             top="200"
             left="200"

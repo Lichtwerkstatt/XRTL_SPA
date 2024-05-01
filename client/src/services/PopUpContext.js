@@ -1,6 +1,7 @@
 import { useState, useContext, createContext } from "react";
 import { useSocketContext } from "./SocketContext";
 import { Alert, Snackbar } from '@mui/material';
+import {useTranslation} from "react-i18next";
 
 const PopUpContext = createContext();
 
@@ -25,6 +26,7 @@ export function PopUpContextProvider({ children }) {
     const [type, setType] = useState('info'); // sets the type of the popUp window, e.g. warning, info, success
 
     const socketCtx = useSocketContext();
+    const { t, i18n } = useTranslation();
 
     // Display of popUp window, if microcontroller sends a error message to the server
     socketCtx.socket.on('error', error => {
@@ -35,7 +37,7 @@ export function PopUpContextProvider({ children }) {
 
     // Display of popUp widnow, if new web application client has connected to the server
     socketCtx.socket.on('newUserInfo', (payload) => {
-        toggleShowPopUp(payload + ' has joined the experiment!', 'info')
+        toggleShowPopUp(t('new_user', {user: payload}), 'info')
     })
 
     // Creates a new popUp Window with transmitted text and type

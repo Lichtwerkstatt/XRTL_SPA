@@ -10,6 +10,7 @@ import styles from '../CSS/NavBar.module.css';
 import { theme } from './../templates/Theme';
 import { memo } from 'react';
 import { isEqual } from 'lodash';
+import {useTranslation} from "react-i18next";
 
 /**
  * Navigation bar component 
@@ -22,6 +23,7 @@ import { isEqual } from 'lodash';
 const NavBar = () => {
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
+    const { t, i18n } = useTranslation();
 
     // Icon colors intialization and change of these, if condition is fulfilled
     let connectionStatusColor = '';
@@ -46,40 +48,40 @@ const NavBar = () => {
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab - Fundamentals</h1>
                 {/* If underConstruction, then the following is displayed */}
-                {appCtx.underConstruction && <h2>Experiment under construction! Some functions may not work!</h2>}
+                {appCtx.underConstruction && <h2>{t('messages.under_construction')}</h2>}
 
                 {/* Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}
                 <div className={styles.navMenu}>
                     <ul>
-                        <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
+                        <Tooltip title={(socketCtx.connected) ? t('tooltips.disconnect') : t('tooltips.connect')}>
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
-                        <Tooltip title='Labels'>
+                        <Tooltip title={t('tooltips.labels')}>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Cam'>
+                        <Tooltip title={t('tooltips.cam')}>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Model'>
+                        <Tooltip title={t('tooltips.model')}>
                             <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Beam Path'>
+                        <Tooltip title={t('tooltips.beam_path')}>
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
                         </Tooltip> 
 
-                        <Tooltip title='Light Source'>
+                        <Tooltip title={t('tooltips.light_source')}>
                             <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Manual'>
+                        <Tooltip title={t('tooltips.manual')}>
                             <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Info'>
+                        <Tooltip title={t('tooltips.info')}>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
                     </ul>

@@ -1,5 +1,6 @@
 import TaskWindowContent from "../experiment/ComponentDescription/Tasks";
 import Window from "../UI/experimentUI/Window";
+import {useTranslation} from "react-i18next";
 
 /**
  * Task window
@@ -9,6 +10,8 @@ import Window from "../UI/experimentUI/Window";
  * @returns {React.ReactElement} Task window
  */
 const TaskWindow = () => {
+    const { t, i18n } = useTranslation();
+
     var width = window.innerWidth
     var height = 0;
 
@@ -22,7 +25,7 @@ const TaskWindow = () => {
 
     return (
         <Window
-            header="XR TwinLab - Adaptive Optic"
+            header={t('manual.header')}
             id='manual'
             top="100"
             left="1000"

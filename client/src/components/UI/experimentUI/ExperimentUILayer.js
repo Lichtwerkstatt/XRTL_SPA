@@ -8,7 +8,7 @@ import ManualWindow from "../../windows/TaskWindow";
 import { useEffect, Fragment } from "react";
 import { isEqual } from 'lodash';
 import { memo } from "react";
-import {useLocaleContext} from "../../../services/LocaleContext";
+import {useTranslation} from "react-i18next";
 
 /**
  *  Fragment component 
@@ -23,12 +23,12 @@ const ExperimentUILayer = () => {
   const socketCtx = useSocketContext();
   const popupCtx = usePopUpContext();
   const appCtx = useAppContext();
-  const localeCtx = useLocaleContext();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     // If authentication was successful on the server side, then auth command is received with the colour assigned by the server.
     const auth = (color) => {
-      popupCtx.toggleShowPopUp('Connection successful!', 'success');
+      popupCtx.toggleShowPopUp(t('connection_success'), 'success');
       socketCtx.socket.emit('userId', socketCtx.username);
       socketCtx.setConnected(true);
       socketCtx.setFontColor(color);
@@ -42,7 +42,7 @@ const ExperimentUILayer = () => {
     // If authentication fails on the server side because too many users are connected to the server, the authfailed command is sent to the client.
     const authFailed = () => {
       socketCtx.setConnected(false);
-      popupCtx.toggleShowPopUp('To many user are connected right now!', 'warning');
+      popupCtx.toggleShowPopUp(t('connection_many'), 'warning');
     }
 
     socketCtx.socket.on('AuthFailed', authFailed)
@@ -53,7 +53,7 @@ const ExperimentUILayer = () => {
 
     // Prevents the rendering of the pop-up message when the web page is opened.
     if (socketCtx.username !== '') {
-      popupCtx.toggleShowPopUp('No server connection!', 'error');
+      popupCtx.toggleShowPopUp(t('connection_failed'), 'error');
     }
 
     return () => {
@@ -73,7 +73,6 @@ const ExperimentUILayer = () => {
       {appCtx.showManualWindow && <ManualWindow />}
       <Fundamentals
         selected={appCtx.selectedComps}
-        compTitle={localeCtx.compTitle}
       />
     </Fragment>
   );

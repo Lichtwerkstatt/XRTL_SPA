@@ -1,5 +1,6 @@
 import ESPCam from '../UI/CtrlUnits/ESPCamWithoutSettings';
 import Window from '../UI/experimentUI/Window';
+import {useTranslation} from "react-i18next";
 
 /**
  * Overview camera window
@@ -9,6 +10,8 @@ import Window from '../UI/experimentUI/Window';
  * @returns {React.ReactElement} Overview camera window
  */
 const CamWindow = () => {
+    const { t, i18n } = useTranslation();
+
     var width = window.innerWidth
     var height = 0;
 
@@ -27,7 +30,7 @@ const CamWindow = () => {
 
     return (
         <Window
-            header={'Top View of Experiment'}
+            header={t('cam.header')}
             top={'200'}
             left={'650'}
             id={'overview'}

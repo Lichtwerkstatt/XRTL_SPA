@@ -1,11 +1,7 @@
-import { Environment, Billboard } from "@react-three/drei";
 import Overlay from "../../experiment/Fundamentals/2D_Overlay";
 import Overlay_off from "../../experiment/Fundamentals/2D_Overlay_Cam_off";
 import { useSocketContext } from "../../../services/SocketContext";
 import { useAppContext } from "../../../services/AppContext";
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
-import {useLocaleContext} from "../../../services/LocaleContext";
 
 /**
  * 3D Experiment Visualization and Overview Camera Stream
@@ -20,7 +16,6 @@ import {useLocaleContext} from "../../../services/LocaleContext";
 const VirtualLayer = (...props) => {
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
-  const localeCtx = useLocaleContext();
 
   if (!appCtx.showVirtualLayer) {
     // Cam off
@@ -31,7 +26,6 @@ const VirtualLayer = (...props) => {
           selected={appCtx.selectedComps}
           socket={socketCtx.socket}
           showTags={appCtx.showTags}
-          compTitle={localeCtx.compTitle}
       />
     );
   } else {  
@@ -42,7 +36,6 @@ const VirtualLayer = (...props) => {
           selected={appCtx.selectedComps}
           socket={socketCtx.socket}
           showTags={appCtx.showTags}
-          compTitle={localeCtx.compTitle}
       />
     );
   }

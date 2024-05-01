@@ -7,6 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import React, { useState, memo } from 'react';
 import styles from './CSS/Login.module.css';
 import { isEqual } from 'lodash';
+import {useTranslation} from "react-i18next";
 
 /**
  * Login component 
@@ -25,6 +26,7 @@ const Login = () => {
 
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
+    const { t, i18n } = useTranslation();
 
     //Forwarding the entered user name and access code to the SocketContext
     const handleLogin = () => {
@@ -58,7 +60,7 @@ const Login = () => {
                 </div>
                 {/* Login window with input fields */}
                 <div className={styles.popupInner} >
-                    <h3 title='settings'>Login</h3>
+                    <h3 title='settings'>{t('login')}</h3>
                     <div className={styles.close}>
                         <IconButton onClick={(e) => {
                             appCtx.toggleLogin();
@@ -75,31 +77,31 @@ const Login = () => {
                         <TextField
                             autoFocus
                             variant='outlined'
-                            label='Username '
+                            label={t('username')}
                             value={username}
                             onChange={handleChange}
                             onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
                             style={{ marginLeft: '0%', width: '200px', paddingRight: '25%' }}
                             error={username === ''}
-                            helperText={username === '' ? 'Enter your username!' : ' '}
+                            helperText={username === '' ? t('username_helper') : ' '}
                         />
 
                         <TextField
                             variant='outlined'
-                            label='Access code '
+                            label={t('access_code')}
                             value={accessCode}
                             onChange={handleAccessCode}
                             onKeyPress={(e) => { if (e.key === 'Enter') { handleLogin(); } }}
                             style={{ marginLeft: '0%', width: '200px', paddingRight: '25%' }}
                             error={accessCode === ''}
-                            helperText={accessCode === '' ? 'Enter the access code!' : ' '}
+                            helperText={accessCode === '' ? t('access_code_helper') : ' '}
                         />
                     </Grid>
                     <Button size='small' type='submit' variant='contained'
                         onClick={handleLogin}
                         endIcon={<SendIcon />}
                         style={{ width: '20%', height: '15%' }}
-                    >Login</Button>
+                    >{t('login')}</Button>
                 </div>
             </ThemeProvider>
         );
