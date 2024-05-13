@@ -1,15 +1,17 @@
 import { useSocketContext } from '../../../services/SocketContext';
 import { MdInfoOutline, MdOutlineMenuBook } from 'react-icons/md';
 import { useAppContext } from '../../../services/AppContext';
-import { ThemeProvider, Tooltip } from '@mui/material';
+import {Button, Menu, MenuItem, ThemeProvider, Tooltip} from '@mui/material';
 import { FaTags, FaLightbulb } from 'react-icons/fa';
 import { BsCamera, BsBox} from 'react-icons/bs';
 import { ImEnter, ImExit } from 'react-icons/im';
 import { GiLaserWarning } from 'react-icons/gi';
 import styles from '../CSS/NavBar.module.css';
 import { theme } from './../templates/Theme';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { isEqual } from 'lodash';
+import { useLocaleContext } from "../../../services/LocaleContext";
+import { LANG_OPTIONS } from "../../../services/constants";
 import {useTranslation} from "react-i18next";
 
 /**
@@ -21,9 +23,25 @@ import {useTranslation} from "react-i18next";
  * @returns {React.ReactElement} Navigation bar component  
  */
 const NavBar = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
     const appCtx = useAppContext();
     const socketCtx = useSocketContext();
-    const { t, i18n } = useTranslation();
+    const localeCtx = useLocaleContext();
+    const { t } = useTranslation();
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleChangeLanguage = (lang) => {
+        localeCtx.changeLanguage(lang)
+        handleClose()
+    }
 
     // Icon colors intialization and change of these, if condition is fulfilled
     let connectionStatusColor = '';
@@ -84,6 +102,30 @@ const NavBar = () => {
                         <Tooltip title={t('tooltips.info')}>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
+
+                        <Button id="language"
+                                aria-controls={open ? 'language-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}>
+                            {t('language')}
+                        </Button>
+                        <Menu
+                            id="language-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'language',
+                            }}
+                        >
+                            {Object.entries(LANG_OPTIONS).map(entry => {
+                                const [key, value] = entry
+                                return <MenuItem key={value}
+                                                 selected={value === localeCtx.resolvedLanguage()}
+                                                 onClick={() => handleChangeLanguage(value)}>{key}</MenuItem>
+                            })}
+                        </Menu>
                     </ul>
                 </div>
             </ThemeProvider>
