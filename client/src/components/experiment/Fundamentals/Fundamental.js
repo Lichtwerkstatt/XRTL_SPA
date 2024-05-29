@@ -2,6 +2,7 @@ import DescriptionOnlyComponent from "../../assembly/DescriptionOnly";
 import Screen from "../../assembly/RetracatableScreen";
 import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
+import RotaryCtrl from "../../assembly/Rotary";
 
 /**
  * Experiment Setup Component
@@ -39,7 +40,7 @@ const Fundamentals = (props) => {
                     controlId={"relay_g_laser"}
                     footer={footer}
                     top={200}
-                    left={400}
+                    left={0}
                 />
             )}
 
@@ -51,19 +52,43 @@ const Fundamentals = (props) => {
                     controlId={"relay_r_laser"}
                     footer={footer}
                     top={100}
-                    left={200}
+                    left={150}
                 />
             )}
 
             {/* Rotation Laser */}
             {props.selected.has("stepper_rot_laser") && (
-                <LaserCtrl
+                <RotaryCtrl
                     title="Rotation Laser"
                     id={"stepper_rot_laser"}
                     controlId={"stepper_rot_laser"}
                     footer={footer}
+                    top={200}
+                    left={300}
+                />
+            )}
+
+            {/* Rotation Dia 1 */}
+            {props.selected.has("stepper_sample_dia_1") && (
+                <RotaryCtrl
+                    title="Rotation Dia 1"
+                    id={"stepper_sample_dia_1"}
+                    controlId={"stepper_sample_dia_1"}
+                    footer={footer}
                     top={100}
-                    left={800}
+                    left={450}
+                />
+            )}
+
+            {/* Rotation Dia 2 */}
+            {props.selected.has("stepper_sample_dia_2") && (
+                <RotaryCtrl
+                    title="Rotation Dia 2"
+                    id={"stepper_sample_dia_2"}
+                    controlId={"stepper_sample_dia_2"}
+                    footer={footer}
+                    top={200}
+                    left={600}
                 />
             )}
         </div>

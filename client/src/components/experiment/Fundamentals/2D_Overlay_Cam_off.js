@@ -54,9 +54,11 @@ const Overlay = (props) => {
     let MAP = {
         name: "Fundamental_2D_Map",
         areas: [
-            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: 'Power Supply G' },
-            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: 'Power Supply R' },
-            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: 'Rotation Laser' },
+            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([0, 500, 100, 750])), desc: 'Power Supply G' },
+            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([100, 500, 200, 750])), desc: 'Power Supply R' },
+            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 750])), desc: 'Rotation Laser' },
+            { controlId: "stepper_sample_dia_1", shape: "rect", coords: boxScaling(boxTransform([300, 500, 400, 750])), desc: 'Rotation Dia 1'},
+            { controlId: "stepper_sample_dia_2", shape: "rect", coords: boxScaling(boxTransform([400, 500, 500, 750])), desc: 'Rotation Dia 2'},
         ]
     };
 
