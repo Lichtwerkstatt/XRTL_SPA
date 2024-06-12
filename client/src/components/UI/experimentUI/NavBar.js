@@ -1,5 +1,5 @@
 import { MenuItem, Menu, ThemeProvider, IconButton, Tooltip } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { LuMenu } from "react-icons/lu";
 import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
 import { FaTags, FaLightbulb } from 'react-icons/fa';
@@ -42,6 +42,8 @@ const NavBar = () => {
 
     const [mobileVersion, setMobileVersion] = useState(null);
     const openMobileVersion = Boolean(mobileVersion);
+    let mobileMenuOn = '';
+    if (mobileVersion) {mobileMenuOn = 'white'}
 
     const [led, setLED] = useState(null);
     const openLED = Boolean(led)
@@ -197,16 +199,16 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Light Source'>
+                        <Tooltip title='Light'>
                             <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Webcam'>
+                        <Tooltip title='Cam'>
                             <li onClick={handleOverviewCam}
                             ><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
 
-                        <Tooltip title='Information'>
+                        <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
                     </ul>
@@ -217,15 +219,16 @@ const NavBar = () => {
                 <div className={styles.mobile}>
                     <IconButton onClick={handleClick} variant="contained" sx={{
                         borderRadius: 1,
-                        height: '33px',
+                        height: '30px',
                         width: '30px',
                         color: 'black',
+                        padding: '0',
                         ':hover': {
                             bgcolor: 'darkgreen',
                             color: '#00ffa8',
                         },
                     }}>
-                        <KeyboardArrowDownIcon color={'white'} />
+                        <LuMenu size={27} color={mobileMenuOn} style={{paddingBottom: '2px'}} />
                     </IconButton>
 
                     {/* Drop down menu  */}
@@ -247,6 +250,15 @@ const NavBar = () => {
                             {(socketCtx.connected) ? 'Disconnect' : 'Connect'}
                         </MenuItem>
 
+                        {/* Button to switch between Model and Cam */}
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            handleVirtualLayer();
+                        }} disableRipple>
+                            <BsBox size={26} style={{ paddingRight: '20px' }} />
+                            Model
+                        </MenuItem>
+
                         {/* Show/hide labels and decriptions of the experiment components */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
@@ -265,6 +277,15 @@ const NavBar = () => {
                             Cam
                         </MenuItem>
 
+                        {/* Toggle the light */}
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleHandleLightSource();
+                        }} disableRipple>
+                            <FaLightbulb size={26} style={{ paddingRight: '20px' }} />
+                            Light
+                        </MenuItem>
+
                         {/* Show/hide Information window */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
@@ -273,8 +294,6 @@ const NavBar = () => {
                             <MdInfoOutline size={26} style={{ paddingRight: '20px' }} />
                             Info
                         </MenuItem>
-
-
                     </Menu>
                 </div>
             </ThemeProvider >
