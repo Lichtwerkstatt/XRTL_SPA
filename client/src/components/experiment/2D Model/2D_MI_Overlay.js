@@ -36,7 +36,7 @@ const Overlay = (props) => {
     // Requires an array in the format [x1, y1, x2, y2, ...]
     // Output: scaled array in the form [x1, y1, x2, y2, ...]
     const Strech_to_Screen = (arrayToTransform) => {
-        let hitbox_scaling = [screen_width / 1920, screen_height / 955];
+        let hitbox_scaling = [screen_width / 1920, screen_height / 1010];
         arrayToTransform = arrayToTransform.map((value, index) => parseInt(value * (hitbox_scaling[index % hitbox_scaling.length])));
 
         return arrayToTransform;
@@ -57,17 +57,17 @@ const Overlay = (props) => {
     let MAP = {
         name: "MI_Simple_imagemap",
         areas: [
-            { controlId: "KM100_1", shape: "poly", coords: Strech_to_Screen(boxTransform([728,846, 945,846, 945,940, 900,940, 900,902, 770,902, 770,942, 727,942])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Reference Mirror'},
-            { controlId: "linear_1", shape: "poly", coords: Strech_to_Screen(boxTransform([179,489, 217,494, 242,504, 259,524, 264,550, 247,581, 214,600, 179,609, 139,603, 114,592, 97,573, 90,548, 100,523, 112,504, 144,492])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Linear Movable Mirror' },
-            { controlId: "plate_rotation", shape: "poly", coords: Strech_to_Screen(boxTransform([536,627, 744,577, 811,593, 833,638, 800,682, 578,726, 522,710, 508,665])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Glass Plate Rotation Stage' },
-            { controlId: "heater_rotation", shape: "poly", coords: Strech_to_Screen(boxTransform([368,688, 422,672, 455,675, 635,785, 644,818, 618,860, 564,862, 360,763, 338,725])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Mirror Changing Stage' },
-            { controlId: "greenlaser_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1763,398, 1849,365, 1915,365, 1915,410, 1870,412, 1871,488, 1915,488, 1915,520, 1786,524])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Laser Alignment' },
-            { controlId: "greenlaserPower_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1577,725, 1777,725, 1789,865, 1585, 865])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Power Supply' },
-            { controlId: "screen", shape: "poly", coords: Strech_to_Screen(boxTransform([516, 4, 1188, 4, 1140, 191, 647, 193])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
-            { controlId: "heater", shape: "poly", coords: Strech_to_Screen(boxTransform([5,415, 310,415, 310,487, 5,487])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Retract. Beam Splitter' },
-            { controlId: "experimentSelection", shape: "poly", coords: Strech_to_Screen(boxTransform([984,395, 1078,394, 1078,257, 1104,257, 1104,490, 984,490])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Multi Component Selection' },
-            { controlId: "lens", shape: "poly", coords: Strech_to_Screen(boxTransform([1200,393, 1282,392, 1284,501, 1200,501])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Lens' },
-            { controlId: "bscube", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Beam Splitter' },
+            { controlId: "KM100_1", shape: "poly", coords: Strech_to_Screen(boxTransform([734,896, 951,895, 951,984, 907,984, 907,954, 785,954, 785,998, 734,998])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Reference Mirror'},
+            { controlId: "linear_1", shape: "poly", coords: Strech_to_Screen(boxTransform([184,505, 222,504, 247,514, 264,534, 269,560, 252,591, 220,610, 184,619, 144,613, 119,602, 102,583, 95,558, 105,533, 122,519, 154,506])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Linear Movable Mirror' },
+            { controlId: "plate_rotation", shape: "poly", coords: Strech_to_Screen(boxTransform([526,666, 729,614, 776,616, 813,639, 816,678, 800,703, 767,719, 732,720, 701,717, 584,754, 540,758, 513,751, 500,736, 495,717, 506,690])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Glass Plate Rotation Stage' },
+            { controlId: "heater_rotation", shape: "poly", coords: Strech_to_Screen(boxTransform([488,761, 615,823, 631,845, 633,871, 613,895, 596,905, 565,909, 543,906, 505,903, 482,893, 466,879, 457,859, 438,851, 426,852, 346,807, 326,781, 327,750, 355,717, 402,704, 430,705, 455,714, 476,728, 484,744])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Mirror Changing Stage' },
+            { controlId: "greenlaser_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1743,418, 1829,385, 1895,385, 1895,430, 1850,432, 1851,508, 1895,508, 1895,540, 1766,544])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Laser Alignment' },
+            { controlId: "greenlaserPower_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1733,723, 1747,726, 1770,735, 1789,754, 1794,770, 1791,790, 1778,805, 1758,815, 1736,816, 1710,811, 1688,796, 1676,782, 1672,769, 1678,748, 1692,733, 1709,727, 1712,725])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Power Supply' },
+            { controlId: "screen", shape: "poly", coords: Strech_to_Screen(boxTransform([540, 1, 1205, 1, 1132, 201, 642, 199])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
+            { controlId: "heater", shape: "poly", coords: Strech_to_Screen(boxTransform([5,430, 315,430, 315,502, 5,502])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Heatable Mirror Stage' },
+            { controlId: "experimentSelection", shape: "poly", coords: Strech_to_Screen(boxTransform([986,415, 1080,414, 1080,277, 1106,277, 1106,510, 986,510])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Multi Component Selection' },
+            { controlId: "lens", shape: "poly", coords: Strech_to_Screen(boxTransform([1195,410, 1277,409, 1279,518, 1195,518])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Lens' },
+            { controlId: "bscube", shape: "poly", coords: Strech_to_Screen(boxTransform([768,407, 947,415, 947,512, 934,527, 773,526, 764,510])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Beam Splitter' },
         ]
     };
 
