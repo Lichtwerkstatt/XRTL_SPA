@@ -24,6 +24,7 @@
     height: 100%;
 }
 
+/*
 .navMenuLaser {
     position: absolute;
     top: -18px;
@@ -46,13 +47,13 @@
     left: 100%;
     align-items: center;
 
-}
+} */
 
 .navMenu ul {
     margin: 0px;
     padding: 0px;
     height: 100%;
-}
+} 
 
 .navMenu li {
     display: block;
@@ -61,16 +62,17 @@
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 2px;
-}
+} 
 
 .navMenu li:hover {
     background: darkgreen;
     color: #00ffa8
-}
+} 
 
+/*
 .navRow {
     float: left;
-}
+} */
 
 .mobile {
     visibility: hidden;
@@ -91,7 +93,7 @@
     }
 }
 
-@media (min-width:577px) and (max-width:768px) {
+/*@media (min-width:577px) and (max-width:768px) {
     .mobile {
         visibility: visible;
         position: absolute;
@@ -103,9 +105,9 @@
     .navMenu {
         visibility: hidden;
     }
-}
+}*/
 
-@media (min-width:769px) and (max-width:992px) {
+@media (min-width:577px) and (max-width:992px) {
     .mobile {
         visibility: visible;
         position: absolute;

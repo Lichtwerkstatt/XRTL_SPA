@@ -97,10 +97,11 @@ const NavBar = () => {
             <ThemeProvider theme={theme} >
                 <h1>XR TwinLab</h1>
 
+                {/*
                 <div className={styles.navMenuLaser}>
                     <h3>Overlay:</h3>
 
-                    {/* Drop-down menu to display the beam path of the white or red LED  */}
+                    {/* Drop-down menu to display the beam path of the white or red LED
                     <IconButton onClick={handleClick2} variant="contained" sx={{
                         borderRadius: 1,
                         height: '33px',
@@ -123,20 +124,20 @@ const NavBar = () => {
                         open={openLED}
                         onClose={handleLED}
                     >
-                        {/* To display the red or white LED */}
+                        {/* To display the red or white LED
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('none');
                         }} disableRipple>None</MenuItem>
 
-                        {/* Display the white LED */}
+                        {/* Display the white LED
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('white');
                             appCtx.toggleShowBeam('off');
                         }} disableRipple>White</MenuItem>
 
-                        {/* Display the red LED */}
+                        {/* Display the red LED 
                         <MenuItem onClick={() => {
                             handleLED();
                             appCtx.toggleShowLED('red');
@@ -144,7 +145,7 @@ const NavBar = () => {
                         }} disableRipple>Red</MenuItem>
                     </Menu>
 
-                    {/* Drop down menu to manage the display option of the beam path */}
+                    {/* Drop down menu to manage the display option of the beam path
                     <IconButton onClick={handleLaserBeam} variant="contained" sx={{
                         borderRadius: 1,
                         height: '33px',
@@ -158,7 +159,7 @@ const NavBar = () => {
                         <GiLaserWarning />
                     </IconButton>
 
-                    {/* To switch the beam path on or off, as well as the option when the beam splitter is in the beam path, which in turn changes the beam path. */}
+                    {/* To switch the beam path on or off, as well as the option when the beam splitter is in the beam path, which in turn changes the beam path.
                     <Menu
                         id="demo-customized-menu"
                         MenuListProps={{ 'aria-labelledby': 'demo-customized-button', }}
@@ -182,9 +183,10 @@ const NavBar = () => {
                         }} disableRipple>Beamsplitter</MenuItem>
                     </Menu>
                 </div>
+                */}
 
                 {/* Navigation bar if screen widther than 992 pixels
-                Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}
+                Icons of the navigation bar, their underlying function calls and the tooltips for the description of the icon functionality. */}                
                 <div className={styles.navMenu}>
                     <ul>
                         <Tooltip title={(socketCtx.connected) ? 'Disconnect' : 'Connect'}>
@@ -192,7 +194,7 @@ const NavBar = () => {
                         </Tooltip>
 
                         <Tooltip title='Model'>
-                            <li onClick={handleVirtualLayer }><BsBox size={26} color={showVirtualLayerColor} /></li>
+                            <li onClick={handleVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
 
                         <Tooltip title='Labels'>
