@@ -97,12 +97,12 @@ const Overlay = (props) => {
     return (
         <div className="grid">
             <div className="presenter">
-                <div style={{ position: 'relative', zIndex: 0 }}>
+                <div style={{ position: 'relative', zIndex: 0}}>
 
                     {/* ESPCam Stream can only be displayed if there is a connection to the server. Otherwise, the OfflineModel image is used as the basis for the hitboxes (see src of the ImageMapper) */}
                     {props.socket.connected ?
                         <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
-                            style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                            style={{position: 'absolut', top: '0px', left: '0px', bottom: '0px', right: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0px', padding: '0px', border: '0px', display: 'block'}} />
                         :
                         <div />
                     }
