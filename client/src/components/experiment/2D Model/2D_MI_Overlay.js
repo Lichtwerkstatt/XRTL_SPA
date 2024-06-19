@@ -101,8 +101,8 @@ const Overlay = (props) => {
 
                     {/* ESPCam Stream can only be displayed if there is a connection to the server. Otherwise, the OfflineModel image is used as the basis for the hitboxes (see src of the ImageMapper) */}
                     {props.socket.connected ?
-                        <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
-                            style={{position: 'absolut', top: '0px', left: '0px', bottom: '0px', right: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0px', padding: '0px', border: '0px', display: 'block'}} />
+                        <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight - 30)}
+                            style={{position: 'absolut', top: '30px', left: '0px', bottom: '0px', right: '0px', transform: 'rotate(180deg)', height: 'calc(100% - 30px)', width: '100%', margin: '0px', padding: '0px', border: '0px', display: 'block'}} />
                         :
                         <div />
                     }

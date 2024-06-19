@@ -41,7 +41,7 @@ const ESPCam = (props) => {
                     x1 = 0;
                     y1 = 0;
                     x2 = props.width;
-                    y2 = props.height - 30;
+                    y2 = props.height;
                     ctx.drawImage(this, x1, y1, x2, y2);
                 };
                 img.src = 'data:image/jpg;base64,' + base64String;
