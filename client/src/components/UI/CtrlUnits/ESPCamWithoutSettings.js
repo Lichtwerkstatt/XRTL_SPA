@@ -45,7 +45,7 @@ const ESPCamWithoutSettings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ESPCam component={props.component} width={props.width} height={props.height} style={{ borderRadius: '5px', backgroundSize: 'cover', top: 30 }} />
+        <ESPCam component={props.component} width={props.width} height={props.height} style={{ borderRadius: '5px', backgroundSize: '', top: 15, bottom: '0px', right: '0px', left: '0px', width: "100%", height: '100%' }} />
     )
 }
 
