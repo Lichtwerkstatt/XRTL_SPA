@@ -78,6 +78,7 @@ const NavBar = () => {
 
     // Prevents the OverviewCam window from being opened when the OverviewCam stream is displayed as a VirtualLayer
     const handleOverviewCam  = () => {
+        console.log(appCtx.showVirtualLayer);
         if (!appCtx.showVirtualLayer) {
             appCtx.toggleCam();
             //cameraStatusColor = 'gray'
@@ -273,7 +274,7 @@ const NavBar = () => {
                         {/* Open the window with OverviewCam */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
-                            appCtx.toggleCam();
+                            handleOverviewCam();
                         }} disableRipple>
                             <BsCamera size={26} style={{ paddingRight: '20px' }} />
                             Cam
