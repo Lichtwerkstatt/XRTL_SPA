@@ -94,7 +94,7 @@ const ESPCamPlusSettings = (props) => {
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
-                <ESPCam component={props.component} width={600} height={400} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px' }} />
+                <ESPCam component={props.component} width={600} height={400} style={{ border: '2px solid #01bd7d', borderRadius: '5px', top: '15px', bottom: '0px', right: '0px', left: '0px', width: '100%', height: '100%'}} />
                 {props.setting &&
 
                     <div className={styles.Settings}>
