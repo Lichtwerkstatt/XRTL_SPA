@@ -26,8 +26,8 @@ const Overlay = (props) => {
     let screen_height = window.innerHeight;
 
     // The scaling and offset factors
-    let scaling = [1.0, 1.0]; // [x-scale, y-scale]
-    let offset = [0, 0]; // [x-offset, y-offset]
+    let scaling = [1.0, 0.97]; // [x-scale, y-scale]
+    let offset = [0, 36]; // [x-offset, y-offset]
 
     // The Colors for the Hitboxes
     let preFill_Color = "rgba(250, 200, 150, 0.3)";
@@ -57,7 +57,7 @@ const Overlay = (props) => {
     let MAP = {
         name: "MI_Simple_imagemap",
         areas: [
-            { controlId: "screen", shape: "poly", coords: Strech_to_Screen(boxTransform([420,30, 1088,30, 1079,87, 486,106])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
+            { controlId: "screen", shape: "poly", coords: Strech_to_Screen(boxTransform([395,0, 1090,0, 1079,87, 486,106])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
             { controlId: "linear_1", shape: "poly", coords: Strech_to_Screen(boxTransform([168,480, 232,481, 304,498, 298,590, 265,592, 265,603, 192,597, 162,587, 140,552, 138,517, 154,489])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Linear Movable Mirror' },
             { controlId: "beamblocker1", shape: "poly", coords: Strech_to_Screen(boxTransform([469,608, 525,614, 597,611, 609,620, 611,711, 598,720, 504,723, 470,729, 453,717, 443,692, 442,668, 447,637, 453,618])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Beam Blocker' },
             { controlId: "KM100_1", shape: "poly", coords: Strech_to_Screen(boxTransform([580,902, 783,902, 783,986, 730,986, 730,959, 623,959, 623,986, 580,986])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Reference Mirror' },
@@ -100,8 +100,8 @@ const Overlay = (props) => {
 
                     {/* ESPCam Stream can only be displayed if there is a connection to the server. Otherwise, the OfflineModel image is used as the basis for the hitboxes (see src of the ImageMapper) */}
                     {props.socket.connected ?
-                        <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
-                            style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                        <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight - 30)}
+                        style={{position: 'absolut', top: '30px', left: '0px', bottom: '0px', right: '0px', transform: 'rotate(180deg)', height: 'calc(100% - 30px)', width: '100%', margin: '0px', padding: '0px', border: '0px', display: 'block'}} />
                         :
                         <div />
                     }
