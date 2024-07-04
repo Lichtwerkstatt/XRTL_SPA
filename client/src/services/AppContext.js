@@ -29,7 +29,8 @@ export function AppContextProvider({ children }) {
   const [manualPage, setManualPage] = useState(1);
   const [welcomePage, setWelcomePage] = useState(1);
   const [showBeam, setShowBeam] = useState(false);
-  const [showTags, setShowTags] = useState(true);
+  const isMobile = window.innerWidth <= 992;
+  const [showTags, setShowTags] = useState(!isMobile);
   const [showCam, setShowCam] = useState(false);
   const [username, setUsername] = useState('');
   const [socket, setSocket] = useState('');
