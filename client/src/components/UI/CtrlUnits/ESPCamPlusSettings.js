@@ -3,7 +3,7 @@ import { useSocketContext } from '../../../services/SocketContext';
 import { ThemeProvider } from '@mui/material/styles';
 import ESPCam from '../templates/ESPCam';
 import styles from '../CSS/Settings.module.css'
-import { theme, themeSettings } from '../templates/Theme.js';
+import { themeSettings } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import Slider from '../templates/Slider';
@@ -57,7 +57,7 @@ const ESPCamPlusSettings = (props) => {
             document.getElementById(props.component).style.left = props.setting ? '-325px' : '-655px';
         }
         else {
-            document.getElementById(props.component).style.left = props.setting ? '-25px' : '-355px';
+            document.getElementById(props.component).style.left = props.setting ? '-25px' : '-255px';
         }
     }
 
@@ -67,7 +67,7 @@ const ESPCamPlusSettings = (props) => {
             document.getElementById(props.component).style.left = !props.setting ? '-325px' : '-655px';
         }
         else {
-            document.getElementById(props.component).style.left = !props.setting ? '-25px' : '-355px';
+            document.getElementById(props.component).style.left = !props.setting ? '-25px' : '-255px';
         }
 
         const status = (payload) => {
@@ -119,7 +119,7 @@ const ESPCamPlusSettings = (props) => {
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
-                <ESPCam component={props.component} width={dimensions.width} height={dimensions.height} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px' }} />
+                <ESPCam component={props.component} width={dimensions.width} height={dimensions.height} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px'}} />
                 {props.setting && (
                     <div className={styles.SettingsContainer}>
                         {isMobile ? (

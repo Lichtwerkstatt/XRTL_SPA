@@ -32,7 +32,7 @@ const ESPCamStream = (props) => {
     let newHeight = window.innerHeight;
 
     if (isMobile) {
-      newWidth = setting ? 700 : 370;
+      newWidth = setting ? 600 : 370;
       newHeight = 260;
     } else {
       newWidth = setting ? 1000 : 670;
