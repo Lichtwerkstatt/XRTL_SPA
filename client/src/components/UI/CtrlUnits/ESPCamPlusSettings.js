@@ -3,7 +3,7 @@ import { useSocketContext } from '../../../services/SocketContext';
 import { ThemeProvider } from '@mui/material/styles';
 import ESPCam from '../templates/ESPCam';
 import styles from '../CSS/Settings.module.css'
-import { theme } from '../templates/Theme.js';
+import { theme, themeSettings } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import Slider from '../templates/Slider';
@@ -32,6 +32,8 @@ const ESPCamPlusSettings = (props) => {
     const [contrast, setContrast] = useState(0);
     const [exposure, setExposure] = useState(0);
 
+    const isMobile = window.innerWidth <= 992;
+
     const socketCtx = useSocketContext();
 
     const resolution = {
@@ -41,23 +43,31 @@ const ESPCamPlusSettings = (props) => {
         10: 'XGA (1024x768)',
     }
 
+    
+    const [dimensions, setDimensions] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
     // Handles the change of the window size when clicking on the setting icon
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
 
-        if (props.setting) {
-            document.getElementById(props.component).style.left = '-325px'
-        } else {
-            document.getElementById(props.component).style.left = '-655px'
+        if (!isMobile) {
+            document.getElementById(props.component).style.left = props.setting ? '-325px' : '-655px';
+        }
+        else {
+            document.getElementById(props.component).style.left = props.setting ? '-25px' : '-355px';
         }
     }
 
     useEffect(() => {
         // Handles the window size when opening the component window.
-        if (!props.setting) {
-            document.getElementById(props.component).style.left = '-325px'
-        } else {
-            document.getElementById(props.component).style.left = '-655px'
+        if (!isMobile) {
+            document.getElementById(props.component).style.left = !props.setting ? '-325px' : '-655px';
+        }
+        else {
+            document.getElementById(props.component).style.left = !props.setting ? '-25px' : '-355px';
         }
 
         const status = (payload) => {
@@ -88,24 +98,48 @@ const ESPCamPlusSettings = (props) => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketCtx.socket]);
 
+    useEffect(() => {
+        let newWidth = window.innerWidth;
+        let newHeight = window.innerHeight;
+    
+        if (isMobile) {
+          newWidth = 300;
+          newHeight = 230;
+        } else {
+          newWidth = 600;
+          newHeight = 400;
+        }
+    
+        setDimensions({ width: newWidth, height: newHeight });
+      }, [isMobile]);
+
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={themeSettings}>
             <div className={styles.Settings}>
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
-                <ESPCam component={props.component} width={600} height={400} style={{ border: '2px solid #01bd7d', borderRadius: '5px', top: '15px', bottom: '0px', right: '0px', left: '0px', width: '100%', height: '100%'}} />
-                {props.setting &&
-
-                    <div className={styles.Settings}>
-                        <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
-                        <Select title='Resolution' component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} />
-                        <Switch component={props.component} switchStatus={switchIsOn} online={online} left='Color' right='Gray' option='gray' />
-                        <Slider title='Contrast' component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
-                        <Slider title='Exposure' component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
+                <ESPCam component={props.component} width={dimensions.width} height={dimensions.height} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px' }} />
+                {props.setting && (
+                    <div className={styles.SettingsContainer}>
+                        {isMobile ? (
+                            <>
+                            <Select title='Resolution' component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} style={{padding:0}}/>
+                            <Switch component={props.component} switchStatus={switchIsOn} online={online} left='Color' right='Gray' option='gray' />
+                            <Slider title='Contrast' component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
+                            <Slider title='Exposure' component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
+                            </>
+                        ) : (
+                            <>
+                            <Box sx={{ m: 2, width: 250 }} > <h1>Settings</h1> </Box>
+                            <Select title='Resolution' component={props.component} online={online} option='frameSize' selectValue={frameSize} list={resolution} />
+                            <Switch component={props.component} switchStatus={switchIsOn} online={online} left='Color' right='Gray' option='gray' />
+                            <Slider title='Contrast' component={props.component} online={online} sliderValue={contrast} min={-2} max={2} option='contrast' />
+                            <Slider title='Exposure' component={props.component} online={online} sliderValue={exposure} min={0} max={1200} option='exposure' />
+                            </>
+                        )}
                     </div>
-
-                }
+                )}
             </div>
         </ThemeProvider>
     )

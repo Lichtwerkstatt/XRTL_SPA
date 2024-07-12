@@ -16,7 +16,21 @@ export const theme = createTheme({
             dark: '#01bd7d',
             contrastText: '#01bd7d',
         },
-    }
+    },
+})
+
+export const themeSettings = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            light: '#01bd7d',
+            main: '#01bd7d',
+            dark: '#01bd7d',
+            contrastText: '#01bd7d',
+        },
+    },
+
+    spacing: window.innerWidth <= 992 ? 1 : 8,
 })
 
 /**
