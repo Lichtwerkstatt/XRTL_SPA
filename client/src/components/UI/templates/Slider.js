@@ -77,7 +77,7 @@ const SliderCtrl = (props) => {
 
   if (props.text) {
     return (
-      <Box sx={{ width: 290, mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}> 
+      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}> 
         <Typography id="input-slider" gutterBottom={isMobile ? false : true}>
           {props.title}
         </Typography>
@@ -97,7 +97,7 @@ const SliderCtrl = (props) => {
     )
   } else {
     return (
-      <Box sx={{ width: 290, mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}>
+      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}>
         <Typography id="input-slider" gutterBottom={isMobile ? false : true}>
           {props.title}
         </Typography>
