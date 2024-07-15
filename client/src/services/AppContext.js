@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 const AppContext = React.createContext()
 
@@ -24,7 +24,8 @@ export function AppContextProvider({ children }) {
   const [lightSource, setLightSource] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBeam, setShowBeam] = useState('off');
-  const [showTags, setShowTags] = useState(true);
+  const isMobile = window.innerWidth <= 992;
+  const [showTags, setShowTags] = useState(!isMobile);
   const [showCam, setShowCam] = useState(false);
   const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);

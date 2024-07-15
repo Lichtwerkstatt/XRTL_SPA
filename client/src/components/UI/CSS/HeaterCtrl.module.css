@@ -54,4 +54,50 @@ div.Canvas2 {
 
 div.Select {
     padding-top: 30px;
+    width: 290px;
+}
+
+@media (min-width:577px) and (max-width:992px) {
+    div.Temp h2 {
+        position: absolute;
+        width: 220px;
+        height: 80px;
+        top: 45px;
+        background-color: #01bd7d;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    div.Switch {
+        position: relative;
+        top: 115px;
+        left: 180px;
+        margin: 0 0 0 5px;
+        padding: 0;
+    }
+
+    div.Select {
+        padding-top: 30px;
+        width: 275px;
+    }
+
+    div.Canvas1 {
+        position: absolute;
+        width: 295px;
+        height: 130px;
+        top: 140px;
+        left: 10px;
+        border: 2px solid #01bd7d;
+        border-radius: 15px;
+    }
+
+    div.Canvas2 {
+        position: absolute;
+        width: 275px;
+        height: 185px;
+        top: 85px;
+        left: 53%;
+        border: 2px solid #01bd7d;
+        border-radius: 15px;
+    }
 }

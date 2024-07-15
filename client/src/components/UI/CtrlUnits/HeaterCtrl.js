@@ -5,7 +5,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useSocketContext } from '../../../services/SocketContext';
 import { useAppContext } from '../../../services/AppContext';
 import styles from '../CSS/HeaterCtrl.module.css';
-import { theme } from '../templates/Theme.js';
+import { theme, themeSettings } from '../templates/Theme.js';
 import { useState, useEffect } from 'react';
 import Select from '../templates/Select';
 import Slider from '../templates/Slider';
@@ -32,6 +32,8 @@ const HeaterCtrl = (props) => {
     const [powerValue, setPowerValue] = useState(0);
     const [temp, setTemp] = useState('-°C');
 
+    const isMobile = window.innerWidth <= 992;
+
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
@@ -54,23 +56,23 @@ const HeaterCtrl = (props) => {
     const hiddenSetting = () => {
         props.setSetting(!props.setting)
 
-        if (props.setting) {
-            document.getElementById('heaterSetting').style.left = '300px'
-            document.getElementById('temp').style.left = '65px';
+        if (isMobile) {
+            document.getElementById('heaterSetting').style.left = props.setting ? '270px' : '560px';
+            document.getElementById('temp').style.left = '50px';
         } else {
-            document.getElementById('heaterSetting').style.left = '620px';
-            document.getElementById('temp').style.left = '225px';
+            document.getElementById('heaterSetting').style.left = props.setting ? '300px' : '620px';
+            document.getElementById('temp').style.left = props.setting ? '65px' : '255px';
         }
     }
 
     useEffect(() => {
         // Handles the window size when opening the component window.
-        if (!props.setting) {
-            document.getElementById('heaterSetting').style.left = '300px'
-            document.getElementById('temp').style.left = '65px'
+        if (isMobile) {
+            document.getElementById('heaterSetting').style.left = !props.setting ? '270px' : '560px';
+            document.getElementById('temp').style.left = '50px';
         } else {
-            document.getElementById('heaterSetting').style.left = '620px';
-            document.getElementById('temp').style.left = '225px';
+            document.getElementById('heaterSetting').style.left = !props.setting ? '300px' : '620px';
+            document.getElementById('temp').style.left = !props.setting ? '65px' : '255px';
         }
 
         const status = (payload) => {
@@ -154,9 +156,9 @@ const HeaterCtrl = (props) => {
             {props.setting &&
                 <div className={styles.Temp}>
                     <div className={styles.Canvas2}>
-                        <Button sx={{ fontSize: 17, marginLeft: -34, marginTop: -4, marginBottom: 10 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
+                        <Button sx={{ fontSize: 17, marginLeft: -31, marginTop: -4, marginBottom: 10 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
                         <div className={styles.Select}>
-                            <Select sx={{ zIndex: 1500, marginBottom: -10 }} title='Average time (ms)' component={props.componentT} online={onlineStatus} option='averageTime' selectValue={averageTime} list={averageTimeList} />
+                            <Select sx={{ zIndex: 1500, marginBottom: 0 }} title='Average time (ms)' component={props.componentT} online={onlineStatus} option='averageTime' selectValue={averageTime} list={averageTimeList} />
                             <Select title='Update time (s)' component={props.componentT} online={onlineStatus} option='updateTime' selectValue={updateTime} list={updateTimeList} />
                         </div>
                     </div>

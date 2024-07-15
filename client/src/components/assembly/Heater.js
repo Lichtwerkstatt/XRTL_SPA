@@ -1,6 +1,6 @@
 import HeaterCtrl from '../UI/CtrlUnits/HeaterCtrl';
 import Window from '../UI/experimentUI/Window';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Heater component window
@@ -20,13 +20,28 @@ import { useState } from 'react';
  */
 const Heater = (props) => {
     const [setting, setSetting] = useState(false)
-    var width = window.innerWidth
+    const isMobile = window.innerWidth <= 992;
 
-    if (setting) {
-        width = '673px'
-    } else if (!setting) {
-        width = '350px'
-    }
+    const [dimensions, setDimensions] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        //Handles Window Size when opening the Stream Window
+        let newWidth = window.innerWidth;
+        let newHeight = window.innerHeight;
+
+        if (isMobile) {
+        newWidth = setting ? 613: 320;
+        newHeight = 260;
+        } else {
+        newWidth = setting ? 673 : 350;
+        newHeight = 350;
+        }
+
+        setDimensions({ width: newWidth, height: newHeight });
+    }, [setting, isMobile]);
 
     return (
         <Window
@@ -35,8 +50,8 @@ const Heater = (props) => {
             header={props.title}
             top={props.top}
             left={props.left}
-            height='340px'
-            width={width}
+            height={`${dimensions.height}px`}
+            width={`${dimensions.width}px`}
         >
             <HeaterCtrl
                 component={props.controlIdHeater}

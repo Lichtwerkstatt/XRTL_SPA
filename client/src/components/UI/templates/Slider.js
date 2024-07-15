@@ -34,6 +34,8 @@ const SliderCtrl = (props) => {
  */
   const [sliderPos, setSliderPos] = useState(props.sliderValue);
 
+  const isMobile = window.innerWidth <= 992;
+
   const appCtx = useAppContext();
   const socketCtx = useSocketContext();
 
@@ -75,8 +77,8 @@ const SliderCtrl = (props) => {
 
   if (props.text) {
     return (
-      <Box sx={{ width: 290, m: 2 }}>
-        <Typography id="input-slider" gutterBottom>
+      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}> 
+        <Typography id="input-slider" gutterBottom={isMobile ? false : true}>
           {props.title}
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
@@ -95,8 +97,8 @@ const SliderCtrl = (props) => {
     )
   } else {
     return (
-      <Box sx={{ width: 290, m: 2 }}>
-        <Typography id="input-slider" gutterBottom>
+      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}>
+        <Typography id="input-slider" gutterBottom={isMobile ? false : true}>
           {props.title}
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">

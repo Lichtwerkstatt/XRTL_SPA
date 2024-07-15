@@ -27,24 +27,27 @@ div.Settings button {
   top: 3px;
 }
 
-@media (min-width: 0px) and (max-width: 576px) {
-  div.Settings {
-    visibility: hidden;
-  }
-
-  div.Canvas canvas {
-    top: 20px;
-    left: -12px;
-    width: 330px;
-    height: 220px;
-    visibility: visible;
-    position: absolute;
-    border: 2px solid #01bd7d;
-    border-radius: 15px;
-    object-fit: scale-down;
-  }
+div.SettingsContainer {
+  visibility: visible;
+  position: absolute;
+  height: 400px;
+  width: 300px;
+  right: 30px;
+  top: 25px;
 }
 
+
+@media (min-width: 0px) and (max-width: 576px) {
+  div.SettingsContainer {
+    visibility: visible;
+    position: absolute;
+    height: 250px;
+    width: 300px;
+    right: 30px;
+    top: 15px;
+    }
+}
+/*
 @media (min-width: 576px) and (max-width: 768px) {
   div.Settings {
     visibility: hidden;
@@ -63,21 +66,14 @@ div.Settings button {
     object-fit: scale-down;
   }
 }
-
-@media (min-width: 768px) and (max-width: 992px) {
-  div.Settings {
-    visibility: hidden;
-  }
-
-  div.Canvas canvas {
-    top: 15px;
-    left: -300px;
-    width: 600px;
-    height: 400px;
-    visibility: visible;
-    position: absolute;
-    object-fit: scale-down;
-    border-radius: 15px;
-    border: 2px solid #01bd7d;
+*/
+@media (min-width: 577px) and (max-width: 992px) {
+  div.SettingsContainer {
+  visibility: visible;
+  position: absolute;
+  height: 250px;
+  width: 200px;
+  right: 30px;
+  top: 15px;
   }
 }
