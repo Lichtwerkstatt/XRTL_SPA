@@ -12,13 +12,9 @@ const CamWindow = () => {
     var width = window.innerWidth
     var height = 0;
 
-    if (0 < width && width < 576) {
+    if (width <= 992) {
         width = '350'
         height = '260'
-    }
-    else if (576 < width && width < 768) {
-        width = '510'
-        height = '340'
     } else {
         width = '600'
         height = '400'
