@@ -45,8 +45,8 @@ const ESPCamPlusSettings = (props) => {
 
     
     const [dimensions, setDimensions] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: isMobile ? 300 : 600,
+        height: isMobile ? 230 : 400,
     });
 
     // Handles the change of the window size when clicking on the setting icon
