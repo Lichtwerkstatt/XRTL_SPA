@@ -23,7 +23,7 @@ export function AppContextProvider({ children }) {
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [lightSource, setLightSource] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [showBeam, setShowBeam] = useState('off');
+  const [showBeam, setShowBeam] = useState(false);
   const isMobile = window.innerWidth <= 992;
   const [showTags, setShowTags] = useState(!isMobile);
   const [showCam, setShowCam] = useState(false);
@@ -109,8 +109,8 @@ export function AppContextProvider({ children }) {
   };
 
   // For displaying the beam path within the 3D visualisation
-  const toggleShowBeam = (newVal) => {
-    setShowBeam(newVal);
+  const toggleShowBeam = () => {
+    setShowBeam(!showBeam);
   }
 
   // For displaying the beam path of the white and red within the 3D visualisation
