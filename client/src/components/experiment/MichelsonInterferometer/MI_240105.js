@@ -21,22 +21,29 @@ export function Model(props) {
 
   useEffect(() => {
     const status = (payload) => {
-      //console.log(payload.controlId + ": " + payload.status.absolute);
-      console.log("Status ", payload)
+      //console.log(payload.controlId + ": " + payload.status.state);
+      //console.log("Status ", payload)
+
       //convert multi selection tool radio button values to booleans
-      if (payload.controlId === "selector"){
+    
+      if(payload.controlId === "experimentSelection") {
+        console.log(payload.controlId + ": " + payload.status.state);
         //Beamsplitter
-        payload.status.absolute === 115
+        payload.status.state === "splitter"
         ? setBeamsplitterState(true)
         : setBeamsplitterState(false);
 
-        //Red + White LED (cant decide between them right now)
-        payload.status.absolute === 41
+        //Red + White LED
+        payload.status.state === "rled"
         ? setRedLEDState(true)
         : setRedLEDState(false)
 
-        //console.log("Status ", payload)
+        payload.status.state === "wled"
+        ? setWhiteLEDState(true)
+        : setWhiteLEDState(false)
       }
+
+      //console.log("Status ", payload)
     }
 
   socket.on("status", status);
@@ -52,28 +59,6 @@ export function Model(props) {
   return (
     <group {...props} dispose={null}>
       <group name="Scene">
-        {/* Beam Overlay */}
-
-        {props.showBeam && (
-          <mesh
-            name="LaserBeam"
-            geometry={nodes.LaserBeam.geometry}
-            material={materials.Laser}
-          >
-            <LaserMaterial />
-          </mesh>
-        )}
-        {props.showBeam &&
-          beamsplitterState && (
-            <mesh 
-              name="LaserBeamBS"
-              geometry={nodes.LaserBeamBS.geometry}
-              material={materials.Laser}
-            >
-              <LaserMaterial />
-            </mesh>
-        )}
-
         <group name="Optical elements">
           {/* Glass Materials need to be generated here*/}
           {/* Beam Splitter cube */}
@@ -391,7 +376,7 @@ export function Model(props) {
             </Cylinder>
           </group>
         )}
-        {props.showLED === "none" && props.showBeam && (
+        {!redLEDState && !whiteLEDState && props.showBeam && (
           <group>
             <mesh
               name="LaserBeam"
@@ -446,7 +431,7 @@ export function Model(props) {
           </group>
         )}
 
-        {props.showLED === "none" && props.showBeam && beamsplitterState && (
+        {!redLEDState && !whiteLEDState && props.showBeam && beamsplitterState && (
           <group>
             <mesh
               name="LaserBeamBS"
@@ -571,9 +556,7 @@ export function Model(props) {
           </group>
         )}
 
-        {props.showLED === "none" && <mesh />}
-
-        {!props.showBeam && props.showLED === "white" && (
+        {props.showBeam && whiteLEDState && (
           <group>
             <mesh
               name="LEDLightWhite"
@@ -680,7 +663,7 @@ export function Model(props) {
           </group>
         )}
 
-        {!props.showBeam && props.showLED === "red" && (
+        {props.showBeam && redLEDState && (
           <group>
             <mesh
               name="LEDLightRed"

@@ -60,6 +60,7 @@ const RadioButton = (props) => {
             >
                 {Object.keys(props.dictionary).map(val =>
                     <FormControlLabel
+                        key={val}
                         disabled={(socketCtx.connected && props.online) ? false : true}
                         label={props.dictionary[val]}
                         value={val}

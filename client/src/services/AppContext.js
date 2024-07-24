@@ -27,7 +27,7 @@ export function AppContextProvider({ children }) {
   const isMobile = window.innerWidth <= 992;
   const [showTags, setShowTags] = useState(!isMobile);
   const [showCam, setShowCam] = useState(false);
-  const [showLED, setShowLED] = useState('none');
+//  const [showLED, setShowLED] = useState('none');
   const [logs, setLogs] = useState([]);
   const [socket, setSocket] = useState('');
   const [username, setUsername] = useState('');
@@ -113,10 +113,11 @@ export function AppContextProvider({ children }) {
     setShowBeam(!showBeam);
   }
 
-  // For displaying the beam path of the white and red within the 3D visualisation
+ /* // For displaying the beam path of the white and red within the 3D visualisation
   const toggleShowLED = (newVal) => {
     setShowLED(newVal);
-  }
+  }   -> depreciated
+    */
 
   // Handles the display of the Information window
   const toggleShowInfoWindow = () => {
@@ -180,8 +181,8 @@ export function AppContextProvider({ children }) {
         roomComponent,
         setRoomComponent,
         toggleRoomComp,
-        showLED,
-        toggleShowLED,
+//        showLED,
+//        toggleShowLED,
         socket,
         setSocket,
         username,
