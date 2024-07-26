@@ -21,8 +21,8 @@ export function AppContextProvider({ children }) {
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showManualWindow, setShowManual] = useState(false);
-  const [winZIndexes, setWinZIndexes] = useState({});
-  const [maxZIndex, setMaxZIndex] = useState(1);
+  const [windowZIndexes, setWindowZIndexes] = useState({});
+  const [maxWindowZIndex, setMaxWindowZIndex] = useState(1);
   const [lightSource, setLightSource] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
@@ -52,32 +52,25 @@ export function AppContextProvider({ children }) {
       // returns the new set
       return newSelectedComps;
     });
-    handleWinZIndexes(compId);
   };
 
-  // Handles z-indexes (overlapping) of opened windows
-  const handleWinZIndexes = (compId) => {
-      setMaxZIndex((prev) => {
-          const newWinZIndexes = winZIndexes; // Stores z-indexes of currently open windows
-          let newMaxZIndex = prev; // Stores the new maximum z-index value
-          if (!winZIndexes.hasOwnProperty(compId)) {
-              // If component z-index does not exist, assign the maximum z-index
-              newWinZIndexes[compId] = prev;
-              newMaxZIndex = newMaxZIndex + 1;
-          } else {
-              // If component's z-index exists, remove it from the state object
-              const removeZIndex = winZIndexes[compId];
-              // Bring all windows higher than the closed window down by one z-index
-              for (const [key, value] of Object.entries(newWinZIndexes)) {
-                  if (value === removeZIndex) delete newWinZIndexes[key];
-                  else if (value > removeZIndex) newWinZIndexes[key] = value - 1;
-              }
-              newMaxZIndex = newMaxZIndex - 1;
-          }
-          setWinZIndexes(newWinZIndexes);
-          return newMaxZIndex;
-      })
+  // Updates z-index of opened window layers
+  // Gets called when window is rendered and when clicked to drag (if not on top)
+  const updateWindowZIndex = (id) => {
+      if (!windowZIndexes.hasOwnProperty(id) || windowZIndexes[id] + 1 < maxWindowZIndex) {
+          const index = maxWindowZIndex;
+          setWindowZIndexes({...windowZIndexes, [id]: index});
+          setMaxWindowZIndex(index + 1);
+      }
   }
+
+    // Deletes z-index of closed window layers
+    const clearWindowZIndex = (id) => {
+        setWindowZIndexes(prev => {
+            delete prev[id];
+            return {...prev};
+        })
+    }
 
   /**
    * Data recieving controlIds set
@@ -220,7 +213,10 @@ export function AppContextProvider({ children }) {
         toogleRoomComp,
         showManualWindow,
         toggleShowManualWindow,
-        winZIndexes,
+        windowZIndexes,
+        maxWindowZIndex,
+        updateWindowZIndex,
+        clearWindowZIndex,
         underConstruction,
         toggleunderConstruction,
         manualPage,

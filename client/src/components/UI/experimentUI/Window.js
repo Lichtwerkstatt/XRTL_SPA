@@ -52,6 +52,13 @@ const Window = (props) => {
   }
 
   useEffect(() => {
+    appCtx.updateWindowZIndex(props.id);
+    return () => {
+      appCtx.clearWindowZIndex(props.id);
+    }
+  }, [props.id]);
+
+  useEffect(() => {
     // Processing of the transferred topper variable
     if (props.topper === 'none') {
       setTopper('none')
@@ -160,21 +167,18 @@ const Window = (props) => {
     })
   }
 
-  const getStyle = () => {
-    const style = { top: props.top + 'px', left: props.left + 'px', width: props.height + 'px', height: props.height + 'px' };
-    // If window has a z-index property, add it to the style object
-    if (appCtx.winZIndexes.hasOwnProperty(props.id)) {
-      style.zIndex = appCtx.winZIndexes[props.id];
-    }
-    return style;
+  // Handles the start event of dragging a window
+  const handleOnStart = () => {
+    appCtx.updateWindowZIndex(props.id);
   }
 
   return (
     /* Ensures the free movement of the component windows */
-    <Draggable handle='.draggableHandler'>
+    <Draggable handle='.draggableHandler'
+               onStart={handleOnStart}>
       <div
         className={styles.window}
-        style={getStyle()}
+        style={{zIndex: appCtx.windowZIndexes[props.id], top: props.top + 'px', left: props.left + 'px', width: props.height + 'px', height: props.height + 'px'}}
       >
         {/* Styling of the topper of the component window */}
         <div className={styles.windowHeader}>
