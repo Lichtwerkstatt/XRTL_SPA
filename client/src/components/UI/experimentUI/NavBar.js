@@ -268,6 +268,16 @@ const NavBar = () => {
                             Model
                         </MenuItem>
 
+                        {/* Button to show the Beam Path*/}
+                        <MenuItem onClick={() => {
+                            closeMobileVersion();
+                            appCtx.toggleShowBeam();
+                        }} disableRipple>
+                            <GiLaserWarning size={25} style={{ paddingRight: '20px' }} />
+                            Beam Path
+                        </MenuItem>
+
+
                         {/* Show/hide labels and decriptions of the experiment components */}
                         <MenuItem onClick={() => {
                             closeMobileVersion();
