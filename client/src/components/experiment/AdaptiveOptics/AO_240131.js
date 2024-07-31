@@ -660,7 +660,7 @@ function Model(props) {
       >
         {props.showTags && (
           <DescriptiveTag
-            position={[-0.12, 0.12, -0.01]}
+            position={[-0.12, 0.14, -0.01]}
             title="Screen"
             description="Simple Retractable Plate"
           />
@@ -794,7 +794,7 @@ function Model(props) {
       >
         {props.showTags && (
           <DescriptiveTag
-            position={[-0.12, 0.025, 0.46]}
+            position={[-0.03, 0.17, 0.38]}
             title="Detail Cam"
             description="Shows Diopter and Iris state"
           />
