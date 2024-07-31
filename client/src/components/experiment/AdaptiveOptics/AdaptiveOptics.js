@@ -169,14 +169,21 @@ const AdaptiveOptics = (props) => {
       )}
       {/* Shack-Hartmann-Sensor*/}
       {props.selected.has("wavesensor_1") && (
-        <KM100
+        <DescriptionOnlyComponent
+          title="Wavefront Sensor"
+          controlId={"wavesensor_1"}
+          top={50}
+          left={750}
+        />
+        //Uncomment the below to control the Wavefront Sensor
+        /*<KM100
           title="Wavefront Sensor"
           id={"wavesensor_1"}
           controlIdTop={"stepper_sensor_a"}
           controlIdBottom={"stepper_sensor_b"}
           top={50}
           left={750}
-        />
+        />*/
       )}
       {/* Screen */}
       {props.selected.has("cam_screen") && (
