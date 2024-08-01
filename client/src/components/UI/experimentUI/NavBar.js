@@ -71,14 +71,6 @@ const NavBar = () => {
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
-                        <Tooltip title='Labels'>
-                            <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
-                        </Tooltip>
-
-                        <Tooltip title='Cam'>
-                            <li onClick={handleOverviewCam}><BsCamera size={26} color={cameraStatusColor} /></li>
-                        </Tooltip>
-
                         <Tooltip title='Model'>
                             <li onClick={handleVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
@@ -87,14 +79,22 @@ const NavBar = () => {
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
                         </Tooltip>
 
+                        <Tooltip title='Labels'>
+                            <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
+                        </Tooltip>
+
                         <Tooltip title='Light Source'>
                             <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
 
+                        <Tooltip title='Cam'>
+                            <li onClick={handleOverviewCam}><BsCamera size={26} color={cameraStatusColor} /></li>
+                        </Tooltip>
+                        {/*
                         <Tooltip title='Manual'>
                             <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>
                         </Tooltip>
-
+                        */}
                         <Tooltip title='Info'>
                             <li onClick={appCtx.toggleShowInfoWindow}><MdInfoOutline size={26} color={showInfoWindowColor} /></li>
                         </Tooltip>
