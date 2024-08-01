@@ -618,7 +618,7 @@ function Model(props) {
       >
         {props.showTags && (
           <DescriptiveTag
-            position={[-0.12, 0.1, -0.04]}
+            position={[-0.12, 0.09, -0.04]}
             title="Screen Retraction"
             description="Moves screen in and out of the beam"
           />
