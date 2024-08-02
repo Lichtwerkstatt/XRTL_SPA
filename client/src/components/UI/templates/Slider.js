@@ -48,6 +48,8 @@ const SliderCtrl = (props) => {
     { value: parseInt(props.max), label: props.max, },
   ]
 
+  const noMarks = [  ]
+
   /**
    * Handles the onclick event on the slider
    * 
@@ -77,13 +79,13 @@ const SliderCtrl = (props) => {
 
   if (props.text) {
     return (
-      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}> 
+      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 10 : 4 }}> 
         <Typography id="input-slider" gutterBottom={isMobile ? false : true}>
           {props.title}
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
-            valueLabelDisplay="auto"
+            valueLabelDisplay={isMobile ? "on" : "auto"}
             step={1}
             min={props.min}
             max={props.max}
@@ -97,7 +99,7 @@ const SliderCtrl = (props) => {
     )
   } else {
     return (
-      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 20 : 4 }}>
+      <Box sx={{mt: 0, mr: 2, ml: 2, mb: isMobile ? 10 : 4 }}>
         <Typography id="input-slider" gutterBottom={isMobile ? false : true}>
           {props.title}
         </Typography>
@@ -109,7 +111,7 @@ const SliderCtrl = (props) => {
             max={props.max}
             value={props.sliderValue}
             onChangeCommitted={handleSettingChanges}
-            marks={marks}
+            marks={isMobile ? noMarks : marks}
             disabled={(socketCtx.connected && props.online) ? false : true}
           />
         </Stack>

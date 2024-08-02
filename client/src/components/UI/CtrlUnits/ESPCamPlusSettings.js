@@ -45,8 +45,8 @@ const ESPCamPlusSettings = (props) => {
 
     
     const [dimensions, setDimensions] = useState({
-        width: isMobile ? '300' : '600',
-        height: isMobile ? '230' : '400',
+        width: isMobile ? '270' : '600',
+        height: isMobile ? '200' : '400',
     });
 
     // Handles the change of the window size when clicking on the setting icon
@@ -57,7 +57,7 @@ const ESPCamPlusSettings = (props) => {
             document.getElementById(props.component).style.left = props.setting ? '-325px' : '-655px';
         }
         else {
-            document.getElementById(props.component).style.left = props.setting ? '-25px' : '-255px';
+            document.getElementById(props.component).style.left = props.setting ? '0px' : '-220px';
         }
     }
 
@@ -67,7 +67,7 @@ const ESPCamPlusSettings = (props) => {
             document.getElementById(props.component).style.left = !props.setting ? '-325px' : '-655px';
         }
         else {
-            document.getElementById(props.component).style.left = !props.setting ? '-25px' : '-255px';
+            document.getElementById(props.component).style.left = !props.setting ? '0px' : '-220px';
         }
 
         const status = (payload) => {
@@ -103,8 +103,8 @@ const ESPCamPlusSettings = (props) => {
         let newHeight = window.innerHeight;
     
         if (isMobile) {
-          newWidth = '300';
-          newHeight = '230';
+          newWidth = '270';
+          newHeight = '200';
         } else {
           newWidth = '600';
           newHeight = '400';

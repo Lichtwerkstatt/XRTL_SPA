@@ -37,6 +37,8 @@ const TypeSelectMenuItem = (props) => {
  * @example <Select component={'Select3'} online={true} option='frameSize' selectValue={3} list={{1: 'a', b: 2, 3: 'c'}} />
  */
 export default function CustomSelect(props) {
+    const isMobile = window.innerWidth <= 992;
+
     const socketCtx = useSocketContext();
     const appCtx = useAppContext();
 
@@ -64,10 +66,10 @@ export default function CustomSelect(props) {
     };
 
     return (
-        <Box sx={{ m:2 }}>
+        <Box sx={{ m:2}}>
             <FormControl fullWidth>
                 <InputLabel >{props.title}</InputLabel>
-                <Select
+                <Select sx={{height: isMobile ? 45 : 56}}
                     label={props.title}
                     value={props.selectValue}
                     onChange={handleChange}

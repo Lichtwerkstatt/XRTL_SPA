@@ -33,8 +33,8 @@ const Heater = (props) => {
         let newHeight = window.innerHeight;
 
         if (isMobile) {
-        newWidth = setting ? 613: 320;
-        newHeight = 260;
+        newWidth = setting ? 485: 260;
+        newHeight = 210;
         } else {
         newWidth = setting ? 673 : 350;
         newHeight = 350;

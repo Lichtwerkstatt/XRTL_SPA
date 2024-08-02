@@ -57,8 +57,7 @@ const HeaterCtrl = (props) => {
         props.setSetting(!props.setting)
 
         if (isMobile) {
-            document.getElementById('heaterSetting').style.left = props.setting ? '270px' : '560px';
-            document.getElementById('temp').style.left = '50px';
+            document.getElementById('heaterSetting').style.left = '210px';
         } else {
             document.getElementById('heaterSetting').style.left = props.setting ? '300px' : '620px';
             document.getElementById('temp').style.left = props.setting ? '65px' : '255px';
@@ -68,8 +67,7 @@ const HeaterCtrl = (props) => {
     useEffect(() => {
         // Handles the window size when opening the component window.
         if (isMobile) {
-            document.getElementById('heaterSetting').style.left = !props.setting ? '270px' : '560px';
-            document.getElementById('temp').style.left = '50px';
+            document.getElementById('heaterSetting').style.left = '210px';
         } else {
             document.getElementById('heaterSetting').style.left = !props.setting ? '300px' : '620px';
             document.getElementById('temp').style.left = !props.setting ? '65px' : '255px';
@@ -136,8 +134,8 @@ const HeaterCtrl = (props) => {
             {/* Temperature display and the button for unfolding the settings */}
             <div className={styles.Temp}>
                 <Typography id='temp' variant='h2'>{temp}</Typography>
-                <IconButton id={'heaterSetting'} onClick={hiddenSetting}  >
-                    <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
+                <IconButton id={'heaterSetting'} onClick={hiddenSetting} >
+                    <SettingsOutlinedIcon sx={{ fontSize: 35}} />
                 </IconButton>
             </div>
 
@@ -156,7 +154,7 @@ const HeaterCtrl = (props) => {
             {props.setting &&
                 <div className={styles.Temp}>
                     <div className={styles.Canvas2}>
-                        <Button sx={{ fontSize: 17, marginLeft: -31, marginTop: -4, marginBottom: 10 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
+                        <Button sx={{fontSize: 17, marginLeft: isMobile ? -24 : -31, marginTop: -4, marginBottom: 10 }} startIcon={<DeviceThermostatOutlinedIcon />}>Gauge settings </Button>
                         <div className={styles.Select}>
                             <Select sx={{ zIndex: 1500, marginBottom: 0 }} title='Average time (ms)' component={props.componentT} online={onlineStatus} option='averageTime' selectValue={averageTime} list={averageTimeList} />
                             <Select title='Update time (s)' component={props.componentT} online={onlineStatus} option='updateTime' selectValue={updateTime} list={updateTimeList} />
