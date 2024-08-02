@@ -85,7 +85,7 @@ const SliderCtrl = (props) => {
         </Typography>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
           <Slider aria-label="Temperature"
-            valueLabelDisplay={isMobile ? "on" : "auto"}
+            valueLabelDisplay="auto"
             step={1}
             min={props.min}
             max={props.max}
