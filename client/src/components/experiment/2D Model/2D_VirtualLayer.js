@@ -1,5 +1,5 @@
 import ESPCam from "../../UI/templates/ESPCam";
-import OfflineModel from "./media/MI_2D.png";
+import OfflineModel from "./media/AO_2D.png";
 import Model from "./media/Transparent.png";
 import ImageMapper from "react-img-mapper";
 import React, { useState } from "react";
@@ -37,7 +37,7 @@ const Overlay = (props) => {
     // Requires an array in the format [x1, y1, x2, y2, ...]
     // Output: scaled array in the form [x1, y1, x2, y2, ...]
     const Strech_to_Screen = (arrayToTransform) => {
-        let hitbox_scaling = [screen_width / 1920, screen_height / 955];
+        let hitbox_scaling = [screen_width / 1920, screen_height / 1008];
         arrayToTransform = arrayToTransform.map((value, index) => parseInt(value * (hitbox_scaling[index % hitbox_scaling.length])));
 
         return arrayToTransform;
@@ -58,22 +58,22 @@ const Overlay = (props) => {
     let MAP = {
         name: "MI_Simple_imagemap",
         areas: [
-            { controlId: "KM100B_1", shape: "poly", coords: Strech_to_Screen(boxTransform([728,846, 945,846, 945,940, 900,940, 900,902, 770,902, 770,942, 727,942])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Prism Mount'},
-            { controlId: "stepper_linear1", shape: "poly", coords: Strech_to_Screen(boxTransform([179,489, 217,494, 242,504, 259,524, 264,550, 247,581, 214,600, 179,609, 139,603, 114,592, 97,573, 90,548, 100,523, 112,504, 144,492])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Linear Stage' },
-            { controlId: "redlaser_1", shape: "poly", coords: Strech_to_Screen(boxTransform([536,627, 744,577, 811,593, 833,638, 800,682, 578,726, 522,710, 508,665])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Laser Alignment' },
-            { controlId: "relay_laser", shape: "poly", coords: Strech_to_Screen(boxTransform([368,688, 422,672, 455,675, 635,785, 644,818, 618,860, 564,862, 360,763, 338,725])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Power Supply' },
-            { controlId: "stepper_pinhole", shape: "poly", coords: Strech_to_Screen(boxTransform([1763,398, 1849,365, 1915,365, 1915,410, 1870,412, 1871,488, 1915,488, 1915,520, 1786,524])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Pinhole' },
-            { controlId: "eye_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1577,725, 1777,725, 1789,865, 1585, 865])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Artificial Eye' },
-            { controlId: "stepper_rotation", shape: "poly", coords: Strech_to_Screen(boxTransform([516, 4, 1188, 4, 1140, 191, 647, 193])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Target Changing Stage' },
-            { controlId: "beamSplitter", shape: "poly", coords: Strech_to_Screen(boxTransform([5,415, 310,415, 310,487, 5,487])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Beam Splitter' },
-            { controlId: "prism", shape: "poly", coords: Strech_to_Screen(boxTransform([984,395, 1078,394, 1078,257, 1104,257, 1104,490, 984,490])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Prism' },
-            { controlId: "telescope_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1200,393, 1282,392, 1284,501, 1200,501])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Telescope 1' },
-            { controlId: "telescope_2", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Telescope 2' },
-            { controlId: "servo_screen", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen Retraction' },
-            { controlId: "mirror_1", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Adaptive Mirror' },
-            { controlId: "wavesensor_1", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Wavefront Sensor' },
-            { controlId: "cam_screen", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
-            { controlId: "cam_eye", shape: "poly", coords: Strech_to_Screen(boxTransform([772,390, 922,390, 933,408, 931,509, 783,511, 767,495])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Detail Cam' },
+            //{ controlId: "KM100B_1", shape: "poly", coords: Strech_to_Screen(boxTransform([720, 356, 840, 356, 840, 281, 720, 281])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Prism Mount'},
+            { controlId: "stepper_linear1", shape: "poly", coords: Strech_to_Screen(boxTransform([687, 718, 888, 718, 888, 429, 687, 429])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Linear Stage' },
+            //{ controlId: "redlaser_1", shape: "poly", coords: Strech_to_Screen(boxTransform([])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Laser Alignment' },
+            { controlId: "relay_laser", shape: "poly", coords: Strech_to_Screen(boxTransform([10, 845, 110, 845, 110, 745, 10, 745])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Power Supply' },
+            { controlId: "stepper_pinhole", shape: "poly", coords: Strech_to_Screen(boxTransform([372, 500, 470, 500, 470, 370, 372, 370])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Pinhole' },
+            { controlId: "eye_1", shape: "poly", coords: Strech_to_Screen(boxTransform([75, 370, 300, 370, 300, 230, 75, 230])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Artificial Eye' },
+            { controlId: "stepper_rotation", shape: "poly", coords: Strech_to_Screen(boxTransform([0, 515, 60, 515, 60, 450, 0, 450])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Target Changing Stage' },
+            { controlId: "beamSplitter", shape: "poly", coords: Strech_to_Screen(boxTransform([365, 357, 449, 357, 449, 282, 365, 282])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Beam Splitter' },
+            { controlId: "prism", shape: "poly", coords: Strech_to_Screen(boxTransform([720, 356, 840, 356, 840, 281, 720, 281])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Prism' },
+            { controlId: "telescope_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1200, 417, 1763, 417, 1763, 290, 1200, 290])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Telescope 1' },
+            { controlId: "telescope_2", shape: "poly", coords: Strech_to_Screen(boxTransform([1503, 691, 1887, 492, 1812, 426, 1440, 609])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Telescope 2' },
+            { controlId: "servo_screen", shape: "poly", coords: Strech_to_Screen(boxTransform([1127, 511, 1213, 511, 1213, 381, 1127, 381])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen Retraction' },
+            { controlId: "mirror_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1851, 415, 1920, 415, 1920, 312, 1851, 312])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Adaptive Mirror' },
+            { controlId: "wavesensor_1", shape: "poly", coords: Strech_to_Screen(boxTransform([1265, 827, 1453, 738, 1369, 624, 1190, 702])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Wavefront Sensor' },
+            { controlId: "cam_screen", shape: "poly", coords: Strech_to_Screen(boxTransform([1084, 426, 1120, 426, 1120, 295, 1084, 295])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Screen' },
+            { controlId: "cam_eye", shape: "poly", coords: Strech_to_Screen(boxTransform([524, 260, 614, 260, 614, 155, 524, 155])), preFillColor: preFill_Color, fillColor: fill_Color, desc: 'Detail Cam' },
         ]
     };
 
