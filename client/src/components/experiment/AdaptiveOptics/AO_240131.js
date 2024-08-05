@@ -491,7 +491,7 @@ function Model(props) {
       >
         {props.showTags && (
           <DescriptiveTag
-            position={[0.1, 0.1, 0.15]}
+            position={[0.05, 0.02, 0.16]}
             title="Linear Stage"
             description="XR50P/M Linear Translation Platform"
           />
