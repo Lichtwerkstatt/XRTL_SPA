@@ -57,7 +57,7 @@ const Fundamentals = (props) => {
             )}
 
             {/* Rotation Laser */}
-            {props.selected.has("stepper_laser") && (
+            {props.selected.has("stepper_rot_laser") && (
                 <RotaryCtrl
                     title="Rotation Laser"
                     id={"stepper_rot_laser"}
