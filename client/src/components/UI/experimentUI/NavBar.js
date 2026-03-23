@@ -55,9 +55,11 @@ const NavBar = () => {
                             <li onClick={() => { (socketCtx.connected) ? socketCtx.toggleConnection() : appCtx.toggleLogin(); }}> {(socketCtx.connected) ? <ImExit size={25} color={connectionStatusColor} /> : <ImEnter size={25} color={connectionStatusColor} />} </li>
                         </Tooltip>
 
+                        {/*
                         <Tooltip title='Labels'>
                             <li onClick={appCtx.toggleShowTags}><FaTags size={25} color={showTagsColor} /></li>
                         </Tooltip>
+                        */}
 
                         <Tooltip title='Cam'>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
@@ -69,9 +71,11 @@ const NavBar = () => {
                         </Tooltip>
                         */}
 
+                        {/*
                         <Tooltip title='Beam Path'>
                             <li onClick={appCtx.toggleShowBeam}><GiLaserWarning size={25} color={showBeamColor} /></li>
                         </Tooltip> 
+                        */}
 
                         <Tooltip title='Light Source'>
                             <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>

@@ -3,6 +3,7 @@ import Screen from "../../assembly/RetracatableScreen";
 import LaserCtrl from "../../assembly/Laser";
 import KM100 from "../../assembly/KM100";
 import RotaryCtrl from "../../assembly/Rotary";
+import ESPCam from "../../assembly/ESPCamStream";
 
 /**
  * Experiment Setup Component
@@ -113,6 +114,26 @@ const Fundamentals = (props) => {
                     footer={footer}
                     top={200}
                     left={900}
+                />
+            )}
+
+            {/* Cam 1 */}
+            {props.selected.has("FU_Cam_I") && (
+                <ESPCam 
+                    title="FU_Cam_I" 
+                    controlId={"FU_Cam_I"} 
+                    top={50} 
+                    left={600} 
+                />
+            )}
+
+            {/* Cam 2 */}
+            {props.selected.has("FU_Cam_II") && (
+                <ESPCam 
+                    title="FU_Cam_II" 
+                    controlId={"FU_Cam_II"} 
+                    top={50} 
+                    left={600} 
                 />
             )}
         </div>

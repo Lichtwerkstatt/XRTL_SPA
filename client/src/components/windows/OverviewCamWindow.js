@@ -30,15 +30,15 @@ const CamWindow = () => {
             header={'Top View of Experiment'}
             top={'200'}
             left={'650'}
-            id={'overview'}
-            componentList={['overview']}
+            id={'FU_Cam_III'}
+            componentList={['FU_Cam_III']}
             width={width}
             height={height}
             footer={'none'}
             topper={'none'}
         >
             <ESPCam
-                component={'overview'}
+                component={'FU_Cam_III'}
                 width={width}
                 height={height}
             />

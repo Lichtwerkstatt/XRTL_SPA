@@ -62,6 +62,8 @@ const Overlay = (props) => {
             { controlId: "stepper_sample_dia_2", shape: "rect", coords: boxScaling(boxTransform([400, 500, 500, 750])), desc: 'Rotation Dia 2'},
             { controlId: "stepper_screen_1", shape: "rect", coords: boxScaling(boxTransform([500, 500, 600, 750])), desc: 'Rotation Screen 1'},
             { controlId: "stepper_screen_2", shape: "rect", coords: boxScaling(boxTransform([600, 500, 700, 750])), desc: 'Rotation Screen 2'},
+            { controlId: "FU_Cam_I", shape: "rect", coords: boxScaling(boxTransform([700, 500, 800, 750])), desc: 'Cam 1'},
+            { controlId: "FU_Cam_II", shape: "rect", coords: boxScaling(boxTransform([800, 500, 900, 750])), desc: 'Cam 2'},
         ]
     };
 
