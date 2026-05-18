@@ -54,9 +54,15 @@ const Overlay = (props) => {
     let MAP = {
         name: "Fundamental_2D_Map",
         areas: [
-            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([450, 800, 740, 1000])), desc: 'Power Supply G' },
-            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([5, 480, 180, 740])), desc: 'Power Supply R' },
-            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 680])), desc: 'Rotation Laser' },
+            { controlId: "relay_g_laser", shape: "rect", coords: boxScaling(boxTransform([0, 500, 100, 750])), desc: 'Power Supply G' },
+            { controlId: "relay_r_laser", shape: "rect", coords: boxScaling(boxTransform([100, 500, 200, 750])), desc: 'Power Supply R' },
+            { controlId: "stepper_rot_laser", shape: "rect", coords: boxScaling(boxTransform([200, 500, 300, 750])), desc: 'Rotation Laser' },
+            { controlId: "stepper_sample_dia_1", shape: "rect", coords: boxScaling(boxTransform([300, 500, 400, 750])), desc: 'Rotation Dia 1'},
+            { controlId: "stepper_sample_dia_2", shape: "rect", coords: boxScaling(boxTransform([400, 500, 500, 750])), desc: 'Rotation Dia 2'},
+            { controlId: "stepper_screen_1", shape: "rect", coords: boxScaling(boxTransform([500, 500, 600, 750])), desc: 'Rotation Screen 1'},
+            { controlId: "stepper_screen_2", shape: "rect", coords: boxScaling(boxTransform([600, 500, 700, 750])), desc: 'Rotation Screen 2'},
+            { controlId: "FU_Cam_I", shape: "rect", coords: boxScaling(boxTransform([700, 500, 800, 750])), desc: 'Cam 1'},
+            { controlId: "FU_Cam_II", shape: "rect", coords: boxScaling(boxTransform([800, 500, 900, 750])), desc: 'Cam 2'},
         ]
     };
 
@@ -90,8 +96,9 @@ const Overlay = (props) => {
 
                     {/* ESPCam Stream can only be displayed if there is a connection to the server. Otherwise, the OfflineModel image is used as the basis for the hitboxes (see src of the ImageMapper) */}
                     {props.socket.connected &&
-                        <ESPCam component={'overview'} width={String(window.innerWidth)} height={String(window.innerHeight)}
-                                style={{ top: '0px', transform: 'rotate(180deg)', height: '100%', width: '100%', margin: '0', display: 'block' }} />
+                        <ESPCam component={'FU_Cam_III'} width={String(window.innerWidth)} height={String(window.innerHeight)}
+                                style={{ top: '0px', height: '100%', width: '100%', margin: '0px', padding: '0px', display: 'block' }} />
+                                //style={{position: 'absolut', top: '30px', left: '0px', bottom: '0px', right: '0px', transform: 'rotate(0deg)', height: 'calc(100% - 30px)', width: '100%', margin: '0px', padding: '0px', border: '0px', display: 'block'}} />
                     }
 
                     {/* To render the hitboxes, the ImageMapper requires an image as a source (in this case a transparent image if there is a server connection

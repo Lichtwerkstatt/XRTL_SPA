@@ -20,12 +20,33 @@ const ESPCamStream = (props) => {
   // Handles changing the width of the component window when the settings are to be shown or hidden
   const [setting, setSetting] = useState(false)
   var width = window.innerWidth
+  var height = 0;
+  var mobile = true;
 
-  if (setting) {
-    width = '1000px';
-  } else if (!setting) {
-    width = '670px';
+  if (0 < width && width < 576) {
+    width = '350px'
+    height = '260px'
   }
+  else if (576 < width && width < 768) {
+    width = '510px'
+    height = '340px'
+  }
+  else if (768 < width && width < 1000) {
+    width = '650px'
+    height = '430px'
+  } 
+  else {
+    width = '1600px'
+    height = '1200px'
+  }
+
+  //if (setting && width === '1000px') {
+  //  width = '1000px';
+  //  mobile = false
+  //} else if (!setting && width === '1000px') {
+  //  width = '670px';
+  //  mobile = false;
+  //}
 
   return (
     <Window
@@ -35,13 +56,15 @@ const ESPCamStream = (props) => {
       top={props.top}
       left={props.left}
       width={width}
-      height={'430px'}
+      height={height}
     >
       <Settings
         component={props.id}
         width={width}
+        height={height}
         setting={setting}
         setSetting={setSetting}
+        mobile={mobile}
       />
     </Window>
   );

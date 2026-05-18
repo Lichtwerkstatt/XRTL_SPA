@@ -61,15 +61,16 @@ const NavBar = () => {
                         </Tooltip>
                         */}
 
+                        {/*
                         <Tooltip title='Cam'>
                             <li onClick={appCtx.toggleCam}><BsCamera size={26} color={cameraStatusColor} /></li>
                         </Tooltip>
+                        */}
 
-                        {/*
                         <Tooltip title='Model'>
                             <li onClick={appCtx.toggleShowVirtualLayer}><BsBox size={26} color={showVirtualLayerColor} /></li>
                         </Tooltip>
-                        */}
+
 
                         {/*
                         <Tooltip title='Beam Path'>
@@ -77,9 +78,11 @@ const NavBar = () => {
                         </Tooltip> 
                         */}
 
+                        {/*
                         <Tooltip title='Light Source'>
                             <li onClick={appCtx.toggleHandleLightSource}><FaLightbulb size={24} color={lightSource} /></li>
                         </Tooltip>
+                        */}
 
                         <Tooltip title='Manual'>
                             <li onClick={appCtx.toggleShowManualWindow}><MdOutlineMenuBook size={26} color={showManualWindowColor} /></li>

@@ -41,6 +41,7 @@ const ESPCamPlusSettings = (props) => {
         8: 'VGA (640x480)',
         9: 'SVGA (800x600)',
         10: 'XGA (1024x768)',
+        12: 'UXGA (1600x1200)',
     }
 
     const hiddenSetting = () => {
@@ -92,7 +93,7 @@ const ESPCamPlusSettings = (props) => {
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
-                <ESPCam component={props.component} width={'600px'} height={'400px'} />
+                <ESPCam component={props.component} width={'1600px'} height={'1400px'} />
                 {props.setting &&
 
                     <div className={styles.Settings}>
