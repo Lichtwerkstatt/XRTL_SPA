@@ -41,6 +41,7 @@ const CamWindow = () => {
                 component={'FU_Cam_III'}
                 width={width}
                 height={height}
+                
             />
         </Window>
     );

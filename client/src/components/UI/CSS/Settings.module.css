@@ -11,9 +11,9 @@ div.Settings {
     visibility: visible;
     position: absolute;
     height: 400px;
-    width: 300px;
-    right: 30px;
-    top: 25px
+    width: 0px;
+    left: 10px;
+    top: 20px
 }
 
 div.Cam {

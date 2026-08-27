@@ -36,17 +36,17 @@ const ESPCamStream = (props) => {
     height = '430px'
   } 
   else {
-    width = '1600px'
-    height = '1200px'
+    width = '1000px'
+    height = '430px'
   }
 
-  //if (setting && width === '1000px') {
-  //  width = '1000px';
-  //  mobile = false
-  //} else if (!setting && width === '1000px') {
-  //  width = '670px';
-  //  mobile = false;
-  //}
+  if (setting && width === '1000px') {
+    width = '1000px';
+    mobile = false
+  } else if (!setting && width === '1000px') {
+    width = '670px';
+    mobile = false;
+  }
 
   return (
     <Window

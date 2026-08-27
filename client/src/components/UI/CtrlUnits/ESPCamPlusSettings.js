@@ -48,17 +48,18 @@ const ESPCamPlusSettings = (props) => {
         props.setSetting(!props.setting)
 
         if (props.setting) {
-            document.getElementById(props.component).style.left = '-325px'
+            document.getElementById(props.component).style.left = '50px'//'-325px'
         } else {
-            document.getElementById(props.component).style.left = '-655px'
+            document.getElementById(props.component).style.left = '350px'//'-655px'
         }
     }
 
     useEffect(() => {
-        if (!props.setting) {
-            document.getElementById(props.component).style.left = '-325px'
+        if (!props.setting && !props.mobile) {
+            document.getElementById(props.component).style.left = '50px'//'-325px'
+        } else if (!props.mobile) {
+            document.getElementById(props.component).style.left = '350px'//'-655px'
         }
-
         const status = (payload) => {
             if (payload.controlId === props.component) {
                 setOnlineStatus(true)
@@ -93,7 +94,7 @@ const ESPCamPlusSettings = (props) => {
                 <IconButton onClick={hiddenSetting}  >
                     <SettingsOutlinedIcon sx={{ fontSize: 35 }} />
                 </IconButton>
-                <ESPCam component={props.component} width={'1600px'} height={'1400px'} />
+                <ESPCam component={props.component} width={'600'} height={'400'} style={{ border: '2px solid #01bd7d', borderRadius: '15px', top: '15px' }} />
                 {props.setting &&
 
                     <div className={styles.Settings}>

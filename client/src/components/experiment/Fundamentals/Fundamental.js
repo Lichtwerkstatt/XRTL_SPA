@@ -120,20 +120,22 @@ const Fundamentals = (props) => {
             {/* Cam 1 */}
             {props.selected.has("FU_Cam_I") && (
                 <ESPCam 
-                    title="FU_Cam_I" 
+                    title="Cam 1" 
+                    id={"FU_Cam_I"}
                     controlId={"FU_Cam_I"} 
-                    top={50} 
-                    left={600} 
+                    top={30} 
+                    left={0}
                 />
             )}
 
             {/* Cam 2 */}
             {props.selected.has("FU_Cam_II") && (
                 <ESPCam 
-                    title="FU_Cam_II" 
+                    title="Cam 2" 
+                    id={"FU_Cam_II"} 
                     controlId={"FU_Cam_II"} 
-                    top={50} 
-                    left={600} 
+                    top={30} 
+                    left={0} 
                 />
             )}
         </div>

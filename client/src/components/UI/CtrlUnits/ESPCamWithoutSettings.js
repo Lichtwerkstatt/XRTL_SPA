@@ -1,7 +1,7 @@
 import { useSocketContext } from '../../../services/SocketContext';
 import ESPCam from '../templates/ESPCam';
 import propTypes from "prop-types";
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * ESPCam component without settings
@@ -45,7 +45,7 @@ const ESPCamWithoutSettings = (props) => {
     }, [socketCtx.socket]);
 
     return (
-        <ESPCam component={props.component} width={props.width} height={props.height} style={{ borderRadius: '5px', backgroundSize: 'cover', top: 30 }} />
+        <ESPCam component={props.component} width={props.width} height={props.height} style={{ border: '0px', borderRadius: '0px', backgroundSize: '', top: 15, bottom: '0px', right: '0px', left: '0px', width: "100%", height: '100%' }} />
     )
 }
 
